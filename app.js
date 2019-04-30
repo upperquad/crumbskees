@@ -3,7 +3,6 @@
 const express = require('express')
 const SocketServer = require('ws').Server
 const path = require('path')
-const url = require('url')
 
 const PORT = process.env.PORT || 3000
 const phonePage = path.join(__dirname, 'game/phone.html')
@@ -15,38 +14,22 @@ const server = express()
   .get('/game', (req, res) => res.sendFile(gamePage) )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-const wssPage = new SocketServer({ noServer: true })
-const wssPhone = new SocketServer({ noServer: true })
-
-const wss = new SocketServer({ server })
+const wssPage = new SocketServer({server: server, path: '/game'})
+const wssPhone = new SocketServer({server: server, path: '/phone'})
 
 wssPage.on('connection', ws => {
-  // ...
+  console.log('new page')
 });
 
 wssPhone.on('connection', ws => {
-  ws.on('message', ws => {
+  console.log('new phone')
+
+  ws.on('message', message => {
     wssPage.clients.forEach(client => {
-      client.send(ws.data)
+      client.send(message)
     })
   })
 });
-
-server.on('upgrade', (request, socket, head) => {
-  const pathname = url.parse(request.url).pathname
-
-  if (pathname === '/game') {
-    wssPage.handleUpgrade(request, socket, head, ws => {
-      wssPage.emit('connection', ws, request)
-    });
-  } else if (pathname === '/phone') {
-    wssPhone.handleUpgrade(request, socket, head, ws => {
-      wssPhone.emit('connection', ws, request)
-    });
-  } else {
-    socket.destroy()
-  }
-})
 
 // wss.clients.forEach(client => {
 //   client.send(`123`)
