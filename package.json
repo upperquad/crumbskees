@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "deploy": "gcloud app deploy",
-    "start": "cd app && webpack --config webpack.prod.js && cd .. && node app.js"
+    "start": "cd app && yarn install && webpack --config webpack.prod.js && cd .. && node app.js"
   },
   "keywords": [],
   "author": "",
