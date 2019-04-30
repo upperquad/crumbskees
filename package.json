@@ -1,0 +1,19 @@
+{
+  "name": "sfdw-2019",
+  "version": "1.0.0",
+  "engines": {
+    "node": "11.12.0"
+  },
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gcloud app deploy",
+    "start": "node app.js",
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "express": "4.13.4",
+    "ws": "1.1.0"
+  }
+}
