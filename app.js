@@ -20,11 +20,15 @@ const wssPhone = new WebSocket.Server({ noServer: true })
 const wss = new SocketServer({ server })
 
 wssPage.on('connection', ws => {
-  ws.send(ws.data)
+  // ...
 });
 
 wssPhone.on('connection', ws => {
-  // ...
+  ws.on('message', ws => {
+    wssPage.clients.forEach(client => {
+      client.send(ws.data)
+    })
+  })
 });
 
 server.on('upgrade', (request, socket, head) => {
