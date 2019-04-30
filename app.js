@@ -5,9 +5,9 @@ const SocketServer = require('ws').Server
 const path = require('path')
 
 const PORT = process.env.PORT || 3000
-const phonePage = path.join(__dirname, 'app/dist/phone.html')
-const gamePage = path.join(__dirname, 'app/dist/game.html')
-const adminPage = path.join(__dirname, 'app/dist/admin.html')
+const phonePage = path.join(__dirname, 'app/dist/phone/index.html')
+const gamePage = path.join(__dirname, 'app/dist/game/index.html')
+const adminPage = path.join(__dirname, 'app/dist/admin/index.html')
 
 const server = express()
   .get('/', (req, res) => res.sendFile(phonePage) )

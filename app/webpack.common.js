@@ -14,27 +14,28 @@ module.exports = {
       title: 'Upperquad SFDW 2019',
       template: 'templates/game.html',
       chunks: ['game'],
-      filename: '../game.html'
+      filename: 'game/index.html'
     }),
     new HtmlWebpackPlugin({
       title: 'Controller - Upperquad SFDW 2019',
       template: 'templates/phone.html',
       chunks: ['phone'],
-      filename: '../phone.html'
+      filename: 'phone/index.html'
     }),
     new HtmlWebpackPlugin({
       title: 'Admin - Upperquad SFDW 2019',
       template: 'templates/phone.html',
       chunks: ['admin'],
-      filename: '../admin.html'
+      filename: 'admin/index.html'
     })
   ],
   output: {
     filename: 'js/[name].js',
-    path: path.resolve(__dirname, 'dist/static/')
+    publicPath: '/',
+    path: path.resolve(__dirname, 'dist/')
   },
   resolve: {
-    modules: [path.resolve(__dirname, 'app'), 'node_modules']
+    modules: [__dirname, 'node_modules']
   },
   module: {
     rules: [{

@@ -12,7 +12,8 @@ module.exports = merge(common, {
 		new SassLintPlugin()
 	],
 	devServer: {
-		contentBase: '../dist',
+		contentBase: './dist',
+		publicPath: '/',
 		hot: true
 	},
 	module: {
