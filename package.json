@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "deploy": "gcloud app deploy",
-    "start": "node app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
