@@ -5,13 +5,15 @@ const SocketServer = require('ws').Server
 const path = require('path')
 
 const PORT = process.env.PORT || 3000
-const phonePage = path.join(__dirname, 'game/phone.html')
-const gamePage = path.join(__dirname, 'game/game.html')
+const phonePage = path.join(__dirname, 'app/dist/phone.html')
+const gamePage = path.join(__dirname, 'app/dist/game.html')
+const adminPage = path.join(__dirname, 'app/dist/admin.html')
 
 const server = express()
-  .use(express.static('game'))
   .get('/', (req, res) => res.sendFile(phonePage) )
   .get('/game', (req, res) => res.sendFile(gamePage) )
+  .get('/admin', (req, res) => res.sendFile(adminPage) )
+  .use('/static', express.static('app/dist/static'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 const wssPage = new SocketServer({server: server, path: '/game'})
@@ -30,7 +32,3 @@ wssPhone.on('connection', ws => {
     })
   })
 });
-
-// wss.clients.forEach(client => {
-//   client.send(`123`)
-// })

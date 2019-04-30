@@ -1,0 +1,4 @@
+import '../scss/game.scss'
+
+(() => {
+})()
