@@ -3,6 +3,7 @@
 const express = require('express')
 const SocketServer = require('ws').Server
 const path = require('path')
+const url = require('url')
 
 const PORT = process.env.PORT || 3000
 const phonePage = path.join(__dirname, 'game/phone.html')
@@ -14,8 +15,8 @@ const server = express()
   .get('/game', (req, res) => res.sendFile(gamePage) )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-const wssPage = new WebSocket.Server({ noServer: true })
-const wssPhone = new WebSocket.Server({ noServer: true })
+const wssPage = new SocketServer({ noServer: true })
+const wssPhone = new SocketServer({ noServer: true })
 
 const wss = new SocketServer({ server })
 
