@@ -2,6 +2,11 @@ html, body {
   overscroll-behavior-x: none;
 }
 
+body:not(.is-ready) {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .touchpad {
   background: black;
   bottom: 0;
@@ -25,5 +30,48 @@ html, body {
     opacity: 1;
     transform: translate(-50%, -50%);
     transition: opacity .3s, transform ease-in-out .3s;
+  }
+}
+
+.token-pad {
+  background: black;
+  bottom: 0;
+  color: white;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+
+.token-instruction {
+  font-size: 20px;
+}
+
+.token-display {
+  position: relative;
+  font-size: 40px;
+  height: 60px;
+
+  .token-error {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
+}
+
+.token-input {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 30px auto;
+  width: 150px;
+
+  .token-input-key {
+    border: 1px solid white;
+    height: 40px;
+    margin-bottom: 10px;
+    width: 40px;
   }
 }
