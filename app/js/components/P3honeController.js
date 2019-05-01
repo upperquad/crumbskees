@@ -1,4 +1,4 @@
-export default class phoneController {
+export default class PhoneController {
   constructor() {
     this.host = window.location.origin.replace(/^http/, 'ws')
     this.websocket = new WebSocket(`${this.host}/phone`)
