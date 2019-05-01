@@ -5,9 +5,9 @@ export default class phoneController {
     this.touchpad = document.getElementById('touchpad')
     this.touchBubble = document.getElementById('touch-bubble')
 
-    document.addEventListener('touchstart', this.handleTouchStart, false)
-    document.addEventListener('touchmove', this.handleTouchMove, false)
-    document.addEventListener('touchend', this.handleTouchEnd, false)
+    document.addEventListener('touchstart', this.handleTouchStart, { passive: false })
+    document.addEventListener('touchmove', this.handleTouchMove, { passive: false })
+    document.addEventListener('touchend', this.handleTouchEnd, { passive: false })
   }
 
   handleTouchStart = event => {
