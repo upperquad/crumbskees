@@ -3,8 +3,7 @@ body {
   flex-flow: column nowrap;
   justify-content: center;
   margin: 0;
-  padding: 20px;
-}
+  padding: 20px; }
 
 button {
   background: gray;
@@ -12,5 +11,7 @@ button {
   font-size: 30px;
   margin: 30px auto;
   padding: 5px 10px;
-  width: 130px;
-}
+  width: 130px; }
+
+
+/*# sourceMappingURL=admin.css.map*/

@@ -7,14 +7,5 @@
   </head>
   <body>
     <div id="numbers"></div>
-    <script>
-      const host = location.origin.replace(/^http/, 'ws')
-      const websocket = new WebSocket(`${host}/game`)
-      const numbers = document.getElementById('numbers')
-
-      websocket.onmessage = event => {
-        numbers.innerHTML = event.data
-      }
-    </script>
   </body>
 </html>
