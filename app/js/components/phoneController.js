@@ -5,18 +5,20 @@ export default class phoneController {
     this.touchpad = document.getElementById('touchpad')
     this.touchBubble = document.getElementById('touch-bubble')
 
-    document.addEventListener('touchstart', this.handleTouchStart, { passive: false })
-    document.addEventListener('touchmove', this.handleTouchMove, { passive: false })
-    document.addEventListener('touchend', this.handleTouchEnd, { passive: false })
+    this.touchpad.addEventListener('touchstart', this.handleTouchStart, { passive: false })
+    this.touchpad.addEventListener('touchmove', this.handleTouchMove, { passive: false })
+    this.touchpad.addEventListener('touchend', this.handleTouchEnd, { passive: false })
   }
 
   handleTouchStart = event => {
     event.preventDefault()
+    event.stopPropagation()
     this.touchBubble.classList.add('is-touching')
   }
 
   handleTouchMove = event => {
     event.preventDefault()
+    event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
     this.touchBubble.style.left = clientX
     this.touchBubble.style.top = clientY
@@ -26,6 +28,7 @@ export default class phoneController {
 
   handleTouchEnd = event => {
     event.preventDefault()
+    event.stopPropagation()
     this.touchBubble.classList.remove('is-touching')
   }
 }
