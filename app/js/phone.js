@@ -1,4 +1,4 @@
 import '../scss/phone.scss'
-import PhoneController from './components/phoneController'
+import PhoneController from './components/PhoneController'
 
 new PhoneController()
