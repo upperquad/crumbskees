@@ -13,6 +13,8 @@ export default class PhoneController {
   handleTouchStart = event => {
     event.preventDefault()
     event.stopPropagation()
+    const { clientX, clientY } = event.touches[0]
+    this.updatePosition(clientX, clientY)
     this.touchBubble.classList.add('is-touching')
   }
 
@@ -20,15 +22,19 @@ export default class PhoneController {
     event.preventDefault()
     event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
-    this.touchBubble.style.left = clientX
-    this.touchBubble.style.top = clientY
-
-    this.websocket.send(`${clientX / window.innerWidth}, ${clientY / window.innerHeight}`)
+    this.updatePosition(clientX, clientY)
   }
 
   handleTouchEnd = event => {
     event.preventDefault()
     event.stopPropagation()
     this.touchBubble.classList.remove('is-touching')
+  }
+
+  updatePosition = (clientX, clientY) => {
+    this.touchBubble.style.left = clientX
+    this.touchBubble.style.top = clientY
+
+    this.websocket.send(`${clientX / window.innerWidth}, ${clientY / window.innerHeight}`)
   }
 }
