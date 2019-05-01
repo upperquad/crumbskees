@@ -1,7 +1,7 @@
 export default class PhoneController {
   constructor() {
     this.host = window.location.origin.replace(/^http/, 'ws')
-    this.websocket = new WebSocket(`${this.host}/phone`)
+    this.websocket = new WebSocket(`${this.host}/phone?token=123`)
     this.touchpad = document.getElementById('touchpad')
     this.touchBubble = document.getElementById('touch-bubble')
 

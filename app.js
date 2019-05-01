@@ -26,6 +26,7 @@ wssPage.on('connection', ws => {
 
 wssPhone.on('connection', ws => {
   console.log('new phone')
+  console.log(url.parse(ws.upgradeReq.url, true).query)
 
   ws.on('message', message => {
     wssPage.clients.forEach(client => {
