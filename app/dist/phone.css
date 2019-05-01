@@ -4,8 +4,7 @@
   left: 0;
   position: fixed;
   right: 0;
-  top: 0;
-}
+  top: 0; }
 
 .touch-bubble {
   border: 2px blue solid;
@@ -13,12 +12,12 @@
   height: 50px;
   opacity: 0;
   position: absolute;
-  transform: translate(-50%, -50%) scale(.2);
+  transform: translate(-50%, -50%) scale(0.2);
   transition: opacity .3s, transform ease-in-out .3s;
-  width: 50px;
-
-  &.is-touching {
+  width: 50px; }
+  .touch-bubble.is-touching {
     opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
+    transform: translate(-50%, -50%); }
+
+
+/*# sourceMappingURL=phone.css.map*/

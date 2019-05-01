@@ -6,7 +6,7 @@ module.exports = merge(common, {
 	mode: 'production',
 	devtool: 'source-map',
 	plugins: [
-		new MiniCssExtractPlugin('css/[name].css'),
+		new MiniCssExtractPlugin('[name].css'),
 	],
 	module: {
 		rules: [{

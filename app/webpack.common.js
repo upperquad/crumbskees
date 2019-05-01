@@ -24,7 +24,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: 'Admin - Upperquad SFDW 2019',
-      template: 'templates/phone.html',
+      template: 'templates/admin.html',
       chunks: ['admin'],
       filename: 'admin/index.html'
     })

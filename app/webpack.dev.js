@@ -1,6 +1,6 @@
 const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
-const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const SassLintPlugin = require('sass-lint-webpack')
 
@@ -8,19 +8,14 @@ module.exports = merge(common, {
 	mode: 'development',
 	devtool: 'inline-source-map',
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
-		new SassLintPlugin()
+		new MiniCssExtractPlugin('[name].css'),
 	],
-	devServer: {
-		contentBase: './dist',
-		publicPath: '/',
-		hot: true
-	},
+	watch: true,
 	module: {
 		rules: [{
 			test: /\.scss$/,
 			use: [
-				'style-loader', // creates style nodes from JS strings
+				MiniCssExtractPlugin.loader,
 				'css-loader', // translates CSS into CommonJS
 				'sass-loader' // compiles Sass to CSS, using Node Sass by default
 			]

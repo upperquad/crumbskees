@@ -1,32 +1,13 @@
 <html>
   <head>
-    <style>
-      * { box-sizing: border-box; }
-
-      .scene {
-        background: black;
-        bottom: 0;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-      }
-
-    </style>
+    <title>Admin - Upperquad SFDW 2019</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   </head>
   <body>
-    <div class="scene" id="scene">
-    </div>
+    <button id="button-reset">Reset</button>
 
-    <script>
-      const host = location.origin.replace(/^http/, 'ws')
-      const websocket = new WebSocket(`${host}/phone`)
-      const scene = document.getElementById('scene')
-
-      scene.ontouchmove = event => {
-        event.preventDefault()
-        websocket.send(`${event.touches[0].clientX / window.innerWidth}, ${event.touches[0].clientY / window.innerHeight}`)
-      }
-    </script>
+    <button id="button-refresh">Refresh</button>
   </body>
 </html>

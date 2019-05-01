@@ -13,11 +13,12 @@ const server = express()
   .get('/', (req, res) => res.sendFile(phonePage) )
   .get('/game', (req, res) => res.sendFile(gamePage) )
   .get('/admin', (req, res) => res.sendFile(adminPage) )
-  .use('/static', express.static('app/dist/static'))
+  .use('/', express.static('app/dist/'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 const wssPage = new SocketServer({server: server, path: '/game'})
 const wssPhone = new SocketServer({server: server, path: '/phone'})
+const wssAdmin = new SocketServer({server: server, path: '/admin'})
 
 wssPage.on('connection', ws => {
   console.log('new page')
@@ -28,7 +29,19 @@ wssPhone.on('connection', ws => {
 
   ws.on('message', message => {
     wssPage.clients.forEach(client => {
-      client.send(message)
+      client.send('control,' + message)
     })
+  })
+});
+
+wssAdmin.on('connection', ws => {
+  console.log('new admin')
+
+  ws.on('message', message => {
+    if (message === 'refresh' || message === 'reset') {
+      wssPage.clients.forEach(client => {
+        client.send('command,' + message)
+      })
+    }
   })
 });
