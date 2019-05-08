@@ -1,3 +1,5 @@
+import { throttle } from 'throttle-debounce'
+
 export default class PhoneController {
   constructor($scope, $element) {
     this.$scope = $scope
@@ -64,12 +66,12 @@ export default class PhoneController {
     this.touchBubble.classList.add('is-touching')
   }
 
-  handleTouchMove = event => {
+  handleTouchMove = throttle(100, event => {
     event.preventDefault()
     event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
     this.updatePosition(clientX, clientY)
-  }
+  })
 
   handleTouchEnd = event => {
     event.preventDefault()
