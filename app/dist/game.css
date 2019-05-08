@@ -1,3 +1,11 @@
+.bubble {
+  border: 2px solid red;
+  border-radius: 50%;
+  height: 40px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transition: left .1s, top .1s;
+  width: 40px; }
 
 
 /*# sourceMappingURL=game.css.map*/

@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"game.css","sourcesContent":[],"sourceRoot":""}
+{"version":3,"sources":["webpack:///./scss/game.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA,cAAc","file":"game.css","sourcesContent":[".bubble {\n  border: 2px solid red;\n  border-radius: 50%;\n  height: 40px;\n  position: fixed;\n  transform: translate(-50%, -50%);\n  transition: left .1s, top .1s;\n  width: 40px; }\n"],"sourceRoot":""}

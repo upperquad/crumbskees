@@ -3,6 +3,7 @@ export default class GameCommunicator {
     this.host = window.location.origin.replace(/^http/, 'ws')
     this.websocket = new WebSocket(`${this.host}/game`)
     this.numbers = document.getElementById('numbers')
+    this.bubble = document.getElementById('bubble')
 
     this.websocket.onmessage = event => {
       const data = event.data.split(',')
@@ -13,6 +14,9 @@ export default class GameCommunicator {
         } else if (data[1] === 'refresh') {
           window.location.reload(false)
         }
+      } else if (data[0] === 'control') {
+        this.bubble.style.left = `calc(${data[1]} * 100%)`
+        this.bubble.style.top = `calc(${data[2]} * 100%)`
       }
 
       this.numbers.innerHTML = event.data
