@@ -13,7 +13,7 @@ export default class PhoneController {
     this.isConnecting = false
     this.invalidToken = false
 
-    this.throttledTouchMove = throttle(300, this.handleTouchMove)
+    this.throttledTouchMove = throttle(50, this.handleTouchMove)
 
     this.touchpad.addEventListener('touchstart', this.handleTouchStart, { passive: false })
     this.touchpad.addEventListener('touchmove', this.throttledTouchMove, { passive: false })
