@@ -13,8 +13,10 @@ export default class PhoneController {
     this.isConnecting = false
     this.invalidToken = false
 
+    this.throttledTouchMove = throttle(300, this.handleTouchMove)
+
     this.touchpad.addEventListener('touchstart', this.handleTouchStart, { passive: false })
-    this.touchpad.addEventListener('touchmove', this.handleTouchMove, { passive: false })
+    this.touchpad.addEventListener('touchmove', this.throttledTouchMove, { passive: false })
     this.touchpad.addEventListener('touchend', this.handleTouchEnd, { passive: false })
     this.ready = true
   }
@@ -66,12 +68,12 @@ export default class PhoneController {
     this.touchBubble.classList.add('is-touching')
   }
 
-  handleTouchMove = throttle(100, event => {
+  handleTouchMove = event => {
     event.preventDefault()
     event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
     this.updatePosition(clientX, clientY)
-  })
+  }
 
   handleTouchEnd = event => {
     event.preventDefault()
