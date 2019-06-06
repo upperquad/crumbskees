@@ -1,0 +1,51 @@
+.vh {
+  height: 100vh;
+  position: relative;
+  width: 100%;
+}
+
+.fit {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(100%);
+  /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.object-fit-compat {
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 100%;
+  left: 0%;
+  position: absolute;
+  top: 0%;
+  width: 100%;
+}
+
+.center {
+  @extend %center;
+}
+
+.center-flex {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}

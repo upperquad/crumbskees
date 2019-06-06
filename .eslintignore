@@ -1,4 +1,4 @@
-/*.js
+app/*.js
 app/js/polyfills.js
 app/js/vendor/
 app/js/utils/

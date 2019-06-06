@@ -1,0 +1,57 @@
+/* ------------------------------------------------------------------ */
+/*        FONT FACE DECLARATION
+/* ------------------------------------------------------------------ */
+
+// Exemple
+@font-face {
+  font-family: 'Calibre Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../../assets/front-end/fonts/CalibreWeb-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../../assets/front-end/fonts/CalibreWeb-Bold.eot?#iefix') format('embedded-opentype'),
+  url('../../assets/front-end/fonts/CalibreWeb-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../../assets/front-end/fonts/CalibreWeb-Regular.eot'); /* IE9 Compat Modes */
+  src: url('../../assets/front-end/fonts/CalibreWeb-Regular.eot?#iefix') format('embedded-opentype'),
+  url('../../assets/front-end/fonts/CalibreWeb-Regular.woff') format('woff');
+}
+
+
+/* ------------------------------------------------------------------ */
+/*        VARIABLES DECLARATION
+/* ------------------------------------------------------------------ */
+
+
+%Regular {
+  @extend %smooth; // Optionnal
+
+  font-family: 'Calibre', serif;
+}
+
+%Light {
+  @extend %smooth; // Optionnal
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+}
+
+%Bold {
+  @extend %smooth; // Optionnal
+  font-family: 'Calibre Bold';
+}
+
+/* ------------------------------------------------------------------ */
+/*        APPLY TO ALL CLASS
+/* ------------------------------------------------------------------ */
+
+[class*="--light"] {
+  @extend %Light;
+}
+
+[class*="--bold"] {
+  @extend %Bold;
+}

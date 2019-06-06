@@ -1,0 +1,30 @@
+.scene-svg {
+  border: 1px solid $color-blue;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  path {
+    stroke-width: 4;
+  }
+
+  #player1 {
+    stroke: $color-red;
+  }
+
+  #player2 {
+    stroke: $color-blue;
+  }
+}
+
+.debug {
+  background-color: black;
+  border-radius: 50%;
+  display: none;
+  height: 20px;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  width: 20px;
+}
