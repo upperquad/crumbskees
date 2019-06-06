@@ -7,8 +7,12 @@ import Player from '../components/Player'
 import scene1Bkg from '../../../assets/front-end/images/find-cat.png'
 import scene1Item from '../../../assets/front-end/images/pattern.png'
 
-class GameManager {
+export default class GameManager {
   constructor() {
+    this.init()
+  }
+
+  init() {
     this.main = document.querySelector('.main')
 
     this.main.innerHTML = gameTmp
@@ -27,9 +31,9 @@ class GameManager {
       }, {
         bkg: scene1Bkg,
         item: scene1Item,
-        numItems: 5,
-        gridCols: 4,
-        gridLines: 4,
+        numItems: 10,
+        gridCols: 10,
+        gridLines: 10,
         effect: '?',
       }, {
         bkg: scene1Bkg,
@@ -170,5 +174,3 @@ class GameManager {
     }
   }
 }
-
-export default new GameManager()

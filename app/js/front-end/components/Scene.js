@@ -1,8 +1,7 @@
 import uuidv1 from 'uuid/v1'
 import { getNow, getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
-import { random, randomInt } from '../utils/math'
-import GameManager from '../managers/GameManager'
+import { randomInt } from '../utils/math'
 
 // assets
 import itemImg from '../../../assets/front-end/images/pattern.png'
@@ -36,10 +35,10 @@ export default class Scene {
     this.acceleration = 1
     this.destAcceleration = 1
     this.coefAcceleration = 0.2
-    this.increaseMax = GameManager.vbWidth * 0.07
+    this.increaseMax = window.GameManager.vbWidth * 0.07
 
     // items
-    this.itemSize = GameManager.vbWidth * 0.05
+    this.itemSize = window.GameManager.vbWidth * 0.05
 
     // values for mouse event
     this.x = 0
@@ -129,7 +128,7 @@ export default class Scene {
 
   fitSceneToImage() {
     // set viewbox values
-    this.dom.svgScene.setAttribute('viewBox', `0 0 ${GameManager.vbWidth} ${GameManager.vbHeight}`)
+    this.dom.svgScene.setAttribute('viewBox', `0 0 ${window.GameManager.vbWidth} ${window.GameManager.vbHeight}`)
   }
 
   // ////////
@@ -154,10 +153,10 @@ export default class Scene {
     this.eventY = e.touches ? e.touches[0].clientY : e.clientY
     this.eventY += scrollY
 
-    this.targetX = this.eventX / this.width * GameManager.vbWidth // because we're using viewbox units here
-    this.targetX -= GameManager.vbWidth / 2 // because starting point is this.centerX
-    this.targetY = this.eventY / this.height * GameManager.vbHeight - this.offsetTop
-    this.targetY -= GameManager.vbHeight / 2
+    this.targetX = this.eventX / this.width * window.GameManager.vbWidth // because we're using viewbox units here
+    this.targetX -= window.GameManager.vbWidth / 2 // because starting point is this.centerX
+    this.targetY = this.eventY / this.height * window.GameManager.vbHeight - this.offsetTop
+    this.targetY -= window.GameManager.vbHeight / 2
 
     // ^These shoudl be linked to a cursor
   }
@@ -168,7 +167,7 @@ export default class Scene {
     // if cursor position
     // Check if cursor item is found
     const precision = this.clickPrecision
-    const player = GameManager.players[0]
+    const player = window.GameManager.players[0]
     const x = this.eventX / this.width
     const y = this.eventY / this.height
 
@@ -179,7 +178,7 @@ export default class Scene {
         x < item.x + precision &&
         y > item.y - precision &&
         y < item.y + precision) {
-        GameManager.score(player, itemImg)
+        window.GameManager.score(player, itemImg)
         item.found = true
         item.el.style.opacity = 0
         item.debugEl.style.opacity = 0
@@ -189,7 +188,7 @@ export default class Scene {
     }
 
     if (this.numItemFound === this.items.length) {
-      GameManager.endScene()
+      window.GameManager.endScene()
     }
   }
 
@@ -201,8 +200,8 @@ export default class Scene {
     this.y = this.y + (this.targetY - this.y) * 0.1
 
     // For each cursor...
-    for (let y = 0; y < GameManager.players.length; y++) {
-      const cursor = GameManager.players[y]
+    for (let y = 0; y < window.GameManager.players.length; y++) {
+      const cursor = window.GameManager.players[y]
 
       // For each points of the cursor (organic shape)
       // Create organic shape / Tween all points
