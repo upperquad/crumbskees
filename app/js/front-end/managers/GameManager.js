@@ -7,8 +7,40 @@ import Player from '../components/Player'
 import scene1Bkg from '../../../assets/front-end/images/find-cat.png'
 import scene1Item from '../../../assets/front-end/images/pattern.png'
 
+const id = 'ewpijf'
+const token = 'weijfwepfijwfs'
+
 export default class GameManager {
   constructor() {
+    this.host = window.location.origin.replace(/^http/, 'ws')
+    this.websocket = new WebSocket(`${this.host}/game`)
+    this.numbers = document.getElementById('numbers')
+    this.bubble = document.getElementById('bubble')
+
+    this.websocket.onmessage = event => {
+      const data = event.data.split(',')
+
+      if (data[0] === 'token_submit') {
+        if (data[1] === id && data[2] === token) {
+          this.init()
+        } else {
+          return // can be an error object
+        }
+      } else if (data[0] === 'command') {
+        if (data[1] === 'reset') {
+          // TODO, can even do "Kick Player 1 Out", "Kick Player 2 Out",
+          // "Kick'em Both Out" buttons
+        } else if (data[1] === 'refresh') {
+          window.location.reload(false)
+        }
+      } else if (data[0] === 'control') {
+        this.bubble.style.left = `calc(${data[1]} * 100%)`
+        this.bubble.style.top = `calc(${data[2]} * 100%)`
+      }
+
+      this.numbers.innerHTML = event.data
+    }
+
     this.init()
   }
 
