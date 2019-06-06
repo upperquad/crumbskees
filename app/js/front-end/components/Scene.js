@@ -2,37 +2,28 @@ import uuidv1 from 'uuid/v1'
 import { getNow, getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { random, randomInt } from '../utils/math'
-import Player from './Player'
 import GameManager from '../managers/GameManager'
 
 // assets
 import itemImg from '../../../assets/front-end/images/pattern.png'
 
-export default class Game {
-  constructor(el) {
+export default class Scene {
+  constructor(el, bkg, item, numItems, gridCols, gridLines, index) {
     this.element = el
+    this.bkg = bkg
+    this.item = item
+    this.numItems = numItems
+    this.gridCols = gridCols
+    this.gridLines = gridLines
+    this.index = index
 
-    this.imagePlaceholder = this.element.querySelector('.scene__placeholder')
-
-    // Load image
-    const img = new Image()
-    img.src = this.imagePlaceholder.src
-    img.onload = () => {
-      // image loaded
-      this.dom()
-      this.set()
-    }
+    this.dom()
+    this.set()
   }
 
   dom() {
     this.dom = {
-      scene: this.element.querySelector('.scene'),
-      cursors: this.element.querySelectorAll('.cursor'),
-      message: this.element.parentNode.querySelector('.scene__message'),
-      scoreCenterRecap: this.element.parentNode.querySelectorAll('.score__center__recap'),
-      scoreItems: this.element.parentNode.querySelectorAll('.score__items'),
       svgScene: this.element.querySelector('.scene-svg'),
-      svgImage: this.element.querySelector('.scene-svg__image'),
       svgClipPath: this.element.querySelector('.scene-svg__clippath'),
       svgClipPathRef: this.element.querySelector('.scene-svg__clippath-ref'),
     }
@@ -41,32 +32,14 @@ export default class Game {
   set() {
     this.fitSceneToImage()
 
-    this.numPoints = parseInt(this.element.dataset.numPoints, 10)
-    this.numItems = parseInt(this.element.dataset.numItems, 10)
-    this.gridCols = parseInt(this.element.dataset.gridCols, 10)
-    this.gridLines = parseInt(this.element.dataset.gridLines, 10)
-
-    // values for SVG scene
-    this.vbX = 0
-    this.vbY = 0
-    this.vbWidth = this.imagePlaceholder.offsetWidth
-    this.vbHeight = this.imagePlaceholder.offsetHeight
     // assuming we always use a viewbox of 100 x 100
-    this.centerX = this.vbWidth / 2 // equal to svg viewbox / 2
-    this.centerY = this.vbHeight / 2 // equal to svg viewbox / 2
-    this.minRadius = this.vbWidth * 0.05 // 70% of full size / 2 --> should be based on width viewbox
-    this.maxRadius = this.minRadius + this.minRadius * 0.2
-    this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
-    this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
-    this.minDuration = 700
-    this.maxDuration = 900
     this.acceleration = 1
     this.destAcceleration = 1
     this.coefAcceleration = 0.2
-    this.increaseMax = this.vbWidth * 0.07
+    this.increaseMax = GameManager.vbWidth * 0.07
 
     // items
-    this.itemSize = this.vbWidth * 0.05
+    this.itemSize = GameManager.vbWidth * 0.05
 
     // values for mouse event
     this.x = 0
@@ -77,50 +50,20 @@ export default class Game {
     this.numItemFound = 0
 
     // values for DOM scene
-    this.width = this.dom.scene.offsetWidth
-    this.height = this.dom.scene.offsetHeight
-    this.offsetLeft = getOffsetLeft(this.element)
-    this.offsetTop = getOffsetTop(this.element)
+    this.width = this.element.offsetWidth
+    this.height = this.element.offsetHeight
+    this.offsetLeft = getOffsetLeft(this.element.parentNode)
+    this.offsetTop = getOffsetTop(this.element.parentNode)
 
-    this.setPlayers()
+    if (this.dom.svgClipPath) {
+      this.setClipPathId()
+    }
     this.setGrid()
     this.setItems()
 
     // start events
     this.events(true)
     this.eventsRAF(true)
-  }
-
-  setPlayers() {
-    if (this.dom.svgClipPath) {
-      this.setClipPathId()
-    }
-
-    // this.svgPath.setAttribute('d', this.cardinal(this.points))
-    const obj = {
-      numPoints: this.numPoints,
-      minDuration: this.minDuration,
-      maxDuration: this.maxDuration,
-      centerX: this.centerX,
-      centerY: this.centerY,
-      minRadius: this.minRadius,
-      maxRadius: this.maxRadius,
-      minMiddleRadius: this.minMiddleRadius,
-      maxMiddleRadius: this.maxMiddleRadius,
-    }
-
-    const colors = [
-      'red',
-      'blue',
-    ]
-
-    // set players
-    this.players = []
-
-    for (let i = 0; i < this.dom.cursors.length; i++) {
-      const props = Object.assign(obj, { el: this.dom.cursors[i], index: i, color: colors[i] })
-      this.players.push(new Player(props))
-    }
   }
 
   setClipPathId() {
@@ -171,7 +114,7 @@ export default class Game {
       div.classList.add('debug')
       div.style.left = `${x * 100}%`
       div.style.top = `${y * 100}%`
-      this.dom.scene.appendChild(div)
+      this.element.appendChild(div)
 
       const obj = {
         el: svgImage,
@@ -186,46 +129,7 @@ export default class Game {
 
   fitSceneToImage() {
     // set viewbox values
-    this.dom.svgScene.setAttribute('viewBox', `0 0 ${this.imagePlaceholder.offsetWidth} ${this.imagePlaceholder.offsetHeight}`)
-  }
-
-  score(player) {
-    this.popUpMessage('+1', player.color) // + color player
-
-    GameManager.scores[player.index] += 1
-    this.element.parentNode.classList.add('item-found')
-
-    for (let i = 0; i < this.dom.scoreCenterRecap.length; i++) {
-      if (i === player.index) {
-        this.dom.scoreCenterRecap[i].innerHTML = `P-${player.index + 1} : ${GameManager.scores[player.index]}`
-      }
-    }
-
-    const img = document.createElement('img')
-    img.src = itemImg
-    img.classList.add('score__item')
-    this.dom.scoreItems[player.index].appendChild(img)
-  }
-
-  end() {
-    this.popUpMessage('end of game', 'black', true)
-    // this.events(false)
-  }
-
-  popUpMessage(message, color = 'gray', end = false) {
-    const div = document.createElement('div')
-    div.classList.add('message', 't-120--bold', `color--${color}`)
-    if (end) {
-      div.classList.add('message-end')
-    }
-    div.innerHTML = message
-    this.dom.scene.appendChild(div)
-
-    if (!end) {
-      setTimeout(() => {
-        div.remove()
-      }, 3000)
-    }
+    this.dom.svgScene.setAttribute('viewBox', `0 0 ${GameManager.vbWidth} ${GameManager.vbHeight}`)
   }
 
   // ////////
@@ -250,10 +154,10 @@ export default class Game {
     this.eventY = e.touches ? e.touches[0].clientY : e.clientY
     this.eventY += scrollY
 
-    this.targetX = this.eventX / this.width * this.vbWidth // because we're using viewbox units here
-    this.targetX -= this.vbWidth / 2 // because starting point is this.centerX
-    this.targetY = this.eventY / this.height * this.vbHeight - this.offsetTop
-    this.targetY -= this.vbHeight / 2
+    this.targetX = this.eventX / this.width * GameManager.vbWidth // because we're using viewbox units here
+    this.targetX -= GameManager.vbWidth / 2 // because starting point is this.centerX
+    this.targetY = this.eventY / this.height * GameManager.vbHeight - this.offsetTop
+    this.targetY -= GameManager.vbHeight / 2
 
     // ^These shoudl be linked to a cursor
   }
@@ -264,7 +168,7 @@ export default class Game {
     // if cursor position
     // Check if cursor item is found
     const precision = this.clickPrecision
-    const player = this.players[0]
+    const player = GameManager.players[0]
     const x = this.eventX / this.width
     const y = this.eventY / this.height
 
@@ -275,7 +179,7 @@ export default class Game {
         x < item.x + precision &&
         y > item.y - precision &&
         y < item.y + precision) {
-        this.score(player)
+        GameManager.score(player, itemImg)
         item.found = true
         item.el.style.opacity = 0
         item.debugEl.style.opacity = 0
@@ -285,7 +189,7 @@ export default class Game {
     }
 
     if (this.numItemFound === this.items.length) {
-      this.end()
+      GameManager.endScene()
     }
   }
 
@@ -297,8 +201,8 @@ export default class Game {
     this.y = this.y + (this.targetY - this.y) * 0.1
 
     // For each cursor...
-    for (let y = 0; y < this.players.length; y++) {
-      const cursor = this.players[y]
+    for (let y = 0; y < GameManager.players.length; y++) {
+      const cursor = GameManager.players[y]
 
       // For each points of the cursor (organic shape)
       // Create organic shape / Tween all points
@@ -340,25 +244,26 @@ export default class Game {
           point.y += this.y
         }
 
-        // if item found, increase cursor radius
-        if (y === 0 && cursor.itemFound && !point.isIncrease) {
-          const newMaxRadius = this.maxRadius + this.increaseMax
-          const newMaxMiddleRadius = this.maxMiddleRadius + this.increaseMax
-          const newMinRadius = this.minRadius + this.increaseMax
-          const newMinMiddleRadius = this.minMiddleRadius + this.increaseMax
-          point.targetMaxX = this.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-          point.targetMinX = this.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+        // For increasing cursor
+        // // if item found, increase cursor radius
+        // if (y === 0 && cursor.itemFound && !point.isIncrease) {
+        //   const newMaxRadius = cursor.maxRadius + this.increaseMax
+        //   const newMaxMiddleRadius = cursor.maxMiddleRadius + this.increaseMax
+        //   const newMinRadius = cursor.minRadius + this.increaseMax
+        //   const newMinMiddleRadius = cursor.minMiddleRadius + this.increaseMax
+        //   point.targetMaxX = cursor.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+        //   point.targetMinX = cursor.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
 
-          point.destX = point.targetMaxX
+        //   point.destX = point.targetMaxX
 
-          point.targetMaxY = this.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-          point.targetMinY = this.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+        //   point.targetMaxY = cursor.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+        //   point.targetMinY = cursor.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
 
-          point.destY = point.targetMaxY
-          point.startAnim = getNow()
+        //   point.destY = point.targetMaxY
+        //   point.startAnim = getNow()
 
-          point.isIncrease = true
-        }
+        //   point.isIncrease = true
+        // }
       }
 
       cursor.el.setAttribute('d', this.cardinal(cursor.points))

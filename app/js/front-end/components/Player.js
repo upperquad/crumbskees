@@ -1,5 +1,6 @@
 import { getNow } from '../utils/dom'
 import { random } from '../utils/math'
+import GameManager from '../managers/GameManager'
 
 export default class Player {
   constructor(props) {
@@ -8,28 +9,20 @@ export default class Player {
       index,
       color,
       numPoints,
-      minDuration,
-      maxDuration,
-      centerX,
-      centerY,
-      minRadius,
-      maxRadius,
-      minMiddleRadius,
-      maxMiddleRadius,
     } = props
 
     this.el = el
     this.index = index
     this.color = color
     this.numPoints = numPoints
-    this.minDuration = minDuration
-    this.maxDuration = maxDuration
-    this.centerX = centerX
-    this.centerY = centerY
-    this.minRadius = minRadius
-    this.maxRadius = maxRadius
-    this.minMiddleRadius = minMiddleRadius
-    this.maxMiddleRadius = maxMiddleRadius
+    this.centerX = GameManager.vbWidth / 2 // equal to svg viewbox / 2
+    this.centerY = GameManager.vbHeight / 2 // equal to svg viewbox / 2
+    this.minRadius = GameManager.vbWidth * 0.05 // 70% of full size / 2 --> should be based on width viewbox
+    this.maxRadius = this.minRadius + this.minRadius * 0.2
+    this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
+    this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
+    this.minDuration = 700
+    this.maxDuration = 900
 
     this.isInsideTime = 0
 
