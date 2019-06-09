@@ -1,4 +1,4 @@
-import { getNow } from '../utils/dom'
+import { getNow } from '../utils/time'
 import { random } from '../utils/math'
 
 export default class Player {

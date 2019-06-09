@@ -1,10 +1,8 @@
 import uuidv1 from 'uuid/v1'
-import { getNow, getOffsetTop, getOffsetLeft } from '../utils/dom'
+import { getNow } from '../utils/time'
+import { getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { randomInt } from '../utils/math'
-
-// assets
-import itemImg from '../../../assets/front-end/images/pattern.png'
 
 export default class Scene {
   constructor(el, bkg, item, numItems, gridCols, gridLines, index) {
@@ -23,12 +21,15 @@ export default class Scene {
   dom() {
     this.dom = {
       svgScene: this.element.querySelector('.scene-svg'),
+      svgMaskedImage: this.element.querySelector('.scene-svg__image'),
       svgClipPath: this.element.querySelector('.scene-svg__clippath'),
       svgClipPathRef: this.element.querySelector('.scene-svg__clippath-ref'),
     }
   }
 
   set() {
+    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
+    this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     this.fitSceneToImage()
 
     // assuming we always use a viewbox of 100 x 100
@@ -63,6 +64,8 @@ export default class Scene {
     // start events
     this.events(true)
     this.eventsRAF(true)
+
+    window.GameManager.popUpMessage('START!', 'black')
   }
 
   setClipPathId() {
@@ -100,7 +103,7 @@ export default class Scene {
       const svgImage = document.createElementNS('http://www.w3.org/2000/svg', 'image')
       svgImage.setAttributeNS(null, 'height', this.itemSize)
       svgImage.setAttributeNS(null, 'width', this.itemSize)
-      svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', itemImg)
+      svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.item)
       svgImage.setAttributeNS(null, 'x', `${x * 100}%`)
       svgImage.setAttributeNS(null, 'y', `${y * 100}%`)
       svgImage.setAttributeNS(null, 'transform', `translate(-${this.itemSize / 2} -${this.itemSize / 2})`)
@@ -178,7 +181,7 @@ export default class Scene {
         x < item.x + precision &&
         y > item.y - precision &&
         y < item.y + precision) {
-        window.GameManager.score(player, itemImg)
+        window.GameManager.score(player, this.item)
         item.found = true
         item.el.style.opacity = 0
         item.debugEl.style.opacity = 0

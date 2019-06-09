@@ -4,8 +4,10 @@ import Scene from '../components/Scene'
 import Player from '../components/Player'
 
 // assets
-import scene1Bkg from '../../../assets/front-end/images/find-cat.png'
+import scene1Bkg from '../../../assets/front-end/images/bkg1.jpg'
 import scene1Item from '../../../assets/front-end/images/pattern.png'
+import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
+// import scene2Item from '../../../assets/front-end/images/pattern.png'
 
 const id = 'ewpijf'
 const token = 'weijfwepfijwfs'
@@ -61,7 +63,7 @@ export default class GameManager {
         gridLines: 4,
         effect: '?',
       }, {
-        bkg: scene1Bkg,
+        bkg: scene2Bkg,
         item: scene1Item,
         numItems: 10,
         gridCols: 10,
@@ -87,6 +89,10 @@ export default class GameManager {
     this.scores = [0, 0]
     this.currentSceneIndex = 0
 
+    this.loadBkg()
+  }
+
+  loadBkg() {
     // Load Current Scene image
     const img = new Image()
     img.src = this.scenes[this.currentSceneIndex].bkg
@@ -96,6 +102,9 @@ export default class GameManager {
       this.setPlayers()
 
       const scene = this.scenes[this.currentSceneIndex]
+
+      // add image placholder
+      this.dom.imagePlaceholder.src = scene.bkg
 
       this.currentScene = new Scene(
         this.dom.scene,
@@ -168,11 +177,9 @@ export default class GameManager {
     div.innerHTML = message
     this.dom.scene.appendChild(div)
 
-    if (!end) {
-      setTimeout(() => {
-        div.remove()
-      }, 3000)
-    }
+    setTimeout(() => {
+      div.remove()
+    }, 2000)
   }
 
   endScene() {
