@@ -57,6 +57,7 @@ export default class GameManager {
     this.scenes = [
       {
         bkg: scene1Bkg,
+        maskedBkg: scene1Bkg,
         item: scene1Item,
         numItems: 5,
         gridCols: 4,
@@ -64,6 +65,7 @@ export default class GameManager {
         effect: '?',
       }, {
         bkg: scene2Bkg,
+        maskedBkg: scene2Bkg,
         item: scene1Item,
         numItems: 5,
         gridCols: 10,
@@ -71,6 +73,7 @@ export default class GameManager {
         effect: '?',
       }, {
         bkg: scene1Bkg,
+        maskedBkg: scene1Bkg,
         item: scene1Item,
         numItems: 5,
         gridCols: 4,
@@ -78,6 +81,7 @@ export default class GameManager {
         effect: '?',
       }, {
         bkg: scene1Bkg,
+        maskedBkg: scene1Bkg,
         item: scene1Item,
         numItems: 5,
         gridCols: 4,
@@ -106,15 +110,11 @@ export default class GameManager {
       // add image placholder
       this.dom.imagePlaceholder.src = scene.bkg
 
-      this.currentScene = new Scene(
-        this.dom.scene,
-        scene.bkg,
-        scene.item,
-        scene.numItems,
-        scene.gridCols,
-        scene.gridLines,
-        this.currentSceneIndex,
-      )
+      this.currentScene = new Scene({
+        el: this.dom.scene,
+        index: this.currentSceneIndex,
+        ...scene,
+      })
     }
   }
 
@@ -163,9 +163,10 @@ export default class GameManager {
 
       this.dom.timer.innerHTML = seconds
 
-      if (timer < 0) {
-        timer = duration
+      if (timer === 0) {
+        this.endScene('TIME OUT!')
       }
+
       timer -= 1
     }, 1000)
   }
@@ -202,9 +203,9 @@ export default class GameManager {
     }, 2000)
   }
 
-  endScene() {
+  endScene(message = 'end of scene') {
     clearInterval(this.timerInterval)
-    this.popUpMessage('end of scene', 'black', true)
+    this.popUpMessage(message, 'white', true)
     setTimeout(() => {
       this.updateScene(this.currentSceneIndex + 1)
     }, 2000)
@@ -216,15 +217,11 @@ export default class GameManager {
     this.currentSceneIndex = index
     const scene = this.scenes[this.currentSceneIndex]
 
-    this.currentScene = new Scene(
-      this.dom.scene,
-      scene.bkg,
-      scene.item,
-      scene.numItems,
-      scene.gridCols,
-      scene.gridLines,
-      this.currentSceneIndex,
-    )
+    this.currentScene = new Scene({
+      el: this.dom.scene,
+      index: this.currentSceneIndex,
+      ...scene,
+    })
   }
 
   destroyScene(scene) {

@@ -5,14 +5,15 @@ import { inOutSine } from '../utils/ease'
 import { randomInt } from '../utils/math'
 
 export default class Scene {
-  constructor(el, bkg, item, numItems, gridCols, gridLines, index) {
-    this.element = el
-    this.bkg = bkg
-    this.item = item
-    this.numItems = numItems
-    this.gridCols = gridCols
-    this.gridLines = gridLines
-    this.index = index
+  constructor(options) {
+    this.element = options.el
+    this.bkg = options.bkg
+    this.maskedBkg = options.maskedBkg
+    this.item = options.item
+    this.numItems = options.numItems
+    this.gridCols = options.gridCols
+    this.gridLines = options.gridLines
+    this.index = options.index
 
     this.dom()
     this.set()
@@ -28,9 +29,7 @@ export default class Scene {
   }
 
   set() {
-    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
-    this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
-    this.fitSceneToImage()
+    this.setBkgs()
 
     // assuming we always use a viewbox of 100 x 100
     this.acceleration = 1
@@ -65,7 +64,7 @@ export default class Scene {
     this.events(true)
     this.eventsRAF(true)
 
-    window.GameManager.popUpMessage('START!', 'black')
+    window.GameManager.popUpMessage('START!', 'white')
     window.GameManager.startTimer(60)
   }
 
@@ -130,9 +129,14 @@ export default class Scene {
     }
   }
 
-  fitSceneToImage() {
-    // set viewbox values
+  setBkgs() {
+    // set viewbox values, fit Image to scene
     this.dom.svgScene.setAttribute('viewBox', `0 0 ${window.GameManager.vbWidth} ${window.GameManager.vbHeight}`)
+    // Add masked bkg
+    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
+    this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
+    // Add "front" bkg
+    this.element.style.backgroundImage = `url(${this.maskedBkg})`
   }
 
   // ////////
