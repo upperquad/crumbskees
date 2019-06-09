@@ -65,7 +65,7 @@ export default class GameManager {
       }, {
         bkg: scene2Bkg,
         item: scene1Item,
-        numItems: 10,
+        numItems: 5,
         gridCols: 10,
         gridLines: 10,
         effect: '?',
@@ -123,9 +123,10 @@ export default class GameManager {
       scene: this.element.querySelector('.scene'),
       imagePlaceholder: this.element.querySelector('.scene__placeholder'),
       cursors: this.element.querySelectorAll('.cursor'),
-      message: this.element.parentNode.querySelector('.scene__message'),
-      scoreCenterRecap: this.element.parentNode.querySelectorAll('.score__center__recap'),
-      scoreItems: this.element.parentNode.querySelectorAll('.score__items'),
+      message: this.element.querySelector('.scene__message'),
+      scoreCenterRecap: this.element.querySelectorAll('.score__center__recap'),
+      scoreItems: this.element.querySelectorAll('.score__items'),
+      timer: this.element.querySelector('.timer'),
     }
   }
 
@@ -148,6 +149,25 @@ export default class GameManager {
       const props = Object.assign(obj, { el: this.dom.cursors[i], index: i, color: colors[i] })
       this.players.push(new Player(props))
     }
+  }
+
+  startTimer(duration) {
+    let timer = duration
+    let seconds
+
+    this.dom.timer.innerHTML = duration
+
+    this.timerInterval = setInterval(() => {
+      seconds = parseInt(timer, 10)
+      seconds = seconds < 10 ? `0${seconds}` : seconds
+
+      this.dom.timer.innerHTML = seconds
+
+      if (timer < 0) {
+        timer = duration
+      }
+      timer -= 1
+    }, 1000)
   }
 
   score(player, item) {
@@ -183,6 +203,7 @@ export default class GameManager {
   }
 
   endScene() {
+    clearInterval(this.timerInterval)
     this.popUpMessage('end of scene', 'black', true)
     setTimeout(() => {
       this.updateScene(this.currentSceneIndex + 1)

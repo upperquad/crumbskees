@@ -66,6 +66,7 @@ export default class Scene {
     this.eventsRAF(true)
 
     window.GameManager.popUpMessage('START!', 'black')
+    window.GameManager.startTimer(60)
   }
 
   setClipPathId() {
