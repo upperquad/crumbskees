@@ -3,6 +3,9 @@ import gameTmp from '../../../templates/front-end/game.html'
 import Scene from '../components/Scene'
 import Player from '../components/Player'
 
+// server
+import Server from '../constants/Server'
+
 // assets
 import scene1Bkg from '../../../assets/front-end/images/bkg1.jpg'
 import scene1Item from '../../../assets/front-end/images/pattern.png'
@@ -14,36 +17,40 @@ const token = 'weijfwepfijwfs'
 
 export default class GameManager {
   constructor() {
-    this.host = window.location.origin.replace(/^http/, 'ws')
-    this.websocket = new WebSocket(`${this.host}/game`)
-    this.numbers = document.getElementById('numbers')
-    this.bubble = document.getElementById('bubble')
-
-    this.websocket.onmessage = event => {
-      const data = event.data.split(',')
-
-      if (data[0] === 'token_submit') {
-        if (data[1] === id && data[2] === token) {
-          this.init()
-        } else {
-          return // can be an error object
-        }
-      } else if (data[0] === 'command') {
-        if (data[1] === 'reset') {
-          // TODO, can even do "Kick Player 1 Out", "Kick Player 2 Out",
-          // "Kick'em Both Out" buttons
-        } else if (data[1] === 'refresh') {
-          window.location.reload(false)
-        }
-      } else if (data[0] === 'control') {
-        this.bubble.style.left = `calc(${data[1]} * 100%)`
-        this.bubble.style.top = `calc(${data[2]} * 100%)`
-      }
-
-      this.numbers.innerHTML = event.data
-    }
+    Server.websocket.onmessage = this.listenServer
 
     this.init()
+  }
+
+  listenServer = event => {
+    const data = event.data.split(',')
+
+    if (data[0] === 'token_submit') {
+      if (data[1] === id && data[2] === token) {
+        // send
+        // Server.websocket.send(`auth_result_id,${id},1`)
+        this.init()
+      } else {
+        // Server.websocket.send(`auth_result_id,${id},0`)
+        return // can be an error object
+      }
+    } else if (data[0] === 'command') {
+      if (data[1] === 'reset') {
+        // TODO, can even do "Kick Player 1 Out", "Kick Player 2 Out",
+        // "Kick'em Both Out" buttons
+      } else if (data[1] === 'refresh') {
+        window.location.reload(false)
+      }
+    } else if (data[0] === 'cursor_move') {
+      // data[1] needs to be the index of player (or id)
+      // this.currentScene.player[data[1]].eventX = data[1]
+      // this.currentScene.player[data[1]].eventY = data[2]
+    } else if (data[0] === 'click') {
+      // data[1] needs to be the index of player (or id)
+      // this.currentScene.player[data[1]].handleClick()
+    }
+
+    this.numbers.innerHTML = event.data
   }
 
   init() {
@@ -187,6 +194,8 @@ export default class GameManager {
     img.src = item
     img.classList.add('score__item')
     this.dom.scoreItems[player.index].appendChild(img)
+
+    Server.websocket.send(`score,${player.index},${this.scores[player.index]}`)
   }
 
   popUpMessage(message, color = 'gray', end = false) {
@@ -205,13 +214,17 @@ export default class GameManager {
 
   endScene(message = 'end of scene') {
     clearInterval(this.timerInterval)
-    this.popUpMessage(message, 'white', true)
+    this.popUpMessage(message, 'black', true)
     setTimeout(() => {
       this.updateScene(this.currentSceneIndex + 1)
     }, 2000)
   }
 
   updateScene(index) {
+    if (index === this.scenes.length) {
+      console.log('end of party')
+      Server.websocket.send('disconnect_all_users')
+    }
     this.destroyScene(this.currentScene)
 
     this.currentSceneIndex = index

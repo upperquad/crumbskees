@@ -14,6 +14,7 @@ export default class Scene {
     this.gridCols = options.gridCols
     this.gridLines = options.gridLines
     this.index = options.index
+    this.time = 60 // in seconds
 
     this.dom()
     this.set()
@@ -36,15 +37,10 @@ export default class Scene {
     this.destAcceleration = 1
     this.coefAcceleration = 0.2
     this.increaseMax = window.GameManager.vbWidth * 0.07
-
     // items
     this.itemSize = window.GameManager.vbWidth * 0.05
 
     // values for mouse event
-    this.x = 0
-    this.y = 0
-    this.targetX = 0
-    this.targetY = 0
     this.clickPrecision = 0.05
     this.numItemFound = 0
 
@@ -64,8 +60,8 @@ export default class Scene {
     this.events(true)
     this.eventsRAF(true)
 
-    window.GameManager.popUpMessage('START!', 'white')
-    window.GameManager.startTimer(60)
+    window.GameManager.popUpMessage('START!', 'black')
+    window.GameManager.startTimer(this.time)
   }
 
   setClipPathId() {
@@ -156,15 +152,17 @@ export default class Scene {
 
   handleMouseMove = e => {
     const scrollY = window.scrollY || document.documentElement.scrollTop
-    this.eventX = e.touches ? e.touches[0].clientX : e.clientX
-    this.eventX -= this.offsetLeft
-    this.eventY = e.touches ? e.touches[0].clientY : e.clientY
-    this.eventY += scrollY
+    const player = window.GameManager.players[0]
 
-    this.targetX = this.eventX / this.width * window.GameManager.vbWidth // because we're using viewbox units here
-    this.targetX -= window.GameManager.vbWidth / 2 // because starting point is this.centerX
-    this.targetY = this.eventY / this.height * window.GameManager.vbHeight - this.offsetTop
-    this.targetY -= window.GameManager.vbHeight / 2
+    player.eventX = e.touches ? e.touches[0].clientX : e.clientX
+    player.eventX -= this.offsetLeft
+    player.eventY = e.touches ? e.touches[0].clientY : e.clientY
+    player.eventY += scrollY
+
+    player.targetX = player.eventX / this.width * window.GameManager.vbWidth // because we're using viewbox units here
+    player.targetX -= window.GameManager.vbWidth / 2 // because starting point is player.centerX
+    player.targetY = player.eventY / this.height * window.GameManager.vbHeight - this.offsetTop
+    player.targetY -= window.GameManager.vbHeight / 2
 
     // ^These shoudl be linked to a cursor
   }
@@ -176,8 +174,8 @@ export default class Scene {
     // Check if cursor item is found
     const precision = this.clickPrecision
     const player = window.GameManager.players[0]
-    const x = this.eventX / this.width
-    const y = this.eventY / this.height
+    const x = player.eventX / this.width
+    const y = player.eventY / this.height
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
@@ -204,8 +202,10 @@ export default class Scene {
     const { now } = e.detail
     this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
-    this.x = this.x + (this.targetX - this.x) * 0.1
-    this.y = this.y + (this.targetY - this.y) * 0.1
+    const player = window.GameManager.players[0]
+
+    player.x = player.x + (player.targetX - player.x) * 0.1
+    player.y = player.y + (player.targetY - player.y) * 0.1
 
     // For each cursor...
     for (let y = 0; y < window.GameManager.players.length; y++) {
@@ -247,8 +247,8 @@ export default class Scene {
 
         // move cursor based on mouse
         if (y === 0) {
-          point.x += this.x
-          point.y += this.y
+          point.x += player.x
+          point.y += player.y
         }
 
         // For increasing cursor

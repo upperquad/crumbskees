@@ -22,7 +22,11 @@ export default class Player {
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
     this.minDuration = 700
     this.maxDuration = 900
-
+    // cursor position
+    this.x = 0
+    this.y = 0
+    this.targetX = 0
+    this.targetY = 0
     this.isInsideTime = 0
 
     this.setPoints()
