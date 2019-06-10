@@ -8,6 +8,11 @@ export default class PhoneController {
     this.websocket = null
     this.touchpad = document.getElementById('touchpad')
     this.touchBubble = document.getElementById('touch-bubble')
+    this.originCoord = {
+      x: 0,
+      y: 0,
+    }
+    this.score = null
 
     this.token = ''
     this.isConnecting = false
@@ -45,10 +50,12 @@ export default class PhoneController {
     this.$scope.$apply()
 
     this.websocket.onclose = this.onWsClose
+    this.websocket.onmessage = this.onWsMessage
   }
 
   onWsClose = event => {
     this.connected = false
+    console.log(event.reason)
 
     if (event.reason === 'invalid-token') {
       this.invalidToken = true
@@ -60,19 +67,36 @@ export default class PhoneController {
     this.$scope.$apply()
   }
 
+  onWsMessage = event => {
+    console.log(event.data)
+    const message = event.data.split(',')
+
+    switch (message[0]) {
+      case 'score':
+        this.score = message[1]
+        break
+      default:
+        break
+    }
+  }
+
   handleTouchStart = event => {
     event.preventDefault()
     event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
-    this.updatePosition(clientX, clientY)
+    this.originCoord.x = clientX
+    this.originCoord.y = clientY
     this.touchBubble.classList.add('is-touching')
   }
 
   handleTouchMove = event => {
     event.preventDefault()
     event.stopPropagation()
+    const { x: originX, y: originY } = this.originCoord
     const { clientX, clientY } = event.touches[0]
-    this.updatePosition(clientX, clientY)
+    this.originCoord.x = clientX
+    this.originCoord.y = clientY
+    this.updatePosition(clientX, clientY, originX, originY)
   }
 
   handleTouchEnd = event => {
@@ -81,10 +105,10 @@ export default class PhoneController {
     this.touchBubble.classList.remove('is-touching')
   }
 
-  updatePosition = (clientX, clientY) => {
+  updatePosition = (clientX, clientY, originX, originY) => {
     this.touchBubble.style.left = clientX
     this.touchBubble.style.top = clientY
 
-    this.websocket.send(`${clientX / window.innerWidth}, ${clientY / window.innerHeight}`)
+    this.websocket.send(`cursor_move,${(clientX - originX) / window.innerWidth}, ${(clientY - originY) / window.innerHeight}`)
   }
 }
