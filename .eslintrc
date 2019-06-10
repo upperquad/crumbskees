@@ -43,6 +43,9 @@
       ],
       "class-methods-use-this": [
           0
+      ],
+      "prefer-destructuring": [
+          "off"
       ]
   }
 }
