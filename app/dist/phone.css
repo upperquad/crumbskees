@@ -5,6 +5,11 @@ body:not(.is-ready) {
   opacity: 0;
   pointer-events: none; }
 
+.score {
+  left: 0;
+  position: fixed;
+  top: 0; }
+
 .touchpad {
   background: black;
   bottom: 0;
