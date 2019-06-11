@@ -21,7 +21,7 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
     ws.on('message', message => {
       if (!ws.accepted) {
         ws.send('not_accepted_yet')
-        // return
+        return
       }
 
       if (!wssPage.clients.length) {
