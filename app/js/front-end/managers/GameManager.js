@@ -13,7 +13,7 @@ import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'
 
 const id = 'ewpijf'
-const token = 'weijfwepfijwfs'
+const tokens = ['123', '456']
 
 export default class GameManager {
   constructor() {
@@ -26,28 +26,22 @@ export default class GameManager {
     const data = event.data.split(',')
 
     if (data[0] === 'token_submit') {
+      // loop into the tokens, if the token correspond, set up the id
       if (data[1] === id && data[2] === token) {
         // send
-        // Server.websocket.send(`auth_result_id,${id},1`)
+        Server.websocket.send(`auth_result_id,${id},1`)
         this.init()
       } else {
-        // Server.websocket.send(`auth_result_id,${id},0`)
+        Server.websocket.send(`auth_result_id,${id},0`)
         return // can be an error object
-      }
-    } else if (data[0] === 'command') {
-      if (data[1] === 'reset') {
-        // TODO, can even do "Kick Player 1 Out", "Kick Player 2 Out",
-        // "Kick'em Both Out" buttons
-      } else if (data[1] === 'refresh') {
-        window.location.reload(false)
       }
     } else if (data[0] === 'cursor_move') {
       // data[1] needs to be the index of player (or id)
-      // this.currentScene.player[data[1]].eventX = data[1]
-      // this.currentScene.player[data[1]].eventY = data[2]
+      // this.players[data[1]].eventX = data[1]
+      // this.players[data[1]].eventY = data[2]
     } else if (data[0] === 'click') {
       // data[1] needs to be the index of player (or id)
-      // this.currentScene.player[data[1]].handleClick()
+      // this.players[data[1]].handleClick()
     }
 
     this.numbers.innerHTML = event.data
@@ -151,7 +145,7 @@ export default class GameManager {
       'red',
       'blue',
     ]
-
+    // each player is an object with a key/id
     for (let i = 0; i < this.dom.cursors.length; i++) {
       const props = Object.assign(obj, { el: this.dom.cursors[i], index: i, color: colors[i] })
       this.players.push(new Player(props))
