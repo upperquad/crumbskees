@@ -109,6 +109,6 @@ export default class PhoneController {
     this.touchBubble.style.left = clientX
     this.touchBubble.style.top = clientY
 
-    this.websocket.send(`cursor_move,${(clientX - originX) / window.innerWidth}, ${(clientY - originY) / window.innerHeight}`)
+    this.websocket.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
   }
 }

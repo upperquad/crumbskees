@@ -141,7 +141,7 @@ export default class Scene {
 
   events(method) {
     const ev = method ? 'addEventListener' : 'removeEventListener'
-    window[ev]('mousemove', this.handleMouseMove, false)
+    // window[ev]('mousemove', this.handleMouseMove, false)
     window[ev]('click', this.handleClick, false)
   }
 
@@ -174,8 +174,8 @@ export default class Scene {
     // Check if cursor item is found
     const precision = this.clickPrecision
     const player = window.GameManager.players[window.GameManager.playerIds[0]]
-    const x = player.eventX / this.width
-    const y = player.eventY / this.height
+    const x = player.targetX / this.width
+    const y = player.targetY / this.height
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
@@ -202,19 +202,17 @@ export default class Scene {
     const { now } = e.detail
     this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
-    const player = window.GameManager.players[window.GameManager.playerIds[0]]
-
-    player.x += (player.targetX - player.x) * 0.1
-    player.y += (player.targetY - player.y) * 0.1
-
     // For each cursor...
     for (let y = 0; y < window.GameManager.playerIds.length; y++) {
-      const cursor = window.GameManager.players[window.GameManager.playerIds[y]]
+      const player = window.GameManager.players[window.GameManager.playerIds[y]]
 
-      // For each points of the cursor (organic shape)
+      player.x += (player.targetX - player.x) * 0.1
+      player.y += (player.targetY - player.y) * 0.1
+
+      // For each points of the player (organic shape)
       // Create organic shape / Tween all points
-      for (let i = 0; i < cursor.points.length; i++) {
-        const point = cursor.points[i]
+      for (let i = 0; i < player.points.length; i++) {
+        const point = player.points[i]
 
         // From scratch tween:
         // percent is going from 0 to 1 in X seconds where X is the "duration variable".
@@ -245,26 +243,24 @@ export default class Scene {
           }
         }
 
-        // move cursor based on mouse
-        if (y === 0) {
-          point.x += player.x
-          point.y += player.y
-        }
+        // move player based on mouse
+        point.x += player.x
+        point.y += player.y
 
-        // For increasing cursor
-        // // if item found, increase cursor radius
-        // if (y === 0 && cursor.itemFound && !point.isIncrease) {
-        //   const newMaxRadius = cursor.maxRadius + this.increaseMax
-        //   const newMaxMiddleRadius = cursor.maxMiddleRadius + this.increaseMax
-        //   const newMinRadius = cursor.minRadius + this.increaseMax
-        //   const newMinMiddleRadius = cursor.minMiddleRadius + this.increaseMax
-        //   point.targetMaxX = cursor.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-        //   point.targetMinX = cursor.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+        // For increasing player
+        // // if item found, increase player radius
+        // if (y === 0 && player.itemFound && !point.isIncrease) {
+        //   const newMaxRadius = player.maxRadius + this.increaseMax
+        //   const newMaxMiddleRadius = player.maxMiddleRadius + this.increaseMax
+        //   const newMinRadius = player.minRadius + this.increaseMax
+        //   const newMinMiddleRadius = player.minMiddleRadius + this.increaseMax
+        //   point.targetMaxX = player.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+        //   point.targetMinX = player.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
 
         //   point.destX = point.targetMaxX
 
-        //   point.targetMaxY = cursor.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-        //   point.targetMinY = cursor.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+        //   point.targetMaxY = player.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+        //   point.targetMinY = player.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
 
         //   point.destY = point.targetMaxY
         //   point.startAnim = getNow()
@@ -273,7 +269,7 @@ export default class Scene {
         // }
       }
 
-      cursor.el.setAttribute('d', this.cardinal(cursor.points))
+      player.el.setAttribute('d', this.cardinal(player.points))
     }
   }
 

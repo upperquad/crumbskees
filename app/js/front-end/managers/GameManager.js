@@ -1,4 +1,5 @@
 import gameTmp from '../../../templates/front-end/game.html'
+import setupTmp from '../../../templates/front-end/setup.html'
 
 import Scene from '../components/Scene'
 import Player from '../components/Player'
@@ -12,6 +13,7 @@ import scene1Item from '../../../assets/front-end/images/pattern.png'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'\
 
+const host = window.location.origin.replace(/^http/, 'ws')
 const debug = false
 
 const playerIds = debug ? ['refiejrfer', 'erfjerfpie'] : []
@@ -19,36 +21,41 @@ const tokens = ['123', '456']
 
 export default class GameManager {
   constructor() {
+    this.main = document.querySelector('.main')
     // Server.websocket.onopen = this.onWsOpen
-    this.websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/game`)
+    this.websocket = new WebSocket(`${host}/game`)
     this.websocket.onopen = this.onWsOpen
-    // this.init()
-    // Server.websocket.onmessage = this.listenServer
+
+    if (debug === true) {
+      this.init()
+    }
   }
 
   onWsOpen = () => {
+    this.main.innerHTML = setupTmp
+    this.setupMessage = this.main.querySelector('.setup__message')
     this.websocket.onmessage = this.listenServer
   }
 
   listenServer = event => {
     const data = event.data.split(',')
-    console.log(event)
 
     if (data[0] === 'token_submit') {
       // loop into the tokens, if the token correspond, set up the id
       let validToken = false
       for (let i = 0; i < tokens.length; i++) {
-        if (tokens[i] === data[1]) {
+        if (tokens[i] === data[1] && data[2] !== this.firstPlayerId) {
+          // data[2] !== this.firstPlayerId In case second player use the token of the first player
           playerIds.push(data[2])
-          this.websocket.send(`auth_result_id,${data[2]},1`)
+          this.websocket.send(`auth_result,${data[2]},1`)
           validToken = true
-          console.log(`${playerIds.length} player(s) is set`)
+          this.firstPlayerId = data[2]
+          this.setupMessage.innerHTML = `Player ${playerIds.length} is ready`
         }
       }
 
       if (validToken === false) {
-        console.log('wrong token')
-        this.websocket.send(`auth_result_id,${data[2]},0`)
+        this.websocket.send(`auth_result,${data[2]},0`)
       }
 
       if (playerIds.length === 2) {
@@ -56,19 +63,21 @@ export default class GameManager {
         this.init()
       }
     } else if (data[0] === 'cursor_move') {
-      console.log(data[1])
-      // data[1] needs to be the index of player (or id)
-      // this.players[data[1]].eventX = data[1]
-      // this.players[data[1]].eventY = data[2]
+      const x = parseFloat(data[2], 10) * this.vbWidth
+      const y = parseFloat(data[3], 10) * this.vbWidth 
+      // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
+      this.players[data[1]].targetX = x + this.players[data[1]].targetX
+      this.players[data[1]].targetY = y + this.players[data[1]].targetY
+
+      // this.players[data[1]].targetX
     } else if (data[0] === 'click') {
       // data[1] needs to be the index of player (or id)
-      // this.players[data[1]].handleClick()
+      console.log(data)
+      this.players[data[1]].handleClick()
     }
   }
 
   init() {
-    this.main = document.querySelector('.main')
-
     this.main.innerHTML = gameTmp
 
     this.element = document.querySelector('[game]')

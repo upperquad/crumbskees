@@ -26,13 +26,13 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     const id = messageList[1]
     const result = messageList[2]
     const wsPhone = wssPhone.clients.find(elem => {
-      elem.id === id
+      return elem.id === id
     })
     if (!wsPhone) {
       return
     }
     if (result) {
-      wsPhone.accpected = true
+      wsPhone.accepted = true
     } else {
       wsPhone.close(1000, 'invalid_token')
     }
