@@ -152,7 +152,7 @@ export default class Scene {
 
   handleMouseMove = e => {
     const scrollY = window.scrollY || document.documentElement.scrollTop
-    const player = window.GameManager.players[0]
+    const player = window.GameManager.players[window.GameManager.playerIds[0]]
 
     player.eventX = e.touches ? e.touches[0].clientX : e.clientX
     player.eventX -= this.offsetLeft
@@ -173,7 +173,7 @@ export default class Scene {
     // if cursor position
     // Check if cursor item is found
     const precision = this.clickPrecision
-    const player = window.GameManager.players[0]
+    const player = window.GameManager.players[window.GameManager.playerIds[0]]
     const x = player.eventX / this.width
     const y = player.eventY / this.height
 
@@ -202,14 +202,14 @@ export default class Scene {
     const { now } = e.detail
     this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
-    const player = window.GameManager.players[0]
+    const player = window.GameManager.players[window.GameManager.playerIds[0]]
 
-    player.x = player.x + (player.targetX - player.x) * 0.1
-    player.y = player.y + (player.targetY - player.y) * 0.1
+    player.x += (player.targetX - player.x) * 0.1
+    player.y += (player.targetY - player.y) * 0.1
 
     // For each cursor...
-    for (let y = 0; y < window.GameManager.players.length; y++) {
-      const cursor = window.GameManager.players[y]
+    for (let y = 0; y < window.GameManager.playerIds.length; y++) {
+      const cursor = window.GameManager.players[window.GameManager.playerIds[y]]
 
       // For each points of the cursor (organic shape)
       // Create organic shape / Tween all points

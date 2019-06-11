@@ -10,32 +10,53 @@ import Server from '../constants/Server'
 import scene1Bkg from '../../../assets/front-end/images/bkg1.jpg'
 import scene1Item from '../../../assets/front-end/images/pattern.png'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
-// import scene2Item from '../../../assets/front-end/images/pattern.png'
+// import scene2Item from '../../../assets/front-end/images/pattern.png'\
 
-const id = 'ewpijf'
+const debug = false
+
+const playerIds = debug ? ['refiejrfer', 'erfjerfpie'] : []
 const tokens = ['123', '456']
 
 export default class GameManager {
   constructor() {
-    Server.websocket.onmessage = this.listenServer
+    // Server.websocket.onopen = this.onWsOpen
+    this.websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/game`)
+    this.websocket.onopen = this.onWsOpen
+    // this.init()
+    // Server.websocket.onmessage = this.listenServer
+  }
 
-    this.init()
+  onWsOpen = () => {
+    this.websocket.onmessage = this.listenServer
   }
 
   listenServer = event => {
     const data = event.data.split(',')
+    console.log(event)
 
     if (data[0] === 'token_submit') {
       // loop into the tokens, if the token correspond, set up the id
-      if (data[1] === id && data[2] === token) {
-        // send
-        Server.websocket.send(`auth_result_id,${id},1`)
+      let validToken = false
+      for (let i = 0; i < tokens.length; i++) {
+        if (tokens[i] === data[1]) {
+          playerIds.push(data[2])
+          this.websocket.send(`auth_result_id,${data[2]},1`)
+          validToken = true
+          console.log(`${playerIds.length} player(s) is set`)
+        }
+      }
+
+      if (validToken === false) {
+        console.log('wrong token')
+        this.websocket.send(`auth_result_id,${data[2]},0`)
+      }
+
+      if (playerIds.length === 2) {
+        // if both players are set, let's start
         this.init()
-      } else {
-        Server.websocket.send(`auth_result_id,${id},0`)
-        return // can be an error object
       }
     } else if (data[0] === 'cursor_move') {
+      console.log(data[1])
       // data[1] needs to be the index of player (or id)
       // this.players[data[1]].eventX = data[1]
       // this.players[data[1]].eventY = data[2]
@@ -43,8 +64,6 @@ export default class GameManager {
       // data[1] needs to be the index of player (or id)
       // this.players[data[1]].handleClick()
     }
-
-    this.numbers.innerHTML = event.data
   }
 
   init() {
@@ -132,23 +151,21 @@ export default class GameManager {
   }
 
   setPlayers() {
-    this.numPoints = 8
+    this.playerIds = playerIds
     this.vbWidth = this.dom.imagePlaceholder.offsetWidth
     this.vbHeight = this.dom.imagePlaceholder.offsetHeight
     // assuming we always use a viewbox of 100 x 100
-
-    const obj = {
-      numPoints: this.numPoints,
-    }
 
     const colors = [
       'red',
       'blue',
     ]
+
     // each player is an object with a key/id
-    for (let i = 0; i < this.dom.cursors.length; i++) {
-      const props = Object.assign(obj, { el: this.dom.cursors[i], index: i, color: colors[i] })
-      this.players.push(new Player(props))
+    this.players = {}
+    if (playerIds.length === 2) {
+      this.players[playerIds[0]] = new Player({ el: this.dom.cursors[0], index: 0, color: colors[0] })
+      this.players[playerIds[1]] = new Player({ el: this.dom.cursors[1], index: 1, color: colors[1] })
     }
   }
 

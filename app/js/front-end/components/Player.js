@@ -7,13 +7,12 @@ export default class Player {
       el,
       index,
       color,
-      numPoints,
     } = props
 
     this.el = el
     this.index = index
     this.color = color
-    this.numPoints = numPoints
+    this.numPoints = 8
     this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
     this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2
     this.minRadius = window.GameManager.vbWidth * 0.05 // 70% of full size / 2 --> should be based on width viewbox
