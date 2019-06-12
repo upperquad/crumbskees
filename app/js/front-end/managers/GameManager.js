@@ -72,13 +72,11 @@ export default class GameManager {
       // this.players[data[1]].targetX
     } else if (data[0] === 'click') {
       // data[1] needs to be the index of player (or id)
-      console.log(data)
       this.currentScene.handleClick(data[1])
     }
   }
 
   init() {
-    console.log(`score,${playerIds[0]},0`)
     this.websocket.send(`score,${playerIds[0]},0`)
     this.main.innerHTML = gameTmp
 
