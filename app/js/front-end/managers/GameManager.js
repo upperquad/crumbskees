@@ -5,7 +5,7 @@ import Scene from '../components/Scene'
 import Player from '../components/Player'
 
 // server
-import Server from '../constants/Server'
+// import Server from '../constants/Server'
 
 // assets
 import scene1Bkg from '../../../assets/front-end/images/bkg1.jpg'
@@ -173,8 +173,18 @@ export default class GameManager {
     // each player is an object with a key/id
     this.players = {}
     if (playerIds.length === 2) {
-      this.players[playerIds[0]] = new Player({ el: this.dom.cursors[0], index: 0, color: colors[0], id: playerIds[0] })
-      this.players[playerIds[1]] = new Player({ el: this.dom.cursors[1], index: 1, color: colors[1], id: playerIds[1] })
+      this.players[playerIds[0]] = new Player({
+        el: this.dom.cursors[0],
+        index: 0,
+        color: colors[0],
+        id: playerIds[0],
+      })
+      this.players[playerIds[1]] = new Player({
+        el: this.dom.cursors[1],
+        index: 1,
+        color: colors[1],
+        id: playerIds[1],
+      })
     }
   }
 
