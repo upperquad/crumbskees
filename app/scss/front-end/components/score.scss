@@ -1,0 +1,32 @@
+.score {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px;
+  position: relative;
+
+  &__items {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    border-radius: 50%;
+    border-width: 2px;
+    margin: 20px 5px 0px 0px;
+    width: 50px;
+  }
+
+  &__recap {
+    max-width: 44%;
+    text-align: left;
+  }
+
+  &__center {
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transform: translateX(-50%);
+  }
+}

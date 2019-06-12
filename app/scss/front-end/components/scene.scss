@@ -1,0 +1,20 @@
+.scene {
+  background-position: center center;
+  background-size: cover;
+  cursor: none;
+  position: relative;
+  text-align: center;
+
+  &__wrapper {
+    position: relative;
+  }
+
+  &__placeholder {
+    height: 0;
+    opacity: 0;
+    padding-bottom: calc(630 / 1200  * 100%);
+    pointer-events: none;
+    position: relative;
+    width: 100%;
+  }
+}

@@ -1,4 +1,2 @@
-/*.js
-app/js/polyfills.js
-app/js/vendor/
-app/js/utils/
+app/*.js
+app/js/front-end/utils/*.js
