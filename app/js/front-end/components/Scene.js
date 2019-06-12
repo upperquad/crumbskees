@@ -193,7 +193,8 @@ export default class Scene {
       }
     }
 
-    if (this.numItemFound === this.items.length) {
+    if (this.numItemFound === this.items.length && !this.isEnded) {
+      this.isEnded = true
       window.GameManager.endScene()
     }
   }
