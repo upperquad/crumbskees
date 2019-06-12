@@ -6,8 +6,11 @@ body:not(.is-ready) {
   pointer-events: none; }
 
 .score {
+  color: white;
+  font-size: 20px;
   left: 0;
   position: fixed;
+  pointer-events: none;
   top: 0; }
 
 .touchpad {
