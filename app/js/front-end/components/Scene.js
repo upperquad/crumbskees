@@ -167,18 +167,20 @@ export default class Scene {
     // ^These shoudl be linked to a cursor
   }
 
-  handleClick = () => {
+  handleClick = playerId => {
     // console.log(e)
     // e will be current cursor with positions
     // if cursor position
     // Check if cursor item is found
     const precision = this.clickPrecision
-    const player = window.GameManager.players[window.GameManager.playerIds[0]]
+    const player = window.GameManager.players[playerId]
     const x = player.targetX / this.width
+    console.log(player, player.targetX, x)
     const y = player.targetY / this.height
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
+      console.log(item.x)
       if (!item.found &&
         x > item.x - precision &&
         x < item.x + precision &&

@@ -23,6 +23,7 @@ export default class PhoneController {
     this.touchpad.addEventListener('touchstart', this.handleTouchStart, { passive: false })
     this.touchpad.addEventListener('touchmove', this.throttledTouchMove, { passive: false })
     this.touchpad.addEventListener('touchend', this.handleTouchEnd, { passive: false })
+    this.touchpad.addEventListener('click', this.handleClick)
     this.ready = true
   }
 
@@ -68,7 +69,6 @@ export default class PhoneController {
   }
 
   onWsMessage = event => {
-    console.log(event.data)
     const message = event.data.split(',')
 
     switch (message[0]) {
@@ -81,7 +81,6 @@ export default class PhoneController {
   }
 
   handleTouchStart = event => {
-    event.preventDefault()
     event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
     this.originCoord.x = clientX
@@ -100,9 +99,12 @@ export default class PhoneController {
   }
 
   handleTouchEnd = event => {
-    event.preventDefault()
     event.stopPropagation()
     this.touchBubble.classList.remove('is-touching')
+  }
+
+  handleClick = () => {
+    this.websocket.send('click')
   }
 
   updatePosition = (clientX, clientY, originX, originY) => {
