@@ -2,7 +2,7 @@ import uuidv1 from 'uuid/v1'
 import { getNow } from '../utils/time'
 import { getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
-import { randomInt } from '../utils/math'
+import { clamp, randomInt } from '../utils/math'
 
 export default class Scene {
   constructor(options) {
@@ -174,13 +174,11 @@ export default class Scene {
     // Check if cursor item is found
     const precision = this.clickPrecision
     const player = window.GameManager.players[playerId]
-    const x = player.targetX / this.width
-    console.log(player, player.targetX, x)
-    const y = player.targetY / this.height
+    const x = (player.targetX / window.GameManager.vbWidth) + 0.5
+    const y = (player.targetY / window.GameManager.vbHeight) + 0.5
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
-      console.log(item.x)
       if (!item.found &&
         x > item.x - precision &&
         x < item.x + precision &&
@@ -208,8 +206,13 @@ export default class Scene {
     for (let y = 0; y < window.GameManager.playerIds.length; y++) {
       const player = window.GameManager.players[window.GameManager.playerIds[y]]
 
+      // clamp player position to limit of the scene
+      player.targetX = clamp(player.targetX, -window.GameManager.vbWidth / 2, window.GameManager.vbWidth / 2)
+      player.targetY = clamp(player.targetY, -window.GameManager.vbHeight / 2, window.GameManager.vbHeight / 2)
+
       player.x += (player.targetX - player.x) * 0.1
       player.y += (player.targetY - player.y) * 0.1
+
 
       // For each points of the player (organic shape)
       // Create organic shape / Tween all points
