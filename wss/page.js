@@ -45,7 +45,7 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     const id = messageList[1]
     const score = messageList[2]
     const wsPhone = wssPhone.clients.find(elem => {
-      elem.id === id
+      return elem.id === id
     })
     if (!wsPhone) {
       return

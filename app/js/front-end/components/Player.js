@@ -5,11 +5,13 @@ export default class Player {
   constructor(props) {
     const {
       el,
+      id,
       index,
       color,
     } = props
 
     this.el = el
+    this.id = id
     this.index = index
     this.color = color
     this.numPoints = 8

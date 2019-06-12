@@ -64,7 +64,7 @@ export default class GameManager {
       }
     } else if (data[0] === 'cursor_move') {
       const x = parseFloat(data[2], 10) * this.vbWidth
-      const y = parseFloat(data[3], 10) * this.vbWidth 
+      const y = parseFloat(data[3], 10) * this.vbWidth
       // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
       this.players[data[1]].targetX = x + this.players[data[1]].targetX
       this.players[data[1]].targetY = y + this.players[data[1]].targetY
@@ -73,11 +73,13 @@ export default class GameManager {
     } else if (data[0] === 'click') {
       // data[1] needs to be the index of player (or id)
       console.log(data)
-      this.players[data[1]].handleClick()
+      this.currentScene.handleClick(data[1])
     }
   }
 
   init() {
+    console.log(`score,${playerIds[0]},0`)
+    this.websocket.send(`score,${playerIds[0]},0`)
     this.main.innerHTML = gameTmp
 
     this.element = document.querySelector('[game]')
@@ -173,8 +175,8 @@ export default class GameManager {
     // each player is an object with a key/id
     this.players = {}
     if (playerIds.length === 2) {
-      this.players[playerIds[0]] = new Player({ el: this.dom.cursors[0], index: 0, color: colors[0] })
-      this.players[playerIds[1]] = new Player({ el: this.dom.cursors[1], index: 1, color: colors[1] })
+      this.players[playerIds[0]] = new Player({ el: this.dom.cursors[0], index: 0, color: colors[0], id: playerIds[0] })
+      this.players[playerIds[1]] = new Player({ el: this.dom.cursors[1], index: 1, color: colors[1], id: playerIds[1] })
     }
   }
 
@@ -215,7 +217,7 @@ export default class GameManager {
     img.classList.add('score__item')
     this.dom.scoreItems[player.index].appendChild(img)
 
-    Server.websocket.send(`score,${player.index},${this.scores[player.index]}`)
+    this.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
 
   popUpMessage(message, color = 'gray', end = false) {
@@ -243,7 +245,7 @@ export default class GameManager {
   updateScene(index) {
     if (index === this.scenes.length) {
       console.log('end of party')
-      Server.websocket.send('disconnect_all_users')
+      this.websocket.send('disconnect_all_users')
     }
     this.destroyScene(this.currentScene)
 
