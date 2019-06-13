@@ -210,6 +210,8 @@ export default class Scene {
 
     setTimeout(() => {
       player.el.classList.remove('good', 'wrong')
+      // add a rect svg element in the clippath following the
+      // cursor, opacity:0 by default, display it to fill the cursor.
       // this.dom.svgClipPathRef.style.opacity = 1
     }, 1000)
 
