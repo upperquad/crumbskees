@@ -5,10 +5,6 @@
   top: 0;
   width: 100%;
 
-  path {
-    stroke-width: 4;
-  }
-
   #player1 {
     stroke: $color-red;
   }
@@ -16,4 +12,19 @@
   #player2 {
     stroke: $color-blue;
   }
+
+  .cursor {
+    stroke-width: 4;
+    &.good {
+      fill: green !important;
+    }
+
+    &.wrong {
+      fill: red !important;
+    }
+  }
+}
+
+.scene-svg__clippath-ref {
+  // opacity: 0;
 }

@@ -181,6 +181,8 @@ export default class Scene {
     const x = (player.targetX / window.GameManager.vbWidth) + 0.5
     const y = (player.targetY / window.GameManager.vbHeight) + 0.5
 
+    let goodClick = false
+
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (!item.found &&
@@ -194,8 +196,22 @@ export default class Scene {
         item.debugEl.style.opacity = 0
 
         this.numItemFound = this.numItemFound + 1
+        goodClick = true
       }
     }
+
+    if (goodClick) {
+      player.el.classList.add('good')
+    } else {
+      player.el.classList.add('wrong')
+    }
+
+    // this.dom.svgClipPathRef.style.opacity = 0
+
+    setTimeout(() => {
+      player.el.classList.remove('good', 'wrong')
+      // this.dom.svgClipPathRef.style.opacity = 1
+    }, 1000)
 
     if (this.numItemFound === this.items.length) {
       window.GameManager.endScene()

@@ -95,12 +95,20 @@ export default class GameManager {
         maskedBkg: scene1Bkg,
         item: scene1Item,
         numItems: 5,
-        gridCols: 4,
-        gridLines: 4,
+        gridCols: 6,
+        gridLines: 6,
         effect: '?',
       }, {
         bkg: scene2Bkg,
         maskedBkg: scene2Bkg,
+        item: scene1Item,
+        numItems: 5,
+        gridCols: 8,
+        gridLines: 8,
+        effect: '?',
+      }, {
+        bkg: scene1Bkg,
+        maskedBkg: scene1Bkg,
         item: scene1Item,
         numItems: 5,
         gridCols: 10,
@@ -111,16 +119,8 @@ export default class GameManager {
         maskedBkg: scene1Bkg,
         item: scene1Item,
         numItems: 5,
-        gridCols: 4,
-        gridLines: 4,
-        effect: '?',
-      }, {
-        bkg: scene1Bkg,
-        maskedBkg: scene1Bkg,
-        item: scene1Item,
-        numItems: 5,
-        gridCols: 4,
-        gridLines: 4,
+        gridCols: 12,
+        gridLines: 12,
         effect: '?',
       },
     ]
@@ -259,10 +259,18 @@ export default class GameManager {
   updateScene(index) {
     this.destroyScene(this.currentScene)
 
-    if (index === this.scenes.length) {
+    if (index === this.scenes.length + 1) {
       console.log('end of party')
       Server.websocket.send('disconnect_all_users')
       return
+    }
+
+    // reset players pos to 0
+    for (let i = 0; i < playerIds.length; i++) {
+      this.players[playerIds[i]].targetX = 0
+      this.players[playerIds[i]].targetY = 0
+      this.players[playerIds[i]].x = 0
+      this.players[playerIds[i]].y = 0
     }
 
     this.currentSceneIndex = index
