@@ -4,6 +4,10 @@ import { getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
 
+import DEBUG from '../constants/Debug'
+
+const playerIds = DEBUG ? ['refiejrfer', 'erfjerfpie'] : []
+
 export default class Scene {
   constructor(options) {
     this.element = options.el
@@ -108,11 +112,14 @@ export default class Scene {
       this.dom.svgClipPathRef.appendChild(svgImage)
 
       // fake item for debugging
-      const div = document.createElement('div')
-      div.classList.add('debug')
-      div.style.left = `${x * 100}%`
-      div.style.top = `${y * 100}%`
-      this.element.appendChild(div)
+      let div
+      if (DEBUG) {
+        div = document.createElement('div')
+        div.classList.add('debug')
+        div.style.left = `${x * 100}%`
+        div.style.top = `${y * 100}%`
+        this.element.appendChild(div)
+      }
 
       const obj = {
         el: svgImage,
@@ -141,7 +148,7 @@ export default class Scene {
 
   events(method) {
     const ev = method ? 'addEventListener' : 'removeEventListener'
-    // window[ev]('mousemove', this.handleMouseMove, false)
+    if (DEBUG) window[ev]('mousemove', this.handleMouseMove, false)
     window[ev]('click', this.handleClick, false)
   }
 
@@ -168,10 +175,7 @@ export default class Scene {
   }
 
   handleClick = playerId => {
-    // console.log(e)
-    // e will be current cursor with positions
-    // if cursor position
-    // Check if cursor item is found
+    if (DEBUG) playerId = playerIds[0]
     const precision = this.clickPrecision
     const player = window.GameManager.players[playerId]
     const x = (player.targetX / window.GameManager.vbWidth) + 0.5

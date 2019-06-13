@@ -1,3 +1,4 @@
+
 import gameTmp from '../../../templates/front-end/game.html'
 import setupTmp from '../../../templates/front-end/setup.html'
 
@@ -6,6 +7,7 @@ import Player from '../components/Player'
 
 // server
 import Server from '../constants/Server'
+import DEBUG from '../constants/Debug'
 
 // assets
 import scene1Bkg from '../../../assets/front-end/images/bkg1.jpg'
@@ -13,17 +15,22 @@ import scene1Item from '../../../assets/front-end/images/pattern.png'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'\
 
-const debug = false
-
-const playerIds = debug ? ['refiejrfer', 'erfjerfpie'] : []
+const playerIds = DEBUG ? ['refiejrfer', 'erfjerfpie'] : []
 const tokens = ['123', '456']
+
+
+// prepare the CharacterId
+// CharacterId --> get the image of the character
+// end scene:
+//
 
 export default class GameManager {
   constructor() {
     this.main = document.querySelector('.main')
-    Server.websocket.onopen = this.onWsOpen
 
-    if (debug === true) {
+    if (!DEBUG) {
+      Server.websocket.onopen = this.onWsOpen
+    } else {
       this.init()
     }
   }
@@ -76,7 +83,7 @@ export default class GameManager {
   }
 
   init() {
-    Server.websocket.send(`score,${playerIds[0]},0`)
+    if (!DEBUG) Server.websocket.send(`score,${playerIds[0]},0`)
     this.main.innerHTML = gameTmp
 
     this.element = document.querySelector('[game]')
@@ -241,7 +248,7 @@ export default class GameManager {
     }, 2000)
   }
 
-  endScene(message = 'end of scene') {
+  endScene(message = 'stage complete') {
     clearInterval(this.timerInterval)
     this.popUpMessage(message, 'black', true)
     setTimeout(() => {
