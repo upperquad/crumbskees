@@ -215,7 +215,8 @@ export default class Scene {
       // this.dom.svgClipPathRef.style.opacity = 1
     }, 1000)
 
-    if (this.numItemFound === this.items.length) {
+    if (this.numItemFound === this.items.length && !this.isEnded) {
+      this.isEnded = true
       window.GameManager.endScene()
     }
   }
