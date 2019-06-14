@@ -2,26 +2,12 @@ html {
   @extend %Regular;
   box-sizing: border-box;
   font-size: 62.5%;
-
-  @include tablet {
-    font-size: 55%; // change global size of elements
-  }
-
-  @include mobile {
-    font-size: 56.5%; // change global size of elements
-    overflow: auto;
-  }
 }
 
 body {
   // basic font size : 16px
   font-size: 1.6rem;
   width: 100%;
-
-  @include mobile {
-    height: auto;
-    overflow: hidden;
-  }
 }
 
 *,

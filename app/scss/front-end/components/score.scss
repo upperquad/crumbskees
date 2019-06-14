@@ -1,7 +1,7 @@
 .score {
   display: flex;
   justify-content: space-between;
-  padding: 20px 30px;
+  padding: grid-unit(2) 30px;
   position: relative;
 
   &__items {

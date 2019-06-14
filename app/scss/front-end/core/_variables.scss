@@ -1,12 +1,8 @@
-/* ------------------------------------------------------------------ */
-/*        BREAKPOINTS
-/* ------------------------------------------------------------------ */
+// Grid system
+// 32 x 18
+// 1920 / 32
 
-$breakpoint-small-mobile : 414px;
-$breakpoint-mobile  : 768px;
-$breakpoint-tablet  : 1024px;
-$breakpoint-desktop : 1920px;
-$breakpoint-height : 760px;
+$grid-unit: 3.125vw;
 
 /* ------------------------------------------------------------------ */
 /*        COLORS
@@ -16,8 +12,8 @@ $breakpoint-height : 760px;
 $color-black  : #29314D;
 $color-white  : #e7e7e7;
 $color-gray : #aeaeae;
-$color-blue: #1EC5FF;
-$color-red: #FF5800;
+$color-blue : #1EC5FF;
+$color-red : #FF5800;
 
 
 /* ------------------------------------------------------------------ */

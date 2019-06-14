@@ -4,21 +4,17 @@
 
 // Exemple
 @font-face {
-  font-family: 'Calibre Bold';
+  font-family: 'Fakt Medium';
   font-style: normal;
   font-weight: normal;
-  src: url('../../assets/front-end/fonts/CalibreWeb-Bold.eot'); /* IE9 Compat Modes */
-  src: url('../../assets/front-end/fonts/CalibreWeb-Bold.eot?#iefix') format('embedded-opentype'),
-  url('../../assets/front-end/fonts/CalibreWeb-Bold.woff') format('woff');
+  src: url('../../assets/front-end/fonts/Fakt-Medium.otf') format("opentype");
 }
 
 @font-face {
-  font-family: 'Calibre';
+  font-family: 'Ginto Nord Black';
   font-style: normal;
   font-weight: normal;
-  src: url('../../assets/front-end/fonts/CalibreWeb-Regular.eot'); /* IE9 Compat Modes */
-  src: url('../../assets/front-end/fonts/CalibreWeb-Regular.eot?#iefix') format('embedded-opentype'),
-  url('../../assets/front-end/fonts/CalibreWeb-Regular.woff') format('woff');
+  src: url('../../assets/front-end/fonts/ginto-nord-black.otf') format("opentype");
 }
 
 
@@ -28,20 +24,20 @@
 
 
 %Regular {
-  @extend %smooth; // Optionnal
-
-  font-family: 'Calibre', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Fakt Medium', serif;
 }
 
 %Light {
-  @extend %smooth; // Optionnal
   font-family: 'Roboto Slab', serif;
   font-weight: 300;
 }
 
 %Bold {
-  @extend %smooth; // Optionnal
-  font-family: 'Calibre Bold';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Ginto Nord Black';
 }
 
 /* ------------------------------------------------------------------ */

@@ -1,9 +1,5 @@
 [class*="text"] {
   line-height: 1.6em;
-
-  @include mobile {
-    line-height: 1.4em;
-  }
 }
 
 [class*="-16"] {
