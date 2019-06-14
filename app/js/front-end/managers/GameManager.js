@@ -10,8 +10,9 @@ import Server from '../constants/Server'
 import DEBUG from '../constants/Debug'
 
 // assets
-import scene1Bkg from '../../../assets/front-end/images/bkg1.jpg'
-import scene1Item from '../../../assets/front-end/images/pattern.png'
+import scene1Bkg from '../../../assets/front-end/images/round_1/r1-pattern.jpg'
+import scene1Mask from '../../../assets/front-end/images/round_1/r1-mask.jpg'
+import scene1Item from '../../../assets/front-end/images/round_1/r1-target.jpg'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'\
 
@@ -92,7 +93,7 @@ export default class GameManager {
     this.scenes = [
       {
         bkg: scene1Bkg,
-        maskedBkg: scene1Bkg,
+        maskedBkg: scene1Mask,
         item: scene1Item,
         numItems: 5,
         gridCols: 6,
@@ -138,12 +139,12 @@ export default class GameManager {
     img.onload = () => {
       // image loaded
       this.dom()
+      // Set the viewbox to the ratio of the scene
+      this.vbWidth = 1920
+      this.vbHeight = 840
       this.setPlayers()
 
       const scene = this.scenes[this.currentSceneIndex]
-
-      // add image placholder
-      this.dom.imagePlaceholder.src = scene.bkg
 
       this.currentScene = new Scene({
         el: this.dom.scene,
@@ -156,7 +157,6 @@ export default class GameManager {
   dom() {
     this.dom = {
       scene: this.element.querySelector('.scene'),
-      imagePlaceholder: this.element.querySelector('.scene__placeholder'),
       cursors: this.element.querySelectorAll('.cursor'),
       message: this.element.querySelector('.scene__message'),
       scoreCenterRecap: this.element.querySelectorAll('.score__center__recap'),
@@ -167,9 +167,6 @@ export default class GameManager {
 
   setPlayers() {
     this.playerIds = playerIds
-    this.vbWidth = this.dom.imagePlaceholder.offsetWidth
-    this.vbHeight = this.dom.imagePlaceholder.offsetHeight
-    // assuming we always use a viewbox of 100 x 100
 
     const colors = [
       'red',

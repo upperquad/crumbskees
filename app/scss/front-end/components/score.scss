@@ -1,8 +1,9 @@
 .score {
   display: flex;
   justify-content: space-between;
-  padding: grid-unit(2) 30px;
+  padding: grid(2) 30px;
   position: relative;
+  height: grid(4);
 
   &__items {
     align-items: center;

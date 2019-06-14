@@ -2,11 +2,13 @@
   background-position: center center;
   background-size: cover;
   cursor: none;
+  height: grid(14);
   position: relative;
   text-align: center;
 
   &__wrapper {
     position: relative;
+    height: 100%;
   }
 
   &__placeholder {
