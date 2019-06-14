@@ -1,9 +1,43 @@
+@keyframes switch {
+  0% {
+    background-color: $color-green;
+    width: 100%;
+  }
+  25% {
+    background-color: $color-blue;
+    width: 75%;
+  }
+  50% {
+    background-color: $color-pink;
+    width: 50%;
+  }
+  75% {
+    background-color: $color-orange;
+    width: 25%;
+  }
+  100% {
+    background-color: $color-red;
+    width: 0%;
+  }
+}
+
 .score {
   display: flex;
   justify-content: space-between;
   padding: grid(2) 30px;
   position: relative;
   height: grid(4);
+
+  &::after {
+    content: '';
+    animation: switch 30s linear infinite;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: -10px;
+    width: 100%;
+    z-index: 10;
+  }
 
   &__items {
     align-items: center;
@@ -29,5 +63,9 @@
     text-align: center;
     top: 0;
     transform: translateX(-50%);
+  }
+
+  &__line {
+
   }
 }

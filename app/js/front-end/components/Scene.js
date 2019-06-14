@@ -18,7 +18,7 @@ export default class Scene {
     this.gridCols = options.gridCols
     this.gridLines = options.gridLines
     this.index = options.index
-    this.time = 60 // in seconds
+    this.time = 30 // in seconds
 
     this.dom()
     this.set()
