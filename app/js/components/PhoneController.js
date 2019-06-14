@@ -74,6 +74,7 @@ export default class PhoneController {
     switch (message[0]) {
       case 'score':
         this.score = message[1]
+        this.$scope.$apply()
         break
       default:
         break
