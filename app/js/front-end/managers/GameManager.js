@@ -169,8 +169,8 @@ export default class GameManager {
     this.playerIds = playerIds
 
     const colors = [
+      'purple',
       'red',
-      'blue',
     ]
 
     // each player is an object with a key/id

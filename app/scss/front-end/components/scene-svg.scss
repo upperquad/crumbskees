@@ -6,15 +6,15 @@
   width: 100%;
 
   #player1 {
-    stroke: $color-red;
+    stroke: $color-purple;
   }
 
   #player2 {
-    stroke: $color-blue;
+    stroke: $color-red;
   }
 
   .cursor {
-    stroke-width: 4;
+    stroke-width: grid(0.1);
     &.good {
       fill: green !important;
     }
