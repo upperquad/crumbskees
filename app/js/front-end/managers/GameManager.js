@@ -209,6 +209,8 @@ export default class GameManager {
 
       timer -= 1
     }, 1000)
+
+    this.element.classList.add('sceneStarted')
   }
 
   score(player, item) {

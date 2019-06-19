@@ -28,8 +28,21 @@
   height: grid(4);
   position: relative;
 
+  .sceneStarted & {
+    &::after {
+      animation: change-color 30s linear infinite;
+      content: '';
+      height: grid(0.3);
+      left: 0;
+      position: absolute;
+      top: grid(-0.3);
+      width: 100%;
+      z-index: 10;
+    }
+  }
+
   &::after {
-    animation: change-color 30s linear infinite;
+    background-color: $color-green;
     content: '';
     height: grid(0.3);
     left: 0;

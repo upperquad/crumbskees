@@ -1,0 +1,45 @@
+.intro {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  @keyframes blink-color {
+    0% {
+      color: transparent;
+    }
+    50% {
+      color: $color-red;
+    }
+    100% {
+      color: transparent;
+    }
+  }
+
+  &__round {
+    align-items: flex-end;
+    display: flex;
+    height: grid(6);
+    margin-top: grid(-2.4);
+    overflow: hidden;
+    position: relative;
+
+    &.blink {
+      animation: blink-color 0.1s linear 6 forwards;
+      -webkit-text-stroke-width: grid(0.06);
+      -webkit-text-stroke-color: $color-black;
+    }
+
+    span {
+      display: inline-block;
+      line-height: 1;
+      min-width: grid(0.8);
+      vertical-align: bottom;
+    }
+  }
+}

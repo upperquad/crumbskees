@@ -4,6 +4,8 @@ import { getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
 
+import { TimelineMax } from 'gsap/TweenMax'
+
 import DEBUG from '../constants/Debug'
 
 const playerIds = DEBUG ? ['refiejrfer', 'erfjerfpie'] : []
@@ -26,6 +28,7 @@ export default class Scene {
 
   dom() {
     this.dom = {
+      introRound: this.element.querySelector('.intro__round'),
       svgScene: this.element.querySelector('.scene-svg'),
       svgMaskedImage: this.element.querySelector('.scene-svg__image'),
       svgClipPath: this.element.querySelector('.scene-svg__clippath'),
@@ -60,12 +63,59 @@ export default class Scene {
     this.setGrid()
     this.setItems()
 
-    // start events
-    this.events(true)
-    this.eventsRAF(true)
+    this.intro()
+  }
 
-    window.GameManager.popUpMessage('START!', 'black')
-    window.GameManager.startTimer(this.time)
+  splitText(el) {
+    const spans = []
+    const length = el.textContent.length
+
+    for (let i = 0; i < length; i++) {
+      const span = document.createElement('span')
+      span.innerHTML = el.textContent[i]
+      spans.push(span)
+    }
+
+    el.innerHTML = ''
+
+    for (let i = 0; i < length; i++) {
+      el.appendChild(spans[i])
+    }
+
+    return spans
+  }
+
+  intro() {
+    window.GameManager.element.classList.add('isIntro')
+    window.GameManager.dom.timer.innerHTML = this.time
+
+    const tlScaleDown = new TimelineMax({ paused: true })
+    this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
+
+    const text = this.splitText(this.dom.introRound)
+    text.forEach((el, index) => {
+      const tl = new TimelineMax({ delay: index * 0.06 })
+      tl.fromTo(el, 0.8, { y: '100%' }, { y: '-70%', ease: window.Expo.easeOut })
+      tl.to(el, 0.6, { y: '0%', ease: window.Bounce.easeOut }, '-=0.3')
+      tl.add(() => {
+        tl.kill()
+        if (index === text.length - 1) {
+          tlScaleDown.play()
+        }
+      })
+    })
+
+    tlScaleDown.add(() => {
+      this.dom.introRound.classList.add('blink')
+    })
+    tlScaleDown.to(this.dom.introRound, 1.4, { scale: 0.27, y: '118%', ease: window.Power4.easeOut }, 0.9)
+
+    // start events
+    // this.events(true)
+    // this.eventsRAF(true)
+
+    // window.GameManager.popUpMessage('START!', 'black')
+    // window.GameManager.startTimer(this.time)
   }
 
   setClipPathId() {

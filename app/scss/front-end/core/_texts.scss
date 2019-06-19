@@ -35,6 +35,10 @@
   font-size: responsive-font(120);
 }
 
+[class*="-200"] {
+  font-size: responsive-font(200);
+}
+
 .text-hollow {
   line-height: 1em;
   white-space: nowrap;

@@ -7,8 +7,12 @@
   text-align: center;
 
   &__wrapper {
-    position: relative;
     height: 100%;
+    position: relative;
+
+    .isIntro & {
+      background-color: white;
+    }
   }
 
   &__placeholder {
