@@ -92,7 +92,6 @@ export default class Scene {
   }
 
   intro() {
-
     // Clean previous animation
     TweenMax.set([
       this.dom.introItemToFindImg,

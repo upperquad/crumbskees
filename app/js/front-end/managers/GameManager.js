@@ -193,7 +193,7 @@ export default class GameManager {
   }
 
   startTimer(duration) {
-    let timer = duration
+    let timer = duration - 1
     let seconds
 
     this.dom.timer.innerHTML = duration
@@ -268,7 +268,7 @@ export default class GameManager {
     this.destroyScene(this.currentScene)
 
     if (index === this.scenes.length + 1) {
-      console.log('end of party')
+      // console.log('end of party')
       Server.websocket.send('disconnect_all_users')
       return
     }
