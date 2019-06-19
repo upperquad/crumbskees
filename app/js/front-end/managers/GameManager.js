@@ -13,6 +13,7 @@ import DEBUG from '../constants/Debug'
 import scene1Bkg from '../../../assets/front-end/images/round_1/r1-pattern.jpg'
 import scene1Mask from '../../../assets/front-end/images/round_1/r1-mask.jpg'
 import scene1Item from '../../../assets/front-end/images/round_1/r1-target.jpg'
+import scene2Item from '../../../assets/front-end/images/pattern.png'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'\
 
@@ -102,7 +103,7 @@ export default class GameManager {
       }, {
         bkg: scene2Bkg,
         maskedBkg: scene2Bkg,
-        item: scene1Item,
+        item: scene2Item,
         numItems: 5,
         gridCols: 8,
         gridLines: 8,
@@ -248,12 +249,19 @@ export default class GameManager {
     }, 2000)
   }
 
-  endScene(message = 'stage complete') {
+  endScene(message = 'ROUND COMPLETE') {
     clearInterval(this.timerInterval)
-    this.popUpMessage(message, 'black', true)
+    this.popUpMessage(message, 'red', true)
+
+    this.element.classList.remove('sceneStarted')
+
+    setTimeout(() => {
+      this.element.classList.add('isIntro')
+    }, 2000)
+
     setTimeout(() => {
       this.updateScene(this.currentSceneIndex + 1)
-    }, 2000)
+    }, 5000)
   }
 
   updateScene(index) {

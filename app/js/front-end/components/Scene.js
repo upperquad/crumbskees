@@ -1,10 +1,9 @@
 import uuidv1 from 'uuid/v1'
+import { TweenMax, TimelineMax } from 'gsap/TweenMax'
 import { getNow } from '../utils/time'
 import { getOffsetTop, getOffsetLeft } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
-
-import { TimelineMax } from 'gsap/TweenMax'
 
 import DEBUG from '../constants/Debug'
 
@@ -29,6 +28,12 @@ export default class Scene {
   dom() {
     this.dom = {
       introRound: this.element.querySelector('.intro__round'),
+      introItemToFindTxt: this.element.querySelector('.intro__itemToFind__text'),
+      introItemToFindImg: this.element.querySelector('.intro__itemToFind__img'),
+      introCircle: this.element.querySelector('.intro__circle'),
+      introReady: this.element.querySelector('.intro__ready'),
+      introSet: this.element.querySelector('.intro__set'),
+      introGo: this.element.querySelector('.intro__go'),
       svgScene: this.element.querySelector('.scene-svg'),
       svgMaskedImage: this.element.querySelector('.scene-svg__image'),
       svgClipPath: this.element.querySelector('.scene-svg__clippath'),
@@ -37,6 +42,7 @@ export default class Scene {
   }
 
   set() {
+    window.GameManager.dom.timer.innerHTML = this.time
     this.setBkgs()
 
     // assuming we always use a viewbox of 100 x 100
@@ -86,36 +92,103 @@ export default class Scene {
   }
 
   intro() {
-    window.GameManager.element.classList.add('isIntro')
-    window.GameManager.dom.timer.innerHTML = this.time
+
+    // Clean previous animation
+    TweenMax.set([
+      this.dom.introItemToFindImg,
+      this.dom.introRound,
+      this.dom.introCircle,
+      this.dom.introItemToFindTxt,
+      this.dom.introItemToFindImg,
+      this.dom.introReady,
+      this.dom.introSet,
+      this.dom.introGo,
+    ], { clearProps: 'all' })
+
+    this.dom.introRound.classList.remove('blink')
+
+
+    this.dom.introItemToFindImg.src = this.item
+    this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
 
     const tlScaleDown = new TimelineMax({ paused: true })
-    this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
+    const tlItemToFind = new TimelineMax({ paused: true })
+    const tlReady = new TimelineMax({ paused: true })
 
     const text = this.splitText(this.dom.introRound)
     text.forEach((el, index) => {
       const tl = new TimelineMax({ delay: index * 0.06 })
       tl.fromTo(el, 0.8, { y: '100%' }, { y: '-70%', ease: window.Expo.easeOut })
-      tl.to(el, 0.6, { y: '0%', ease: window.Bounce.easeOut }, '-=0.3')
-      tl.add(() => {
-        tl.kill()
-        if (index === text.length - 1) {
-          tlScaleDown.play()
-        }
-      })
+        .to(el, 0.6, { y: '0%', ease: window.Bounce.easeOut }, '-=0.3')
+        .add(() => {
+          tl.kill()
+          if (index === text.length - 1) {
+            tlScaleDown.play()
+          }
+        })
     })
 
     tlScaleDown.add(() => {
       this.dom.introRound.classList.add('blink')
     })
-    tlScaleDown.to(this.dom.introRound, 1.4, { scale: 0.27, y: '118%', ease: window.Power4.easeOut }, 0.9)
+      .to(this.dom.introRound, 1.4, { scale: 0.27, y: '118%', ease: window.Power4.easeOut }, 0.9)
+      .add(() => {
+        tlScaleDown.kill()
+        tlItemToFind.play()
+      }, '-=0.9')
 
+    tlItemToFind.fromTo(this.dom.introCircle, 1.5, {
+      x: '-50%',
+      y: '-50%',
+      scale: 3.8,
+    },
+    {
+      x: '-50%',
+      y: '-50%',
+      scale: 1,
+      ease: window.Expo.easeOut,
+    })
+      .to(this.dom.introCircle, 0.5, { opacity: 1 }, 0.1)
+      .to(this.dom.introItemToFindTxt, 0.5, { opacity: 1 }, '-=0.8')
+      .to(this.dom.introItemToFindImg, 0.5, { opacity: 1 }, '-=0.6')
+      .to(this.dom.introItemToFindImg, 1.4, { scale: 0.55, y: '340%', ease: window.Power4.easeOut }, '+=1.5')
+      .to(this.dom.introItemToFindTxt, 0.5, { opacity: 0 }, '-=1.4')
+      .to(this.dom.introCircle, 1.5, {
+        x: '-50%',
+        y: '-50%',
+        scale: 3.8,
+        ease: window.Expo.easeOut,
+      }, '-=1.4')
+      .to(this.dom.introCircle, 0.5, {
+        opacity: 0,
+      }, '-=1.6')
+      .add(() => {
+        tlItemToFind.kill()
+        tlReady.play()
+      }, '-=0.3')
+
+    tlReady.to(this.dom.introReady, 0.6, { y: '0%', ease: window.Bounce.easeOut })
+      .to(this.dom.introReady, 0.6, { y: '100%', ease: window.Power4.easeOut }, '+=0.5')
+      .to(this.dom.introSet, 0.6, { x: '-50%', y: '0%', ease: window.Bounce.easeOut }, '-=0.65')
+      .to(this.dom.introSet, 0.6, { x: '-50%', y: '100%', ease: window.Power4.easeOut }, '+=0.5')
+      .to(this.dom.introGo, 0.2, { opacity: 1 }, '-=0.65')
+      .to(this.dom.introGo, 3, {
+        scale: 3,
+        x: '-50%',
+        y: '-50%',
+        ease: window.Expo.easeOut,
+      }, '-=0.6')
+      .to(this.dom.introGo, 1, { opacity: 0 }, '-=2.5')
+      .add(this.start, '-=2.6')
+  }
+
+  start = () => {
+    window.GameManager.element.classList.remove('isIntro')
     // start events
-    // this.events(true)
-    // this.eventsRAF(true)
+    this.events(true)
+    this.eventsRAF(true)
 
-    // window.GameManager.popUpMessage('START!', 'black')
-    // window.GameManager.startTimer(this.time)
+    window.GameManager.startTimer(this.time)
   }
 
   setClipPathId() {
