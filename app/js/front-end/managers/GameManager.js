@@ -159,9 +159,9 @@ export default class GameManager {
       scene: this.element.querySelector('.scene'),
       cursors: this.element.querySelectorAll('.cursor'),
       message: this.element.querySelector('.scene__message'),
-      scoreCenterRecap: this.element.querySelectorAll('.score__center__recap'),
-      scoreItems: this.element.querySelectorAll('.score__items'),
-      timer: this.element.querySelector('.timer'),
+      boardPlayerScore: this.element.querySelectorAll('.board__player__score'),
+      boardPlayerItems: this.element.querySelectorAll('.board__player__items'),
+      timer: this.element.querySelector('.board__center__timer'),
     }
   }
 
@@ -217,16 +217,17 @@ export default class GameManager {
     this.scores[player.index] += 1
     this.element.classList.add('item-found')
 
-    for (let i = 0; i < this.dom.scoreCenterRecap.length; i++) {
+    for (let i = 0; i < this.dom.boardPlayerScore.length; i++) {
       if (i === player.index) {
-        this.dom.scoreCenterRecap[i].innerHTML = `P-${player.index + 1} : ${this.scores[player.index]}`
+        const zeroUnit = this.scores[player.index] < 10 ? '0' : ''
+        this.dom.boardPlayerScore[i].innerHTML = `${zeroUnit}${this.scores[player.index]}`
       }
     }
 
     const img = document.createElement('img')
     img.src = item
-    img.classList.add('score__item')
-    this.dom.scoreItems[player.index].appendChild(img)
+    img.classList.add('board__player__item')
+    this.dom.boardPlayerItems[player.index].appendChild(img)
 
     Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
@@ -268,6 +269,9 @@ export default class GameManager {
       this.players[playerIds[i]].targetY = 0
       this.players[playerIds[i]].x = 0
       this.players[playerIds[i]].y = 0
+
+      // reset items in board
+      this.dom.boardPlayerItems[i].innerHTML = ''
     }
 
     this.currentSceneIndex = index

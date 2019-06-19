@@ -1,5 +1,5 @@
 [class*="text"] {
-  line-height: 1.6em;
+  line-height: 1;
 }
 
 [class*="-16"] {
@@ -21,6 +21,14 @@
 
 [class*="-64"] {
   font-size: responsive-font(64);
+}
+
+[class*="-80"] {
+  font-size: responsive-font(80);
+}
+
+[class*="-112"] {
+  font-size: responsive-font(112);
 }
 
 [class*="-120"] {

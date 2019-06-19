@@ -10,7 +10,8 @@ $grid-unit: 3.125vw;
 /* ------------------------------------------------------------------ */
 
 // Pattern : $color-{name}:#FFFFFF;
-$color-black  : #29314D;
+$color-black  : #343434;
+$color-black-full : #000000;
 $color-white  : #e7e7e7;
 $color-gray : #aeaeae;
 $color-blue : #00c1ff;
@@ -18,6 +19,9 @@ $color-green : #00f384;
 $color-pink : #feb8ee;
 $color-orange : #ff9d21;
 $color-red : #ff1a22;
+$color-purple : #6D12E3;
+
+$border: 1px solid $color-black;
 
 
 /* ------------------------------------------------------------------ */
