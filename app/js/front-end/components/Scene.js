@@ -138,11 +138,10 @@ export default class Scene {
     tlScaleDown.add(() => {
       this.dom.introRound.classList.add('blink')
     })
-      .to(this.dom.introRound, 1.4, { scale: 0.27, y: '118%', ease: window.Power4.easeOut }, 0.9)
+      .to(this.dom.introRound, 1.5, { scale: 0.22, y: '120%', ease: window.Expo.easeOut }, 0.9)
       .add(() => {
-        tlScaleDown.kill()
         tlItemToFind.play()
-      }, '-=0.9')
+      }, '-=1.4')
 
     tlItemToFind.fromTo(this.dom.introCircle, 1.5, {
       x: '-50%',
@@ -158,9 +157,9 @@ export default class Scene {
       .to(this.dom.introCircle, 0.5, { opacity: 1 }, 0.1)
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 1 }, '-=0.8')
       .to(this.dom.itemToFind, 0.5, { opacity: 1 }, '-=0.6')
-      .to(this.dom.itemToFind, 1.4, { scale: 0.55, x: '-50%', y: '380%', ease: window.Power4.easeOut }, '+=1.5')
+      .to(this.dom.itemToFind, 1.4, { scale: 0.55, x: '-50%', y: '380%', ease: window.Power4.easeOut }, '+=3')
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 0 }, '-=1.4')
-      .to(this.dom.introCircle, 1.5, {
+      .to(this.dom.introCircle, 2, {
         x: '-50%',
         y: '-50%',
         scale: 3.8,
@@ -169,9 +168,8 @@ export default class Scene {
       .add(() => {
         TweenMax.set(this.dom.introCircle, { opacity: 0 })
         TweenMax.set(this.dom.introVideo, { opacity: 0 })
-        tlItemToFind.kill()
         tlReady.play()
-      }, '-=0.3')
+      }, '-=1.2')
 
     tlReady.to(this.dom.introReady, 0.6, { y: '0%', ease: window.Bounce.easeOut })
       .to(this.dom.introReady, 0.6, { y: '100%', ease: window.Power4.easeOut }, '+=0.5')
@@ -185,7 +183,11 @@ export default class Scene {
         ease: window.Expo.easeOut,
       }, '-=0.6')
       .to(this.dom.introGo, 1, { opacity: 0 }, '-=2.5')
-      .add(this.start, '-=2.6')
+      .add(() => {
+        tlItemToFind.kill()
+        tlScaleDown.kill()
+        this.start()
+      }, '-=2.6')
 
     return true
   }
