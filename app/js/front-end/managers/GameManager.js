@@ -1,7 +1,4 @@
-
-import gameTmp from '../../../templates/front-end/game.html'
-import setupTmp from '../../../templates/front-end/setup.html'
-
+// components
 import Scene from '../components/Scene'
 import Player from '../components/Player'
 
@@ -29,8 +26,6 @@ const tokens = ['123', '456']
 
 export default class GameManager {
   constructor() {
-    this.main = document.querySelector('.main')
-
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
     } else {
@@ -39,8 +34,11 @@ export default class GameManager {
   }
 
   onWsOpen = () => {
-    this.main.innerHTML = setupTmp
-    this.setupMessage = this.main.querySelector('.setup__message')
+    window.RouterManager.goTo('setup', this.setup)
+  }
+
+  setup = () => {
+    this.setupMessage = document.querySelector('.setup__message')
     Server.websocket.onmessage = this.listenServer
   }
 
@@ -67,9 +65,7 @@ export default class GameManager {
 
       if (playerIds.length === 2) {
         // if both players are set, let's start
-        setTimeout(() => {
-          this.init()
-        }, 1000)
+        window.RouterManager.goTo('game', this.init)
       }
     } else if (data[0] === 'cursor_move') {
       const x = parseFloat(data[2], 10) * this.vbWidth
@@ -85,9 +81,8 @@ export default class GameManager {
     }
   }
 
-  init() {
+  init = () => {
     if (!DEBUG) Server.websocket.send(`score,${playerIds[0]},0`)
-    this.main.innerHTML = gameTmp
 
     this.element = document.querySelector('[game]')
 
