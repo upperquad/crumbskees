@@ -19,7 +19,7 @@ export default class Scene {
     this.gridCols = options.gridCols
     this.gridLines = options.gridLines
     this.index = options.index
-    this.time = 30 // in seconds
+    this.time = 5 // in seconds
 
     this.dom()
     this.set()
@@ -110,6 +110,12 @@ export default class Scene {
     this.dom.introItemToFindImg.src = this.item
     this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
 
+    if (DEBUG) {
+      this.dom.introRound.innerHTML = ''
+      this.start()
+      return false
+    }
+
     const tlScaleDown = new TimelineMax({ paused: true })
     const tlItemToFind = new TimelineMax({ paused: true })
     const tlReady = new TimelineMax({ paused: true })
@@ -179,6 +185,8 @@ export default class Scene {
       }, '-=0.6')
       .to(this.dom.introGo, 1, { opacity: 0 }, '-=2.5')
       .add(this.start, '-=2.6')
+
+    return true
   }
 
   start = () => {
@@ -460,6 +468,10 @@ export default class Scene {
   }
 
   destroy() {
+    const debugs = document.querySelectorAll('.debug')
+    debugs.forEach(debug => debug.remove())
+    this.items.forEach(item => item.el.remove())
+
     this.events(false)
     this.eventsRAF(false)
   }

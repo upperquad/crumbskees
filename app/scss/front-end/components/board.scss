@@ -33,9 +33,10 @@
       animation: change-color 30s linear infinite forwards;
       content: '';
       height: grid(0.3);
-      left: 0;
+      left: 50%;
       position: absolute;
       top: grid(-0.3);
+      transform: translateX(-50%);
       width: 100%;
       z-index: 10;
     }
