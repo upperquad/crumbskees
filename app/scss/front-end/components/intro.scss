@@ -4,10 +4,22 @@
   height: 100%;
   justify-content: center;
   left: 0;
+  overflow: hidden;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 10;
+
+  &:nth-child(2) {
+    z-index: 11;
+  }
+
+  video {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
 
   @keyframes blink-color {
     0% {
@@ -28,6 +40,7 @@
     margin-top: grid(-2.4);
     overflow: hidden;
     position: relative;
+    z-index: 10;
 
     &.blink {
       animation: blink-color 0.1s linear 6 forwards;
@@ -44,23 +57,18 @@
   }
 
   &__itemToFind {
-    // opacity: 0;
-
-    &__img {
-      height: grid(2);
-      width: grid(2);
-      opacity: 0;
-    }
-
     &__text {
       width: grid(6);
       line-height: 1.2;
-      margin-bottom: grid(0.4);
+      margin-top: grid(-2);
       opacity: 0;
+      position: relative;
+      z-index: 10;
     }
   }
 
   &__circle {
+    background-color: white;
     border: grid(0.3) solid $color-black;
     border-radius: 50%;
     width: grid(11);
@@ -68,8 +76,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 1;
+    z-index: 10;
   }
 
   &__ready-wrapper {
@@ -96,4 +105,15 @@
     transform: translate(-50%, -50%);
     opacity: 0;
   }
+}
+
+.itemToFind {
+  height: grid(2);
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: grid(6.4);
+  transform: translate(-50%, 50%);
+  width: grid(2);
+  z-index: 40;
 }

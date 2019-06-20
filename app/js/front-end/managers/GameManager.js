@@ -10,9 +10,10 @@ import Server from '../constants/Server'
 import DEBUG from '../constants/Debug'
 
 // assets
-import scene1Bkg from '../../../assets/front-end/images/round_1/r1-pattern.jpg'
+import scene1Bkg from '../../../assets/front-end/images/round_3/r3-pattern.gif'
 import scene1Mask from '../../../assets/front-end/images/round_1/r1-mask.jpg'
 import scene1Item from '../../../assets/front-end/images/round_1/r1-target.jpg'
+import scene1IntroVideo from '../../../assets/front-end/images/round_3/r3-intro.mp4'
 import scene2Item from '../../../assets/front-end/images/pattern.png'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'\
@@ -96,6 +97,7 @@ export default class GameManager {
         bkg: scene1Bkg,
         maskedBkg: scene1Mask,
         item: scene1Item,
+        videoIntro: scene1IntroVideo,
         numItems: 5,
         gridCols: 16,
         gridLines: 7,
@@ -104,6 +106,7 @@ export default class GameManager {
         bkg: scene2Bkg,
         maskedBkg: scene2Bkg,
         item: scene2Item,
+        videoIntro: scene1IntroVideo,
         numItems: 5,
         gridCols: 16,
         gridLines: 7,
@@ -112,6 +115,7 @@ export default class GameManager {
         bkg: scene1Bkg,
         maskedBkg: scene1Bkg,
         item: scene1Item,
+        videoIntro: scene1IntroVideo,
         numItems: 5,
         gridCols: 16,
         gridLines: 7,
@@ -120,6 +124,7 @@ export default class GameManager {
         bkg: scene1Bkg,
         maskedBkg: scene1Bkg,
         item: scene1Item,
+        videoIntro: scene1IntroVideo,
         numItems: 5,
         gridCols: 16,
         gridLines: 7,
@@ -267,7 +272,7 @@ export default class GameManager {
   updateScene(index) {
     this.destroyScene(this.currentScene)
 
-    if (index === this.scenes.length + 1) {
+    if (index === this.scenes.length) {
       // console.log('end of party')
       Server.websocket.send('disconnect_all_users')
       return

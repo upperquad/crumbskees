@@ -15,11 +15,12 @@ export default class Scene {
     this.bkg = options.bkg
     this.maskedBkg = options.maskedBkg
     this.item = options.item
+    this.videoIntro = options.videoIntro
     this.numItems = options.numItems
     this.gridCols = options.gridCols
     this.gridLines = options.gridLines
     this.index = options.index
-    this.time = 5 // in seconds
+    this.time = 30 // in seconds
 
     this.dom()
     this.set()
@@ -29,8 +30,9 @@ export default class Scene {
     this.dom = {
       introRound: this.element.querySelector('.intro__round'),
       introItemToFindTxt: this.element.querySelector('.intro__itemToFind__text'),
-      introItemToFindImg: this.element.querySelector('.intro__itemToFind__img'),
+      itemToFind: document.querySelector('.itemToFind'),
       introCircle: this.element.querySelector('.intro__circle'),
+      introVideo: this.element.querySelector('.intro video'),
       introReady: this.element.querySelector('.intro__ready'),
       introSet: this.element.querySelector('.intro__set'),
       introGo: this.element.querySelector('.intro__go'),
@@ -94,27 +96,27 @@ export default class Scene {
   intro() {
     // Clean previous animation
     TweenMax.set([
-      this.dom.introItemToFindImg,
+      this.dom.itemToFind,
       this.dom.introRound,
       this.dom.introCircle,
       this.dom.introItemToFindTxt,
-      this.dom.introItemToFindImg,
       this.dom.introReady,
       this.dom.introSet,
       this.dom.introGo,
+      this.dom.introVideo,
     ], { clearProps: 'all' })
 
     this.dom.introRound.classList.remove('blink')
 
-
-    this.dom.introItemToFindImg.src = this.item
+    this.dom.itemToFind.src = this.item
+    this.dom.introVideo.src = this.videoIntro
     this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
 
-    if (DEBUG) {
-      this.dom.introRound.innerHTML = ''
-      this.start()
-      return false
-    }
+    // if (DEBUG) {
+    //   this.dom.introRound.innerHTML = ''
+    //   this.start()
+    //   return false
+    // }
 
     const tlScaleDown = new TimelineMax({ paused: true })
     const tlItemToFind = new TimelineMax({ paused: true })
@@ -155,8 +157,8 @@ export default class Scene {
     })
       .to(this.dom.introCircle, 0.5, { opacity: 1 }, 0.1)
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 1 }, '-=0.8')
-      .to(this.dom.introItemToFindImg, 0.5, { opacity: 1 }, '-=0.6')
-      .to(this.dom.introItemToFindImg, 1.4, { scale: 0.55, y: '340%', ease: window.Power4.easeOut }, '+=1.5')
+      .to(this.dom.itemToFind, 0.5, { opacity: 1 }, '-=0.6')
+      .to(this.dom.itemToFind, 1.4, { scale: 0.55, x: '-50%', y: '380%', ease: window.Power4.easeOut }, '+=1.5')
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 0 }, '-=1.4')
       .to(this.dom.introCircle, 1.5, {
         x: '-50%',
@@ -164,10 +166,9 @@ export default class Scene {
         scale: 3.8,
         ease: window.Expo.easeOut,
       }, '-=1.4')
-      .to(this.dom.introCircle, 0.5, {
-        opacity: 0,
-      }, '-=1.6')
       .add(() => {
+        TweenMax.set(this.dom.introCircle, { opacity: 0 })
+        TweenMax.set(this.dom.introVideo, { opacity: 0 })
         tlItemToFind.kill()
         tlReady.play()
       }, '-=0.3')
