@@ -29,7 +29,7 @@ export default class GameManager {
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
     } else {
-      this.init()
+      window.RouterManager.goTo('game', this.init)
     }
   }
 
