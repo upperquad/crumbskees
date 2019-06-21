@@ -42,7 +42,6 @@ export default class GameManager {
   updateQr = () => {
     this.qrBlocks.forEach((block, index) => {
       if (this.playerIds[index] === null) {
-        console.log('here')
         const tokenUrl = `${BASE_URL}${this.tokens[index]}`
         const qrCode = new QRCode({
           content: tokenUrl,
@@ -118,7 +117,9 @@ export default class GameManager {
         break
       case 'click':
         // data[1] needs to be the index of player (or id)
-        this.currentScene.handleClick(data[1])
+        if (this.currentScene && this.currentScene.handleClick) {
+          this.currentScene.handleClick(data[1])
+        }
         break
     }
   }
@@ -209,8 +210,6 @@ export default class GameManager {
   }
 
   setPlayers() {
-    this.this.playerIds = this.playerIds
-
     const colors = [
       'purple',
       'red',
