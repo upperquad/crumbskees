@@ -105,13 +105,15 @@ export default class GameManager {
         this.removePhone(data[1])
         break
       case 'cursor_move': {
-        const x = parseFloat(data[2], 10) * this.vbWidth
-        const y = parseFloat(data[3], 10) * this.vbWidth
-        // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
-        this.players[data[1]].targetX = x + this.players[data[1]].targetX
-        this.players[data[1]].targetY = y + this.players[data[1]].targetY
+        if (this.currentScene) {
+          const x = parseFloat(data[2], 10) * this.vbWidth
+          const y = parseFloat(data[3], 10) * this.vbWidth
+          // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
+          this.players[data[1]].targetX = x + this.players[data[1]].targetX
+          this.players[data[1]].targetY = y + this.players[data[1]].targetY
 
-        // this.players[data[1]].targetX
+          // this.players[data[1]].targetX
+        }
         break
       }
       case 'click':
