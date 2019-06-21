@@ -1,4 +1,4 @@
-import QRCode from 'qrcode-svg'
+import QRCode from 'qrcode'
 // components
 import Scene from '../components/Scene'
 import Player from '../components/Player'
@@ -8,13 +8,13 @@ import Server from '../constants/Server'
 import DEBUG from '../constants/Debug'
 
 // assets
-import scene1Bkg from '../../../assets/front-end/images/round_3/r3-pattern.gif'
-import scene1Mask from '../../../assets/front-end/images/round_1/r1-mask.jpg'
-import scene1Item from '../../../assets/front-end/images/round_1/r1-target.jpg'
-import scene1IntroVideo from '../../../assets/front-end/images/round_3/r3-intro.mp4'
-import scene2Item from '../../../assets/front-end/images/pattern.png'
-import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
-// import scene2Item from '../../../assets/front-end/images/pattern.png'\
+import scene1Bkg from '../../../assets/game/images/round_3/r3-pattern.gif'
+import scene1Mask from '../../../assets/game/images/round_1/r1-mask.jpg'
+import scene1Item from '../../../assets/game/images/round_1/r1-target.jpg'
+import scene1IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
+import scene2Item from '../../../assets/game/images/pattern.png'
+import scene2Bkg from '../../../assets/game/images/find-cat.png'
+// import scene2Item from '../../../assets/game/images/pattern.png'\
 
 const BASE_URL = `http://${window.location.host}/`
 
@@ -41,16 +41,13 @@ export default class GameManager {
     this.qrBlocks.forEach((block, index) => {
       if (this.playerIds[index] === null) {
         const tokenUrl = `${BASE_URL}${this.tokens[index]}`
-        const qrCode = new QRCode({
-          content: tokenUrl,
-          padding: 0,
-          width: 25,
-          height: 25,
-          ecl: 'L',
-        }).svg()
-        block.innerHTML = `<div class="qr__url">${tokenUrl}</div><div class="qr__qr" style="background-image: url(data:image/svg+xml,${encodeURIComponent(qrCode)})"></div>`
+        QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
+          .then(dataUrl => {
+            block.classList.remove('is-connected')
+            block.querySelector('.qr').innerHTML = `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-14">Think QR codes are stupid? Go to <span class="color--green">${tokenUrl}</span></div>`
+          })
       } else {
-        block.innerHTML = '<div class="qr__connected">User connected!</div>'
+        block.classList.add('is-connected')
       }
     })
   }
@@ -60,7 +57,7 @@ export default class GameManager {
   }
 
   setup = () => {
-    this.qrBlocks = [...document.querySelectorAll('.setup__qr')]
+    this.qrBlocks = [...document.querySelectorAll('.setup__upper')]
     this.updateQr()
     Server.websocket.onmessage = this.listenServer
   }
