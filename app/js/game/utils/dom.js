@@ -1,5 +1,4 @@
 export function getOffsetTop(elem) { // issues on ie11
-
   if (!elem) {
     return 0
   }
@@ -11,7 +10,6 @@ export function getOffsetTop(elem) { // issues on ie11
 }
 
 export function getOffsetLeft(elem) { // issues on ie11
-
   if (!elem) {
     return 0
   }

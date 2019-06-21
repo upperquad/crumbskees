@@ -35,9 +35,7 @@ export default class GameManager {
     }
   }
 
-  getNewToken = () => {
-    return Math.random().toString(10).substr(2, 3)
-  }
+  getNewToken = () => Math.random().toString(10).substr(2, 3)
 
   updateQr = () => {
     this.qrBlocks.forEach((block, index) => {
@@ -48,7 +46,7 @@ export default class GameManager {
           padding: 0,
           width: 25,
           height: 25,
-          ecl: 'L'
+          ecl: 'L',
         }).svg()
         block.innerHTML = `<div class="qr__url">${tokenUrl}</div><div class="qr__qr" style="background-image: url(data:image/svg+xml,${encodeURIComponent(qrCode)})"></div>`
       } else {
@@ -106,7 +104,7 @@ export default class GameManager {
       case 'phone_left':
         this.removePhone(data[1])
         break
-      case 'cursor_move':
+      case 'cursor_move': {
         const x = parseFloat(data[2], 10) * this.vbWidth
         const y = parseFloat(data[3], 10) * this.vbWidth
         // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
@@ -115,11 +113,14 @@ export default class GameManager {
 
         // this.players[data[1]].targetX
         break
+      }
       case 'click':
         // data[1] needs to be the index of player (or id)
         if (this.currentScene && this.currentScene.handleClick) {
           this.currentScene.handleClick(data[1])
         }
+        break
+      default:
         break
     }
   }
