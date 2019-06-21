@@ -1,4 +1,4 @@
-import QRCode from 'qrcode-svg'
+import QRCode from 'qrcode'
 // components
 import Scene from '../components/Scene'
 import Player from '../components/Player'
@@ -41,14 +41,10 @@ export default class GameManager {
     this.qrBlocks.forEach((block, index) => {
       if (this.playerIds[index] === null) {
         const tokenUrl = `${BASE_URL}${this.tokens[index]}`
-        const qrCode = new QRCode({
-          content: tokenUrl,
-          padding: 0,
-          width: 25,
-          height: 25,
-          ecl: 'L',
-        }).svg()
-        block.innerHTML = `<div class="qr__url">${tokenUrl}</div><div class="qr__qr" style="background-image: url(data:image/svg+xml,${encodeURIComponent(qrCode)})"></div>`
+        QRCode.toDataURL(tokenUrl, {margin: 0, scale: 10})
+          .then(dataUrl => {
+            block.innerHTML = `<div class="qr__url">${tokenUrl}</div><div class="qr__qr" style="background-image: url(${dataUrl})"></div>`
+          })
       } else {
         block.innerHTML = '<div class="qr__connected">User connected!</div>'
       }
