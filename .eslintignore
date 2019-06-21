@@ -1,2 +1,2 @@
 app/*.js
-app/js/front-end/utils/*.js
+app/js/game/utils/*.js

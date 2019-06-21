@@ -24,7 +24,17 @@ export default class PhoneController {
     this.touchpad.addEventListener('touchmove', this.throttledTouchMove, { passive: false })
     this.touchpad.addEventListener('touchend', this.handleTouchEnd, { passive: false })
     this.touchpad.addEventListener('click', this.handleClick)
+
+    this.initToken()
     this.ready = true
+  }
+
+  initToken = () => {
+    const path = window.location.pathname
+    if (/^\/\d{3}$/.test(path)) {
+      this.token = path.slice(1)
+      this.initConnect()
+    }
   }
 
   tokenKey = key => {
@@ -47,6 +57,7 @@ export default class PhoneController {
   }
 
   onWsOpen = () => {
+    this.isConnecting = false
     this.connected = true
     this.$scope.$apply()
 
@@ -55,6 +66,7 @@ export default class PhoneController {
   }
 
   onWsClose = event => {
+    this.isConnecting = false
     this.connected = false
     console.log(event.reason)
 
