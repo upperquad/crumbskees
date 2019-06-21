@@ -423,11 +423,14 @@ body {
     height: 15.26042vw;
     position: relative; }
     .setup .setup__upper.is-connected .connected {
-      opacity: 1; }
+      opacity: 1;
+      pointer-events: auto; }
     .setup .setup__upper.is-connected .qr {
-      opacity: 0; }
+      opacity: 0;
+      pointer-events: none; }
   .setup .connected {
     opacity: 0;
+    pointer-events: none;
     position: relative; }
     .setup .connected::before {
       background: #FF4047;
@@ -487,8 +490,31 @@ body {
   .setup .instruction {
     font-size: calc(36 / 1920 * 100vw);
     line-height: calc(53 / 1920 * 100vw);
-    margin: 5.20833vw auto 0 auto;
-    width: 38.22917%; }
+    overflow: hidden;
+    padding: 5.20833vw 30.88542vw 2.08333vw;
+    position: relative; }
+    .setup .instruction.is-started .instruction__text {
+      opacity: 0;
+      pointer-events: none; }
+    .setup .instruction.is-started .instruction__letsplay {
+      opacity: 1; }
+  .setup .instruction__text {
+    transition: opacity .2s; }
+  .setup .instruction__letsplay {
+    bottom: 0;
+    left: 0;
+    line-height: .8em;
+    -webkit-text-fill-color: #fff;
+    -webkit-text-stroke-color: #000;
+    -webkit-text-stroke-width: 2px;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    transition: opacity .2s;
+    width: 100%; }
+    .setup .instruction__letsplay span {
+      display: inline-block; }
   .setup footer {
     align-items: center;
     border: 2px solid #000;
@@ -502,7 +528,28 @@ body {
     width: 100%; }
     .setup footer .love,
     .setup footer .whatup {
-      letter-spacing: -0.02em; }
+      letter-spacing: -0.02em;
+      line-height: normal; }
+    .setup footer .whatup {
+      padding: 0.98958vw 0;
+      position: relative;
+      overflow: hidden; }
+      .setup footer .whatup div {
+        animation: marquee 3s infinite linear; }
+      .setup footer .whatup div:last-of-type {
+        left: 100%;
+        position: absolute;
+        top: 0.98958vw;
+        width: 100%; }
+      .setup footer .whatup::after {
+        background: #00f384;
+        content: '';
+        height: 1.77083vw;
+        right: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-55%);
+        width: 1.77083vw; }
     .setup footer .black-bar {
       align-items: center;
       background: #000;
@@ -514,7 +561,8 @@ body {
       justify-content: space-between;
       padding: 0 1.77083% 0 5.05208%; }
     .setup footer .version {
-      letter-spacing: -0.04em; }
+      letter-spacing: -0.04em;
+      line-height: normal; }
     .setup footer .love {
       text-align: center;
       width: 15.52083%; }

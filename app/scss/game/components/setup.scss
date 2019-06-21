@@ -33,16 +33,19 @@
     &.is-connected {
       .connected {
         opacity: 1;
+        pointer-events: auto;
       }
 
       .qr {
         opacity: 0;
+        pointer-events: none;
       }
     }
   }
 
   .connected {
     opacity: 0;
+    pointer-events: none;
     position: relative;
 
     &::before {
@@ -128,8 +131,43 @@
   .instruction {
     font-size: responsive-font(36);
     line-height: responsive-font(53);
-    margin: 100/1920*100vw auto 0 auto;
-    width: 734/1920*100%;
+    overflow: hidden;
+    padding: 100/1920*100vw 593/1920*100vw 40/1920*100vw;
+    position: relative;
+
+    &.is-started {
+      .instruction__text {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .instruction__letsplay {
+        opacity: 1;
+      }
+    }
+  }
+
+  .instruction__text {
+    transition: opacity .2s;
+  }
+
+  .instruction__letsplay {
+    bottom: 0;
+    left: 0;
+    line-height: .8em;
+    -webkit-text-fill-color: $color-white-full;
+    -webkit-text-stroke-color: $color-black-full;
+    -webkit-text-stroke-width: 2px;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    transition: opacity .2s;
+    width: 100%;
+
+    span {
+      display: inline-block;
+    }
   }
 
   footer {
@@ -147,6 +185,35 @@
     .love,
     .whatup {
       letter-spacing: -0.02em;
+      line-height: normal;
+    }
+
+    .whatup {
+      padding: 19/1920*100vw 0;
+      position: relative;
+      overflow: hidden;
+
+      div {
+        animation: marquee 3s infinite linear;
+      }
+
+      div:last-of-type {
+        left: 100%;
+        position: absolute;
+        top: 19/1920*100vw;
+        width: 100%;
+      }
+
+      &::after {
+        background: $color-green;
+        content: '';
+        height: 34/1920*100vw;
+        right: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-55%);
+        width: 34/1920*100vw;
+      }
     }
 
     .black-bar {
@@ -163,6 +230,7 @@
 
     .version {
       letter-spacing: -0.04em;
+      line-height: normal;
     }
 
     .love {
