@@ -7,5 +7,5 @@ export function outExpo(n) {
 }
 
 export function inOutSine(n) {
-	return .5 * (1 - Math.cos(Math.PI * n));
+  return 0.5 * (1 - Math.cos(Math.PI * n))
 }

@@ -157,7 +157,12 @@ export default class Scene {
       .to(this.dom.introCircle, 0.5, { opacity: 1 }, 0.1)
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 1 }, '-=0.8')
       .to(this.dom.itemToFind, 0.5, { opacity: 1 }, '-=0.6')
-      .to(this.dom.itemToFind, 1.4, { scale: 0.55, x: '-50%', y: '380%', ease: window.Power4.easeOut }, '+=3')
+      .to(this.dom.itemToFind, 1.4, {
+        scale: 0.55,
+        x: '-50%',
+        y: '380%',
+        ease: window.Power4.easeOut,
+      }, '+=3')
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 0 }, '-=1.4')
       .to(this.dom.introCircle, 2, {
         x: '-50%',
