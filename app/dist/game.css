@@ -488,8 +488,6 @@ body {
   100% {
     transform: translateX(-100%); } }
   .setup .instruction {
-    font-size: calc(36 / 1920 * 100vw);
-    line-height: calc(53 / 1920 * 100vw);
     overflow: hidden;
     padding: 5.20833vw 30.88542vw 2.08333vw;
     position: relative; }
@@ -499,6 +497,8 @@ body {
     .setup .instruction.is-started .instruction__letsplay {
       opacity: 1; }
   .setup .instruction__text {
+    font-size: calc(36 / 1920 * 100vw);
+    line-height: calc(53 / 1920 * 100vw);
     transition: opacity .2s; }
   .setup .instruction__letsplay {
     bottom: 0;

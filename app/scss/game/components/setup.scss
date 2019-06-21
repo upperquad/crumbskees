@@ -129,8 +129,6 @@
   }
 
   .instruction {
-    font-size: responsive-font(36);
-    line-height: responsive-font(53);
     overflow: hidden;
     padding: 100/1920*100vw 593/1920*100vw 40/1920*100vw;
     position: relative;
@@ -148,6 +146,8 @@
   }
 
   .instruction__text {
+    font-size: responsive-font(36);
+    line-height: responsive-font(53);
     transition: opacity .2s;
   }
 
