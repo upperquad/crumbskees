@@ -18,6 +18,7 @@ const server = express()
   .get('/game', (req, res) => res.sendFile(gamePage) )
   .get('/admin', (req, res) => res.sendFile(adminPage) )
   .use('/', express.static('app/dist/'))
+  .use((req, res) => res.sendFile(phonePage))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 const wssPage = new SocketServer({server: server, path: '/game'})

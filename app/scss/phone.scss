@@ -42,9 +42,13 @@ body:not(.is-ready) {
   }
 }
 
+.connecting,
 .token-pad {
   background: black;
   bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
   color: white;
   left: 0;
   position: fixed;
@@ -53,6 +57,7 @@ body:not(.is-ready) {
   top: 0;
 }
 
+.connecting,
 .token-instruction {
   font-size: 20px;
 }

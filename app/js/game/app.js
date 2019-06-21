@@ -1,4 +1,4 @@
-import '../../scss/front-end/style.scss'
+import '../../scss/game/style.scss'
 
 import './managers/RAFManager'
 import GameManager from './managers/GameManager'
