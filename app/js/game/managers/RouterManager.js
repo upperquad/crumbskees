@@ -1,7 +1,7 @@
-import setupTmp from '../../../templates/front-end/setup.html'
-import tutorialTmp from '../../../templates/front-end/tutorial.html'
-import gameTmp from '../../../templates/front-end/game.html'
-import finalTmp from '../../../templates/front-end/final.html'
+import setupTmp from '../../../templates/game-stages/setup.html'
+import tutorialTmp from '../../../templates/game-stages/tutorial.html'
+import gameTmp from '../../../templates/game-stages/game.html'
+import finalTmp from '../../../templates/game-stages/final.html'
 
 
 export default class RouterManager {
