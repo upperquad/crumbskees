@@ -1,0 +1,30 @@
+<html ng-app="phoneApp">
+  <head>
+    <title>Controller - Upperquad SFDW 2019</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link href="/phone.css" rel="stylesheet"></head>
+  <body ng-controller="PhoneController as phoneCtrl" ng-class="{'is-ready': phoneCtrl.ready}">
+    <div class="touchpad" id="touchpad">
+      <div class="touch-bubble" id="touch-bubble"></div>
+    </div>
+    <div class="connecting" ng-if="phoneCtrl.isConnecting">Connecting</div>
+    <div class="token-pad" ng-if="!phoneCtrl.connected && !phoneCtrl.isConnecting">
+      <div class="token-instruction">Enter code to join the game</div>
+      <div class="token-display">
+        <div class="token-error" ng-if="phoneCtrl.invalidToken">Invalid token</div>{{phoneCtrl.token}}
+      </div>
+      <div class="token-input">
+        <div class="token-input-key"
+            ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]"
+            ng-click="phoneCtrl.tokenKey(i)">{{i}}</div>
+        <div class="token-input-key"
+            ng-click="phoneCtrl.tokenKey(-1)">←</div>
+      </div>
+    </div>
+    <div class="score">
+      {{phoneCtrl.score}}
+    </div>
+  <script type="text/javascript" src="/js/phone.js"></script></body>
+</html>

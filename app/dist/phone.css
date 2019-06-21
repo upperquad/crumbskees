@@ -1,0 +1,79 @@
+html, body {
+  overscroll-behavior-x: none; }
+
+body:not(.is-ready) {
+  opacity: 0;
+  pointer-events: none; }
+
+.score {
+  color: white;
+  font-size: 20px;
+  left: 0;
+  position: fixed;
+  pointer-events: none;
+  top: 0; }
+
+.touchpad {
+  background: black;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0; }
+
+.touch-bubble {
+  border: 2px blue solid;
+  border-radius: 50%;
+  height: 50px;
+  opacity: 0;
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0.2);
+  transition: opacity .3s, left .1s, top .1s;
+  width: 50px; }
+  .touch-bubble.is-touching {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity .3s, transform ease-in-out .3s, left .1s, top .1s; }
+
+.connecting,
+.token-pad {
+  background: black;
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  color: white;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0; }
+
+.connecting,
+.token-instruction {
+  font-size: 20px; }
+
+.token-display {
+  position: relative;
+  font-size: 40px;
+  height: 60px; }
+  .token-display .token-error {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%; }
+
+.token-input {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 30px auto;
+  width: 150px; }
+  .token-input .token-input-key {
+    border: 1px solid white;
+    height: 40px;
+    margin-bottom: 10px;
+    width: 40px; }
+
+
+/*# sourceMappingURL=phone.css.map*/
