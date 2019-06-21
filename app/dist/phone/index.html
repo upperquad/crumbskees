@@ -9,7 +9,8 @@
     <div class="touchpad" id="touchpad">
       <div class="touch-bubble" id="touch-bubble"></div>
     </div>
-    <div class="token-pad" ng-if="!phoneCtrl.connected">
+    <div class="connecting" ng-if="phoneCtrl.isConnecting">Connecting</div>
+    <div class="token-pad" ng-if="!phoneCtrl.connected && !phoneCtrl.isConnecting">
       <div class="token-instruction">Enter code to join the game</div>
       <div class="token-display">
         <div class="token-error" ng-if="phoneCtrl.invalidToken">Invalid token</div>{{phoneCtrl.token}}

@@ -1,26 +1,173 @@
 .setup {
-	align-items: center;
-	display: flex;
-	height: 100%;
-	justify-content: center;
+  background: url(../../assets/game/images/setup/background.png) center / cover no-repeat;
+  color: $color-black-full;
+  height: 100%;
   position: absolute;
-	width: 100%;
-}
+  width: 100%;
 
-.setup__qr {
-  margin: 0 50px;
-}
+  .setup__qr {
+    margin: 0 50px;
+  }
 
-.qr__qr {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  position: relative;
-  width: 200px;
+  .setup__players {
+    display: flex;
+    justify-content: center;
+    padding-top: 70/1920*100vw;
+  }
 
-  &::before {
-    content: '';
-    display: block;
-    padding-top: 100%;
+  .setup__qr__wrapper {
+    background: $color-white-full;
+    border: 2px solid $color-black-full;
+    text-align: center;
+    width: 720/1920*100%;
+
+    &:first-of-type {
+      margin-right: 120/1920*100%;
+    }
+  }
+
+  .setup__upper {
+    height: 293/1920*100vw;
+    position: relative;
+
+    &.is-connected {
+      .connected {
+        opacity: 1;
+      }
+
+      .qr {
+        opacity: 0;
+      }
+    }
+  }
+
+  .connected {
+    opacity: 0;
+    position: relative;
+
+    &::before {
+      background: $color-red;
+      border-radius: 50%;
+      content: '';
+      height: 166/1920*100vw;
+      position: absolute;
+      width: 166/1920*100vw;
+    }
+
+    span {
+      position: relative;
+    }
+  }
+
+  .connected,
+  .qr {
+    align-items: center;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    left: 0;
+    height: 100%;
+    position: absolute;
+    transition: opacity .3s;
+    top: 0;
+    width: 100%;
+  }
+
+  .setup__player {
+    align-items: center;
+    border-top: 2px solid $color-black-full;
+    display: flex;
+    justify-content: center;
+    height: 130/1920*100vw;
+    text-transform: uppercase;
+  }
+
+  .qr__qr {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    margin-bottom: 24/1920*100vw;
+    width: 181/1920*100vw;
+
+    &::before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+  }
+
+  .qr__url {
+    text-transform: uppercase;
+
+    span {
+      text-transform: none;
+    }
+  }
+
+  .marquee {
+    padding-top: 48/1920*100vw;
+    white-space: nowrap;
+
+    div {
+      animation: marquee 6s infinite linear;
+      display: inline-block;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  .instruction {
+    font-size: responsive-font(36);
+    line-height: responsive-font(53);
+    margin: 100/1920*100vw auto 0 auto;
+    width: 734/1920*100%;
+  }
+
+  footer {
+    align-items: center;
+    border: 2px solid $color-black-full;
+    display: flex;
+    flex-flow: row nowrap;
+    left: 0;
+    bottom: 0;
+    text-transform: uppercase;
+    height: 105 / 1920 * 100vw;
+    position: absolute;
+    width: 100%;
+
+    .love,
+    .whatup {
+      letter-spacing: -0.02em;
+    }
+
+    .black-bar {
+      align-items: center;
+      background: $color-black-full;
+      color: $color-white;
+      display: flex;
+      flex-grow: 1;
+      flex-flow: row nowrap;
+      height: 100%;
+      justify-content: space-between;
+      padding: 0 34/1920*100% 0 97/1920*100%;
+    }
+
+    .version {
+      letter-spacing: -0.04em;
+    }
+
+    .love {
+      text-align: center;
+      width: 298 / 1920 * 100%;
+    }
   }
 }

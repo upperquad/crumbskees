@@ -2,6 +2,10 @@
   line-height: 1;
 }
 
+[class*="-14"] {
+  font-size: responsive-font(14);
+}
+
 [class*="-16"] {
   font-size: responsive-font(16);
   letter-spacing: 0.2em;
@@ -17,6 +21,10 @@
 
 [class*="-48"] {
   font-size: responsive-font(48);
+}
+
+[class*="-56"] {
+  font-size: responsive-font(56);
 }
 
 [class*="-64"] {
