@@ -1,3 +1,4 @@
+import QRCode from 'qrcode-svg'
 // components
 import Scene from '../components/Scene'
 import Player from '../components/Player'
@@ -15,9 +16,7 @@ import scene2Item from '../../../assets/front-end/images/pattern.png'
 import scene2Bkg from '../../../assets/front-end/images/find-cat.png'
 // import scene2Item from '../../../assets/front-end/images/pattern.png'\
 
-const playerIds = DEBUG ? ['refiejrfer', 'erfjerfpie'] : []
-const tokens = ['123', '456']
-
+const BASE_URL = `http://${window.location.host}/`
 
 // prepare the CharacterId
 // CharacterId --> get the image of the character
@@ -26,6 +25,9 @@ const tokens = ['123', '456']
 
 export default class GameManager {
   constructor() {
+    this.playerIds = DEBUG ? ['a', 'b'] : [null, null]
+    this.tokens = [this.getNewToken(), this.getNewToken()]
+
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
     } else {
@@ -33,56 +35,96 @@ export default class GameManager {
     }
   }
 
+  getNewToken = () => {
+    return Math.random().toString(10).substr(2, 3)
+  }
+
+  updateQr = () => {
+    this.qrBlocks.forEach((block, index) => {
+      if (this.playerIds[index] === null) {
+        console.log('here')
+        const tokenUrl = `${BASE_URL}${this.tokens[index]}`
+        const qrCode = new QRCode({
+          content: tokenUrl,
+          padding: 0,
+          width: 25,
+          height: 25,
+          ecl: 'L'
+        }).svg()
+        block.innerHTML = `<div class="qr__url">${tokenUrl}</div><div class="qr__qr" style="background-image: url(data:image/svg+xml,${encodeURIComponent(qrCode)})"></div>`
+      } else {
+        block.innerHTML = '<div class="qr__connected">User connected!</div>'
+      }
+    })
+  }
+
   onWsOpen = () => {
     window.RouterManager.goTo('setup', this.setup)
   }
 
   setup = () => {
-    this.setupMessage = document.querySelector('.setup__message')
+    this.qrBlocks = [...document.querySelectorAll('.setup__qr')]
+    this.updateQr()
     Server.websocket.onmessage = this.listenServer
+  }
+
+  verifyToken = (token, userId) => {
+    let isTokenValid = false
+    for (let index = 0; index <= 1; index++) {
+      if (this.playerIds[index] === null && this.tokens[index] === token) {
+        this.tokens[index] = null
+        this.playerIds[index] = userId
+        isTokenValid = true
+        break
+      }
+    }
+    Server.websocket.send(`auth_result,${userId},${isTokenValid ? 1 : 0}`)
+    this.updateQr()
+  }
+
+  removePhone = userId => {
+    for (let index = 0; index <= 1; index++) {
+      if (this.playerIds[index] === userId) {
+        this.tokens[index] = this.getNewToken()
+        this.playerIds[index] = null
+        this.updateQr()
+        return
+      }
+    }
   }
 
   listenServer = event => {
     const data = event.data.split(',')
 
-    if (data[0] === 'token_submit') {
-      // loop into the tokens, if the token correspond, set up the id
-      let validToken = false
-      for (let i = 0; i < tokens.length; i++) {
-        if (tokens[i] === data[1] && data[2] !== this.firstPlayerId) {
-          // data[2] !== this.firstPlayerId In case second player use the token of the first player
-          playerIds.push(data[2])
-          Server.websocket.send(`auth_result,${data[2]},1`)
-          validToken = true
-          this.firstPlayerId = data[2]
-          this.setupMessage.innerHTML = `Player ${playerIds.length} is ready`
+    switch (data[0]) {
+      case 'token_submit':
+        this.verifyToken(data[1], data[2])
+
+        if (this.playerIds[0] !== null && this.playerIds[1] !== null) {
+          window.RouterManager.goTo('game', this.init)
         }
-      }
+        break
+      case 'phone_left':
+        this.removePhone(data[1])
+        break
+      case 'cursor_move':
+        const x = parseFloat(data[2], 10) * this.vbWidth
+        const y = parseFloat(data[3], 10) * this.vbWidth
+        // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
+        this.players[data[1]].targetX = x + this.players[data[1]].targetX
+        this.players[data[1]].targetY = y + this.players[data[1]].targetY
 
-      if (validToken === false) {
-        Server.websocket.send(`auth_result,${data[2]},0`)
-      }
-
-      if (playerIds.length === 2) {
-        // if both players are set, let's start
-        window.RouterManager.goTo('game', this.init)
-      }
-    } else if (data[0] === 'cursor_move') {
-      const x = parseFloat(data[2], 10) * this.vbWidth
-      const y = parseFloat(data[3], 10) * this.vbWidth
-      // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
-      this.players[data[1]].targetX = x + this.players[data[1]].targetX
-      this.players[data[1]].targetY = y + this.players[data[1]].targetY
-
-      // this.players[data[1]].targetX
-    } else if (data[0] === 'click') {
-      // data[1] needs to be the index of player (or id)
-      this.currentScene.handleClick(data[1])
+        // this.players[data[1]].targetX
+        break
+      case 'click':
+        // data[1] needs to be the index of player (or id)
+        this.currentScene.handleClick(data[1])
+        break
     }
   }
 
   init = () => {
-    if (!DEBUG) Server.websocket.send(`score,${playerIds[0]},0`)
+    if (!DEBUG) Server.websocket.send(`score,${this.playerIds[0]},0`)
 
     this.element = document.querySelector('[game]')
 
@@ -167,7 +209,7 @@ export default class GameManager {
   }
 
   setPlayers() {
-    this.playerIds = playerIds
+    this.this.playerIds = this.playerIds
 
     const colors = [
       'purple',
@@ -176,18 +218,18 @@ export default class GameManager {
 
     // each player is an object with a key/id
     this.players = {}
-    if (playerIds.length === 2) {
-      this.players[playerIds[0]] = new Player({
+    if (this.playerIds.length === 2) {
+      this.players[this.playerIds[0]] = new Player({
         el: this.dom.cursors[0],
         index: 0,
         color: colors[0],
-        id: playerIds[0],
+        id: this.playerIds[0],
       })
-      this.players[playerIds[1]] = new Player({
+      this.players[this.playerIds[1]] = new Player({
         el: this.dom.cursors[1],
         index: 1,
         color: colors[1],
-        id: playerIds[1],
+        id: this.playerIds[1],
       })
     }
   }
@@ -274,11 +316,11 @@ export default class GameManager {
     }
 
     // reset players pos to 0
-    for (let i = 0; i < playerIds.length; i++) {
-      this.players[playerIds[i]].targetX = 0
-      this.players[playerIds[i]].targetY = 0
-      this.players[playerIds[i]].x = 0
-      this.players[playerIds[i]].y = 0
+    for (let i = 0; i < this.playerIds.length; i++) {
+      this.players[this.playerIds[i]].targetX = 0
+      this.players[this.playerIds[i]].targetY = 0
+      this.players[this.playerIds[i]].x = 0
+      this.players[this.playerIds[i]].y = 0
 
       // reset items in board
       this.dom.boardPlayerItems[i].innerHTML = ''

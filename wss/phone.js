@@ -43,6 +43,7 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
     })
 
     ws.on('close', message => {
+      wssPage.clients[0].send(`phone_left,${ws.id}`)
       console.log('phone left')
     })
   })
