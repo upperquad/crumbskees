@@ -31,5 +31,5 @@
 
 
 .message-end {
-  animation: fadeIn 1s $ExpoEaseOut forwards;
+  animation: fadeIn 1s $ExpoEaseOut forwards, fadeOut 1s $ExpoEaseOut forwards 1s;
 }

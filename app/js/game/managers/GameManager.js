@@ -157,8 +157,8 @@ export default class GameManager {
         item: scene1Item,
         videoIntro: scene1IntroVideo,
         numItems: 5,
-        gridCols: 16,
-        gridLines: 7,
+        gridCols: 32,
+        gridLines: 14,
         effect: '?',
       }, {
         bkg: scene2Bkg,
@@ -166,8 +166,8 @@ export default class GameManager {
         item: scene2Item,
         videoIntro: scene1IntroVideo,
         numItems: 5,
-        gridCols: 16,
-        gridLines: 7,
+        gridCols: 32,
+        gridLines: 14,
         effect: '?',
       }, {
         bkg: scene1Bkg,
@@ -175,23 +175,15 @@ export default class GameManager {
         item: scene1Item,
         videoIntro: scene1IntroVideo,
         numItems: 5,
-        gridCols: 16,
-        gridLines: 7,
-        effect: '?',
-      }, {
-        bkg: scene1Bkg,
-        maskedBkg: scene1Bkg,
-        item: scene1Item,
-        videoIntro: scene1IntroVideo,
-        numItems: 5,
-        gridCols: 16,
-        gridLines: 7,
+        gridCols: 32,
+        gridLines: 14,
         effect: '?',
       },
     ]
     this.players = []
     this.scores = [0, 0]
     this.currentSceneIndex = 0
+
 
     this.loadBkg()
   }
@@ -206,6 +198,9 @@ export default class GameManager {
       // Set the viewbox to the ratio of the scene
       this.vbWidth = 1920
       this.vbHeight = 840
+      this.gridUnit = 3.125 / 100 * this.vbWidth // 3.125 == 1 unit grid (1920 / 32)
+      this.gridUnitVw = 3.125
+      this.gridUnitVh = (60 / this.vbHeight * 100)
       this.setPlayers()
 
       const scene = this.scenes[this.currentSceneIndex]
@@ -275,8 +270,8 @@ export default class GameManager {
     this.element.classList.add('sceneStarted')
   }
 
-  score(player, item) {
-    this.popUpMessage('+1', player.color) // + color player
+  score(player, item, pos = false) {
+    this.popUpMessage('+1', player.color, false, pos) // + color player
 
     this.scores[player.index] += 1
     this.element.classList.add('item-found')
@@ -296,33 +291,44 @@ export default class GameManager {
     Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
 
-  popUpMessage(message, color = 'gray', end = false) {
+  popUpMessage(message, color = 'gray', end = false, pos = false) {
     const div = document.createElement('div')
     div.classList.add('message', 't-120--bold', `color--${color}`)
     if (end) {
       div.classList.add('message-end')
     }
+    if (pos) {
+      div.style.left = `${pos.x * 100}%`
+      div.style.top = `${pos.y * 100}%`
+    }
     div.innerHTML = message
     this.dom.scene.appendChild(div)
 
-    setTimeout(() => {
-      div.remove()
-    }, 2000)
+    if (!end) {
+      setTimeout(() => {
+        div.remove()
+      }, 2000)
+    }
   }
 
-  endScene(message = 'ROUND COMPLETE') {
+  endScene(message = 'DOPE.') {
     clearInterval(this.timerInterval)
     this.popUpMessage(message, 'red', true)
 
     this.element.classList.remove('sceneStarted')
 
     setTimeout(() => {
+      this.element.classList.add('isOutro')
+    }, 1000)
+
+    setTimeout(() => {
+      this.element.classList.remove('isOutro')
       this.element.classList.add('isIntro')
-    }, 2000)
+    }, 5000)
 
     setTimeout(() => {
       this.updateScene(this.currentSceneIndex + 1)
-    }, 5000)
+    }, 6500)
   }
 
   updateScene(index) {

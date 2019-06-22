@@ -1,6 +1,7 @@
 // Grid system
 // 32 x 18
-// 1920 / 32
+// 1920 / 32 --> 60
+// 60 / 1920
 
 $base-width: 1920;
 $grid-unit: 3.125vw;
@@ -22,7 +23,7 @@ $color-orange: #ff9d21;
 $color-red: #FF4047;
 $color-purple: #6D12E3;
 
-$border: 1px solid $color-black;
+$border: 2px solid $color-black;
 
 
 /* ------------------------------------------------------------------ */

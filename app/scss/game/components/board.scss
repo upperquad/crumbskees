@@ -73,8 +73,11 @@
     }
 
     &__score {
-      border-top: $border;
+      -webkit-text-stroke-color: $color-black;
+      -webkit-text-stroke-width: 2px;
       border-right: $border;
+      border-top: $border;
+      color: transparent !important;
       display: inline-block;
       height: grid(3);
       line-height: grid(3);
@@ -89,6 +92,8 @@
       vertical-align: top;
       width: grid(7);
       padding: grid(1);
+      display: flex;
+      align-items: center;
     }
 
     &__items {

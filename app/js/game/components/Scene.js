@@ -7,8 +7,6 @@ import { clamp, randomInt } from '../utils/math'
 
 import DEBUG from '../constants/Debug'
 
-const playerIds = DEBUG ? ['refiejrfer', 'erfjerfpie'] : []
-
 export default class Scene {
   constructor(options) {
     this.element = options.el
@@ -36,6 +34,7 @@ export default class Scene {
       introReady: this.element.querySelector('.intro__ready'),
       introSet: this.element.querySelector('.intro__set'),
       introGo: this.element.querySelector('.intro__go'),
+      reveal: this.element.querySelector('.scene__reveal'),
       svgScene: this.element.querySelector('.scene-svg'),
       svgMaskedImage: this.element.querySelector('.scene-svg__image'),
       svgClipPath: this.element.querySelector('.scene-svg__clippath'),
@@ -53,10 +52,10 @@ export default class Scene {
     this.coefAcceleration = 0.2
     this.increaseMax = window.GameManager.vbWidth * 0.07
     // items
-    this.itemSize = window.GameManager.vbWidth * 0.05
+    this.itemSize = window.GameManager.gridUnit
 
     // values for mouse event
-    this.clickPrecision = 0.05
+    this.clickPrecision = window.GameManager.gridUnitVw * 1.5 / 100 // 1.5 grid unit
     this.numItemFound = 0
 
     // values for DOM scene
@@ -71,7 +70,9 @@ export default class Scene {
     this.setGrid()
     this.setItems()
 
-    this.intro()
+    setTimeout(() => {
+      this.intro()
+    }, 1000)
   }
 
   intro() {
@@ -87,17 +88,18 @@ export default class Scene {
       this.dom.introVideo,
     ], { clearProps: 'all' })
 
-    this.dom.introRound.classList.remove('blink')
+    // if (DEBUG) {
+    //   this.dom.introRound.style.display = 'none'
+    //   this.dom.introVideo.style.display = 'none'
+    //   this.dom.introCircle.style.display = 'none'
+    //   this.start()
+    //   return false
+    // }
 
     this.dom.itemToFind.src = this.item
     this.dom.introVideo.src = this.videoIntro
     this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
-
-    // if (DEBUG) {
-    //   this.dom.introRound.innerHTML = ''
-    //   this.start()
-    //   return false
-    // }
+    this.dom.introRound.classList.remove('blink')
 
     const tlScaleDown = new TimelineMax({ paused: true })
     const tlItemToFind = new TimelineMax({ paused: true })
@@ -198,9 +200,9 @@ export default class Scene {
     let y
 
     for (let i = 0; i < this.gridCols; i++) {
-      x = i + 0.5 // add half
+      x = i
       for (let j = 0; j < this.gridLines; j++) {
-        y = j + 0.5 // add half
+        y = j
         const obj = { x, y }
         this.positionsInGrid.push(obj)
       }
@@ -213,8 +215,8 @@ export default class Scene {
     for (let i = 0; i < this.numItems; i++) {
       // randomize
       const rd = randomInt(0, this.positionsInGrid.length - 1)
-      const x = this.positionsInGrid[rd].x / this.gridCols
-      const y = this.positionsInGrid[rd].y / this.gridLines
+      const x = (this.positionsInGrid[rd].x) / this.gridCols + window.GameManager.gridUnitVw / 200
+      const y = (this.positionsInGrid[rd].y) / this.gridLines + window.GameManager.gridUnitVh / 200
       this.positionsInGrid.splice(rd, 1)
 
       // svg items
@@ -225,7 +227,7 @@ export default class Scene {
       svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.item)
       svgImage.setAttributeNS(null, 'x', `${x * 100}%`)
       svgImage.setAttributeNS(null, 'y', `${y * 100}%`)
-      svgImage.setAttributeNS(null, 'transform', `translate(-${this.itemSize / 2} -${this.itemSize / 2})`)
+      svgImage.setAttributeNS(null, 'transform', `translate(-${this.itemSize / 2}, -${this.itemSize / 2})`)
       svgImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
 
       this.dom.svgClipPathRef.appendChild(svgImage)
@@ -259,6 +261,7 @@ export default class Scene {
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     // Add "front" bkg
     this.element.style.backgroundImage = `url(${this.maskedBkg})`
+    this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
   }
 
   // ////////
@@ -294,50 +297,47 @@ export default class Scene {
   }
 
   handleClick = playerId => {
-    if (DEBUG) playerId = playerIds[0]
-    const precision = this.clickPrecision
+    if (DEBUG) playerId = window.GameManager.playerIds[0]
     const player = window.GameManager.players[playerId]
     const x = (player.targetX / window.GameManager.vbWidth) + 0.5
     const y = (player.targetY / window.GameManager.vbHeight) + 0.5
 
-    let goodClick = false
+    // let goodClick = false
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (!item.found &&
-        x > item.x - precision &&
-        x < item.x + precision &&
-        y > item.y - precision &&
-        y < item.y + precision) {
-        window.GameManager.score(player, this.item)
+        x > item.x - this.clickPrecision &&
+        x < item.x + this.clickPrecision &&
+        y > item.y - this.clickPrecision &&
+        y < item.y + this.clickPrecision) {
+        window.GameManager.score(player, this.item, { x, y })
         item.found = true
         item.el.style.opacity = 0
-        item.debugEl.style.opacity = 0
+        if (item.debugEl) item.debugEl.style.opacity = 0
 
         this.numItemFound = this.numItemFound + 1
-        goodClick = true
+        // goodClick = true
       }
     }
-
-    if (goodClick) {
-      player.el.classList.add('good')
-    } else {
-      player.el.classList.add('wrong')
-    }
-
-    // this.dom.svgClipPathRef.style.opacity = 0
-
-    setTimeout(() => {
-      player.el.classList.remove('good', 'wrong')
-      // add a rect svg element in the clippath following the
-      // cursor, opacity:0 by default, display it to fill the cursor.
-      // this.dom.svgClipPathRef.style.opacity = 1
-    }, 1000)
 
     if (this.numItemFound === this.items.length && !this.isEnded) {
       this.isEnded = true
       window.GameManager.endScene()
     }
+
+    // if (goodClick) {
+    //   player.el.classList.add('good')
+    // } else {
+    //   player.el.classList.add('wrong')
+    // }
+
+    // setTimeout(() => {
+    //   player.el.classList.remove('good', 'wrong')
+    //   // add a rect svg element in the clippath following the
+    //   // cursor, opacity:0 by default, display it to fill the cursor.
+    //   // this.dom.svgClipPathRef.style.opacity = 1
+    // }, 1000)
   }
 
   handleRAF = e => {

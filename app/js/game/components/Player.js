@@ -17,7 +17,7 @@ export default class Player {
     this.numPoints = 8
     this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
     this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2
-    this.minRadius = window.GameManager.vbWidth * 0.05 // 70% of full size / 2 --> should be based on width viewbox
+    this.minRadius = window.GameManager.gridUnit * 1.4 // 3.125 == 1 unit grid (1920 / 32)
     this.maxRadius = this.minRadius + this.minRadius * 0.2
     this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
