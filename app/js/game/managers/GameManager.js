@@ -304,9 +304,11 @@ export default class GameManager {
     div.innerHTML = message
     this.dom.scene.appendChild(div)
 
-    setTimeout(() => {
-      div.remove()
-    }, 2000)
+    if (!end) {
+      setTimeout(() => {
+        div.remove()
+      }, 2000)
+    }
   }
 
   endScene(message = 'DOPE.') {
@@ -316,12 +318,17 @@ export default class GameManager {
     this.element.classList.remove('sceneStarted')
 
     setTimeout(() => {
+      this.element.classList.add('isOutro')
+    }, 1000)
+
+    setTimeout(() => {
+      this.element.classList.remove('isOutro')
       this.element.classList.add('isIntro')
-    }, 2000)
+    }, 5000)
 
     setTimeout(() => {
       this.updateScene(this.currentSceneIndex + 1)
-    }, 5000)
+    }, 6500)
   }
 
   updateScene(index) {

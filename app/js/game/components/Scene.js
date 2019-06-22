@@ -34,6 +34,7 @@ export default class Scene {
       introReady: this.element.querySelector('.intro__ready'),
       introSet: this.element.querySelector('.intro__set'),
       introGo: this.element.querySelector('.intro__go'),
+      reveal: this.element.querySelector('.scene__reveal'),
       svgScene: this.element.querySelector('.scene-svg'),
       svgMaskedImage: this.element.querySelector('.scene-svg__image'),
       svgClipPath: this.element.querySelector('.scene-svg__clippath'),
@@ -69,7 +70,9 @@ export default class Scene {
     this.setGrid()
     this.setItems()
 
-    this.intro()
+    setTimeout(() => {
+      this.intro()
+    }, 1000)
   }
 
   intro() {
@@ -85,19 +88,18 @@ export default class Scene {
       this.dom.introVideo,
     ], { clearProps: 'all' })
 
-    if (DEBUG) {
-      this.dom.introRound.style.display = 'none'
-      this.dom.introVideo.style.display = 'none'
-      this.dom.introCircle.style.display = 'none'
-      this.start()
-      return false
-    }
-
-    this.dom.introRound.classList.remove('blink')
+    // if (DEBUG) {
+    //   this.dom.introRound.style.display = 'none'
+    //   this.dom.introVideo.style.display = 'none'
+    //   this.dom.introCircle.style.display = 'none'
+    //   this.start()
+    //   return false
+    // }
 
     this.dom.itemToFind.src = this.item
     this.dom.introVideo.src = this.videoIntro
     this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
+    this.dom.introRound.classList.remove('blink')
 
     const tlScaleDown = new TimelineMax({ paused: true })
     const tlItemToFind = new TimelineMax({ paused: true })
@@ -235,8 +237,8 @@ export default class Scene {
       if (DEBUG) {
         div = document.createElement('div')
         div.classList.add('debug')
-        div.style.left = `calc(${x * 100}% - ${0 / 2}vw)`
-        div.style.top = `calc(${y * 100}% - ${0 / 2}vh)`
+        div.style.left = `${x * 100}%`
+        div.style.top = `${y * 100}%`
         this.element.appendChild(div)
       }
 
@@ -259,6 +261,7 @@ export default class Scene {
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     // Add "front" bkg
     this.element.style.backgroundImage = `url(${this.maskedBkg})`
+    this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
   }
 
   // ////////
@@ -299,7 +302,7 @@ export default class Scene {
     const x = (player.targetX / window.GameManager.vbWidth) + 0.5
     const y = (player.targetY / window.GameManager.vbHeight) + 0.5
 
-    let goodClick = false
+    // let goodClick = false
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
@@ -314,27 +317,27 @@ export default class Scene {
         if (item.debugEl) item.debugEl.style.opacity = 0
 
         this.numItemFound = this.numItemFound + 1
-        goodClick = true
+        // goodClick = true
       }
     }
-
-    if (goodClick) {
-      player.el.classList.add('good')
-    } else {
-      player.el.classList.add('wrong')
-    }
-
-    setTimeout(() => {
-      player.el.classList.remove('good', 'wrong')
-      // add a rect svg element in the clippath following the
-      // cursor, opacity:0 by default, display it to fill the cursor.
-      // this.dom.svgClipPathRef.style.opacity = 1
-    }, 1000)
 
     if (this.numItemFound === this.items.length && !this.isEnded) {
       this.isEnded = true
       window.GameManager.endScene()
     }
+
+    // if (goodClick) {
+    //   player.el.classList.add('good')
+    // } else {
+    //   player.el.classList.add('wrong')
+    // }
+
+    // setTimeout(() => {
+    //   player.el.classList.remove('good', 'wrong')
+    //   // add a rect svg element in the clippath following the
+    //   // cursor, opacity:0 by default, display it to fill the cursor.
+    //   // this.dom.svgClipPathRef.style.opacity = 1
+    // }, 1000)
   }
 
   handleRAF = e => {

@@ -35,6 +35,6 @@ export default class RouterManager {
       this.main.innerHTML = tmp
       this.main.classList.add('transition-in')
       callback()
-    }, 1000)
+    }, 1400)
   }
 }
