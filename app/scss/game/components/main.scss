@@ -4,4 +4,24 @@
   padding-bottom: 56.25%; // 1080 / 1920
   position: relative;
   width: 100%;
+
+  &::after {
+    background-color: white;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: transform 1.5s $ExpoEaseOut;
+    transform: scaleX(1);
+    transform-origin: 0% center;
+  }
+
+  &.transition-out {
+    &::after {
+      transform: scaleX(0);
+    }
+  }
 }

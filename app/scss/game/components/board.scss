@@ -81,6 +81,9 @@
       text-align: center;
       vertical-align: middle;
       width: grid(3);
+      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-color: $color-black;
+      color: transparent !important;
     }
 
     &__name {
@@ -89,6 +92,8 @@
       vertical-align: top;
       width: grid(7);
       padding: grid(1);
+      display: flex;
+      align-items: center;
     }
 
     &__items {
