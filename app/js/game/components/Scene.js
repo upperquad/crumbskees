@@ -1,7 +1,7 @@
 import uuidv1 from 'uuid/v1'
 import { TweenMax, TimelineMax } from 'gsap/TweenMax'
 import { getNow } from '../utils/time'
-import { getOffsetTop, getOffsetLeft } from '../utils/dom'
+import { getOffsetTop, getOffsetLeft, splitText } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
 
@@ -72,25 +72,6 @@ export default class Scene {
     this.intro()
   }
 
-  splitText(el) {
-    const spans = []
-    const length = el.textContent.length
-
-    for (let i = 0; i < length; i++) {
-      const span = document.createElement('span')
-      span.innerHTML = el.textContent[i]
-      spans.push(span)
-    }
-
-    el.innerHTML = ''
-
-    for (let i = 0; i < length; i++) {
-      el.appendChild(spans[i])
-    }
-
-    return spans
-  }
-
   intro() {
     // Clean previous animation
     TweenMax.set([
@@ -122,7 +103,7 @@ export default class Scene {
     const tlItemToFind = new TimelineMax({ paused: true })
     const tlReady = new TimelineMax({ paused: true })
 
-    const text = this.splitText(this.dom.introRound)
+    const text = splitText(this.dom.introRound)
     text.forEach((el, index) => {
       const tl = new TimelineMax({ delay: index * 0.06 })
       tl.fromTo(el, 0.8, { y: '100%' }, { y: '-70%', ease: window.Expo.easeOut })

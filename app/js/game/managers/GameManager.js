@@ -1,4 +1,7 @@
 import QRCode from 'qrcode'
+import { TimelineMax } from 'gsap/TweenMax'
+import { splitText } from '../utils/dom'
+
 // components
 import Scene from '../components/Scene'
 import Player from '../components/Player'
@@ -87,6 +90,23 @@ export default class GameManager {
     }
   }
 
+  kickOffGame = () => {
+    // handle if someone quits here
+    document.querySelector('.instruction').classList.add('is-started')
+    const text = splitText(document.querySelector('.instruction__letsplay'))
+    text.forEach((el, index) => {
+      const tl = new TimelineMax({ delay: index * 0.06 })
+      tl.fromTo(el, 0.8, { y: '100%' }, { y: '-70%', ease: window.Expo.easeOut })
+        .to(el, 0.6, { y: '0%', ease: window.Bounce.easeOut }, '-=0.3')
+        .add(() => {
+          tl.kill()
+          if (index === text.length - 1) {
+            window.RouterManager.goTo('game', this.init)
+          }
+        })
+    })
+  }
+
   listenServer = event => {
     const data = event.data.split(',')
 
@@ -95,7 +115,7 @@ export default class GameManager {
         this.verifyToken(data[1], data[2])
 
         if (this.playerIds[0] !== null && this.playerIds[1] !== null) {
-          window.RouterManager.goTo('game', this.init)
+          this.kickOffGame()
         }
         break
       case 'phone_left':
