@@ -372,7 +372,16 @@ export default class GameManager {
 
   initFinal = () => {
     this.charactersImg = [character1, character2]
-    const playerIndex = this.scores[0] > this.scores[1] ? 0 : 1
+    let playerIndex = this.scores[0] > this.scores[1] ? 0 : 1
+
+    if (this.scores[0] > this.scores[1]) {
+      playerIndex = 0
+    } else if (this.scores[0] < this.scores[1]) {
+      playerIndex = 1
+    } else {
+      console.log('tie!')
+      // ???
+    }
 
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
