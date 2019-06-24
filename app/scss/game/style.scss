@@ -6,14 +6,17 @@
 @import "core/import";
 
 // Add your components here
+@import "components/board";
+@import "components/debug";
+@import "components/final";
+@import "components/footer";
 @import "components/game";
 @import "components/html";
+@import "components/intro";
+@import "components/main";
 @import "components/message";
 @import "components/scene";
 @import "components/scene-svg";
-@import "components/board";
-@import "components/timer";
 @import "components/setup";
-@import "components/debug";
-@import "components/main";
-@import "components/intro";
+@import "components/timer";
+@import "components/tutorial";

@@ -19,6 +19,10 @@
   font-size: responsive-font(32);
 }
 
+[class*="-36"] {
+  font-size: responsive-font(36);
+}
+
 [class*="-48"] {
   font-size: responsive-font(48);
 }
@@ -41,6 +45,10 @@
 
 [class*="-120"] {
   font-size: responsive-font(120);
+}
+
+[class*="-180"] {
+  font-size: responsive-font(180);
 }
 
 [class*="-200"] {
