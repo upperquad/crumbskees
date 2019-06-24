@@ -88,13 +88,13 @@ export default class Scene {
       this.dom.introVideo,
     ], { clearProps: 'all' })
 
-    // if (DEBUG) {
-    //   this.dom.introRound.style.display = 'none'
-    //   this.dom.introVideo.style.display = 'none'
-    //   this.dom.introCircle.style.display = 'none'
-    //   this.start()
-    //   return false
-    // }
+    if (DEBUG) {
+      this.dom.introRound.style.display = 'none'
+      this.dom.introVideo.style.display = 'none'
+      this.dom.introCircle.style.display = 'none'
+      this.start()
+      return false
+    }
 
     this.dom.itemToFind.src = this.item
     this.dom.introVideo.src = this.videoIntro

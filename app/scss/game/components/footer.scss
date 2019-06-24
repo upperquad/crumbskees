@@ -1,0 +1,68 @@
+footer {
+  align-items: center;
+  border: 2px solid $color-black-full;
+  display: flex;
+  flex-flow: row nowrap;
+  left: 0;
+  bottom: 0;
+  text-transform: uppercase;
+  height: 105 / 1920 * 100vw;
+  position: absolute;
+  width: 100%;
+
+  .love,
+  .whatup {
+    letter-spacing: -0.02em;
+    line-height: normal;
+  }
+
+  .whatup {
+    padding: 19/1920*100vw 0;
+    position: relative;
+    overflow: hidden;
+
+    div {
+      animation: marquee 3s infinite linear;
+    }
+
+    div:last-of-type {
+      left: 100%;
+      position: absolute;
+      top: 19/1920*100vw;
+      width: 100%;
+    }
+
+    &::after {
+      background: $color-green;
+      content: '';
+      height: 34/1920*100vw;
+      right: 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-55%);
+      width: 34/1920*100vw;
+    }
+  }
+
+  .black-bar {
+    align-items: center;
+    background: $color-black-full;
+    color: $color-white;
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row nowrap;
+    height: 100%;
+    justify-content: space-between;
+    padding: 0 34/1920*100% 0 97/1920*100%;
+  }
+
+  .version {
+    letter-spacing: -0.04em;
+    line-height: normal;
+  }
+
+  .love {
+    text-align: center;
+    width: 298 / 1920 * 100%;
+  }
+}

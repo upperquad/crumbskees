@@ -19,6 +19,9 @@ import scene2Item from '../../../assets/game/images/pattern.png'
 import scene2Bkg from '../../../assets/game/images/find-cat.png'
 // import scene2Item from '../../../assets/game/images/pattern.png'\
 
+import character1 from '../../../assets/game/images/character1.png'
+import character2 from '../../../assets/game/images/character2.png'
+
 const BASE_URL = `http://${window.location.host}/`
 
 // prepare the CharacterId
@@ -34,7 +37,7 @@ export default class GameManager {
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
     } else {
-      window.RouterManager.goTo('game', this.init)
+      window.RouterManager.goTo('game', this.initGame)
     }
   }
 
@@ -101,7 +104,7 @@ export default class GameManager {
         .add(() => {
           tl.kill()
           if (index === text.length - 1) {
-            window.RouterManager.goTo('game', this.init)
+            window.RouterManager.goTo('tutorial', this.initTutorial)
           }
         })
     })
@@ -144,7 +147,13 @@ export default class GameManager {
     }
   }
 
-  init = () => {
+  initTutorial = () => {
+    setTimeout(() => {
+      window.RouterManager.goTo('game', this.initGame)
+    }, 7000)
+  }
+
+  initGame = () => {
     if (!DEBUG) Server.websocket.send(`score,${this.playerIds[0]},0`)
 
     this.element = document.querySelector('[game]')
@@ -335,7 +344,7 @@ export default class GameManager {
     this.destroyScene(this.currentScene)
 
     if (index === this.scenes.length) {
-      // console.log('end of party')
+      window.RouterManager.goTo('final', this.initFinal)
       Server.websocket.send('disconnect_all_users')
       return
     }
@@ -359,6 +368,19 @@ export default class GameManager {
       index: this.currentSceneIndex,
       ...scene,
     })
+  }
+
+  initFinal = () => {
+    this.charactersImg = [character1, character2]
+    const playerIndex = this.scores[0] > this.scores[1] ? 0 : 1
+
+    const scoreEl = document.querySelector('.final__score')
+    const playerEl = document.querySelector('.final__player')
+    const playerImgEl = document.querySelector('.final__player-img')
+
+    playerEl.innerHTML = `player ${playerIndex + 1}`
+    scoreEl.innerHTML = this.scores[playerIndex]
+    playerImgEl.src = this.charactersImg[playerIndex]
   }
 
   destroyScene(scene) {
