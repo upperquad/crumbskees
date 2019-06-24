@@ -36,6 +36,7 @@ export default class GameManager {
 
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
+      Server.websocket.onclose = this.onWsClose
     } else {
       window.RouterManager.goTo('game', this.initGame)
     }
@@ -60,6 +61,12 @@ export default class GameManager {
 
   onWsOpen = () => {
     window.RouterManager.goTo('setup', this.setup)
+  }
+
+  onWsClose = event => {
+    if (event.reason === 'active_game_exist') {
+      window.RouterManager.goTo('error_game_exist')
+    }
   }
 
   setup = () => {

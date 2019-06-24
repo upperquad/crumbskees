@@ -26,15 +26,21 @@ export default class RouterManager {
       case 'final':
         tmp = finalTmp
         break
+      case 'error_game_exist':
+        tmp = 'An active game is running somewhere else'
     }
 
     this.main.classList.remove('transition-in')
     this.main.classList.add('transition-out')
 
-    setTimeout(() => {
+    clearTimeout(this.timeout)
+
+    this.timeout = setTimeout(() => {
       this.main.innerHTML = tmp
       this.main.classList.add('transition-in')
-      callback()
+      if (callback) {
+        callback()
+      }
     }, 1400)
   }
 }
