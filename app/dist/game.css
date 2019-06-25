@@ -252,6 +252,8 @@ html {
       width: calc(4 * 3.125vw); }
       .board__player__character img {
         width: 100%; }
+      .board__player__character.is-dead {
+        filter: grayscale(100%); }
     .board__player__score {
       -webkit-text-stroke-color: #000;
       -webkit-text-stroke-width: 2px;

@@ -33,6 +33,8 @@ export default class GameManager {
   constructor() {
     this.playerIds = DEBUG ? ['a', 'b'] : [null, null]
     this.tokens = [this.getNewToken(), this.getNewToken()]
+    this.gameStarted = false
+    this.tutorialStarted = false
 
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
@@ -98,7 +100,36 @@ export default class GameManager {
         this.tokens[index] = this.getNewToken()
         this.playerIds[index] = null
         this.updateQr()
+        if (this.tutorialStarted) {
+          clearTimeout(this.tutorialTimeout)
+          window.RouterManager.goTo('setup', this.setup)
+        }
         return
+      }
+    }
+  }
+
+  markPlayerDisconnected = userId => {
+    for (let index = 0; index <= 1; index++) {
+      if (this.playerIds[index] === userId) {
+        this.players[userId].disconnected = true
+        this.updatePlayerConnectionStatus()
+        if (this.players[this.playerIds[1 - index]].disconnected) {
+          window.RouterManager.goTo('final', this.initFinal)
+        }
+        return
+      }
+    }
+  }
+
+  updatePlayerConnectionStatus = () => {
+    for (let index = 0; index <= 1; index++) {
+      const userId = this.playerIds[index]
+      if (this.players[userId]) {
+        const player = this.players[userId]
+        if (player.disconnected && this.dom.boardPlayerCharacters && this.dom.boardPlayerCharacters[index]) {
+          this.dom.boardPlayerCharacters[index].classList.add('is-dead')
+        }
       }
     }
   }
@@ -114,6 +145,7 @@ export default class GameManager {
         .add(() => {
           tl.kill()
           if (index === text.length - 1) {
+            this.tutorialStarted = true
             window.RouterManager.goTo('tutorial', this.initTutorial)
           }
         })
@@ -132,10 +164,15 @@ export default class GameManager {
         }
         break
       case 'phone_left':
-        this.removePhone(data[1])
+        if (this.gameStarted) {
+          // Mark player lost, or end game if both are lost
+          this.markPlayerDisconnected(data[1])
+        } else {
+          this.removePhone(data[1])
+        }
         break
       case 'cursor_move': {
-        if (this.currentScene) {
+        if (this.gameStarted) {
           const x = parseFloat(data[2], 10) * this.vbWidth
           const y = parseFloat(data[3], 10) * this.vbWidth
           // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
@@ -148,7 +185,7 @@ export default class GameManager {
       }
       case 'click':
         // data[1] needs to be the index of player (or id)
-        if (this.currentScene && this.currentScene.handleClick) {
+        if (this.gameStarted && this.currentScene && this.currentScene.handleClick) {
           this.currentScene.handleClick(data[1])
         }
         break
@@ -158,12 +195,14 @@ export default class GameManager {
   }
 
   initTutorial = () => {
-    setTimeout(() => {
+    this.tutorialTimeout = setTimeout(() => {
       window.RouterManager.goTo('game', this.initGame)
     }, 7000)
   }
 
   initGame = () => {
+    this.gameStarted = true
+
     if (!DEBUG) Server.websocket.send(`score,${this.playerIds[0]},0`)
 
     this.element = document.querySelector('[game]')
@@ -213,7 +252,7 @@ export default class GameManager {
     img.src = this.scenes[this.currentSceneIndex].bkg
     img.onload = () => {
       // image loaded
-      this.dom()
+      this.initDom()
       // Set the viewbox to the ratio of the scene
       this.vbWidth = 1920
       this.vbHeight = 840
@@ -232,13 +271,14 @@ export default class GameManager {
     }
   }
 
-  dom() {
+  initDom() {
     this.dom = {
       scene: this.element.querySelector('.scene'),
       cursors: this.element.querySelectorAll('.cursor'),
       message: this.element.querySelector('.scene__message'),
       boardPlayerScore: this.element.querySelectorAll('.board__player__score'),
       boardPlayerItems: this.element.querySelectorAll('.board__player__items'),
+      boardPlayerCharacters: this.element.querySelectorAll('.board__player__character'),
       timer: this.element.querySelector('.board__center__timer'),
     }
   }
@@ -265,6 +305,7 @@ export default class GameManager {
         id: this.playerIds[1],
       })
     }
+    this.updatePlayerConnectionStatus()
   }
 
   startTimer(duration) {
@@ -355,7 +396,7 @@ export default class GameManager {
 
     if (index === this.scenes.length) {
       window.RouterManager.goTo('final', this.initFinal)
-      Server.websocket.send('disconnect_all_users')
+      // Server.websocket.send('disconnect_all_users')
       return
     }
 
