@@ -54,7 +54,7 @@ export default class GameManager {
           .then(dataUrl => {
             block.classList.remove('is-connected')
             block.querySelector('.qr').innerHTML =
-              `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-14">Think QR codes are stupid? Go to <span class="color--green">${tokenUrl}</span></div>`
+              `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-18">Think QR codes are stupid?<br>Go to ${BASE_URL}<span class="color--red">${this.tokens[index]}</span></div>`
           })
       } else {
         block.classList.add('is-connected')

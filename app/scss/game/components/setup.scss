@@ -90,7 +90,7 @@
     background-repeat: no-repeat;
     background-size: contain;
     position: relative;
-    margin-bottom: 24/1920*100vw;
+    margin-bottom: 12/1920*100vw;
     width: 181/1920*100vw;
 
     &::before {
@@ -101,9 +101,10 @@
   }
 
   .qr__url {
-    text-transform: uppercase;
+    line-height: 1.4;
 
     span {
+      font-weight: bold;
       text-transform: none;
     }
   }

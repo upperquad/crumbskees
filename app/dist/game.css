@@ -438,7 +438,6 @@ footer {
   width: 100%; }
   footer .love,
   footer .whatup {
-    letter-spacing: -0.02em;
     line-height: normal; }
   footer .whatup {
     padding: 0.98958vw 0;
@@ -765,15 +764,16 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     position: relative;
-    margin-bottom: 1.25vw;
+    margin-bottom: 0.625vw;
     width: 9.42708vw; }
     .setup .qr__qr::before {
       content: '';
       display: block;
       padding-top: 100%; }
   .setup .qr__url {
-    text-transform: uppercase; }
+    line-height: 1.4; }
     .setup .qr__url span {
+      font-weight: bold;
       text-transform: none; }
   .setup .marquee {
     padding-top: 2.5vw;
