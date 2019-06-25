@@ -448,6 +448,10 @@ export default class GameManager {
     playerEl.innerHTML = `player ${playerIndex + 1}`
     scoreEl.innerHTML = this.scores[playerIndex]
     playerImgEl.src = this.charactersImg[playerIndex]
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 7000)
   }
 
   initErrorGameExists = () => {
@@ -472,6 +476,10 @@ export default class GameManager {
 
     messageEl.innerHTML = 'We\'ve lost connection!'
     buttonEl.innerHTML = 'Restart'
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 7000)
   }
 
   destroyScene(scene) {
