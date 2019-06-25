@@ -22,7 +22,7 @@ import scene2Bkg from '../../../assets/game/images/find-cat.png'
 import character1 from '../../../assets/game/images/character1.png'
 import character2 from '../../../assets/game/images/character2.png'
 
-const BASE_URL = `http://${window.location.host}/`
+const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 // prepare the CharacterId
 // CharacterId --> get the image of the character
@@ -51,7 +51,8 @@ export default class GameManager {
         QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
           .then(dataUrl => {
             block.classList.remove('is-connected')
-            block.querySelector('.qr').innerHTML = `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-14">Think QR codes are stupid? Go to <span class="color--green">${tokenUrl}</span></div>`
+            block.querySelector('.qr').innerHTML =
+              `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-14">Think QR codes are stupid? Go to <span class="color--green">${tokenUrl}</span></div>`
           })
       } else {
         block.classList.add('is-connected')
@@ -65,7 +66,9 @@ export default class GameManager {
 
   onWsClose = event => {
     if (event.reason === 'active_game_exist') {
-      window.RouterManager.goTo('error_game_exist')
+      window.RouterManager.goTo('error', this.initErrorGameExists)
+    } else {
+      window.RouterManager.goTo('error', this.initErrorConnectionLost)
     }
   }
 
@@ -397,6 +400,30 @@ export default class GameManager {
     playerEl.innerHTML = `player ${playerIndex + 1}`
     scoreEl.innerHTML = this.scores[playerIndex]
     playerImgEl.src = this.charactersImg[playerIndex]
+  }
+
+  initErrorGameExists = () => {
+    const messageEl = document.querySelector('.error__message')
+    const buttonEl = document.querySelector('.error__button')
+
+    messageEl.innerHTML = 'Another game is in progress'
+    buttonEl.innerHTML = 'Kick\'em off'
+    buttonEl.addEventListener('click', event => {
+      event.preventDefault()
+      const websocket = new WebSocket(`${Server.host}/admin?command=disconnect_all`)
+      websocket.onopen = () => {
+        websocket.close()
+        window.location = '/game'
+      }
+    })
+  }
+
+  initErrorConnectionLost = () => {
+    const messageEl = document.querySelector('.error__message')
+    const buttonEl = document.querySelector('.error__button')
+
+    messageEl.innerHTML = 'We\'ve lost connection!'
+    buttonEl.innerHTML = 'Restart'
   }
 
   destroyScene(scene) {

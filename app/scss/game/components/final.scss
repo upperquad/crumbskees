@@ -1,4 +1,5 @@
-.final {
+.final,
+.error {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -57,7 +58,9 @@
       }
     }
   }
+}
 
+.final {
   &__player {
     text-align: center;
     margin-top: grid(0.5);
@@ -90,6 +93,4 @@
     border-width: grid(0.05);
     transform: translate(-50%, 50%);
   }
-
-  
 }
