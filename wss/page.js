@@ -1,7 +1,11 @@
 const initPage = (wssPage, wssPhone, wssAdmin) => {
   wssPage.on('connection', ws => {
-    console.log(`new page`)
-    // handler for only accepting the first approved page
+    if (wssPage.clients.length > 1) {
+      ws.close(1000, 'active_game_exist')
+      return
+    }
+
+    cleanupGame()
 
     ws.on('message', message => {
       const messageList = message.split(',')
@@ -18,6 +22,13 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
       }
     })
   })
+
+  function cleanupGame() {
+    console.log(`new page`)
+    wssPhone.clients.forEach(client => {
+      client.close(1000, 'new_game_started')
+    })
+  }
 
   function onAuthResult(messageList) {
     if (messageList.length !== 3) {

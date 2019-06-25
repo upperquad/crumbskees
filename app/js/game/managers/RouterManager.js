@@ -1,7 +1,8 @@
-import setupTmp from '../../../templates/game-stages/setup.html'
-import tutorialTmp from '../../../templates/game-stages/tutorial.html'
-import gameTmp from '../../../templates/game-stages/game.html'
-import finalTmp from '../../../templates/game-stages/final.html'
+import setupTemplate from '../../../templates/game-stages/setup.html'
+import tutorialTemplate from '../../../templates/game-stages/tutorial.html'
+import gameTemplate from '../../../templates/game-stages/game.html'
+import finalTemplate from '../../../templates/game-stages/final.html'
+import errorTemplate from '../../../templates/game-stages/error.html'
 
 
 export default class RouterManager {
@@ -10,31 +11,37 @@ export default class RouterManager {
   }
 
   goTo(scene, callback) {
-    let tmp = ''
+    let template = ''
     switch (scene) {
       default:
         break
       case 'setup':
-        tmp = setupTmp
+        template = setupTemplate
         break
       case 'tutorial':
-        tmp = tutorialTmp
+        template = tutorialTemplate
         break
       case 'game':
-        tmp = gameTmp
+        template = gameTemplate
         break
       case 'final':
-        tmp = finalTmp
+        template = finalTemplate
         break
+      case 'error':
+        template = errorTemplate
     }
 
     this.main.classList.remove('transition-in')
     this.main.classList.add('transition-out')
 
-    setTimeout(() => {
-      this.main.innerHTML = tmp
+    clearTimeout(this.timeout)
+
+    this.timeout = setTimeout(() => {
+      this.main.innerHTML = template
       this.main.classList.add('transition-in')
-      callback()
+      if (callback) {
+        callback()
+      }
     }, 1400)
   }
 }

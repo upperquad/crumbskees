@@ -70,6 +70,10 @@
       img {
         width: 100%;
       }
+
+      &.is-dead {
+        filter: grayscale(100%);
+      }
     }
 
     &__score {
