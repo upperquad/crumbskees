@@ -11,7 +11,7 @@ export default class Scene {
   constructor(options) {
     this.element = options.el
     this.bkg = options.bkg
-    this.maskedBkg = options.maskedBkg
+    this.frontBkg = options.frontBkg
     this.item = options.item
     this.videoIntro = options.videoIntro
     this.numItems = options.numItems
@@ -97,7 +97,11 @@ export default class Scene {
     }
 
     this.dom.itemToFind.src = this.item
-    this.dom.introVideo.src = this.videoIntro
+    if (this.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
+      this.dom.introVideo.poster = this.videoIntro
+    } else {
+      this.dom.introVideo.src = this.videoIntro
+    }
     this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
     this.dom.introRound.classList.remove('blink')
 
@@ -260,7 +264,7 @@ export default class Scene {
     this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     // Add "front" bkg
-    this.element.style.backgroundImage = `url(${this.maskedBkg})`
+    this.element.style.backgroundImage = `url(${this.frontBkg})`
     this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
   }
 

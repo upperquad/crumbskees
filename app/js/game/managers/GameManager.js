@@ -11,13 +11,20 @@ import Server from '../constants/Server'
 import DEBUG from '../constants/Debug'
 
 // assets
-import scene1Bkg from '../../../assets/game/images/round_3/r3-pattern.gif'
-import scene1Mask from '../../../assets/game/images/round_1/r1-mask.jpg'
-import scene1Item from '../../../assets/game/images/round_1/r1-target.jpg'
-import scene1IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
-import scene2Item from '../../../assets/game/images/pattern.png'
-import scene2Bkg from '../../../assets/game/images/find-cat.png'
-// import scene2Item from '../../../assets/game/images/pattern.png'\
+import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.jpg'
+import scene1Front from '../../../assets/game/images/round_1/r1-front.jpg'
+import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
+import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.jpg'
+
+import scene2Pattern from '../../../assets/game/images/round_2/r2-pattern.jpg'
+import scene2Front from '../../../assets/game/images/round_2/r2-front.jpg'
+import scene2Item from '../../../assets/game/images/round_2/r2-item.png'
+import scene2IntroVideo from '../../../assets/game/images/round_2/r2-intro.mp4'
+
+import scene3Pattern from '../../../assets/game/images/round_3/r3-pattern.gif'
+import scene3Front from '../../../assets/game/images/round_3/r3-front.jpg'
+import scene3Item from '../../../assets/game/images/round_3/r3-item.png'
+import scene3IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
 
 import character1 from '../../../assets/game/images/character1.png'
 import character2 from '../../../assets/game/images/character2.png'
@@ -210,8 +217,8 @@ export default class GameManager {
     // scores
     this.scenes = [
       {
-        bkg: scene1Bkg,
-        maskedBkg: scene1Mask,
+        bkg: scene1Pattern,
+        frontBkg: scene1Front,
         item: scene1Item,
         videoIntro: scene1IntroVideo,
         numItems: 5,
@@ -219,19 +226,19 @@ export default class GameManager {
         gridLines: 14,
         effect: '?',
       }, {
-        bkg: scene2Bkg,
-        maskedBkg: scene2Bkg,
+        bkg: scene2Pattern,
+        frontBkg: scene2Front,
         item: scene2Item,
-        videoIntro: scene1IntroVideo,
+        videoIntro: scene2IntroVideo,
         numItems: 5,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
       }, {
-        bkg: scene1Bkg,
-        maskedBkg: scene1Bkg,
-        item: scene1Item,
-        videoIntro: scene1IntroVideo,
+        bkg: scene3Pattern,
+        frontBkg: scene3Front,
+        item: scene3Item,
+        videoIntro: scene3IntroVideo,
         numItems: 5,
         gridCols: 32,
         gridLines: 14,
