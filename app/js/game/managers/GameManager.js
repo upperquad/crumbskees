@@ -457,7 +457,9 @@ export default class GameManager {
   initErrorGameExists = () => {
     const messageEl = document.querySelector('.error__message')
     const buttonEl = document.querySelector('.error__button')
+    const timebarEl = document.querySelector('.error__timebar')
 
+    timebarEl.style.display = 'none'
     messageEl.innerHTML = 'Another game is in progress'
     buttonEl.innerHTML = 'Kick\'em off'
     buttonEl.addEventListener('click', event => {

@@ -58,6 +58,21 @@
       }
     }
   }
+
+  &__timebar {
+    animation: final-timebar 7s linear 1 both;
+    background-color: $color-green;
+    height: grid(0.3);
+
+    @keyframes final-timebar {
+      0% {
+        transform: scaleX(1);
+      }
+      100% {
+        transform: scaleX(0);
+      }
+    }
+  }
 }
 
 .final {
@@ -74,9 +89,16 @@
     }
   }
 
+  &__timebar {
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+
   &__score {
     position: absolute;
-    bottom: 0;
+    bottom: grid(.3);
     left: 50%;
     transform: translateX(-50%);
   }
