@@ -31,6 +31,7 @@ export default class PhoneController {
     this.invalidToken = false
     this.accepted = false
     this.character = null
+    this.result = null
 
     this.throttledTouchMove = throttle(50, this.handleTouchMove)
 
@@ -84,16 +85,11 @@ export default class PhoneController {
     this.connected = false
     this.accepted = false
     this.character = null
+    this.result = null
+    this.token = ''
     console.log(event.reason)
 
-    if (event.reason === 'invalid-token') {
-      this.invalidToken = true
-      this.token = ''
-    } else {
-      // Handle game over
-      this.invalidToken = false
-      this.token = ''
-    }
+    this.invalidToken = event.reason === 'invalid-token'
     this.$scope.$apply()
   }
 
@@ -109,6 +105,8 @@ export default class PhoneController {
         this.score = 0
         this.character = CHARACTERS[parseInt(message[1], 10)]
         break
+      case 'result':
+        this.result = message[1]
       default:
         break
     }

@@ -17,8 +17,11 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
         case 'score':
           onScore(messageList)
           break
-        case 'disconnect_all_users':
+        case 'disconnect_users':
           onDisconnectAll()
+        case 'result':
+          onResult(messageList)
+          break
         default:
           break
       }
@@ -62,6 +65,22 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
       return
     }
     wsPhone.send(`score,${score}`)
+  }
+
+  function onResult(messageList) {
+    if (messageList.length !== 2) {
+      return
+    }
+    const result = messageList[1]
+    if (result === 'tie') {
+      wssPhone.clients.forEach(client => {
+        client.send('result,tie')
+      })
+    } else {
+      wssPhone.clients.forEach(client => {
+        client.send(`result,${client.id === result ? 'won' : 'lost'}`)
+      })
+    }
   }
 
   function onDisconnectAll(messageList) {

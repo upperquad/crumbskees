@@ -453,6 +453,8 @@ export default class GameManager {
       tie = true
     }
 
+    Server.websocket.send(`result,${tie ? 'tie' : this.playerIds[playerIndex]}`)
+
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
     const playerImgEl = document.querySelector('.final__player-img')
@@ -473,7 +475,7 @@ export default class GameManager {
     }
 
     setTimeout(() => {
-      Server.websocket.send('disconnect_all_users')
+      Server.websocket.send('disconnect_users')
       window.location.reload()
     }, 7000)
   }
