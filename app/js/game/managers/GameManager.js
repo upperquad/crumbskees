@@ -235,7 +235,9 @@ export default class GameManager {
   initGame = () => {
     this.gameStarted = true
 
-    if (!DEBUG) Server.websocket.send(`score,${this.playerIds[0]},0`)
+    if (!DEBUG) {
+      Server.websocket.send('game_start')
+    }
 
     this.element = document.querySelector('[game]')
 
