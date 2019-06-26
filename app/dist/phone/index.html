@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link href="/phone.css" rel="stylesheet"></head>
   <body ng-controller="PhoneController as phoneCtrl" ng-class="{'is-ready': phoneCtrl.ready}">
-    <div class="touchpad" id="touchpad">
+    <div id="touchpad" ng-class="['touchpad', {'is-shown': (phoneCtrl.accepted && phoneCtrl.userConfirmed && phoneCtrl.result === null)}]">
+      <img src="{{phoneCtrl.character.image}}" />
+      <div class="score">
+        {{phoneCtrl.score}}
+      </div>
       <div class="touch-bubble" id="touch-bubble"></div>
     </div>
     <div class="connecting" ng-if="phoneCtrl.isConnecting">Connecting</div>
@@ -23,8 +27,17 @@
             ng-click="phoneCtrl.tokenKey(-1)">←</div>
       </div>
     </div>
-    <div class="score">
-      {{phoneCtrl.score}}
+    <div class="character-confirm" ng-if="(phoneCtrl.accepted && !phoneCtrl.userConfirmed)">
+      <div class="confirm__meet">Meet your character:</div>
+      <img src="{{phoneCtrl.character.image}}" />
+      <div class="confirm__button" role="button" ng-click="phoneCtrl.handleConfirm()">Start</div>
+    </div>
+    <div class="result" ng-if="phoneCtrl.result !== null">
+      <div class="result__text">{{phoneCtrl.result !== 'tied' ? 'You ' : null}}{{phoneCtrl.result}}</div>
+      <img src="{{phoneCtrl.character.image}}" />
+      <div class="score">
+        {{phoneCtrl.score}}
+      </div>
     </div>
   <script type="text/javascript" src="/js/phone.js"></script></body>
 </html>

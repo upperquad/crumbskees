@@ -72,9 +72,9 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
       return
     }
     const result = messageList[1]
-    if (result === 'tie') {
+    if (result === 'tied') {
       wssPhone.clients.forEach(client => {
-        client.send('result,tie')
+        client.send('result,tied')
       })
     } else {
       wssPhone.clients.forEach(client => {

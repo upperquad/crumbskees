@@ -453,7 +453,7 @@ export default class GameManager {
       tie = true
     }
 
-    Server.websocket.send(`result,${tie ? 'tie' : this.playerIds[playerIndex]}`)
+    Server.websocket.send(`result,${tie ? 'tied' : this.playerIds[playerIndex]}`)
 
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')

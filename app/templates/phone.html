@@ -33,7 +33,7 @@
       <div class="confirm__button" role="button" ng-click="phoneCtrl.handleConfirm()">Start</div>
     </div>
     <div class="result" ng-if="phoneCtrl.result !== null">
-      <div class="result__text">{{phoneCtrl.result !== 'tie' ? 'You ' : null}}{{phoneCtrl.result}}</div>
+      <div class="result__text">{{phoneCtrl.result !== 'tied' ? 'You ' : null}}{{phoneCtrl.result}}</div>
       <img src="{{phoneCtrl.character.image}}" />
       <div class="score">
         {{phoneCtrl.score}}

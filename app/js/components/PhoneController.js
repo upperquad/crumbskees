@@ -107,6 +107,7 @@ export default class PhoneController {
         break
       case 'result':
         this.result = message[1]
+        break
       default:
         break
     }
