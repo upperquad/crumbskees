@@ -55,7 +55,8 @@ export default class Scene {
     this.itemSize = window.GameManager.gridUnit
 
     // values for mouse event
-    this.clickPrecision = window.GameManager.gridUnitVw * 2.5 / 100 // 3 grid unit
+    this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 2.5 grid unit
+    this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 2.5 grid unit
     this.numItemFound = 0
 
     // values for DOM scene
@@ -311,10 +312,10 @@ export default class Scene {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (!item.found &&
-        x > item.x - this.clickPrecision &&
-        x < item.x + this.clickPrecision &&
-        y > item.y - this.clickPrecision &&
-        y < item.y + this.clickPrecision) {
+        x > item.x - this.clickPrecisionW &&
+        x < item.x + this.clickPrecisionW &&
+        y > item.y - this.clickPrecisionH &&
+        y < item.y + this.clickPrecisionH) {
         window.GameManager.score(player, this.item, { x, y })
         item.found = true
         item.el.style.opacity = 0

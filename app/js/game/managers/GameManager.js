@@ -12,7 +12,7 @@ import DEBUG from '../constants/Debug'
 
 // assets
 import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.gif'
-import scene1Front from '../../../assets/game/images/round_1/r1-front.jpg'
+import scene1Front from '../../../assets/game/images/round_1/r1-front.gif'
 import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
 import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.jpg'
 
