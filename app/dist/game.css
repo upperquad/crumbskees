@@ -82,10 +82,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #ff9d21; }
 
 .color--red {
-  color: #FF4047; }
+  color: #ff4047; }
 
 .color--purple {
-  color: #6D12E3; }
+  color: #6d12e3; }
 
 .bkg--black {
   background-color: #000; }
@@ -208,7 +208,7 @@ html {
     background-color: #ff9d21;
     width: 50%; }
   100% {
-    background-color: #FF4047;
+    background-color: #ff4047;
     width: 0%; } }
 
 .board {
@@ -543,7 +543,7 @@ body {
   0% {
     color: transparent; }
   50% {
-    color: #FF4047; }
+    color: #ff4047; }
   100% {
     color: transparent; } }
   .intro__round {
@@ -723,9 +723,9 @@ body {
   top: 0;
   width: 100%; }
   .scene-svg #player1 {
-    stroke: #6D12E3; }
+    stroke: #6d12e3; }
   .scene-svg #player2 {
-    stroke: #FF4047; }
+    stroke: #ff4047; }
   .scene-svg .cursor {
     stroke-width: calc(0.2 * 3.125vw); }
     .scene-svg .cursor.good {
@@ -766,7 +766,7 @@ body {
     pointer-events: none;
     position: relative; }
     .setup .connected::before {
-      background: #FF4047;
+      background: #ff4047;
       border-radius: 50%;
       content: '';
       height: 8.64583vw;
