@@ -253,7 +253,7 @@ export default class GameManager {
         gridLines: 14,
         message: 'DOPE.',
         power: {
-          type: 'freeze',
+          type: 'grow',
           item: scene2Item,
         },
       }, {

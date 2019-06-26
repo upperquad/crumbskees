@@ -48,10 +48,10 @@ export default class Player {
       for (let i = 0; i < scene.items.length; i++) {
         const item = scene.items[i]
         if (!item.found &&
-          x > item.x - scene.clickPrecisionW &&
-          x < item.x + scene.clickPrecisionW &&
-          y > item.y - scene.clickPrecisionH &&
-          y < item.y + scene.clickPrecisionH) {
+          x > item.x - this.clickPrecisionW &&
+          x < item.x + this.clickPrecisionW &&
+          y > item.y - this.clickPrecisionH &&
+          y < item.y + this.clickPrecisionH) {
           window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
         }
       }
