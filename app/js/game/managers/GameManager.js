@@ -47,7 +47,7 @@ export default class GameManager {
       Server.websocket.onopen = this.onWsOpen
       Server.websocket.onclose = this.onWsClose
     } else {
-      window.RouterManager.goTo('game', this.initGame)
+      this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
     }
   }
 
@@ -70,7 +70,7 @@ export default class GameManager {
   }
 
   onWsOpen = () => {
-    window.RouterManager.goTo('setup', this.setup)
+    window.RouterManager.goTo('setup', this.initSetup)
   }
 
   onWsClose = event => {
@@ -81,7 +81,7 @@ export default class GameManager {
     }
   }
 
-  setup = () => {
+  initSetup = () => {
     this.qrBlocks = [...document.querySelectorAll('.setup__upper')]
     this.updateQr()
     Server.websocket.onmessage = this.listenServer
@@ -109,7 +109,7 @@ export default class GameManager {
         this.updateQr()
         if (this.tutorialStarted) {
           clearTimeout(this.tutorialTimeout)
-          window.RouterManager.goTo('setup', this.setup)
+          window.RouterManager.goTo('setup', this.initSetup)
         }
         return
       }
@@ -203,9 +203,32 @@ export default class GameManager {
 
   initTutorial = () => {
     this.tutorialTimeout = setTimeout(() => {
-      window.RouterManager.goTo('game', this.initGame)
+      this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
     }, 7000)
   }
+
+  loadAll = callback => {
+    // load all images
+    Promise.all([
+      this.load(scene1Pattern),
+      this.load(scene1Front),
+      this.load(scene1Item),
+      this.load(scene2Pattern),
+      this.load(scene2Front),
+      this.load(scene2Item),
+      this.load(scene3Pattern),
+      this.load(scene3Front),
+      this.load(scene3Item),
+    ]).then(callback)
+  }
+
+  load = src => new Promise(resolve => {
+    const img = new Image()
+    img.src = src
+    img.onload = () => {
+      resolve()
+    }
+  })
 
   initGame = () => {
     this.gameStarted = true
@@ -221,7 +244,7 @@ export default class GameManager {
         frontBkg: scene1Front,
         item: scene1Item,
         videoIntro: scene1IntroVideo,
-        numItems: 5,
+        numItems: 10,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
@@ -230,7 +253,7 @@ export default class GameManager {
         frontBkg: scene2Front,
         item: scene2Item,
         videoIntro: scene2IntroVideo,
-        numItems: 5,
+        numItems: 10,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
@@ -239,7 +262,7 @@ export default class GameManager {
         frontBkg: scene3Front,
         item: scene3Item,
         videoIntro: scene3IntroVideo,
-        numItems: 5,
+        numItems: 10,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
@@ -248,34 +271,23 @@ export default class GameManager {
     this.players = []
     this.scores = [0, 0]
     this.currentSceneIndex = 0
+    // Size scene parameter
+    this.vbWidth = 1920
+    this.vbHeight = 840
+    this.gridUnit = 3.125 / 100 * this.vbWidth // 3.125 == 1 unit grid (1920 / 32)
+    this.gridUnitVw = 3.125
+    this.gridUnitVh = (60 / this.vbHeight * 100)
 
+    this.initDom()
+    this.setPlayers()
 
-    this.loadBkg()
-  }
+    const scene = this.scenes[this.currentSceneIndex]
 
-  loadBkg() {
-    // Load Current Scene image
-    const img = new Image()
-    img.src = this.scenes[this.currentSceneIndex].bkg
-    img.onload = () => {
-      // image loaded
-      this.initDom()
-      // Set the viewbox to the ratio of the scene
-      this.vbWidth = 1920
-      this.vbHeight = 840
-      this.gridUnit = 3.125 / 100 * this.vbWidth // 3.125 == 1 unit grid (1920 / 32)
-      this.gridUnitVw = 3.125
-      this.gridUnitVh = (60 / this.vbHeight * 100)
-      this.setPlayers()
-
-      const scene = this.scenes[this.currentSceneIndex]
-
-      this.currentScene = new Scene({
-        el: this.dom.scene,
-        index: this.currentSceneIndex,
-        ...scene,
-      })
-    }
+    this.currentScene = new Scene({
+      el: this.dom.scene,
+      index: this.currentSceneIndex,
+      ...scene,
+    })
   }
 
   initDom() {
