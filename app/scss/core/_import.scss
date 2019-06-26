@@ -1,8 +1,6 @@
 @import "variables";
-@import "extends";
 @import "reset";
 @import "colors";
-@import "bkgs";
 
 // Typography
 @import "../typography/font-face";
@@ -11,7 +9,7 @@
 
 // MIXINS
 
-@import "mixins/media-queries";
+@import "mixins/function";
 
 @import "helpers";
 @import "texts";

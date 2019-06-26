@@ -1,22 +1,30 @@
-/* ------------------------------------------------------------------ */
-/*        BREAKPOINTS
-/* ------------------------------------------------------------------ */
+// Grid system
+// 32 x 18
+// 1920 / 32 --> 60
+// 60 / 1920
 
-$breakpoint-small-mobile : 414px;
-$breakpoint-mobile  : 768px;
-$breakpoint-tablet  : 1024px;
-$breakpoint-desktop : 1920px;
-$breakpoint-height : 760px;
+$base-width: 1920;
+$grid-unit: 3.125vw;
 
 /* ------------------------------------------------------------------ */
 /*        COLORS
 /* ------------------------------------------------------------------ */
 
 // Pattern : $color-{name}:#FFFFFF;
-$color-black  : #000000;
-$color-white  : #FFFFFF;
-$color-gray : #aeaeae;
-$color-blue: #0F72E5;
+$color-black: #000;
+$color-black-full: #000;
+$color-white: #e7e7e7;
+$color-white-full: #fff;
+$color-gray: #aeaeae;
+$color-blue: #00c1ff;
+$color-green: #00f384;
+$color-pink: #feb8ee;
+$color-orange: #ff9d21;
+$color-red: #FF4047;
+$color-purple: #6D12E3;
+$color-beige: #FFFAF2;
+
+$border: 2px solid $color-black;
 
 
 /* ------------------------------------------------------------------ */

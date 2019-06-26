@@ -14,4 +14,30 @@
   &--blue {
     color: $color-blue;
   }
+
+  &--green {
+    color: $color-green;
+  }
+
+  &--pink {
+    color: $color-pink;
+  }
+
+  &--orange {
+    color: $color-orange;
+  }
+
+  &--red {
+    color: $color-red;
+  }
+
+  &--purple {
+    color: $color-purple;
+  }
+}
+
+.bkg {
+  &--black {
+    background-color: $color-black;
+  }
 }
