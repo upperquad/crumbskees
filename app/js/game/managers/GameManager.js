@@ -12,7 +12,7 @@ import DEBUG from '../constants/Debug'
 
 // assets
 import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.gif'
-import scene1Front from '../../../assets/game/images/round_1/r1-front.jpg'
+import scene1Front from '../../../assets/game/images/round_1/r1-front.gif'
 import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
 import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.jpg'
 
@@ -47,7 +47,7 @@ export default class GameManager {
       Server.websocket.onopen = this.onWsOpen
       Server.websocket.onclose = this.onWsClose
     } else {
-      window.RouterManager.goTo('game', this.initGame)
+      this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
     }
   }
 
@@ -70,7 +70,7 @@ export default class GameManager {
   }
 
   onWsOpen = () => {
-    window.RouterManager.goTo('setup', this.setup)
+    window.RouterManager.goTo('setup', this.initSetup)
   }
 
   onWsClose = event => {
@@ -81,7 +81,7 @@ export default class GameManager {
     }
   }
 
-  setup = () => {
+  initSetup = () => {
     this.qrBlocks = [...document.querySelectorAll('.setup__upper')]
     this.updateQr()
     Server.websocket.onmessage = this.listenServer
@@ -111,7 +111,7 @@ export default class GameManager {
         this.updateQr()
         if (this.tutorialStarted) {
           clearTimeout(this.tutorialTimeout)
-          window.RouterManager.goTo('setup', this.setup)
+          window.RouterManager.goTo('setup', this.initSetup)
         }
         return
       }
@@ -205,9 +205,32 @@ export default class GameManager {
 
   initTutorial = () => {
     this.tutorialTimeout = setTimeout(() => {
-      window.RouterManager.goTo('game', this.initGame)
+      this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
     }, 7000)
   }
+
+  loadAll = callback => {
+    // load all images
+    Promise.all([
+      this.load(scene1Pattern),
+      this.load(scene1Front),
+      this.load(scene1Item),
+      this.load(scene2Pattern),
+      this.load(scene2Front),
+      this.load(scene2Item),
+      this.load(scene3Pattern),
+      this.load(scene3Front),
+      this.load(scene3Item),
+    ]).then(callback)
+  }
+
+  load = src => new Promise(resolve => {
+    const img = new Image()
+    img.src = src
+    img.onload = () => {
+      resolve()
+    }
+  })
 
   initGame = () => {
     this.gameStarted = true
@@ -223,7 +246,7 @@ export default class GameManager {
         frontBkg: scene1Front,
         item: scene1Item,
         videoIntro: scene1IntroVideo,
-        numItems: 5,
+        numItems: 10,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
@@ -232,7 +255,7 @@ export default class GameManager {
         frontBkg: scene2Front,
         item: scene2Item,
         videoIntro: scene2IntroVideo,
-        numItems: 5,
+        numItems: 10,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
@@ -241,7 +264,7 @@ export default class GameManager {
         frontBkg: scene3Front,
         item: scene3Item,
         videoIntro: scene3IntroVideo,
-        numItems: 5,
+        numItems: 10,
         gridCols: 32,
         gridLines: 14,
         effect: '?',
@@ -250,34 +273,23 @@ export default class GameManager {
     this.players = []
     this.scores = [0, 0]
     this.currentSceneIndex = 0
+    // Size scene parameter
+    this.vbWidth = 1920
+    this.vbHeight = 840
+    this.gridUnit = 3.125 / 100 * this.vbWidth // 3.125 == 1 unit grid (1920 / 32)
+    this.gridUnitVw = 3.125
+    this.gridUnitVh = (60 / this.vbHeight * 100)
 
+    this.initDom()
+    this.setPlayers()
 
-    this.loadBkg()
-  }
+    const scene = this.scenes[this.currentSceneIndex]
 
-  loadBkg() {
-    // Load Current Scene image
-    const img = new Image()
-    img.src = this.scenes[this.currentSceneIndex].bkg
-    img.onload = () => {
-      // image loaded
-      this.initDom()
-      // Set the viewbox to the ratio of the scene
-      this.vbWidth = 1920
-      this.vbHeight = 840
-      this.gridUnit = 3.125 / 100 * this.vbWidth // 3.125 == 1 unit grid (1920 / 32)
-      this.gridUnitVw = 3.125
-      this.gridUnitVh = (60 / this.vbHeight * 100)
-      this.setPlayers()
-
-      const scene = this.scenes[this.currentSceneIndex]
-
-      this.currentScene = new Scene({
-        el: this.dom.scene,
-        index: this.currentSceneIndex,
-        ...scene,
-      })
-    }
+    this.currentScene = new Scene({
+      el: this.dom.scene,
+      index: this.currentSceneIndex,
+      ...scene,
+    })
   }
 
   initDom() {
@@ -431,24 +443,34 @@ export default class GameManager {
 
   initFinal = () => {
     this.charactersImg = [character1, character2]
-    let playerIndex = this.scores[0] > this.scores[1] ? 0 : 1
-
+    let playerIndex
+    let tie = false
     if (this.scores[0] > this.scores[1]) {
       playerIndex = 0
     } else if (this.scores[0] < this.scores[1]) {
       playerIndex = 1
     } else {
-      console.log('tie!')
-      // ???
+      tie = true
     }
 
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
     const playerImgEl = document.querySelector('.final__player-img')
+    const playersImgEl = document.querySelector('.final__players-img')
 
-    playerEl.innerHTML = `player ${playerIndex + 1}`
-    scoreEl.innerHTML = this.scores[playerIndex]
-    playerImgEl.src = this.charactersImg[playerIndex]
+    if (!tie) {
+      playerEl.innerHTML = `player ${playerIndex + 1}`
+      scoreEl.innerHTML = this.scores[playerIndex]
+      playerImgEl.src = this.charactersImg[playerIndex]
+    } else {
+      playerEl.innerHTML = 'TIE!'
+      scoreEl.innerHTML = this.scores[0]
+      const playerImgEl2 = playerImgEl.cloneNode(true)
+      playerImgEl2.src = this.charactersImg[1]
+      playerImgEl.src = this.charactersImg[0]
+      playersImgEl.appendChild(playerImgEl2)
+      playersImgEl.classList.add('tie')
+    }
 
     setTimeout(() => {
       Server.websocket.send('disconnect_all_users')

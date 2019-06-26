@@ -7,9 +7,20 @@
   text-align: center;
   z-index: 1;
 
+  &__frontBkg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+  }
+
   &__reveal {
-    background-position: center center;
-    background-size: cover;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
     height: 100%;
     left: 0;
@@ -17,7 +28,7 @@
     top: 0;
     transition: clip-path 1.3s $CircEaseInOut;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
 
     .isOutro & {
       clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);

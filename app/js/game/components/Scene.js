@@ -34,6 +34,7 @@ export default class Scene {
       introReady: this.element.querySelector('.intro__ready'),
       introSet: this.element.querySelector('.intro__set'),
       introGo: this.element.querySelector('.intro__go'),
+      frontBkg: this.element.querySelector('.scene__frontBkg'),
       reveal: this.element.querySelector('.scene__reveal'),
       svgScene: this.element.querySelector('.scene-svg'),
       svgMaskedImage: this.element.querySelector('.scene-svg__image'),
@@ -55,7 +56,8 @@ export default class Scene {
     this.itemSize = window.GameManager.gridUnit
 
     // values for mouse event
-    this.clickPrecision = window.GameManager.gridUnitVw * 2.5 / 100 // 3 grid unit
+    this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 2.5 grid unit
+    this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 2.5 grid unit
     this.numItemFound = 0
 
     // values for DOM scene
@@ -264,8 +266,11 @@ export default class Scene {
     this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     // Add "front" bkg
-    this.element.style.backgroundImage = `url(${this.frontBkg})`
-    this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
+    setTimeout(() => {
+      this.dom.frontBkg.src = this.frontBkg
+      this.dom.reveal.src = this.bkg
+    }, 1000) // match gifs
+    // this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
   }
 
   // ////////
@@ -311,10 +316,10 @@ export default class Scene {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (!item.found &&
-        x > item.x - this.clickPrecision &&
-        x < item.x + this.clickPrecision &&
-        y > item.y - this.clickPrecision &&
-        y < item.y + this.clickPrecision) {
+        x > item.x - this.clickPrecisionW &&
+        x < item.x + this.clickPrecisionW &&
+        y > item.y - this.clickPrecisionH &&
+        y < item.y + this.clickPrecisionH) {
         window.GameManager.score(player, this.item, { x, y })
         item.found = true
         item.el.style.opacity = 0
@@ -329,19 +334,6 @@ export default class Scene {
       this.isEnded = true
       window.GameManager.endScene()
     }
-
-    // if (goodClick) {
-    //   player.el.classList.add('good')
-    // } else {
-    //   player.el.classList.add('wrong')
-    // }
-
-    // setTimeout(() => {
-    //   player.el.classList.remove('good', 'wrong')
-    //   // add a rect svg element in the clippath following the
-    //   // cursor, opacity:0 by default, display it to fill the cursor.
-    //   // this.dom.svgClipPathRef.style.opacity = 1
-    // }, 1000)
   }
 
   handleRAF = e => {

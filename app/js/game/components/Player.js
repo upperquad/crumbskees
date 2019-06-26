@@ -14,15 +14,15 @@ export default class Player {
     this.id = id
     this.index = index
     this.color = color
-    this.numPoints = 8
+    this.numPoints = 10
     this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
     this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2
-    this.minRadius = window.GameManager.gridUnit * 1.4 // 3.125 == 1 unit grid (1920 / 32)
-    this.maxRadius = this.minRadius + this.minRadius * 0.2
+    this.minRadius = window.GameManager.gridUnit * 1.2 // 3.125 == 1 unit grid (1920 / 32)
+    this.maxRadius = this.minRadius + this.minRadius * 0.45
     this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
-    this.minDuration = 700
-    this.maxDuration = 900
+    this.minDuration = 500
+    this.maxDuration = 700
     // cursor position
     this.x = 0
     this.y = 0

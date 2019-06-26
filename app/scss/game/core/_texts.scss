@@ -23,6 +23,10 @@
   font-size: responsive-font(36);
 }
 
+[class*="-40"] {
+  font-size: responsive-font(40);
+}
+
 [class*="-48"] {
   font-size: responsive-font(48);
 }
