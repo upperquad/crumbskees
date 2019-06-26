@@ -23,7 +23,7 @@
 
   .sceneStarted & {
     &::after {
-      animation: change-color 30s linear infinite forwards;
+      animation: change-color 40s linear infinite forwards;
       content: '';
       height: grid(0.3);
       left: 50%;
