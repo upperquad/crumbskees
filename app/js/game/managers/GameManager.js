@@ -444,22 +444,33 @@ export default class GameManager {
     this.charactersImg = [character1, character2]
     let playerIndex = this.scores[0] > this.scores[1] ? 0 : 1
 
+    let tie = false
     if (this.scores[0] > this.scores[1]) {
       playerIndex = 0
     } else if (this.scores[0] < this.scores[1]) {
       playerIndex = 1
     } else {
-      console.log('tie!')
-      // ???
+      tie = true
     }
 
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
     const playerImgEl = document.querySelector('.final__player-img')
+    const playersImgEl = document.querySelector('.final__players-img')
 
-    playerEl.innerHTML = `player ${playerIndex + 1}`
-    scoreEl.innerHTML = this.scores[playerIndex]
-    playerImgEl.src = this.charactersImg[playerIndex]
+    if (!tie) {
+      playerEl.innerHTML = `player ${playerIndex + 1}`
+      scoreEl.innerHTML = this.scores[playerIndex]
+      playerImgEl.src = this.charactersImg[playerIndex]
+    } else {
+      playerEl.innerHTML = 'TIE!'
+      scoreEl.innerHTML = this.scores[0]
+      const playerImgEl2 = playerImgEl.cloneNode(true)
+      playerImgEl2.src = this.charactersImg[1]
+      playerImgEl.src = this.charactersImg[0]
+      playersImgEl.appendChild(playerImgEl2)
+      playersImgEl.classList.add('tie')
+    }
 
     setTimeout(() => {
       window.location.reload()
