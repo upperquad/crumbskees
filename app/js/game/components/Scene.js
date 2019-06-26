@@ -34,6 +34,7 @@ export default class Scene {
       introReady: this.element.querySelector('.intro__ready'),
       introSet: this.element.querySelector('.intro__set'),
       introGo: this.element.querySelector('.intro__go'),
+      frontBkg: this.element.querySelector('.scene__frontBkg'),
       reveal: this.element.querySelector('.scene__reveal'),
       svgScene: this.element.querySelector('.scene-svg'),
       svgMaskedImage: this.element.querySelector('.scene-svg__image'),
@@ -265,8 +266,11 @@ export default class Scene {
     this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     // Add "front" bkg
-    this.element.style.backgroundImage = `url(${this.frontBkg})`
-    this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
+    setTimeout(() => {
+      this.dom.frontBkg.src = this.frontBkg
+      this.dom.reveal.src = this.bkg
+    }, 1000) // match gifs
+    // this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
   }
 
   // ////////
@@ -330,19 +334,6 @@ export default class Scene {
       this.isEnded = true
       window.GameManager.endScene()
     }
-
-    // if (goodClick) {
-    //   player.el.classList.add('good')
-    // } else {
-    //   player.el.classList.add('wrong')
-    // }
-
-    // setTimeout(() => {
-    //   player.el.classList.remove('good', 'wrong')
-    //   // add a rect svg element in the clippath following the
-    //   // cursor, opacity:0 by default, display it to fill the cursor.
-    //   // this.dom.svgClipPathRef.style.opacity = 1
-    // }, 1000)
   }
 
   handleRAF = e => {
