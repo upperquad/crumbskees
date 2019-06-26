@@ -89,15 +89,17 @@ export default class GameManager {
 
   verifyToken = (token, userId) => {
     let isTokenValid = false
+    let playerIndex = null
     for (let index = 0; index <= 1; index++) {
       if (this.playerIds[index] === null && this.tokens[index] === token) {
         this.tokens[index] = null
         this.playerIds[index] = userId
         isTokenValid = true
+        playerIndex = index
         break
       }
     }
-    Server.websocket.send(`auth_result,${userId},${isTokenValid ? 1 : 0}`)
+    Server.websocket.send(`auth_result,${userId},${isTokenValid ? 1 : 0},${playerIndex}`)
     this.updateQr()
   }
 
