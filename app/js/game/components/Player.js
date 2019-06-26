@@ -31,6 +31,27 @@ export default class Player {
     this.isInsideTime = 0
 
     this.setPoints()
+
+    this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
+  }
+
+  isCloseToItem = () => {
+    const scene = window.GameManager.currentScene
+
+    if (scene) {
+      const x = (this.targetX / window.GameManager.vbWidth) + 0.5
+      const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+      for (let i = 0; i < scene.items.length; i++) {
+        const item = scene.items[i]
+        if (!item.found &&
+          x > item.x - scene.clickPrecisionW &&
+          x < item.x + scene.clickPrecisionW &&
+          y > item.y - scene.clickPrecisionH &&
+          y < item.y + scene.clickPrecisionH) {
+          window.GameManager.popUpMessage('TAP', this.color, false, { x, y })
+        }
+      }
+    }
   }
 
   setPoints() {

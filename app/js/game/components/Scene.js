@@ -318,6 +318,8 @@ export default class Scene {
 
         this.numItemFound = this.numItemFound + 1
         // goodClick = true
+        // kill player intervalTap
+        clearInterval(player.isCloseToItemInterval)
       }
     }
 
