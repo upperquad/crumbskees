@@ -85,6 +85,7 @@ section.token {
       justify-content: center;
       height: 70px;
       margin-bottom: 12px;
+      padding-top: 5px;
       width: 70px;
     }
   }
@@ -215,6 +216,20 @@ section.in-game {
       height: 100px;
       position: absolute;
       right: 0;
+    }
+
+    .score {
+      @extend %Bold;
+
+      font-size: 40vw;
+      left: 50%;
+      position: absolute;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-color: $color-white-full;
+      -webkit-text-stroke-width: 2px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: .2;
     }
   }
 

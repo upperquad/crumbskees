@@ -50,6 +50,7 @@ export default class PhoneController {
     // this.result = 'tied'
     // this.resultTop = 'You tied…'
     // this.resultBottom = 'Nobody wins!'
+    // this.score = 12
 
     this.throttledTouchMove = throttle(50, this.handleTouchMove)
 
@@ -130,7 +131,7 @@ export default class PhoneController {
         break
       case 'accepted': {
         this.accepted = true
-        this.score = 0
+        this.score = null
         const characterIndex = parseInt(message[1], 10)
         this.character = CHARACTERS[characterIndex]
         this.opponent = CHARACTERS[1 - characterIndex]
