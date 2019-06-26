@@ -405,7 +405,6 @@ export default class GameManager {
 
     if (index === this.scenes.length) {
       window.RouterManager.goTo('final', this.initFinal)
-      // Server.websocket.send('disconnect_all_users')
       return
     }
 
@@ -452,6 +451,7 @@ export default class GameManager {
     playerImgEl.src = this.charactersImg[playerIndex]
 
     setTimeout(() => {
+      Server.websocket.send('disconnect_all_users')
       window.location.reload()
     }, 7000)
   }

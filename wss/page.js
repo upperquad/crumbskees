@@ -17,6 +17,8 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
         case 'score':
           onScore(messageList)
           break
+        case 'disconnect_all_users':
+          onDisconnectAll()
         default:
           break
       }
