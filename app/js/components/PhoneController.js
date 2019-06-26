@@ -45,11 +45,11 @@ export default class PhoneController {
     this.resultBottom = ''
 
     // TODO: debug only, remove
-    this.opponent = CHARACTERS[0]
-    this.character = CHARACTERS[1]
-    this.result = 'tied'
-    this.resultTop = 'You tied…'
-    this.resultBottom = 'Nobody wins!'
+    // this.opponent = CHARACTERS[0]
+    // this.character = CHARACTERS[1]
+    // this.result = 'tied'
+    // this.resultTop = 'You tied…'
+    // this.resultBottom = 'Nobody wins!'
 
     this.throttledTouchMove = throttle(50, this.handleTouchMove)
 
