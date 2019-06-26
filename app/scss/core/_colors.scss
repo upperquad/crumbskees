@@ -14,4 +14,38 @@
   &--blue {
     color: $color-blue;
   }
+
+  &--green {
+    color: $color-green;
+  }
+
+  &--pink {
+    color: $color-pink;
+  }
+
+  &--orange {
+    color: $color-orange;
+  }
+
+  &--red {
+    color: $color-red;
+  }
+
+  &--red--fade {
+    color: rgba($color-red, 0.8);
+  }
+
+  &--purple {
+    color: $color-purple;
+  }
+
+  &--purple--fade {
+    color: rgba($color-purple, 0.8);
+  }
+}
+
+.bkg {
+  &--black {
+    background-color: $color-black;
+  }
 }
