@@ -29,6 +29,10 @@ export default class Player {
     this.targetX = 0
     this.targetY = 0
     this.isInsideTime = 0
+    this.increaseMax = window.GameManager.vbWidth * 0.05
+    // values for mouse event
+    this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 1.5 grid unit
+    this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 1.5 grid unit
 
     this.setPoints()
 
@@ -86,5 +90,67 @@ export default class Player {
 
       this.points.push(point)
     }
+  }
+
+  updateRadius(incr, clickPrecision) {
+    for (let i = 0; i < this.points.length; i++) {
+      const point = this.points[i]
+      // Increase each points
+      // if player has grown power, increase player radius
+      const newMaxRadius = this.maxRadius + incr
+      const newMaxMiddleRadius = this.maxMiddleRadius + incr
+      const newMinRadius = this.minRadius + incr
+      const newMinMiddleRadius = this.minMiddleRadius + incr
+
+      point.duration += 250
+
+      point.targetMaxX = this.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+      point.targetMinX = this.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+      point.destX = point.targetMaxX
+
+      point.targetMaxY = this.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+      point.targetMinY = this.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+      point.destY = point.targetMaxY
+      point.startAnim = getNow()
+    }
+
+    setTimeout(() => {
+      this.clickPrecisionW = window.GameManager.gridUnitVw * clickPrecision / 100 // 2.5 grid unit
+      this.clickPrecisionH = window.GameManager.gridUnitVh * clickPrecision / 100 // 2.5 grid unit
+      for (let i = 0; i < this.points.length; i++) {
+        this.points[i].duration -= 250
+      }
+    }, 1000) // to prevent big click on the click getting the power
+  }
+
+  setPower = type => {
+    let timeClean
+    switch (type) {
+      default:
+        break
+      case 'grow':
+        this.powerGrown = true
+        this.updateRadius(this.increaseMax, 3)
+        window.GameManager.popUpMessage('GROW', 'orange', false)
+        timeClean = 6000
+        break
+      case 'freeze':
+        this.powerFreeze = true
+        window.GameManager.popUpMessage('FREEZE', 'blue', false)
+        timeClean = 4000
+        break
+    }
+
+    setTimeout(() => {
+      this.cleanPowers()
+    }, timeClean)
+  }
+
+  cleanPowers = () => {
+    this.powerGrown = false
+    this.powerFreeze = false
+    this.updateRadius(0, 1.5)
   }
 }

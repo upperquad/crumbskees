@@ -8,8 +8,8 @@ import { clamp, randomInt } from '../utils/math'
 import DEBUG from '../constants/Debug'
 
 export default class Scene {
-  constructor(options) {
-    this.opts = { ...options }
+  constructor(props) {
+    this.props = { ...props }
     this.time = 40 // in seconds
 
     this.dom()
@@ -18,20 +18,20 @@ export default class Scene {
 
   dom() {
     this.dom = {
-      introRound: this.opts.el.querySelector('.intro__round'),
-      introItemToFindTxt: this.opts.el.querySelector('.intro__itemToFind__text'),
+      introRound: this.props.el.querySelector('.intro__round'),
+      introItemToFindTxt: this.props.el.querySelector('.intro__itemToFind__text'),
       itemToFind: document.querySelector('.itemToFind'),
-      introCircle: this.opts.el.querySelector('.intro__circle'),
-      introVideo: this.opts.el.querySelector('.intro video'),
-      introReady: this.opts.el.querySelector('.intro__ready'),
-      introSet: this.opts.el.querySelector('.intro__set'),
-      introGo: this.opts.el.querySelector('.intro__go'),
-      frontBkg: this.opts.el.querySelector('.scene__frontBkg'),
-      reveal: this.opts.el.querySelector('.scene__reveal'),
-      svgScene: this.opts.el.querySelector('.scene-svg'),
-      svgMaskedImage: this.opts.el.querySelector('.scene-svg__image'),
-      svgClipPath: this.opts.el.querySelector('.scene-svg__clippath'),
-      svgClipPathRef: this.opts.el.querySelector('.scene-svg__clippath-ref'),
+      introCircle: this.props.el.querySelector('.intro__circle'),
+      introVideo: this.props.el.querySelector('.intro video'),
+      introReady: this.props.el.querySelector('.intro__ready'),
+      introSet: this.props.el.querySelector('.intro__set'),
+      introGo: this.props.el.querySelector('.intro__go'),
+      frontBkg: this.props.el.querySelector('.scene__frontBkg'),
+      reveal: this.props.el.querySelector('.scene__reveal'),
+      svgScene: this.props.el.querySelector('.scene-svg'),
+      svgMaskedImage: this.props.el.querySelector('.scene-svg__image'),
+      svgClipPath: this.props.el.querySelector('.scene-svg__clippath'),
+      svgClipPathRef: this.props.el.querySelector('.scene-svg__clippath-ref'),
     }
   }
 
@@ -43,20 +43,16 @@ export default class Scene {
     this.acceleration = 1
     this.destAcceleration = 1
     this.coefAcceleration = 0.2
-    this.increaseMax = window.GameManager.vbWidth * 0.07
     // items
     this.itemSize = window.GameManager.gridUnit
 
-    // values for mouse event
-    this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 2.5 grid unit
-    this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 2.5 grid unit
     this.numItemFound = 0
 
     // values for DOM scene
-    this.width = this.opts.el.offsetWidth
-    this.height = this.opts.el.offsetHeight
-    this.offsetLeft = getOffsetLeft(this.opts.el.parentNode)
-    this.offsetTop = getOffsetTop(this.opts.el.parentNode)
+    this.width = this.props.el.offsetWidth
+    this.height = this.props.el.offsetHeight
+    this.offsetLeft = getOffsetLeft(this.props.el.parentNode)
+    this.offsetTop = getOffsetTop(this.props.el.parentNode)
 
     if (this.dom.svgClipPath) {
       this.setClipPathId()
@@ -90,13 +86,13 @@ export default class Scene {
       return false
     }
 
-    this.dom.itemToFind.src = this.opts.item
-    if (this.opts.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
-      this.dom.introVideo.poster = this.opts.videoIntro
+    this.dom.itemToFind.src = this.props.item
+    if (this.props.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
+      this.dom.introVideo.poster = this.props.videoIntro
     } else {
-      this.dom.introVideo.src = this.opts.videoIntro
+      this.dom.introVideo.src = this.props.videoIntro
     }
-    this.dom.introRound.innerHTML = `ROUND 0${this.opts.index + 1}`
+    this.dom.introRound.innerHTML = `ROUND 0${this.props.index + 1}`
     this.dom.introRound.classList.remove('blink')
 
     const tlScaleDown = new TimelineMax({ paused: true })
@@ -197,9 +193,9 @@ export default class Scene {
     let x
     let y
 
-    for (let i = 0; i < this.opts.gridCols; i++) {
+    for (let i = 0; i < this.props.gridCols; i++) {
       x = i
-      for (let j = 0; j < this.opts.gridLines; j++) {
+      for (let j = 0; j < this.props.gridLines; j++) {
         y = j
         const obj = { x, y }
         this.positionsInGrid.push(obj)
@@ -208,59 +204,78 @@ export default class Scene {
   }
 
   setItems() {
+    if (this.props.power) {
+      this.setItem(this.props.power.item, 'power')
+    }
+
     this.items = []
 
-    for (let i = 0; i < this.opts.numItems; i++) {
-      // randomize
-      const rd = randomInt(0, this.positionsInGrid.length - 1)
-      const x = (this.positionsInGrid[rd].x) / this.opts.gridCols + window.GameManager.gridUnitVw / 200
-      const y = (this.positionsInGrid[rd].y) / this.opts.gridLines + window.GameManager.gridUnitVh / 200
-      this.positionsInGrid.splice(rd, 1)
-
-      // svg items
-      // need to precise that we're using the svg namespace
-      const svgImage = document.createElementNS('http://www.w3.org/2000/svg', 'image')
-      svgImage.setAttributeNS(null, 'height', this.itemSize)
-      svgImage.setAttributeNS(null, 'width', this.itemSize)
-      svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.opts.item)
-      svgImage.setAttributeNS(null, 'x', `${x * 100}%`)
-      svgImage.setAttributeNS(null, 'y', `${y * 100}%`)
-      svgImage.setAttributeNS(null, 'transform', `translate(-${this.itemSize / 2}, -${this.itemSize / 2})`)
-      svgImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
-
-      this.dom.svgClipPathRef.appendChild(svgImage)
-
-      // fake item for debugging
-      let div
-      if (DEBUG) {
-        div = document.createElement('div')
-        div.classList.add('debug')
-        div.style.left = `${x * 100}%`
-        div.style.top = `${y * 100}%`
-        this.opts.el.appendChild(div)
-      }
-
-      const obj = {
-        el: svgImage,
-        debugEl: div,
-        x,
-        y,
-      }
-      // between 0 and 1
-      this.items.push(obj)
+    for (let i = 0; i < this.props.numItems; i++) {
+      const item = this.setItem(this.props.item)
+      this.items.push(item)
     }
+  }
+
+  setItem(img, type = 'target') {
+    // randomize
+    const rd = randomInt(0, this.positionsInGrid.length - 1)
+    const x = (this.positionsInGrid[rd].x) / this.props.gridCols + window.GameManager.gridUnitVw / 200
+    const y = (this.positionsInGrid[rd].y) / this.props.gridLines + window.GameManager.gridUnitVh / 200
+    this.positionsInGrid.splice(rd, 1)
+
+    // fake item for debugging
+    let div
+    if (DEBUG) {
+      div = document.createElement('div')
+      div.classList.add('debug')
+      if (type === 'power') div.classList.add('debug--power')
+      div.style.left = `${x * 100}%`
+      div.style.top = `${y * 100}%`
+      this.props.el.appendChild(div)
+    }
+
+    // between 0 and 1
+    // svg items
+    // need to precise that we're using the svg namespace
+    const svgImage = document.createElementNS('http://www.w3.org/2000/svg', 'image')
+    svgImage.setAttributeNS(null, 'height', this.itemSize)
+    svgImage.setAttributeNS(null, 'width', this.itemSize)
+    svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', img)
+    svgImage.setAttributeNS(null, 'x', `${x * 100}%`)
+    svgImage.setAttributeNS(null, 'y', `${y * 100}%`)
+    svgImage.setAttributeNS(null, 'transform', `translate(-${this.itemSize / 2}, -${this.itemSize / 2})`)
+    svgImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
+
+    this.dom.svgClipPathRef.appendChild(svgImage)
+
+    const obj = {
+      el: svgImage,
+      debugEl: div,
+      x,
+      y,
+    }
+
+    if (type === 'target') {
+      return obj
+    }
+
+    if (type === 'power') {
+      this.props.power = { ...this.props.power, ...obj }
+    }
+
+    return true
   }
 
   setBkgs() {
     // set viewbox values, fit Image to scene
     this.dom.svgScene.setAttribute('viewBox', `0 0 ${window.GameManager.vbWidth} ${window.GameManager.vbHeight}`)
     // Add masked bkg
-    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.opts.bkg)
+    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.props.bkg)
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
-    this.dom.reveal.src = this.opts.bkg
+    this.dom.reveal.src = this.props.bkg
     setTimeout(() => {
       // Add "front" bkg
-      this.dom.frontBkg.src = this.opts.frontBkg
+      this.dom.frontBkg.src = this.props.frontBkg
     }, 1000) // synchronize gifs
   }
 
@@ -280,6 +295,7 @@ export default class Scene {
   }
 
   handleMouseMove = e => {
+    if (window.GameManager.players[window.GameManager.playerIds[0]].powerFreeze) return
     const scrollY = window.scrollY || document.documentElement.scrollTop
     const player = window.GameManager.players[window.GameManager.playerIds[0]]
 
@@ -301,23 +317,41 @@ export default class Scene {
     const player = window.GameManager.players[playerId]
     const x = (player.targetX / window.GameManager.vbWidth) + 0.5
     const y = (player.targetY / window.GameManager.vbHeight) + 0.5
+    const power = this.props.power
 
-    // let goodClick = false
+    if (power) {
+      if (!power.found &&
+        x > power.x - player.clickPrecisionW &&
+        x < power.x + player.clickPrecisionW &&
+        y > power.y - player.clickPrecisionH &&
+        y < power.y + player.clickPrecisionH) {
+        let playerAffected = player
+        if (power.type === 'freeze') {
+          // affect other player
+          const index = player.index === 0 ? 1 : 0
+          playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
+        }
+        playerAffected.setPower(power.type)
+
+        power.found = true
+        power.el.style.opacity = 0
+        if (power.debugEl) power.debugEl.style.opacity = 0
+      }
+    }
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
       if (!item.found &&
-        x > item.x - this.clickPrecisionW &&
-        x < item.x + this.clickPrecisionW &&
-        y > item.y - this.clickPrecisionH &&
-        y < item.y + this.clickPrecisionH) {
-        window.GameManager.score(player, this.opts.item, { x, y })
+        x > item.x - player.clickPrecisionW &&
+        x < item.x + player.clickPrecisionW &&
+        y > item.y - player.clickPrecisionH &&
+        y < item.y + player.clickPrecisionH) {
+        window.GameManager.score(player, this.props.item, { x, y })
         item.found = true
         item.el.style.opacity = 0
         if (item.debugEl) item.debugEl.style.opacity = 0
 
         this.numItemFound = this.numItemFound + 1
-        // goodClick = true
         // kill player intervalTap
         clearInterval(player.isCloseToItemInterval)
       }
@@ -325,7 +359,7 @@ export default class Scene {
 
     if (this.numItemFound === this.items.length && !this.isEnded) {
       this.isEnded = true
-      window.GameManager.endScene(this.opts.message)
+      window.GameManager.endScene(this.props.message)
     }
   }
 
@@ -382,27 +416,6 @@ export default class Scene {
         // move player based on mouse
         point.x += player.x
         point.y += player.y
-
-        // For increasing player
-        // // if item found, increase player radius
-        // if (y === 0 && player.itemFound && !point.isIncrease) {
-        //   const newMaxRadius = player.maxRadius + this.increaseMax
-        //   const newMaxMiddleRadius = player.maxMiddleRadius + this.increaseMax
-        //   const newMinRadius = player.minRadius + this.increaseMax
-        //   const newMinMiddleRadius = player.minMiddleRadius + this.increaseMax
-        //   point.targetMaxX = player.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-        //   point.targetMinX = player.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
-
-        //   point.destX = point.targetMaxX
-
-        //   point.targetMaxY = player.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-        //   point.targetMinY = player.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
-
-        //   point.destY = point.targetMaxY
-        //   point.startAnim = getNow()
-
-        //   point.isIncrease = true
-        // }
       }
 
       player.el.setAttribute('d', this.cardinal(player.points))

@@ -185,8 +185,10 @@ export default class GameManager {
           const x = parseFloat(data[2], 10) * this.vbWidth
           const y = parseFloat(data[3], 10) * this.vbWidth
           // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
-          this.players[data[1]].targetX = x + this.players[data[1]].targetX
-          this.players[data[1]].targetY = y + this.players[data[1]].targetY
+          if (!this.players[data[1]].powerFreeze) { // if player not frozen
+            this.players[data[1]].targetX = x + this.players[data[1]].targetX
+            this.players[data[1]].targetY = y + this.players[data[1]].targetY
+          }
 
           // this.players[data[1]].targetX
         }
@@ -250,7 +252,10 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'DOPE.',
-        effect: '?',
+        power: {
+          type: 'freeze',
+          item: scene2Item,
+        },
       }, {
         bkg: scene2Pattern,
         frontBkg: scene2Front,
@@ -260,7 +265,10 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'GOOD JOB!',
-        effect: '?',
+        power: {
+          type: 'freeze',
+          item: scene3Item,
+        },
       }, {
         bkg: scene3Pattern,
         frontBkg: scene3Front,
@@ -270,7 +278,10 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'AWESOME!',
-        effect: '?',
+        power: {
+          type: 'grow',
+          item: scene2Item,
+        },
       },
     ]
     this.players = []
@@ -429,6 +440,9 @@ export default class GameManager {
       this.players[this.playerIds[i]].targetY = 0
       this.players[this.playerIds[i]].x = 0
       this.players[this.playerIds[i]].y = 0
+
+      // clean powers
+      this.players[this.playerIds[i]].cleanPowers()
 
       // reset items in board
       this.dom.boardPlayerItems[i].innerHTML = ''

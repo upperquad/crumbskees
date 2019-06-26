@@ -1,3 +1,3 @@
-const DEBUG = false
+const DEBUG = true
 
 export default DEBUG
