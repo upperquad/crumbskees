@@ -48,7 +48,7 @@ export default class Player {
           x < item.x + scene.clickPrecisionW &&
           y > item.y - scene.clickPrecisionH &&
           y < item.y + scene.clickPrecisionH) {
-          window.GameManager.popUpMessage('TAP', this.color, false, { x, y })
+          window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
         }
       }
     }
