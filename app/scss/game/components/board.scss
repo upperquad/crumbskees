@@ -3,17 +3,9 @@
     background-color: $color-green;
     width: 100%;
   }
-  25% {
-    background-color: $color-blue;
-    width: 75%;
-  }
   50% {
-    background-color: $color-pink;
-    width: 50%;
-  }
-  75% {
     background-color: $color-orange;
-    width: 25%;
+    width: 50%;
   }
   100% {
     background-color: $color-red;
