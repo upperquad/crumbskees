@@ -2,27 +2,45 @@ html, body {
   overscroll-behavior-x: none;
 }
 
+body {
+  color: white;
+  background: black;
+}
+
 body:not(.is-ready) {
   opacity: 0;
   pointer-events: none;
 }
 
 .score {
-  color: white;
   font-size: 20px;
-  left: 0;
-  position: fixed;
   pointer-events: none;
-  top: 0;
 }
 
 .touchpad {
-  background: black;
+  align-items: center;
   bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
   left: 0;
   position: fixed;
   right: 0;
   top: 0;
+
+  &:not(.is-shown) {
+    display: none;
+  }
+
+  img {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 50%;
+    margin-bottom: 20px;
+    max-height: 80vw;
+    pointer-events: none;
+  }
 }
 
 .touch-bubble {
@@ -44,12 +62,10 @@ body:not(.is-ready) {
 
 .connecting,
 .token-pad {
-  background: black;
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  color: white;
   left: 0;
   position: fixed;
   right: 0;
@@ -83,9 +99,69 @@ body:not(.is-ready) {
   width: 150px;
 
   .token-input-key {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     border: 1px solid white;
     height: 40px;
     margin-bottom: 10px;
     width: 40px;
+  }
+}
+
+.character-confirm {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  left: 0;
+  flex-flow: column nowrap;
+  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  .confirm__meet {
+    font-size: 20px;
+  }
+
+  img {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 50%;
+    margin: 20px 0;
+    max-height: 80vw;
+    pointer-events: none;
+  }
+
+  .confirm__button {
+    background: gray;
+    padding: 20px;
+  }
+}
+
+.result {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  left: 0;
+  flex-flow: column nowrap;
+  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  .result__text {
+    font-size: 20px;
+  }
+
+  img {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 50%;
+    margin: 20px 0;
+    max-height: 80vw;
+    pointer-events: none;
   }
 }

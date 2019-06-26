@@ -89,15 +89,17 @@ export default class GameManager {
 
   verifyToken = (token, userId) => {
     let isTokenValid = false
+    let playerIndex = null
     for (let index = 0; index <= 1; index++) {
       if (this.playerIds[index] === null && this.tokens[index] === token) {
         this.tokens[index] = null
         this.playerIds[index] = userId
         isTokenValid = true
+        playerIndex = index
         break
       }
     }
-    Server.websocket.send(`auth_result,${userId},${isTokenValid ? 1 : 0}`)
+    Server.websocket.send(`auth_result,${userId},${isTokenValid ? 1 : 0},${playerIndex}`)
     this.updateQr()
   }
 
@@ -418,7 +420,6 @@ export default class GameManager {
 
     if (index === this.scenes.length) {
       window.RouterManager.goTo('final', this.initFinal)
-      // Server.websocket.send('disconnect_all_users')
       return
     }
 
@@ -455,6 +456,8 @@ export default class GameManager {
       tie = true
     }
 
+    Server.websocket.send(`result,${tie ? 'tied' : this.playerIds[playerIndex]}`)
+
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
     const playerImgEl = document.querySelector('.final__player-img')
@@ -475,6 +478,7 @@ export default class GameManager {
     }
 
     setTimeout(() => {
+      Server.websocket.send('disconnect_users')
       window.location.reload()
     }, 7000)
   }
@@ -482,7 +486,9 @@ export default class GameManager {
   initErrorGameExists = () => {
     const messageEl = document.querySelector('.error__message')
     const buttonEl = document.querySelector('.error__button')
+    const timebarEl = document.querySelector('.error__timebar')
 
+    timebarEl.style.display = 'none'
     messageEl.innerHTML = 'Another game is in progress'
     buttonEl.innerHTML = 'Kick\'em off'
     buttonEl.addEventListener('click', event => {

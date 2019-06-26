@@ -1,4 +1,16 @@
 import { throttle } from 'throttle-debounce'
+import character1 from '../../assets/game/images/character1.png'
+import character2 from '../../assets/game/images/character2.png'
+
+const CHARACTERS = [
+  {
+    color: '123123',
+    image: character1,
+  }, {
+    color: '456456',
+    image: character2,
+  },
+]
 
 export default class PhoneController {
   constructor($scope, $element) {
@@ -17,6 +29,9 @@ export default class PhoneController {
     this.token = ''
     this.isConnecting = false
     this.invalidToken = false
+    this.accepted = false
+    this.character = null
+    this.result = null
 
     this.throttledTouchMove = throttle(50, this.handleTouchMove)
 
@@ -68,15 +83,13 @@ export default class PhoneController {
   onWsClose = event => {
     this.isConnecting = false
     this.connected = false
+    this.accepted = false
+    this.character = null
+    this.result = null
+    this.token = ''
     console.log(event.reason)
 
-    if (event.reason === 'invalid-token') {
-      this.invalidToken = true
-      this.token = ''
-    } else {
-      this.invalidToken = false
-      this.token = ''
-    }
+    this.invalidToken = event.reason === 'invalid-token'
     this.$scope.$apply()
   }
 
@@ -86,11 +99,19 @@ export default class PhoneController {
     switch (message[0]) {
       case 'score':
         this.score = message[1]
-        this.$scope.$apply()
+        break
+      case 'accepted':
+        this.accepted = true
+        this.score = 0
+        this.character = CHARACTERS[parseInt(message[1], 10)]
+        break
+      case 'result':
+        this.result = message[1]
         break
       default:
         break
     }
+    this.$scope.$apply()
   }
 
   handleTouchStart = event => {
@@ -118,6 +139,10 @@ export default class PhoneController {
 
   handleClick = () => {
     this.websocket.send('click')
+  }
+
+  handleConfirm = () => {
+    this.userConfirmed = true
   }
 
   updatePosition = (clientX, clientY, originX, originY) => {
