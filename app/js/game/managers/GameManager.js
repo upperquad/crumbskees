@@ -11,7 +11,7 @@ import Server from '../constants/Server'
 import DEBUG from '../constants/Debug'
 
 // assets
-import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.jpg'
+import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.gif'
 import scene1Front from '../../../assets/game/images/round_1/r1-front.jpg'
 import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
 import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.jpg'
@@ -448,6 +448,10 @@ export default class GameManager {
     playerEl.innerHTML = `player ${playerIndex + 1}`
     scoreEl.innerHTML = this.scores[playerIndex]
     playerImgEl.src = this.charactersImg[playerIndex]
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 7000)
   }
 
   initErrorGameExists = () => {
@@ -472,6 +476,10 @@ export default class GameManager {
 
     messageEl.innerHTML = 'We\'ve lost connection!'
     buttonEl.innerHTML = 'Restart'
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 7000)
   }
 
   destroyScene(scene) {

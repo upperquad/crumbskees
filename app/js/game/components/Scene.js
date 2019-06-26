@@ -55,7 +55,7 @@ export default class Scene {
     this.itemSize = window.GameManager.gridUnit
 
     // values for mouse event
-    this.clickPrecision = window.GameManager.gridUnitVw * 1.5 / 100 // 1.5 grid unit
+    this.clickPrecision = window.GameManager.gridUnitVw * 2.5 / 100 // 3 grid unit
     this.numItemFound = 0
 
     // values for DOM scene
