@@ -442,8 +442,7 @@ export default class GameManager {
 
   initFinal = () => {
     this.charactersImg = [character1, character2]
-    let playerIndex = this.scores[0] > this.scores[1] ? 0 : 1
-
+    let playerIndex
     let tie = false
     if (this.scores[0] > this.scores[1]) {
       playerIndex = 0
