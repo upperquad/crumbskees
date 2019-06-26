@@ -9,15 +9,7 @@ import DEBUG from '../constants/Debug'
 
 export default class Scene {
   constructor(options) {
-    this.element = options.el
-    this.bkg = options.bkg
-    this.frontBkg = options.frontBkg
-    this.item = options.item
-    this.videoIntro = options.videoIntro
-    this.numItems = options.numItems
-    this.gridCols = options.gridCols
-    this.gridLines = options.gridLines
-    this.index = options.index
+    this.opts = { ...options }
     this.time = 40 // in seconds
 
     this.dom()
@@ -26,20 +18,20 @@ export default class Scene {
 
   dom() {
     this.dom = {
-      introRound: this.element.querySelector('.intro__round'),
-      introItemToFindTxt: this.element.querySelector('.intro__itemToFind__text'),
+      introRound: this.opts.el.querySelector('.intro__round'),
+      introItemToFindTxt: this.opts.el.querySelector('.intro__itemToFind__text'),
       itemToFind: document.querySelector('.itemToFind'),
-      introCircle: this.element.querySelector('.intro__circle'),
-      introVideo: this.element.querySelector('.intro video'),
-      introReady: this.element.querySelector('.intro__ready'),
-      introSet: this.element.querySelector('.intro__set'),
-      introGo: this.element.querySelector('.intro__go'),
-      frontBkg: this.element.querySelector('.scene__frontBkg'),
-      reveal: this.element.querySelector('.scene__reveal'),
-      svgScene: this.element.querySelector('.scene-svg'),
-      svgMaskedImage: this.element.querySelector('.scene-svg__image'),
-      svgClipPath: this.element.querySelector('.scene-svg__clippath'),
-      svgClipPathRef: this.element.querySelector('.scene-svg__clippath-ref'),
+      introCircle: this.opts.el.querySelector('.intro__circle'),
+      introVideo: this.opts.el.querySelector('.intro video'),
+      introReady: this.opts.el.querySelector('.intro__ready'),
+      introSet: this.opts.el.querySelector('.intro__set'),
+      introGo: this.opts.el.querySelector('.intro__go'),
+      frontBkg: this.opts.el.querySelector('.scene__frontBkg'),
+      reveal: this.opts.el.querySelector('.scene__reveal'),
+      svgScene: this.opts.el.querySelector('.scene-svg'),
+      svgMaskedImage: this.opts.el.querySelector('.scene-svg__image'),
+      svgClipPath: this.opts.el.querySelector('.scene-svg__clippath'),
+      svgClipPathRef: this.opts.el.querySelector('.scene-svg__clippath-ref'),
     }
   }
 
@@ -61,10 +53,10 @@ export default class Scene {
     this.numItemFound = 0
 
     // values for DOM scene
-    this.width = this.element.offsetWidth
-    this.height = this.element.offsetHeight
-    this.offsetLeft = getOffsetLeft(this.element.parentNode)
-    this.offsetTop = getOffsetTop(this.element.parentNode)
+    this.width = this.opts.el.offsetWidth
+    this.height = this.opts.el.offsetHeight
+    this.offsetLeft = getOffsetLeft(this.opts.el.parentNode)
+    this.offsetTop = getOffsetTop(this.opts.el.parentNode)
 
     if (this.dom.svgClipPath) {
       this.setClipPathId()
@@ -98,13 +90,13 @@ export default class Scene {
       return false
     }
 
-    this.dom.itemToFind.src = this.item
-    if (this.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
-      this.dom.introVideo.poster = this.videoIntro
+    this.dom.itemToFind.src = this.opts.item
+    if (this.opts.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
+      this.dom.introVideo.poster = this.opts.videoIntro
     } else {
-      this.dom.introVideo.src = this.videoIntro
+      this.dom.introVideo.src = this.opts.videoIntro
     }
-    this.dom.introRound.innerHTML = `ROUND 0${this.index + 1}`
+    this.dom.introRound.innerHTML = `ROUND 0${this.opts.index + 1}`
     this.dom.introRound.classList.remove('blink')
 
     const tlScaleDown = new TimelineMax({ paused: true })
@@ -205,9 +197,9 @@ export default class Scene {
     let x
     let y
 
-    for (let i = 0; i < this.gridCols; i++) {
+    for (let i = 0; i < this.opts.gridCols; i++) {
       x = i
-      for (let j = 0; j < this.gridLines; j++) {
+      for (let j = 0; j < this.opts.gridLines; j++) {
         y = j
         const obj = { x, y }
         this.positionsInGrid.push(obj)
@@ -218,11 +210,11 @@ export default class Scene {
   setItems() {
     this.items = []
 
-    for (let i = 0; i < this.numItems; i++) {
+    for (let i = 0; i < this.opts.numItems; i++) {
       // randomize
       const rd = randomInt(0, this.positionsInGrid.length - 1)
-      const x = (this.positionsInGrid[rd].x) / this.gridCols + window.GameManager.gridUnitVw / 200
-      const y = (this.positionsInGrid[rd].y) / this.gridLines + window.GameManager.gridUnitVh / 200
+      const x = (this.positionsInGrid[rd].x) / this.opts.gridCols + window.GameManager.gridUnitVw / 200
+      const y = (this.positionsInGrid[rd].y) / this.opts.gridLines + window.GameManager.gridUnitVh / 200
       this.positionsInGrid.splice(rd, 1)
 
       // svg items
@@ -230,7 +222,7 @@ export default class Scene {
       const svgImage = document.createElementNS('http://www.w3.org/2000/svg', 'image')
       svgImage.setAttributeNS(null, 'height', this.itemSize)
       svgImage.setAttributeNS(null, 'width', this.itemSize)
-      svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.item)
+      svgImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.opts.item)
       svgImage.setAttributeNS(null, 'x', `${x * 100}%`)
       svgImage.setAttributeNS(null, 'y', `${y * 100}%`)
       svgImage.setAttributeNS(null, 'transform', `translate(-${this.itemSize / 2}, -${this.itemSize / 2})`)
@@ -245,7 +237,7 @@ export default class Scene {
         div.classList.add('debug')
         div.style.left = `${x * 100}%`
         div.style.top = `${y * 100}%`
-        this.element.appendChild(div)
+        this.opts.el.appendChild(div)
       }
 
       const obj = {
@@ -263,14 +255,13 @@ export default class Scene {
     // set viewbox values, fit Image to scene
     this.dom.svgScene.setAttribute('viewBox', `0 0 ${window.GameManager.vbWidth} ${window.GameManager.vbHeight}`)
     // Add masked bkg
-    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.bkg)
+    this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.opts.bkg)
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
-    // Add "front" bkg
+    this.dom.reveal.src = this.opts.bkg
     setTimeout(() => {
-      this.dom.frontBkg.src = this.frontBkg
-      this.dom.reveal.src = this.bkg
-    }, 1000) // match gifs
-    // this.dom.reveal.style.backgroundImage = `url(${this.bkg})`
+      // Add "front" bkg
+      this.dom.frontBkg.src = this.opts.frontBkg
+    }, 1000) // synchronize gifs
   }
 
   // ////////
@@ -320,7 +311,7 @@ export default class Scene {
         x < item.x + this.clickPrecisionW &&
         y > item.y - this.clickPrecisionH &&
         y < item.y + this.clickPrecisionH) {
-        window.GameManager.score(player, this.item, { x, y })
+        window.GameManager.score(player, this.opts.item, { x, y })
         item.found = true
         item.el.style.opacity = 0
         if (item.debugEl) item.debugEl.style.opacity = 0
@@ -332,7 +323,7 @@ export default class Scene {
 
     if (this.numItemFound === this.items.length && !this.isEnded) {
       this.isEnded = true
-      window.GameManager.endScene()
+      window.GameManager.endScene(this.opts.message)
     }
   }
 

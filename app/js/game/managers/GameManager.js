@@ -247,6 +247,7 @@ export default class GameManager {
         numItems: 10,
         gridCols: 32,
         gridLines: 14,
+        message: 'DOPE.',
         effect: '?',
       }, {
         bkg: scene2Pattern,
@@ -256,6 +257,7 @@ export default class GameManager {
         numItems: 10,
         gridCols: 32,
         gridLines: 14,
+        message: 'GOOD JOB!',
         effect: '?',
       }, {
         bkg: scene3Pattern,
@@ -265,6 +267,7 @@ export default class GameManager {
         numItems: 10,
         gridCols: 32,
         gridLines: 14,
+        message: 'AWESOME!',
         effect: '?',
       },
     ]
@@ -340,7 +343,7 @@ export default class GameManager {
       this.dom.timer.innerHTML = seconds
 
       if (timer === 0) {
-        this.endScene('TIME OUT!')
+        this.endScene('TIME\'S UP!')
       }
 
       timer -= 1
