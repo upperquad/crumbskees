@@ -95,8 +95,8 @@ export default class PhoneController {
   }
 
   checkDeadConnection = () => {
-    console.log('here')
     if (!this.connected && this.playerId !== null) {
+      console.log('reconnect')
       this.isConnecting = true
       this.websocket = new WebSocket(`${this.host}/phone?id=${this.playerId}`)
       this.websocket.onopen = this.onWsOpen
