@@ -221,7 +221,7 @@ export default class GameManager {
     const progress = Math.floor(this.tutorialTimeline.progress() * 100)
     this.tutorialTimebarNumberEl.textContent = `${progress}%`
     this.tutorialTimebarColorEl.style.width = `${progress}%`
-    this.tutorialContentEl.dataset.step = Math.ceil(progress / 33.3)
+    this.tutorialContentEl.dataset.step = Math.min(Math.ceil(progress / 33.3), 3)
   }
 
   tutorialTimelineEnd = () => {
