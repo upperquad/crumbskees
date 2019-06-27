@@ -91,7 +91,7 @@ export default class PhoneController {
   }
 
   onWsOpen = () => {
-    this.isConnecting = false
+    this.reset(true)
     this.connected = true
     this.$scope.$apply()
 
@@ -112,14 +112,17 @@ export default class PhoneController {
     this.$scope.$apply()
   }
 
-  reset = () => {
+  reset = hardReset => {
     this.isConnecting = false
     this.connected = false
     this.accepted = false
-    this.character = null
-    this.opponent = null
-    this.result = null
     this.token = ''
+
+    if (hardReset) {
+      this.character = null
+      this.opponent = null
+      this.result = null
+    }
   }
 
   onWsMessage = event => {
@@ -131,6 +134,7 @@ export default class PhoneController {
         break
       case 'accepted': {
         this.accepted = true
+        this.hasPlayed = true
         this.score = null
         const characterIndex = parseInt(message[1], 10)
         this.character = CHARACTERS[characterIndex]
@@ -208,6 +212,6 @@ export default class PhoneController {
     if (this.websocket) {
       this.websocket.close()
     }
-    this.reset()
+    this.reset(true)
   }
 }

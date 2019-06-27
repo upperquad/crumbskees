@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   </head>
   <body ng-controller="PhoneController as phoneCtrl" ng-class="{'is-ready': phoneCtrl.ready}">
-    <section class="token state" ng-class="{'is-shown': (!phoneCtrl.connected && !phoneCtrl.isConnecting)}" >
+    <section class="token state" ng-class="{'is-shown': (!phoneCtrl.connected && !phoneCtrl.isConnecting && phoneCtrl.result === null)}" >
     <!-- <section class="token state"> -->
       <div class="circle circle--yellow"></div>
-      <h2>Enter the code to&nbsp;join</h2>
+      <h2>{{phoneCtrl.hasPlayed ? 'Enter the red code on the screen to play&nbsp;again' : 'Enter the red code on the screen to&nbsp;join'}}</h2>
       <div class="display">
         {{phoneCtrl.token}}
       </div>
