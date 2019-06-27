@@ -10,13 +10,13 @@ const CHARACTERS = [{
   image: character1,
   video: characterVideo1,
   videoWhite: characterVideoWhite1,
-  color: 'red',
+  color: 'purple',
   name: 'Player 1',
 }, {
   image: character2,
   video: characterVideo2,
   videoWhite: characterVideoWhite2,
-  color: 'purple',
+  color: 'red',
   name: 'Player 2',
 }]
 
