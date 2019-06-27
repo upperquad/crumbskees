@@ -306,6 +306,110 @@ section.result {
     text-transform: uppercase;
   }
 
+  .winner--tied {
+    .marquee {
+      &:first-of-type {
+        span {
+          animation-name: infinite-text-16;
+          width: 8em;
+        }
+      }
+
+      &:last-of-type {
+        span {
+          animation-name: infinite-text-21;
+          width: 10.5em;
+        }
+      }
+    }
+  }
+
+  .winner--won {
+    .marquee {
+      &:first-of-type {
+        span {
+          animation-name: infinite-text-15;
+          width: 7.5em;
+        }
+      }
+
+      &:last-of-type {
+        span {
+          animation-name: infinite-text-14;
+          width: 7em;
+        }
+      }
+    }
+  }
+
+  .winner--lost {
+    .marquee {
+      &:first-of-type {
+        span {
+          animation-name: infinite-text-18;
+          width: 9em;
+        }
+      }
+
+      &:last-of-type {
+        span {
+          animation-name: infinite-text-14;
+          width: 7em;
+        }
+      }
+    }
+  }
+
+  @keyframes infinite-text-14 {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-14em);
+    }
+  }
+
+  @keyframes infinite-text-15 {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-15em);
+    }
+  }
+
+  @keyframes infinite-text-16 {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-16em);
+    }
+  }
+
+  @keyframes infinite-text-18 {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-18em);
+    }
+  }
+
+  @keyframes infinite-text-21 {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-21em);
+    }
+  }
+
   .small-text {
     @extend %Regular;
 
@@ -383,7 +487,11 @@ section.state {
   }
 
   &.alternate {
-    span:nth-child(2n) {
+    span {
+      text-align: center;
+    }
+
+    span.invert {
       -webkit-text-fill-color: transparent;
       -webkit-text-stroke-color: $color-white;
       -webkit-text-stroke-width: 1px;

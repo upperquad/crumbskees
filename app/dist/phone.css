@@ -418,6 +418,54 @@ section.result {
     font-size: 50px;
     padding: 12px 0 9px;
     text-transform: uppercase; }
+  section.result .winner--tied .marquee:first-of-type span {
+    animation-name: infinite-text-16;
+    width: 8em; }
+  section.result .winner--tied .marquee:last-of-type span {
+    animation-name: infinite-text-21;
+    width: 10.5em; }
+  section.result .winner--won .marquee:first-of-type span {
+    animation-name: infinite-text-15;
+    width: 7.5em; }
+  section.result .winner--won .marquee:last-of-type span {
+    animation-name: infinite-text-14;
+    width: 7em; }
+  section.result .winner--lost .marquee:first-of-type span {
+    animation-name: infinite-text-18;
+    width: 9em; }
+  section.result .winner--lost .marquee:last-of-type span {
+    animation-name: infinite-text-14;
+    width: 7em; }
+
+@keyframes infinite-text-14 {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-14em); } }
+
+@keyframes infinite-text-15 {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-15em); } }
+
+@keyframes infinite-text-16 {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-16em); } }
+
+@keyframes infinite-text-18 {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-18em); } }
+
+@keyframes infinite-text-21 {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-21em); } }
   section.result .small-text {
     font-size: 16px;
     flex-grow: 0;
@@ -472,7 +520,9 @@ section.state {
   .marquee span {
     animation: infinite-text 5s linear infinite;
     display: inline-block; }
-  .marquee.alternate span:nth-child(2n) {
+  .marquee.alternate span {
+    text-align: center; }
+  .marquee.alternate span.invert {
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke-color: #e7e7e7;
     -webkit-text-stroke-width: 1px; }

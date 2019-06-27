@@ -57,13 +57,17 @@
     <section class="result state" ng-class="{'is-shown': (phoneCtrl.result !== null)}" >
     <!-- <section class="result state"> -->
       <div class="circle circle--{{phoneCtrl.result === 'won' ? phoneCtrl.character.color : (phoneCtrl.result === 'lost' ? phoneCtrl.opponent.color : 'yellow' )}}"></div>
-      <div class="winner">
-        <div class="marquee alternate"><span>{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span></div>
+      <div class="winner winner--{{phoneCtrl.result}}">
+        <div class="marquee alternate">
+          <span class="invert">{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span><span class="invert">{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span>
+        </div>
         <div class="image-wrapper {{phoneCtrl.result === 'tied' ? 'image-wrapper--both' : null}}">
           <video ng-if="(phoneCtrl.result === 'tied' || phoneCtrl.result === 'won')" src="{{phoneCtrl.character.videoWhite}}" poster="{{phoneCtrl.character.image}}" playsinline autoplay muted loop></video>
           <video ng-if="(phoneCtrl.result === 'tied' || phoneCtrl.result === 'lost')" src="{{phoneCtrl.opponent.videoWhite}}" poster="{{phoneCtrl.opponent.image}}" playsinline autoplay muted loop></video>
         </div>
-        <div class="marquee alternate"><span>{{phoneCtrl.resultBottom}}&nbsp;</span><span>{{phoneCtrl.resultBottom}}&nbsp;</span><span>{{phoneCtrl.resultBottom}}&nbsp;</span><span>{{phoneCtrl.resultBottom}}&nbsp;</span></div>
+        <div class="marquee alternate">
+          <span>{{phoneCtrl.resultBottom}}&nbsp;</span><span class="invert">{{phoneCtrl.resultBottom}}&nbsp;</span><span>{{phoneCtrl.resultBottom}}&nbsp;</span><span class="invert">{{phoneCtrl.resultBottom}}&nbsp;</span>
+        </div>
       </div>
       <div class="small-text">{{phoneCtrl.result === 'tied' ? 'Tie!' : 'Winner!'}}</div>
       <div class="button" ng-click="phoneCtrl.playAgain()">Play again</div>
