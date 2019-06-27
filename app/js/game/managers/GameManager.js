@@ -113,7 +113,7 @@ export default class GameManager {
         this.playerIds[index] = null
         this.updateQr()
         if (this.tutorialStarted) {
-          clearTimeout(this.tutorialTimeout)
+          this.tutorialTimeline.kill()
           window.RouterManager.goTo('setup', this.initSetup)
         }
         return
@@ -207,9 +207,26 @@ export default class GameManager {
   }
 
   initTutorial = () => {
-    this.tutorialTimeout = setTimeout(() => {
-      this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
-    }, 7000)
+    this.tutorialContentEl = document.querySelector('#tutorial-content')
+    this.tutorialTimebarNumberEl = document.querySelector('#tutorial-timebar-number')
+    this.tutorialTimebarColorEl = document.querySelector('#tutorial-timebar-color')
+    this.tutorialTimeline = new TimelineMax({
+      onUpdate: this.tutorialTimelineOnUpdate,
+    })
+    this.tutorialTimeline.add(this.tutorialTimelineEnd, 15)
+    this.tutorialTimeline.play()
+  }
+
+  tutorialTimelineOnUpdate = () => {
+    const progress = Math.floor(this.tutorialTimeline.progress() * 100)
+    this.tutorialTimebarNumberEl.textContent = `${progress}%`
+    this.tutorialTimebarColorEl.style.width = `${progress}%`
+    this.tutorialContentEl.dataset.step = Math.ceil(progress / 33.3)
+  }
+
+  tutorialTimelineEnd = () => {
+    console.log('end')
+    this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
   }
 
   loadAll = callback => {
