@@ -14,17 +14,20 @@ import DEBUG from '../constants/Debug'
 import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.gif'
 import scene1Front from '../../../assets/game/images/round_1/r1-front.gif'
 import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
-import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.jpg'
+import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.mp4'
 
-import scene2Pattern from '../../../assets/game/images/round_2/r2-pattern.jpg'
-import scene2Front from '../../../assets/game/images/round_2/r2-front.jpg'
+import scene2Pattern from '../../../assets/game/images/round_2/r2-pattern.gif'
+import scene2Front from '../../../assets/game/images/round_2/r2-front.gif'
 import scene2Item from '../../../assets/game/images/round_2/r2-item.png'
 import scene2IntroVideo from '../../../assets/game/images/round_2/r2-intro.mp4'
 
 import scene3Pattern from '../../../assets/game/images/round_3/r3-pattern.gif'
-import scene3Front from '../../../assets/game/images/round_3/r3-front.jpg'
+import scene3Front from '../../../assets/game/images/round_3/r3-front.gif'
 import scene3Item from '../../../assets/game/images/round_3/r3-item.png'
 import scene3IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
+
+import freezeItem from '../../../assets/game/images/freeze.png'
+import growItem from '../../../assets/game/images/grow.png'
 
 import character1 from '../../../assets/game/images/character1.png'
 import character2 from '../../../assets/game/images/character2.png'
@@ -185,17 +188,17 @@ export default class GameManager {
           const x = parseFloat(data[2], 10) * this.vbWidth
           const y = parseFloat(data[3], 10) * this.vbWidth
           // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
-          this.players[data[1]].targetX = x + this.players[data[1]].targetX
-          this.players[data[1]].targetY = y + this.players[data[1]].targetY
-
-          // this.players[data[1]].targetX
+          if (!this.players[data[1]].frozen) { // if player not frozen
+            this.players[data[1]].targetX = x + this.players[data[1]].targetX
+            this.players[data[1]].targetY = y + this.players[data[1]].targetY
+          }
         }
         break
       }
       case 'click':
         // data[1] needs to be the index of player (or id)
-        if (this.gameStarted && this.currentScene && this.currentScene.handleClick) {
-          this.currentScene.handleClick(data[1])
+        if (this.gameStarted && this.players[data[1]]) {
+          this.players[data[1]].handleClick()
         }
         break
       default:
@@ -251,7 +254,12 @@ export default class GameManager {
         numItems: 10,
         gridCols: 32,
         gridLines: 14,
-        effect: '?',
+        message: 'DOPE.',
+        delayGif: 1000,
+        power: {
+          type: 'grow',
+          item: growItem,
+        },
       }, {
         bkg: scene2Pattern,
         frontBkg: scene2Front,
@@ -260,7 +268,12 @@ export default class GameManager {
         numItems: 10,
         gridCols: 32,
         gridLines: 14,
-        effect: '?',
+        message: 'GOOD JOB!',
+        delayGif: 2750,
+        power: {
+          type: 'freeze',
+          item: freezeItem,
+        },
       }, {
         bkg: scene3Pattern,
         frontBkg: scene3Front,
@@ -269,7 +282,12 @@ export default class GameManager {
         numItems: 10,
         gridCols: 32,
         gridLines: 14,
-        effect: '?',
+        message: 'AWESOME!',
+        delayGif: 0,
+        power: {
+          type: 'grow',
+          item: growItem,
+        },
       },
     ]
     this.players = []
@@ -344,7 +362,7 @@ export default class GameManager {
       this.dom.timer.innerHTML = seconds
 
       if (timer === 0) {
-        this.endScene('TIME OUT!')
+        this.endScene('TIME\'S UP!')
       }
 
       timer -= 1
@@ -353,10 +371,10 @@ export default class GameManager {
     this.element.classList.add('sceneStarted')
   }
 
-  score(player, item, pos = false) {
-    this.popUpMessage('+1', player.color, false, pos) // + color player
+  score(player, item, pos = false, score = 1) {
+    this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
 
-    this.scores[player.index] += 1
+    this.scores[player.index] += score
     this.element.classList.add('item-found')
 
     for (let i = 0; i < this.dom.boardPlayerScore.length; i++) {
@@ -429,6 +447,9 @@ export default class GameManager {
       this.players[this.playerIds[i]].x = 0
       this.players[this.playerIds[i]].y = 0
 
+      // clean powers
+      this.players[this.playerIds[i]].cleanPowers()
+
       // reset items in board
       this.dom.boardPlayerItems[i].innerHTML = ''
     }
@@ -466,6 +487,8 @@ export default class GameManager {
       playerEl.innerHTML = `player ${playerIndex + 1}`
       scoreEl.innerHTML = this.scores[playerIndex]
       playerImgEl.src = this.charactersImg[playerIndex]
+      playerEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
+      scoreEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
     } else {
       playerEl.innerHTML = 'TIE!'
       scoreEl.innerHTML = this.scores[0]
@@ -479,7 +502,7 @@ export default class GameManager {
     setTimeout(() => {
       Server.websocket.send('disconnect_users')
       window.location.reload()
-    }, 7000)
+    }, 13000)
   }
 
   initErrorGameExists = () => {

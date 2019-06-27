@@ -31,8 +31,16 @@
     color: $color-red;
   }
 
+  &--red--fade {
+    color: rgba($color-red, 0.8);
+  }
+
   &--purple {
     color: $color-purple;
+  }
+
+  &--purple--fade {
+    color: rgba($color-purple, 0.8);
   }
 }
 

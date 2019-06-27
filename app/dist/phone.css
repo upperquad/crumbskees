@@ -81,8 +81,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .color--red {
   color: #ff4047; }
 
+.color--red--fade {
+  color: rgba(255, 64, 71, 0.8); }
+
 .color--purple {
   color: #6d12e3; }
+
+.color--purple--fade {
+  color: rgba(109, 18, 227, 0.8); }
 
 .bkg--black {
   background-color: #000; }

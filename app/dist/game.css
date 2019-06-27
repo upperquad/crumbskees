@@ -84,8 +84,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .color--red {
   color: #ff4047; }
 
+.color--red--fade {
+  color: rgba(255, 64, 71, 0.8); }
+
 .color--purple {
   color: #6d12e3; }
+
+.color--purple--fade {
+  color: rgba(109, 18, 227, 0.8); }
 
 .bkg--black {
   background-color: #000; }
@@ -219,7 +225,7 @@ html {
   position: relative;
   z-index: 1; }
   .sceneStarted .board::after {
-    animation: change-color 30s linear infinite forwards;
+    animation: change-color 40s linear infinite forwards;
     content: '';
     height: calc(0.3 * 3.125vw);
     left: 50%;
@@ -243,9 +249,9 @@ html {
     width: calc(14 * 3.125vw);
     position: relative; }
     .board__player__character {
+      background-color: #6d12e3;
       border-right: 2px solid #000;
       height: 100%;
-      padding: calc(0.5 * 3.125vw);
       width: calc(4 * 3.125vw); }
       .board__player__character img {
         width: 100%; }
@@ -287,6 +293,7 @@ html {
     .board__player:last-child {
       flex-direction: row-reverse; }
       .board__player:last-child .board__player__character {
+        background-color: #ff4047;
         border-right: none;
         border-left: 2px solid #000; }
       .board__player:last-child .board__player__score {
@@ -315,6 +322,8 @@ html {
   position: absolute;
   transform: translate(-50%, -50%);
   width: 20px; }
+  .debug--power {
+    background-color: red; }
 
 .error {
   text-align: center; }
@@ -395,7 +404,7 @@ html {
         -webkit-text-stroke-color: #fff; }
   .final__timebar,
   .error__timebar {
-    animation: final-timebar 7s linear 1 both;
+    animation: final-timebar 13s linear 1 both;
     background-color: #00f384;
     height: calc(0.3 * 3.125vw); }
 
@@ -655,7 +664,8 @@ body {
   left: 50%;
   position: absolute;
   top: 50%;
-  width: 100%; }
+  width: 100%;
+  z-index: 9; }
 
 .message-end {
   animation: fadeIn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, fadeOut 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1s; }
