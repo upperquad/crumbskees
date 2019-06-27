@@ -118,6 +118,8 @@ export default class Player {
       }
     }
 
+    let nbItemGet = 0
+
     for (let i = 0; i < scene.items.length; i++) {
       const item = scene.items[i]
       if (!item.found &&
@@ -125,15 +127,19 @@ export default class Player {
         x < item.x + this.clickPrecisionW &&
         y > item.y - this.clickPrecisionH &&
         y < item.y + this.clickPrecisionH) {
-        window.GameManager.score(this, scene.props.item, { x, y })
         item.found = true
         item.el.style.opacity = 0
         if (item.debugEl) item.debugEl.style.opacity = 0
 
-        scene.numItemFound += 1
+        nbItemGet += 1
         // kill player intervalTap
         clearInterval(this.isCloseToItemInterval)
       }
+    }
+
+    if (nbItemGet > 0) {
+      window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
+      scene.numItemFound += nbItemGet
     }
 
     if (scene.numItemFound === scene.items.length && !scene.isEnded) {

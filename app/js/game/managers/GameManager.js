@@ -365,8 +365,8 @@ export default class GameManager {
     this.element.classList.add('sceneStarted')
   }
 
-  score(player, item, pos = false) {
-    this.popUpMessage('+1', player.color, false, pos) // + color player
+  score(player, item, pos = false, score = 1) {
+    this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
 
     this.scores[player.index] += 1
     this.element.classList.add('item-found')
