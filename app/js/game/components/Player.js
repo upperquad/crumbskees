@@ -158,13 +158,11 @@ export default class Player {
 
       let minDistance = 0
 
-      if (!power.found) {
+      if (!this.grown) {
         minDistance = 0.08
       } else {
         minDistance = 0.19
       }
-
-      console.log(distance)
 
       if (!item.found && distance <= minDistance) {
         item.found = true
