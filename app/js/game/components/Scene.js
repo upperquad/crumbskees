@@ -1,9 +1,11 @@
 import uuidv1 from 'uuid/v1'
 import { TweenMax, TimelineMax } from 'gsap/TweenMax'
+import { Howl } from 'howler'
 import { getNow } from '../utils/time'
 import { getOffsetTop, getOffsetLeft, splitText } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
+import startSound from '../../../assets/game/sounds/start.mp3'
 
 import DEBUG from '../constants/Debug'
 
@@ -11,6 +13,11 @@ export default class Scene {
   constructor(props) {
     this.props = { ...props }
     this.time = 40 // in seconds
+
+    this.startSound = new Howl({
+      src: [startSound],
+      volume: 1,
+    })
 
     this.dom()
     this.set()
@@ -78,13 +85,13 @@ export default class Scene {
       this.dom.introVideo,
     ], { clearProps: 'all' })
 
-    if (DEBUG) {
-      this.dom.introRound.style.display = 'none'
-      this.dom.introVideo.style.display = 'none'
-      this.dom.introCircle.style.display = 'none'
-      this.start()
-      return false
-    }
+    // if (DEBUG) {
+    //   this.dom.introRound.style.display = 'none'
+    //   this.dom.introVideo.style.display = 'none'
+    //   this.dom.introCircle.style.display = 'none'
+    //   this.start()
+    //   return false
+    // }
 
     this.dom.itemToFind.src = this.props.item
     if (this.props.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
@@ -157,6 +164,7 @@ export default class Scene {
         TweenMax.set(this.dom.introCircle, { opacity: 0 })
         TweenMax.set(this.dom.introVideo, { opacity: 0 })
         tlReady.play()
+        this.startSound.play()
       }, '-=1.2')
 
     tlReady.to(this.dom.introReady, 0.6, { y: '0%', ease: window.Bounce.easeOut })
