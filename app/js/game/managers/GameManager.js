@@ -257,7 +257,7 @@ export default class GameManager {
         message: 'DOPE.',
         delayGif: 1000,
         power: {
-          type: 'freeze',
+          type: 'grow',
           item: growItem,
         },
       }, {
@@ -487,6 +487,8 @@ export default class GameManager {
       playerEl.innerHTML = `player ${playerIndex + 1}`
       scoreEl.innerHTML = this.scores[playerIndex]
       playerImgEl.src = this.charactersImg[playerIndex]
+      playerEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
+      scoreEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
     } else {
       playerEl.innerHTML = 'TIE!'
       scoreEl.innerHTML = this.scores[0]
@@ -500,7 +502,7 @@ export default class GameManager {
     setTimeout(() => {
       Server.websocket.send('disconnect_users')
       window.location.reload()
-    }, 10000)
+    }, 13000)
   }
 
   initErrorGameExists = () => {

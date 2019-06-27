@@ -249,9 +249,9 @@ html {
     width: calc(14 * 3.125vw);
     position: relative; }
     .board__player__character {
+      background-color: #6d12e3;
       border-right: 2px solid #000;
       height: 100%;
-      padding: calc(0.5 * 3.125vw);
       width: calc(4 * 3.125vw); }
       .board__player__character img {
         width: 100%; }
@@ -293,6 +293,7 @@ html {
     .board__player:last-child {
       flex-direction: row-reverse; }
       .board__player:last-child .board__player__character {
+        background-color: #ff4047;
         border-right: none;
         border-left: 2px solid #000; }
       .board__player:last-child .board__player__score {
@@ -403,7 +404,7 @@ html {
         -webkit-text-stroke-color: #fff; }
   .final__timebar,
   .error__timebar {
-    animation: final-timebar 10s linear 1 both;
+    animation: final-timebar 13s linear 1 both;
     background-color: #00f384;
     height: calc(0.3 * 3.125vw); }
 
