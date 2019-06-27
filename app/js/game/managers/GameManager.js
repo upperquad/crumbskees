@@ -253,6 +253,7 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'DOPE.',
+        delayGif: 1000,
         power: {
           type: 'grow',
           item: growItem,
@@ -266,6 +267,7 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'GOOD JOB!',
+        delayGif: 2750,
         power: {
           type: 'freeze',
           item: freezeItem,
@@ -279,6 +281,7 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'AWESOME!',
+        delayGif: 1000,
         power: {
           type: 'grow',
           item: growItem,
@@ -495,7 +498,7 @@ export default class GameManager {
     setTimeout(() => {
       Server.websocket.send('disconnect_users')
       window.location.reload()
-    }, 7000)
+    }, 10000)
   }
 
   initErrorGameExists = () => {
