@@ -149,6 +149,11 @@ section.character-confirm {
     video {
       width: 90%;
     }
+
+    @media only screen and (max-height: 630px) {
+      height: 60vw;
+      width: 60vw;
+    }
   }
 
   .ready {
@@ -278,6 +283,10 @@ section.result {
     flex-shrink: 0;
     overflow: hidden;
     width: 85vw;
+
+    @media only screen and (max-height: 630px) {
+      width: 60vw;
+    }
   }
 
   .image-wrapper {
@@ -460,6 +469,10 @@ section.result {
 
   &--red {
     background: $color-red;
+  }
+
+  @media only screen and (max-height: 630px) {
+    transform: translate(-50%, -40%);
   }
 }
 
