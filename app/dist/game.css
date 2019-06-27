@@ -793,6 +793,7 @@ body {
     pointer-events: none;
     position: relative; }
     .setup .connected::before {
+      border: 2px solid #000;
       background: #ff4047;
       border-radius: 50%;
       content: '';
