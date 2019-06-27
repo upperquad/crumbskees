@@ -5,40 +5,91 @@
   position: absolute;
   width: 100%;
 
-  &__content {
-    align-items: center;
+  &__card {
     background-color: #FFFAF2;
     border-style: solid;
     border-color: $color-black-full;
     border-width: grid(0.05);
-    display: flex;
-    flex-direction: column;
-    height: grid(7);
-    justify-content: center;
+    height: grid(9);
     left: 50%;
-    padding: grid(1);
     position: absolute;
     text-align: center;
-    top: grid(2.3);
+    top: grid(4);
     transform: translateX(-50%);
-    width: grid(17);
+    width: grid(17.5);
 
-    &__title {
-      margin-bottom: grid(0.8);
-    }
-
-    &__text {
-      line-height: 1.6;
+    &[data-step="1"] .step-1,
+    &[data-step="2"] .step-2,
+    &[data-step="3"] .step-3 {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 
-  &__start {
+  &__header {
+    border-bottom: grid(0.05) solid $color-black-full;
+    height: grid(1.5);
+    padding-top: grid(.35);
+  }
+
+  &__content {
+    left: 0;
+    padding: grid(.6) grid(1.6);
     position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    right: 0;
+    top: grid(1.5);
+    transition: opacity .3s;
+
+    img {
+      height: grid(1);
+      margin-bottom: grid(.5);
+    }
+
+    &__text {
+      line-height: 1.4;
+    }
+  }
+
+  &__timebar {
+    border: grid(0.05) solid $color-black-full;
+    bottom: grid(1);
     left: 50%;
-    top: grid(11.6);
+    padding: grid(.2) 0 grid(.16);
+    position: absolute;
+    text-align: center;
     transform: translateX(-50%);
-    color: $color-white-full;
-    -webkit-text-stroke-width: grid(0.06);
-    -webkit-text-stroke-color: $color-black;
+    width: grid(5);
+
+    &__color {
+      background: $color-green;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      top: 0;
+      transition: width .1s;
+      z-index: -1;
+    }
+  }
+
+  .marquee {
+    padding-top: 48/1920*100vw;
+    white-space: nowrap;
+
+    div {
+      animation: marquee 6s infinite linear;
+      display: inline-block;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
   }
 }
