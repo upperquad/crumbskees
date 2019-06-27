@@ -18,7 +18,7 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
       ws.id = uuid()
       console.log(`new phone: ${ws.id}`)
       wssPage.clients[0].send(`token_submit,${query.token},${ws.id}`)
-    } else if (query.id && !wssPhone.clients.find(elem => elem.id === id)) {
+    } else if (query.id && !wssPhone.clients.find(elem => elem.id === query.id)) {
       ws.id = query.id
       console.log(`reconnect phone: ${ws.id}`)
       wssPage.clients[0].send(`reconnect_phone,${ws.id}`)
