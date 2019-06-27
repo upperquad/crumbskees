@@ -156,18 +156,6 @@ section.character-confirm {
     }
   }
 
-  .ready {
-    @extend %Bold;
-
-    color: $color-red;
-    letter-spacing: 0.012em;
-    flex-grow: 0;
-    flex-shrink: 0;
-    font-size: 21px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-  }
-
   .button {
     @extend %Bold;
 

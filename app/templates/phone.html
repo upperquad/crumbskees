@@ -37,8 +37,7 @@
         <video src="{{phoneCtrl.character.videoWhite}}" poster="{{phoneCtrl.character.image}}" playsinline autoplay muted loop></video>
       </div>
       <div class="placeholder"></div>
-      <div class="ready">Ready?</div>
-      <div class="button" role="button" ng-click="phoneCtrl.handleConfirm()">Start</div>
+      <div class="button" role="button" ng-click="phoneCtrl.handleConfirm()">Ready</div>
     </section>
 
     <section id="touchpad" class="in-game state" ng-class="{'is-shown': (phoneCtrl.accepted && phoneCtrl.userConfirmed && phoneCtrl.result === null)}">
