@@ -112,13 +112,12 @@ export default class Player {
     if (scene) {
       const x = (this.targetX / window.GameManager.vbWidth) + 0.5
       const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+
       for (let i = 0; i < scene.items.length; i++) {
         const item = scene.items[i]
-        if (!item.found &&
-          x > item.x - this.clickPrecisionW &&
-          x < item.x + this.clickPrecisionW &&
-          y > item.y - this.clickPrecisionH &&
-          y < item.y + this.clickPrecisionH) {
+        const distance = Math.hypot(x - item.x, y - item.y)
+
+        if (!item.found && distance <= 0.08) {
           window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
         }
       }
@@ -155,11 +154,19 @@ export default class Player {
 
     for (let i = 0; i < scene.items.length; i++) {
       const item = scene.items[i]
-      if (!item.found &&
-        x > item.x - this.clickPrecisionW &&
-        x < item.x + this.clickPrecisionW &&
-        y > item.y - this.clickPrecisionH &&
-        y < item.y + this.clickPrecisionH) {
+      const distance = Math.hypot(x - item.x, y - item.y)
+
+      let minDistance = 0
+
+      if (!power.found) {
+        minDistance = 0.08
+      } else {
+        minDistance = 0.19
+      }
+
+      console.log(distance)
+
+      if (!item.found && distance <= minDistance) {
         item.found = true
         item.el.style.opacity = 0
         if (item.debugEl) item.debugEl.style.opacity = 0
@@ -167,7 +174,7 @@ export default class Player {
         nbItemGet += 1
         // kill player intervalTap
         clearInterval(this.isCloseToItemInterval)
-
+        
         this.soundDuck.play()
       }
     }
