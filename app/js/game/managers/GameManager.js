@@ -552,6 +552,7 @@ export default class GameManager {
     const playerEl = document.querySelector('.final__player')
     const playerVideoEl = document.querySelector('.final__player-video')
     const playersVideoEl = document.querySelector('.final__players-video')
+    const spans = document.querySelectorAll('.final__title-wrapper > span')
 
     if (!tie) {
       playerEl.innerHTML = `player ${playerIndex + 1}`
@@ -567,6 +568,10 @@ export default class GameManager {
       playerVideoEl.src = charactersVideos[0]
       playersVideoEl.appendChild(playerVideoEl2)
       playersVideoEl.classList.add('tie')
+
+      for (let i = 0; i < spans.length; i++) {
+        spans[i].innerHTML = 'Nobody wins!'
+      }
     }
 
     this.winnerSound.play()
@@ -574,7 +579,7 @@ export default class GameManager {
     setTimeout(() => {
       Server.websocket.send('disconnect_users')
       window.location.reload()
-    }, 130000)
+    }, 13000)
   }
 
   initErrorGameExists = () => {
