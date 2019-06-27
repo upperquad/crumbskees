@@ -88,6 +88,7 @@ export default class Player {
         this.frozen = true
         window.GameManager.popUpMessage('FREEZE', 'blue', false)
         timeClean = 4000
+        this.el.classList.add('frozen')
         break
     }
 
@@ -208,5 +209,6 @@ export default class Player {
     this.grown = false
     this.frozen = false
     this.updateRadius(0, 1.5)
+    this.el.classList.remove('frozen')
   }
 }
