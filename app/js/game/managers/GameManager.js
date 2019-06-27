@@ -366,7 +366,7 @@ export default class GameManager {
   score(player, item, pos = false, score = 1) {
     this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
 
-    this.scores[player.index] += 1
+    this.scores[player.index] += score
     this.element.classList.add('item-found')
 
     for (let i = 0; i < this.dom.boardPlayerScore.length; i++) {
