@@ -237,6 +237,7 @@ export default class GameManager {
     })
     this.tutorialTimeline.add(this.tutorialTimelineEnd, 15)
     this.tutorialTimeline.play()
+    this.loadAll()
   }
 
   tutorialTimelineOnUpdate = () => {
