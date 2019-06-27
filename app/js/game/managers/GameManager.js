@@ -22,7 +22,7 @@ import scene2Item from '../../../assets/game/images/round_2/r2-item.png'
 import scene2IntroVideo from '../../../assets/game/images/round_2/r2-intro.mp4'
 
 import scene3Pattern from '../../../assets/game/images/round_3/r3-pattern.gif'
-import scene3Front from '../../../assets/game/images/round_3/r3-front.jpg'
+import scene3Front from '../../../assets/game/images/round_3/r3-front.gif'
 import scene3Item from '../../../assets/game/images/round_3/r3-item.png'
 import scene3IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
 
@@ -255,7 +255,7 @@ export default class GameManager {
         message: 'DOPE.',
         delayGif: 1000,
         power: {
-          type: 'grow',
+          type: 'freeze',
           item: growItem,
         },
       }, {
@@ -281,7 +281,7 @@ export default class GameManager {
         gridCols: 32,
         gridLines: 14,
         message: 'AWESOME!',
-        delayGif: 1000,
+        delayGif: 0,
         power: {
           type: 'grow',
           item: growItem,
