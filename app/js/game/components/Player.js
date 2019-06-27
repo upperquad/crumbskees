@@ -14,10 +14,10 @@ export default class Player {
     this.id = id
     this.index = index
     this.color = color
-    this.numPoints = 10
+    this.numPoints = 8
     this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
     this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2
-    this.minRadius = window.GameManager.gridUnit * 1.2 // 3.125 == 1 unit grid (1920 / 32)
+    this.minRadius = window.GameManager.gridUnit * 1.1 // 3.125 == 1 unit grid (1920 / 32)
     this.maxRadius = this.minRadius + this.minRadius * 0.45
     this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
@@ -29,29 +29,14 @@ export default class Player {
     this.targetX = 0
     this.targetY = 0
     this.isInsideTime = 0
+    this.increaseMax = window.GameManager.vbWidth * 0.05
+    // values for mouse event
+    this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 1.5 grid unit
+    this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 1.5 grid unit
 
     this.setPoints()
 
     this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
-  }
-
-  isCloseToItem = () => {
-    const scene = window.GameManager.currentScene
-
-    if (scene) {
-      const x = (this.targetX / window.GameManager.vbWidth) + 0.5
-      const y = (this.targetY / window.GameManager.vbHeight) + 0.5
-      for (let i = 0; i < scene.items.length; i++) {
-        const item = scene.items[i]
-        if (!item.found &&
-          x > item.x - scene.clickPrecisionW &&
-          x < item.x + scene.clickPrecisionW &&
-          y > item.y - scene.clickPrecisionH &&
-          y < item.y + scene.clickPrecisionH) {
-          window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
-        }
-      }
-    }
   }
 
   setPoints() {
@@ -86,5 +71,142 @@ export default class Player {
 
       this.points.push(point)
     }
+  }
+
+  setPower = type => {
+    let timeClean
+    switch (type) {
+      default:
+        break
+      case 'grow':
+        this.grown = true
+        this.updateRadius(this.increaseMax, 3)
+        window.GameManager.popUpMessage('GROW', 'orange', false)
+        timeClean = 6000
+        break
+      case 'freeze':
+        this.frozen = true
+        window.GameManager.popUpMessage('FREEZE', 'blue', false)
+        timeClean = 4000
+        break
+    }
+
+    setTimeout(() => {
+      this.cleanPowers()
+    }, timeClean)
+  }
+
+  isCloseToItem = () => {
+    const scene = window.GameManager.currentScene
+
+    if (scene) {
+      const x = (this.targetX / window.GameManager.vbWidth) + 0.5
+      const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+      for (let i = 0; i < scene.items.length; i++) {
+        const item = scene.items[i]
+        if (!item.found &&
+          x > item.x - this.clickPrecisionW &&
+          x < item.x + this.clickPrecisionW &&
+          y > item.y - this.clickPrecisionH &&
+          y < item.y + this.clickPrecisionH) {
+          window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
+        }
+      }
+    }
+  }
+
+  click = () => {
+    const scene = window.GameManager.currentScene
+    const x = (this.targetX / window.GameManager.vbWidth) + 0.5
+    const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+    const power = scene.props.power
+
+    if (power) {
+      if (!power.found &&
+        x > power.x - this.clickPrecisionW &&
+        x < power.x + this.clickPrecisionW &&
+        y > power.y - this.clickPrecisionH &&
+        y < power.y + this.clickPrecisionH) {
+        let playerAffected = this
+        if (power.type === 'freeze') {
+          // affect other player
+          const index = this.index === 0 ? 1 : 0
+          playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
+        }
+        playerAffected.setPower(power.type)
+
+        power.found = true
+        power.el.style.opacity = 0
+        if (power.debugEl) power.debugEl.style.opacity = 0
+      }
+    }
+
+    let nbItemGet = 0
+
+    for (let i = 0; i < scene.items.length; i++) {
+      const item = scene.items[i]
+      if (!item.found &&
+        x > item.x - this.clickPrecisionW &&
+        x < item.x + this.clickPrecisionW &&
+        y > item.y - this.clickPrecisionH &&
+        y < item.y + this.clickPrecisionH) {
+        item.found = true
+        item.el.style.opacity = 0
+        if (item.debugEl) item.debugEl.style.opacity = 0
+
+        nbItemGet += 1
+        // kill player intervalTap
+        clearInterval(this.isCloseToItemInterval)
+      }
+    }
+
+    if (nbItemGet > 0) {
+      window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
+      scene.numItemFound += nbItemGet
+    }
+
+    if (scene.numItemFound === scene.items.length && !scene.isEnded) {
+      scene.isEnded = true
+      window.GameManager.endScene(scene.props.message)
+    }
+  }
+
+  updateRadius(incr, clickPrecision) {
+    for (let i = 0; i < this.points.length; i++) {
+      const point = this.points[i]
+      // Increase each points
+      // if player has grown power, increase player radius
+      const newMaxRadius = this.maxRadius + incr
+      const newMaxMiddleRadius = this.maxMiddleRadius + incr
+      const newMinRadius = this.minRadius + incr
+      const newMinMiddleRadius = this.minMiddleRadius + incr
+
+      point.duration += 250
+
+      point.targetMaxX = this.centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+      point.targetMinX = this.centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+      point.destX = point.targetMaxX
+
+      point.targetMaxY = this.centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+      point.targetMinY = this.centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+      point.destY = point.targetMaxY
+      point.startAnim = getNow()
+    }
+
+    setTimeout(() => {
+      this.clickPrecisionW = window.GameManager.gridUnitVw * clickPrecision / 100 // 2.5 grid unit
+      this.clickPrecisionH = window.GameManager.gridUnitVh * clickPrecision / 100 // 2.5 grid unit
+      for (let i = 0; i < this.points.length; i++) {
+        this.points[i].duration -= 250
+      }
+    }, 1000) // to prevent big click on the click getting the power
+  }
+
+  cleanPowers = () => {
+    this.grown = false
+    this.frozen = false
+    this.updateRadius(0, 1.5)
   }
 }

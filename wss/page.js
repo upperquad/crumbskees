@@ -17,6 +17,15 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
         case 'score':
           onScore(messageList)
           break
+        case 'game_start':
+          onGameStart()
+          break
+        case 'disconnect_users':
+          onDisconnectAll()
+          break
+        case 'result':
+          onResult(messageList)
+          break
         default:
           break
       }
@@ -31,17 +40,19 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
   }
 
   function onAuthResult(messageList) {
-    if (messageList.length !== 3) {
+    if (messageList.length !== 4) {
       return
     }
     const id = messageList[1]
     const result = messageList[2]
+    const playerIndex = messageList[3]
     const wsPhone = wssPhone.clients.find(elem => elem.id === id)
     if (!wsPhone) {
       return
     }
     if (result === '1') {
       wsPhone.accepted = true
+      wsPhone.send(`accepted,${playerIndex}`)
     } else {
       wsPhone.close(1000, 'invalid_token')
     }
@@ -60,7 +71,29 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     wsPhone.send(`score,${score}`)
   }
 
-  function onDisconnectAll(messageList) {
+  function onResult(messageList) {
+    if (messageList.length !== 2) {
+      return
+    }
+    const result = messageList[1]
+    if (result === 'tied') {
+      wssPhone.clients.forEach(client => {
+        client.send('result,tied')
+      })
+    } else {
+      wssPhone.clients.forEach(client => {
+        client.send(`result,${client.id === result ? 'won' : 'lost'}`)
+      })
+    }
+  }
+
+  function onGameStart() {
+    wssPhone.clients.forEach(client => {
+      client.send('game_start')
+    })
+  }
+
+  function onDisconnectAll() {
     wssPhone.clients.forEach(client => {
       client.close(1000, 'game_over')
     })

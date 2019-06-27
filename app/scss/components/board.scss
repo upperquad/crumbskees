@@ -1,0 +1,150 @@
+@keyframes change-color {
+  0% {
+    background-color: $color-green;
+    width: 100%;
+  }
+  50% {
+    background-color: $color-orange;
+    width: 50%;
+  }
+  100% {
+    background-color: $color-red;
+    width: 0%;
+  }
+}
+
+.board {
+  border-bottom: $border;
+  border-top: $border;
+  display: flex;
+  height: grid(4);
+  position: relative;
+  z-index: 1;
+
+  .sceneStarted & {
+    &::after {
+      animation: change-color 40s linear infinite forwards;
+      content: '';
+      height: grid(0.3);
+      left: 50%;
+      position: absolute;
+      top: grid(-0.3);
+      transform: translateX(-50%);
+      width: 100%;
+      z-index: 10;
+    }
+  }
+
+  &::after {
+    background-color: $color-green;
+    content: '';
+    height: grid(0.3);
+    left: 0;
+    position: absolute;
+    top: grid(-0.3);
+    width: 100%;
+    z-index: 10;
+  }
+
+  // players
+  &__player {
+    align-items: flex-end;
+    display: flex;
+    width: grid(14);
+    position: relative;
+
+    &__character {
+      background-color: $color-purple;
+      border-right: $border;
+      height: 100%;
+      width: grid(4);
+
+      img {
+        width: 100%;
+      }
+
+      &.is-dead {
+        filter: grayscale(100%);
+      }
+    }
+
+    &__score {
+      -webkit-text-stroke-color: $color-black;
+      -webkit-text-stroke-width: 2px;
+      border-right: $border;
+      border-top: $border;
+      color: transparent !important;
+      display: inline-block;
+      height: grid(3);
+      line-height: grid(3);
+      text-align: center;
+      vertical-align: middle;
+      width: grid(3);
+    }
+
+    &__name {
+      border-top: $border;
+      height: grid(3);
+      vertical-align: top;
+      width: grid(7);
+      padding: grid(1);
+      display: flex;
+      align-items: center;
+    }
+
+    &__items {
+      align-items: center;
+      display: flex;
+      height: grid(1);
+      justify-content: flex-end;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: grid(10);
+    }
+
+    &__item {
+      height: grid(0.5);
+      margin-right: grid(0.3);
+      width: grid(0.5);
+    }
+
+    &:last-child {
+      flex-direction: row-reverse;
+
+      .board__player__character {
+        background-color: $color-red;
+        border-right: none;
+        border-left: $border;
+      }
+
+      .board__player__score {
+        border-right: none;
+        border-left: $border;
+      }
+
+      .board__player__name {
+        text-align: right;
+      }
+
+      .board__player__items {
+        justify-content: flex-start;
+        left: 0;
+        right: auto;
+      }
+
+      .board__player__item {
+        margin-left: grid(0.3);
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__center {
+    width: grid(4);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: grid(0.4);
+  }
+}
