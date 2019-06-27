@@ -5,7 +5,7 @@ import { getNow } from '../utils/time'
 import { getOffsetTop, getOffsetLeft, splitText } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
-import startSound from '../../../assets/game/sounds/start.mp3'
+import startSound from '../../../assets/game/sounds/start2.mp3'
 
 import DEBUG from '../constants/Debug'
 
