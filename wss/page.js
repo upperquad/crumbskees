@@ -52,7 +52,7 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     }
     if (result === '1') {
       wsPhone.accepted = true
-      wsPhone.send(`accepted,${playerIndex}`)
+      wsPhone.send(`accepted,${playerIndex},${wsPhone.id}`)
     } else {
       wsPhone.close(1000, 'invalid_token')
     }

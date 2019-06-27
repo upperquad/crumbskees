@@ -34,6 +34,7 @@ export default class PhoneController {
     }
     this.score = null
 
+    this.playerId = null
     this.token = ''
     this.isConnecting = false
     this.errorReason = null
@@ -61,6 +62,9 @@ export default class PhoneController {
 
     this.initToken()
     this.ready = true
+
+    setInterval(this.checkDeadConnection, 3000)
+    window.addEventListener('focus', this.checkDeadConnection)
   }
 
   initToken = () => {
@@ -88,6 +92,15 @@ export default class PhoneController {
     this.isConnecting = true
     this.websocket = new WebSocket(`${this.host}/phone?token=${this.token}`)
     this.websocket.onopen = this.onWsOpen
+  }
+
+  checkDeadConnection = () => {
+    console.log('here')
+    if (!this.connected && this.playerId !== null) {
+      this.isConnecting = true
+      this.websocket = new WebSocket(`${this.host}/phone?id=${this.playerId}`)
+      this.websocket.onopen = this.onWsOpen
+    }
   }
 
   onWsOpen = () => {
@@ -122,6 +135,7 @@ export default class PhoneController {
       this.character = null
       this.opponent = null
       this.result = null
+      this.playerId = null
     }
   }
 
@@ -133,6 +147,7 @@ export default class PhoneController {
         this.score = message[1]
         break
       case 'accepted': {
+        this.playerId = message[2]
         this.accepted = true
         this.hasPlayed = true
         this.score = null

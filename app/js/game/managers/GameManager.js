@@ -134,13 +134,32 @@ export default class GameManager {
     }
   }
 
+  checkReconnectPhone = userId => {
+    let foundUser = false
+    let playerIndex = null
+    for (let index = 0; index <= 1; index++) {
+      if (this.playerIds[index] === userId && this.players[userId].disconnected) {
+        this.players[userId].disconnected = false
+        foundUser = true
+        playerIndex = index
+        this.updatePlayerConnectionStatus()
+        break
+      }
+    }
+    Server.websocket.send(`auth_result,${userId},${foundUser ? 1 : 0},${playerIndex}`)
+  }
+
   updatePlayerConnectionStatus = () => {
     for (let index = 0; index <= 1; index++) {
       const userId = this.playerIds[index]
       if (this.players[userId]) {
         const player = this.players[userId]
-        if (player.disconnected && this.dom.boardPlayerCharacters && this.dom.boardPlayerCharacters[index]) {
-          this.dom.boardPlayerCharacters[index].classList.add('is-dead')
+        if (this.dom.boardPlayerCharacters && this.dom.boardPlayerCharacters[index]) {
+          if (player.disconnected) {
+            this.dom.boardPlayerCharacters[index].classList.add('is-dead')
+          } else {
+            this.dom.boardPlayerCharacters[index].classList.remove('is-dead')
+          }
         }
       }
     }
@@ -174,6 +193,9 @@ export default class GameManager {
         if (this.playerIds[0] !== null && this.playerIds[1] !== null) {
           this.kickOffGame()
         }
+        break
+      case 'reconnect_phone':
+        this.checkReconnectPhone(data[1])
         break
       case 'phone_left':
         if (this.gameStarted) {

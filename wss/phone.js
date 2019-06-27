@@ -9,14 +9,20 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
     }
 
     const query = url.parse(ws.upgradeReq.url, true).query
-    if (!query.token) {
+    if (!query.token && !query.id) {
       ws.close(1000, 'invalid_token')
       return
     }
 
-    ws.id = uuid()
-    console.log(`new phone: ${ws.id}`)
-    wssPage.clients[0].send(`token_submit,${query.token},${ws.id}`)
+    if (query.token) {
+      ws.id = uuid()
+      console.log(`new phone: ${ws.id}`)
+      wssPage.clients[0].send(`token_submit,${query.token},${ws.id}`)
+    } else if (query.id && !wssPhone.clients.find(elem => elem.id === id)) {
+      ws.id = query.id
+      console.log(`reconnect phone: ${ws.id}`)
+      wssPage.clients[0].send(`reconnect_phone,${ws.id}`)
+    }
 
     ws.on('message', message => {
       if (!ws.accepted) {
