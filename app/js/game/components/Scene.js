@@ -78,13 +78,13 @@ export default class Scene {
       this.dom.introVideo,
     ], { clearProps: 'all' })
 
-    if (DEBUG) {
-      this.dom.introRound.style.display = 'none'
-      this.dom.introVideo.style.display = 'none'
-      this.dom.introCircle.style.display = 'none'
-      this.start()
-      return false
-    }
+    // if (DEBUG) {
+    //   this.dom.introRound.style.display = 'none'
+    //   this.dom.introVideo.style.display = 'none'
+    //   this.dom.introCircle.style.display = 'none'
+    //   this.start()
+    //   return false
+    // }
 
     this.dom.itemToFind.src = this.props.item
     if (this.props.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
@@ -92,7 +92,13 @@ export default class Scene {
     } else {
       this.dom.introVideo.src = this.props.videoIntro
     }
-    this.dom.introRound.innerHTML = `ROUND 0${this.props.index + 1}`
+    console.log(this.props.index, window.GameManager.scenes.length)
+    if (this.props.index < window.GameManager.scenes.length - 1) {
+      this.dom.introRound.innerHTML = `ROUND 0${this.props.index + 1}`
+    } else {
+      this.dom.introRound.innerHTML = 'LAST ROUND'
+    }
+
     this.dom.introRound.classList.remove('blink')
 
     const tlScaleDown = new TimelineMax({ paused: true })

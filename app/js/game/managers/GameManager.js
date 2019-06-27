@@ -14,7 +14,7 @@ import DEBUG from '../constants/Debug'
 import scene1Pattern from '../../../assets/game/images/round_1/r1-pattern.gif'
 import scene1Front from '../../../assets/game/images/round_1/r1-front.gif'
 import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
-import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.jpg'
+import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.mp4'
 
 import scene2Pattern from '../../../assets/game/images/round_2/r2-pattern.jpg'
 import scene2Front from '../../../assets/game/images/round_2/r2-front.jpg'
@@ -25,6 +25,9 @@ import scene3Pattern from '../../../assets/game/images/round_3/r3-pattern.gif'
 import scene3Front from '../../../assets/game/images/round_3/r3-front.jpg'
 import scene3Item from '../../../assets/game/images/round_3/r3-item.png'
 import scene3IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
+
+import freezeItem from '../../../assets/game/images/freeze.png'
+import growItem from '../../../assets/game/images/grow.png'
 
 import character1 from '../../../assets/game/images/character1.png'
 import character2 from '../../../assets/game/images/character2.png'
@@ -252,7 +255,7 @@ export default class GameManager {
         message: 'DOPE.',
         power: {
           type: 'grow',
-          item: scene2Item,
+          item: growItem,
         },
       }, {
         bkg: scene2Pattern,
@@ -265,7 +268,7 @@ export default class GameManager {
         message: 'GOOD JOB!',
         power: {
           type: 'freeze',
-          item: scene3Item,
+          item: freezeItem,
         },
       }, {
         bkg: scene3Pattern,
@@ -278,7 +281,7 @@ export default class GameManager {
         message: 'AWESOME!',
         power: {
           type: 'grow',
-          item: scene2Item,
+          item: growItem,
         },
       },
     ]
