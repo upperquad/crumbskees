@@ -16,8 +16,8 @@ import scene1Front from '../../../assets/game/images/round_1/r1-front.gif'
 import scene1Item from '../../../assets/game/images/round_1/r1-item.png'
 import scene1IntroVideo from '../../../assets/game/images/round_1/r1-intro.mp4'
 
-import scene2Pattern from '../../../assets/game/images/round_2/r2-pattern.jpg'
-import scene2Front from '../../../assets/game/images/round_2/r2-front.jpg'
+import scene2Pattern from '../../../assets/game/images/round_2/r2-pattern.gif'
+import scene2Front from '../../../assets/game/images/round_2/r2-front.gif'
 import scene2Item from '../../../assets/game/images/round_2/r2-item.png'
 import scene2IntroVideo from '../../../assets/game/images/round_2/r2-intro.mp4'
 

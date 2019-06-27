@@ -279,10 +279,7 @@ export default class Scene {
     this.dom.svgMaskedImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.props.bkg)
     this.dom.svgMaskedImage.setAttributeNS(null, 'preserveAspectRatio', 'xMidYMid slice')
     this.dom.reveal.src = this.props.bkg
-    setTimeout(() => {
-      // Add "front" bkg
-      this.dom.frontBkg.src = this.props.frontBkg
-    }, 1000) // synchronize gifs
+    this.dom.frontBkg.src = this.props.frontBkg
   }
 
   // ////////
