@@ -50,7 +50,7 @@
 
   &::after {
     background-color: $color-green;
-    bottom: calc(100% + grid(0.03));
+    bottom: calc(100% + #{grid(0.03)});
     content: '';
     height: grid(0.3);
     left: 50%;
