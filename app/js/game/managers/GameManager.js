@@ -185,12 +185,10 @@ export default class GameManager {
           const x = parseFloat(data[2], 10) * this.vbWidth
           const y = parseFloat(data[3], 10) * this.vbWidth
           // we use vbWidth the same coeficient here to have the same speed movement on touchmove X and Y
-          if (!this.players[data[1]].powerFreeze) { // if player not frozen
+          if (!this.players[data[1]].frozen) { // if player not frozen
             this.players[data[1]].targetX = x + this.players[data[1]].targetX
             this.players[data[1]].targetY = y + this.players[data[1]].targetY
           }
-
-          // this.players[data[1]].targetX
         }
         break
       }

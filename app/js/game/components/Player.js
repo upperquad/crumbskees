@@ -73,6 +73,29 @@ export default class Player {
     }
   }
 
+  setPower = type => {
+    let timeClean
+    switch (type) {
+      default:
+        break
+      case 'grow':
+        this.grown = true
+        this.updateRadius(this.increaseMax, 3)
+        window.GameManager.popUpMessage('GROW', 'orange', false)
+        timeClean = 6000
+        break
+      case 'freeze':
+        this.frozen = true
+        window.GameManager.popUpMessage('FREEZE', 'blue', false)
+        timeClean = 4000
+        break
+    }
+
+    setTimeout(() => {
+      this.cleanPowers()
+    }, timeClean)
+  }
+
   isCloseToItem = () => {
     const scene = window.GameManager.currentScene
 
@@ -181,32 +204,9 @@ export default class Player {
     }, 1000) // to prevent big click on the click getting the power
   }
 
-  setPower = type => {
-    let timeClean
-    switch (type) {
-      default:
-        break
-      case 'grow':
-        this.powerGrown = true
-        this.updateRadius(this.increaseMax, 3)
-        window.GameManager.popUpMessage('GROW', 'orange', false)
-        timeClean = 6000
-        break
-      case 'freeze':
-        this.powerFreeze = true
-        window.GameManager.popUpMessage('FREEZE', 'blue', false)
-        timeClean = 4000
-        break
-    }
-
-    setTimeout(() => {
-      this.cleanPowers()
-    }, timeClean)
-  }
-
   cleanPowers = () => {
-    this.powerGrown = false
-    this.powerFreeze = false
+    this.grown = false
+    this.frozen = false
     this.updateRadius(0, 1.5)
   }
 }

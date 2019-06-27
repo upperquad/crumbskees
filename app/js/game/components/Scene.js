@@ -297,7 +297,7 @@ export default class Scene {
   }
 
   handleMouseMove = e => {
-    if (window.GameManager.players[window.GameManager.playerIds[0]].powerFreeze) return
+    if (window.GameManager.players[window.GameManager.playerIds[0]].frozen) return
     const scrollY = window.scrollY || document.documentElement.scrollTop
     const player = window.GameManager.players[window.GameManager.playerIds[0]]
 
@@ -326,6 +326,11 @@ export default class Scene {
     // For each cursor...
     for (let y = 0; y < window.GameManager.playerIds.length; y++) {
       const player = window.GameManager.players[window.GameManager.playerIds[y]]
+
+      if (player.frozen) { // if player frozen
+        player.el.setAttribute('d', this.cardinal(player.points))
+        return
+      }
 
       // clamp player position to limit of the scene
       player.targetX = clamp(player.targetX, -window.GameManager.vbWidth / 2, window.GameManager.vbWidth / 2)
