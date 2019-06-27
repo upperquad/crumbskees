@@ -2,15 +2,6 @@ const uuid = require('uuid/v1')
 const url = require('url')
 
 const initPhone = (wssPage, wssPhone, wssAdmin) => {
-  const interval = setInterval(function ping() {
-    wssPhone.clients.forEach(function each(ws) {
-      if (ws.isAlive === false) return ws.terminate()
-
-      ws.isAlive = false
-      ws.ping(noop)
-    })
-  }, 20000)
-
   wssPhone.on('connection', ws => {
     if (!wssPage.clients.length) {
       ws.close(1000, 'no_active_game')
@@ -64,12 +55,6 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
       console.log('phone left')
     })
   })
-
-  function heartbeat() {
-    this.isAlive = true
-  }
-
-  function noop() {}
 }
 
 module.exports = initPhone

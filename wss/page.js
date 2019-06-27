@@ -6,7 +6,7 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
       ws.isAlive = false
       ws.ping(noop)
     })
-  }, 20000)
+  }, 40000)
 
   wssPage.on('connection', ws => {
     if (wssPage.clients.length > 1) {
