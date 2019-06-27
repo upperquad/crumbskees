@@ -1,9 +1,12 @@
 import uuidv1 from 'uuid/v1'
 import { TweenMax, TimelineMax } from 'gsap/TweenMax'
+import { Howl } from 'howler'
 import { getNow } from '../utils/time'
 import { getOffsetTop, getOffsetLeft, splitText } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
+import startSound from '../../../assets/game/sounds/start2.mp3'
+import wooshSound from '../../../assets/game/sounds/woosh.mp3'
 
 import DEBUG from '../constants/Debug'
 
@@ -11,6 +14,16 @@ export default class Scene {
   constructor(props) {
     this.props = { ...props }
     this.time = 40 // in seconds
+
+    this.startSound = new Howl({
+      src: [startSound],
+      volume: 1,
+    })
+
+    this.wooshSound = new Howl({
+      src: [wooshSound],
+      volume: 1,
+    })
 
     this.dom()
     this.set()
@@ -78,13 +91,13 @@ export default class Scene {
       this.dom.introVideo,
     ], { clearProps: 'all' })
 
-    if (DEBUG) {
-      this.dom.introRound.style.display = 'none'
-      this.dom.introVideo.style.display = 'none'
-      this.dom.introCircle.style.display = 'none'
-      this.start()
-      return false
-    }
+    // if (DEBUG) {
+    //   this.dom.introRound.style.display = 'none'
+    //   this.dom.introVideo.style.display = 'none'
+    //   this.dom.introCircle.style.display = 'none'
+    //   this.start()
+    //   return false
+    // }
 
     this.dom.itemToFind.src = this.props.item
     if (this.props.videoIntro.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
@@ -121,7 +134,7 @@ export default class Scene {
     tlScaleDown.add(() => {
       this.dom.introRound.classList.add('blink')
     })
-      .to(this.dom.introRound, 1.5, { scale: 0.22, y: '120%', ease: window.Expo.easeOut }, 0.9)
+      .to(this.dom.introRound, 1.5, { scale: 0.13, y: '194%', ease: window.Expo.easeOut }, 0.9)
       .add(() => {
         tlItemToFind.play()
       }, '-=1.4')
@@ -143,7 +156,7 @@ export default class Scene {
       .to(this.dom.itemToFind, 1.4, {
         scale: 0.55,
         x: '-50%',
-        y: '380%',
+        y: '367%',
         ease: window.Power4.easeOut,
       }, '+=3')
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 0 }, '-=1.4')
@@ -157,6 +170,7 @@ export default class Scene {
         TweenMax.set(this.dom.introCircle, { opacity: 0 })
         TweenMax.set(this.dom.introVideo, { opacity: 0 })
         tlReady.play()
+        this.startSound.play()
       }, '-=1.2')
 
     tlReady.to(this.dom.introReady, 0.6, { y: '0%', ease: window.Bounce.easeOut })
@@ -175,6 +189,7 @@ export default class Scene {
         tlItemToFind.kill()
         tlScaleDown.kill()
         this.start()
+        this.wooshSound.play()
       }, '-=2.6')
 
     return true

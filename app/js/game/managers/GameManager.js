@@ -1,5 +1,6 @@
 import QRCode from 'qrcode'
 import { TimelineMax } from 'gsap/TweenMax'
+import { Howl } from 'howler'
 import { splitText } from '../utils/dom'
 
 // components
@@ -32,6 +33,10 @@ import growItem from '../../../assets/game/images/grow.png'
 import characterVideoWhite1 from '../../../assets/game/images/character-white-1.mp4'
 import characterVideoWhite2 from '../../../assets/game/images/character-white-2.mp4'
 
+import countdownSound from '../../../assets/game/sounds/countdown.mp3'
+import winnerSound from '../../../assets/game/sounds/winner.mp3'
+import wooshSound from '../../../assets/game/sounds/woosh.mp3'
+
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 // prepare the CharacterId
@@ -45,6 +50,22 @@ export default class GameManager {
     this.tokens = [this.getNewToken(), this.getNewToken()]
     this.gameStarted = false
     this.tutorialStarted = false
+
+    // Sounds
+    this.countdownSound = new Howl({
+      src: [countdownSound],
+      volume: 0.5,
+    })
+
+    this.winnerSound = new Howl({
+      src: [winnerSound],
+      volume: 1,
+    })
+
+    this.wooshSound = new Howl({
+      src: [wooshSound],
+      volume: 1,
+    })
 
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
@@ -405,6 +426,11 @@ export default class GameManager {
         this.endScene('TIME\'S UP!')
       }
 
+      if (timer === 10) {
+        // play sound countdown
+        this.countdownSound.play()
+      }
+
       timer -= 1
     }, 1000)
 
@@ -462,11 +488,13 @@ export default class GameManager {
 
     setTimeout(() => {
       this.element.classList.add('isOutro')
+      this.wooshSound.play()
     }, 1000)
 
     setTimeout(() => {
       this.element.classList.remove('isOutro')
       this.element.classList.add('isIntro')
+      this.wooshSound.play()
     }, 5000)
 
     setTimeout(() => {
@@ -540,6 +568,8 @@ export default class GameManager {
       playersVideoEl.appendChild(playerVideoEl2)
       playersVideoEl.classList.add('tie')
     }
+
+    this.winnerSound.play()
 
     setTimeout(() => {
       Server.websocket.send('disconnect_users')

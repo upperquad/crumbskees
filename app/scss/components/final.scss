@@ -79,6 +79,8 @@
   &__player {
     text-align: center;
     margin-top: grid(0.5);
+    position: relative;
+    z-index: 1;
   }
 
    &__players-video:not(.tie) {
