@@ -317,6 +317,10 @@ section.character-confirm {
     width: 85vw; }
     section.character-confirm .block video {
       width: 90%; }
+    @media only screen and (max-height: 630px) {
+      section.character-confirm .block {
+        height: 60vw;
+        width: 60vw; } }
   section.character-confirm .ready {
     color: #ff4047;
     letter-spacing: 0.012em;
@@ -406,6 +410,9 @@ section.result {
     flex-shrink: 0;
     overflow: hidden;
     width: 85vw; }
+    @media only screen and (max-height: 630px) {
+      section.result .winner {
+        width: 60vw; } }
   section.result .image-wrapper {
     align-items: center;
     background: #fff;
@@ -508,6 +515,9 @@ section.result {
     background: #6d12e3; }
   .circle--red {
     background: #ff4047; }
+  @media only screen and (max-height: 630px) {
+    .circle {
+      transform: translate(-50%, -40%); } }
 
 section.state {
   bottom: 0;
