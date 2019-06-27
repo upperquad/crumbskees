@@ -62,9 +62,6 @@ export default class PhoneController {
 
     this.initToken()
     this.ready = true
-
-    setInterval(this.checkDeadConnection, 3000)
-    window.addEventListener('focus', this.checkDeadConnection)
   }
 
   initToken = () => {
@@ -95,11 +92,12 @@ export default class PhoneController {
   }
 
   checkDeadConnection = () => {
-    if (!this.connected && this.playerId !== null) {
+    if (!this.isConnecting && !this.connected && this.playerId !== null) {
       console.log('reconnect')
       this.isConnecting = true
       this.websocket = new WebSocket(`${this.host}/phone?id=${this.playerId}`)
       this.websocket.onopen = this.onWsOpen
+      setTimeout(this.checkDeadConnection, 1000)
     }
   }
 
@@ -120,6 +118,10 @@ export default class PhoneController {
       this.errorReason = 'Invalid token'
     } else if (event.reason === 'no_active_game') {
       this.errorReason = 'There\'s no active game'
+    }
+
+    if (!event.reason) {
+      this.checkDeadConnection()
     }
 
     this.$scope.$apply()
