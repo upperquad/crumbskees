@@ -6,18 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link href="/phone.css" rel="stylesheet"></head>
   <body ng-controller="PhoneController as phoneCtrl" ng-class="{'is-ready': phoneCtrl.ready}">
-    <div id="touchpad" ng-class="['touchpad', {'is-shown': (phoneCtrl.accepted && phoneCtrl.userConfirmed && phoneCtrl.result === null)}]">
-      <img src="{{phoneCtrl.character.image}}" />
-      <div class="score">
-        {{phoneCtrl.score}}
+    <section class="token state" ng-class="{'is-shown': (!phoneCtrl.connected && !phoneCtrl.isConnecting)}" >
+    <!-- <section class="token state"> -->
+      <div class="circle circle--yellow"></div>
+      <h2>Enter the code to&nbsp;join</h2>
+      <div class="display">
+        {{phoneCtrl.token}}
       </div>
-      <div class="touch-bubble" id="touch-bubble"></div>
-    </div>
-    <div class="connecting" ng-if="phoneCtrl.isConnecting">Connecting</div>
-    <div class="token-pad" ng-if="!phoneCtrl.connected && !phoneCtrl.isConnecting">
-      <div class="token-instruction">Enter code to join the game</div>
-      <div class="token-display">
-        <div class="token-error" ng-if="phoneCtrl.invalidToken">Invalid token</div>{{phoneCtrl.token}}
+      <div class="label">
+        <span class="error" ng-if="phoneCtrl.errorReason !== null">{{phoneCtrl.errorReason}}</span>
+        <span class="connecting" ng-if="phoneCtrl.isConnecting">Connecting...</span>
       </div>
       <div class="token-input">
         <div class="token-input-key"
@@ -26,18 +24,53 @@
         <div class="token-input-key"
             ng-click="phoneCtrl.tokenKey(-1)">←</div>
       </div>
-    </div>
-    <div class="character-confirm" ng-if="(phoneCtrl.accepted && !phoneCtrl.userConfirmed)">
-      <div class="confirm__meet">Meet your character:</div>
-      <img src="{{phoneCtrl.character.image}}" />
-      <div class="confirm__button" role="button" ng-click="phoneCtrl.handleConfirm()">Start</div>
-    </div>
-    <div class="result" ng-if="phoneCtrl.result !== null">
-      <div class="result__text">{{phoneCtrl.result !== 'tied' ? 'You ' : null}}{{phoneCtrl.result}}</div>
-      <img src="{{phoneCtrl.character.image}}" />
-      <div class="score">
-        {{phoneCtrl.score}}
+      <div class="placeholder"></div>
+      <div class="bottom">
       </div>
-    </div>
+    </section>
+
+    <section class="character-confirm state" ng-class="{'is-shown': (phoneCtrl.accepted && !phoneCtrl.userConfirmed)}" >
+    <!-- <section class="character-confirm state" > -->
+      <div class="circle circle--{{phoneCtrl.character.color}}"></div>
+      <div class="text"><h2>You're in!</h2><p>Say hello to your avatar.</p></div>
+      <div class="block">
+        <video src="{{phoneCtrl.character.videoWhite}}" poster="{{phoneCtrl.character.image}}" playsinline autoplay muted loop></video>
+      </div>
+      <div class="placeholder"></div>
+      <div class="ready">Ready?</div>
+      <div class="button" role="button" ng-click="phoneCtrl.handleConfirm()">Start</div>
+    </section>
+
+    <section id="touchpad" class="in-game state" ng-class="{'is-shown': (phoneCtrl.accepted && phoneCtrl.userConfirmed && phoneCtrl.result === null)}">
+    <!-- <section id="touchpad" class="in-game state is-shown"> -->
+      <h2 class="color--{{phoneCtrl.opponent.color}}">The Upperquadrant</h2>
+      <div class="block block--{{phoneCtrl.character.color}}">
+        <div class="score">
+          {{phoneCtrl.score}}
+        </div>
+        <img src="{{phoneCtrl.character.image}}" />
+      </div>
+      <div class="marquee"><span>What up tiny type that is distracting —&nbsp;</span><span>What up tiny type that is distracting —&nbsp;</span><span>What up tiny type that is distracting —&nbsp;</span><span>What up tiny type that is distracting —&nbsp;</span></div>
+      <div class="touch-bubble" id="touch-bubble"></div>
+    </section>
+
+    <section class="result state" ng-class="{'is-shown': (phoneCtrl.result !== null)}" >
+    <!-- <section class="result state"> -->
+      <div class="circle circle--{{phoneCtrl.result === 'won' ? phoneCtrl.character.color : (phoneCtrl.result === 'lost' ? phoneCtrl.opponent.color : 'yellow' )}}"></div>
+      <div class="winner winner--{{phoneCtrl.result}}">
+        <div class="marquee alternate">
+          <span class="invert">{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span><span class="invert">{{phoneCtrl.resultTop}}&nbsp;</span><span>{{phoneCtrl.resultTop}}&nbsp;</span>
+        </div>
+        <div class="image-wrapper {{phoneCtrl.result === 'tied' ? 'image-wrapper--both' : null}}">
+          <video ng-if="(phoneCtrl.result === 'tied' || phoneCtrl.result === 'won')" src="{{phoneCtrl.character.videoWhite}}" poster="{{phoneCtrl.character.image}}" playsinline autoplay muted loop></video>
+          <video ng-if="(phoneCtrl.result === 'tied' || phoneCtrl.result === 'lost')" src="{{phoneCtrl.opponent.videoWhite}}" poster="{{phoneCtrl.opponent.image}}" playsinline autoplay muted loop></video>
+        </div>
+        <div class="marquee alternate">
+          <span>{{phoneCtrl.resultBottom}}&nbsp;</span><span class="invert">{{phoneCtrl.resultBottom}}&nbsp;</span><span>{{phoneCtrl.resultBottom}}&nbsp;</span><span class="invert">{{phoneCtrl.resultBottom}}&nbsp;</span>
+        </div>
+      </div>
+      <div class="small-text">{{phoneCtrl.result === 'tied' ? 'Tie!' : 'Winner!'}}</div>
+      <div class="button" ng-click="phoneCtrl.playAgain()">Play again</div>
+    </section>
   <script type="text/javascript" src="/js/phone.js"></script></body>
 </html>

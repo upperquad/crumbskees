@@ -1,16 +1,24 @@
 import { throttle } from 'throttle-debounce'
 import character1 from '../../assets/game/images/character1.png'
 import character2 from '../../assets/game/images/character2.png'
+import characterVideo1 from '../../assets/game/images/character1.mp4'
+import characterVideo2 from '../../assets/game/images/character2.mp4'
+import characterVideoWhite1 from '../../assets/game/images/character-white-1.mp4'
+import characterVideoWhite2 from '../../assets/game/images/character-white-2.mp4'
 
-const CHARACTERS = [
-  {
-    color: '123123',
-    image: character1,
-  }, {
-    color: '456456',
-    image: character2,
-  },
-]
+const CHARACTERS = [{
+  image: character1,
+  video: characterVideo1,
+  videoWhite: characterVideoWhite1,
+  color: 'purple',
+  name: 'Player 1',
+}, {
+  image: character2,
+  video: characterVideo2,
+  videoWhite: characterVideoWhite2,
+  color: 'red',
+  name: 'Player 2',
+}]
 
 export default class PhoneController {
   constructor($scope, $element) {
@@ -28,10 +36,21 @@ export default class PhoneController {
 
     this.token = ''
     this.isConnecting = false
-    this.invalidToken = false
+    this.errorReason = null
     this.accepted = false
     this.character = null
+    this.opponent = null
     this.result = null
+    this.resultTop = ''
+    this.resultBottom = ''
+
+    // TODO: debug only, remove
+    // this.opponent = CHARACTERS[0]
+    // this.character = CHARACTERS[1]
+    // this.result = 'tied'
+    // this.resultTop = 'You tied…'
+    // this.resultBottom = 'Nobody wins!'
+    // this.score = 12
 
     this.throttledTouchMove = throttle(50, this.handleTouchMove)
 
@@ -53,7 +72,7 @@ export default class PhoneController {
   }
 
   tokenKey = key => {
-    this.invalidToken = false
+    this.errorReason = null
 
     if (key === -1) {
       this.token = this.token.slice(0, -1)
@@ -81,16 +100,26 @@ export default class PhoneController {
   }
 
   onWsClose = event => {
+    this.reset()
+    console.log(event.reason)
+
+    if (event.reason === 'invalid_token') {
+      this.errorReason = 'Invalid token'
+    } else if (event.reason === 'no_active_game') {
+      this.errorReason = 'There\'s no active game'
+    }
+
+    this.$scope.$apply()
+  }
+
+  reset = () => {
     this.isConnecting = false
     this.connected = false
     this.accepted = false
     this.character = null
+    this.opponent = null
     this.result = null
     this.token = ''
-    console.log(event.reason)
-
-    this.invalidToken = event.reason === 'invalid-token'
-    this.$scope.$apply()
   }
 
   onWsMessage = event => {
@@ -100,13 +129,31 @@ export default class PhoneController {
       case 'score':
         this.score = message[1]
         break
-      case 'accepted':
+      case 'accepted': {
         this.accepted = true
-        this.score = 0
-        this.character = CHARACTERS[parseInt(message[1], 10)]
+        this.score = null
+        const characterIndex = parseInt(message[1], 10)
+        this.character = CHARACTERS[characterIndex]
+        this.opponent = CHARACTERS[1 - characterIndex]
+        break
+      }
+      case 'game_start':
+        if (this.accepted && this.character) {
+          this.userConfirmed = true
+        }
         break
       case 'result':
         this.result = message[1]
+        if (this.result === 'tied') {
+          this.resultTop = 'You tied…'
+          this.resultBottom = 'Nobody wins!'
+        } else if (this.result === 'won') {
+          this.resultTop = 'You won!'
+          this.resultBottom = this.character.name
+        } else {
+          this.resultTop = 'You’re bad!'
+          this.resultBottom = this.opponent.name
+        }
         break
       default:
         break
@@ -119,6 +166,7 @@ export default class PhoneController {
     const { clientX, clientY } = event.touches[0]
     this.originCoord.x = clientX
     this.originCoord.y = clientY
+    this.updateBubble(clientX, clientY)
     this.touchBubble.classList.add('is-touching')
   }
 
@@ -146,9 +194,20 @@ export default class PhoneController {
   }
 
   updatePosition = (clientX, clientY, originX, originY) => {
-    this.touchBubble.style.left = clientX
-    this.touchBubble.style.top = clientY
+    this.updateBubble(clientX, clientY)
 
     this.websocket.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
+  }
+
+  updateBubble = (clientX, clientY) => {
+    this.touchBubble.style.left = clientX
+    this.touchBubble.style.top = clientY
+  }
+
+  playAgain = () => {
+    if (this.websocket) {
+      this.websocket.close()
+    }
+    this.reset()
   }
 }

@@ -17,8 +17,12 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
         case 'score':
           onScore(messageList)
           break
+        case 'game_start':
+          onGameStart()
+          break
         case 'disconnect_users':
           onDisconnectAll()
+          break
         case 'result':
           onResult(messageList)
           break
@@ -83,7 +87,13 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     }
   }
 
-  function onDisconnectAll(messageList) {
+  function onGameStart() {
+    wssPhone.clients.forEach(client => {
+      client.send('game_start')
+    })
+  }
+
+  function onDisconnectAll() {
     wssPhone.clients.forEach(client => {
       client.close(1000, 'game_over')
     })
