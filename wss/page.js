@@ -1,4 +1,13 @@
 const initPage = (wssPage, wssPhone, wssAdmin) => {
+  const interval = setInterval(function ping() {
+    wssPage.clients.forEach(function each(ws) {
+      if (ws.isAlive === false) return ws.terminate()
+
+      ws.isAlive = false
+      ws.ping(noop)
+    })
+  }, 20000)
+
   wssPage.on('connection', ws => {
     if (wssPage.clients.length > 1) {
       ws.close(1000, 'active_game_exist')
@@ -6,6 +15,8 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     }
 
     cleanupGame()
+    ws.isAlive = true
+    ws.on('pong', heartbeat)
 
     ws.on('message', message => {
       const messageList = message.split(',')
@@ -31,6 +42,12 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
       }
     })
   })
+
+  function heartbeat() {
+    this.isAlive = true
+  }
+
+  function noop() {}
 
   function cleanupGame() {
     console.log(`new page`)
