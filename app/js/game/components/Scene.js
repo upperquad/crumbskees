@@ -6,6 +6,7 @@ import { getOffsetTop, getOffsetLeft, splitText } from '../utils/dom'
 import { inOutSine } from '../utils/ease'
 import { clamp, randomInt } from '../utils/math'
 import startSound from '../../../assets/game/sounds/start2.mp3'
+import wooshSound from '../../../assets/game/sounds/woosh.mp3'
 
 import DEBUG from '../constants/Debug'
 
@@ -16,6 +17,11 @@ export default class Scene {
 
     this.startSound = new Howl({
       src: [startSound],
+      volume: 1,
+    })
+
+    this.wooshSound = new Howl({
+      src: [wooshSound],
       volume: 1,
     })
 
@@ -128,7 +134,7 @@ export default class Scene {
     tlScaleDown.add(() => {
       this.dom.introRound.classList.add('blink')
     })
-      .to(this.dom.introRound, 1.5, { scale: 0.22, y: '120%', ease: window.Expo.easeOut }, 0.9)
+      .to(this.dom.introRound, 1.5, { scale: 0.13, y: '194%', ease: window.Expo.easeOut }, 0.9)
       .add(() => {
         tlItemToFind.play()
       }, '-=1.4')
@@ -150,7 +156,7 @@ export default class Scene {
       .to(this.dom.itemToFind, 1.4, {
         scale: 0.55,
         x: '-50%',
-        y: '380%',
+        y: '367%',
         ease: window.Power4.easeOut,
       }, '+=3')
       .to(this.dom.introItemToFindTxt, 0.5, { opacity: 0 }, '-=1.4')
@@ -183,6 +189,7 @@ export default class Scene {
         tlItemToFind.kill()
         tlScaleDown.kill()
         this.start()
+        this.wooshSound.play()
       }, '-=2.6')
 
     return true

@@ -1,3 +1,39 @@
+@keyframes change-color {
+  0% {
+    background-color: $color-green;
+    width: 100%;
+  }
+  50% {
+    background-color: $color-orange;
+    width: 50%;
+  }
+  75% {
+    background-color: $color-red;
+  }
+  100% {
+    background-color: $color-red;
+    width: 0%;
+  }
+}
+
+@keyframes blink-bar-color {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .scene {
   background-position: center center;
   background-size: cover;
@@ -5,7 +41,25 @@
   height: grid(14);
   position: relative;
   text-align: center;
-  z-index: 1;
+  z-index: 10;
+
+  .sceneStarted & {
+    &::after {
+      animation: change-color 40s linear infinite forwards, blink-bar-color 1s linear infinite forwards 30s;
+    }
+  }
+
+  &::after {
+    background-color: $color-green;
+    bottom: 0;
+    content: '';
+    height: grid(0.3);
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10;
+  }
 
   &__frontBkg {
     object-fit: cover;

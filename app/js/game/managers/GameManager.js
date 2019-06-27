@@ -35,6 +35,7 @@ import characterVideoWhite2 from '../../../assets/game/images/character-white-2.
 
 import countdownSound from '../../../assets/game/sounds/countdown.mp3'
 import winnerSound from '../../../assets/game/sounds/winner.mp3'
+import wooshSound from '../../../assets/game/sounds/woosh.mp3'
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
@@ -58,6 +59,11 @@ export default class GameManager {
 
     this.winnerSound = new Howl({
       src: [winnerSound],
+      volume: 1,
+    })
+
+    this.wooshSound = new Howl({
+      src: [wooshSound],
       volume: 1,
     })
 
@@ -482,11 +488,13 @@ export default class GameManager {
 
     setTimeout(() => {
       this.element.classList.add('isOutro')
+      this.wooshSound.play()
     }, 1000)
 
     setTimeout(() => {
       this.element.classList.remove('isOutro')
       this.element.classList.add('isIntro')
+      this.wooshSound.play()
     }, 5000)
 
     setTimeout(() => {
