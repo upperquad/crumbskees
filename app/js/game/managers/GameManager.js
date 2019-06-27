@@ -401,10 +401,12 @@ export default class GameManager {
       }
     }
 
-    const img = document.createElement('img')
-    img.src = item
-    img.classList.add('board__player__item')
-    this.dom.boardPlayerItems[player.index].appendChild(img)
+    for (let i = 0; i < score; i++) {
+      const img = document.createElement('img')
+      img.src = item
+      img.classList.add('board__player__item')
+      this.dom.boardPlayerItems[player.index].appendChild(img)
+    }
 
     Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
