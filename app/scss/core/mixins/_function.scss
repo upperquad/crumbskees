@@ -1,7 +1,7 @@
 @function grid($cols) {
-  @return calc(#{$cols} * #{$grid-unit});
+  @return $cols / $grid-cols * 100vw;
 }
 
 @function responsive-font($unit) {
-  @return calc(#{$unit} / #{$base-width} * 100vw);
+  @return $unit / $base-width * 100vw;
 }

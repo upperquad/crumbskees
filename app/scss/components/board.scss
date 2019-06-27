@@ -37,7 +37,6 @@
 .board {
   border-bottom: $border;
   border-top: $border;
-  border-width: $border-width;
   display: flex;
   height: grid(4);
   position: relative;
@@ -51,12 +50,12 @@
 
   &::after {
     background-color: $color-green;
+    bottom: calc(100% + grid(0.03));
     content: '';
     height: grid(0.3);
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
-    top: grid(-0.33);
     width: 100%;
     z-index: 10;
   }
@@ -71,7 +70,6 @@
     &__character {
       background-color: $color-purple;
       border-right: $border;
-      border-width: $border-width;
       height: 100%;
       width: grid(4);
 
@@ -89,7 +87,6 @@
       -webkit-text-stroke-width: 2px;
       border-right: $border;
       border-top: $border;
-      border-width: $border-width;
       color: transparent !important;
       display: inline-block;
       height: grid(3);
@@ -101,7 +98,6 @@
 
     &__name {
       border-top: $border;
-      border-width: $border-width;
       height: grid(3);
       vertical-align: top;
       width: grid(7);
@@ -134,13 +130,11 @@
         background-color: $color-red;
         border-right: none;
         border-left: $border;
-        border-width: $border-width;
       }
 
       .board__player__score {
         border-right: none;
         border-left: $border;
-        border-width: $border-width;
       }
 
       .board__player__name {

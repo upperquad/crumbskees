@@ -29,8 +29,8 @@ import scene3IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
 import freezeItem from '../../../assets/game/images/freeze.png'
 import growItem from '../../../assets/game/images/grow.png'
 
-import character1 from '../../../assets/game/images/character1.png'
-import character2 from '../../../assets/game/images/character2.png'
+import characterVideoWhite1 from '../../../assets/game/images/character-white-1.mp4'
+import characterVideoWhite2 from '../../../assets/game/images/character-white-2.mp4'
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
@@ -507,7 +507,7 @@ export default class GameManager {
   }
 
   initFinal = () => {
-    this.charactersImg = [character1, character2]
+    const charactersVideos = [characterVideoWhite1, characterVideoWhite2]
     let playerIndex
     let tie = false
     if (this.scores[0] > this.scores[1]) {
@@ -522,29 +522,29 @@ export default class GameManager {
 
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
-    const playerImgEl = document.querySelector('.final__player-img')
-    const playersImgEl = document.querySelector('.final__players-img')
+    const playerVideoEl = document.querySelector('.final__player-video')
+    const playersVideoEl = document.querySelector('.final__players-video')
 
     if (!tie) {
       playerEl.innerHTML = `player ${playerIndex + 1}`
       scoreEl.innerHTML = this.scores[playerIndex]
-      playerImgEl.src = this.charactersImg[playerIndex]
+      playerVideoEl.src = charactersVideos[playerIndex]
       playerEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
       scoreEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
     } else {
       playerEl.innerHTML = 'TIE!'
       scoreEl.innerHTML = this.scores[0]
-      const playerImgEl2 = playerImgEl.cloneNode(true)
-      playerImgEl2.src = this.charactersImg[1]
-      playerImgEl.src = this.charactersImg[0]
-      playersImgEl.appendChild(playerImgEl2)
-      playersImgEl.classList.add('tie')
+      const playerVideoEl2 = playerVideoEl.cloneNode(true)
+      playerVideoEl2.src = charactersVideos[1]
+      playerVideoEl.src = charactersVideos[0]
+      playersVideoEl.appendChild(playerVideoEl2)
+      playersVideoEl.classList.add('tie')
     }
 
     setTimeout(() => {
       Server.websocket.send('disconnect_users')
       window.location.reload()
-    }, 13000)
+    }, 130000)
   }
 
   initErrorGameExists = () => {
