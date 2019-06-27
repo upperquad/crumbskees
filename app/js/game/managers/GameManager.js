@@ -198,7 +198,7 @@ export default class GameManager {
       case 'click':
         // data[1] needs to be the index of player (or id)
         if (this.gameStarted && this.players[data[1]]) {
-          this.players[data[1]].handleClick()
+          this.players[data[1]].click()
         }
         break
       default:
