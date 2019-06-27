@@ -1,9 +1,16 @@
 .tutorial {
-  background: url(../assets/game/images/tutorial/background.jpg) center / cover no-repeat;
   color: $color-black-full;
   height: 100%;
   position: absolute;
   width: 100%;
+
+  video {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+  }
 
   &__card {
     background-color: #FFFAF2;

@@ -461,6 +461,7 @@ html {
 
 footer {
   align-items: center;
+  background: #fff;
   border: 2px solid #000;
   display: flex;
   flex-flow: row nowrap;
@@ -744,11 +745,16 @@ body {
       fill: red !important; }
 
 .setup {
-  background: url(/f956e8bb6ef336b5bdfe9a6c8ec056ee.png) center/cover no-repeat;
   color: #000;
   height: 100%;
   position: absolute;
   width: 100%; }
+  .setup video {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1; }
   .setup .setup__qr {
     margin: 0 50px; }
   .setup .setup__players {
@@ -835,15 +841,13 @@ body {
     overflow: hidden;
     padding: 5.20833vw 30.88542vw 2.08333vw;
     position: relative; }
-    .setup .instruction.is-started .instruction__text {
-      opacity: 0;
-      pointer-events: none; }
     .setup .instruction.is-started .instruction__letsplay {
       opacity: 1; }
   .setup .instruction__text {
     font-size: calc(36 / 1920 * 100vw);
     line-height: calc(53 / 1920 * 100vw);
-    transition: opacity .2s; }
+    opacity: 0;
+    pointer-events: none; }
   .setup .instruction__letsplay {
     bottom: 0;
     left: 0;
@@ -868,11 +872,16 @@ body {
   width: 100%; }
 
 .tutorial {
-  background: url(/5af3471cf7fb80cb7c805218fd47068f.jpg) center/cover no-repeat;
   color: #000;
   height: 100%;
   position: absolute;
   width: 100%; }
+  .tutorial video {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1; }
   .tutorial__card {
     background-color: #FFFAF2;
     border-style: solid;

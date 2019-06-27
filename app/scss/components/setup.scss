@@ -1,9 +1,16 @@
 .setup {
-  background: url(../assets/game/images/setup/background.png) center / cover no-repeat;
   color: $color-black-full;
   height: 100%;
   position: absolute;
   width: 100%;
+
+  video {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+  }
 
   .setup__qr {
     margin: 0 50px;
@@ -135,21 +142,18 @@
     position: relative;
 
     &.is-started {
-      .instruction__text {
-        opacity: 0;
-        pointer-events: none;
-      }
-
       .instruction__letsplay {
         opacity: 1;
       }
     }
   }
 
+  // TODO: actually remove this
   .instruction__text {
     font-size: responsive-font(36);
     line-height: responsive-font(53);
-    transition: opacity .2s;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .instruction__letsplay {
