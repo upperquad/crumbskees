@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link href="/phone.css" rel="stylesheet"></head>
   <body ng-controller="PhoneController as phoneCtrl" ng-class="{'is-ready': phoneCtrl.ready}">
-    <section class="token state" ng-class="{'is-shown': (!phoneCtrl.connected && !phoneCtrl.isConnecting)}" >
+    <section class="token state" ng-class="{'is-shown': (!phoneCtrl.connected && !phoneCtrl.isConnecting && phoneCtrl.result === null)}" >
     <!-- <section class="token state"> -->
       <div class="circle circle--yellow"></div>
-      <h2>Enter the code to&nbsp;join</h2>
+      <h2>{{phoneCtrl.hasPlayed ? 'Enter the red code on the screen to play&nbsp;again' : 'Enter the red code on the screen to&nbsp;join'}}</h2>
       <div class="display">
         {{phoneCtrl.token}}
       </div>
@@ -37,8 +37,7 @@
         <video src="{{phoneCtrl.character.videoWhite}}" poster="{{phoneCtrl.character.image}}" playsinline autoplay muted loop></video>
       </div>
       <div class="placeholder"></div>
-      <div class="ready">Ready?</div>
-      <div class="button" role="button" ng-click="phoneCtrl.handleConfirm()">Start</div>
+      <div class="button" role="button" ng-click="phoneCtrl.handleConfirm()">Ready</div>
     </section>
 
     <section id="touchpad" class="in-game state" ng-class="{'is-shown': (phoneCtrl.accepted && phoneCtrl.userConfirmed && phoneCtrl.result === null)}">

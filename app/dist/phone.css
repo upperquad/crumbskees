@@ -120,7 +120,7 @@ section.token .label, section.token .token-input .token-input-key, section.chara
   font-family: 'Roboto Slab', serif;
   font-weight: 300; }
 
-[class*="--bold"], .title, section.token h2, section.token .display, section.character-confirm .text h2, section.character-confirm .ready, section.character-confirm .button, section.in-game h2, section.in-game .block .score, section.result .marquee, section.result .button {
+[class*="--bold"], .title, section.token h2, section.token .display, section.character-confirm .text h2, section.character-confirm .button, section.in-game h2, section.in-game .block .score, section.result .marquee, section.result .button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Ginto Nord Black'; }
@@ -231,6 +231,7 @@ section.token {
     flex-grow: 0;
     flex-shrink: 0;
     letter-spacing: 0.011em;
+    line-height: 1.2;
     padding: 0 20px;
     text-transform: uppercase; }
   section.token .display {
@@ -321,14 +322,6 @@ section.character-confirm {
       section.character-confirm .block {
         height: 60vw;
         width: 60vw; } }
-  section.character-confirm .ready {
-    color: #ff4047;
-    letter-spacing: 0.012em;
-    flex-grow: 0;
-    flex-shrink: 0;
-    font-size: 21px;
-    margin-bottom: 15px;
-    text-transform: uppercase; }
   section.character-confirm .button {
     background: #6ce9a7;
     border: 1px solid #000;
