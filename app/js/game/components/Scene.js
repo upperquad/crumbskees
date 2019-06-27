@@ -285,8 +285,10 @@ export default class Scene {
 
   events(method) {
     const ev = method ? 'addEventListener' : 'removeEventListener'
-    if (DEBUG) window[ev]('mousemove', this.handleMouseMove, false)
-    window[ev]('click', this.handleClick, false)
+    if (DEBUG) {
+      window[ev]('mousemove', this.handleMouseMove, false)
+      window[ev]('click', this.handleClick, false)
+    }
   }
 
   eventsRAF(method) {
@@ -312,55 +314,9 @@ export default class Scene {
     // ^These shoudl be linked to a cursor
   }
 
-  handleClick = playerId => {
-    if (DEBUG) playerId = window.GameManager.playerIds[0]
-    const player = window.GameManager.players[playerId]
-    const x = (player.targetX / window.GameManager.vbWidth) + 0.5
-    const y = (player.targetY / window.GameManager.vbHeight) + 0.5
-    const power = this.props.power
-
-    if (power) {
-      if (!power.found &&
-        x > power.x - player.clickPrecisionW &&
-        x < power.x + player.clickPrecisionW &&
-        y > power.y - player.clickPrecisionH &&
-        y < power.y + player.clickPrecisionH) {
-        let playerAffected = player
-        if (power.type === 'freeze') {
-          // affect other player
-          const index = player.index === 0 ? 1 : 0
-          playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
-        }
-        playerAffected.setPower(power.type)
-
-        power.found = true
-        power.el.style.opacity = 0
-        if (power.debugEl) power.debugEl.style.opacity = 0
-      }
-    }
-
-    for (let i = 0; i < this.items.length; i++) {
-      const item = this.items[i]
-      if (!item.found &&
-        x > item.x - player.clickPrecisionW &&
-        x < item.x + player.clickPrecisionW &&
-        y > item.y - player.clickPrecisionH &&
-        y < item.y + player.clickPrecisionH) {
-        window.GameManager.score(player, this.props.item, { x, y })
-        item.found = true
-        item.el.style.opacity = 0
-        if (item.debugEl) item.debugEl.style.opacity = 0
-
-        this.numItemFound = this.numItemFound + 1
-        // kill player intervalTap
-        clearInterval(player.isCloseToItemInterval)
-      }
-    }
-
-    if (this.numItemFound === this.items.length && !this.isEnded) {
-      this.isEnded = true
-      window.GameManager.endScene(this.props.message)
-    }
+  handleClick = () => {
+    const player = window.GameManager.players[window.GameManager.playerIds[0]]
+    player.click()
   }
 
   handleRAF = e => {

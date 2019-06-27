@@ -14,10 +14,10 @@ export default class Player {
     this.id = id
     this.index = index
     this.color = color
-    this.numPoints = 10
+    this.numPoints = 8
     this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
     this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2
-    this.minRadius = window.GameManager.gridUnit * 1.2 // 3.125 == 1 unit grid (1920 / 32)
+    this.minRadius = window.GameManager.gridUnit * 1.1 // 3.125 == 1 unit grid (1920 / 32)
     this.maxRadius = this.minRadius + this.minRadius * 0.45
     this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
@@ -37,25 +37,6 @@ export default class Player {
     this.setPoints()
 
     this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
-  }
-
-  isCloseToItem = () => {
-    const scene = window.GameManager.currentScene
-
-    if (scene) {
-      const x = (this.targetX / window.GameManager.vbWidth) + 0.5
-      const y = (this.targetY / window.GameManager.vbHeight) + 0.5
-      for (let i = 0; i < scene.items.length; i++) {
-        const item = scene.items[i]
-        if (!item.found &&
-          x > item.x - this.clickPrecisionW &&
-          x < item.x + this.clickPrecisionW &&
-          y > item.y - this.clickPrecisionH &&
-          y < item.y + this.clickPrecisionH) {
-          window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
-        }
-      }
-    }
   }
 
   setPoints() {
@@ -89,6 +70,75 @@ export default class Player {
       point.destY = point.targetMaxY
 
       this.points.push(point)
+    }
+  }
+
+  isCloseToItem = () => {
+    const scene = window.GameManager.currentScene
+
+    if (scene) {
+      const x = (this.targetX / window.GameManager.vbWidth) + 0.5
+      const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+      for (let i = 0; i < scene.items.length; i++) {
+        const item = scene.items[i]
+        if (!item.found &&
+          x > item.x - this.clickPrecisionW &&
+          x < item.x + this.clickPrecisionW &&
+          y > item.y - this.clickPrecisionH &&
+          y < item.y + this.clickPrecisionH) {
+          window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
+        }
+      }
+    }
+  }
+
+  click = () => {
+    const scene = window.GameManager.currentScene
+    const x = (this.targetX / window.GameManager.vbWidth) + 0.5
+    const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+    const power = scene.props.power
+
+    if (power) {
+      if (!power.found &&
+        x > power.x - this.clickPrecisionW &&
+        x < power.x + this.clickPrecisionW &&
+        y > power.y - this.clickPrecisionH &&
+        y < power.y + this.clickPrecisionH) {
+        let playerAffected = this
+        if (power.type === 'freeze') {
+          // affect other player
+          const index = this.index === 0 ? 1 : 0
+          playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
+        }
+        playerAffected.setPower(power.type)
+
+        power.found = true
+        power.el.style.opacity = 0
+        if (power.debugEl) power.debugEl.style.opacity = 0
+      }
+    }
+
+    for (let i = 0; i < scene.items.length; i++) {
+      const item = scene.items[i]
+      if (!item.found &&
+        x > item.x - this.clickPrecisionW &&
+        x < item.x + this.clickPrecisionW &&
+        y > item.y - this.clickPrecisionH &&
+        y < item.y + this.clickPrecisionH) {
+        window.GameManager.score(this, scene.props.item, { x, y })
+        item.found = true
+        item.el.style.opacity = 0
+        if (item.debugEl) item.debugEl.style.opacity = 0
+
+        scene.numItemFound += 1
+        // kill player intervalTap
+        clearInterval(this.isCloseToItemInterval)
+      }
+    }
+
+    if (scene.numItemFound === scene.items.length && !scene.isEnded) {
+      scene.isEnded = true
+      window.GameManager.endScene(scene.props.message)
     }
   }
 
