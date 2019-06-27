@@ -1,5 +1,8 @@
+import { Howl, Howler } from 'howler'
 import { getNow } from '../utils/time'
 import { random } from '../utils/math'
+import duckSound from '../../../assets/game/sounds/duck.mp3'
+
 
 export default class Player {
   constructor(props) {
@@ -37,6 +40,12 @@ export default class Player {
     this.setPoints()
 
     this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
+
+    Howler.volume(0.5)
+
+    this.soundDuck = new Howl({
+      src: [duckSound],
+    })
   }
 
   setPoints() {
@@ -88,6 +97,7 @@ export default class Player {
         this.frozen = true
         window.GameManager.popUpMessage('FREEZE', 'blue', false)
         timeClean = 4000
+        this.el.classList.add('frozen')
         break
     }
 
@@ -157,6 +167,8 @@ export default class Player {
         nbItemGet += 1
         // kill player intervalTap
         clearInterval(this.isCloseToItemInterval)
+
+        this.soundDuck.play()
       }
     }
 
@@ -208,5 +220,6 @@ export default class Player {
     this.grown = false
     this.frozen = false
     this.updateRadius(0, 1.5)
+    this.el.classList.remove('frozen')
   }
 }
