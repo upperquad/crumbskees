@@ -333,56 +333,53 @@ export default class Scene {
     for (let y = 0; y < window.GameManager.playerIds.length; y++) {
       const player = window.GameManager.players[window.GameManager.playerIds[y]]
 
-      if (player.frozen) { // if player frozen
-        player.el.setAttribute('d', this.cardinal(player.points))
-        return
-      }
+      if (!player.frozen) { // if player not frozen
+        // clamp player position to limit of the scene
+        player.targetX = clamp(player.targetX, -window.GameManager.vbWidth / 2, window.GameManager.vbWidth / 2)
+        player.targetY = clamp(player.targetY, -window.GameManager.vbHeight / 2, window.GameManager.vbHeight / 2)
 
-      // clamp player position to limit of the scene
-      player.targetX = clamp(player.targetX, -window.GameManager.vbWidth / 2, window.GameManager.vbWidth / 2)
-      player.targetY = clamp(player.targetY, -window.GameManager.vbHeight / 2, window.GameManager.vbHeight / 2)
-
-      player.x += (player.targetX - player.x) * 0.1
-      player.y += (player.targetY - player.y) * 0.1
+        player.x += (player.targetX - player.x) * 0.1
+        player.y += (player.targetY - player.y) * 0.1
 
 
-      // For each points of the player (organic shape)
-      // Create organic shape / Tween all points
-      for (let i = 0; i < player.points.length; i++) {
-        const point = player.points[i]
+        // For each points of the player (organic shape)
+        // Create organic shape / Tween all points
+        for (let i = 0; i < player.points.length; i++) {
+          const point = player.points[i]
 
-        // From scratch tween:
-        // percent is going from 0 to 1 in X seconds where X is the "duration variable".
-        // Each points starting value is going to his destination value in X seconds
-        // then I use easing functions to modify the value curve through time.
-        const percent = (now - point.startAnim) / point.duration * this.acceleration
+          // From scratch tween:
+          // percent is going from 0 to 1 in X seconds where X is the "duration variable".
+          // Each points starting value is going to his destination value in X seconds
+          // then I use easing functions to modify the value curve through time.
+          const percent = (now - point.startAnim) / point.duration * this.acceleration
 
-        point.x = point.startX + (point.destX - point.startX) * inOutSine(percent)
-        point.y = point.startY + (point.destY - point.startY) * inOutSine(percent)
+          point.x = point.startX + (point.destX - point.startX) * inOutSine(percent)
+          point.y = point.startY + (point.destY - point.startY) * inOutSine(percent)
 
-        if (percent >= 1) {
-          // end of animation,
-          // restart animation by going back
-          if (point.reverseAnim) {
-            point.startX = point.x
-            point.startY = point.y
-            point.destX = point.targetMaxX
-            point.destY = point.targetMaxY
-            point.reverseAnim = false
-            point.startAnim = getNow()
-          } else {
-            point.startX = point.x
-            point.startY = point.y
-            point.destX = point.targetMinX
-            point.destY = point.targetMinY
-            point.reverseAnim = true
-            point.startAnim = getNow()
+          if (percent >= 1) {
+            // end of animation,
+            // restart animation by going back
+            if (point.reverseAnim) {
+              point.startX = point.x
+              point.startY = point.y
+              point.destX = point.targetMaxX
+              point.destY = point.targetMaxY
+              point.reverseAnim = false
+              point.startAnim = getNow()
+            } else {
+              point.startX = point.x
+              point.startY = point.y
+              point.destX = point.targetMinX
+              point.destY = point.targetMinY
+              point.reverseAnim = true
+              point.startAnim = getNow()
+            }
           }
-        }
 
-        // move player based on mouse
-        point.x += player.x
-        point.y += player.y
+          // move player based on mouse
+          point.x += player.x
+          point.y += player.y
+        }
       }
 
       player.el.setAttribute('d', this.cardinal(player.points))

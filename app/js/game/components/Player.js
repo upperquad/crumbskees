@@ -36,6 +36,8 @@ export default class Player {
     // values for mouse event
     this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 1.5 grid unit
     this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 1.5 grid unit
+    this.grown = false
+    this.frozen = false
 
     this.setPoints()
 
