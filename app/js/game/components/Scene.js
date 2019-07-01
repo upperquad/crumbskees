@@ -434,4 +434,11 @@ export default class Scene {
     this.events(false)
     this.eventsRAF(false)
   }
+
+  destroyTarget() {
+    const debugs = document.querySelectorAll('.debug')
+    debugs.forEach(debug => debug.remove())
+    this.items.forEach(item => item.el.remove())
+    if (this.props.power) this.props.power.el.remove()
+  }
 }
