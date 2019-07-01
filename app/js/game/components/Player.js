@@ -126,6 +126,7 @@ export default class Player {
 
   click = () => {
     const scene = window.GameManager.currentScene
+    if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
     const x = (this.targetX / window.GameManager.vbWidth) + 0.5
     const y = (this.targetY / window.GameManager.vbHeight) + 0.5
     const power = scene.props.power
@@ -172,7 +173,7 @@ export default class Player {
         nbItemGet += 1
         // kill player intervalTap
         clearInterval(this.isCloseToItemInterval)
-        
+
         this.soundDuck.play()
       }
     }

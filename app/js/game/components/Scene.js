@@ -431,6 +431,7 @@ export default class Scene {
     this.items.forEach(item => item.el.remove())
     if (this.props.power) this.props.power.el.remove()
 
+    this.targetsDestroyed = false
     this.events(false)
     this.eventsRAF(false)
   }
@@ -440,5 +441,6 @@ export default class Scene {
     debugs.forEach(debug => debug.remove())
     this.items.forEach(item => item.el.remove())
     if (this.props.power) this.props.power.el.remove()
+    this.targetsDestroyed = true
   }
 }
