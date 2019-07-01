@@ -132,11 +132,8 @@ export default class Player {
     const power = scene.props.power
 
     if (power) {
-      if (!power.found &&
-        x > power.x - this.clickPrecisionW &&
-        x < power.x + this.clickPrecisionW &&
-        y > power.y - this.clickPrecisionH &&
-        y < power.y + this.clickPrecisionH) {
+      const distance = Math.hypot(x - power.x, y - power.y)
+      if (!power.found && distance <= 0.08) {
         let playerAffected = this
         if (power.type === 'freeze') {
           // affect other player
