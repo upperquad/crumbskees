@@ -205,6 +205,9 @@ export default class GameManager {
           this.removePhone(data[1])
         }
         break
+      case 'skip_tutorial':
+        this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
+        break
       case 'cursor_move': {
         if (this.gameStarted) {
           const x = parseFloat(data[2], 10) * this.vbWidth
@@ -229,6 +232,7 @@ export default class GameManager {
   }
 
   initTutorial = () => {
+    Server.websocket.send('tutorial_start')
     this.tutorialContentEl = document.querySelector('#tutorial-content')
     this.tutorialTimebarNumberEl = document.querySelector('#tutorial-timebar-number')
     this.tutorialTimebarColorEl = document.querySelector('#tutorial-timebar-color')
@@ -249,6 +253,8 @@ export default class GameManager {
 
   tutorialTimelineEnd = () => {
     console.log('end')
+    this.tutorialStarted = false
+    Server.websocket.send('tutorial_over')
     this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
   }
 

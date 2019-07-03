@@ -17,6 +17,11 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
         case 'score':
           onScore(messageList)
           break
+        case 'tutorial_start':
+          wssPhone.clients.forEach(client => {
+            client.send('tutorial_start')
+          })        
+          break
         case 'game_start':
           onGameStart()
           break

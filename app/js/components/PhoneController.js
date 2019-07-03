@@ -41,6 +41,7 @@ export default class PhoneController {
     this.accepted = false
     this.character = null
     this.opponent = null
+    this.tutorialActive = false
     this.result = null
     this.resultTop = ''
     this.resultBottom = ''
@@ -158,9 +159,16 @@ export default class PhoneController {
         this.opponent = CHARACTERS[1 - characterIndex]
         break
       }
+      case 'tutorial_start':
+        this.tutorialActive = true
+        break
+      case 'tutorial_over':
+        this.tutorialActive = false
+        break
       case 'game_start':
         if (this.accepted && this.character) {
           this.userConfirmed = true
+          this.tutorialActive = false
         }
         break
       case 'result':
@@ -212,6 +220,10 @@ export default class PhoneController {
 
   handleConfirm = () => {
     this.userConfirmed = true
+  }
+
+  skipTutorial = () => {
+    this.websocket.send('skip_tutorial')
   }
 
   updatePosition = (clientX, clientY, originX, originY) => {

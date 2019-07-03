@@ -37,6 +37,19 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
       // TODO: handle command since it's actually accpeted
       const messageList = message.split(',')
       switch(messageList[0]) {
+        case 'skip_tutorial':
+          wssPage.clients[0].send(`skip_tutorial,${ws.id}`)
+          break
+        case 'tutorial_start':
+          wssPhone.clients.forEach(wssPhone => {
+            wssPhone.send('tutorial_start')
+          });
+          break
+        case 'tutorial_over':
+          wssPhone.clients.forEach(wssPhone => {
+            wssPhone.send('tutorial_over')
+          });
+          break
         case 'cursor_move':
           wssPage.clients[0].send(`cursor_move,${ws.id},${messageList[1]},${messageList[2]}`)
           break

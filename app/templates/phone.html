@@ -51,6 +51,7 @@
       </div>
       <div class="marquee"><span>What up tiny type that is distracting —&nbsp;</span><span>What up tiny type that is distracting —&nbsp;</span><span>What up tiny type that is distracting —&nbsp;</span><span>What up tiny type that is distracting —&nbsp;</span></div>
       <div class="touch-bubble" id="touch-bubble"></div>
+      <div class="button skip-tutorial" ng-class="{'is-shown': (phoneCtrl.tutorialActive === true)}" role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div>
     </section>
 
     <section class="result state" ng-class="{'is-shown': (phoneCtrl.result !== null)}" >
