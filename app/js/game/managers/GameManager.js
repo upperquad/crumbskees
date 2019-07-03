@@ -410,6 +410,7 @@ export default class GameManager {
       if (timer === 0) {
         this.endScene('TIME\'S UP!')
         this.destroyTargetScene(this.currentScene)
+        // this.destroyTargetScene(this.currentScene)
       }
 
       timer -= 1
