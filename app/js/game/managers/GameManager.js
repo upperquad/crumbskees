@@ -206,6 +206,7 @@ export default class GameManager {
         }
         break
       case 'skip_tutorial':
+        this.tutorialTimeline.remove(this.tutorialTimelineEnd, 0)
         this.loadAll(() => window.RouterManager.goTo('game', this.initGame))
         break
       case 'cursor_move': {
