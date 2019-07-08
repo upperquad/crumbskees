@@ -36,7 +36,12 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
 
       // TODO: handle command since it's actually accpeted
       const messageList = message.split(',')
+      console.log(messageList)
       switch(messageList[0]) {
+        case 'character_pick':
+          console.log(messageList)
+          wssPage.clients[0].send(`character_pick,${messageList[1]},${messageList[2]},${messageList[3]}`)
+          break
         case 'skip_tutorial':
           wssPage.clients[0].send(`skip_tutorial,${ws.id}`)
           break

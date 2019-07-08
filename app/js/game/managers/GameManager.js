@@ -44,7 +44,9 @@ export default class GameManager {
     this.playerIds = DEBUG ? ['a', 'b'] : [null, null]
     this.tokens = [this.getNewToken(), this.getNewToken()]
     this.gameStarted = false
+    this.string = 'foo'
     this.tutorialStarted = false
+    this.playersCharacter = [0, 1]
 
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
@@ -104,6 +106,11 @@ export default class GameManager {
     }
     Server.websocket.send(`auth_result,${userId},${isTokenValid ? 1 : 0},${playerIndex}`)
     this.updateQr()
+  }
+
+  handleCharacters = (playerId, characterId) => {
+    this.playersCharacter[playerId] = characterId
+    console.log(this.playersCharacter)
   }
 
   removePhone = userId => {
@@ -189,10 +196,13 @@ export default class GameManager {
     switch (data[0]) {
       case 'token_submit':
         this.verifyToken(data[1], data[2])
-
         if (this.playerIds[0] !== null && this.playerIds[1] !== null) {
           this.kickOffGame()
         }
+        break
+      case 'character_pick':
+        console.log(data)
+        this.handleCharacters(data[1], data[3])
         break
       case 'reconnect_phone':
         this.checkReconnectPhone(data[1])
@@ -349,6 +359,7 @@ export default class GameManager {
 
     this.initDom()
     this.setPlayers()
+    this.setCharacters()
 
     const scene = this.scenes[this.currentSceneIndex]
 
@@ -385,15 +396,29 @@ export default class GameManager {
         index: 0,
         color: colors[0],
         id: this.playerIds[0],
+        character: this.playersCharacter[0],
+
       })
       this.players[this.playerIds[1]] = new Player({
         el: this.dom.cursors[1],
         index: 1,
         color: colors[1],
         id: this.playerIds[1],
+        character: this.playersCharacter[1],
       })
     }
     this.updatePlayerConnectionStatus()
+    console.log(this.players)
+  }
+
+
+  setCharacters() {
+    console.log(this.dom.boardPlayerCharacters)
+    const characterChoice1 = this.players[Object.keys(this.players)[0]].character
+    const characterChoice2 = this.players[Object.keys(this.players)[1]].character
+
+    this.dom.boardPlayerCharacters[0].querySelector('img').src = `/character${characterChoice1}.png`
+    this.dom.boardPlayerCharacters[1].querySelector('img').src = `/character${characterChoice2}.png`
   }
 
   startTimer(duration) {
@@ -410,7 +435,6 @@ export default class GameManager {
 
       if (timer === 0) {
         this.endScene('TIME\'S UP!')
-        this.destroyTargetScene(this.currentScene)
         // this.destroyTargetScene(this.currentScene)
       }
 

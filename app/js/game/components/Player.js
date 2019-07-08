@@ -11,12 +11,14 @@ export default class Player {
       id,
       index,
       color,
+      character,
     } = props
 
     this.el = el
     this.id = id
     this.index = index
     this.color = color
+    this.character = character
     this.numPoints = 8
     this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
     this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2

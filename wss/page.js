@@ -9,7 +9,7 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
 
     ws.on('message', message => {
       const messageList = message.split(',')
-
+    
       switch(messageList[0]) {
         case 'auth_result':
           onAuthResult(messageList)

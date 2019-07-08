@@ -135,6 +135,7 @@
         border-right: none;
         border-left: $border;
         border-width: $border-width;
+        display: flex;
       }
 
       .board__player__score {

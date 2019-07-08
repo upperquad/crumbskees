@@ -7,16 +7,46 @@ import characterVideoWhite1 from '../../assets/game/images/character-white-1.mp4
 import characterVideoWhite2 from '../../assets/game/images/character-white-2.mp4'
 
 const CHARACTERS = [{
+  id: 0,
   image: character1,
   video: characterVideo1,
   videoWhite: characterVideoWhite1,
   color: 'purple',
   name: 'Player 1',
 }, {
+  id: 1,
   image: character2,
   video: characterVideo2,
   videoWhite: characterVideoWhite2,
   color: 'red',
+  name: 'Player 2',
+}, {
+  id: 2,
+  image: character2,
+  video: characterVideo2,
+  videoWhite: characterVideoWhite2,
+  color: 'purple',
+  name: 'Player 2',
+}, {
+  id: 3,
+  image: character2,
+  video: characterVideo2,
+  videoWhite: characterVideoWhite2,
+  color: 'purple',
+  name: 'Player 2',
+}, {
+  id: 4,
+  image: character2,
+  video: characterVideo2,
+  videoWhite: characterVideoWhite2,
+  color: 'purple',
+  name: 'Player 2',
+}, {
+  id: 5,
+  image: character2,
+  video: characterVideo2,
+  videoWhite: characterVideoWhite2,
+  color: 'purple',
   name: 'Player 2',
 }]
 
@@ -39,6 +69,7 @@ export default class PhoneController {
     this.isConnecting = false
     this.errorReason = null
     this.accepted = false
+    this.playerIndex = null
     this.character = null
     this.opponent = null
     this.tutorialActive = false
@@ -144,6 +175,7 @@ export default class PhoneController {
 
   onWsMessage = event => {
     const message = event.data.split(',')
+    console.log(message)
 
     switch (message[0]) {
       case 'score':
@@ -155,8 +187,14 @@ export default class PhoneController {
         this.hasPlayed = true
         this.score = null
         const characterIndex = parseInt(message[1], 10)
+        this.playerIndex = characterIndex
         this.character = CHARACTERS[characterIndex]
         this.opponent = CHARACTERS[1 - characterIndex]
+        break
+      }
+      case 'character_picked': {
+        // this.character = CHARACTERS[characterIndex]
+        // playerId
         break
       }
       case 'tutorial_start':
@@ -188,6 +226,11 @@ export default class PhoneController {
         break
     }
     this.$scope.$apply()
+  }
+
+  characterPick = characterId => {
+    console.log(`you chose character ${characterId}`)
+    this.websocket.send(`character_pick,${this.playerIndex},${this.playerId},${characterId}`)
   }
 
   handleTouchStart = event => {
