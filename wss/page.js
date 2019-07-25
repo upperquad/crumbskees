@@ -7,7 +7,7 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     ws.send(`id,${ws.id}`)
 
     ws.on('message', message => {
-      we.send('pong')
+      ws.send('pong')
     })
   })
 }
