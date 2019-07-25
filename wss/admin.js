@@ -22,6 +22,10 @@ const initAdmin = (wssPage, wssPhone, wssAdmin) => {
         wssPage.clients.forEach(client => {
           client.close()
         })
+
+        wssPhone.clients.forEach(client => {
+          client.close()
+        })
       }
     })
   })

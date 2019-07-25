@@ -1,0 +1,21 @@
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 3px 15px 2px;
+}
+
+table {
+  table-layout: fixed;
+  width: 800px;
+}
+
+tbody tr:nth-child(even):not(.is-dead) {
+  background-color: #eee;
+}
+
+tr.is-dead {
+  background: pink;
+}

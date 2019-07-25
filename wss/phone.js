@@ -3,58 +3,28 @@ const url = require('url')
 
 const initPhone = (wssPage, wssPhone, wssAdmin) => {
   wssPhone.on('connection', ws => {
-    if (!wssPage.clients.length) {
-      ws.close(1000, 'no_active_game')
+    const game = wssPage.clients.find(game => !game.taken)
+    if (!game) {
+      ws.close(1000, 'no_available_game')
       return
     }
 
-    const query = url.parse(ws.upgradeReq.url, true).query
-    if (!query.token && !query.id) {
-      ws.close(1000, 'invalid_token')
-      return
-    }
-
-    if (query.token) {
-      ws.id = uuid()
-      console.log(`new phone: ${ws.id}`)
-      wssPage.clients[0].send(`token_submit,${query.token},${ws.id}`)
-    } else if (query.id && !wssPhone.clients.find(elem => elem.id === query.id)) {
-      ws.id = query.id
-      console.log(`reconnect phone: ${ws.id}`)
-      wssPage.clients[0].send(`reconnect_phone,${ws.id}`)
-    }
+    game.taken = true
+    ws.send(`id,${game.id}`)
+    ws.id = game.id
 
     ws.on('message', message => {
-      if (!ws.accepted) {
-        ws.send('not_accepted_yet')
-        return
-      }
-
-      if (!wssPage.clients.length) {
-        return
-      }
-
-      // TODO: handle command since it's actually accpeted
-      const messageList = message.split(',')
-      switch(messageList[0]) {
-        case 'cursor_move':
-          wssPage.clients[0].send(`cursor_move,${ws.id},${messageList[1]},${messageList[2]}`)
-          break
-        case 'click':
-          wssPage.clients[0].send(`click,${ws.id}`)
-          break
-        default:
-          break
-      }
-    })
-
-    ws.on('close', message => {
-      if (wssPage.clients.length) {
-        wssPage.clients[0].send(`phone_left,${ws.id}`)
-      }
-      console.log('phone left')
+      sendToGame(message, ws.id)
     })
   })
+
+  function sendToGame (message, gameId) {
+    const game = wssPage.clients.find(game => game.id === gameId)
+    if (!game) {
+      return
+    }
+    game.send(message)
+  }
 }
 
 module.exports = initPhone
