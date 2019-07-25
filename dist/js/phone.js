@@ -1,4 +1,4 @@
-const GAME_COUNT = 30
+const GAME_COUNT = 100
 const HOST = window.location.origin.replace(/^http/, 'ws')
 
 const mainEl = document.getElementById("main")
