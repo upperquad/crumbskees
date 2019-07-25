@@ -50,6 +50,12 @@ function init() {
   for (let i = 0; i < GAME_COUNT; i++) {
     games.push(new Game())
   }
+
+  const messageInterval = setInterval(() => {
+    games.forEach(game => {
+      game.sendMessage('ping')
+    })
+  }, 10000)
 }
 
 
