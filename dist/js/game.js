@@ -42,6 +42,14 @@ class Game {
     console.log(event.reason)
     this.gameEl.classList.add('is-dead')
   }
+
+  sendMessage = message => {
+    try {
+      this.webSocket.send(message)
+    } catch (e) {
+      return
+    }
+  }
 }
 
 init()
@@ -53,7 +61,7 @@ function init() {
 
   const messageInterval = setInterval(() => {
     games.forEach(game => {
-      game.webSocket.send('ping')
+      game.sendMessage('ping')
     })
   }, 10000)
 }
