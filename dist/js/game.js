@@ -53,7 +53,7 @@ function init() {
 
   const messageInterval = setInterval(() => {
     games.forEach(game => {
-      game.send('ping')
+      game.webSocket.send('ping')
     })
   }, 10000)
 }
