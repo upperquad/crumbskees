@@ -33,7 +33,7 @@ class Game {
     const data = event.data.split(',')
     if (data[0] === 'id') {
       this.gameIdEl.textContent = data[1]
-    } else {
+    } else if (data[0] !== 'pong') {
       this.leftPlayerDataEl.textContent = event.data
     }
   }
