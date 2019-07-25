@@ -5,6 +5,10 @@ const initPage = (wssPage, wssPhone, wssAdmin) => {
     ws.id = uuid()
 
     ws.send(`id,${ws.id}`)
+
+    ws.on('message', message => {
+      we.send('pong')
+    })
   })
 }
 
