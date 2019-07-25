@@ -53,7 +53,7 @@ function init() {
 
   const messageInterval = setInterval(() => {
     games.forEach(game => {
-      game.sendMessage('ping')
+      game.send('ping')
     })
   }, 10000)
 }
