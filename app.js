@@ -4,7 +4,7 @@ const express = require('express')
 const SocketServer = require('ws').Server
 const path = require('path')
 
-const frontEndRoot = process.env.USE_DIST ? 'app/dist/' : 'app/build/'
+const frontEndRoot = 'app/build/'
 
 const initPage = require('./wss/page.js')
 const initPhone = require('./wss/phone.js')
