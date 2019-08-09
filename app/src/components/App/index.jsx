@@ -9,8 +9,6 @@ import { BREAKPOINT } from '../../constants'
 const App = props => {
   const [isDesktop] = useState(() => window.innerWidth > BREAKPOINT)
 
-  console.log(isDesktop)
-
   return (
     <>
       {isDesktop && <DisplayDevice />}
