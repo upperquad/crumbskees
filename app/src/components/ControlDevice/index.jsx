@@ -12,12 +12,12 @@ const ControlDevice = props => {
   const [stage, setStage] = useState('pre_connect')
 
   return (
-    <div>
+    <>
       {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')}/> }
       {stage === 'meet_character' && <MeetCharacterStage onFinish={() => setStage('play')}/> }
       {stage === 'play' && <PlayStage onFinish={() => setStage('result')}/> }
       {stage === 'result' && <ResultStage onFinish={() => setStage('pre_connect')}/> }
-    </div>
+    </>
   )
 }
 
