@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './style.module.scss'
 
-import homeBgVideo from '../../assets/images/home-bg.mp4'
+import homeBgVideo from '../../../../assets/images/home-bg.mp4'
 
 const SetupStage = props => {
   return (
