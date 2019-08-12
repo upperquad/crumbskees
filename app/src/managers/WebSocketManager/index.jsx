@@ -56,13 +56,11 @@ class WebSocketManager {
   }
 
   onWsOpen = () => {
-    window.dispatchEvent(new CustomEvent('WS_UPDATE', { detail: { state: this._ws.readyState } }))
     this._ws.onclose = this.onWsClose
     this._ws.onmessage = this.onWsMessage
   }
 
   onWsClose = event => {
-    window.dispatchEvent(new CustomEvent('WS_UPDATE', { detail: { state: this._ws.readyState } }))
     window.dispatchEvent(new CustomEvent('WS_CLOSE', { detail: { reason: event.reason } }))
     console.log('Connection closed:', event.reason)
     this._ws = null
