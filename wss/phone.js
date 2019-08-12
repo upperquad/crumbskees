@@ -34,7 +34,6 @@ const initPhone = (wssPage, wssPhone, wssAdmin) => {
         return
       }
 
-      // TODO: handle command since it's actually accpeted
       const messageList = message.split(',')
       console.log(messageList)
       switch(messageList[0]) {
