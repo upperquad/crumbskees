@@ -9,6 +9,14 @@ import { BREAKPOINT } from '../../constants'
 const App = props => {
   const [isDesktop] = useState(() => window.innerWidth > BREAKPOINT)
 
+  useEffect(() => {
+    if (isDesktop) {
+      document.documentElement.classList.add('is-desktop')
+    } else {
+      document.documentElement.classList.remove('is-desktop')
+    }
+  }, [isDesktop])
+
   return (
     <>
       {isDesktop && <DisplayDevice />}

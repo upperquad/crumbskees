@@ -6,6 +6,8 @@
     "main.js.map": "/js/main.chunk.js.map",
     "runtime~main.js": "/js/bundle.js",
     "runtime~main.js.map": "/js/bundle.js.map",
-    "index.html": "/index.html"
+    "index.html": "/index.html",
+    "media/Fakt-Medium.otf": "/media/Fakt-Medium.4d9c7bce.otf",
+    "media/Ginto-Nord-Black.otf": "/media/Ginto-Nord-Black.b62a047e.otf"
   }
 }

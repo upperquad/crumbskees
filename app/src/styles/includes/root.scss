@@ -1,6 +1,18 @@
 html {
   box-sizing: border-box;
   overflow-x: hidden;
+
+  &.is-desktop {
+
+  }
+
+  &:not(.is-desktop) {
+    overscroll-behavior-x: none;
+
+    body {
+      overscroll-behavior-x: none;
+    }
+  }
 }
 
 body {

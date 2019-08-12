@@ -8,12 +8,33 @@ import ResultStage from './stages/ResultStage'
 
 import WebSocketManager from '../../managers/WebSocketManager'
 
-function effectWebsocket(setToken, setConnectionState) {
-  const onWebSocketStateUpdate = event => {
-    setConnectionState(event.detail.state)
-  }
+const ControlDevice = props => {
+  // set hasPlayed when game starts
+  const [hasPlayed, setHasPlayed] = useState(false)
+  const [stage, setStage] = useState('pre_connect')
+  const [token, setToken] = useState('')
+  const [connectError, setConnectError] = useState(null)
+  const [isConnecting, setIsConnecting] = useState(false)
 
-  window.addEventListener('WS_UPDATE', onWebSocketStateUpdate)
+  useEffect(() => effectWebsocket(), [])
+  useEffect(() => effectWebsocketClose(setToken, setConnectError, setIsConnecting), [setConnectError])
+
+  return (
+    <div>
+      {stage === 'pre_connect' && (
+        <PreConnectStage
+          isConnecting={isConnecting}
+          hasPlayed={hasPlayed}
+          token={token}
+          updateToken={key => updateToken(key, token, setToken, setConnectError, setIsConnecting)}
+          errorReason={connectError}
+        />
+      )}
+    </div>
+  )
+}
+
+function effectWebsocket() {
   WebSocketManager.init('control')
 
   const path = window.location.pathname
@@ -23,60 +44,43 @@ function effectWebsocket(setToken, setConnectionState) {
   }
 
   return () => {
-    window.removeEventListener('WS_UPDATE', onWebSocketStateUpdate)
     WebSocketManager.disconnect()
   }
 }
 
-function effectWebsocketStateUpdate(setConnectionState) {
-  const onWebSocketStateUpdate = event => {
-    setConnectionState(event.detail.state)
+function effectWebsocketClose(setToken, setConnectError, setIsConnecting) {
+  const onWebSocketClose = event => {
+    const { detail: { reason } } = event
+    if (reason === 'invalid_token') {
+      setConnectError('Invalid token')
+    } else if (reason === 'no_active_game') {
+      setConnectError('There\'s no active game')
+    }
+    setIsConnecting(false)
+    setToken('')
   }
 
-  window.addEventListener('WS_UPDATE', onWebSocketStateUpdate)
+  window.addEventListener('WS_CLOSE', onWebSocketClose)
 
   return () => {
-    window.removeEventListener('WS_UPDATE', onWebSocketStateUpdate)
+    window.removeEventListener('WS_CLOSE', onWebSocketClose)
   }
 }
 
-function updateToken(key, token, setToken) {
-  // this.errorReason = null
+function updateToken(key, token, setToken, setConnectError, setIsConnecting) {
+  setConnectError(null)
 
   if (key === -1) {
     setToken(token.slice(0, -1))
   } else {
     const newToken = token + key
     if (newToken.length >= 3) {
+      setIsConnecting(true)
       WebSocketManager.connect({token: newToken})
-      setToken('')
-    } else {
-      setToken(newToken)
     }
+
+    setToken(newToken)
   }
-}
-
-const ControlDevice = props => {
-  const [connectionState, setConnectionState] = useState('uninitialized')
-  const [hasPlayed, setHasPlayed] = useState(false)
-  const [stage, setStage] = useState('pre_connect')
-  const [token, setToken] = useState('')
-
-  useEffect(() => effectWebsocket(setToken, setConnectionState), [])
-  useEffect(() => effectWebsocketStateUpdate(setConnectionState), [setConnectionState])
-
-  return (
-    <div>
-      {stage === 'pre_connect' && (
-        <PreConnectStage
-          connectionState={connectionState}
-          hasPlayed={hasPlayed}
-          token={token}
-          updateToken={key => updateToken(key, token, setToken)}
-        />
-      )}
-    </div>
-  )
 }
 
 export default ControlDevice

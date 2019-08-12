@@ -1,20 +1,14 @@
+// Exemple
 @font-face {
-  font-family: Calibre;
+  font-family: 'Fakt Medium';
   font-style: normal;
   font-weight: normal;
-  src: url('/assets/fonts/CalibreWeb-Regular.eot');
+  src: url('../assets/fonts/Fakt-Medium.otf') format("opentype");
 }
 
 @font-face {
-  font-family: Calibre;
-  font-style: italic;
-  font-weight: normal;
-  src: url('/assets/fonts/CalibreWeb-RegularItalic.eot');
-}
-
-@font-face {
-  font-family: Calibre;
+  font-family: 'Ginto Nord Black';
   font-style: normal;
-  font-weight: 700;
-  src: url('/assets/fonts/CalibreWeb-Bold.eot');
+  font-weight: normal;
+  src: url('../assets/fonts/Ginto-Nord-Black.otf') format("opentype");
 }
