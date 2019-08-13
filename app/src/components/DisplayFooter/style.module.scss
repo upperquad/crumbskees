@@ -1,0 +1,62 @@
+@import "../../styles/imports/index";
+
+.footer {
+  align-items: center;
+  background: $color-white;
+  border: 2px solid $color-black;
+  display: flex;
+  flex-flow: row nowrap;
+  left: 0;
+  bottom: 0;
+  text-transform: uppercase;
+  height: 105 / 1920 * 100vw;
+  position: absolute;
+  width: 100%;
+}
+
+.blackBar {
+  align-items: center;
+  background: $color-black;
+  color: $color-white;
+  display: flex;
+  flex-grow: 1;
+  flex-flow: row nowrap;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0 34/1920*100% 0 97/1920*100%;
+}
+
+.whatup {
+  font-size: responsive-font(14);
+  line-height: normal;
+  padding: 19/1920*100vw 0;
+  position: relative;
+  overflow: hidden;
+  width: 280/1920*100vw;
+
+  &::after {
+    background: $color-green;
+    content: '';
+    height: 34/1920*100vw;
+    right: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-55%);
+    width: 34/1920*100vw;
+  }
+}
+
+.version {
+  @extend %Bold;
+  font-size: responsive-font(24);
+  letter-spacing: -0.04em;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.love {
+  font-size: responsive-font(14);
+  line-height: normal;
+  text-align: center;
+  width: 298 / 1920 * 100%;
+}
