@@ -1,0 +1,67 @@
+@import "../../../../styles/imports/index";
+
+.characterConfirm {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding-top: 56px;
+
+  .text {
+    color: $color-white-full;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    h2 {
+      @extend %Bold;
+
+      letter-spacing: 0.024em;
+      font-size: 40px;
+      text-transform: uppercase;
+    }
+    p {
+      @extend %Regular;
+
+      font-size: 16px;
+      margin-top: 40px;
+      text-align: center;
+    }
+  }
+
+  .block {
+    align-items: center;
+    background-color: $color-white-full;
+    border: 1px solid $color-black;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+    height: 85vw;
+    margin: 20px 0;
+    width: 85vw;
+
+    video {
+      width: 90%;
+    }
+
+    @media only screen and (max-height: 630px) {
+      height: 60vw;
+      width: 60vw;
+    }
+  }
+
+  .button {
+    @extend %Bold;
+
+    background: $color-mint;
+    border: 1px solid $color-black;
+    letter-spacing: 0.024em;
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-size: 40px;
+    padding: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+  }
+}
