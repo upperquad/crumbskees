@@ -80,7 +80,7 @@ body {
       align-items: center;
       background: $color-red;
       border: 1px solid $color-black;
-      color: $color-white-full;
+      color: $color-white;
       display: flex;
       font-size: 27px;
       justify-content: center;
@@ -115,7 +115,7 @@ body {
   padding-top: 36px;
 
   .text {
-    color: $color-white-full;
+    color: $color-white;
     flex-grow: 0;
     flex-shrink: 0;
 
@@ -142,7 +142,7 @@ body {
 
   .block {
     align-items: center;
-    background-color: $color-white-full;
+    background-color: $color-white;
     border: 1px solid $color-black;
     display: flex;
     flex-grow: 0;
@@ -191,7 +191,7 @@ body {
   padding-top: 56px;
 
   .text {
-    color: $color-white-full;
+    color: $color-white;
     flex-grow: 0;
     flex-shrink: 0;
 
@@ -213,7 +213,7 @@ body {
 
   .block {
     align-items: center;
-    background-color: $color-white-full;
+    background-color: $color-white;
     border: 1px solid $color-black;
     display: flex;
     flex-grow: 0;
@@ -295,7 +295,7 @@ body {
       left: 50%;
       position: absolute;
       -webkit-text-fill-color: transparent;
-      -webkit-text-stroke-color: $color-white-full;
+      -webkit-text-stroke-color: $color-white;
       -webkit-text-stroke-width: 2px;
       top: 50%;
       transform: translate(-50%, -50%);
@@ -312,7 +312,7 @@ body {
   }
 
   .touch-bubble {
-    border: 2px $color-white-full solid;
+    border: 2px $color-white solid;
     border-radius: 50%;
     height: 74px;
     opacity: 0;
@@ -356,7 +356,7 @@ body {
 
   .image-wrapper {
     align-items: center;
-    background: $color-white-full;
+    background: $color-white;
     display: flex;
     justify-content: center;
     flex-flow: row nowrap;
@@ -372,7 +372,7 @@ body {
     @extend %Bold;
 
     background: $color-black;
-    color: $color-white-full;
+    color: $color-white;
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 50px;
