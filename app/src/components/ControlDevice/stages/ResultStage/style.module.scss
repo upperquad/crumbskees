@@ -23,7 +23,7 @@ section.result {
 
   .image-wrapper {
     align-items: center;
-    background: $color-white-full;
+    background: $color-white;
     display: flex;
     justify-content: center;
     flex-flow: row nowrap;
@@ -39,7 +39,7 @@ section.result {
     @extend %Bold;
 
     background: $color-black;
-    color: $color-white-full;
+    color: $color-white;
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 50px;

@@ -8,7 +8,7 @@ section.characterConfirm {
   padding-top: 56px;
 
   .text {
-    color: $color-white-full;
+    color: $color-white;
     flex-grow: 0;
     flex-shrink: 0;
 
@@ -30,7 +30,7 @@ section.characterConfirm {
 
   .block {
     align-items: center;
-    background-color: $color-white-full;
+    background-color: $color-white;
     border: 1px solid $color-black;
     display: flex;
     flex-grow: 0;
