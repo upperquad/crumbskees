@@ -1,0 +1,18 @@
+.marquee {
+  white-space: nowrap;
+}
+
+.marqueeInnerText {
+  animation: marquee-text-inner 6s infinite linear;
+  display: inline-block;
+}
+
+@keyframes marquee-text-inner {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}

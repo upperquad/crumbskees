@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import styles from './style.module.scss'
 
+import MarqueeText from '../../../MarqueeText'
+
 import homeBgVideo from '../../../../assets/images/home-bg.mp4'
 
 const SetupStage = props => {
   return (
     <>
-      <video src={homeBgVideo} playsinline autoplay muted loop />
-      <div class="marquee text-56">
-        <div>Pull out yo smartphone camera! -&nbsp;</div><div>Pull out yo smartphone camera! -&nbsp;</div><div>Pull out yo smartphone camera! -&nbsp;</div><div>Pull out yo smartphone camera! -&nbsp;</div>
-      </div>
+      <video src={homeBgVideo} playsInline autoPlay muted loop />
+      <MarqueeText extraClassName={styles.pullOutPhone} text='Pull out yo smartphone camera! -&nbsp;' duration='6s' />
       <div class="setup__players">
         <div class="setup__qr__wrapper">
           <div class="setup__upper">
