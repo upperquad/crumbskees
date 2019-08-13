@@ -19,11 +19,11 @@ const DisplayDevice = props => {
 
   return (
     <>
-      {stage === 'setup' && <SetupStage onFinish={() => setStage('tutorial')} onError={onError} /> }
-      {stage === 'tutorial' && <TutorialStage onFinish={() => setStage('play')} onError={onError} /> }
-      {stage === 'play' && <PlayStage onFinish={() => setStage('result')} onError={onError} /> }
-      {stage === 'result' && <ResultStage onFinish={() => setStage('setup')} onError={onError} /> }
-      {stage === 'error' && <ErrorStage /> }
+      {stage === 'setup' && <SetupStage key='stage-setup' onFinish={() => setStage('tutorial')} onError={onError} /> }
+      {stage === 'tutorial' && <TutorialStage key='stage-tutorial' onFinish={() => setStage('play')} onError={onError} /> }
+      {stage === 'play' && <PlayStage key='stage-play' onFinish={() => setStage('result')} onError={onError} /> }
+      {stage === 'result' && <ResultStage key='stage-result' onFinish={() => setStage('setup')} onError={onError} /> }
+      {stage === 'error' && <ErrorStage key='stage-error' /> }
     </>
   )
 }
