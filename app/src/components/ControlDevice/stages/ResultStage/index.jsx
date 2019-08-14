@@ -6,7 +6,7 @@ import characterVideoWhite2 from '../../../../assets/images/character-white-2.mp
 
 const ResultStage = props => {
 
-  const result = 'tied'
+  const result = 'won'
   const character = {
     name: 'Player 1',
     color: 'red',

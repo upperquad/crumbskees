@@ -15,14 +15,13 @@ const ControlDevice = props => {
     <>
       {/* {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')}/> } */}
       {/* <MeetCharacterStage onFinish={() => setStage('play')}/> */}
-      {/* <PlayStage onFinish={() => setStage('result')}/> */}
-      <ResultStage onFinish={() => setStage('pre_connect')}/>
+      <PlayStage onFinish={() => setStage('result')}/>
+      {/* <ResultStage onFinish={() => setStage('pre_connect')}/> */}
 
       {/* {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')}/> }
       {stage === 'meet_character' && <MeetCharacterStage onFinish={() => setStage('play')}/> }
       {stage === 'play' && <PlayStage onFinish={() => setStage('result')}/> }
       {stage === 'result' && <ResultStage onFinish={() => setStage('pre_connect')}/> } */}
-
     </>
   )
 }
