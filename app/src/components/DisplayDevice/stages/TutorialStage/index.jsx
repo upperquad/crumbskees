@@ -14,7 +14,7 @@ const TutorialStage = props => {
   return (
     <div className={styles.tutorial}>
       <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
-      <MarqueeText extraClassName={styles.welcome} text='Welcome to The Upperquadrant -&nbsp;' duration='6s' />
+      <MarqueeText extraClassName={styles.welcome} text='Welcome to The Upperquadrant -' duration='12s' />
       <div className={styles.tutorialCard} id="tutorial-content">
         <div className={styles.tutorialHeader}>Your instructions</div>
         {step === 1 && (
