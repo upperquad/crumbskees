@@ -6,172 +6,177 @@ section.result {
   flex-flow: column nowrap;
   justify-content: center;
   padding-top: 70px;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
 
-  .winner {
-    border: 1px solid $color-black;
-    display: flex;
-    flex-flow: column nowrap;
-    flex-grow: 1;
-    flex-shrink: 0;
-    overflow: hidden;
-    width: 85vw;
+.winner {
+  border: 1px solid $color-black;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+  flex-shrink: 0;
+  overflow: hidden;
+  width: 85vw;
 
-    @media only screen and (max-height: 630px) {
-      width: 60vw;
-    }
+  @media only screen and (max-height: 630px) {
+    width: 60vw;
   }
+}
 
-  .image-wrapper {
-    align-items: center;
-    background: $color-white;
-    display: flex;
-    justify-content: center;
-    flex-flow: row nowrap;
-    flex-grow: 1;
-    flex-shrink: 0;
+.imageWrapper {
+  align-items: center;
+  background: $color-white;
+  display: flex;
+  justify-content: center;
+  flex-flow: row nowrap;
+  flex-grow: 1;
+  flex-shrink: 0;
 
-    video {
-      width: 70%;
-    }
+  video {
+    width: 70%;
   }
+}
 
+.marquee {
+  @extend %Bold;
+
+  background: $color-black;
+  color: $color-white;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 50px;
+  padding: 12px 0 9px;
+  text-transform: uppercase;
+}
+
+.winnerTied {
   .marquee {
-    @extend %Bold;
-
-    background: $color-black;
-    color: $color-white;
-    flex-grow: 0;
-    flex-shrink: 0;
-    font-size: 50px;
-    padding: 12px 0 9px;
-    text-transform: uppercase;
-  }
-
-  .winner--tied {
-    .marquee {
-      &:first-of-type {
-        span {
-          animation-name: infinite-text-16;
-          width: 8em;
-        }
+    &:first-of-type {
+      span {
+        animation-name: infinite-text-16;
+        width: 8em;
       }
+    }
 
-      &:last-of-type {
-        span {
-          animation-name: infinite-text-21;
-          width: 10.5em;
-        }
+    &:last-of-type {
+      span {
+        animation-name: infinite-text-21;
+        width: 10.5em;
       }
     }
   }
+}
 
-  .winner--won {
-    .marquee {
-      &:first-of-type {
-        span {
-          animation-name: infinite-text-15;
-          width: 7.5em;
-        }
-      }
-
-      &:last-of-type {
-        span {
-          animation-name: infinite-text-14;
-          width: 7em;
-        }
+.winnerWon {
+  .marquee {
+    &:first-of-type {
+      span {
+        animation-name: infinite-text-15;
+        width: 7.5em;
       }
     }
-  }
 
-  .winner--lost {
-    .marquee {
-      &:first-of-type {
-        span {
-          animation-name: infinite-text-18;
-          width: 9em;
-        }
-      }
-
-      &:last-of-type {
-        span {
-          animation-name: infinite-text-14;
-          width: 7em;
-        }
+    &:last-of-type {
+      span {
+        animation-name: infinite-text-14;
+        width: 7em;
       }
     }
   }
+}
 
-  @keyframes infinite-text-14 {
-    0% {
-      transform: translateX(0);
+.winnerLost {
+  .marquee {
+    &:first-of-type {
+      span {
+        animation-name: infinite-text-18;
+        width: 9em;
+      }
     }
 
-    100% {
-      transform: translateX(-14em);
-    }
-  }
-
-  @keyframes infinite-text-15 {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-15em);
+    &:last-of-type {
+      span {
+        animation-name: infinite-text-14;
+        width: 7em;
+      }
     }
   }
+}
 
-  @keyframes infinite-text-16 {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-16em);
-    }
+@keyframes infinite-text-14 {
+  0% {
+    transform: translateX(0);
   }
 
-  @keyframes infinite-text-18 {
-    0% {
-      transform: translateX(0);
-    }
+  100% {
+    transform: translateX(-14em);
+  }
+}
 
-    100% {
-      transform: translateX(-18em);
-    }
+@keyframes infinite-text-15 {
+  0% {
+    transform: translateX(0);
   }
 
-  @keyframes infinite-text-21 {
-    0% {
-      transform: translateX(0);
-    }
+  100% {
+    transform: translateX(-15em);
+  }
+}
 
-    100% {
-      transform: translateX(-21em);
-    }
+@keyframes infinite-text-16 {
+  0% {
+    transform: translateX(0);
   }
 
-  .small-text {
-    @extend %Regular;
+  100% {
+    transform: translateX(-16em);
+  }
+}
 
-    font-size: 16px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin: 27px 0;
+@keyframes infinite-text-18 {
+  0% {
+    transform: translateX(0);
   }
 
-  .button {
-    @extend %Bold;
-
-    background: $color-yellow;
-    border: 1px solid $color-black;
-    letter-spacing: 0.024em;
-    flex-grow: 0;
-    flex-shrink: 0;
-    font-size: 32px;
-    padding: 20px;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
+  100% {
+    transform: translateX(-18em);
   }
+}
+
+@keyframes infinite-text-21 {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-21em);
+  }
+}
+
+.smallText {
+  @extend %Regular;
+
+  font-size: 16px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 27px 0;
+}
+
+.button {
+  @extend %Bold;
+
+  background: $color-yellow;
+  border: 1px solid $color-black;
+  letter-spacing: 0.024em;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 32px;
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
 }
