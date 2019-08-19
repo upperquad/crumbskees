@@ -35,6 +35,7 @@ const ResultStage = props => {
         {/* <div className="image-wrapper {{phoneCtrl.result === 'tied' ? 'image-wrapper--both' : null}}"> */}
           {result === 'won' && <video src={characterVideoWhite1} poster={opponent.image} playsInline autoPlay muted loop></video>}
           {result === 'tied' && <video src={characterVideoWhite1} poster={opponent.image} playsInline autoPlay muted loop></video>}
+          {result === 'tied' && <video src={characterVideoWhite2} poster={opponent.image} playsInline autoPlay muted loop></video>}
           {result === 'lost' && <video src={characterVideoWhite2} poster={opponent.image} playsInline autoPlay muted loop></video>}
         </div>
         <MarqueeText text={resultBottom} duration='6s' alternate/>

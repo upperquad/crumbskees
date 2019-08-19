@@ -9,19 +9,14 @@ import ResultStage from './stages/ResultStage'
 const ControlDevice = props => {
   // set hasPlayed when game starts
   const [hasPlayed, setHasPlayed] = useState(false)
-  const [stage, setStage] = useState('pre_connect')
+  const [stage, setStage] = useState('result')
 
   return (
     <>
-      {/* {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')}/> } */}
-      {/* <MeetCharacterStage onFinish={() => setStage('play')}/> */}
-      <PlayStage onFinish={() => setStage('result')}/>
-      {/* <ResultStage onFinish={() => setStage('pre_connect')}/> */}
-
-      {/* {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')}/> }
+      {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')}/> }
       {stage === 'meet_character' && <MeetCharacterStage onFinish={() => setStage('play')}/> }
       {stage === 'play' && <PlayStage onFinish={() => setStage('result')}/> }
-      {stage === 'result' && <ResultStage onFinish={() => setStage('pre_connect')}/> } */}
+      {stage === 'result' && <ResultStage onFinish={() => setStage('pre_connect')}/> }
     </>
   )
 }
