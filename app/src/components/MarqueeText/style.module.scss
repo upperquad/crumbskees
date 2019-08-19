@@ -2,10 +2,19 @@
 
 .marquee {
   white-space: nowrap;
+  @extend %Bold;
+
+  background: $color-black;
+  color: $color-white;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 50px;
+  padding: 12px 0 9px;
+  text-transform: uppercase;
 }
 
 .marqueeInnerText {
-  animation: marquee-text-inner 6s infinite linear;
+  animation: marquee-text-inner 12s infinite linear;
   display: inline-block;
 }
 
@@ -15,6 +24,50 @@
   }
 
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-200%);
+  }
+}
+
+.alternate {
+  div {
+    text-align: center;
+  }
+
+  div.invert {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: $color-white;
+    -webkit-text-stroke-width: 1px;
+  }
+}
+
+.winnerWon {
+  .marquee {
+    &:first-of-type {
+      span {
+        animation-name: infinite-text-15;
+        width: 7.5em;
+      }
+    }
+
+    &:last-of-type {
+      span {
+        animation-name: infinite-text-14;
+        width: 7em;
+      }
+    }
+  }
+}
+
+.marqueeInvert {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-color: $color-white;
+  -webkit-text-stroke-width: 1px;
+}
+
+.marqueeAlternate {
+  div:nth-child(even) {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: $color-white;
+    -webkit-text-stroke-width: 1px;
   }
 }

@@ -3,14 +3,15 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 
 const MarqueeText = props => {
-  const { text, extraClassName, duration } = props
-  const animationDuration = duration ? duration : '6s'
+  const { text, extraClassName, duration, type, alternate } = props
+  const animationDuration = duration ? duration : '12s'
+
   return (
-    <div className={classNames(styles.marquee, extraClassName)}>
-      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}</div>
-      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}</div>
-      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}</div>
-      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}</div>
+    <div className={classNames(styles.marquee, styles[extraClassName], {[styles.marqueeAlternate]: alternate})}>
+      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}&nbsp;</div>
+      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}&nbsp;</div>
+      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}&nbsp;</div>
+      <div className={styles.marqueeInnerText} style={{animationDuration}}>{text}&nbsp;</div>
     </div>
   )
 }
