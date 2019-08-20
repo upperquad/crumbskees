@@ -25,6 +25,18 @@ section.result {
   @media only screen and (max-height: 630px) {
     width: 60vw;
   }
+
+  .marquee {
+    @extend %Bold;
+  
+    background: $color-black;
+    color: $color-white;
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-size: 50px;
+    padding: 12px 0 9px;
+    text-transform: uppercase;
+  }
 }
 
 .imageWrapper {
@@ -39,18 +51,6 @@ section.result {
   video {
     width: 70%;
   }
-}
-
-.marquee {
-  @extend %Bold;
-
-  background: $color-black;
-  color: $color-white;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 50px;
-  padding: 12px 0 9px;
-  text-transform: uppercase;
 }
 
 .winnerTied {

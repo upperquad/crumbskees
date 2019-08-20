@@ -1,11 +1,17 @@
 @import "../../../../styles/imports/index";
 
-section.characterConfirm {
+.characterConfirm {
   align-items: center;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   padding-top: 56px;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: opacity .1s;
 
   .text {
     color: $color-white;
@@ -48,6 +54,11 @@ section.characterConfirm {
       height: 60vw;
       width: 60vw;
     }
+  }
+
+  .placeholder {
+    flex-grow: 1;
+    flex-shrink: 0;
   }
 
   .button {

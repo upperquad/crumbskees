@@ -30,14 +30,14 @@ const ResultStage = props => {
       {result === 'won' && <Circle color={character.color} />}
       {result === 'tied' && <Circle color="yellow" />}
       <div className={`${styles.winner} ${styles.winner}--${result}`}>
-        <MarqueeText text={resultTop} duration='6s' alternate/>
+        <MarqueeText text={resultTop} duration='6s' winner alternate/>
         <div className={styles.imageWrapper}>
           {result === 'won' && <video src={characterVideoWhite1} poster={opponent.image} playsInline autoPlay muted loop></video>}
           {result === 'tied' && <video src={characterVideoWhite1} poster={opponent.image} playsInline autoPlay muted loop></video>}
           {result === 'tied' && <video src={characterVideoWhite2} poster={opponent.image} playsInline autoPlay muted loop></video>}
           {result === 'lost' && <video src={characterVideoWhite2} poster={opponent.image} playsInline autoPlay muted loop></video>}
         </div>
-        <MarqueeText text={resultBottom} duration='6s' alternate/>
+        <MarqueeText text={resultBottom} duration='6s' winner alternate/>
       </div>
       <div className={styles.smallText}>
         {result === 'won' && 'Winner!'}
