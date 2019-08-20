@@ -1,0 +1,62 @@
+@import "../../../../styles/imports/index";
+
+.result {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.background {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: grid(12);
+  height: grid(12);
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-color: $color-black;
+  border-width: grid(.05);
+  background-color: $color-white;
+  overflow: hidden;
+}
+
+.titleWrapper {
+  background-color: $color-black;
+  height: grid(2);
+}
+
+.title {
+  @extend %Bold;
+
+  font-size: responsive-font(80);
+}
+
+.timebar {
+  animation: final-timebar 13s linear 1 both;
+  background-color: $color-green;
+  height: grid(.3);
+
+  @keyframes final-timebar {
+    0% {
+      transform: scaleX(1);
+    }
+    100% {
+      transform: scaleX(0);
+    }
+  }
+}
+
+.resultTimebar {
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
