@@ -9,7 +9,7 @@ import ResultStage from './stages/ResultStage'
 const ControlDevice = props => {
   // set hasPlayed when game starts
   const [hasPlayed, setHasPlayed] = useState(false)
-  const [stage, setStage] = useState('result')
+  const [stage, setStage] = useState('play')
 
   return (
     <>

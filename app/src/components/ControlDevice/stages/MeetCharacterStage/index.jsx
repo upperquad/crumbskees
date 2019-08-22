@@ -19,9 +19,9 @@ const character = {
   return (
     <section className={styles.characterConfirm}> 
       <Circle color={character.color} />
-      <div className={styles.text}><h2>You're in!</h2><p>Say hello to your avatar.</p></div>
+      <div className={styles.text}><h2 className={styles.title}>You're in!</h2><p className={styles.subtitle}>Say hello to your avatar.</p></div>
       <div className={styles.block}>
-        <video src={character.video} poster={character.image} autoPlay muted loop></video>
+        <video className={styles.video} src={character.video} poster={character.image} autoPlay muted loop></video>
       </div>
       <div className={styles.placeholder}></div>
       <div className={styles.button} role="button" ng-click="phoneCtrl.handleConfirm()">Ready</div>
