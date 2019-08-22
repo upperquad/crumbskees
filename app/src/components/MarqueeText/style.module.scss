@@ -19,7 +19,7 @@
   }
 }
 
-.marqueeAlternate {
+.marqueeInvert {
   div:nth-child(even) {
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke-color: $color-white;
