@@ -5,6 +5,7 @@ import characterVideoWhite2 from '../../../../assets/images/character-white-2.mp
 
 import Circle from '../../Circle'
 import MarqueeText from '../../../MarqueeText'
+import AutoplayVideo from '../../AutoplayVideo'
 
 const ResultStage = props => {
 
@@ -32,10 +33,10 @@ const ResultStage = props => {
       <div className={`${styles.winner} ${styles.winner}--${result}`}>
         <MarqueeText text={resultTop} duration='6s' isAlternate isWhite/>
         <div className={styles.imageWrapper}>
-          {result === 'won' && <video src={characterVideoWhite1} poster={opponent.image} playsInline autoPlay muted loop></video>}
-          {result === 'tied' && <video src={characterVideoWhite1} poster={opponent.image} playsInline autoPlay muted loop></video>}
-          {result === 'tied' && <video src={characterVideoWhite2} poster={opponent.image} playsInline autoPlay muted loop></video>}
-          {result === 'lost' && <video src={characterVideoWhite2} poster={opponent.image} playsInline autoPlay muted loop></video>}
+          {result === 'won' && <AutoplayVideo src={characterVideoWhite1} setWidth="70" poster={character.image} />}
+          {result === 'tied' && <AutoplayVideo src={characterVideoWhite1} setWidth="70" poster={character.image} />}
+          {result === 'tied' && <AutoplayVideo src={characterVideoWhite2} setWidth="70" poster={opponent.image} />}
+          {result === 'lost' && <AutoplayVideo src={characterVideoWhite2} setWidth="70" poster={opponent.image} />}
         </div>
         <MarqueeText text={resultBottom} duration='6s' isAlternate isWhite/>
       </div>

@@ -7,6 +7,7 @@ import styles from './style.module.scss'
 import "./style.module.scss"
 import "../../../../styles/common/control-device.scss";
 import Circle from '../../Circle'
+import AutoplayVideo from '../../AutoplayVideo'
 
 const MeetCharacterStage = props => {
 
@@ -21,7 +22,7 @@ const character = {
       <Circle color={character.color} />
       <div className={styles.text}><h2 className={styles.title}>You're in!</h2><p className={styles.subtitle}>Say hello to your avatar.</p></div>
       <div className={styles.block}>
-        <video className={styles.video} src={character.video} poster={character.image} autoPlay muted loop></video>
+        <AutoplayVideo src={character.video} setWidth="90" poster={character.image} />
       </div>
       <div className={styles.placeholder}></div>
       <div className={styles.button} role="button" ng-click="phoneCtrl.handleConfirm()">Ready</div>
