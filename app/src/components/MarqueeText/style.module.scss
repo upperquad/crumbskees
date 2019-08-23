@@ -19,7 +19,16 @@
   }
 }
 
-.marqueeInvert {
+.marqueeAlternate {
+  @extend %Bold;
+
+  color: $color-white;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 50px;
+  padding: 12px 0 9px;
+  text-transform: uppercase;
+
   div:nth-child(even) {
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke-color: $color-white;
@@ -27,14 +36,7 @@
   }
 }
 
-.marqueeWinner {
-  @extend %Bold;
-
+.marqueeWhite {
   background: $color-black;
   color: $color-white;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 50px;
-  padding: 12px 0 9px;
-  text-transform: uppercase;
 }
