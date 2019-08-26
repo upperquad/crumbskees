@@ -55,14 +55,14 @@
   margin: 20px 5vw 24px;
   flex-grow: 1;
   position: relative;
+}
 
-  &.purple {
-    background: $color-purple;
-  }
+.blockPurple {
+  background: $color-purple;
+}
 
-  &.red {
-    background: $color-red;
-  }
+.blockRed {
+  background: $color-red;
 }
 
 .image {

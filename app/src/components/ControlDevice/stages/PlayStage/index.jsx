@@ -18,7 +18,7 @@ const PlayStage = props => {
   return (
     <section className={styles.inGame}>
       <h2 className={styles.title}>The Upperquadrant</h2>
-      <div className={classNames(styles.block, styles[character.color])}>
+      <div className={classNames(styles.block, {[styles.blockRed]: character.color === 'red', [styles.blockPurple]: character.color === 'purple'})}>
         <div className={styles.score}>
           {score}
         </div>

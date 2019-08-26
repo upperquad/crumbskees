@@ -1,6 +1,6 @@
 @import "../../../../styles/imports/index";
 
-section.result {
+.result {
   align-items: center;
   display: flex;
   flex-flow: column nowrap;
@@ -51,110 +51,6 @@ section.result {
 
 .video {
   width: 70%;
-}
-
-.winnerTied {
-  .marquee {
-    &:first-of-type {
-      span {
-        animation-name: infinite-text-16;
-        width: 8em;
-      }
-    }
-
-    &:last-of-type {
-      span {
-        animation-name: infinite-text-21;
-        width: 10.5em;
-      }
-    }
-  }
-}
-
-.winnerWon {
-  .marquee {
-    &:first-of-type {
-      span {
-        animation-name: infinite-text-15;
-        width: 7.5em;
-      }
-    }
-
-    &:last-of-type {
-      span {
-        animation-name: infinite-text-14;
-        width: 7em;
-      }
-    }
-  }
-}
-
-.winnerLost {
-  .marquee {
-    &:first-of-type {
-      span {
-        animation-name: infinite-text-18;
-        width: 9em;
-      }
-    }
-
-    &:last-of-type {
-      span {
-        animation-name: infinite-text-14;
-        width: 7em;
-      }
-    }
-  }
-}
-
-@keyframes infinite-text-14 {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-14em);
-  }
-}
-
-@keyframes infinite-text-15 {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-15em);
-  }
-}
-
-@keyframes infinite-text-16 {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-16em);
-  }
-}
-
-@keyframes infinite-text-18 {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-18em);
-  }
-}
-
-@keyframes infinite-text-21 {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-21em);
-  }
 }
 
 .smallText {

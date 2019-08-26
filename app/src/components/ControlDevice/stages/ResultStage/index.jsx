@@ -12,25 +12,44 @@ const ResultStage = props => {
   const result = 'won'
   const character = {
     name: 'Player 1',
-    color: 'red',
+    color: 'purple',
     image: '',
     videoWhite: '',
   }
   const opponent = {
     name: 'Player 2',
-    color: 'purple',
+    color: 'red',
     image: '',
     videoWhite: '',
   }
-  const resultTop = 'You won! '
-  const resultBottom = `${character.name} `
+
+  let resultTop
+  let resultBottom
+  let circleColor
+
+  switch(result) {
+    case 'won':
+      circleColor = character.color
+      resultTop = 'You won! '
+      resultBottom = `${character.name} `
+      break
+    case 'lost':
+      circleColor = opponent.color
+      resultTop = 'You’re bad! '
+      resultBottom = `${character.name} `
+      break
+    case 'tied':
+    default:
+      circleColor = 'yellow'
+      resultTop = 'Nobody wins! '
+      resultBottom = `${opponent.name} `    
+      break
+  }
 
   return (
     <section className={styles.result}>
-      {result === 'won' && <Circle color={character.color} />}
-      {result === 'won' && <Circle color={character.color} />}
-      {result === 'tied' && <Circle color="yellow" />}
-      <div className={`${styles.winner} ${styles.winner}--${result}`}>
+      <Circle color={circleColor} />
+      <div className={styles.winner}>
         <MarqueeText text={resultTop} duration='6s' isAlternate isWhite/>
         <div className={styles.imageWrapper}>
           {result === 'won' && <AutoplayVideo src={characterVideoWhite1} extraClassName={styles.video} poster={character.image} />}
