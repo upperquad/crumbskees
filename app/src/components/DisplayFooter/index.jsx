@@ -12,7 +12,7 @@ const DisplayFooter = props => {
         Made with 🖤 by Upperquad
       </div>
       <div className={styles.blackBar}>
-        <MarqueeText extraClassName={styles.whatup} text='What up tiny type that is scrolling -&nbsp;' duration='3s' />
+        <MarqueeText extraClassName={styles.whatup} text='What up tiny type that is scrolling -' duration='6s' />
         <div className={styles.version}>
           © 2019 Upperquad LLC. Ver. 6.35
         </div>

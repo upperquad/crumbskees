@@ -3,9 +3,7 @@ import styles from './style.module.scss'
 
 const PlayStage = props => {
   return (
-    <div>
-      This is the PlayStage
-    </div>
+    <></>
   )
 }
 

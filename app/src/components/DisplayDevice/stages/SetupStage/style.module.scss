@@ -17,23 +17,23 @@
 
 .pullOutPhone {
   font-size: responsive-font(56);
-  padding-top: 48/1920*100vw;
+  padding-top: 48/$base-width*100vw;
 }
 
 .players {
   display: flex;
   justify-content: center;
-  padding-top: 70/1920*100vw;
+  padding-top: 70/$base-width*100vw;
 }
 
 .player {
   background: $color-white;
   border: 2px solid $color-black;
   text-align: center;
-  width: 720/1920*100%;
+  width: 720/$base-width*100%;
 
   &:first-of-type {
-    margin-right: 120/1920*100%;
+    margin-right: 120/$base-width*100%;
   }
 }
 
@@ -42,7 +42,7 @@
 }
 
 .qrWrapper {
-  height: 293/1920*100vw;
+  height: 293/$base-width*100vw;
   position: relative;
 
   &.is-connected {
@@ -72,9 +72,9 @@
     background: $color-red;
     border-radius: 50%;
     content: '';
-    height: 166/1920*100vw;
+    height: 166/$base-width*100vw;
     position: absolute;
-    width: 166/1920*100vw;
+    width: 166/$base-width*100vw;
   }
 
   span {
@@ -104,7 +104,7 @@
   display: flex;
   font-size: responsive-font(48);
   justify-content: center;
-  height: 130/1920*100vw;
+  height: 130/$base-width*100vw;
   text-transform: uppercase;
 }
 
@@ -113,8 +113,8 @@
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
-  margin-bottom: 12/1920*100vw;
-  width: 181/1920*100vw;
+  margin-bottom: 12/$base-width*100vw;
+  width: 181/$base-width*100vw;
 
   &::before {
     content: '';
@@ -134,7 +134,7 @@
 
 .instruction {
   overflow: hidden;
-  padding: 100/1920*100vw 593/1920*100vw 40/1920*100vw;
+  padding: 100/$base-width*100vw 593/$base-width*100vw 40/$base-width*100vw;
   position: relative;
 
   &.is-started {
