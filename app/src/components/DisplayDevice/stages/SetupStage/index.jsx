@@ -10,7 +10,7 @@ const SetupStage = props => {
   return (
     <div className={styles.setup}>
       <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
-      <MarqueeText extraClassName={styles.pullOutPhone} text='Pull out yo smartphone camera! -&nbsp;' duration='6s' />
+      <MarqueeText extraClassName={styles.pullOutPhone} text='Pull out yo smartphone camera! -' duration='12s' />
       <div className={styles.players}>
         {[0, 1].map(number => (
           <div key={number} className={styles.player}>
