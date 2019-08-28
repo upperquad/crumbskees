@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styles from './style.module.scss'
-import characterVideoWhite1 from '../../../../assets/images/character-white-1.mp4'
-import characterVideoWhite2 from '../../../../assets/images/character-white-2.mp4'
+import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
+import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 
-import Circle from '../../Circle'
-import MarqueeText from '../../../MarqueeText'
-import AutoplayVideo from '../../AutoplayVideo'
+import Circle from '~components/ControlDevice/Circle'
+import MarqueeText from '~components/MarqueeText'
+import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
 
-const ResultStage = props => {
-
+const ResultStage = () => {
   const result = 'won'
   const character = {
     name: 'Player 1',
@@ -27,7 +26,7 @@ const ResultStage = props => {
   let resultBottom
   let circleColor
 
-  switch(result) {
+  switch (result) {
     case 'won':
       circleColor = character.color
       resultTop = 'You won! '
@@ -42,7 +41,7 @@ const ResultStage = props => {
     default:
       circleColor = 'yellow'
       resultTop = 'Nobody wins! '
-      resultBottom = `${opponent.name} `    
+      resultBottom = `${opponent.name} `
       break
   }
 
@@ -50,20 +49,30 @@ const ResultStage = props => {
     <section className={styles.result}>
       <Circle color={circleColor} />
       <div className={styles.winner}>
-        <MarqueeText text={resultTop} duration='6s' isAlternate isWhite/>
+        <MarqueeText text={resultTop} duration="6s" isAlternate isWhite />
         <div className={styles.imageWrapper}>
-          {result === 'won' && <AutoplayVideo src={characterVideoWhite1} extraClassName={styles.video} poster={character.image} />}
-          {result === 'tied' && <AutoplayVideo src={characterVideoWhite1} extraClassName={styles.video} poster={character.image} />}
-          {result === 'tied' && <AutoplayVideo src={characterVideoWhite2} extraClassName={styles.video} poster={opponent.image} />}
-          {result === 'lost' && <AutoplayVideo src={characterVideoWhite2} extraClassName={styles.video} poster={opponent.image} />}
+          {result === 'won' && (
+            <AutoplayVideo src={characterVideoWhite1} extraClassName={styles.video} poster={character.image} />
+          )}
+          {result === 'tied' && (
+            <AutoplayVideo src={characterVideoWhite1} extraClassName={styles.video} poster={character.image} />
+          )}
+          {result === 'tied' && (
+            <AutoplayVideo src={characterVideoWhite2} extraClassName={styles.video} poster={opponent.image} />
+          )}
+          {result === 'lost' && (
+            <AutoplayVideo src={characterVideoWhite2} extraClassName={styles.video} poster={opponent.image} />
+          )}
         </div>
-        <MarqueeText text={resultBottom} duration='6s' isAlternate isWhite/>
+        <MarqueeText text={resultBottom} duration="6s" isAlternate isWhite />
       </div>
       <div className={styles.smallText}>
         {result === 'won' && 'Winner!'}
         {result === 'tied' && 'Tie!'}
       </div>
-      <div className={styles.button} ng-click="phoneCtrl.playAgain()">Play again</div>
+      <div className={styles.button} ng-click="phoneCtrl.playAgain()">
+        Play again
+      </div>
     </section>
   )
 }

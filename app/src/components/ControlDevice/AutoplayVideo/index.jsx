@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import styles from './style.module.scss'
+import React from 'react'
 import classNames from 'classnames'
+import styles from './style.module.scss'
 
 const AutoplayVideo = props => {
-  const { src, poster, extraClassName } = props
+  const { extraClassName, poster, src } = props
   return (
-    <video className={classNames(styles.autoPlayVideo, extraClassName)} src={src} poster={poster} autoPlay playsInline muted loop></video>
+    <video
+      className={classNames(styles.autoPlayVideo, extraClassName)}
+      src={src}
+      poster={poster}
+      autoPlay
+      playsInline
+      muted
+      loop
+    />
   )
 }
 
