@@ -1,5 +1,5 @@
 // const HOST = window.location.origin.replace(/^http/, 'ws')
-const HOST = `wss://uq.fyi`
+const HOST = 'wss://uq.fyi'
 
 class WebSocketManager {
   constructor() {

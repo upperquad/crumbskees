@@ -10,7 +10,10 @@ import ErrorStage from './stages/ErrorStage'
 import WebSocketManager from '../../managers/WebSocketManager'
 
 const DisplayDevice = props => {
-  const [stage, setStage] = useState('result')
+  console.log('zizdi')
+  // if (props === null) {
+    const [stage, setStage] = useState('result')
+  // }
   useEffect(() => {
     WebSocketManager.init('display')
   }, [])
