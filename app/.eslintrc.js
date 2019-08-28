@@ -1,5 +1,6 @@
-{
-  "root": true,
+const path = require('path');
+
+module.exports = {
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -67,11 +68,11 @@
     "import/resolver": {
       "alias": {
         "map": [
-          ["~assets", "./src/assets"],
-          ["~components", "./src/components"],
-          ["~managers", "./src/managers"],
-          ["~constants", "./src/constants.jsx"],
-          ["~styles", "./src/styles"],
+          ["~assets", path.resolve(__dirname, 'src/assets/')],
+          ["~components", path.resolve(__dirname, 'src/components/')],
+          ["~managers", path.resolve(__dirname, 'src/managers/')],
+          ["~constants", path.resolve(__dirname, 'src/constants.jsx')],
+          ["~styles", path.resolve(__dirname, 'src/styles/')],
         ],
         "extensions": [".js", ".jsx"]
       }
