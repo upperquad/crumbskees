@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from './style.module.scss'
 
-import MarqueeText from '../../../MarqueeText'
-import DisplayFooter from '../../../DisplayFooter'
+import MarqueeText from '~components/MarqueeText'
+import DisplayFooter from '~components/DisplayFooter'
 
-import homeBgVideo from '../../../../assets/images/home-bg.mp4'
+import homeBgVideo from '~assets/images/home-bg.mp4'
 
 const SetupStage = () => (
   <div className={styles.setup}>

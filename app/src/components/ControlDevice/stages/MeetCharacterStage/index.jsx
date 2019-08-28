@@ -4,9 +4,9 @@ import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import character1 from '~assets/images/character1.png'
 // import character2 from '~assets/images/character2.png'
 import styles from './style.module.scss'
-import '../../../../styles/common/control-device.scss'
-import Circle from '../../Circle'
-import AutoplayVideo from '../../AutoplayVideo'
+import '~styles/common/control-device.scss'
+import Circle from '~components/ControlDevice/Circle'
+import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
 
 const MeetCharacterStage = () => {
   const character = {

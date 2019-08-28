@@ -3,9 +3,9 @@ import styles from './style.module.scss'
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 
-import Circle from '../../Circle'
-import MarqueeText from '../../../MarqueeText'
-import AutoplayVideo from '../../AutoplayVideo'
+import Circle from '~components/ControlDevice/Circle'
+import MarqueeText from '~components/MarqueeText'
+import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
 
 const ResultStage = () => {
   const result = 'won'

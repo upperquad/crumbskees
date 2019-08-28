@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import character1 from '~assets/images/character1.png'
 // import character2 from '~assets/images/character2.png'
-import MarqueeText from '../../../MarqueeText'
+import MarqueeText from '~components/MarqueeText'
 
 const PlayStage = () => {
   const character = {

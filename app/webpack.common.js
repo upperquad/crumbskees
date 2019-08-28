@@ -34,6 +34,10 @@ module.exports = {
     extensions: ['.js', '.jsx', '.scss'],
     alias: {
       '~assets': path.resolve(__dirname, 'src/assets/'),
+      '~components': path.resolve(__dirname, 'src/components/'),
+      '~managers': path.resolve(__dirname, 'src/managers/'),
+      '~constants': path.resolve(__dirname, 'src/constants.jsx'),
+      '~styles': path.resolve(__dirname, 'src/styles/'),
     }
   }
 };

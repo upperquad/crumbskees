@@ -7,7 +7,7 @@ import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
 import ErrorStage from './stages/ErrorStage'
 
-import WebSocketManager from '../../managers/WebSocketManager'
+import WebSocketManager from '~managers/WebSocketManager'
 
 const DisplayDevice = () => {
   // if (props === null) {

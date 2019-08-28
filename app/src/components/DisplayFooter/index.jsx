@@ -1,7 +1,7 @@
 import React from 'react'
 // import classNames from 'classnames'
 
-import MarqueeText from '../MarqueeText'
+import MarqueeText from '~components/MarqueeText'
 
 import styles from './style.module.scss'
 

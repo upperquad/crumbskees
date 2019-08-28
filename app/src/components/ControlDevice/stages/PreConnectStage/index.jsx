@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 // import classNames from 'classnames'
 import styles from './style.module.scss'
 
-import Circle from '../../Circle'
+import Circle from '~components/ControlDevice/Circle'
 
-import WebSocketManager from '../../../../managers/WebSocketManager'
+import WebSocketManager from '~managers/WebSocketManager'
 
 const PreConnectStage = props => {
   const [token, setToken] = useState('')

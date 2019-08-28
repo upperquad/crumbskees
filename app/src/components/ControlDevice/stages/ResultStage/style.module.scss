@@ -1,4 +1,4 @@
-@import "../../../../styles/imports/index";
+@import "~styles/imports/index";
 
 .result {
   align-items: center;
@@ -28,7 +28,7 @@
 
   .marquee {
     @extend %Bold;
-  
+
     background: $color-black;
     color: $color-white;
     flex-grow: 0;

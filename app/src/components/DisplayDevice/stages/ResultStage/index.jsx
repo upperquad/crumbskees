@@ -2,10 +2,10 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
-import MarqueeText from '../../../MarqueeText'
+import MarqueeText from '~components/MarqueeText'
 
 import resultBg from '~assets/images/round_3/r3-intro.mp4'
-import characterImage1 from '../../../../assets/images/character1.png'
+import characterImage1 from '~assets/images/character1.png'
 
 const ResultStage = () => (
   <div className={styles.result}>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import styles from './style.module.scss'
 
-import MarqueeText from '../../../MarqueeText'
-import DisplayFooter from '../../../DisplayFooter'
+import MarqueeText from '~components/MarqueeText'
+import DisplayFooter from '~components/DisplayFooter'
 
-import homeBgVideo from '../../../../assets/images/home-bg.mp4'
-import step1Img from '../../../../assets/images/tutorial/tutorial-1.png'
-import step2Img from '../../../../assets/images/tutorial/tutorial-2.png'
-import step3Img from '../../../../assets/images/tutorial/tutorial-3.png'
+import homeBgVideo from '~assets/images/home-bg.mp4'
+import step1Img from '~assets/images/tutorial/tutorial-1.png'
+import step2Img from '~assets/images/tutorial/tutorial-2.png'
+import step3Img from '~assets/images/tutorial/tutorial-3.png'
 
 const TutorialStage = () => {
   const [step] = useState(1)

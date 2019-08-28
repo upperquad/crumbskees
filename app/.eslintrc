@@ -68,6 +68,10 @@
       "alias": {
         "map": [
           ["~assets", "./src/assets"],
+          ["~components", "./src/components"],
+          ["~managers", "./src/managers"],
+          ["~constants", "./src/constants.jsx"],
+          ["~styles", "./src/styles"],
         ],
         "extensions": [".js", ".jsx"]
       }

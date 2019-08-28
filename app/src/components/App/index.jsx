@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import DisplayDevice from '../DisplayDevice'
 import ControlDevice from '../ControlDevice'
 
-import BREAKPOINT from '../../constants'
+import { BREAKPOINT } from '~constants'
 
 const App = () => {
   const [isDesktop] = useState(() => window.innerWidth > BREAKPOINT)
