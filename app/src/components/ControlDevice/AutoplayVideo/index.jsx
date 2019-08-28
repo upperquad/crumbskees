@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 
 const AutoplayVideo = props => {
-  const { src, poster, extraClassName } = props
+  const { extraClassName, poster, src } = props
   return (
     <video
       className={classNames(styles.autoPlayVideo, extraClassName)}

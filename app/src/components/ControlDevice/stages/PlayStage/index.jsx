@@ -28,7 +28,8 @@ const PlayStage = () => {
       </div>
       <MarqueeText text={marqueeText} duration="12s" />
       <div className="touch-bubble" />
-      {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}" role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
+      {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}"
+       role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
     </section>
   )
 }
