@@ -16,5 +16,8 @@
     "express": "4.13.4",
     "uuid": "^3.3.2",
     "ws": "1.1.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-cumul8": "^1.4.56"
   }
 }

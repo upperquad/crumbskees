@@ -2,7 +2,12 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   module: {
-    rules: [
+    rules: [{
+        enforce: "pre",
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader"
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
