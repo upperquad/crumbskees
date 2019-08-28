@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require('path');
 
 module.exports = {
   module: {
@@ -7,11 +8,7 @@ module.exports = {
         enforce: 'pre',
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          failOnError: false,
-          quiet: true,
-        },
+        loader: 'eslint-loader'
       }, {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -34,6 +31,10 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.scss']
+    extensions: ['.js', '.jsx', '.scss'],
+    alias: {
+      '~assets': path.resolve(__dirname, 'src/assets/'),
+    }
   }
 };
+

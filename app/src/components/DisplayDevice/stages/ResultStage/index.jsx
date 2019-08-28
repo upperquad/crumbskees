@@ -4,10 +4,11 @@ import styles from './style.module.scss'
 
 import MarqueeText from '../../../MarqueeText'
 
-import resultBg from '../../../../assets/images/round_3/r3-intro.mp4'
+import resultBg from '~assets/images/round_3/r3-intro.mp4'
 import characterImage1 from '../../../../assets/images/character1.png'
 
 const ResultStage = props => {
+  console.log(resultBg)
   return (
     <div className={styles.result}>
       <video className={styles.background} loop autoPlay muted src={resultBg} />
