@@ -21,10 +21,7 @@ class WebSocketManager {
     }
   }
 
-  connect = ({
-    id = null,
-    token = null
-  } = {}) => {
+  connect = ({ id = null, token = null } = {}) => {
     if (this._ws) {
       return console.error('Connection already exists')
     }
@@ -34,7 +31,7 @@ class WebSocketManager {
     }
 
     let url
-    switch(this.deviceType) {
+    switch (this.deviceType) {
       case 'control':
         url = `${HOST}/phone`
         if (token) {
@@ -53,6 +50,8 @@ class WebSocketManager {
     this._ws = new WebSocket(url)
     this._ws.onopen = this.onWsOpen
     // handle connection and reconnection
+
+    return true
   }
 
   onWsOpen = () => {
@@ -72,9 +71,7 @@ class WebSocketManager {
     window.dispatchEvent(new CustomEvent('MESSAGE', { detail: { type, params } }))
   }
 
-  disconnect = () => {
-
-  }
+  disconnect = () => {}
 
   send = () => {
     // check if connected and send things

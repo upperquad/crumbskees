@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import styles from './style.module.scss'
+import React from 'react'
+// import styles from './style.module.scss'
 
-const PlayStage = props => {
-  return (
-    <></>
-  )
-}
+const PlayStage = () => <></>
 
 export default PlayStage
