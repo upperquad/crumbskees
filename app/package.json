@@ -10,8 +10,11 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development"
+    "start": "yarn watch:build",
+    "watch:build": "webpack --config webpack.watch-build.js",
+    "frontend": "yarn watch",
+    "watch": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.build.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,8 +42,10 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "path": "^0.12.7",
+    "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
   }
 }
