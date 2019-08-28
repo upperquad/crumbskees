@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import styles from './style.module.scss'
+// import styles from './style.module.scss'
 
 import DisplayDevice from '../DisplayDevice'
 import ControlDevice from '../ControlDevice'
 
-import { BREAKPOINT } from '../../constants'
+import BREAKPOINT from '../../constants'
 
-const App = props => {
+const App = () => {
   const [isDesktop] = useState(() => window.innerWidth > BREAKPOINT)
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import classNames from 'classnames'
+// import classNames from 'classnames'
 import styles from './style.module.scss'
 
 import Circle from '../../Circle'
@@ -12,38 +12,43 @@ const PreConnectStage = props => {
   const [isConnecting, setIsConnecting] = useState(false)
 
   useEffect(() => effectWebsocket(), [])
-  useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [setToken, setErrorReason, setIsConnecting])
+  useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [
+    setToken,
+    setErrorReason,
+    setIsConnecting,
+  ])
 
   const { hasPlayed } = props
 
   return (
     <div className={styles.preConnect}>
       <Circle color="yellow" />
-      <h2 className={styles.instruction}>{`Enter the red code on the screen ${hasPlayed ? 'to play\xA0again' : 'to\xA0join'}`}</h2>
-      <div className={styles.tokenDisplay}>
-        {token}
-      </div>
+      <h2 className={styles.instruction}>
+        {`Enter the red code on the screen ${
+          hasPlayed ? 'to play\xA0again' : 'to\xA0join'
+        }`}
+      </h2>
+      <div className={styles.tokenDisplay}>{token}</div>
       <div className={styles.label}>
         {errorReason && <span className={styles.labelError}>{errorReason}</span>}
         {isConnecting && <span className={styles.labelConnecting}>Connecting...</span>}
       </div>
       <div className={styles.tokenInput}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(key => (
-          <div className={styles.tokenInputKey}
+          <div
+            className={styles.tokenInputKey}
             key={key}
-            onClick={() => updateToken(key, token, setToken, setErrorReason, setIsConnecting)}>{key}</div>
+            onClick={() => updateToken(key, token, setToken, setErrorReason, setIsConnecting)}
+          >
+            {key}
+          </div>
         ))}
-        <div
-          className={styles.tokenInputKey}
-          key={-1}
-          onClick={() => updateToken(-1)}
-        >
+        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1)}>
           ←
         </div>
       </div>
-      <div className={styles.placeholder}></div>
-      <div className={styles.bottomPattern}>
-      </div>
+      <div className={styles.placeholder} />
+      <div className={styles.bottomPattern} />
     </div>
   )
 }
@@ -54,7 +59,7 @@ function effectWebsocket() {
   const path = window.location.pathname
   if (/^\/\d{3}$/.test(path)) {
     const token = path.slice(1)
-    WebSocketManager.connect({token})
+    WebSocketManager.connect({ token })
   }
 
   return () => {
@@ -64,11 +69,13 @@ function effectWebsocket() {
 
 function effectWebsocketClose(setToken, setErrorReason, setIsConnecting) {
   const onWebSocketClose = event => {
-    const { detail: { reason } } = event
+    const {
+      detail: { reason },
+    } = event
     if (reason === 'invalid_token') {
       setErrorReason('Invalid token')
     } else if (reason === 'no_active_game') {
-      setErrorReason('There\'s no active game')
+      setErrorReason("There's no active game")
     }
     setIsConnecting(false)
     setToken('')
@@ -90,7 +97,7 @@ function updateToken(key, token, setToken, setErrorReason, setIsConnecting) {
     const newToken = token + key
     if (newToken.length >= 3) {
       setIsConnecting(true)
-      WebSocketManager.connect({token: newToken})
+      WebSocketManager.connect({ token: newToken })
     }
 
     setToken(newToken)

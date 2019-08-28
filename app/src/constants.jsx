@@ -1,1 +1,3 @@
-export const BREAKPOINT = 768
+const BREAKPOINT = 768
+
+export default BREAKPOINT

@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import styles from './style.module.scss'
+import React from 'react'
+// import styles from './style.module.scss'
 
-const ErrorStage = props => {
-  return (
-    <div>
-      This is the ErrorStage
-    </div>
-  )
-}
+const ErrorStage = () => <div>This is the ErrorStage</div>
 
 export default ErrorStage

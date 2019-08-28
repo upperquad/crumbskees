@@ -31,4 +31,7 @@ module.exports = merge(common, {
       }
     ]
   },
+  devServer: {
+    hot: true,
+  },
 })

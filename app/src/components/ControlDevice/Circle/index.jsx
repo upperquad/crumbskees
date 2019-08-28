@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
@@ -9,9 +9,7 @@ const PlayStage = props => {
     [styles.circlePurple]: color === 'purple',
     [styles.circleRed]: color === 'red',
   })
-  return (
-    <div className={circleClass}></div>
-  )
+  return <div className={circleClass} />
 }
 
 export default PlayStage

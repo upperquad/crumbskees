@@ -31,5 +31,5 @@ module.exports = merge(common, {
     filename: 'js/[name].js',
     publicPath: '/',
     path: path.resolve(__dirname, 'build/')
-  },
+  }
 })
