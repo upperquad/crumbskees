@@ -6,8 +6,8 @@ const path = require('path')
 
 const frontEndRoot = 'app/build/'
 
-const initPage = require('./wss/page.js')
-const initPhone = require('./wss/phone.js')
+const initDisplay = require('./wss/display.js')
+const initController = require('./wss/controller.js')
 const initAdmin = require('./wss/admin.js')
 
 const PORT = process.env.PORT || 8000
@@ -19,10 +19,10 @@ const server = express()
   .use((req, res) => res.sendFile(page))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-const wssPage = new SocketServer({server: server, path: '/game'})
-const wssPhone = new SocketServer({server: server, path: '/phone'})
+const wssDisplay = new SocketServer({server: server, path: '/display'})
+const wssController = new SocketServer({server: server, path: '/controller'})
 const wssAdmin = new SocketServer({server: server, path: '/admin'})
 
-initPage(wssPage, wssPhone, wssAdmin)
-initPhone(wssPage, wssPhone, wssAdmin)
-initAdmin(wssPage, wssPhone, wssAdmin)
+initDisplay(wssDisplay, wssController, wssAdmin)
+initController(wssDisplay, wssController, wssAdmin)
+initAdmin(wssDisplay, wssController, wssAdmin)
