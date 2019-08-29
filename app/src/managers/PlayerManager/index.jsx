@@ -1,8 +1,12 @@
 class PlayerManager {
-  setPlayer(token) {
-    // call this when token has been validate
+  constructor() {
+    this.players = [null, null]
+  }
 
-    this.player = new Player({ id: token })
+  setPlayer(token, index) {
+    // call this when token has been validate
+    // chekc if a player exist already
+    this.players.push(new Player({ id: token }))
   }
 }
 

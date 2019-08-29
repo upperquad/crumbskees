@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
+import classNames from 'classnames'
 import styles from './style.module.scss'
+import typography from '~styles/modules/typography.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
 import DisplayFooter from '~components/DisplayFooter'
+import PlayerManager from '~managers/PlayerManager'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 
@@ -12,12 +15,10 @@ const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 const SetupStage = () => {
   console.log('SETUP')
 
-  const qrBlocks = []
-  console.log(qrBlocks)
+  const [qrCode, setQrCode] = useState([])
 
-  // this.qrBlocks = [...document.querySelectorAll('.setup__upper')]
-  // this.updateQr()
-  // Server.websocket.onmessage = this.listenServer
+  console.log(PlayerManager)
+
 
   const listenServer = e => {
     const data = e.data.split(',')
@@ -37,28 +38,49 @@ const SetupStage = () => {
 
   const tokens = [getNewToken(), getNewToken()]
 
-  const playerEls = useRef('')
+  if (qrCode.length === 0) {
+    updateQr(setQrCode, tokens)
+  }
 
-  // let playerEls
   useEffect(() => {
-    console.log('did mount', qrBlocks)
-    playerEls.current = updateQr(qrBlocks, tokens)
     window.addEventListener('MESSAGE', listenServer)
-
-    console.log(playerEls)
 
     return () => {
       window.removeEventListener('MESSAGE', listenServer)
     }
   })
 
-  console.log(tokens)
-
   return (
     <div className={styles.setup}>
       <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
-      {playerEls}
+      <div className={styles.players}>
+        {[0, 1].map((number, index) => (
+          <div key={number} className={styles.player}>
+            <div className={styles.qrWrapper}>
+              {qrCode[index] && (
+                <div className={styles.qr}>
+                  <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
+                  <div className={classNames(styles.qrUrl, typography.text18)}>
+                    Think QR codes are stupid?
+                    <br />
+                    Go to
+                    {BASE_URL}
+                    <span className={styles.qrUrlToken}>{tokens[index]}</span>
+                  </div>
+                </div>
+              )}
+              <div className={styles.playerConnected}>
+                <span>Connected!</span>
+              </div>
+            </div>
+            <div className={styles.playerName}>
+              Player
+              {number + 1}
+            </div>
+          </div>
+        ))}
+      </div>
       <div className={styles.instruction}>
         <span className={styles.instructionText}>
           Your smart phone will be your control pad. Open your camera app and scan the code!
@@ -71,10 +93,22 @@ const SetupStage = () => {
 }
 
 function getNewToken() {
-  Math.random().toString(10).substr(2, 3)
+  return Math.random().toString(10).substr(2, 3)
 }
 
-function updateQr(qrBlocks, tokens) {
+function updateQr(setQrCode, tokens) {
+  const qrCode = []
+  tokens.forEach(token => {
+    const tokenUrl = `${BASE_URL}${token}`
+    QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
+      .then(dataUrl => {
+        qrCode.push(dataUrl)
+        setTimeout(() => {
+          setQrCode(qrCode)
+        }, 0) // hack otherwise is was not working form some React reason?
+      })
+  })
+
   // qrBlocks.forEach((block, index) => {
   //   if (this.playerIds[index] === null) {
   //     const tokenUrl = `${BASE_URL}${tokens[index]}`
@@ -82,36 +116,13 @@ function updateQr(qrBlocks, tokens) {
   //       .then(dataUrl => {
   //         block.classList.remove('is-connected')
   //         block.querySelector('.qr').innerHTML =
-  //           `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-18">Think QR codes are stupid?<br>Go to ${BASE_URL}<span class="color--red">${this.tokens[index]}</span></div>`
+  // `<div class="qr__qr" style="background-image: url(${dataUrl})"></div>
+  // <div class="qr__url text-18">Think QR codes are stupid?<br>Go to ${BASE_URL}<span class="color--red">${this.tokens[index]}</span></div>`
   //       })
   //   } else {
   //     block.classList.add('is-connected')
   //   }
   // })
-
-  const playerEls = (
-    <div className={styles.players}>
-      {[0, 1].map((number, index) => (
-        <div key={number} className={styles.player}>
-          <div ref={ref => { qrBlocks[index] = ref }} className={styles.qrWrapper}>
-            <div className={styles.qr} />
-            <div className={styles.playerConnected}>
-              <span>Connected!</span>
-            </div>
-          </div>
-          <div className={styles.playerName}>
-            Player
-            {number + 1}
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-
-  return playerEls
-
-  // div empty
-  // then update div
 }
 
 export default SetupStage

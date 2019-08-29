@@ -19,7 +19,7 @@ module.exports = merge(common, {
           loader: 'css-loader',
           options: {
             modules: true,
-            localIdentName: '[name]__[local]___[hash:base64:5]',
+            localIdentName: '[folder]-[local]--[hash:base64:5]',
             camelCase: true
           }
         },
