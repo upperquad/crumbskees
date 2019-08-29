@@ -1,4 +1,4 @@
-class PlayerManager {
+class PlayersManager {
   constructor() {
     this.players = [null, null]
   }
@@ -10,4 +10,4 @@ class PlayerManager {
   }
 }
 
-export default new PlayerManager()
+export default new PlayersManager()

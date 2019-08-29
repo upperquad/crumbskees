@@ -6,25 +6,23 @@ import typography from '~styles/modules/typography.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
 import DisplayFooter from '~components/DisplayFooter'
-import PlayerManager from '~managers/PlayerManager'
+// import PlayersManager from '~managers/PlayersManager'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 const SetupStage = () => {
-  console.log('SETUP')
+  console.log('SetupStage')
 
   const [qrCode, setQrCode] = useState([])
 
-  console.log(PlayerManager)
-
 
   const listenServer = e => {
-    const data = e.data.split(',')
-    console.log(data)
+    console.log('listen ', e)
+    const data = e
 
-    switch (data[0]) {
+    switch (data) {
       case 'token_submit':
         // this.verifyToken(data[1], data[2])
         // if (this.playerIds[0] !== null && this.playerIds[1] !== null) {
@@ -48,7 +46,7 @@ const SetupStage = () => {
     return () => {
       window.removeEventListener('MESSAGE', listenServer)
     }
-  })
+  }, [])
 
   return (
     <div className={styles.setup}>

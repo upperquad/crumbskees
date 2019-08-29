@@ -11,7 +11,7 @@ class WebSocketManager {
     return WebSocketManager.instance
   }
 
-  static _broadcast(eventType, detail = null) {
+  _broadcast = (eventType, detail = null) => {
     window.dispatchEvent(new CustomEvent(eventType, { detail }))
   }
 

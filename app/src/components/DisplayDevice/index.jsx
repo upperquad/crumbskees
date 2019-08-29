@@ -15,8 +15,7 @@ const DisplayDevice = () => {
   // }
   useEffect(() => {
     WebSocketManager.init('display')
-    // WebSocketManager.connect()
-    console.log('ok')
+    WebSocketManager.connect()
   }, [])
 
   // Listen to
