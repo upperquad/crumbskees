@@ -1,3 +1,6 @@
+const encodeMessage = require('./inc/encodeMessage.js')
+const decodeMessage = require('./inc/decodeMessage.js')
+
 const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   wssDisplay.on('connection', ws => {
     if (wssDisplay.clients.length > 1) {
@@ -8,14 +11,14 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     cleanupGame()
 
     ws.on('message', message => {
-      const messageList = message.split(',')
+      const { type, data } = decodeMessage(message)
     
-      switch(messageList[0]) {
+      switch(type) {
         case 'auth_result':
-          onAuthResult(messageList)
+          onAuthResult(data)
           break
         case 'score':
-          onScore(messageList)
+          onScore(data)
           break
         case 'tutorial_start':
           wssControl.clients.forEach(client => {
@@ -29,7 +32,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onDisconnectAll()
           break
         case 'result':
-          onResult(messageList)
+          onResult(data)
           break
         default:
           break
@@ -44,52 +47,40 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     })
   }
 
-  function onAuthResult(messageList) {
-    if (messageList.length !== 4) {
-      return
-    }
-    const id = messageList[1]
-    const result = messageList[2]
-    const playerIndex = messageList[3]
+  function onAuthResult(data) {
+    const { id, result, playerIndex } = data
     const wsPhone = wssControl.clients.find(elem => elem.id === id)
-    if (!wsPhone) {
+    if (!wsPhone || id === undefined || result === undefined || playerIndex === undefined ) {
       return
     }
     if (result === '1') {
       wsPhone.accepted = true
-      wsPhone.send(`accepted,${playerIndex},${wsPhone.id}`)
+      wsPhone.send(encodeMessage('accepted', { playerIndex, id: wsPhone.id }))
     } else {
       wsPhone.close(1000, 'invalid_token')
     }
   }
 
-  function onScore(messageList) {
-    if (messageList.length !== 3) {
-      return
-    }
-    const id = messageList[1]
-    const score = messageList[2]
+  function onScore(data) {
+    const { id, score } = data
     const wsPhone = wssControl.clients.find(elem => elem.id === id)
-    if (!wsPhone) {
+    if (!wsPhone || id === undefined || score === undefined ) {
       return
     }
-    wsPhone.send(`score,${score}`)
+    wsPhone.send(encodeMessage('score', { score }))
   }
 
   function onResult(messageList) {
-    if (messageList.length !== 2) {
+    const { result } = data
+    if (result === undefined) {
       return
     }
-    const result = messageList[1]
-    if (result === 'tied') {
-      wssControl.clients.forEach(client => {
-        client.send('result,tied')
+    wssControl.clients.forEach(client => {
+      const message = encodeMessage('result', {
+        result: result === 'tied' ? 'tied' : client.id === result ? 'won' : 'lost'
       })
-    } else {
-      wssControl.clients.forEach(client => {
-        client.send(`result,${client.id === result ? 'won' : 'lost'}`)
-      })
-    }
+      client.send(message)
+    })
   }
 
   function onGameStart() {
