@@ -1,5 +1,6 @@
 const url = require('url')
 
+//TODO: kill this, or completely rewrite
 const initAdmin = (wssDisplay, wssControl, wssAdmin) => {
   wssAdmin.on('connection', ws => {
     console.log('new admin')
