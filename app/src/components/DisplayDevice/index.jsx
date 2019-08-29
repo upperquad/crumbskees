@@ -11,11 +11,13 @@ import WebSocketManager from '~managers/WebSocketManager'
 
 const DisplayDevice = () => {
   // if (props === null) {
-  const [stage, setStage] = useState('result')
+  const [stage, setStage] = useState('setup')
   // }
   useEffect(() => {
     WebSocketManager.init('display')
   }, [])
+
+  // Listen to
 
   const onError = () => setStage('error')
 
