@@ -9,7 +9,7 @@ import ResultStage from './stages/ResultStage'
 const ControlDevice = () => {
   // set hasPlayed when game starts
   const [hasPlayed] = useState(false)
-  const [stage, setStage] = useState('result')
+  const [stage, setStage] = useState('pre_connect')
 
   return (
     <>
