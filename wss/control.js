@@ -1,8 +1,8 @@
 const uuid = require('uuid/v1')
 const url = require('url')
 
-const initDisplay = (wssDisplay, wssController, wssAdmin) => {
-  wssController.on('connection', ws => {
+const initControl = (wssDisplay, wssControl, wssAdmin) => {
+  wssControl.on('connection', ws => {
     if (!wssDisplay.clients.length) {
       ws.close(1000, 'no_active_game')
       return
@@ -18,7 +18,7 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
       ws.id = uuid()
       console.log(`new phone: ${ws.id}`)
       wssDisplay.clients[0].send(`token_submit,${query.token},${ws.id}`)
-    } else if (query.id && !wssController.clients.find(elem => elem.id === query.id)) {
+    } else if (query.id && !wssControl.clients.find(elem => elem.id === query.id)) {
       ws.id = query.id
       console.log(`reconnect phone: ${ws.id}`)
       wssDisplay.clients[0].send(`reconnect_phone,${ws.id}`)
@@ -45,12 +45,12 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
           wssDisplay.clients[0].send(`skip_tutorial,${ws.id}`)
           break
         case 'tutorial_start':
-          wssController.clients.forEach(wssPhone => {
+          wssControl.clients.forEach(wssPhone => {
             wssPhone.send('tutorial_start')
           });
           break
         case 'tutorial_over':
-          wssController.clients.forEach(wssPhone => {
+          wssControl.clients.forEach(wssPhone => {
             wssPhone.send('tutorial_over')
           });
           break
@@ -74,4 +74,4 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
   })
 }
 
-module.exports = initDisplay
+module.exports = initControl

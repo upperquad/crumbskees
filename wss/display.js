@@ -1,4 +1,4 @@
-const initDisplay = (wssDisplay, wssController, wssAdmin) => {
+const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   wssDisplay.on('connection', ws => {
     if (wssDisplay.clients.length > 1) {
       ws.close(1000, 'active_game_exist')
@@ -18,7 +18,7 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
           onScore(messageList)
           break
         case 'tutorial_start':
-          wssController.clients.forEach(client => {
+          wssControl.clients.forEach(client => {
             client.send('tutorial_start')
           })        
           break
@@ -39,7 +39,7 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
 
   function cleanupGame() {
     console.log(`new page`)
-    wssController.clients.forEach(client => {
+    wssControl.clients.forEach(client => {
       client.close(1000, 'new_game_started')
     })
   }
@@ -51,7 +51,7 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
     const id = messageList[1]
     const result = messageList[2]
     const playerIndex = messageList[3]
-    const wsPhone = wssController.clients.find(elem => elem.id === id)
+    const wsPhone = wssControl.clients.find(elem => elem.id === id)
     if (!wsPhone) {
       return
     }
@@ -69,7 +69,7 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
     }
     const id = messageList[1]
     const score = messageList[2]
-    const wsPhone = wssController.clients.find(elem => elem.id === id)
+    const wsPhone = wssControl.clients.find(elem => elem.id === id)
     if (!wsPhone) {
       return
     }
@@ -82,24 +82,24 @@ const initDisplay = (wssDisplay, wssController, wssAdmin) => {
     }
     const result = messageList[1]
     if (result === 'tied') {
-      wssController.clients.forEach(client => {
+      wssControl.clients.forEach(client => {
         client.send('result,tied')
       })
     } else {
-      wssController.clients.forEach(client => {
+      wssControl.clients.forEach(client => {
         client.send(`result,${client.id === result ? 'won' : 'lost'}`)
       })
     }
   }
 
   function onGameStart() {
-    wssController.clients.forEach(client => {
+    wssControl.clients.forEach(client => {
       client.send('game_start')
     })
   }
 
   function onDisconnectAll() {
-    wssController.clients.forEach(client => {
+    wssControl.clients.forEach(client => {
       client.close(1000, 'game_over')
     })
   }

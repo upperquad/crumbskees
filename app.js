@@ -7,7 +7,7 @@ const path = require('path')
 const frontEndRoot = 'app/build/'
 
 const initDisplay = require('./wss/display.js')
-const initController = require('./wss/controller.js')
+const initControl = require('./wss/control.js')
 const initAdmin = require('./wss/admin.js')
 
 const PORT = process.env.PORT || 8000
@@ -20,9 +20,9 @@ const server = express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 const wssDisplay = new SocketServer({server: server, path: '/display'})
-const wssController = new SocketServer({server: server, path: '/controller'})
+const wssControl = new SocketServer({server: server, path: '/control'})
 const wssAdmin = new SocketServer({server: server, path: '/admin'})
 
-initDisplay(wssDisplay, wssController, wssAdmin)
-initController(wssDisplay, wssController, wssAdmin)
-initAdmin(wssDisplay, wssController, wssAdmin)
+initDisplay(wssDisplay, wssControl, wssAdmin)
+initControl(wssDisplay, wssControl, wssAdmin)
+initAdmin(wssDisplay, wssControl, wssAdmin)
