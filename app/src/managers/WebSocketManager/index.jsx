@@ -60,6 +60,7 @@ class WebSocketManager {
   }
 
   onWsClose = event => {
+    console.log('egifuhoi')
     window.dispatchEvent(new CustomEvent('WS_CLOSE', { detail: { reason: event.reason } }))
     console.log('Connection closed:', event.reason)
     this._ws = null
@@ -69,6 +70,7 @@ class WebSocketManager {
     const { data = '' } = event
     const [type, ...params] = data.split(',')
     window.dispatchEvent(new CustomEvent('MESSAGE', { detail: { type, params } }))
+    console.log(data)
   }
 
   disconnect = () => {}

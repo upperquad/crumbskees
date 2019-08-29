@@ -10,6 +10,7 @@ const PreConnectStage = props => {
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
+  console.log('preconnect')
 
   useEffect(() => effectWebsocket(), [])
   useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import QRCode from 'qrcode'
 import styles from './style.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
@@ -6,17 +7,21 @@ import DisplayFooter from '~components/DisplayFooter'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 
+const BASE_URL = `${window.location.protocol}//${window.location.host}/`
+
 const SetupStage = () => {
   console.log('SETUP')
+
+  const qrBlocks = []
+  console.log(qrBlocks)
 
   // this.qrBlocks = [...document.querySelectorAll('.setup__upper')]
   // this.updateQr()
   // Server.websocket.onmessage = this.listenServer
 
-  const getNewToken = () => Math.random().toString(10).substr(2, 3)
-
   const listenServer = e => {
     const data = e.data.split(',')
+    console.log(data)
 
     switch (data[0]) {
       case 'token_submit':
@@ -32,7 +37,20 @@ const SetupStage = () => {
 
   const tokens = [getNewToken(), getNewToken()]
 
-  window.addEventListener('MESSAGE', listenServer)
+  const playerEls = useRef('')
+
+  // let playerEls
+  useEffect(() => {
+    console.log('did mount', qrBlocks)
+    playerEls.current = updateQr(qrBlocks, tokens)
+    window.addEventListener('MESSAGE', listenServer)
+
+    console.log(playerEls)
+
+    return () => {
+      window.removeEventListener('MESSAGE', listenServer)
+    }
+  })
 
   console.log(tokens)
 
@@ -40,22 +58,7 @@ const SetupStage = () => {
     <div className={styles.setup}>
       <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
-      <div className={styles.players}>
-        {[0, 1].map(number => (
-          <div key={number} className={styles.player}>
-            <div className={styles.qrWrapper}>
-              <div className={styles.qr} />
-              <div className={styles.playerConnected}>
-                <span>Connected!</span>
-              </div>
-            </div>
-            <div className={styles.playerName}>
-              Player
-              {number + 1}
-            </div>
-          </div>
-        ))}
-      </div>
+      {playerEls}
       <div className={styles.instruction}>
         <span className={styles.instructionText}>
           Your smart phone will be your control pad. Open your camera app and scan the code!
@@ -65,6 +68,50 @@ const SetupStage = () => {
       <DisplayFooter />
     </div>
   )
+}
+
+function getNewToken() {
+  Math.random().toString(10).substr(2, 3)
+}
+
+function updateQr(qrBlocks, tokens) {
+  // qrBlocks.forEach((block, index) => {
+  //   if (this.playerIds[index] === null) {
+  //     const tokenUrl = `${BASE_URL}${tokens[index]}`
+  //     QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
+  //       .then(dataUrl => {
+  //         block.classList.remove('is-connected')
+  //         block.querySelector('.qr').innerHTML =
+  //           `<div class="qr__qr" style="background-image: url(${dataUrl})"></div><div class="qr__url text-18">Think QR codes are stupid?<br>Go to ${BASE_URL}<span class="color--red">${this.tokens[index]}</span></div>`
+  //       })
+  //   } else {
+  //     block.classList.add('is-connected')
+  //   }
+  // })
+
+  const playerEls = (
+    <div className={styles.players}>
+      {[0, 1].map((number, index) => (
+        <div key={number} className={styles.player}>
+          <div ref={ref => { qrBlocks[index] = ref }} className={styles.qrWrapper}>
+            <div className={styles.qr} />
+            <div className={styles.playerConnected}>
+              <span>Connected!</span>
+            </div>
+          </div>
+          <div className={styles.playerName}>
+            Player
+            {number + 1}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+
+  return playerEls
+
+  // div empty
+  // then update div
 }
 
 export default SetupStage
