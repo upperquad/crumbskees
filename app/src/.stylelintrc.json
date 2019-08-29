@@ -1,0 +1,20 @@
+{
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "scss/dollar-variable-pattern": "^foo",
+    "scss/selector-no-redundant-nesting-selector": true,
+    "color-named": "never",
+    "selector-no-id": null,
+    "declaration-no-important": null,
+    "number-no-trailing-zeros": null,
+    "declaration-block-no-duplicate-properties": true,
+    "media-feature-name-no-vendor-prefix": true,
+    "max-nesting-depth": 6,
+    "indentation": 2,
+    "declaration-block-semicolon-space-after": "always",
+    "": true,
+    "": true,
+  }
+}
