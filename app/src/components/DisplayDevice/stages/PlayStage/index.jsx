@@ -33,7 +33,6 @@ const PlayStage = () => {
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
       <Scene />
-      <img src="" className={styles.itemToFind} alt="" />
       <Board />
     </section>
   )

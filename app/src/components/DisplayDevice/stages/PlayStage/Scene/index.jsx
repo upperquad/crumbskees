@@ -1,50 +1,54 @@
 import React from 'react'
+import classNames from 'classnames'
+import styles from './style.module.scss'
+import typography from '~styles/modules/typography.module.scss'
 
 const Scene = () => {
   console.log('ok')
   return (
-    <div class="scene" scene>
-      <img class="scene__frontBkg" />
-      <img class="scene__reveal" />
-      <div class="scene__wrapper">
-        <svg class="scene-svg" viewBox="0 0 1920 840" stroke="black">
+    <div className={styles.scene}>
+      <img className={styles.frontBkg} alt="" />
+      <img className={styles.reveal} alt="" />
+      <div className={styles.wrapper}>
+        <svg className={styles.svg} viewBox="0 0 1920 840" stroke="black">
           <defs>
-            <clipPath class="scene-svg__clippath">
+            <clipPath className={styles.svgClipPath}>
               <use xlinkHref="#player1" />
               <use xlinkHref="#player2" />
             </clipPath>
           </defs>
-          <path id="player1" class="cursor" stroke-width="6"></path>
-          <path id="player2" class="cursor" stroke-width="6"></path>
-          <g class="scene-svg__clippath-ref" width="1920px" height="840px">
-            <image class="scene-svg__image" width="1920px" height="840px" />
+          <path id="player1" className={styles.cursor} strokeWidth="6" />
+          <path id="player2" className={styles.cursor} strokeWidth="6" />
+          <g className={styles.svgClipPathRef} width="1920px" height="840px">
+            <image className={styles.svgImage} width="1920px" height="840px" />
           </g>
         </svg>
       </div>
-      <div class="intros">
-        <div class="intro">
-          <div class="intro__round t-200--bold color--red">
-          </div>
+      <div className={styles.intros}>
+        <div className={styles.intro}>
+          <div className={classNames(styles.introRound, typography.text200Bold, styles.red)} />
         </div>
-        <div class="intro">
-          <div class="intro__circle">
+        <div className={styles.intro}>
+          <div className={styles.introCircle} />
+          <div className={classNames(styles.introItemToFind, typography.text200Bold, styles.black)}>
+            <div className={classNames(styles.introItemToFindText, typography.text48old)}>
+              ITEM
+              <br />
+              TO FIND
+            </div>
           </div>
-          <div class="intro__itemToFind t-200--bold color--black text-center">
-            <div class="intro__itemToFind__text t-48--bold">ITEM <br /> TO FIND</div>
-          </div>
-          <video width="1920px" height="840px" autoplay loop muted>
-          </video>
+          <video width="1920px" height="840px" autoPlay loop muted />
         </div>
-        <div class="intro">
-          <div class="intro__ready-wrapper">
-            <div class="intro__ready t-200--bold color--red">
+        <div className={styles.intro}>
+          <div className={styles.introReadyWrapper}>
+            <div className={classNames(styles.introReady, typography.text200Bold, styles.red)}>
               READY
             </div>
-            <div class="intro__set t-200--bold color--red">
+            <div className={classNames(styles.introSet, typography.text200Bold, styles.red)}>
               SET
             </div>
           </div>
-          <div class="intro__go t-200--bold color--red">
+          <div className={classNames(styles.introGo, typography.text200Bold, styles.red)}>
             GO
           </div>
         </div>
