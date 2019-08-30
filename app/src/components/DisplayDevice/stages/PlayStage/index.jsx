@@ -5,6 +5,13 @@ import styles from './style.module.scss'
 import Scene from './Scene'
 import Board from './Board'
 
+// assets
+import scene1Pattern from '~assets/images/round_1/r1-pattern.gif'
+import scene1Front from '~assets/images/round_1/r1-front.gif'
+import scene1Item from '~assets/images/round_1/r1-item.png'
+import scene1IntroVideo from '~assets/images/round_1/r1-intro.mp4'
+import growItem from '~assets/images/grow.png'
+
 // Get character from PlayerManager
 // PlayerManager.player[token] ??
 
@@ -30,9 +37,34 @@ import Board from './Board'
 const PlayStage = () => {
   console.log('ok')
 
+  const currentSceneIndex = 0
+
+  const scenes = [
+    {
+      bkg: scene1Pattern,
+      frontBkg: scene1Front,
+      itemImage: scene1Item,
+      videoIntro: scene1IntroVideo,
+      numItems: 10,
+      gridCols: 32,
+      gridLines: 14,
+      message: 'DOPE.',
+      delayGif: 1000,
+      power: {
+        type: 'grow',
+        image: growItem,
+      },
+    },
+  ]
+
+  const sceneProps = {
+    index: currentSceneIndex,
+    ...scenes[currentSceneIndex],
+  }
+
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
-      <Scene />
+      <Scene {...sceneProps} />
       <Board />
     </section>
   )

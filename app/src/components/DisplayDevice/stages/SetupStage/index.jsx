@@ -27,12 +27,9 @@ const SetupStage = () => {
   const tokens = [getNewToken(), getNewToken()]
   const [qrCode, setQrCode] = useState([])
 
-  if (qrCode.length === 0) {
-    updateQr(setQrCode, tokens)
-  }
-
   useEffect(() => {
     window.addEventListener('MESSAGE', listenServer)
+    updateQr(setQrCode, tokens)
 
     return () => {
       window.removeEventListener('MESSAGE', listenServer)

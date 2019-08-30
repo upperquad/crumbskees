@@ -1,2 +1,4 @@
-/*.js
-/build
+*.js
+build
+app/src/utils
+src/utils

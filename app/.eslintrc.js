@@ -64,6 +64,7 @@ module.exports = {
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     "react/jsx-fragments": 0,
+    "react/jsx-props-no-spreading": 0,
     "no-console":  [
       "warn",
       { allow: ["warn", "error"] },
@@ -76,6 +77,7 @@ module.exports = {
           ["~assets", path.resolve(__dirname, 'src/assets/')],
           ["~components", path.resolve(__dirname, 'src/components/')],
           ["~managers", path.resolve(__dirname, 'src/managers/')],
+          ["~utils", path.resolve(__dirname, 'src/utils/')],
           ["~constants", path.resolve(__dirname, 'src/constants.jsx')],
           ["~styles", path.resolve(__dirname, 'src/styles/')],
         ],
