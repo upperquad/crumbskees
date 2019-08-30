@@ -17,8 +17,9 @@ class PlayersManager {
   players = new Proxy(this._players, {
     get: (obj, prop) => obj[prop],
     set: (obj, prop, value) => {
+      obj[prop] = value
       this.observers.forEach(observer => observer())
-      return Reflect.set(obj, prop, value)
+      return obj[prop]
     },
   })
 

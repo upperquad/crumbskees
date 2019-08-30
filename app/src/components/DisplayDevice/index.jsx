@@ -46,8 +46,6 @@ const DisplayDevice = () => {
     }
   }, [setStage])
 
-  console.log(PlayersManager.players)
-
   return (
     <>
       {stage === 'setup' && <SetupStage key="stage-setup" onFinish={() => setStage('tutorial')} />}

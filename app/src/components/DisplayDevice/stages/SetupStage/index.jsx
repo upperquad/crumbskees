@@ -25,31 +25,21 @@ const SetupStage = () => {
   // this.tutorialStarted = false
   // this.playersCharacter = [0, 1]
 
-  const [qrCode, setQrCode] = useState([])
+  const [qrCode, setQrCode] = useState([null, null])
 
-  // TODO: a token effect tied to user
-
-  // QR Code effect
-  // useEffect(() => {
-  //   const qrCode = []
-  //   tokens.forEach((token, index) => {
-  //     if (PlayersManager.players[index] === null) {
-  //       const tokenUrl = `${BASE_URL}${token}`
-  //       QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
-  //         .then(dataUrl => {
-  //           qrCode.push(dataUrl)
-  //           setTimeout(() => {
-  //             setQrCode(qrCode)
-  //           }, 0) // hack otherwise is was not working form some React reason?
-  //         })
-  //     } else {
-  //       // TD:
-  
-  //       // Add `is-connected`to the corresponding `block`
-  //       // Maybe use the qrCode state for that
-  //     }
-  //   })
-  // }, [tokens])
+  useEffect(() => {
+    Promise.all(PlayersManager.players.map((player, index) => {
+      const { token } = player
+      if (token) {
+        const tokenUrl = `${BASE_URL}${token}`
+        return QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
+      } else {
+        return Promise.resolve("")
+      }
+    })).then(values => {
+      setQrCode(values)
+    })
+  }, [PlayersManager.players[0], PlayersManager.players[1]])
 
   useEffect(() => {
     const messageHandler = event => {
@@ -100,7 +90,7 @@ const SetupStage = () => {
                   <div className={classNames(styles.qrUrl, typography.text18)}>
                     Think QR codes are stupid?
                     <br />
-                    Go to {BASE_URL}<span className={styles.qrUrlToken}>{tokens[index]}</span>
+                    Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
                   </div>
                 </div>
               )}
