@@ -106,7 +106,6 @@ class WebSocketManager {
 
   disconnect = () => {}
 
-  // TODO: make this into json/named ones
   send = (messageType, attributes = {}) => {
     if (!this._ws) {
       if (this._id) {
