@@ -3,7 +3,6 @@
     "stylelint-scss"
   ],
   "rules": {
-    "scss/dollar-variable-pattern": "^foo",
     "scss/selector-no-redundant-nesting-selector": true,
     "color-named": "never",
     "declaration-no-important": null,
@@ -12,6 +11,6 @@
     "media-feature-name-no-vendor-prefix": true,
     "max-nesting-depth": 6,
     "indentation": 2,
-    "declaration-block-semicolon-space-after": "always"
+    "declaration-block-semicolon-space-after": "always-single-line"
   }
 }
