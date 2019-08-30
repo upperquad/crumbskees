@@ -1,5 +1,111 @@
 @import "core/import";
 
+html, body {
+  overscroll-behavior-x: none;
+  box-sizing: border-box;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  transition: opacity .3s;
+}
+
+body:not(.is-ready) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+section.token {
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  padding-top: 56px;
+  text-align: center;
+
+  h2 {
+    @extend %Bold;
+    font-size: 19px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    letter-spacing: 0.011em;
+    line-height: 1.2;
+    padding: 0 20px;
+    text-transform: uppercase;
+  }
+
+  .display {
+    @extend %Bold;
+    font-size: 69px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+    padding: 0 20px;
+    position: relative;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: $color-black;
+    -webkit-text-stroke-width: 1px;
+    margin-top: 13px;
+    height: 70px;
+    text-transform: uppercase;
+  }
+
+  .label {
+    @extend %Regular;
+
+    height: 16px;
+    font-size: 16px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .token-input {
+    align-items: flex-start;
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: space-between;
+    margin: 20px auto 30px;
+    width: 234px;
+
+    .token-input-key {
+      @extend %Regular;
+
+      align-items: center;
+      background: $color-red;
+      border: 1px solid $color-black;
+      color: $color-white-full;
+      display: flex;
+      font-size: 27px;
+      justify-content: center;
+      height: 70px;
+      margin-bottom: 12px;
+      padding-top: 5px;
+      width: 70px;
+    }
+  }
+
+  .bottom {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAADuCAMAAACeckYSAAAALVBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACttl6nAAAADnRSTlMADvHfILZaRm2jkcsygJ+8GJgAAAXASURBVHja7N3LcpswGIBRSYibg/X+j9sJm84kpYWpZRE43zKLzBgbfun4QpCa1k85SE3KUxdKKf0Qg/Tm4tCXUsLYp1LKPAbpjS1zKSX1YwghTh+llO5pFOtN5WdXSvmY4tc/GMWq2/YFb5mNYtVvXEfvvIQ/tC4K02MJUpWWR1o3vWGruI7ijsyoirmsozf+60XakRnVMZdu33gdPmUmzUaxXtS6wUj9EHZFZlTHXHZFZlTHXI43khm9wlzGsCsyo9rmsh2ZUXVz2Y7MqIG5HBrFySjW3tF7wFzIjKqYS8V/bhRra/QeukiRGbUzFzKjduZCZlTbXOq/4MmMPovHRiKZUTtzITOqYy7Nyg8yc29zeeSwKzKjSubSvkhmztCtt6CZzNzNXLLTQoadN0m83bEVmVEDc2lf9vHVS47eI+ZCZtTAXM6nlOlpOfjjW57pyHsNZEY1zAVYirmQGeayFZlRQ3MhM2pnLmRG1zGX+jJjFJ+5/NtcLryyIDPnLN9htb7MZObM5jLv9AoyI+ZCZpgLmRFzITPM5aeOYjLT1lz8Dj2ZYS4nkZnRcvBtxbEv7kVEZpgLmWEuIjPM5VQyk8iMo0tmmItVSpAVNplhLmRGzMXcsJohM2Iu7MBxM4pl9DqgTlgfX9X3hrkYvWSGuVx2uvjJt63yZJ3yhhYy8xdzMR4IgyNio4cI5LA7FcmMr/WKzDAXMsNcRGaYC4fwWGU7aPPvyXGSicwwFzLDXFSjWOc2ie1vGWjhR2aYi3Y29lfQimU1l97Cz6bRtl7/8RQ6fURmmIs7f7vTvMgMc3llLisvLPrq6Q1kZmEusrVkLmTGiSEyw1zIjM2Rbiozeep+sXcHqg2DUBSGE2ZrRsPe/3EHg0E2yEg69RTy/U/Q2prj/aNe0cvMzJd/DCNFjf0Hqi2m+FGAXr4UR9jM3OdR0cu5YMfMcC5ImxnOBdko7mVmitcdOPyI4lwQPljsWC/SZoZzQbpNopaBCJsZzgVpM8O5IG1mOBekzQzngrCZ4VyQNjOcC9JmhnNB2MxwLkibGc4FaTPDuSBtZjgXhM0M54KomeFcEK1HVB6ItgzUOhDBc5xOWSL3Vs77NxDRuBJ/Oxc+EEPuc3HRKWItA8uBPTOiGI0551qYGbRk/Y5ed44j51ycRsdw5vpV176v/+g786HvDEbc58LMoItz0YIGMeeyTk1YmRl0cy7MDLpEr25wyDkXvRkQOeXRPSYrM4MGzoWZQZds1BwYr+5cmBnk/Agzg8A+l95RbDnIuWzRNRP9qaecCzODnHNhZtCSsuylXn49sDAznMsWZgY9zIfPBwWnlySci4mCwwRaBobNjCjWA/0w+qujhXNhZpBzLswMOA1mhnNRwMNPxsxwLswMejsXZgbNncvbUnxBeEB4xI/DtuKR1Ju+2IpEZT5+/RgmHTgXZoZzUXhhBMU6aBPFzIypLwg4F8fsofwjAwyzqQnOhZmx1FaeoaVzeYjeY1H8YGZManHxypxvOXmf8IyZMWsVdpSBATSBwbkwMxbRijjY52LPjOkqVLAzSpyLy/iVbMTCFaPX0Iyc5qLYJWRG2zWMru68PFYlVtycy8TMcC6f7d3RCoMwEERRCpZFiP7/5/alAfG11EnIuV+gtGRnLpgFM2MCyEBrZWDBbwi23gJZAPhNOBdmRt6AXK5xMRPeDM4JZzszI91CV9TvmZnpaAfnMv/sOpokAeldl2JmPDOcJpwLM8O5gJnhXJiZsWi+91vn69kmI0DG77yKc1mK+loOzgWrmxnOhZnhXJA2Mzo5wmbG6EV6FHMuSDcBG1CQ3SdU7rNB+qYpwQ/pOMi5IG1mOBeEzYzRi/Qo5lwwuZmpt5WB+M3McC5Imxn77ZDePOn6eqQv4+dcEDYznAvSZoZzwbBmpnbOBX8fxedenAviZuZeljkXPMD1z8a5IG5m+lgW/PAQ98LBuSBpZj6ULI5g0CFkKQAAAABJRU5ErkJggg==");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    border: 1px solid $color-black;
+    flex-grow: 0;
+    flex-shrink: 1;
+    height: 118px;
+
+    @media only screen and (max-height: 645px) {
+      display: none;
+    }
+  }
+}
 
 section.character-choice {
   align-items: center;
@@ -47,8 +153,8 @@ section.character-choice {
     width: 35vw;
 
     img {
-      height: 100%;
-      width: 100%;
+      height: 100%;    
+      width: 100%;    
     }
 
     video {

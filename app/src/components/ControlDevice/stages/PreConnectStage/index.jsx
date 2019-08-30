@@ -10,6 +10,7 @@ const PreConnectStage = props => {
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
+  console.log('PreConnectStage')
 
   useEffect(() => effectWebsocket(), [])
   useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [
@@ -98,6 +99,8 @@ function updateToken(key, token, setToken, setErrorReason, setIsConnecting) {
     if (newToken.length >= 3) {
       setIsConnecting(true)
       WebSocketManager.connect({ token: newToken })
+
+      // PlayerManager.setPlayer(token)
     }
 
     setToken(newToken)

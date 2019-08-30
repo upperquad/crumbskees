@@ -10,6 +10,7 @@ const PlayStage = () => {
     color: 'purple',
     image: character1,
   }
+
   const score = ''
 
   const marqueeText = 'What up tiny type that is distracting —'

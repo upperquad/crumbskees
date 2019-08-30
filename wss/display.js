@@ -50,7 +50,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   function onAuthResult(data) {
     const { id, result, playerIndex } = data
     const wsPhone = wssControl.clients.find(elem => elem.id === id)
-    if (!wsPhone || id === undefined || result === undefined || playerIndex === undefined ) {
+    if (!wsPhone || id === undefined || result === undefined || (result === '1' && playerIndex === undefined) ) {
       return
     }
     if (result === '1') {

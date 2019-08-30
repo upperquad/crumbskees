@@ -11,7 +11,7 @@ class WebSocketManager {
     return WebSocketManager.instance
   }
 
-  static _broadcast(eventType, detail = null) {
+  _broadcast = (eventType, detail = null) => {
     window.dispatchEvent(new CustomEvent(eventType, { detail }))
   }
 
@@ -22,6 +22,7 @@ class WebSocketManager {
   }
 
   connect = ({ id = null, token = null } = {}) => {
+    console.log('connect')
     if (this._ws) {
       return console.error('Connection already exists')
     }
@@ -100,17 +101,17 @@ class WebSocketManager {
     }
 
     this._broadcast('MESSAGE', { type, data: messageAttributes })
+    console.log('on message')
   }
 
   disconnect = () => {}
 
-  // TODO: make this into json/named ones
   send = (messageType, attributes = {}) => {
     if (!this._ws) {
       if (this._id) {
         this.connect({ id: this._id })
       } else {
-        return console.error('No conenction')
+        return console.error('No connection')
       }
     }
 
