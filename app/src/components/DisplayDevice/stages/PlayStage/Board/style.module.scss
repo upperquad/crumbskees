@@ -1,0 +1,113 @@
+@import "~styles/imports/index";
+
+.board {
+  border-bottom: $border;
+  border-top: $border;
+  display: flex;
+  height: grid(4);
+  position: relative;
+  z-index: 1;
+}
+
+.player {
+  align-items: flex-end;
+  display: flex;
+  width: grid(14);
+  position: relative;
+
+  &:last-child {
+    flex-direction: row-reverse;
+
+    .character {
+      background-color: $color-red;
+      border-right: none;
+      border-left: $border;
+      border-width: $border-width;
+      display: flex;
+    }
+
+    .score {
+      border-right: none;
+      border-left: $border;
+    }
+
+    .name {
+      text-align: right;
+    }
+
+    .items {
+      justify-content: flex-start;
+      left: 0;
+      right: auto;
+    }
+
+    .item {
+      margin-left: grid(0.3);
+      margin-right: 0;
+    }
+  }
+}
+
+.character {
+  background-color: $color-purple;
+  border-right: $border;
+  height: 100%;
+  width: grid(4);
+
+  img {
+    width: 100%;
+  }
+
+  &.is-dead {
+    filter: grayscale(100%);
+  }
+}
+
+.score {
+  -webkit-text-stroke-color: $color-black;
+  -webkit-text-stroke-width: 2px;
+  border-right: $border;
+  border-top: $border;
+  color: transparent !important;
+  display: inline-block;
+  height: grid(3);
+  line-height: grid(3);
+  text-align: center;
+  vertical-align: middle;
+  width: grid(3);
+}
+
+.name {
+  border-top: $border;
+  height: grid(3);
+  vertical-align: top;
+  width: grid(7);
+  padding: grid(1);
+  display: flex;
+  align-items: center;
+}
+
+.items {
+  align-items: center;
+  display: flex;
+  height: grid(1);
+  justify-content: flex-end;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: grid(10);
+}
+
+.item {
+  height: grid(0.5);
+  margin-right: grid(0.3);
+  width: grid(0.5);
+}
+
+.center {
+  width: grid(4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 2vw;
+}

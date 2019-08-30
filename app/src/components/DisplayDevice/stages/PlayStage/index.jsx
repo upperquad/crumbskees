@@ -1,5 +1,9 @@
 import React from 'react'
-// import styles from './style.module.scss'
+import classNames from 'classnames'
+import styles from './style.module.scss'
+
+import Scene from './Scene'
+import Board from './Board'
 
 // Get character from PlayerManager
 // PlayerManager.player[token] ??
@@ -23,6 +27,16 @@ import React from 'react'
 //   Do in transitions... etc...
 // }
 
-const PlayStage = () => <></>
+const PlayStage = () => {
+  console.log('ok')
+
+  return (
+    <section className={classNames(styles.game, styles.isIntro)}>
+      <Scene />
+      <img src="" className={styles.itemToFind} alt="" />
+      <Board />
+    </section>
+  )
+}
 
 export default PlayStage

@@ -27,3 +27,6 @@ $base-width: 1920;
 /* Timings */
 
 $grid-unit: 3.125vw;
+
+$border-width: 2px;
+$border: $border-width solid $color-black;

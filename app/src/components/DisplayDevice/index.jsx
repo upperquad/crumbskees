@@ -11,7 +11,7 @@ import WebSocketManager from '~managers/WebSocketManager'
 
 const DisplayDevice = () => {
   // if (props === null) {
-  const [stage, setStage] = useState('setup')
+  const [stage, setStage] = useState('play')
   // }
   useEffect(() => {
     WebSocketManager.init('display')

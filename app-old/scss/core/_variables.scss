@@ -26,7 +26,8 @@ $color-beige: #fffaf2;
 $color-yellow: #ffe947;
 $color-mint: #6ce9a7;
 
-$border: 2px solid $color-black;
+$border-width: 2px;
+$border: $border-width solid $color-black;
 
 
 /* ------------------------------------------------------------------ */
