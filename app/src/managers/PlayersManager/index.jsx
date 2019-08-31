@@ -1,12 +1,17 @@
+import Player from '~components/Player'
+
 class PlayersManager {
   constructor() {
-    this.players = [null, null]
+    this.players = []
+
+    this.setPlayer(123, 0)
   }
 
   setPlayer(token, index) {
     // call this when token has been validate
     // chekc if a player exist already
-    this.players.push(new Player({ id: token }))
+    this.players.push(new Player({ id: token, index }))
+    console.log(token)
   }
 }
 

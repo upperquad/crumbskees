@@ -1,10 +1,11 @@
 import { Howl } from 'howler'
-import { getNow } from '../utils/time'
-import { random } from '../utils/math'
+import { getNow } from '~utils/time'
+import { random } from '~utils/math'
 // import duckSound from '../../../assets/game/sounds/duck.mp3'
-import scoreSound from '../../../assets/game/sounds/score.mp3'
-import freezeSound from '../../../assets/game/sounds/freeze.mp3'
-import growSound from '../../../assets/game/sounds/grow.mp3'
+import scoreSound from '~assets/sounds/score.mp3'
+import freezeSound from '~assets/sounds/freeze.mp3'
+import growSound from '~assets/sounds/grow.mp3'
+import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
 
 export default class Player {
   constructor(props) {
@@ -22,9 +23,9 @@ export default class Player {
     this.color = color
     this.character = character
     this.numPoints = 8
-    this.centerX = window.GameManager.vbWidth / 2 // equal to svg viewbox / 2
-    this.centerY = window.GameManager.vbHeight / 2 // equal to svg viewbox / 2
-    this.minRadius = window.GameManager.gridUnit * 1.1 // 3.125 == 1 unit grid (1920 / 32)
+    this.centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
+    this.centerY = VB_HEIGHT / 2 // equal to svg viewbox / 2
+    this.minRadius = GRID_UNIT * 1.1 // 3.125 == 1 unit grid (1920 / 32)
     this.maxRadius = this.minRadius + this.minRadius * 0.45
     this.minMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.45
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
@@ -36,10 +37,10 @@ export default class Player {
     this.targetX = 0
     this.targetY = 0
     this.isInsideTime = 0
-    this.increaseMax = window.GameManager.vbWidth * 0.05
+    this.increaseMax = VB_WIDTH * 0.05
     // values for mouse event
-    this.clickPrecisionW = window.GameManager.gridUnitVw * 1.5 / 100 // 1.5 grid unit
-    this.clickPrecisionH = window.GameManager.gridUnitVh * 1.5 / 100 // 1.5 grid unit
+    this.clickPrecisionW = (GRID_UNIT_VW * 1.5) / 100 // 1.5 grid unit
+    this.clickPrecisionH = (GRID_UNIT_VH * 1.5) / 100 // 1.5 grid unit
     this.grown = false
     this.frozen = false
 
@@ -118,28 +119,28 @@ export default class Player {
   }
 
   isCloseToItem = () => {
-    const scene = window.GameManager.currentScene
+    // const scene = window.GameManager.currentScene
 
-    if (scene) {
-      const x = (this.targetX / window.GameManager.vbWidth) + 0.5
-      const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+    // if (scene) {
+    //   const x = (this.targetX / VB_WIDTH) + 0.5
+    //   const y = (this.targetY / VB_HEIGHT) + 0.5
 
-      for (let i = 0; i < scene.items.length; i++) {
-        const item = scene.items[i]
-        const distance = Math.hypot(x - item.x, y - item.y)
+    //   for (let i = 0; i < scene.items.length; i++) {
+    //     const item = scene.items[i]
+    //     const distance = Math.hypot(x - item.x, y - item.y)
 
-        if (!item.found && distance <= 0.08) {
-          window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
-        }
-      }
-    }
+    //     if (!item.found && distance <= 0.08) {
+    //       window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
+    //     }
+    //   }
+    // }
   }
 
   click = () => {
     const scene = window.GameManager.currentScene
     if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
-    const x = (this.targetX / window.GameManager.vbWidth) + 0.5
-    const y = (this.targetY / window.GameManager.vbHeight) + 0.5
+    const x = (this.targetX / VB_WIDTH) + 0.5
+    const y = (this.targetY / VB_HEIGHT) + 0.5
     const power = scene.props.power
 
     if (power) {
@@ -226,8 +227,8 @@ export default class Player {
     }
 
     setTimeout(() => {
-      this.clickPrecisionW = window.GameManager.gridUnitVw * clickPrecision / 100 // 2.5 grid unit
-      this.clickPrecisionH = window.GameManager.gridUnitVh * clickPrecision / 100 // 2.5 grid unit
+      this.clickPrecisionW = (GRID_UNIT_VW * clickPrecision) / 100 // 2.5 grid unit
+      this.clickPrecisionH = (GRID_UNIT_VH * clickPrecision) / 100 // 2.5 grid unit
       for (let i = 0; i < this.points.length; i++) {
         this.points[i].duration -= 250
       }
