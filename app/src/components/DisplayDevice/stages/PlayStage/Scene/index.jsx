@@ -30,7 +30,7 @@ const Scene = props => {
     const offsetLeft = getOffsetLeft(sceneRef.current)
     const sceneWidth = sceneRef.current.offsetWidth
     const sceneHeight = sceneRef.current.offsetHeight
-    console.log('call')
+    console.log('useEffect for events')
 
     const effectRAF = e => handleRAF(e, playersRef)
     const effectMouseMove = e => handleMouseMove(e, offsetTop, offsetLeft, sceneWidth, sceneHeight)
@@ -65,14 +65,12 @@ const Scene = props => {
             id="player1"
             className={classNames(styles.cursor, styles.cursor1)}
             strokeWidth="6"
-            fill="#FFFFFF"
           />
           <path
             ref={playersRef[1]}
             id="player2"
             className={classNames(styles.cursor, styles.cursor2)}
             strokeWidth="6"
-            fill="#FFFFFF"
           />
           <g
             className={styles.svgClipPathRef}
