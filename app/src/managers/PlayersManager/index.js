@@ -1,11 +1,16 @@
 import Player from './Player'
 import WebSocketManager from '~managers/WebSocketManager'
 
+
 class PlayersManager {
   constructor() {
     if (!PlayersManager.instance) {
       PlayersManager.instance = this
     }
+
+    // just for test PlayStage
+    this.players[0] = new Player({ id: 123 })
+    this.players[1] = new Player({ id: 345 })
 
     return PlayersManager.instance
   }
@@ -37,7 +42,7 @@ class PlayersManager {
       return token === submittedToken
     })
     if (matchIndex !== -1) {
-      this.players[matchIndex] = new Player(userId)
+      this.players[matchIndex] = new Player({ id: userId })
       WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
     } else {
       WebSocketManager.send('auth_result', { id: userId, result: 0 })
