@@ -7,6 +7,7 @@ import typography from '~styles/modules/typography.module.scss'
 import MarqueeText from '~components/MarqueeText'
 import DisplayFooter from '~components/DisplayFooter'
 import PlayersManager from '~managers/PlayersManager'
+import WebSocketManager from '~managers/WebSocketManager'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 
@@ -24,15 +25,54 @@ const SetupStage = () => {
   // this.tutorialStarted = false
   // this.playersCharacter = [0, 1]
 
-  const tokens = [getNewToken(), getNewToken()]
-  const [qrCode, setQrCode] = useState([])
+  const [qrCode, setQrCode] = useState([null, null])
 
   useEffect(() => {
-    window.addEventListener('MESSAGE', listenServer)
-    updateQr(setQrCode, tokens)
+    Promise.all(PlayersManager.players.map((player, index) => {
+      const { token } = player
+      if (token) {
+        const tokenUrl = `${BASE_URL}${token}`
+        return QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
+      } else {
+        return Promise.resolve("")
+      }
+    })).then(values => {
+      setQrCode(values)
+    })
+  }, [PlayersManager.players[0], PlayersManager.players[1]])
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { type, data } } = event
+      
+      switch (type) {
+        case 'token_submit': {
+          const { token, id } = data
+          PlayersManager.newConnect(token, id)
+          break
+        }
+        case 'character_pick':
+          // handleCharacters(data[1], data[3])
+          break
+        case 'reconnect_phone':
+          // checkReconnectPhone(data[1])
+          break
+        case 'phone_left':
+          // if (this.gameStarted) {
+          //   // Mark player lost, or end game if both are lost
+          //   markPlayerDisconnected(data[1])
+          // } else {
+          //   removePhone(data[1])
+          // }
+          break
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', listenServer)
+      window.removeEventListener('MESSAGE', messageHandler)
     }
   }, [])
 
@@ -50,9 +90,7 @@ const SetupStage = () => {
                   <div className={classNames(styles.qrUrl, typography.text18)}>
                     Think QR codes are stupid?
                     <br />
-                    Go to
-                    {BASE_URL}
-                    <span className={styles.qrUrlToken}>{tokens[index]}</span>
+                    Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
                   </div>
                 </div>
               )}
@@ -78,64 +116,7 @@ const SetupStage = () => {
   )
 }
 
-function getNewToken() {
-  return Math.random().toString(10).substr(2, 3)
-}
 
-function updateQr(setQrCode, tokens) {
-  const qrCode = []
-  tokens.forEach((token, index) => {
-    if (PlayersManager.players[index] === null) {
-      const tokenUrl = `${BASE_URL}${token}`
-      QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
-        .then(dataUrl => {
-          qrCode.push(dataUrl)
-          setTimeout(() => {
-            setQrCode(qrCode)
-          }, 0) // hack otherwise is was not working form some React reason?
-        })
-    } else {
-      // TD:
-
-      // Add `is-connected`to the corresponding `block`
-      // Maybe use the qrCode state for that
-    }
-  })
-}
-
-function listenServer(e) {
-  console.log('listen ', e)
-  const data = e
-
-  // TD:
-
-  // For each message, call the corresponding functions
-
-  switch (data) {
-    case 'token_submit':
-      // verifyToken(data[1], data[2])
-      // if (PlayersManager.players[0] !== null && PlayersManager.players[1] !== null) {
-      //   this.kickOffGame()
-      // }
-      break
-    case 'character_pick':
-      // handleCharacters(data[1], data[3])
-      break
-    case 'reconnect_phone':
-      // checkReconnectPhone(data[1])
-      break
-    case 'phone_left':
-      // if (this.gameStarted) {
-      //   // Mark player lost, or end game if both are lost
-      //   markPlayerDisconnected(data[1])
-      // } else {
-      //   removePhone(data[1])
-      // }
-      break
-    default:
-      break
-  }
-}
 
 // TD:
 
