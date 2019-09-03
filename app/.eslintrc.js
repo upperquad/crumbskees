@@ -78,7 +78,7 @@ module.exports = {
           ["~components", path.resolve(__dirname, 'src/components/')],
           ["~managers", path.resolve(__dirname, 'src/managers/')],
           ["~utils", path.resolve(__dirname, 'src/utils/')],
-          ["~constants", path.resolve(__dirname, 'src/constants.jsx')],
+          ["~constants", path.resolve(__dirname, 'src/constants.js')],
           ["~styles", path.resolve(__dirname, 'src/styles/')],
         ],
         "extensions": [".js", ".jsx"]

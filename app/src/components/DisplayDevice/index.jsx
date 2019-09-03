@@ -12,7 +12,7 @@ import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 
 const DisplayDevice = () => {
-  const [stage, setStage] = useState('setup')
+  const [stage, setStage] = useState('play')
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {

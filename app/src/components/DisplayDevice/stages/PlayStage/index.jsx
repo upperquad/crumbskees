@@ -35,8 +35,6 @@ import growItem from '~assets/images/grow.png'
 // }
 
 const PlayStage = () => {
-  console.log('ok')
-
   const currentSceneIndex = 0
 
   const scenes = [
