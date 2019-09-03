@@ -10,39 +10,52 @@ import { getNow } from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 
+import SceneContext from './context'
+
 const Scene = props => {
   const { bkg, frontBkg } = props
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
+  const [sceneUnits, setSceneUnits] = useState()
 
-  const playersRef = [useRef(null), useRef(null)]
   const sceneRef = useRef(null)
 
-  useEffect(() => {
+  // console.log(SceneContext)
+  SceneContext.currentValue.items = items
+
+  useEffect(() => effectItems(setItems, props), [props]) // updated on props change
+
+  useEffect(() => { // never updated
+    // Set clip path id
     const id = uuid()
     setClipPathId(id)
+
+    // events
+
+    // Call effectUnits the first time
+    effectUnits(setSceneUnits, sceneRef)
+    const effectResize = () => effectUnits(setSceneUnits, sceneRef)
+
+    window.addEventListener('resize', effectResize)
+    window.addEventListener('click', handleClick)
+    window.addEventListener('RAF', handleRAF)
+
+    return () => {
+      window.removeEventListener('resize', effectResize)
+      window.removeEventListener('click', handleClick)
+      window.removeEventListener('RAF', handleRAF)
+    }
   }, [])
 
-  useEffect(() => effectItems(setItems, props), [props])
+  useEffect(() => { // updated on sceneUnits change
+    const effectMouseMove = e => handleMouseMove(e, sceneUnits)
 
-  useEffect(() => {
-    const offsetTop = getOffsetTop(sceneRef.current)
-    const offsetLeft = getOffsetLeft(sceneRef.current)
-    const sceneWidth = sceneRef.current.offsetWidth
-    const sceneHeight = sceneRef.current.offsetHeight
-    console.log('useEffect for events')
-
-    const effectRAF = e => handleRAF(e, playersRef)
-    const effectMouseMove = e => handleMouseMove(e, offsetTop, offsetLeft, sceneWidth, sceneHeight)
-    // events
     window.addEventListener('mousemove', effectMouseMove)
-    window.addEventListener('RAF', effectRAF)
 
     return () => {
       window.removeEventListener('mousemove', effectMouseMove)
-      window.removeEventListener('RAF', effectRAF)
     }
-  }, [playersRef])
+  }, [sceneUnits])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
@@ -60,14 +73,19 @@ const Scene = props => {
               <use xlinkHref="#player2" />
             </clipPath>
           </defs>
+          {/* onPlayerClick={onClick()} */}
           <path
-            ref={playersRef[0]}
+            ref={ref => {
+              PlayersManager.players[0].el = ref
+            }}
             id="player1"
             className={classNames(styles.cursor, styles.cursor1)}
             strokeWidth="6"
           />
           <path
-            ref={playersRef[1]}
+            ref={ref => {
+              PlayersManager.players[1].el = ref
+            }}
             id="player2"
             className={classNames(styles.cursor, styles.cursor2)}
             strokeWidth="6"
@@ -85,18 +103,23 @@ const Scene = props => {
               width={`${VB_WIDTH}px`}
               height={`${VB_HEIGHT}px`}
             />
-            {items.map(item => (
-              <image
-                className={styles.svgImage}
-                xlinkHref={item.image}
-                preserveAspectRatio="xMidYMid slice"
-                width={item.size}
-                height={item.size}
-                x={`${item.x * 100}%`}
-                y={`${item.y * 100}%`}
-                style={{ transform: `translate(-${item.size / 2}, -${item.size / 2})` }}
-              />
-            ))}
+            {items.map(item => {
+              if (!item.found) {
+                return (
+                  <image
+                    className={styles.svgImage}
+                    xlinkHref={item.image}
+                    preserveAspectRatio="xMidYMid slice"
+                    width={item.size}
+                    height={item.size}
+                    x={`${item.x * 100}%`}
+                    y={`${item.y * 100}%`}
+                    style={{ transform: `translate(-${item.size / 2}, -${item.size / 2})` }}
+                  />
+                )
+              }
+              return false
+            })}
           </g>
         </svg>
       </div>
@@ -192,24 +215,31 @@ function createItem(props, grid, image, type = 'target') {
   return obj
 }
 
-function handleMouseMove(e, offsetTop, offsetLeft, width, height) {
-  // console.log('hello')
+function handleMouseMove(e, sceneUnits) {
+  if (!sceneUnits) return
   // if (window.GameManager.players[window.GameManager.playerIds[0]].frozen) return
   const scrollY = window.scrollY || document.documentElement.scrollTop
   const player = PlayersManager.players[0]
 
   player.eventX = e.touches ? e.touches[0].clientX : e.clientX
-  player.eventX -= offsetLeft
+  player.eventX -= sceneUnits.offsetLeft
   player.eventY = e.touches ? e.touches[0].clientY : e.clientY
   player.eventY += scrollY
 
-  player.targetX = (player.eventX / width) * VB_WIDTH // because we're using viewbox units here
+  player.targetX = (player.eventX / sceneUnits.width) * VB_WIDTH // because we're using viewbox units here
   player.targetX -= VB_WIDTH / 2 // because starting point is player.centerX
-  player.targetY = (player.eventY / height) * VB_HEIGHT - offsetTop
+  player.targetY = (player.eventY / sceneUnits.height) * VB_HEIGHT - sceneUnits.offsetTop
   player.targetY -= VB_HEIGHT / 2
 }
 
-function handleRAF(e, playersRef) {
+function handleClick() {
+  // const player = PlayersManager.players[0]
+  // // player.
+
+  // setItems()
+}
+
+function handleRAF(e) {
   // console.log('raf')
   const { now } = e.detail
   // console.log(playersRef)
@@ -269,7 +299,7 @@ function handleRAF(e, playersRef) {
       }
     }
 
-    playersRef[y].current.setAttribute('d', cardinal(player.points))
+    player.el.setAttribute('d', cardinal(player.points))
   }
 }
 
@@ -307,6 +337,15 @@ function cardinal(points, tension = 1.2) {
   }
 
   return `${path}z` // close path with z
+}
+
+function effectUnits(setSceneUnits, sceneRef) {
+  const offsetTop = getOffsetTop(sceneRef.current)
+  const offsetLeft = getOffsetLeft(sceneRef.current)
+  const width = sceneRef.current.offsetWidth
+  const height = sceneRef.current.offsetHeight
+
+  setSceneUnits({ offsetTop, offsetLeft, width, height })
 }
 
 export default Scene

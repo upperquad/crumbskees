@@ -12,6 +12,8 @@ import scene1Item from '~assets/images/round_1/r1-item.png'
 import scene1IntroVideo from '~assets/images/round_1/r1-intro.mp4'
 import growItem from '~assets/images/grow.png'
 
+import SceneContext from './Scene/context'
+
 // Get character from PlayerManager
 // PlayerManager.player[token] ??
 
@@ -59,6 +61,8 @@ const PlayStage = () => {
     index: currentSceneIndex,
     ...scenes[currentSceneIndex],
   }
+
+  SceneContext.currentValue = sceneProps
 
   return (
     <section className={classNames(styles.game, styles.isIntro)}>

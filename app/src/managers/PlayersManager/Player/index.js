@@ -7,6 +7,9 @@ import freezeSound from '~assets/sounds/freeze.mp3'
 import growSound from '~assets/sounds/grow.mp3'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
 
+import SceneContext from '~components/DisplayDevice/stages/PlayStage/Scene/context'
+import Scene from '~components/DisplayDevice/stages/PlayStage/Scene'
+
 export default class Player {
   constructor(props) {
     const {
@@ -146,11 +149,13 @@ export default class Player {
   }
 
   click = () => {
-    const scene = window.GameManager.currentScene
-    if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
+    console.log('click', Scene)
+
+    const scene = SceneContext.currentValue
+    // if (scene.targetsDestroyed) return false // if targets are destroy, don't listen to click event
     const x = (this.targetX / VB_WIDTH) + 0.5
     const y = (this.targetY / VB_HEIGHT) + 0.5
-    const power = scene.props.power
+    const { power } = scene
 
     if (power) {
       const distance = Math.hypot(x - power.x, y - power.y)
@@ -189,9 +194,8 @@ export default class Player {
 
       if (!item.found && distance <= minDistance) {
         item.found = true
-        item.el.style.opacity = 0
-        if (item.debugEl) item.debugEl.style.opacity = 0
-
+        // if (item.debugEl) item.debugEl.style.opacity = 0
+        Scene.setItems()
         nbItemGet += 1
         // kill player intervalTap
         clearInterval(this.isCloseToItemInterval)
@@ -201,13 +205,14 @@ export default class Player {
     }
 
     if (nbItemGet > 0) {
-      window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
+      console.log('score')
+      // window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
       scene.numItemFound += nbItemGet
     }
 
     if (scene.numItemFound === scene.items.length && !scene.isEnded) {
       scene.isEnded = true
-      window.GameManager.endScene(scene.props.message)
+      // window.GameManager.endScene(scene.props.message)
     }
   }
 
