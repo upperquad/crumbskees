@@ -40,18 +40,6 @@
 .qrWrapper {
   height: 293/$base-width*100vw;
   position: relative;
-
-  &.is-connected {
-    .playerConnected {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .qr {
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
 }
 
 .playerConnected {
@@ -59,7 +47,6 @@
 
   color: $color-green;
   font-size: responsive-font(48);
-  opacity: 0;
   pointer-events: none;
   position: relative;
   text-transform: uppercase;
@@ -131,42 +118,6 @@
 
 .instruction {
   overflow: hidden;
-  padding: 100/$base-width*100vw 593/$base-width*100vw 40/$base-width*100vw;
+  padding-top: 200/$base-width*100vw;
   position: relative;
-
-  &.is-started {
-    .instruction__letsplay {
-      opacity: 1;
-    }
-  }
-}
-
-// TODO: actually remove this
-.instructionText {
-  font-size: responsive-font(36);
-  line-height: responsive-font(53);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.letsPlay {
-  @extend %Bold;
-
-  bottom: 0;
-  font-size: responsive-font(120);
-  left: 0;
-  line-height: .8em;
-  -webkit-text-fill-color: $color-white;
-  -webkit-text-stroke-color: $color-black;
-  -webkit-text-stroke-width: 2px;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  text-align: center;
-  transition: opacity .2s;
-  width: 100%;
-
-  span {
-    display: inline-block;
-  }
 }

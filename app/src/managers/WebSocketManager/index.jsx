@@ -12,6 +12,7 @@ class WebSocketManager {
   }
 
   _broadcast = (eventType, detail = null) => {
+    // TODO: rewrite this into pub/sub
     window.dispatchEvent(new CustomEvent(eventType, { detail }))
   }
 
