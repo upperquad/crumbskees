@@ -28,18 +28,26 @@ const SetupStage = () => {
   const [qrCode, setQrCode] = useState([null, null])
 
   useEffect(() => {
+    let didCancel = false
+
     Promise.all(PlayersManager.players.map((player, index) => {
       const { token } = player
       if (token) {
         const tokenUrl = `${BASE_URL}${token}`
         return QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
       } else {
-        return Promise.resolve("")
+        return Promise.resolve('')
       }
     })).then(values => {
-      setQrCode(values)
+      if (!didCancel) {
+        setQrCode(values)
+      }
     })
-  }, [PlayersManager.players[0], PlayersManager.players[1]])
+
+    return () => {
+      didCancel = true
+    }
+  }, [...PlayersManager.players])
 
   useEffect(() => {
     const messageHandler = event => {
