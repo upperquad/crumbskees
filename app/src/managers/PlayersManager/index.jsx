@@ -1,4 +1,4 @@
-import Player from '~components/Player'
+import Player from './Player'
 
 class PlayersManager {
   constructor() {
