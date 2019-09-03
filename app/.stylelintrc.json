@@ -1,7 +1,6 @@
 {
   "plugins": ["stylelint-order", "stylelint-scss"],
   "rules": {
-    "scss/dollar-variable-pattern": "^foo",
     "scss/selector-no-redundant-nesting-selector": true,
     "color-named": "never",
     "declaration-no-important": null,
@@ -17,6 +16,7 @@
       "custom-properties",
       "declarations"
     ],
-    "order/properties-alphabetical-order": true
+    "order/properties-alphabetical-order": true,
+    "declaration-block-semicolon-space-after": "always-single-line"
   }
 }
