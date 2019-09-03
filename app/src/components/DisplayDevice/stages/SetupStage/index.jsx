@@ -14,9 +14,9 @@ import homeBgVideo from '~assets/images/home-bg.mp4'
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
-const SetupStage = () => {
+const SetupStage = props => {
+  const { onFinish, bothConnected } = props
   const [qrCode, setQrCode] = useState([null, null])
-  const [bothConnected, setBothConnected] = useState(false)
 
   useEffect(() => {
     let didCancel = false
@@ -41,33 +41,11 @@ const SetupStage = () => {
   }, [...PlayersManager.players])
 
   useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { type, data } } = event
-      
-      switch (type) {
-        case 'token_submit': {
-          const { token, id } = data
-          PlayersManager.newConnect(token, id)
-          if (PlayersManager.players.every(item => item.id)) {
-            setBothConnected(true)
-            // TODO: kick start next page, add rollback handling
-          }
-          break
-        }
-        case 'phone_left':
-          const { id } = data
-          PlayersManager.closeConnection(id)
-          break
-        default:
-          break
-      }
+    if (bothConnected) {
+      const nextStageTimeout = setTimeout(onFinish, 2000)
+      return () => clearTimeout(nextStageTimeout)
     }
-    window.addEventListener('MESSAGE', messageHandler)
-
-    return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
-    }
-  }, [])
+  }, [bothConnected])
 
   return (
     <div className={styles.setup}>

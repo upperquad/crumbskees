@@ -13,6 +13,7 @@ import PlayersManager from '~managers/PlayersManager'
 
 const DisplayDevice = () => {
   const [stage, setStage] = useState('setup')
+  const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -46,9 +47,37 @@ const DisplayDevice = () => {
     }
   }, [setStage])
 
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+
+      switch (type) {
+        case 'token_submit': {
+          const { id, token } = data
+          PlayersManager.newConnect(token, id)
+          setBothConnected(PlayersManager.players.every(item => item.id))
+          break
+        }
+        case 'phone_left': {
+          const { id } = data
+          PlayersManager.closeConnection(id)
+          setBothConnected(PlayersManager.players.every(item => item.id))
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
+
   return (
     <>
-      {stage === 'setup' && <SetupStage key="stage-setup" onFinish={() => setStage('tutorial')} />}
+      {stage === 'setup' && <SetupStage key="stage-setup" onFinish={() => setStage('tutorial')} bothConnected={bothConnected} />}
       {stage === 'tutorial' && (
         <TutorialStage key="stage-tutorial" onFinish={() => setStage('play')} />
       )}
