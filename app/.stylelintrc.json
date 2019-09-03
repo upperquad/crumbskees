@@ -1,7 +1,5 @@
 {
-  "plugins": [
-    "stylelint-scss"
-  ],
+  "plugins": ["stylelint-order", "stylelint-scss"],
   "rules": {
     "scss/dollar-variable-pattern": "^foo",
     "scss/selector-no-redundant-nesting-selector": true,
@@ -12,6 +10,13 @@
     "media-feature-name-no-vendor-prefix": true,
     "max-nesting-depth": 6,
     "indentation": 2,
-    "declaration-block-semicolon-space-after": "always"
+    "number-leading-zero": "never",
+    "color-hex-length": "short",
+    "selector-list-comma-newline-after": "always",
+    "order/order": [
+      "custom-properties",
+      "declarations"
+    ],
+    "order/properties-alphabetical-order": true
   }
 }
