@@ -37,10 +37,6 @@
   }
 }
 
-.qr {
-  margin: 0 50px;
-}
-
 .qrWrapper {
   height: 293/$base-width*100vw;
   position: relative;
@@ -127,6 +123,7 @@
   line-height: 1.4;
 
   span {
+    color: $color-red;
     font-weight: bold;
     text-transform: none;
   }

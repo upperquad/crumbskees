@@ -63,6 +63,11 @@ module.exports = {
     "react/no-unescaped-entities": 0,
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "react/jsx-fragments": 0,
+    "no-console":  [
+      "warn",
+      { allow: ["warn", "error"] },
+    ],
   },
   "settings": {
     "import/resolver": {

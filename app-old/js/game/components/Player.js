@@ -1,8 +1,10 @@
-import { Howl, Howler } from 'howler'
+import { Howl } from 'howler'
 import { getNow } from '../utils/time'
 import { random } from '../utils/math'
-import duckSound from '../../../assets/game/sounds/duck.mp3'
-
+// import duckSound from '../../../assets/game/sounds/duck.mp3'
+import scoreSound from '../../../assets/game/sounds/score.mp3'
+import freezeSound from '../../../assets/game/sounds/freeze.mp3'
+import growSound from '../../../assets/game/sounds/grow.mp3'
 
 export default class Player {
   constructor(props) {
@@ -45,10 +47,15 @@ export default class Player {
 
     this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
 
-    Howler.volume(0.5)
-
-    this.soundDuck = new Howl({
-      src: [duckSound],
+    // Sounds
+    this.scoreSound = new Howl({
+      src: [scoreSound],
+    })
+    this.freezeSound = new Howl({
+      src: [freezeSound],
+    })
+    this.growSound = new Howl({
+      src: [growSound],
     })
   }
 
@@ -143,6 +150,10 @@ export default class Player {
           // affect other player
           const index = this.index === 0 ? 1 : 0
           playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
+
+          this.freezeSound.play()
+        } else {
+          this.growSound.play()
         }
         playerAffected.setPower(power.type)
 
@@ -175,7 +186,7 @@ export default class Player {
         // kill player intervalTap
         clearInterval(this.isCloseToItemInterval)
 
-        this.soundDuck.play()
+        this.scoreSound.play()
       }
     }
 
