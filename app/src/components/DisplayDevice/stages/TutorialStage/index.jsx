@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import classNames from 'classnames'
 import styles from './style.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
@@ -9,10 +10,11 @@ import step1Img from '~assets/images/tutorial/tutorial-1.png'
 import step2Img from '~assets/images/tutorial/tutorial-2.png'
 import step3Img from '~assets/images/tutorial/tutorial-3.png'
 
-const TutorialStage = () => {
+const TutorialStage = props => {
+  const { extraClassName } = props
   const [step] = useState(1)
   return (
-    <div className={styles.tutorial}>
+    <div className={classNames(styles.tutorial, extraClassName)}>
       <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
       <MarqueeText extraClassName={styles.welcome} text="Welcome to The Upperquadrant -" duration="12s" />
       <div className={styles.tutorialCard} id="tutorial-content">

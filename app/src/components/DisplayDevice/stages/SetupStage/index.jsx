@@ -16,7 +16,7 @@ import homeBgVideo from '~assets/images/home-bg.mp4'
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 const SetupStage = props => {
-  const { onFinish, bothConnected } = props
+  const { extraClassName, onFinish, bothConnected } = props
   const [qrCode, setQrCode] = useState([null, null])
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const SetupStage = props => {
   }, [bothConnected])
 
   return (
-    <div className={styles.setup}>
+    <div className={classNames(styles.setup, extraClassName)}>
       <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
       <div className={styles.players}>
