@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 import classNames from 'classnames'
+import { TransitionGroup, Transition } from 'react-transition-group'
 import styles from './style.module.scss'
 import typography from '~styles/modules/typography.module.scss'
 
@@ -55,21 +56,41 @@ const SetupStage = props => {
         {PlayersManager.players.map((player, index) => (
           <div key={`player-${index}`} className={styles.player}>
             <div className={styles.qrWrapper}>
-              {player.token && qrCode[index] && (
-                <div className={styles.qr} key={player.token}>
-                  <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
-                  <div className={classNames(styles.qrUrl, typography.text18)}>
-                    Think QR codes are stupid?
-                    <br />
-                    Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
-                  </div>
-                </div>
-              )}
-              {player.id && (
-                <div className={styles.playerConnected} key={player.id}>
-                  <span className={styles.playerConnectedText}>Connected!</span>
-                </div>
-              )}
+              <TransitionGroup>
+                {player.token && qrCode[index] && (
+                  <Transition
+                    key={player.token}
+                    timeout={{ enter: 100, exit: 300 }}
+                  >
+                    {status => (
+                      <div className={classNames(styles.qr, {
+                        [styles.qrTransitioning]: status === 'exiting' || status === 'exited' || status === 'entering'
+                      })}>
+                        <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
+                        <div className={classNames(styles.qrUrl, typography.text18)}>
+                          Think QR codes are stupid?
+                          <br />
+                          Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
+                        </div>
+                      </div>
+                    )}
+                  </Transition>
+                )}
+                {player.id && (
+                  <Transition
+                    key={player.id}
+                    timeout={{ enter: 100, exit: 300 }}
+                  >
+                    {status => (
+                      <div className={classNames(styles.playerConnected, {
+                        [styles.playerConnectedTransitioning]: status === 'exiting' || status === 'exited' || status === 'entering'
+                      })}>
+                        <span className={styles.playerConnectedText}>Connected!</span>
+                      </div>
+                    )}
+                  </Transition>
+                )}
+              </TransitionGroup>
             </div>
             <div className={styles.playerName}>
               Player {index + 1}

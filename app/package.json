@@ -8,6 +8,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-spring": "^8.0.27",
+    "react-transition-group": "^4.2.2",
     "use-force-update": "^1.0.7",
     "uuid": "^3.3.3"
   },
@@ -58,8 +59,8 @@
     "sass-loader": "^7.3.1",
     "style-loader": "^1.0.0",
     "stylelint": "^10.1.0",
-    "stylelint-scss": "^3.10.0",
     "stylelint-order": "^3.1.0",
+    "stylelint-scss": "^3.10.0",
     "stylelint-webpack-plugin": "^0.10.5",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",

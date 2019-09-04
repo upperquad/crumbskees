@@ -80,6 +80,11 @@
   width: 100%;
 }
 
+.playerConnectedTransitioning,
+.qrTransitioning {
+  opacity: 0;
+}
+
 .playerName {
   @extend %Bold;
 
