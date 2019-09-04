@@ -31,6 +31,14 @@ const MarqueeText = props => {
         {text}
         &nbsp;
       </div>
+      <div className={styles.marqueeInnerText} style={{ animationDuration }}>
+        {text}
+        &nbsp;
+      </div>
+      <div className={styles.marqueeInnerText} style={{ animationDuration }}>
+        {text}
+        &nbsp;
+      </div>
     </div>
   )
 }
