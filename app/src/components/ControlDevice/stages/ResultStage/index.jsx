@@ -5,7 +5,7 @@ import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 
 import Circle from '~components/ControlDevice/Circle'
 import MarqueeText from '~components/MarqueeText'
-import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
+import AutoplayVideo from '~components/AutoplayVideo'
 
 const ResultStage = () => {
   const result = 'won'

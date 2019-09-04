@@ -9,7 +9,7 @@ import MarqueeText from '~components/MarqueeText'
 import JumpUpText from '~components/JumpUpText'
 import DisplayFooter from '~components/DisplayFooter'
 import PlayersManager from '~managers/PlayersManager'
-import WebSocketManager from '~managers/WebSocketManager'
+import AutoplayVideo from '~components/AutoplayVideo'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 
@@ -50,7 +50,7 @@ const SetupStage = props => {
 
   return (
     <div className={classNames(styles.setup, extraClassName)}>
-      <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
+      <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => (

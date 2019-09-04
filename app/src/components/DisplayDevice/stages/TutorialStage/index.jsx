@@ -5,6 +5,7 @@ import styles from './style.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
 import DisplayFooter from '~components/DisplayFooter'
+import AutoplayVideo from '~components/AutoplayVideo'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 import step1Img from '~assets/images/tutorial/tutorial-1.png'
@@ -55,7 +56,7 @@ const TutorialStage = props => {
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
-      <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
+      <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
       <MarqueeText extraClassName={styles.welcome} text="Welcome to The Upperquadrant -" duration="12s" />
       <div className={styles.tutorialCard} id="tutorial-content">
         <div className={styles.tutorialHeader}>Your instructions</div>
