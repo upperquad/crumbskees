@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "prettier": "^1.18.2",
-    "prettier-eslint": "^9.0.0"
+    "prettier-eslint": "^9.0.0",
+    "stylelint-order": "^3.1.0"
   }
 }
