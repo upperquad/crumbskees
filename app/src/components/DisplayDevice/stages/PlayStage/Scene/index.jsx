@@ -3,17 +3,15 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import typography from '~styles/modules/typography.module.scss'
 import '~managers/RAFManager'
-import PlayersManager from '~managers/PlayersManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
-import { uuid, clamp, randomInt } from '~utils/math'
-import { getNow } from '~utils/time'
-import { inOutSine } from '~utils/ease'
+import { uuid, randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 
 import SceneContext from './context'
+import PlayerCursor from './PlayerCursor'
 
 const Scene = props => {
-  const { bkg, frontBkg } = props
+  const { bkg, frontBkg, power, itemImage } = props
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
@@ -23,9 +21,11 @@ const Scene = props => {
   // console.log(SceneContext)
   SceneContext.currentValue.items = items
 
-  useEffect(() => effectItems(setItems, props), [props]) // updated on props change
+  // updated on props change
+  useEffect(() => effectItems(setItems, props), [props])
 
-  useEffect(() => { // never updated
+  // never updated
+  useEffect(() => {
     // Set clip path id
     const id = uuid()
     setClipPathId(id)
@@ -37,25 +37,13 @@ const Scene = props => {
     const effectResize = () => effectUnits(setSceneUnits, sceneRef)
 
     window.addEventListener('resize', effectResize)
-    window.addEventListener('click', handleClick)
-    window.addEventListener('RAF', handleRAF)
 
     return () => {
       window.removeEventListener('resize', effectResize)
-      window.removeEventListener('click', handleClick)
-      window.removeEventListener('RAF', handleRAF)
     }
   }, [])
 
-  useEffect(() => { // updated on sceneUnits change
-    const effectMouseMove = e => handleMouseMove(e, sceneUnits)
-
-    window.addEventListener('mousemove', effectMouseMove)
-
-    return () => {
-      window.removeEventListener('mousemove', effectMouseMove)
-    }
-  }, [sceneUnits])
+  console.log('update', items)
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
@@ -69,26 +57,31 @@ const Scene = props => {
         <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
           <defs>
             <clipPath id={clipPathId} className={styles.svgClipPath}>
+              <use xlinkHref="#player0" />
               <use xlinkHref="#player1" />
-              <use xlinkHref="#player2" />
             </clipPath>
           </defs>
-          {/* onPlayerClick={onClick()} */}
-          <path
-            ref={ref => {
-              PlayersManager.players[0].el = ref
+          <PlayerCursor
+            index={0}
+            sceneUnits={sceneUnits}
+            extraClassName={styles.playerCursor1}
+            items={items}
+            power={power}
+            itemImage={itemImage}
+            removeItem={item => {
+              removeItem(item, items, setItems)
             }}
-            id="player1"
-            className={classNames(styles.cursor, styles.cursor1)}
-            strokeWidth="6"
           />
-          <path
-            ref={ref => {
-              PlayersManager.players[1].el = ref
+          <PlayerCursor
+            index={1}
+            sceneUnits={sceneUnits}
+            extraClassName={styles.playerCursor2}
+            items={items}
+            power={power}
+            itemImage={itemImage}
+            removeItem={item => {
+              removeItem(item, items, setItems)
             }}
-            id="player2"
-            className={classNames(styles.cursor, styles.cursor2)}
-            strokeWidth="6"
           />
           <g
             className={styles.svgClipPathRef}
@@ -148,6 +141,20 @@ const Scene = props => {
       </div>
     </div>
   )
+}
+
+function removeItem(itemToRemove, items, setItems) {
+  const newItems = items
+  const index = newItems.indexOf(itemToRemove)
+  if (index > -1) {
+    newItems.splice(index, 1)
+  }
+
+  console.log(newItems)
+
+  setItems(newItems) // find a way to update
+
+  // setItems(newItems)
 }
 
 function effectItems(setItems, props) {
@@ -213,130 +220,6 @@ function createItem(props, grid, image, type = 'target') {
   }
 
   return obj
-}
-
-function handleMouseMove(e, sceneUnits) {
-  if (!sceneUnits) return
-  // if (window.GameManager.players[window.GameManager.playerIds[0]].frozen) return
-  const scrollY = window.scrollY || document.documentElement.scrollTop
-  const player = PlayersManager.players[0]
-
-  player.eventX = e.touches ? e.touches[0].clientX : e.clientX
-  player.eventX -= sceneUnits.offsetLeft
-  player.eventY = e.touches ? e.touches[0].clientY : e.clientY
-  player.eventY += scrollY
-
-  player.targetX = (player.eventX / sceneUnits.width) * VB_WIDTH // because we're using viewbox units here
-  player.targetX -= VB_WIDTH / 2 // because starting point is player.centerX
-  player.targetY = (player.eventY / sceneUnits.height) * VB_HEIGHT - sceneUnits.offsetTop
-  player.targetY -= VB_HEIGHT / 2
-}
-
-function handleClick() {
-  // const player = PlayersManager.players[0]
-  // // player.
-
-  // setItems()
-}
-
-function handleRAF(e) {
-  // console.log('raf')
-  const { now } = e.detail
-  // console.log(playersRef)
-  // this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
-
-  // For each cursor...
-  for (let y = 0; y < PlayersManager.players.length; y++) {
-    const player = PlayersManager.players[y]
-
-    if (!player.frozen) {
-      // if player not frozen
-      // clamp player position to limit of the scene
-      player.targetX = clamp(player.targetX, -VB_WIDTH / 2, VB_WIDTH / 2)
-      player.targetY = clamp(player.targetY, -VB_HEIGHT / 2, VB_HEIGHT / 2)
-
-      player.x += (player.targetX - player.x) * 0.1
-      player.y += (player.targetY - player.y) * 0.1
-
-      // For each points of the player (organic shape)
-      // Create organic shape / Tween all points
-      for (let i = 0; i < player.points.length; i++) {
-        const point = player.points[i]
-
-        // From scratch tween:
-        // percent is going from 0 to 1 in X seconds where X is the "duration variable".
-        // Each points starting value is going to his destination value in X seconds
-        // then I use easing functions to modify the value curve through time.
-        const percent = (now - point.startAnim) / point.duration
-        // const percent = ((now - point.startAnim) / point.duration) * this.acceleration
-
-        point.x = point.startX + (point.destX - point.startX) * inOutSine(percent)
-        point.y = point.startY + (point.destY - point.startY) * inOutSine(percent)
-
-        if (percent >= 1) {
-          // end of animation,
-          // restart animation by going back
-          if (point.reverseAnim) {
-            point.startX = point.x
-            point.startY = point.y
-            point.destX = point.targetMaxX
-            point.destY = point.targetMaxY
-            point.reverseAnim = false
-            point.startAnim = getNow()
-          } else {
-            point.startX = point.x
-            point.startY = point.y
-            point.destX = point.targetMinX
-            point.destY = point.targetMinY
-            point.reverseAnim = true
-            point.startAnim = getNow()
-          }
-        }
-
-        // move player based on mouse
-        point.x += player.x
-        point.y += player.y
-      }
-    }
-
-    player.el.setAttribute('d', cardinal(player.points))
-  }
-}
-
-// Create circle distorsion based on the given coordinates points
-// Cardinal spline - a uniform Catmull-Rom spline with a tension option
-function cardinal(points, tension = 1.2) {
-  // 1 tension does not make a perfect round, why?
-  const nbPoints = points.length
-  if (nbPoints < 1) return 'M0 0'
-
-  let path = `M ${points[0].x} ${points[0].y} C`
-  // where M is the starting X,Y coords
-  // C is the 3 next points coord of a Cubic bezier
-
-  for (let i = 0; i < nbPoints; i++) {
-    const p0 = points[(i - 1 + nbPoints) % nbPoints]
-    const p1 = points[i]
-    const p2 = points[(i + 1) % nbPoints]
-    const p3 = points[(i + 2) % nbPoints]
-
-    const x1 = p1.x + ((p2.x - p0.x) / 6) * tension
-    const y1 = p1.y + ((p2.y - p0.y) / 6) * tension
-
-    const x2 = p2.x - ((p3.x - p1.x) / 6) * tension
-    const y2 = p2.y - ((p3.y - p1.y) / 6) * tension
-
-    // cubic Bezier
-    // x1 | The x-axis coordinate of the first control point.
-    // y1 | The y-axis coordinate of the first control point.
-    // x2 | The x-axis coordinate of the second control point.
-    // y2 | The y-axis coordinate of the second control point.
-    // p2.x | The x-axis coordinate of the end point.
-    // p2.y | The y-axis coordinate of the end point.
-    path += ` ${x1} ${y1} ${x2} ${y2} ${p2.x} ${p2.y}`
-  }
-
-  return `${path}z` // close path with z
 }
 
 function effectUnits(setSceneUnits, sceneRef) {

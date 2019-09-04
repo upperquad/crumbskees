@@ -124,29 +124,12 @@
   top: 0;
   width: 100%;
 
-  .cursor1 {
+  .playerCursor1 {
     stroke: $color-purple;
   }
 
-  .cursor2 {
+  .playerCursor2 {
     stroke: $color-red;
-  }
-
-  .cursor {
-    stroke-width: grid(0.2);
-    transition: stroke 1s ease;
-
-    &.frozen {
-      stroke: $color-gray !important;
-    }
-
-    &.good {
-      fill: green !important;
-    }
-
-    &.wrong {
-      fill: red !important;
-    }
   }
 }
 
