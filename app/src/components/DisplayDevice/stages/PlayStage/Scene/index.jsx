@@ -11,7 +11,7 @@ import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
 
 const Scene = props => {
-  const { bkg, frontBkg, power, itemImage } = props
+  const { bkg, frontBkg, itemImage, power } = props
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
@@ -42,8 +42,6 @@ const Scene = props => {
       window.removeEventListener('resize', effectResize)
     }
   }, [])
-
-  console.log('update', items)
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
@@ -96,23 +94,18 @@ const Scene = props => {
               width={`${VB_WIDTH}px`}
               height={`${VB_HEIGHT}px`}
             />
-            {items.map(item => {
-              if (!item.found) {
-                return (
-                  <image
-                    className={styles.svgImage}
-                    xlinkHref={item.image}
-                    preserveAspectRatio="xMidYMid slice"
-                    width={item.size}
-                    height={item.size}
-                    x={`${item.x * 100}%`}
-                    y={`${item.y * 100}%`}
-                    style={{ transform: `translate(-${item.size / 2}, -${item.size / 2})` }}
-                  />
-                )
-              }
-              return false
-            })}
+            {items.map(item => (
+              <image
+                className={styles.svgImage}
+                xlinkHref={item.image}
+                preserveAspectRatio="xMidYMid slice"
+                width={item.size}
+                height={item.size}
+                x={`${item.x * 100}%`}
+                y={`${item.y * 100}%`}
+                style={{ transform: `translate(-${item.size / 2}, -${item.size / 2})` }}
+              />
+            ))}
           </g>
         </svg>
       </div>
@@ -141,20 +134,6 @@ const Scene = props => {
       </div>
     </div>
   )
-}
-
-function removeItem(itemToRemove, items, setItems) {
-  const newItems = items
-  const index = newItems.indexOf(itemToRemove)
-  if (index > -1) {
-    newItems.splice(index, 1)
-  }
-
-  console.log(newItems)
-
-  setItems(newItems) // find a way to update
-
-  // setItems(newItems)
 }
 
 function effectItems(setItems, props) {
@@ -220,6 +199,11 @@ function createItem(props, grid, image, type = 'target') {
   }
 
   return obj
+}
+
+function removeItem(itemToRemove, items, setItems) {
+  const newItems = items.filter(item => item !== itemToRemove)
+  setItems(newItems)
 }
 
 function effectUnits(setSceneUnits, sceneRef) {

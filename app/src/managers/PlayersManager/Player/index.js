@@ -7,9 +7,6 @@ import freezeSound from '~assets/sounds/freeze.mp3'
 import growSound from '~assets/sounds/grow.mp3'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
 
-import SceneContext from '~components/DisplayDevice/stages/PlayStage/Scene/context'
-import Scene from '~components/DisplayDevice/stages/PlayStage/Scene'
-
 export default class Player {
   constructor(props) {
     const {
@@ -149,71 +146,69 @@ export default class Player {
   }
 
   click = () => {
-    console.log('click', Scene)
+    // const scene = SceneContext.currentValue
+    // // if (scene.targetsDestroyed) return false // if targets are destroy, don't listen to click event
+    // const x = (this.targetX / VB_WIDTH) + 0.5
+    // const y = (this.targetY / VB_HEIGHT) + 0.5
+    // const { power } = scene
 
-    const scene = SceneContext.currentValue
-    // if (scene.targetsDestroyed) return false // if targets are destroy, don't listen to click event
-    const x = (this.targetX / VB_WIDTH) + 0.5
-    const y = (this.targetY / VB_HEIGHT) + 0.5
-    const { power } = scene
+    // if (power) {
+    //   const distance = Math.hypot(x - power.x, y - power.y)
+    //   if (!power.found && distance <= 0.08) {
+    //     let playerAffected = this
+    //     if (power.type === 'freeze') {
+    //       // affect other player
+    //       const index = this.index === 0 ? 1 : 0
+    //       playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
 
-    if (power) {
-      const distance = Math.hypot(x - power.x, y - power.y)
-      if (!power.found && distance <= 0.08) {
-        let playerAffected = this
-        if (power.type === 'freeze') {
-          // affect other player
-          const index = this.index === 0 ? 1 : 0
-          playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
+    //       this.freezeSound.play()
+    //     } else {
+    //       this.growSound.play()
+    //     }
+    //     playerAffected.setPower(power.type)
 
-          this.freezeSound.play()
-        } else {
-          this.growSound.play()
-        }
-        playerAffected.setPower(power.type)
+    //     power.found = true
+    //     power.el.style.opacity = 0
+    //     if (power.debugEl) power.debugEl.style.opacity = 0
+    //   }
+    // }
 
-        power.found = true
-        power.el.style.opacity = 0
-        if (power.debugEl) power.debugEl.style.opacity = 0
-      }
-    }
+    // let nbItemGet = 0
 
-    let nbItemGet = 0
+    // for (let i = 0; i < scene.items.length; i++) {
+    //   const item = scene.items[i]
+    //   const distance = Math.hypot(x - item.x, y - item.y)
 
-    for (let i = 0; i < scene.items.length; i++) {
-      const item = scene.items[i]
-      const distance = Math.hypot(x - item.x, y - item.y)
+    //   let minDistance = 0
 
-      let minDistance = 0
+    //   if (!this.grown) {
+    //     minDistance = 0.08
+    //   } else {
+    //     minDistance = 0.19
+    //   }
 
-      if (!this.grown) {
-        minDistance = 0.08
-      } else {
-        minDistance = 0.19
-      }
+    //   if (!item.found && distance <= minDistance) {
+    //     item.found = true
+    //     // if (item.debugEl) item.debugEl.style.opacity = 0
+    //     Scene.setItems()
+    //     nbItemGet += 1
+    //     // kill player intervalTap
+    //     clearInterval(this.isCloseToItemInterval)
 
-      if (!item.found && distance <= minDistance) {
-        item.found = true
-        // if (item.debugEl) item.debugEl.style.opacity = 0
-        Scene.setItems()
-        nbItemGet += 1
-        // kill player intervalTap
-        clearInterval(this.isCloseToItemInterval)
+    //     this.scoreSound.play()
+    //   }
+    // }
 
-        this.scoreSound.play()
-      }
-    }
+    // if (nbItemGet > 0) {
+    //   console.log('score')
+    //   // window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
+    //   scene.numItemFound += nbItemGet
+    // }
 
-    if (nbItemGet > 0) {
-      console.log('score')
-      // window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
-      scene.numItemFound += nbItemGet
-    }
-
-    if (scene.numItemFound === scene.items.length && !scene.isEnded) {
-      scene.isEnded = true
-      // window.GameManager.endScene(scene.props.message)
-    }
+    // if (scene.numItemFound === scene.items.length && !scene.isEnded) {
+    //   scene.isEnded = true
+    //   // window.GameManager.endScene(scene.props.message)
+    // }
   }
 
   updateRadius(incr, clickPrecision) {

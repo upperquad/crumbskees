@@ -10,7 +10,7 @@ import { clamp } from '~utils/math'
 import PlayersManager from '~managers/PlayersManager'
 
 const PlayerCursor = props => {
-  const { extraClassName, index, sceneUnits, removeItem } = props
+  const { extraClassName, index, removeItem, sceneUnits } = props
 
   // updated on index props change
   useEffect(() => {
@@ -36,7 +36,7 @@ const PlayerCursor = props => {
       // window.removeEventListener('CLICK_PLAYER', effectClick) --> from WebSocketServer
       window.removeEventListener('click', effectClick)
     }
-  }, [props])
+  }, [props, removeItem])
 
   // updated on sceneUnits change
   useEffect(() => {
@@ -79,7 +79,7 @@ function handleMouseMove(e, sceneUnits) {
 }
 
 function handleClick(e, props, callback) {
-  const { index, power, items, itemImage } = props
+  const { index, items, power } = props
 
   const player = PlayersManager.players[index]
   // if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
@@ -107,7 +107,7 @@ function handleClick(e, props, callback) {
     }
   }
 
-  let nbItemGet = 0
+  // let nbItemGet = 0
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
