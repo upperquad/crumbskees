@@ -67,7 +67,7 @@ const SetupStage = props => {
               )}
               {player.id && (
                 <div className={styles.playerConnected} key={player.id}>
-                  <span>Connected!</span>
+                  <span className={styles.playerConnectedText}>Connected!</span>
                 </div>
               )}
             </div>
