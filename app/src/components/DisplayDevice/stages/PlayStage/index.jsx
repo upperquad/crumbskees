@@ -31,17 +31,8 @@ const PlayStage = () => {
 
   useEffect(() => { // update when time change
     if (time === '00' && prevSceneIndex === sceneIndex) { // prevent calling above code twice when sceneIndex is updated
-      if (sceneIndex === scenes.length) {
-        // Go to ResultPage
-        console.log('go to result page')
-      } else {
-        console.log('update scene')
-        // Do out transitions... etc...
-        setSceneIndex(sceneIndex + 1)
-        // Do in transitions... etc...
-      }
+      endScene(sceneIndex, setSceneIndex)
       // this.endScene('TIME\'S UP!')
-      // this.destroyTargetScene(this.currentScene)
     }
 
     if (time === '10') {
@@ -64,12 +55,12 @@ const PlayStage = () => {
 }
 
 function endScene(sceneIndex, setSceneIndex) {
-  console.log('end scene')
   sceneIndex += 1
   if (sceneIndex === scenes.length) {
     // Go to ResultPage
     console.log('go to result page')
   } else {
+    console.log('update scene')
     // Do out transitions... etc...
     setSceneIndex(sceneIndex)
     // Do in transitions... etc...
