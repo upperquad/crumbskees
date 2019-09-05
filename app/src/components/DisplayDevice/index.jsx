@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import classNames from 'classnames'
+import { TransitionGroup, Transition } from 'react-transition-group'
 import useForceUpdate from 'use-force-update'
-// import styles from './style.module.scss'
+import styles from './style.module.scss'
 
 import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
@@ -11,8 +13,12 @@ import ErrorStage from './stages/ErrorStage'
 import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 
+const STAGE_TRANSITION_OUT = 1300
+const STAGE_TRANSITION_IN = 800
+
 const DisplayDevice = () => {
   const [stage, setStage] = useState('setup')
+  const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -46,16 +52,131 @@ const DisplayDevice = () => {
     }
   }, [setStage])
 
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+
+      switch (type) {
+        case 'token_submit': {
+          const { id, token } = data
+          PlayersManager.newConnect(token, id)
+          setBothConnected(PlayersManager.players.every(item => item.id))
+          break
+        }
+        case 'phone_left': {
+          const { id } = data
+          PlayersManager.closeConnection(id)
+          setBothConnected(PlayersManager.players.every(item => item.id))
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
+
   return (
-    <>
-      {stage === 'setup' && <SetupStage key="stage-setup" onFinish={() => setStage('tutorial')} />}
-      {stage === 'tutorial' && (
-        <TutorialStage key="stage-tutorial" onFinish={() => setStage('play')} />
+    <TransitionGroup>
+      {stage === 'setup' && (
+        <Transition
+          key="stage-setup"
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
+        >
+          {status => (
+            <div
+              className={classNames(styles.stageWrapper, {
+                [styles.stageWrapperEntering]: status === 'entering',
+                [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
+              })}
+            >
+              <SetupStage
+                extraClassName={styles.stage}
+                onFinish={() => setStage('tutorial')}
+                bothConnected={bothConnected}
+              />
+            </div>
+          )}
+        </Transition>
       )}
-      {stage === 'play' && <PlayStage key="stage-play" onFinish={() => setStage('result')} />}
-      {stage === 'result' && <ResultStage key="stage-result" onFinish={() => setStage('setup')} />}
-      {stage === 'error' && <ErrorStage key="stage-error" />}
-    </>
+      {stage === 'tutorial' && (
+        <Transition
+          key="stage-tutorial"
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
+        >
+          {status => (
+            <div
+              className={classNames(styles.stageWrapper, {
+                [styles.stageWrapperEntering]: status === 'entering',
+                [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
+              })}
+            >
+              <TutorialStage
+                extraClassName={styles.stage}
+                bothConnected={bothConnected}
+                rollback={() => setStage('setup')}
+                onFinish={() => setStage('play')}
+              />
+            </div>
+          )}
+        </Transition>
+      )}
+      {stage === 'play' && (
+        <Transition
+          key="stage-play"
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
+        >
+          {status => (
+            <div
+              className={classNames(styles.stageWrapper, {
+                [styles.stageWrapperEntering]: status === 'entering',
+                [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
+              })}
+            >
+              <PlayStage extraClassName={styles.stage} onFinish={() => setStage('result')} />
+            </div>
+          )}
+        </Transition>
+      )}
+      {stage === 'result' && (
+        <Transition
+          key="stage-result"
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
+        >
+          {status => (
+            <div
+              className={classNames(styles.stageWrapper, {
+                [styles.stageWrapperEntering]: status === 'entering',
+                [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
+              })}
+            >
+              <ResultStage extraClassName={styles.stage} onFinish={() => setStage('setup')} />
+            </div>
+          )}
+        </Transition>
+      )}
+      {stage === 'error' && (
+        <Transition
+          key="stage-error"
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
+        >
+          {status => (
+            <div
+              className={classNames(styles.stageWrapper, {
+                [styles.stageWrapperEntering]: status === 'entering',
+                [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
+              })}
+            >
+              <ErrorStage extraClassName={styles.stage} />
+            </div>
+          )}
+        </Transition>
+      )}
+    </TransitionGroup>
   )
 }
 
