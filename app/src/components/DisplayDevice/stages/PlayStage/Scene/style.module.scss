@@ -176,6 +176,20 @@
   }
 }
 
+.debugItem {
+  background-color: $color-black;
+  border-radius: 50%;
+  // display: none;
+  height: 20px;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  width: 20px;
+}
+
+.debugItemPower {
+  background-color: $color-red;
+}
+
 .introRound {
   align-items: flex-end;
   display: flex;

@@ -8,6 +8,10 @@ import growSound from '~assets/sounds/grow.mp3'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
 
 export default class Player {
+  _score = 0;
+
+  static _numPoints = 8;
+
   constructor(props) {
     const {
       character,
@@ -23,7 +27,6 @@ export default class Player {
     this.index = index
     this.color = color
     this.character = character
-    this.numPoints = 8
     this.centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
     this.centerY = VB_HEIGHT / 2 // equal to svg viewbox / 2
     this.minRadius = GRID_UNIT * 1.1 // 3.125 == 1 unit grid (1920 / 32)
@@ -71,11 +74,11 @@ export default class Player {
 
   setPoints() {
     this.points = []
-    // create "numPoints" x points
-    const slice = (Math.PI * 2) / this.numPoints
+    // create "_numPoints" x points
+    const slice = (Math.PI * 2) / Player._numPoints
     this.startAngle = random(0, Math.PI * 2)
 
-    for (let i = 0; i < this.numPoints; i++) {
+    for (let i = 0; i < Player._numPoints; i++) {
       const margeAngle = random(0, 0.28) // i / 1.2
       // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
       const startAnim = getNow() + i * random(0, this.minDuration)
@@ -145,70 +148,29 @@ export default class Player {
     // }
   }
 
-  click = () => {
-    // const scene = SceneContext.currentValue
-    // // if (scene.targetsDestroyed) return false // if targets are destroy, don't listen to click event
-    // const x = (this.targetX / VB_WIDTH) + 0.5
-    // const y = (this.targetY / VB_HEIGHT) + 0.5
-    // const { power } = scene
+  addScore = nbItemsCaught => {
+    this._score += nbItemsCaught
+    console.log('score : ', this._score)
+    // this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
 
-    // if (power) {
-    //   const distance = Math.hypot(x - power.x, y - power.y)
-    //   if (!power.found && distance <= 0.08) {
-    //     let playerAffected = this
-    //     if (power.type === 'freeze') {
-    //       // affect other player
-    //       const index = this.index === 0 ? 1 : 0
-    //       playerAffected = window.GameManager.players[window.GameManager.playerIds[index]]
+    // this.scores[player.index] += score
+    // this.element.classList.add('item-found')
 
-    //       this.freezeSound.play()
-    //     } else {
-    //       this.growSound.play()
-    //     }
-    //     playerAffected.setPower(power.type)
-
-    //     power.found = true
-    //     power.el.style.opacity = 0
-    //     if (power.debugEl) power.debugEl.style.opacity = 0
+    // for (let i = 0; i < this.dom.boardPlayerScore.length; i++) {
+    //   if (i === player.index) {
+    //     const zeroUnit = this.scores[player.index] < 10 ? '0' : ''
+    //     this.dom.boardPlayerScore[i].innerHTML = `${zeroUnit}${this.scores[player.index]}`
     //   }
     // }
 
-    // let nbItemGet = 0
-
-    // for (let i = 0; i < scene.items.length; i++) {
-    //   const item = scene.items[i]
-    //   const distance = Math.hypot(x - item.x, y - item.y)
-
-    //   let minDistance = 0
-
-    //   if (!this.grown) {
-    //     minDistance = 0.08
-    //   } else {
-    //     minDistance = 0.19
-    //   }
-
-    //   if (!item.found && distance <= minDistance) {
-    //     item.found = true
-    //     // if (item.debugEl) item.debugEl.style.opacity = 0
-    //     Scene.setItems()
-    //     nbItemGet += 1
-    //     // kill player intervalTap
-    //     clearInterval(this.isCloseToItemInterval)
-
-    //     this.scoreSound.play()
-    //   }
+    // for (let i = 0; i < score; i++) {
+    //   const img = document.createElement('img')
+    //   img.src = item
+    //   img.classList.add('board__player__item')
+    //   this.dom.boardPlayerItems[player.index].appendChild(img)
     // }
 
-    // if (nbItemGet > 0) {
-    //   console.log('score')
-    //   // window.GameManager.score(this, scene.props.item, { x, y }, nbItemGet)
-    //   scene.numItemFound += nbItemGet
-    // }
-
-    // if (scene.numItemFound === scene.items.length && !scene.isEnded) {
-    //   scene.isEnded = true
-    //   // window.GameManager.endScene(scene.props.message)
-    // }
+    // Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
 
   updateRadius(incr, clickPrecision) {

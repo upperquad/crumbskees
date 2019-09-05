@@ -107,7 +107,7 @@ function handleClick(e, props, callback) {
     }
   }
 
-  let nbItemGet = 0
+  let nbItemsCaught = 0
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
@@ -127,7 +127,7 @@ function handleClick(e, props, callback) {
       callback(item)
       if (item.debugEl) item.debugEl.style.opacity = 0
 
-      nbItemGet += 1
+      nbItemsCaught += 1
       // kill player intervalTap
       clearInterval(player.isCloseToItemInterval)
 
@@ -135,15 +135,16 @@ function handleClick(e, props, callback) {
     }
   }
 
-  // if (nbItemGet > 0) {
-  //   window.GameManager.score(player, itemImage, { x, y }, nbItemGet)
-  //   scene.numItemFound += nbItemGet
-  // }
+  if (nbItemsCaught > 0) {
+    player.addScore(nbItemsCaught)
+    // window.GameManager.score(player, itemImage, { x, y }, nbItemsCaught)
+  }
 
-  // if (scene.numItemFound === items.length && !scene.isEnded) {
-  //   scene.isEnded = true
-  //   window.GameManager.endScene(scene.props.message)
-  // }
+  if (items - nbItemsCaught === 0) { // && !scene.isEnded
+    console.log('scene end')
+    // scene.isEnded = true
+    // window.GameManager.endScene(scene.props.message)
+  }
 }
 
 function handleRAF(e, index) {

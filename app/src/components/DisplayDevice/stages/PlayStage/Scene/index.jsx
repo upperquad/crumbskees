@@ -3,26 +3,24 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import typography from '~styles/modules/typography.module.scss'
 import '~managers/RAFManager'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
+import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG } from '~constants'
 import { uuid, randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 
-import SceneContext from './context'
+// import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
 
 const Scene = props => {
   const { bkg, frontBkg, itemImage, power } = props
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
+  const [debugItems, setDebugItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
 
   const sceneRef = useRef(null)
 
-  // console.log(SceneContext)
-  SceneContext.currentValue.items = items
-
   // updated on props change
-  useEffect(() => effectItems(setItems, props), [props])
+  useEffect(() => effectItems(setItems, setDebugItems, props), [props])
 
   // never updated
   useEffect(() => {
@@ -103,11 +101,17 @@ const Scene = props => {
                 height={item.size}
                 x={`${item.x * 100}%`}
                 y={`${item.y * 100}%`}
-                style={{ transform: `translate(-${item.size / 2}, -${item.size / 2})` }}
+                style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
               />
             ))}
           </g>
         </svg>
+        {debugItems.map(item => (
+          <div
+            className={classNames(styles.debugItem, { [styles.debugItemPower]: item.power })}
+            style={{ left: item.left, top: item.top }}
+          />
+        ))}
       </div>
       <div className={styles.intros}>
         <div className={styles.intro}>
@@ -136,7 +140,7 @@ const Scene = props => {
   )
 }
 
-function effectItems(setItems, props) {
+function effectItems(setItems, setDebugItems, props) {
   // generate grid
 
   const grid = []
@@ -154,18 +158,33 @@ function effectItems(setItems, props) {
   }
 
   const items = []
+  const debugItems = []
 
   if (power) {
     const item = createItem(props, grid, power.image, 'power')
     items.push(item)
+
+    if (DEBUG) { // fake item for debugging
+      const debugItem = { left: `${item.x * 100}%`, top: `${item.y * 100}%`, power: true }
+      debugItems.push(debugItem)
+    }
   }
 
   for (let i = 0; i < numItems; i++) {
     const item = createItem(props, grid, itemImage)
     items.push(item)
+
+    if (DEBUG) {
+      const debugItem = { left: `${item.x * 100}%`, top: `${item.y * 100}%` }
+      debugItems.push(debugItem)
+    }
   }
 
   setItems(items)
+
+  if (DEBUG) {
+    setDebugItems(debugItems)
+  }
 }
 
 function createItem(props, grid, image, type = 'target') {
@@ -176,21 +195,10 @@ function createItem(props, grid, image, type = 'target') {
   const y = grid[rd].y / gridLines + GRID_UNIT_VH / 200
   grid.splice(rd, 1)
 
-  // fake item for debugging
-  let div
-  // if (DEBUG) {
-  //   div = document.createElement('div')
-  //   div.classList.add('debug')
-  //   if (type === 'power') div.classList.add('debug--power')
-  //   div.style.left = `${x * 100}%`
-  //   div.style.top = `${y * 100}%`
-  //   this.props.el.appendChild(div)
-  // }
-
   const size = GRID_UNIT
 
   const obj = {
-    debugEl: div,
+    // debugEl: div,
     x,
     y,
     size,
