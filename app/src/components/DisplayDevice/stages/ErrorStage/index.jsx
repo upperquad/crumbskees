@@ -16,7 +16,7 @@ const ERROR_DISPLAYS = {
       const websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/admin?command=disconnect_all`)
       websocket.onopen = () => {
         websocket.close()
-        window.location = '/game'
+        window.location.reload()
       }
     },
   },
