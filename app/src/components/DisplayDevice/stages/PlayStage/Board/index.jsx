@@ -6,6 +6,9 @@ import typography from '~styles/modules/typography.module.scss'
 const Board = props => {
   const { time } = props
 
+  let seconds = parseInt(time, 10)
+  seconds = seconds < 10 ? `0${seconds}` : seconds
+
   return (
     <Fragment>
       <img src="" className={styles.itemToFind} alt="" />
@@ -24,7 +27,7 @@ const Board = props => {
         </div>
         <div className={styles.center}>
           <div className={classNames(styles.timer, typography.text112Bold)}>
-            {time}
+            {seconds}
           </div>
         </div>
         <div className={styles.player}>

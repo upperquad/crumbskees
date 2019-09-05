@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import usePrevious from '~utils/hooks'
+import SoundManager from '~managers/SoundManager'
 
 import Scene from './Scene'
 import Board from './Board'
@@ -10,6 +11,7 @@ import Board from './Board'
 import scenes from './scenes'
 
 let timeInterval
+const TIME = 40
 
 const PlayStage = () => {
   const [sceneIndex, setSceneIndex] = useState(0)
@@ -19,25 +21,21 @@ const PlayStage = () => {
 
   useEffect(() => { // update when scene change
     // reset time if sceneIndex is updated
-    startTime(setTime, 5)
+    startTime(setTime, TIME)
 
     return () => {
       // clear interval
-      if (timeInterval) {
-        clearInterval(timeInterval)
-      }
+      clearInterval(timeInterval)
     }
   }, [sceneIndex])
 
   useEffect(() => { // update when time change
-    if (time === '00' && prevSceneIndex === sceneIndex) { // prevent calling above code twice when sceneIndex is updated
+    if (time === 0 && prevSceneIndex === sceneIndex) { // prevent calling above code twice when sceneIndex is updated
       endScene(sceneIndex, setSceneIndex)
       // this.endScene('TIME\'S UP!')
-    }
-
-    if (time === '10') {
+    } else if (time === 10) {
       // play sound countdown
-      // this.countdownSound.play()
+      SoundManager.countdown.play()
     }
   }, [time, sceneIndex, prevSceneIndex])
 
@@ -68,21 +66,13 @@ function endScene(sceneIndex, setSceneIndex) {
 }
 
 function startTime(setTime, duration) {
-  let time = duration - 1
-  let seconds
-
-  setTime(duration)
+  let time = duration
+  setTime(time)
 
   timeInterval = setInterval(() => {
-    seconds = parseInt(time, 10)
-    seconds = seconds < 10 ? `0${seconds}` : seconds
-
-    setTime(seconds)
-
     time -= 1
+    setTime(time)
   }, 1000)
-
-  // this.element.classList.add('sceneStarted')
 }
 
 export default PlayStage

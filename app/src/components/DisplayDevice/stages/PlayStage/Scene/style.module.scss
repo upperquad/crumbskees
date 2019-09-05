@@ -45,7 +45,7 @@
   text-align: center;
   z-index: 10;
 
-  .sceneStarted & {
+  &.started {
     &::after {
       animation: change-color 40s linear infinite forwards, blink-bar-color 1s linear infinite forwards 30s;
     }

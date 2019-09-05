@@ -1,10 +1,6 @@
-import { Howl } from 'howler'
 import getNow from '~utils/time'
 import { random } from '~utils/math'
-// import duckSound from '../../../assets/game/sounds/duck.mp3'
-import scoreSound from '~assets/sounds/score.mp3'
-import freezeSound from '~assets/sounds/freeze.mp3'
-import growSound from '~assets/sounds/grow.mp3'
+import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
 
 export default class Player {
@@ -51,17 +47,6 @@ export default class Player {
     this.setPoints()
 
     this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
-
-    // Sounds
-    this.scoreSound = new Howl({
-      src: [scoreSound],
-    })
-    this.freezeSound = new Howl({
-      src: [freezeSound],
-    })
-    this.growSound = new Howl({
-      src: [growSound],
-    })
   }
 
   destroy = () => {
@@ -115,13 +100,13 @@ export default class Player {
         this.grown = true
         this.updateRadius(this.increaseMax, 3)
         // window.GameManager.popUpMessage('GROW', 'orange', false)
-        this.growSound.play()
+        SoundManager.grow.play()
         timeClean = 6000
         break
       case 'freeze':
         this.frozen = true
         // window.GameManager.popUpMessage('FREEZE', 'blue', false)
-        this.freezeSound.play()
+        SoundManager.freeze.play()
         timeClean = 4000
         this.el.classList.add('frozenCursor')
         break
@@ -152,7 +137,7 @@ export default class Player {
 
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
-    this.scoreSound.play()
+    SoundManager.score.play()
     console.log('score : ', this._score)
 
     // this.popUpMessage(`+${score}`, player.color, false, pos) // + color player

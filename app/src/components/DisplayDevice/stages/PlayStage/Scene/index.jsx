@@ -52,7 +52,7 @@ const Scene = props => {
   // }, this.props.delayGif)
 
   return (
-    <div ref={sceneRef} className={styles.scene}>
+    <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
       <img className={styles.frontBkg} src={frontBkg} alt="" />
       <img className={styles.reveal} src={bkg} alt="" />
       <div className={styles.wrapper}>
