@@ -29,7 +29,7 @@ const TUTORIALS = [
 ]
 
 const TutorialStage = props => {
-  const { extraClassName, onFinish } = props
+  const { bothConnected, extraClassName, onFinish, rollback } = props
   const [step, setStep] = useState(0)
   const [progress, setProgress] = useState(0)
 
@@ -42,7 +42,10 @@ const TutorialStage = props => {
           setStep(2)
         } else if (counter === 100) {
           clearInterval(progressInterval)
-          onFinish()
+          // so we don't kick off the next stage when trying to rollback
+          if (bothConnected) {
+            onFinish()
+          }
           return counter
         }
         return counter + 1
@@ -53,6 +56,12 @@ const TutorialStage = props => {
       clearInterval(progressInterval)
     }
   }, [])
+
+  useEffect(() => {
+    if (!bothConnected) {
+      rollback()
+    }
+  }, [bothConnected])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>

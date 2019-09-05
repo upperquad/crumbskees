@@ -115,7 +115,12 @@ const DisplayDevice = () => {
                 [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
               })}
             >
-              <TutorialStage extraClassName={styles.stage} onFinish={() => setStage('play')} />
+              <TutorialStage
+                extraClassName={styles.stage}
+                bothConnected={bothConnected}
+                rollback={() => setStage('setup')}
+                onFinish={() => setStage('play')}
+              />
             </div>
           )}
         </Transition>
