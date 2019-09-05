@@ -2,9 +2,6 @@
 
 .tutorial {
   color: $color-black;
-  height: 100%;
-  position: absolute;
-  width: 100%;
 }
 
 .video {
@@ -51,6 +48,7 @@
   position: absolute;
   right: 0;
   top: grid(1.5);
+  transition: opacity .3s;
 
   .tutorialImage {
     height: grid(1);
@@ -61,6 +59,10 @@
     font-size: responsive-font(48);
     line-height: 1.4;
   }
+}
+
+.tutorialContentTransitioning {
+  opacity: 0;
 }
 
 .timebar {
@@ -80,7 +82,10 @@
   left: 0;
   position: absolute;
   top: 0;
-  transition: width .1s;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .1s;
+  width: 100%;
   z-index: -1;
 }
 

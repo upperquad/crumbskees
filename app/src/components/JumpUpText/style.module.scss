@@ -1,0 +1,19 @@
+@import "~styles/imports/index";
+
+.jumpUpText {
+  @extend %Bold;
+
+  font-size: responsive-font(120);
+  line-height: .8em;
+  -webkit-text-fill-color: $color-white;
+  -webkit-text-stroke-color: $color-black;
+  -webkit-text-stroke-width: 2px;
+  pointer-events: none;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.letter {
+  display: inline-block;
+}

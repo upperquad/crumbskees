@@ -6,7 +6,7 @@ import character1 from '~assets/images/character1.png'
 import styles from './style.module.scss'
 import '~styles/common/control-device.scss'
 import Circle from '~components/ControlDevice/Circle'
-import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
+import AutoplayVideo from '~components/AutoplayVideo'
 
 const MeetCharacterStage = () => {
   const character = {
