@@ -16,10 +16,10 @@
 .instruction {
   @extend %Bold;
 
-  font-size: 19px;
   flex-grow: 0;
   flex-shrink: 0;
-  letter-spacing: 0.011em;
+  font-size: 19px;
+  letter-spacing: .011em;
   line-height: 1.2;
   padding: 0 20px;
 }
@@ -27,26 +27,26 @@
 .tokenDisplay {
   @extend %Bold;
 
-  font-size: 69px;
   flex-grow: 0;
   flex-shrink: 0;
-  letter-spacing: 0.04em;
+  font-size: 69px;
+  height: 70px;
+  letter-spacing: .04em;
+  margin-top: 13px;
   padding: 0 20px;
   position: relative;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-color: $color-black;
   -webkit-text-stroke-width: 1px;
-  margin-top: 13px;
-  height: 70px;
 }
 
 .label {
   @extend %Regular;
 
-  height: 16px;
-  font-size: 16px;
   flex-grow: 0;
   flex-shrink: 0;
+  font-size: 16px;
+  height: 16px;
   text-align: center;
 }
 
@@ -70,8 +70,8 @@
   color: $color-white;
   display: flex;
   font-size: 27px;
-  justify-content: center;
   height: 70px;
+  justify-content: center;
   margin-bottom: 12px;
   padding-top: 5px;
   width: 70px;

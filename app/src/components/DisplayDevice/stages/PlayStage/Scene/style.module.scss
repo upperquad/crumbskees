@@ -55,7 +55,7 @@
     background-color: $color-green;
     bottom: 0;
     content: '';
-    height: grid(0.3);
+    height: grid(.3);
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
@@ -66,22 +66,20 @@
 
 
 .frontBkg {
-  object-fit: cover;
-  width: 100%;
   height: 100%;
-  position: absolute;
-  z-index: -1;
   left: 0;
+  object-fit: cover;
+  position: absolute;
   top: 0;
+  width: 100%;
+  z-index: -1;
 }
 
 .reveal {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
   clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
   height: 100%;
   left: 0;
+  object-fit: cover;
   position: absolute;
   top: 0;
   transition: clip-path 1.3s $circ-in-out;
@@ -98,21 +96,21 @@
   position: relative;
 
   &::after {
-    background-color: white;
+    background-color: $color-white;
     content: '';
     height: 100%;
     left: 0;
     position: absolute;
     top: 0;
-    transition: transform 1.3s $circ-in-out;
     transform: scaleX(0);
     transform-origin: 0% center;
+    transition: transform 1.3s $circ-in-out;
     width: 100%;
     z-index: 9;
 
     .isIntro & {
-      transition: transform 1.3s $circ-in-out;
       transform: scaleX(1);
+      transition: transform 1.3s $circ-in-out;
     }
   }
 }
@@ -143,7 +141,6 @@
 
 .intro {
   align-items: center;
-  display: flex;
   display: none;
   height: 100%;
   justify-content: center;
@@ -189,47 +186,47 @@
   z-index: 10;
 
   &.blink {
-    color: white;
-    animation: blink-color 0.1s linear 6;
-    -webkit-text-stroke-width: grid(0.06);
+    animation: blink-color .1s linear 6;
+    color: $color-white;
     -webkit-text-stroke-color: $color-black;
+    -webkit-text-stroke-width: grid(.06);
   }
 
   span {
     display: inline-block;
     line-height: 1;
-    min-width: grid(0.8);
+    min-width: grid(.8);
     vertical-align: bottom;
   }
 }
 
 .introItemToFindText {
-  width: grid(6);
   line-height: 1.2;
   margin-top: grid(-2);
   opacity: 0;
   position: relative;
+  width: grid(6);
   z-index: 10;
 }
 
 .introCircle {
-  background-color: white;
-  border: grid(0.3) solid $color-black;
+  background-color: $color-white;
+  border: grid(.3) solid $color-black;
   border-radius: 50%;
-  width: grid(11);
   height: grid(11);
+  left: 50%;
+  opacity: 1;
   position: absolute;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%) scale(4);
-  opacity: 1;
+  width: grid(11);
   z-index: 10;
 }
 
 .introReadyWrapper {
   line-height: 1;
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .introReady {
@@ -237,16 +234,16 @@
 }
 
 .introSet {
-  position: absolute;
   left: 50%;
+  position: absolute;
   top: 0;
   transform: translate(-50%, -100%);
 }
 
 .introGo {
+  left: 50%;
+  opacity: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0;
 }

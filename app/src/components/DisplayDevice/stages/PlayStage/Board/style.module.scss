@@ -12,23 +12,23 @@
 .player {
   align-items: flex-end;
   display: flex;
-  width: grid(14);
   position: relative;
+  width: grid(14);
 
   &:last-child {
     flex-direction: row-reverse;
 
     .character {
       background-color: $color-red;
-      border-right: none;
       border-left: $border;
+      border-right: none;
       border-width: $border-width;
       display: flex;
     }
 
     .score {
-      border-right: none;
       border-left: $border;
+      border-right: none;
     }
 
     .name {
@@ -42,7 +42,7 @@
     }
 
     .item {
-      margin-left: grid(0.3);
+      margin-left: grid(.3);
       margin-right: 0;
     }
   }
@@ -64,8 +64,6 @@
 }
 
 .score {
-  -webkit-text-stroke-color: $color-black;
-  -webkit-text-stroke-width: 2px;
   border-right: $border;
   border-top: $border;
   color: transparent !important;
@@ -73,18 +71,20 @@
   height: grid(3);
   line-height: grid(3);
   text-align: center;
+  -webkit-text-stroke-color: $color-black;
+  -webkit-text-stroke-width: 2px;
   vertical-align: middle;
   width: grid(3);
 }
 
 .name {
+  align-items: center;
   border-top: $border;
+  display: flex;
   height: grid(3);
+  padding: grid(1);
   vertical-align: top;
   width: grid(7);
-  padding: grid(1);
-  display: flex;
-  align-items: center;
 }
 
 .items {
@@ -99,19 +99,19 @@
 }
 
 .item {
-  height: grid(0.5);
-  margin-right: grid(0.3);
-  width: grid(0.5);
+  height: grid(.5);
+  margin-right: grid(.3);
+  width: grid(.5);
 }
 
 .center {
+  align-items: flex-end;
   background-color: $color-black;
   color: $color-white;
-  width: grid(4);
   display: flex;
   justify-content: center;
-  align-items: flex-end;
   padding-bottom: 2vw;
+  width: grid(4);
 }
 
 .itemToFind {

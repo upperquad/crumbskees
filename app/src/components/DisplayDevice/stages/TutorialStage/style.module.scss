@@ -22,9 +22,9 @@
 
 .tutorialCard {
   background-color: #fffaf2;
-  border-style: solid;
   border-color: $color-black;
-  border-width: grid(0.05);
+  border-style: solid;
+  border-width: grid(.05);
   height: grid(9);
   left: 50%;
   position: absolute;
@@ -37,7 +37,7 @@
 .tutorialHeader {
   @extend %Bold;
 
-  border-bottom: grid(0.05) solid $color-black;
+  border-bottom: grid(.05) solid $color-black;
   font-size: responsive-font(56);
   height: grid(1.5);
   padding-top: grid(.35);
@@ -47,8 +47,8 @@
 .tutorialContent {
   left: 0;
   padding: grid(.6) grid(1.6);
-  position: absolute;
   pointer-events: none;
+  position: absolute;
   right: 0;
   top: grid(1.5);
 
@@ -64,7 +64,7 @@
 }
 
 .timebar {
-  border: grid(0.05) solid $color-black;
+  border: grid(.05) solid $color-black;
   bottom: grid(1);
   left: 50%;
   padding: grid(.2) 0 grid(.16);

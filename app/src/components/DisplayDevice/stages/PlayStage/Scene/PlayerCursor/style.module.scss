@@ -1,18 +1,18 @@
 @import "~styles/imports/index";
 
 .playerCursor {
-  stroke-width: grid(0.2);
+  stroke-width: grid(.2);
   transition: stroke 1s ease;
 
   &.frozen {
     stroke: $color-gray !important;
   }
 
-  &.good {
-    fill: green !important;
-  }
+  // &.good {
+  //   fill: green !important;
+  // }
 
-  &.wrong {
-    fill: red !important;
-  }
+  // &.wrong {
+  //   fill: red !important;
+  // }
 }

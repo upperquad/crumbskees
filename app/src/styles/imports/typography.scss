@@ -1,7 +1,7 @@
 %Regular {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   font-family: 'Fakt Medium', serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 %Light {
@@ -10,9 +10,9 @@
 }
 
 %Bold {
+  font-family: 'Ginto Nord Black';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Ginto Nord Black';
   line-height: normal;
   text-transform: uppercase;
 }
