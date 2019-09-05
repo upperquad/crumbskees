@@ -44,7 +44,7 @@ const PreConnectStage = props => {
             {key}
           </div>
         ))}
-        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1)}>
+        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1, token, setToken, setErrorReason)}>
           ←
         </div>
       </div>
