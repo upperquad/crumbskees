@@ -11,7 +11,7 @@ import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 import PlayerCursor from './PlayerCursor'
 
 const Scene = props => {
-  const { bkg, endScene, frontBkg, itemImage, power } = props
+  const { bkg, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   const [debugItems, setDebugItems] = useState([])
@@ -20,7 +20,13 @@ const Scene = props => {
   const sceneRef = useRef(null)
 
   // updated on props change
-  useEffect(() => effectItems(setItems, setDebugItems, props), [props])
+  useEffect(() => effectItems(setItems, setDebugItems, { gridCols, gridLines, itemImage, numItems, power }), [
+    gridCols,
+    gridLines,
+    itemImage,
+    numItems,
+    power,
+  ])
 
   // never updated
   useEffect(() => {
@@ -164,7 +170,8 @@ function effectItems(setItems, setDebugItems, props) {
     const item = createItem(props, grid, power.image, power.type)
     items.push(item)
 
-    if (DEBUG) { // fake item for debugging
+    if (DEBUG) {
+      // fake item for debugging
       const debugItem = { left: `${item.x * 100}%`, top: `${item.y * 100}%`, power: true }
       debugItems.push(debugItem)
     }
@@ -215,7 +222,8 @@ function removeItem(itemsCaught, items, setItems, endScene) {
 
   const targets = newItems.filter(item => item.type === 'target')
 
-  if (targets.length === 0) { // if no more targets left
+  if (targets.length === 0) {
+    // if no more targets left
     endScene()
     // window.GameManager.endScene(scene.props.message)
   }

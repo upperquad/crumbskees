@@ -1,14 +1,10 @@
-import React, { useState, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import typography from '~styles/modules/typography.module.scss'
 
-const Board = () => {
-  const [timer, setTimer] = useState(0)
-
-  if (timer === 0) {
-    startTimer(setTimer, 40)
-  }
+const Board = props => {
+  const { time } = props
 
   return (
     <Fragment>
@@ -28,7 +24,7 @@ const Board = () => {
         </div>
         <div className={styles.center}>
           <div className={classNames(styles.timer, typography.text112Bold)}>
-            {timer}
+            {time}
           </div>
         </div>
         <div className={styles.player}>
@@ -46,34 +42,6 @@ const Board = () => {
       </div>
     </Fragment>
   )
-}
-
-function startTimer(setTimer, duration) {
-  let timer = duration - 1
-  let seconds
-
-  setTimer(duration)
-
-  setInterval(() => {
-    seconds = parseInt(timer, 10)
-    seconds = seconds < 10 ? `0${seconds}` : seconds
-
-    setTimer(seconds)
-
-    if (timer === 0) {
-      // this.endScene('TIME\'S UP!')
-      // this.destroyTargetScene(this.currentScene)
-    }
-
-    if (timer === 10) {
-      // play sound countdown
-      // this.countdownSound.play()
-    }
-
-    timer -= 1
-  }, 1000)
-
-  // this.element.classList.add('sceneStarted')
 }
 
 export default Board
