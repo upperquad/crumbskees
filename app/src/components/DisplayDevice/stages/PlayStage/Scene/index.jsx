@@ -11,7 +11,7 @@ import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 import PlayerCursor from './PlayerCursor'
 
 const Scene = props => {
-  const { bkg, frontBkg, itemImage, power } = props
+  const { bkg, endScene, frontBkg, itemImage, power } = props
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   const [debugItems, setDebugItems] = useState([])
@@ -65,7 +65,7 @@ const Scene = props => {
             power={power}
             itemImage={itemImage}
             removeItem={item => {
-              removeItem(item, items, setItems)
+              removeItem(item, items, setItems, endScene)
             }}
           />
           <PlayerCursor
@@ -76,7 +76,7 @@ const Scene = props => {
             power={power}
             itemImage={itemImage}
             removeItem={item => {
-              removeItem(item, items, setItems)
+              removeItem(item, items, setItems, endScene)
             }}
           />
           <g
@@ -161,7 +161,7 @@ function effectItems(setItems, setDebugItems, props) {
   const debugItems = []
 
   if (power) {
-    const item = createItem(props, grid, power.image, 'power')
+    const item = createItem(props, grid, power.image, power.type)
     items.push(item)
 
     if (DEBUG) { // fake item for debugging
@@ -198,7 +198,6 @@ function createItem(props, grid, image, type = 'target') {
   const size = GRID_UNIT
 
   const obj = {
-    // debugEl: div,
     x,
     y,
     size,
@@ -209,9 +208,18 @@ function createItem(props, grid, image, type = 'target') {
   return obj
 }
 
-function removeItem(itemToRemove, items, setItems) {
-  const newItems = items.filter(item => item !== itemToRemove)
+function removeItem(itemsCaught, items, setItems, endScene) {
+  const newItems = items.filter(item => !itemsCaught.includes(item))
+
   setItems(newItems)
+
+  const targets = newItems.filter(item => item.type === 'target')
+
+  if (targets.length === 0) { // if no more targets
+    console.log('end of scene')
+    endScene()
+    // window.GameManager.endScene(scene.props.message)
+  }
 }
 
 function effectUnits(setSceneUnits, sceneRef) {

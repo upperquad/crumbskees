@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
@@ -38,6 +38,7 @@ import SceneContext from './Scene/context'
 
 const PlayStage = () => {
   const currentSceneIndex = 0
+  const [currentScene, setCurrentScene] = useState()
 
   const scenes = [
     {
@@ -45,7 +46,7 @@ const PlayStage = () => {
       frontBkg: scene1Front,
       itemImage: scene1Item,
       videoIntro: scene1IntroVideo,
-      numItems: 10,
+      numItems: 1,
       gridCols: 32,
       gridLines: 14,
       message: 'DOPE.',
@@ -66,10 +67,14 @@ const PlayStage = () => {
 
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
-      <Scene {...sceneProps} />
+      <Scene {...sceneProps} endScene={endScene} />
       <Board />
     </section>
   )
+}
+
+function endScene() {
+  console.log('wooooo')
 }
 
 export default PlayStage

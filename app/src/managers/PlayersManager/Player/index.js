@@ -114,12 +114,14 @@ export default class Player {
       case 'grow':
         this.grown = true
         this.updateRadius(this.increaseMax, 3)
-        window.GameManager.popUpMessage('GROW', 'orange', false)
+        // window.GameManager.popUpMessage('GROW', 'orange', false)
+        this.growSound.play()
         timeClean = 6000
         break
       case 'freeze':
         this.frozen = true
-        window.GameManager.popUpMessage('FREEZE', 'blue', false)
+        // window.GameManager.popUpMessage('FREEZE', 'blue', false)
+        this.freezeSound.play()
         timeClean = 4000
         this.el.classList.add('frozen')
         break
@@ -150,7 +152,9 @@ export default class Player {
 
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
+    this.scoreSound.play()
     console.log('score : ', this._score)
+
     // this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
 
     // this.scores[player.index] += score

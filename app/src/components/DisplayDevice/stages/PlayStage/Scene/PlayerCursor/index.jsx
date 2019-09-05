@@ -4,7 +4,7 @@ import styles from './style.module.scss'
 
 import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
-import { VB_WIDTH, VB_HEIGHT } from '~constants'
+import { VB_WIDTH, VB_HEIGHT, DEBUG } from '~constants'
 import { clamp } from '~utils/math'
 
 import PlayersManager from '~managers/PlayersManager'
@@ -29,25 +29,36 @@ const PlayerCursor = props => {
       removeItem(item)
     })
 
-    // window.addEventListener('CLICK_PLAYER', effectClick) --> from WebSocketServer
-    window.addEventListener('click', effectClick)
+    if (DEBUG && index === 0) { // only click for player one on debug
+      window.addEventListener('click', effectClick)
+    } else {
+      window.addEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
+    }
 
     return () => {
-      // window.removeEventListener('CLICK_PLAYER', effectClick) --> from WebSocketServer
-      window.removeEventListener('click', effectClick)
+      if (DEBUG && index === 0) {
+        window.removeEventListener('click', effectClick)
+      } else {
+        window.removeEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
+      }
     }
-  }, [props, removeItem])
+  }, [props, removeItem, index])
+
 
   // updated on sceneUnits change
   useEffect(() => {
-    const effectMouseMove = e => handleMouseMove(e, sceneUnits)
+    if (DEBUG) {
+      const effectMouseMove = e => handleMouseMove(e, sceneUnits)
 
-    window.addEventListener('mousemove', effectMouseMove)
+      window.addEventListener('mousemove', effectMouseMove)
 
-    return () => {
-      window.removeEventListener('mousemove', effectMouseMove)
+      return () => {
+        window.removeEventListener('mousemove', effectMouseMove)
+      }
     }
+    return false
   }, [sceneUnits])
+
 
   return (
     <path
@@ -79,72 +90,63 @@ function handleMouseMove(e, sceneUnits) {
 }
 
 function handleClick(e, props, callback) {
-  const { index, items, power } = props
+  const { index, items } = props
+
+  const powers = items.filter(item => item.type !== 'target')
+  const targets = items.filter(item => item.type === 'target')
 
   const player = PlayersManager.players[index]
   // if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
   const x = (player.targetX / VB_WIDTH) + 0.5
   const y = (player.targetY / VB_HEIGHT) + 0.5
 
-  if (power) {
-    const distance = Math.hypot(x - power.x, y - power.y)
-    if (!power.found && distance <= 0.08) {
-      let playerAffected = player
-      if (power.type === 'freeze') {
-        // affect other player
-        const playerIndex = player.index === 0 ? 1 : 0
-        playerAffected = PlayersManager.players[playerIndex]
+  const targetsCaught = catchItems(targets, x, y, player)
 
-        player.freezeSound.play()
-      } else {
-        player.growSound.play()
-      }
-      playerAffected.setPower(power.type)
+  const powersCaught = catchItems(powers, x, y, player)
 
-      power.found = true
-      power.el.style.opacity = 0
-      if (power.debugEl) power.debugEl.style.opacity = 0
-    }
+  if (targetsCaught.length > 0) {
+    player.addScore(targetsCaught.length)
+    // kill player intervalTap
+    clearInterval(player.isCloseToItemInterval)
   }
 
-  let nbItemsCaught = 0
+  // Remove items from the scene
+  if (targetsCaught.length > 0 || powersCaught.length > 0) {
+    callback([...targetsCaught, ...powersCaught])
+  }
+}
+
+function catchItems(items, x, y, player) {
+  const itemsCaught = []
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
     const distance = Math.hypot(x - item.x, y - item.y)
+    const minDistance = player.grown ? 0.19 : 0.08
 
-    let minDistance = 0
+    if (distance <= minDistance) {
+      itemsCaught.push(item)
 
-    if (!player.grown) {
-      minDistance = 0.08
-    } else {
-      minDistance = 0.19
+      let playerIndex
+      let playerAffected
+
+      switch (item.type) {
+        default:
+          break
+        case 'grow':
+          player.setPower(item.type)
+          break
+        case 'freeze':
+          // affect other player
+          playerIndex = player.index === 0 ? 1 : 0
+          playerAffected = PlayersManager.players[playerIndex]
+          playerAffected.setPower(item.type)
+          break
+      }
     }
-
-    if (!item.found && distance <= minDistance) {
-      item.found = true
-      // item.el.style.opacity = 0
-      callback(item)
-      if (item.debugEl) item.debugEl.style.opacity = 0
-
-      nbItemsCaught += 1
-      // kill player intervalTap
-      clearInterval(player.isCloseToItemInterval)
-
-      player.scoreSound.play()
-    }
   }
 
-  if (nbItemsCaught > 0) {
-    player.addScore(nbItemsCaught)
-    // window.GameManager.score(player, itemImage, { x, y }, nbItemsCaught)
-  }
-
-  if (items - nbItemsCaught === 0) { // && !scene.isEnded
-    console.log('scene end')
-    // scene.isEnded = true
-    // window.GameManager.endScene(scene.props.message)
-  }
+  return itemsCaught
 }
 
 function handleRAF(e, index) {
