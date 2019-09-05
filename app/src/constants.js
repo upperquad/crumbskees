@@ -1,3 +1,5 @@
+export const DEBUG = false
+
 export const BREAKPOINT = 768
 
 export const VB_WIDTH = 1920

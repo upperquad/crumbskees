@@ -1,5 +1,6 @@
 import Player from './Player'
 import WebSocketManager from '~managers/WebSocketManager'
+import { DEBUG } from '~constants'
 
 
 class PlayersManager {
@@ -9,8 +10,10 @@ class PlayersManager {
     }
 
     // just for test PlayStage
-    this.players[0] = new Player({ id: 123 })
-    this.players[1] = new Player({ id: 345 })
+    if (DEBUG) {
+      this.players[0] = new Player({ id: 123 })
+      this.players[1] = new Player({ id: 345 })
+    }
 
     return PlayersManager.instance
   }
