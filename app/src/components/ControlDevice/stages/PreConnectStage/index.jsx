@@ -100,7 +100,6 @@ function updateToken(key, token, setToken, setErrorReason, setIsConnecting) {
       setIsConnecting(true)
       WebSocketManager.connect({ token: newToken })
 
-      // PlayerManager.setPlayer(token)
     }
 
     setToken(newToken)

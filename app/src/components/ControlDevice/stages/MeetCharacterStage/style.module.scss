@@ -1,13 +1,13 @@
 @import "~styles/imports/index";
 
-.characterConfirm {
+.meetCharacter {
   align-items: center;
+  bottom: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  padding-top: 56px;
-  bottom: 0;
   left: 0;
+  padding-top: 56px;
   position: fixed;
   right: 0;
   top: 0;
@@ -22,8 +22,8 @@
   .title {
     @extend %Bold;
 
-    letter-spacing: .024em;
     font-size: 40px;
+    letter-spacing: .024em;
     text-transform: uppercase;
   }
 
@@ -43,8 +43,8 @@
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
-  justify-content: center;
   height: 85vw;
+  justify-content: center;
   margin: 20px 0;
   width: 85vw;
 
@@ -68,10 +68,10 @@
 
   background: $color-mint;
   border: 1px solid $color-black;
-  letter-spacing: .025em;
   flex-grow: 0;
   flex-shrink: 0;
   font-size: 40px;
+  letter-spacing: .025em;
   padding: 20px;
   text-align: center;
   text-transform: uppercase;
