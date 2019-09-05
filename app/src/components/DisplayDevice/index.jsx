@@ -18,6 +18,7 @@ const STAGE_TRANSITION_IN = 800
 
 const DisplayDevice = () => {
   const [stage, setStage] = useState('setup')
+  const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
 
@@ -40,10 +41,8 @@ const DisplayDevice = () => {
   useEffect(() => {
     const errorListener = event => {
       const { detail: { reason } } = event
-      if (reason === 'new_game_started' || reason === 'active_game_exist') {
-        // maybe also pass the error message to ErrorStage?
-        setStage('error')
-      }
+      setStage('error')
+      setErrorReason(reason)
     }
     window.addEventListener('WS_CLOSE', errorListener)
 
@@ -171,7 +170,7 @@ const DisplayDevice = () => {
                 [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
               })}
             >
-              <ErrorStage extraClassName={styles.stage} />
+              <ErrorStage extraClassName={styles.stage} reason={errorReason} />
             </div>
           )}
         </Transition>

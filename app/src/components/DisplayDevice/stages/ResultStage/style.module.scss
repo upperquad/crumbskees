@@ -35,11 +35,15 @@
 }
 
 .timebar {
-  animation: final-timebar 13s linear 1 both;
+  animation: result-timebar 13s linear 1 both;
   background-color: $color-green;
+  bottom: 0;
   height: grid(.3);
+  left: 0;
+  position: absolute;
+  width: 100%;
 
-  @keyframes final-timebar {
+  @keyframes result-timebar {
     0% {
       transform: scaleX(1);
     }
@@ -47,13 +51,6 @@
       transform: scaleX(0);
     }
   }
-}
-
-.resultTimebar {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  width: 100%;
 }
 
 .player {
