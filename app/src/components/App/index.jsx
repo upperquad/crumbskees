@@ -7,6 +7,8 @@ import ControlDevice from '../ControlDevice'
 import { BREAKPOINT } from '~constants'
 
 const App = () => {
+  // TODO: a more robust way to determinre whether a device should be
+  // Display or Controller
   const [isDesktop] = useState(() => window.innerWidth > BREAKPOINT)
 
   useEffect(() => {
