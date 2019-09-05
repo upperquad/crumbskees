@@ -215,8 +215,7 @@ function removeItem(itemsCaught, items, setItems, endScene) {
 
   const targets = newItems.filter(item => item.type === 'target')
 
-  if (targets.length === 0) { // if no more targets
-    console.log('end of scene')
+  if (targets.length === 0) { // if no more targets left
     endScene()
     // window.GameManager.endScene(scene.props.message)
   }

@@ -123,7 +123,7 @@ export default class Player {
         // window.GameManager.popUpMessage('FREEZE', 'blue', false)
         this.freezeSound.play()
         timeClean = 4000
-        this.el.classList.add('frozen')
+        this.el.classList.add('frozenCursor')
         break
     }
 
@@ -214,6 +214,6 @@ export default class Player {
     this.grown = false
     this.frozen = false
     this.updateRadius(0, 1.5)
-    this.el.classList.remove('frozen')
+    this.el.classList.remove('frozenCursor')
   }
 }

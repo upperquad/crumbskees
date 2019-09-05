@@ -100,9 +100,9 @@ function handleClick(e, props, callback) {
   const x = (player.targetX / VB_WIDTH) + 0.5
   const y = (player.targetY / VB_HEIGHT) + 0.5
 
-  const targetsCaught = catchItems(targets, x, y, player)
+  const targetsCaught = catchItems(targets, x, y, player, index)
 
-  const powersCaught = catchItems(powers, x, y, player)
+  const powersCaught = catchItems(powers, x, y, player, index)
 
   if (targetsCaught.length > 0) {
     player.addScore(targetsCaught.length)
@@ -116,7 +116,7 @@ function handleClick(e, props, callback) {
   }
 }
 
-function catchItems(items, x, y, player) {
+function catchItems(items, x, y, player, index) {
   const itemsCaught = []
 
   for (let i = 0; i < items.length; i++) {
@@ -138,7 +138,7 @@ function catchItems(items, x, y, player) {
           break
         case 'freeze':
           // affect other player
-          playerIndex = player.index === 0 ? 1 : 0
+          playerIndex = index === 0 ? 1 : 0
           playerAffected = PlayersManager.players[playerIndex]
           playerAffected.setPower(item.type)
           break

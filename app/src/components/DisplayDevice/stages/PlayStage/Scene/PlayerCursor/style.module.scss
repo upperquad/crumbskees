@@ -2,11 +2,6 @@
 
 .playerCursor {
   stroke-width: grid(.2);
-  transition: stroke 1s ease;
-
-  &.frozen {
-    stroke: $color-gray !important;
-  }
 
   // &.good {
   //   fill: green !important;
@@ -15,4 +10,8 @@
   // &.wrong {
   //   fill: red !important;
   // }
+}
+
+:global(.frozenCursor) {
+  stroke: $color-gray !important;
 }
