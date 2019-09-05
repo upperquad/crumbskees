@@ -12,12 +12,12 @@ const ERROR_DISPLAYS = {
     message: 'Another game is in progress',
     buttonText: 'Kick\'em off',
     buttonFunc: () => {
-      // move this to the WebsocketManager
-      // const websocket = new WebSocket(`${Server.host}/admin?command=disconnect_all`)
-      // websocket.onopen = () => {
-      //   websocket.close()
-      //   window.location = '/game'
-      // }
+      // move this to the WebsocketManager? Or maybe just keep this until we kill it?
+      const websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/admin?command=disconnect_all`)
+      websocket.onopen = () => {
+        websocket.close()
+        window.location = '/game'
+      }
     },
   },
   default: {
@@ -35,14 +35,16 @@ const ErrorStage = props => {
   const reasonObj = ERROR_DISPLAYS[reason] ? ERROR_DISPLAYS[reason] : ERROR_DISPLAYS.default
 
   useEffect(() => {
-    if (reasonObj.hasTimebar) {
+    if (reason && reasonObj.hasTimebar) {
       const timeout = setTimeout(reasonObj.buttonFunc, 13000)
 
       return () => {
         clearTimeout(timeout)
       }
     }
-  }, [])
+
+    return () => {}
+  }, [reason, reasonObj])
 
   return (
     <div className={classNames(styles.error, extraClassName)}>
