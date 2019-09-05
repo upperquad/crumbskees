@@ -18,22 +18,3 @@ export function getOffsetLeft(elem) { // issues on ie11
 
   return bounds.left
 }
-
-export function splitText(el) {
-  const spans = []
-  const length = el.textContent.length
-
-  for (let i = 0; i < length; i++) {
-    const span = document.createElement('span')
-    span.innerHTML = el.textContent[i]
-    spans.push(span)
-  }
-
-  el.innerHTML = ''
-
-  for (let i = 0; i < length; i++) {
-    el.appendChild(spans[i])
-  }
-
-  return spans
-}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
-import { getNow } from '~utils/time'
+import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { VB_WIDTH, VB_HEIGHT } from '~constants'
 import { clamp } from '~utils/math'

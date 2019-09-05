@@ -1,5 +1,5 @@
 import { Howl } from 'howler'
-import { getNow } from '~utils/time'
+import getNow from '~utils/time'
 import { random } from '~utils/math'
 // import duckSound from '../../../assets/game/sounds/duck.mp3'
 import scoreSound from '~assets/sounds/score.mp3'
