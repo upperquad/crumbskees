@@ -1,34 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import character1 from '~assets/images/character1.png'
-// import character2 from '~assets/images/character2.png'
 import MarqueeText from '~components/MarqueeText'
 
-const PlayStage = () => {
-  const character = {
-    color: 'purple',
-    image: character1,
-  }
-
-  const score = ''
-
-  const marqueeText = 'What up tiny type that is distracting —'
+const PlayStage = props => {
+  const { color, image, score, secondaryColor } = props
+  const [isTouching, setIsTouching] = useState(false)
 
   return (
-    <section className={styles.inGame}>
-      <h2 className={styles.title}>The Upperquadrant</h2>
-      <div
-        className={classNames(styles.block, {
-          [styles.blockRed]: character.color === 'red',
-          [styles.blockPurple]: character.color === 'purple',
+    <section className={styles.play}>
+      <h2
+        className={classNames(styles.title, {
+          [styles.titleRed]: secondaryColor === 'red',
+          [styles.titlePurple]: secondaryColor === 'purple',
         })}
       >
-        <div className={styles.score}>{score}</div>
-        <img className={styles.image} src={character.image} alt="" />
+        The Upperquadrant
+      </h2>
+      <div
+        className={classNames(styles.block, {
+          [styles.blockRed]: color === 'red',
+          [styles.blockPurple]: color === 'purple',
+        })}
+      >
+        {!!score && <div className={styles.score}>{score}</div>}
+        <img className={styles.image} src={image} alt="" />
       </div>
-      <MarqueeText text={marqueeText} duration="12s" />
-      <div className="touch-bubble" />
+      <MarqueeText extraClassName={styles.marquee} text="What up tiny type that is distracting —" duration="12s" />
+      <div className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
       {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}"
        role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
     </section>

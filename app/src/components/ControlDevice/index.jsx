@@ -36,6 +36,7 @@ const ControlDevice = () => {
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
+  const [score, setScore] = useState(0)
 
   useEffect(() => {
     const messageHandler = event => {
@@ -65,7 +66,7 @@ const ControlDevice = () => {
     <>
       {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')} />}
       {stage === 'meet_character' && <MeetCharacterStage color={character.color} video={character.video} image={character.image} onFinish={() => setStage('play')} />}
-      {stage === 'play' && <PlayStage color={character.color} secondaryColor={character.secondaryColor} image={character.image} onFinish={() => setStage('result')} />}
+      {stage === 'play' && <PlayStage color={character.color} secondaryColor={character.secondaryColor} image={character.image} score={score} onFinish={() => setStage('result')} />}
       {stage === 'result' && <ResultStage onFinish={() => setStage('pre_connect')} />}
     </>
   )
