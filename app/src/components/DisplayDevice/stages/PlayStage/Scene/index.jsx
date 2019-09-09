@@ -1,16 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import '~managers/RAFManager'
+import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG } from '~constants'
 import { uuid, randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
+import Board from './Board'
+
+let timeInterval
+const TIME = 40
 
 const Scene = props => {
   const { bkg, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   const [debugItems, setDebugItems] = useState([])
@@ -33,6 +39,9 @@ const Scene = props => {
     const id = uuid()
     setClipPathId(id)
 
+    // startTime
+    startTime(TIME, setTime, endScene)
+
     // events
 
     // Call effectUnits the first time
@@ -43,105 +52,110 @@ const Scene = props => {
 
     return () => {
       window.removeEventListener('resize', effectResize)
+
+      clearInterval(timeInterval) // clear startTime interval
     }
-  }, [])
+  }, [endScene])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
   // }, this.props.delayGif)
 
   return (
-    <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
-      <img className={styles.frontBkg} src={frontBkg} alt="" />
-      <img className={styles.reveal} src={bkg} alt="" />
-      <div className={styles.wrapper}>
-        <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
-          <defs>
-            <clipPath id={clipPathId} className={styles.svgClipPath}>
-              <use xlinkHref="#player0" />
-              <use xlinkHref="#player1" />
-            </clipPath>
-          </defs>
-          <PlayerCursor
-            index={0}
-            sceneUnits={sceneUnits}
-            extraClassName={styles.playerCursor1}
-            items={items}
-            power={power}
-            itemImage={itemImage}
-            removeItem={item => {
-              removeItem(item, items, setItems, endScene)
-            }}
-          />
-          <PlayerCursor
-            index={1}
-            sceneUnits={sceneUnits}
-            extraClassName={styles.playerCursor2}
-            items={items}
-            power={power}
-            itemImage={itemImage}
-            removeItem={item => {
-              removeItem(item, items, setItems, endScene)
-            }}
-          />
-          <g
-            className={styles.svgClipPathRef}
-            width={`${VB_WIDTH}px`}
-            height={`${VB_HEIGHT}px`}
-            clipPath={`url(#${clipPathId})`}
-          >
-            <image
-              className={styles.svgImage}
-              xlinkHref={bkg}
-              preserveAspectRatio="xMidYMid slice"
+    <Fragment>
+      <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
+        <img className={styles.frontBkg} src={frontBkg} alt="" />
+        <img className={styles.reveal} src={bkg} alt="" />
+        <div className={styles.wrapper}>
+          <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
+            <defs>
+              <clipPath id={clipPathId} className={styles.svgClipPath}>
+                <use xlinkHref="#player0" />
+                <use xlinkHref="#player1" />
+              </clipPath>
+            </defs>
+            <PlayerCursor
+              index={0}
+              sceneUnits={sceneUnits}
+              extraClassName={styles.playerCursor1}
+              items={items}
+              power={power}
+              itemImage={itemImage}
+              removeItem={item => {
+                removeItem(item, items, setItems, endScene)
+              }}
+            />
+            <PlayerCursor
+              index={1}
+              sceneUnits={sceneUnits}
+              extraClassName={styles.playerCursor2}
+              items={items}
+              power={power}
+              itemImage={itemImage}
+              removeItem={item => {
+                removeItem(item, items, setItems, endScene)
+              }}
+            />
+            <g
+              className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}
               height={`${VB_HEIGHT}px`}
-            />
-            {items.map(item => (
+              clipPath={`url(#${clipPathId})`}
+            >
               <image
                 className={styles.svgImage}
-                xlinkHref={item.image}
+                xlinkHref={bkg}
                 preserveAspectRatio="xMidYMid slice"
-                width={item.size}
-                height={item.size}
-                x={`${item.x * 100}%`}
-                y={`${item.y * 100}%`}
-                style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+                width={`${VB_WIDTH}px`}
+                height={`${VB_HEIGHT}px`}
               />
-            ))}
-          </g>
-        </svg>
-        {debugItems.map(item => (
-          <div
-            className={classNames(styles.debugItem, { [styles.debugItemPower]: item.power })}
-            style={{ left: item.left, top: item.top }}
-          />
-        ))}
-      </div>
-      <div className={styles.intros}>
-        <div className={styles.intro}>
-          <div className={classNames(styles.introRound, styles.red)} />
+              {items.map(item => (
+                <image
+                  className={styles.svgImage}
+                  xlinkHref={item.image}
+                  preserveAspectRatio="xMidYMid slice"
+                  width={item.size}
+                  height={item.size}
+                  x={`${item.x * 100}%`}
+                  y={`${item.y * 100}%`}
+                  style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+                />
+              ))}
+            </g>
+          </svg>
+          {debugItems.map(item => (
+            <div
+              className={classNames(styles.debugItem, { [styles.debugItemPower]: item.power })}
+              style={{ left: item.left, top: item.top }}
+            />
+          ))}
         </div>
-        <div className={styles.intro}>
-          <div className={styles.introCircle} />
-          <div className={classNames(styles.introItemToFind, styles.black)}>
-            <div className={classNames(styles.introItemToFindText)}>
-              ITEM
-              <br />
-              TO FIND
+        <div className={styles.intros}>
+          <div className={styles.intro}>
+            <div className={classNames(styles.introRound, styles.red)} />
+          </div>
+          <div className={styles.intro}>
+            <div className={styles.introCircle} />
+            <div className={classNames(styles.introItemToFind, styles.black)}>
+              <div className={classNames(styles.introItemToFindText)}>
+                ITEM
+                <br />
+                TO FIND
+              </div>
             </div>
+            <video width={`${VB_WIDTH}px`} height={`${VB_HEIGHT}px`} autoPlay loop muted />
           </div>
-          <video width={`${VB_WIDTH}px`} height={`${VB_HEIGHT}px`} autoPlay loop muted />
-        </div>
-        <div className={styles.intro}>
-          <div className={styles.introReadyWrapper}>
-            <div className={classNames(styles.introReady, styles.red)}>READY</div>
-            <div className={classNames(styles.introSet, styles.red)}>SET</div>
+          <div className={styles.intro}>
+            <div className={styles.introReadyWrapper}>
+              <div className={classNames(styles.introReady, styles.red)}>READY</div>
+              <div className={classNames(styles.introSet, styles.red)}>SET</div>
+            </div>
+            <div className={classNames(styles.introGo, styles.red)}>GO</div>
           </div>
-          <div className={classNames(styles.introGo, styles.red)}>GO</div>
         </div>
       </div>
-    </div>
+      <Board time={time} />
+    </Fragment>
   )
 }
 
@@ -224,8 +238,25 @@ function removeItem(itemsCaught, items, setItems, endScene) {
   if (targets.length === 0) {
     // if no more targets left
     endScene()
-    // window.GameManager.endScene(scene.props.message)
   }
+}
+
+function startTime(time, setTime, endScene) {
+  setTime(time)
+
+  timeInterval = setInterval(() => {
+    time -= 1
+    setTime(time)
+
+    // if time is 0
+    if (time === 0) {
+      endScene()
+      // this.endScene('TIME\'S UP!')
+    } else if (time === 10) {
+      // play sound countdown
+      SoundManager.countdown.play()
+    }
+  }, 1000)
 }
 
 function effectUnits(setSceneUnits, sceneRef) {
