@@ -1,6 +1,6 @@
 @import "~styles/imports/index";
 
-@keyframes change-color {
+@keyframes playstage-bar-change-color {
   0% {
     background-color: $color-green;
     width: 100%;
@@ -18,7 +18,7 @@
   }
 }
 
-@keyframes blink-bar-color {
+@keyframes playstage-blink-bar-color {
   0% {
     opacity: 0;
   }
@@ -47,7 +47,7 @@
 
   &.started {
     &::after {
-      animation: change-color 40s linear infinite forwards, blink-bar-color 1s linear infinite forwards 30s;
+      animation: playstage-bar-change-color 40s linear infinite forwards, playstage-blink-bar-color 1s linear infinite forwards 30s;
     }
   }
 

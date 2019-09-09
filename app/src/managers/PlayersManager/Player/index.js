@@ -140,10 +140,15 @@ export default class Player {
     SoundManager.score.play()
     console.log('score : ', this._score)
 
+    // Todo:
+
+    // display +1 message
     // this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
 
-    // this.scores[player.index] += score
+    // Add class item-found
     // this.element.classList.add('item-found')
+
+    // add item in board and do +1 on board
 
     // for (let i = 0; i < this.dom.boardPlayerScore.length; i++) {
     //   if (i === player.index) {
