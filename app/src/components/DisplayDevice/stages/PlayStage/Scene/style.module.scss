@@ -1,0 +1,265 @@
+@import "~styles/imports/index";
+
+@keyframes playstage-bar-change-color {
+  0% {
+    background-color: $color-green;
+    width: 100%;
+  }
+  50% {
+    background-color: $color-orange;
+    width: 50%;
+  }
+  75% {
+    background-color: $color-red;
+  }
+  100% {
+    background-color: $color-red;
+    width: 0%;
+  }
+}
+
+@keyframes playstage-blink-bar-color {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.scene {
+  background-position: center center;
+  background-size: cover;
+  cursor: none;
+  height: grid(14);
+  position: relative;
+  text-align: center;
+  z-index: 10;
+
+  &.started {
+    &::after {
+      animation: playstage-bar-change-color 40s linear infinite forwards, playstage-blink-bar-color 1s linear infinite forwards 30s;
+    }
+  }
+
+  &::after {
+    background-color: $color-green;
+    bottom: 0;
+    content: '';
+    height: grid(.3);
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10;
+  }
+}
+
+
+.frontBkg {
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.reveal {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  transition: clip-path 1.3s $circ-in-out;
+  width: 100%;
+  z-index: 0;
+
+  .isOutro & {
+    clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+  }
+}
+
+.wrapper {
+  height: 100%;
+  position: relative;
+
+  &::after {
+    background-color: $color-white;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: scaleX(0);
+    transform-origin: 0% center;
+    transition: transform 1.3s $circ-in-out;
+    width: 100%;
+    z-index: 9;
+
+    .isIntro & {
+      transform: scaleX(1);
+      transition: transform 1.3s $circ-in-out;
+    }
+  }
+}
+
+.svg {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  .playerCursor1 {
+    stroke: $color-purple;
+    transition: stroke 1s ease;
+  }
+
+  .playerCursor2 {
+    stroke: $color-red;
+    transition: stroke 1s ease;
+  }
+}
+
+.svgClipPathRef {
+  // opacity: 0;
+}
+
+.svgImage {
+  // opacity: 0.5;
+}
+
+.intro {
+  align-items: center;
+  display: none;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+
+  &:first-child {
+    overflow: visible;
+    z-index: 11;
+  }
+
+  video {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+
+  @keyframes blink-color {
+    0% {
+      color: transparent;
+    }
+    50% {
+      color: $color-red;
+    }
+    100% {
+      color: transparent;
+    }
+  }
+}
+
+.debugItem {
+  background-color: $color-black;
+  border-radius: 50%;
+  // display: none;
+  height: 20px;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  width: 20px;
+}
+
+.debugItemPower {
+  background-color: $color-red;
+}
+
+.introRound {
+  align-items: flex-end;
+  display: flex;
+  height: grid(6);
+  margin-top: grid(-2.4);
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+
+  &.blink {
+    animation: blink-color .1s linear 6;
+    color: $color-white;
+    -webkit-text-stroke-color: $color-black;
+    -webkit-text-stroke-width: grid(.06);
+  }
+
+  span {
+    display: inline-block;
+    line-height: 1;
+    min-width: grid(.8);
+    vertical-align: bottom;
+  }
+}
+
+.introItemToFindText {
+  line-height: 1.2;
+  margin-top: grid(-2);
+  opacity: 0;
+  position: relative;
+  width: grid(6);
+  z-index: 10;
+}
+
+.introCircle {
+  background-color: $color-white;
+  border: grid(.3) solid $color-black;
+  border-radius: 50%;
+  height: grid(11);
+  left: 50%;
+  opacity: 1;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(4);
+  width: grid(11);
+  z-index: 10;
+}
+
+.introReadyWrapper {
+  line-height: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.introReady {
+  transform: translateY(-100%);
+}
+
+.introSet {
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -100%);
+}
+
+.introGo {
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

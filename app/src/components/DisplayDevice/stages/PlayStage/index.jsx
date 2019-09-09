@@ -1,28 +1,78 @@
-import React from 'react'
-// import styles from './style.module.scss'
+import React, { useState, useEffect } from 'react'
+import classNames from 'classnames'
+import styles from './style.module.scss'
+import usePrevious from '~utils/hooks'
+import SoundManager from '~managers/SoundManager'
 
-// Get character from PlayerManager
-// PlayerManager.player[token] ??
+import Scene from './Scene'
+import Board from './Board'
 
-// const scene = [{
-//   bkg: scene1,
-// }, {
-//   bkg: scene2,
-// }, {
-//   bkg: scene3,
-// }]
-// this can come from a JSON
+// data for scenes
+import scenes from './scenes'
 
-// when scene is over call onEnding(), go to next current scene
+let timeInterval
+const TIME = 40
 
-// {/* <Scene bkg="scene[currentScene].bkg" onEnding={() => {}} /> */}
+const PlayStage = props => {
+  const { onFinish } = props
+  const [sceneIndex, setSceneIndex] = useState(0)
+  const [time, setTime] = useState(0)
 
-// function onEnding = () => {
-//   Do out transitions... etc...
-//   currentScene += 1
-//   Do in transitions... etc...
-// }
+  const prevSceneIndex = usePrevious(sceneIndex)
 
-const PlayStage = () => <></>
+  useEffect(() => { // update when scene change
+    // reset time if sceneIndex is updated
+    startTime(setTime, TIME)
+
+    return () => {
+      // clear interval
+      clearInterval(timeInterval)
+    }
+  }, [sceneIndex])
+
+  useEffect(() => { // update when time change
+    if (time === 0 && prevSceneIndex === sceneIndex) { // prevent calling above code twice when sceneIndex is updated
+      endScene(sceneIndex, setSceneIndex, onFinish)
+      // this.endScene('TIME\'S UP!')
+    } else if (time === 10) {
+      // play sound countdown
+      SoundManager.countdown.play()
+    }
+  }, [time, sceneIndex, prevSceneIndex, onFinish])
+
+  return (
+    <section className={classNames(styles.game, styles.isIntro)}>
+      <Scene
+        {...scenes[sceneIndex]}
+        endScene={() => {
+          endScene(sceneIndex, setSceneIndex, onFinish)
+        }}
+      />
+      <Board time={time} />
+    </section>
+  )
+}
+
+function endScene(sceneIndex, setSceneIndex, onFinish) {
+  sceneIndex += 1
+  if (sceneIndex === scenes.length) {
+    // Go to ResultPage
+    onFinish()
+  } else {
+    // Do out transitions... etc...
+    setSceneIndex(sceneIndex)
+    // Do in transitions... etc...
+  }
+}
+
+function startTime(setTime, duration) {
+  let time = duration
+  setTime(time)
+
+  timeInterval = setInterval(() => {
+    time -= 1
+    setTime(time)
+  }, 1000)
+}
 
 export default PlayStage

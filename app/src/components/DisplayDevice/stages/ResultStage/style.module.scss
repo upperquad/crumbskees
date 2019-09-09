@@ -4,23 +4,23 @@
 }
 
 .background {
+  height: 100%;
   object-fit: cover;
   width: 100%;
-  height: 100%;
 }
 
 .card {
+  background-color: $color-white;
+  border-color: $color-black;
+  border-style: solid;
+  border-width: grid(.05);
+  height: grid(12);
+  left: 50%;
+  overflow: hidden;
   position: absolute;
   top: 50%;
-  left: 50%;
-  width: grid(12);
-  height: grid(12);
   transform: translate(-50%, -50%);
-  border-style: solid;
-  border-color: $color-black;
-  border-width: grid(.05);
-  background-color: $color-white;
-  overflow: hidden;
+  width: grid(12);
 }
 
 .titleWrapper {
@@ -57,27 +57,27 @@
   @extend %Bold;
 
   font-size: responsive-font(40);
-  text-align: center;
   margin-top: grid(.5);
+  text-align: center;
 }
 
 .playersImages:not(.playersImagesTied) {
   .playerAvatar {
+    left: 50%;
     position: absolute;
     top: 50%;
-    left: 50%;
-    width: grid(4);
     transform: translate(-50%, -50%);
+    width: grid(4);
   }
 }
 
 .playersImages.playersImagesTied {
-  position: relative;
   display: flex;
   height: grid(4);
-  width: 100%;
   justify-content: space-around;
   margin-top: grid(1);
+  position: relative;
+  width: 100%;
 
   .playerAvatar {
     height: 100%;
@@ -95,14 +95,14 @@
 }
 
 .circle {
-  position: absolute;
-  bottom: 0;
-  width: grid(6);
-  height: grid(6);
-  left: 50%;
+  border-color: $color-black;
   border-radius: 50%;
   border-style: solid;
-  border-color: $color-black;
   border-width: grid(.05);
+  bottom: 0;
+  height: grid(6);
+  left: 50%;
+  position: absolute;
   transform: translate(-50%, 50%);
+  width: grid(6);
 }
