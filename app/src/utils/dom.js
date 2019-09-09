@@ -1,15 +1,15 @@
-export function getOffsetTop(elem) { // issues on ie11
+export function getOffsetTop(elem) {
   if (!elem) {
     return 0
   }
 
   const bounds = elem.getBoundingClientRect()
-  const bodyTop = window.scrollY || document.body.scrollTop
+  const bodyTop = window.scrollY || window.pageYOffset
 
   return bounds.top + bodyTop
 }
 
-export function getOffsetLeft(elem) { // issues on ie11
+export function getOffsetLeft(elem) {
   if (!elem) {
     return 0
   }
