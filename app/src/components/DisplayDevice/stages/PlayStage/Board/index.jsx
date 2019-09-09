@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import typography from '~styles/modules/typography.module.scss'
 
 const Board = props => {
   const { time } = props
@@ -17,16 +16,16 @@ const Board = props => {
           <div className={styles.character}>
             {/* <img src={players[0].avatar} alt="" /> */}
           </div>
-          <div className={classNames(styles.score, styles.purple, typography.text80Bold)}>
+          <div className={classNames(styles.score, styles.purple)}>
             00
           </div>
-          <div className={classNames(styles.name, typography.text48Bold)}>
+          <div className={styles.name}>
             PLAYER 1
           </div>
           <div className={styles.items} />
         </div>
         <div className={styles.center}>
-          <div className={classNames(styles.timer, typography.text112Bold)}>
+          <div className={styles.timer}>
             {seconds}
           </div>
         </div>
@@ -34,10 +33,10 @@ const Board = props => {
           <div className={styles.character}>
             {/* <img src={players[1].avatar} alt="" /> */}
           </div>
-          <div className={classNames(styles.score, styles.red, typography.text80Bold)}>
+          <div className={classNames(styles.score, styles.red)}>
             00
           </div>
-          <div className={classNames(styles.name, typography.text48Bold)}>
+          <div className={styles.name}>
             PLAYER 2
           </div>
           <div className={styles.items} />

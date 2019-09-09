@@ -64,10 +64,13 @@
 }
 
 .score {
+  @extend %Bold;
+
   border-right: $border;
   border-top: $border;
   color: transparent !important;
   display: inline-block;
+  font-size: responsive-font(80);
   height: grid(3);
   line-height: grid(3);
   text-align: center;
@@ -78,9 +81,12 @@
 }
 
 .name {
+  @extend %Bold;
+
   align-items: center;
   border-top: $border;
   display: flex;
+  font-size: responsive-font(48);
   height: grid(3);
   padding: grid(1);
   vertical-align: top;
@@ -123,4 +129,10 @@
   transform: translate(-50%, 50%);
   width: grid(2);
   z-index: 40;
+}
+
+.timer {
+  @extend %Bold;
+
+  font-size: responsive-font(112);
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import typography from '~styles/modules/typography.module.scss'
 import '~managers/RAFManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG } from '~constants'
 import { uuid, randomInt } from '~utils/math'
@@ -121,12 +120,12 @@ const Scene = props => {
       </div>
       <div className={styles.intros}>
         <div className={styles.intro}>
-          <div className={classNames(styles.introRound, typography.text200Bold, styles.red)} />
+          <div className={classNames(styles.introRound, styles.red)} />
         </div>
         <div className={styles.intro}>
           <div className={styles.introCircle} />
-          <div className={classNames(styles.introItemToFind, typography.text200Bold, styles.black)}>
-            <div className={classNames(styles.introItemToFindText, typography.text48old)}>
+          <div className={classNames(styles.introItemToFind, styles.black)}>
+            <div className={classNames(styles.introItemToFindText)}>
               ITEM
               <br />
               TO FIND
@@ -136,10 +135,10 @@ const Scene = props => {
         </div>
         <div className={styles.intro}>
           <div className={styles.introReadyWrapper}>
-            <div className={classNames(styles.introReady, typography.text200Bold, styles.red)}>READY</div>
-            <div className={classNames(styles.introSet, typography.text200Bold, styles.red)}>SET</div>
+            <div className={classNames(styles.introReady, styles.red)}>READY</div>
+            <div className={classNames(styles.introSet, styles.red)}>SET</div>
           </div>
-          <div className={classNames(styles.introGo, typography.text200Bold, styles.red)}>GO</div>
+          <div className={classNames(styles.introGo, styles.red)}>GO</div>
         </div>
       </div>
     </div>

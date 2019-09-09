@@ -3,7 +3,6 @@ import QRCode from 'qrcode'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import styles from './style.module.scss'
-import typography from '~styles/modules/typography.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
 import JumpUpText from '~components/JumpUpText'
@@ -67,7 +66,7 @@ const SetupStage = props => {
                         [styles.qrTransitioning]: status === 'exiting' || status === 'exited' || status === 'entering'
                       })}>
                         <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
-                        <div className={classNames(styles.qrUrl, typography.text18)}>
+                        <div className={styles.qrUrl}>
                           Think QR codes are stupid?
                           <br />
                           Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
