@@ -13,7 +13,8 @@ import scenes from './scenes'
 let timeInterval
 const TIME = 40
 
-const PlayStage = () => {
+const PlayStage = props => {
+  const { onFinish } = props
   const [sceneIndex, setSceneIndex] = useState(0)
   const [time, setTime] = useState(0)
 
@@ -31,20 +32,20 @@ const PlayStage = () => {
 
   useEffect(() => { // update when time change
     if (time === 0 && prevSceneIndex === sceneIndex) { // prevent calling above code twice when sceneIndex is updated
-      endScene(sceneIndex, setSceneIndex)
+      endScene(sceneIndex, setSceneIndex, onFinish)
       // this.endScene('TIME\'S UP!')
     } else if (time === 10) {
       // play sound countdown
       SoundManager.countdown.play()
     }
-  }, [time, sceneIndex, prevSceneIndex])
+  }, [time, sceneIndex, prevSceneIndex, onFinish])
 
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
       <Scene
         {...scenes[sceneIndex]}
         endScene={() => {
-          endScene(sceneIndex, setSceneIndex)
+          endScene(sceneIndex, setSceneIndex, onFinish)
         }}
       />
       <Board time={time} />
@@ -52,13 +53,12 @@ const PlayStage = () => {
   )
 }
 
-function endScene(sceneIndex, setSceneIndex) {
+function endScene(sceneIndex, setSceneIndex, onFinish) {
   sceneIndex += 1
   if (sceneIndex === scenes.length) {
     // Go to ResultPage
-    console.log('go to result page')
+    onFinish()
   } else {
-    console.log('update scene')
     // Do out transitions... etc...
     setSceneIndex(sceneIndex)
     // Do in transitions... etc...

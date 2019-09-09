@@ -15,7 +15,7 @@ const Board = props => {
       <div className={styles.board}>
         <div className={styles.player}>
           <div className={styles.character}>
-            <img src="../../assets/game/images/character1.png" alt="" />
+            {/* <img src={players[0].avatar} alt="" /> */}
           </div>
           <div className={classNames(styles.score, styles.purple, typography.text80Bold)}>
             00
@@ -32,7 +32,7 @@ const Board = props => {
         </div>
         <div className={styles.player}>
           <div className={styles.character}>
-            <img src="../../assets/game/images/character2.png" alt="" />
+            {/* <img src={players[1].avatar} alt="" /> */}
           </div>
           <div className={classNames(styles.score, styles.red, typography.text80Bold)}>
             00
