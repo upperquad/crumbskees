@@ -2,6 +2,7 @@ import getNow from '~utils/time'
 import { random } from '~utils/math'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
+import PlayersManager from '~managers/PlayersManager'
 
 export default class Player {
   _score = 0;
@@ -38,9 +39,6 @@ export default class Player {
     this.targetY = 0
     this.isInsideTime = 0
     this.increaseMax = VB_WIDTH * 0.05
-    // values for mouse event
-    this.clickPrecisionW = (GRID_UNIT_VW * 1.5) / 100 // 1.5 grid unit
-    this.clickPrecisionH = (GRID_UNIT_VH * 1.5) / 100 // 1.5 grid unit
     this.grown = false
     this.frozen = false
 
@@ -98,7 +96,7 @@ export default class Player {
         break
       case 'grow':
         this.grown = true
-        this.updateRadius(this.increaseMax, 3)
+        this.updateRadius(this.increaseMax)
         // window.GameManager.popUpMessage('GROW', 'orange', false)
         SoundManager.grow.play()
         timeClean = 6000
@@ -112,8 +110,8 @@ export default class Player {
         break
     }
 
-    setTimeout(() => {
-      this.cleanPowers()
+    this.timePower = setTimeout(() => {
+      // this.cleanPowers()
     }, timeClean)
   }
 
@@ -138,7 +136,8 @@ export default class Player {
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
     SoundManager.score.play()
-    console.log('score : ', this._score)
+    // update manager
+    PlayersManager.callObservers('player_click')
 
     // Todo:
 
@@ -167,7 +166,7 @@ export default class Player {
     // Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
 
-  updateRadius(incr, clickPrecision) {
+  updateRadius(incr) {
     for (let i = 0; i < this.points.length; i++) {
       const point = this.points[i]
       // Increase each points
@@ -191,16 +190,15 @@ export default class Player {
       point.startAnim = getNow()
     }
 
-    setTimeout(() => {
-      this.clickPrecisionW = (GRID_UNIT_VW * clickPrecision) / 100 // 2.5 grid unit
-      this.clickPrecisionH = (GRID_UNIT_VH * clickPrecision) / 100 // 2.5 grid unit
+    setTimeout(() => { // after it grows
       for (let i = 0; i < this.points.length; i++) {
         this.points[i].duration -= 250
       }
-    }, 1000) // to prevent big click on the click getting the power
+    }, 1000)
   }
 
   cleanPowers = () => {
+    clearTimeout(this.timePower)
     this.grown = false
     this.frozen = false
     this.updateRadius(0, 1.5)

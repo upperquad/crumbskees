@@ -12,6 +12,8 @@ import ErrorStage from './stages/ErrorStage'
 
 import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
+import Player from '~managers/PlayersManager/Player'
+import { DEBUG } from '~constants'
 
 const STAGE_TRANSITION_OUT = 1300
 const STAGE_TRANSITION_IN = 800
@@ -30,10 +32,15 @@ const DisplayDevice = () => {
   // subscribe to PlayersManager
   useEffect(() => {
     // This should trigger on all children components so don't have to do this anywhere else
-    PlayersManager.addSubscriber(forceUpdate)
+    PlayersManager.addSubscriber('player_change', forceUpdate)
+
+    if (DEBUG) { // just for test debug mode
+      PlayersManager.players[0] = new Player({ id: 123 })
+      PlayersManager.players[1] = new Player({ id: 345 })
+    }
 
     return () => {
-      PlayersManager.removeSubscriber(forceUpdate)
+      PlayersManager.removeSubscriber('player_change', forceUpdate)
     }
   }, [forceUpdate])
 

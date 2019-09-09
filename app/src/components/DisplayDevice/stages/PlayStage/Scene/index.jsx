@@ -39,11 +39,10 @@ const Scene = props => {
     const id = uuid()
     setClipPathId(id)
 
-    // startTime
+    // StartTime
     startTime(TIME, setTime, endScene)
 
-    // events
-
+    // Events
     // Call effectUnits the first time
     effectUnits(setSceneUnits, sceneRef)
     const effectResize = () => effectUnits(setSceneUnits, sceneRef)

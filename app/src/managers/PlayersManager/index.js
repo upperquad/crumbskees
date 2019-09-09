@@ -1,18 +1,11 @@
 import Player from './Player'
 import WebSocketManager from '~managers/WebSocketManager'
-import { DEBUG } from '~constants'
 
 
 class PlayersManager {
   constructor() {
     if (!PlayersManager.instance) {
       PlayersManager.instance = this
-    }
-
-    // just for test PlayStage
-    if (DEBUG) {
-      this.players[0] = new Player({ id: 123 })
-      this.players[1] = new Player({ id: 345 })
     }
 
     return PlayersManager.instance
@@ -26,17 +19,31 @@ class PlayersManager {
     get: (obj, prop) => obj[prop],
     set: (obj, prop, value) => {
       obj[prop] = value
-      this.observers.forEach(observer => observer())
+      this.callObservers('player_change')
       return obj[prop]
     },
   })
 
-  observers = []
+  observers = {}
 
-  addSubscriber = observer => this.observers.push(observer)
+  addSubscriber = (type, observer) => {
+    // Object.prototype.hasOwnProperty.call(foo, "bar");
+    if (!this.observers.hasOwnProperty(type)) {
+      this.observers[type] = []
+    }
+    this.observers[type].push(observer)
+  }
 
-  removeSubscriber = observer => {
-    this.observers = this.observers.filter(item => item !== observer)
+  removeSubscriber = (type, observer) => {
+    if (this.observers.hasOwnProperty(type)) {
+      this.observers[type] = this.observers[type].filter(item => item !== observer)
+    }
+  }
+
+  callObservers = type => {
+    if (this.observers[type]) {
+      this.observers[type].forEach(observer => observer())
+    }
   }
 
   newConnect = (submittedToken, userId) => {

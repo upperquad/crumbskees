@@ -122,7 +122,7 @@ function catchItems(items, x, y, player, index) {
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
     const distance = Math.hypot(x - item.x, y - item.y)
-    const minDistance = player.grown ? 0.19 : 0.08
+    const minDistance = player.grown ? 0.19 : 0.08 // --> need a calcul based on window size for that
 
     if (distance <= minDistance) {
       itemsCaught.push(item)

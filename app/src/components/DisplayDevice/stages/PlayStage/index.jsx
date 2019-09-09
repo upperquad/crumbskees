@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
+import PlayersManager from '~managers/PlayersManager'
+
 import Scene from './Scene'
 
 // data for scenes
@@ -24,6 +26,10 @@ const PlayStage = props => {
 }
 
 function endScene(sceneIndex, setSceneIndex, onFinish) {
+  PlayersManager.players.forEach(player => {
+    player.cleanPowers()
+  })
+
   sceneIndex += 1
   if (sceneIndex === scenes.length) {
     // Go to ResultPage
