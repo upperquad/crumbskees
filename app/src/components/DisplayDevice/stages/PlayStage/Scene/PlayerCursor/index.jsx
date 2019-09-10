@@ -68,6 +68,8 @@ const PlayerCursor = props => {
       id={`player${index}`}
       className={classNames(styles.cursor, extraClassName)}
       strokeWidth="6"
+      stroke={PlayersManager.players[index].color}
+      style={{ transition: 'stroke 1s ease' }}
     />
   )
 }
@@ -112,8 +114,7 @@ function handleClick(e, props, callback) {
 
   // Remove items from the scene
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    console.log(x, y)
-    callback([...targetsCaught, ...powersCaught], { x, y })
+    callback([...targetsCaught, ...powersCaught], player)
   }
 }
 
@@ -151,9 +152,7 @@ function catchItems(items, x, y, player, index) {
 }
 
 function handleRAF(e, index) {
-  // console.log('raf')
   const { now } = e.detail
-  // console.log(playersRef)
   // this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
   const player = PlayersManager.players[index]

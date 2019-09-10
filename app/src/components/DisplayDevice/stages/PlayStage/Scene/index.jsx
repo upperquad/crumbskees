@@ -77,22 +77,14 @@ const Scene = props => {
             <PlayerCursor
               index={0}
               sceneUnits={sceneUnits}
-              extraClassName={styles.playerCursor1}
               items={items}
               power={power}
               itemImage={itemImage}
-              onScore={(item, pos) => {
-                onScore(item, pos, items, setItems, messages, setMessages, endScene)
+              onScore={(item, player) => {
+                onScore(item, player, items, setItems, messages, setMessages, endScene)
               }}
             />
-            <PlayerCursor
-              index={1}
-              sceneUnits={sceneUnits}
-              extraClassName={styles.playerCursor2}
-              items={items}
-              power={power}
-              itemImage={itemImage}
-            />
+            <PlayerCursor index={1} sceneUnits={sceneUnits} items={items} power={power} itemImage={itemImage} />
             <g
               className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}
@@ -129,7 +121,9 @@ const Scene = props => {
         </div>
         <div className={styles.messages}>
           {messages.map(message => (
-            <div className={styles.message} style={{ left: message.left, top: message.top }}>{message.text}</div>
+            <div className={styles.message} style={{ left: message.left, top: message.top, color: message.color }}>
+              {message.text}
+            </div>
           ))}
         </div>
         <div className={styles.intros}>
@@ -161,28 +155,29 @@ const Scene = props => {
   )
 }
 
-// onScore(item, pos, items, setItems, messages, setMessages, endScene)
-function onScore(itemsCaught, pos, items, setItems, messages, setMessages, endScene) {
-  // remove item
+function onScore(itemsCaught, player, items, setItems, messages, setMessages, endScene) {
+  // Update items in the scene (remove what is caught)
   const newItems = items.filter(item => !itemsCaught.includes(item))
-
   setItems(newItems)
 
-  // pop up message
-  const message = {
-    left: `${pos.x * 100}%`,
-    top: `${pos.y * 100}%`,
-    text: `+${itemsCaught.length}`,
-  }
-
-  messages.push(message)
-
-  setMessages(messages)
-
-
-  // If no more targets left, end scene
+  const targetsCaught = itemsCaught.filter(item => item.type === 'target')
   const targets = newItems.filter(item => item.type === 'target')
 
+  // Pop up message
+  itemsCaught.forEach(item => {
+    const message = {
+      left: `${(player.targetX / VB_WIDTH + 0.5) * 100}%`,
+      top: `${(player.targetY / VB_HEIGHT + 0.5) * 100}%`,
+      text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
+      color: item.type === 'target' ? player.color : item.color,
+    }
+
+    messages.push(message)
+  })
+
+  setMessages([...messages])
+
+  // If no more targets left, end scene
   if (targets.length === 0) {
     endScene()
   }
@@ -209,7 +204,7 @@ function effectItems(setItems, setDebugItems, props) {
   const debugItems = []
 
   if (power) {
-    const item = createItem(props, grid, power.image, power.type)
+    const item = createItem(props, grid, power.image, power.type, power.color)
     items.push(item)
 
     if (DEBUG) {
@@ -236,7 +231,7 @@ function effectItems(setItems, setDebugItems, props) {
   }
 }
 
-function createItem(props, grid, image, type = 'target') {
+function createItem(props, grid, image, type = 'target', color = null) {
   const { gridCols, gridLines } = props
   // randomize
   const rd = randomInt(0, grid.length - 1)
@@ -252,6 +247,7 @@ function createItem(props, grid, image, type = 'target') {
     size,
     image,
     type,
+    color,
   }
 
   return obj

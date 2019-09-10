@@ -14,6 +14,7 @@ import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 import Player from '~managers/PlayersManager/Player'
 import { DEBUG } from '~constants'
+import { PURPLE, RED } from '~utils/colors'
 
 // assets
 import character1 from '~assets/images/character1.mp4'
@@ -39,8 +40,8 @@ const DisplayDevice = () => {
     PlayersManager.addSubscriber('player_change', forceUpdate)
 
     if (DEBUG) { // just for test debug mode
-      PlayersManager.players[0] = new Player({ id: 123, character: character1 })
-      PlayersManager.players[1] = new Player({ id: 345, character: character2 })
+      PlayersManager.players[0] = new Player({ id: 123, character: character1, color: PURPLE })
+      PlayersManager.players[1] = new Player({ id: 345, character: character2, color: RED })
     }
 
     return () => {

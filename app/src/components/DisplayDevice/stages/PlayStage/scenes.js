@@ -1,5 +1,7 @@
 // Maybe put this file in a Data/ folder?
 
+import { ORANGE, BLUE } from '~utils/colors'
+
 // assets
 import scene1Pattern from '~assets/images/scene_1/s1-pattern.gif'
 import scene1Front from '~assets/images/scene_1/s1-front.gif'
@@ -22,7 +24,7 @@ const scenes = [
     frontBkg: scene1Front,
     itemImage: scene1Item,
     videoIntro: scene1IntroVideo,
-    numItems: 5,
+    numItems: 10,
     gridCols: 32,
     gridLines: 14,
     message: 'DOPE.',
@@ -30,6 +32,7 @@ const scenes = [
     power: {
       type: 'grow',
       image: growItem,
+      color: ORANGE,
     },
   }, {
     bkg: scene2Pattern,
@@ -44,6 +47,7 @@ const scenes = [
     power: {
       type: 'freeze',
       image: freezeItem,
+      color: BLUE,
     },
   }, {
     bkg: scene3Pattern,
@@ -58,6 +62,7 @@ const scenes = [
     power: {
       type: 'grow',
       image: growItem,
+      color: ORANGE,
     },
   },
 ]

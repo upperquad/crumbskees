@@ -113,7 +113,7 @@ export default class Player {
     }
 
     this.timePower = setTimeout(() => {
-      // this.cleanPowers()
+      this.cleanPowers()
     }, timeClean)
   }
 
