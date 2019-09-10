@@ -1,11 +1,13 @@
 import getNow from '~utils/time'
 import { random } from '~utils/math'
 import SoundManager from '~managers/SoundManager'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH } from '~constants'
+import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
 import PlayersManager from '~managers/PlayersManager'
 
 export default class Player {
   _score = 0;
+
+  _scoreInScene = 0;
 
   static _numPoints = 8;
 
@@ -135,9 +137,10 @@ export default class Player {
 
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
+    this._scoreInScene += nbItemsCaught
     SoundManager.score.play()
     // update manager
-    PlayersManager.callObservers('player_click')
+    PlayersManager.callObservers('player_score')
 
     // Todo:
 
@@ -147,14 +150,7 @@ export default class Player {
     // Add class item-found
     // this.element.classList.add('item-found')
 
-    // add item in board and do +1 on board
-
-    // for (let i = 0; i < this.dom.boardPlayerScore.length; i++) {
-    //   if (i === player.index) {
-    //     const zeroUnit = this.scores[player.index] < 10 ? '0' : ''
-    //     this.dom.boardPlayerScore[i].innerHTML = `${zeroUnit}${this.scores[player.index]}`
-    //   }
-    // }
+    // add item in board
 
     // for (let i = 0; i < score; i++) {
     //   const img = document.createElement('img')

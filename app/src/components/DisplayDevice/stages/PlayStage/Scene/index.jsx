@@ -153,7 +153,7 @@ const Scene = props => {
           </div>
         </div>
       </div>
-      <Board time={time} />
+      <Board time={time} itemImage={itemImage} />
     </Fragment>
   )
 }

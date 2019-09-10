@@ -22,7 +22,7 @@ const scenes = [
     frontBkg: scene1Front,
     itemImage: scene1Item,
     videoIntro: scene1IntroVideo,
-    numItems: 15,
+    numItems: 5,
     gridCols: 32,
     gridLines: 14,
     message: 'DOPE.',

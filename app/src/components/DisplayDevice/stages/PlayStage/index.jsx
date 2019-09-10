@@ -28,6 +28,7 @@ const PlayStage = props => {
 function endScene(sceneIndex, setSceneIndex, onFinish) {
   PlayersManager.players.forEach(player => {
     player.cleanPowers()
+    player._scoreInScene = 0
   })
 
   sceneIndex += 1
