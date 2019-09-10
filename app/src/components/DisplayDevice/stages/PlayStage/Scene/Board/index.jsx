@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from 'react'
-import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 
 import styles from './style.module.scss'
@@ -12,26 +11,7 @@ const Board = props => {
 
   const forceUpdate = useForceUpdate()
 
-  const playersData = [
-    {
-      score: PlayersManager.players[0]._score,
-      scoreInScene: PlayersManager.players[0]._scoreInScene,
-      character: PlayersManager.players[0].character,
-      items: [],
-    },
-    {
-      score: PlayersManager.players[1]._score,
-      scoreInScene: PlayersManager.players[1]._scoreInScene,
-      character: PlayersManager.players[1].character,
-      items: [],
-    },
-  ]
-
-  playersData.forEach(player => {
-    for (let i = 0; i < player.scoreInScene; i++) {
-      player.items.push(<img className={styles.item} src={itemImage} alt="" />)
-    }
-  })
+  const playersContent = []
 
   // subscribe to PlayersManager
   useEffect(() => {
@@ -43,29 +23,39 @@ const Board = props => {
     }
   }, [forceUpdate])
 
+  PlayersManager.players.forEach((player, index) => {
+    // generate player content
+    const items = []
+    for (let i = 0; i < player._scoreInScene; i++) {
+      items.push(<img className={styles.item} src={itemImage} alt="" />)
+    }
+
+    const content = (
+      <div className={styles.player}>
+        <div className={styles.character}>
+          <AutoplayVideo src={player.character} extraClassName={styles.characterVideo} />
+        </div>
+        <div className={styles.score}>{zeroUnit(player._score)}</div>
+        <div className={styles.name}>
+          PLAYER&nbsp;
+          {index + 1}
+        </div>
+        <div className={styles.items}>{items}</div>
+      </div>
+    )
+
+    playersContent.push(content)
+  })
+
   return (
     <Fragment>
       <img src="" className={styles.itemToFind} alt="" />
       <div className={styles.board}>
-        <div className={styles.player}>
-          <div className={styles.character}>
-            <AutoplayVideo src={playersData[0].character} extraClassName={styles.characterVideo} />
-          </div>
-          <div className={classNames(styles.score, styles.purple)}>{zeroUnit(playersData[0].score)}</div>
-          <div className={styles.name}>PLAYER 1</div>
-          <div className={styles.items}>{playersData[0].items}</div>
-        </div>
+        {playersContent[0]}
         <div className={styles.center}>
           <div className={styles.timer}>{zeroUnit(time)}</div>
         </div>
-        <div className={styles.player}>
-          <div className={styles.character}>
-            <AutoplayVideo src={playersData[1].character} extraClassName={styles.characterVideo} />
-          </div>
-          <div className={classNames(styles.score, styles.red)}>{zeroUnit(playersData[1].score)}</div>
-          <div className={styles.name}>PLAYER 2</div>
-          <div className={styles.items}>{playersData[1].items}</div>
-        </div>
+        {playersContent[1]}
       </div>
     </Fragment>
   )

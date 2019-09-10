@@ -24,10 +24,10 @@ const scenes = [
     frontBkg: scene1Front,
     itemImage: scene1Item,
     videoIntro: scene1IntroVideo,
-    numItems: 10,
+    numItems: 2,
     gridCols: 32,
     gridLines: 14,
-    message: 'DOPE.',
+    endMessage: 'DOPE.',
     delayGif: 1000,
     power: {
       type: 'grow',
@@ -42,7 +42,7 @@ const scenes = [
     numItems: 10,
     gridCols: 32,
     gridLines: 14,
-    message: 'GOOD JOB!',
+    endMessage: 'GOOD JOB!',
     delayGif: 2750,
     power: {
       type: 'freeze',
@@ -57,7 +57,7 @@ const scenes = [
     numItems: 1,
     gridCols: 32,
     gridLines: 14,
-    message: 'AWESOME!',
+    endMessage: 'AWESOME!',
     delayGif: 0,
     power: {
       type: 'grow',

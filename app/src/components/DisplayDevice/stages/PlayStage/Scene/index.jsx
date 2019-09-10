@@ -6,6 +6,7 @@ import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG } from '~constants'
 import { uuid, randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
+import { RED } from '~utils/colors'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
@@ -15,7 +16,7 @@ let timeInterval
 const TIME = 40
 
 const Scene = props => {
-  const { bkg, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
   const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
@@ -41,7 +42,7 @@ const Scene = props => {
     setClipPathId(id)
 
     // StartTime
-    startTime(TIME, setTime, endScene)
+    startTime(TIME, setTime, endScene, setMessages)
 
     // Events
     // Call effectUnits the first time
@@ -81,10 +82,19 @@ const Scene = props => {
               power={power}
               itemImage={itemImage}
               onCatchItems={(item, player) => {
-                onCatchItems(item, player, items, setItems, messages, setMessages, endScene)
+                onCatchItems(item, player, items, setItems, messages, setMessages, endScene, endMessage)
               }}
             />
-            <PlayerCursor index={1} sceneUnits={sceneUnits} items={items} power={power} itemImage={itemImage} />
+            <PlayerCursor
+              index={1}
+              sceneUnits={sceneUnits}
+              items={items}
+              power={power}
+              itemImage={itemImage}
+              onCatchItems={(item, player) => {
+                onCatchItems(item, player, items, setItems, messages, setMessages, endScene, endMessage)
+              }}
+            />
             <g
               className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}
@@ -121,7 +131,10 @@ const Scene = props => {
         </div>
         <div className={styles.messages}>
           {messages.map(message => (
-            <div className={styles.message} style={{ left: message.left, top: message.top, color: message.color }}>
+            <div
+              className={classNames(styles.message, { [styles.messageEnd]: message.end })}
+              style={{ left: message.left, top: message.top, color: message.color }}
+            >
               {message.text}
             </div>
           ))}
@@ -155,7 +168,7 @@ const Scene = props => {
   )
 }
 
-function onCatchItems(itemsCaught, player, items, setItems, messages, setMessages, endScene) {
+function onCatchItems(itemsCaught, player, items, setItems, messages, setMessages, endScene, endMessage) {
   // Update items in the scene (remove what is caught)
   const newItems = items.filter(item => !itemsCaught.includes(item))
   setItems(newItems)
@@ -175,12 +188,21 @@ function onCatchItems(itemsCaught, player, items, setItems, messages, setMessage
     messages.push(message)
   })
 
-  setMessages([...messages])
-
   // If no more targets left, end scene
   if (targets.length === 0) {
+    const message = {
+      left: '50%',
+      top: '50%',
+      text: endMessage,
+      color: RED,
+      end: true,
+    }
+
+    messages.push(message)
     endScene()
   }
+
+  setMessages([...messages])
 }
 
 function effectItems(setItems, setDebugItems, props) {
@@ -253,7 +275,7 @@ function createItem(props, grid, image, type = 'target', color = null) {
   return obj
 }
 
-function startTime(time, setTime, endScene) {
+function startTime(time, setTime, endScene, setMessages) {
   setTime(time)
 
   timeInterval = setInterval(() => {
@@ -263,7 +285,15 @@ function startTime(time, setTime, endScene) {
     // if time is 0
     if (time === 0) {
       endScene()
-      // this.endScene('TIME\'S UP!')
+      setMessages([
+        {
+          left: '50%',
+          top: '50%',
+          text: "TIME'S UP!",
+          color: RED,
+          end: true,
+        },
+      ])
     } else if (time === 10) {
       // play sound countdown
       SoundManager.countdown.play()
