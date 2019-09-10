@@ -10,7 +10,7 @@ import { clamp } from '~utils/math'
 import PlayersManager from '~managers/PlayersManager'
 
 const PlayerCursor = props => {
-  const { extraClassName, index, removeItem, sceneUnits } = props
+  const { extraClassName, index, onScore, sceneUnits } = props
 
   // updated on index props change
   useEffect(() => {
@@ -25,8 +25,8 @@ const PlayerCursor = props => {
 
   // updated on props change
   useEffect(() => {
-    const effectClick = e => handleClick(e, props, item => {
-      removeItem(item)
+    const effectClick = e => handleClick(e, props, (item, pos) => {
+      onScore(item, pos)
     })
 
     if (DEBUG && index === 0) { // only click for player one on debug
@@ -42,7 +42,7 @@ const PlayerCursor = props => {
         window.removeEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
       }
     }
-  }, [props, removeItem, index])
+  }, [props, onScore, index])
 
 
   // updated on sceneUnits change
@@ -112,7 +112,8 @@ function handleClick(e, props, callback) {
 
   // Remove items from the scene
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    callback([...targetsCaught, ...powersCaught])
+    console.log(x, y)
+    callback([...targetsCaught, ...powersCaught], { x, y })
   }
 }
 

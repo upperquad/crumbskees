@@ -24,6 +24,7 @@ $base-width: 1920;
 
 /* Easings*/
 $circ-in-out: cubic-bezier(.785, .135, .150, .860);
+$expo-out: cubic-bezier(.190, 1.000, .220, 1.000);
 $easing-circle-ease-out: cubic-bezier(.075, .82, .165, 1);
 $easing-circle-ease-in-out: cubic-bezier(.785, .135, .15, .86);
 

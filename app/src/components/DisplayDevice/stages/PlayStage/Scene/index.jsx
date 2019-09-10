@@ -21,6 +21,7 @@ const Scene = props => {
   const [items, setItems] = useState([])
   const [debugItems, setDebugItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
+  const [messages, setMessages] = useState([])
 
   const sceneRef = useRef(null)
 
@@ -80,8 +81,8 @@ const Scene = props => {
               items={items}
               power={power}
               itemImage={itemImage}
-              removeItem={item => {
-                removeItem(item, items, setItems, endScene)
+              onScore={(item, pos) => {
+                onScore(item, pos, items, setItems, messages, setMessages, endScene)
               }}
             />
             <PlayerCursor
@@ -91,9 +92,6 @@ const Scene = props => {
               items={items}
               power={power}
               itemImage={itemImage}
-              removeItem={item => {
-                removeItem(item, items, setItems, endScene)
-              }}
             />
             <g
               className={styles.svgClipPathRef}
@@ -129,6 +127,11 @@ const Scene = props => {
             />
           ))}
         </div>
+        <div className={styles.messages}>
+          {messages.map(message => (
+            <div className={styles.message} style={{ left: message.left, top: message.top }}>{message.text}</div>
+          ))}
+        </div>
         <div className={styles.intros}>
           <div className={styles.intro}>
             <div className={classNames(styles.introRound, styles.red)} />
@@ -156,6 +159,33 @@ const Scene = props => {
       <Board time={time} itemImage={itemImage} />
     </Fragment>
   )
+}
+
+// onScore(item, pos, items, setItems, messages, setMessages, endScene)
+function onScore(itemsCaught, pos, items, setItems, messages, setMessages, endScene) {
+  // remove item
+  const newItems = items.filter(item => !itemsCaught.includes(item))
+
+  setItems(newItems)
+
+  // pop up message
+  const message = {
+    left: `${pos.x * 100}%`,
+    top: `${pos.y * 100}%`,
+    text: `+${itemsCaught.length}`,
+  }
+
+  messages.push(message)
+
+  setMessages(messages)
+
+
+  // If no more targets left, end scene
+  const targets = newItems.filter(item => item.type === 'target')
+
+  if (targets.length === 0) {
+    endScene()
+  }
 }
 
 function effectItems(setItems, setDebugItems, props) {
@@ -225,19 +255,6 @@ function createItem(props, grid, image, type = 'target') {
   }
 
   return obj
-}
-
-function removeItem(itemsCaught, items, setItems, endScene) {
-  const newItems = items.filter(item => !itemsCaught.includes(item))
-
-  setItems(newItems)
-
-  const targets = newItems.filter(item => item.type === 'target')
-
-  if (targets.length === 0) {
-    // if no more targets left
-    endScene()
-  }
 }
 
 function startTime(time, setTime, endScene) {
