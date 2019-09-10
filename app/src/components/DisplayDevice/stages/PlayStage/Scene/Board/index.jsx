@@ -23,12 +23,10 @@ const Board = props => {
     }
   }, [forceUpdate])
 
+
+  // Generate player content
   PlayersManager.players.forEach((player, index) => {
-    // generate player content
-    const items = []
-    for (let i = 0; i < player._scoreInScene; i++) {
-      items.push(<img className={styles.item} src={itemImage} alt="" />)
-    }
+    const items = [...new Array(player._scoreInScene)]
 
     const content = (
       <div className={styles.player}>
@@ -40,7 +38,9 @@ const Board = props => {
           PLAYER&nbsp;
           {index + 1}
         </div>
-        <div className={styles.items}>{items}</div>
+        <div className={styles.items}>
+          {items.map(() => (<img className={styles.item} src={itemImage} alt="" />))}
+        </div>
       </div>
     )
 
