@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { TransitionGroup, Transition } from 'react-transition-group'
 // import styles from './style.module.scss'
 
 import PreConnectStage from './stages/PreConnectStage'
@@ -12,12 +13,40 @@ const ControlDevice = () => {
   const [stage, setStage] = useState('pre_connect')
 
   return (
-    <>
-      {stage === 'pre_connect' && <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')} />}
-      {stage === 'meet_character' && <MeetCharacterStage onFinish={() => setStage('play')} />}
-      {stage === 'play' && <PlayStage onFinish={() => setStage('result')} />}
-      {stage === 'result' && <ResultStage onFinish={() => setStage('pre_connect')} />}
-    </>
+    <TransitionGroup>
+      {stage === 'pre_connect' && (
+        <Transition
+          key="stage-pre-connect"
+          timeout={500}
+        >
+          <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')} />
+        </Transition>
+      )}
+      {stage === 'meet_character' && (
+        <Transition
+          key="stage-meet-character"
+          timeout={500}
+        >
+          <MeetCharacterStage onFinish={() => setStage('play')} />
+        </Transition>
+      )}
+      {stage === 'play' && (
+        <Transition
+          key="stage-play"
+          timeout={500}
+        >
+          <PlayStage onFinish={() => setStage('result')} />
+        </Transition>
+      )}
+      {stage === 'result' && (
+        <Transition
+          key="stage-result"
+          timeout={500}
+        >
+          <ResultStage onFinish={() => setStage('pre_connect')} />
+        </Transition>
+      )}
+    </TransitionGroup>
   )
 }
 
