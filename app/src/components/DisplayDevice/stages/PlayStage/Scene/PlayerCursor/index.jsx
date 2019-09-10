@@ -10,7 +10,7 @@ import { clamp } from '~utils/math'
 import PlayersManager from '~managers/PlayersManager'
 
 const PlayerCursor = props => {
-  const { extraClassName, index, onScore, sceneUnits } = props
+  const { extraClassName, index, onCatchItems, sceneUnits } = props
 
   // updated on index props change
   useEffect(() => {
@@ -25,8 +25,8 @@ const PlayerCursor = props => {
 
   // updated on props change
   useEffect(() => {
-    const effectClick = e => handleClick(e, props, (item, pos) => {
-      onScore(item, pos)
+    const effectClick = e => handleClick(e, props, (item, player) => {
+      onCatchItems(item, player)
     })
 
     if (DEBUG && index === 0) { // only click for player one on debug
@@ -42,7 +42,7 @@ const PlayerCursor = props => {
         window.removeEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
       }
     }
-  }, [props, onScore, index])
+  }, [props, onCatchItems, index])
 
 
   // updated on sceneUnits change
@@ -91,7 +91,7 @@ function handleMouseMove(e, sceneUnits) {
   player.targetY -= VB_HEIGHT / 2
 }
 
-function handleClick(e, props, callback) {
+function handleClick(e, props, onCatchItems) {
   const { index, items } = props
 
   const powers = items.filter(item => item.type !== 'target')
@@ -114,7 +114,7 @@ function handleClick(e, props, callback) {
 
   // Remove items from the scene
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    callback([...targetsCaught, ...powersCaught], player)
+    onCatchItems([...targetsCaught, ...powersCaught], player)
   }
 }
 

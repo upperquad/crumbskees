@@ -80,8 +80,8 @@ const Scene = props => {
               items={items}
               power={power}
               itemImage={itemImage}
-              onScore={(item, player) => {
-                onScore(item, player, items, setItems, messages, setMessages, endScene)
+              onCatchItems={(item, player) => {
+                onCatchItems(item, player, items, setItems, messages, setMessages, endScene)
               }}
             />
             <PlayerCursor index={1} sceneUnits={sceneUnits} items={items} power={power} itemImage={itemImage} />
@@ -155,7 +155,7 @@ const Scene = props => {
   )
 }
 
-function onScore(itemsCaught, player, items, setItems, messages, setMessages, endScene) {
+function onCatchItems(itemsCaught, player, items, setItems, messages, setMessages, endScene) {
   // Update items in the scene (remove what is caught)
   const newItems = items.filter(item => !itemsCaught.includes(item))
   setItems(newItems)
