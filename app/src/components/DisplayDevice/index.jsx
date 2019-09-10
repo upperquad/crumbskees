@@ -15,6 +15,10 @@ import PlayersManager from '~managers/PlayersManager'
 import Player from '~managers/PlayersManager/Player'
 import { DEBUG } from '~constants'
 
+// assets
+import character1 from '~assets/images/character1.mp4'
+import character2 from '~assets/images/character2.mp4'
+
 const STAGE_TRANSITION_OUT = 1300
 const STAGE_TRANSITION_IN = 800
 
@@ -35,8 +39,8 @@ const DisplayDevice = () => {
     PlayersManager.addSubscriber('player_change', forceUpdate)
 
     if (DEBUG) { // just for test debug mode
-      PlayersManager.players[0] = new Player({ id: 123 })
-      PlayersManager.players[1] = new Player({ id: 345 })
+      PlayersManager.players[0] = new Player({ id: 123, character: character1 })
+      PlayersManager.players[1] = new Player({ id: 345, character: character2 })
     }
 
     return () => {

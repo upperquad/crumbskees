@@ -150,15 +150,7 @@ export default class Player {
     // Add class item-found
     // this.element.classList.add('item-found')
 
-    // add item in board
-
-    // for (let i = 0; i < score; i++) {
-    //   const img = document.createElement('img')
-    //   img.src = item
-    //   img.classList.add('board__player__item')
-    //   this.dom.boardPlayerItems[player.index].appendChild(img)
-    // }
-
+    // Send score to server
     // Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
 
@@ -186,7 +178,7 @@ export default class Player {
       point.startAnim = getNow()
     }
 
-    setTimeout(() => { // after it grows
+    setTimeout(() => { // when growing animation finish
       for (let i = 0; i < this.points.length; i++) {
         this.points[i].duration -= 250
       }
@@ -197,7 +189,7 @@ export default class Player {
     clearTimeout(this.timePower)
     this.grown = false
     this.frozen = false
-    this.updateRadius(0, 1.5)
+    this.updateRadius(0)
     this.el.classList.remove('frozenCursor')
   }
 }

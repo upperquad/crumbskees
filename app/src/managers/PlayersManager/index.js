@@ -27,15 +27,14 @@ class PlayersManager {
   observers = {}
 
   addSubscriber = (type, observer) => {
-    // Object.prototype.hasOwnProperty.call(foo, "bar");
-    if (!this.observers.hasOwnProperty(type)) {
+    if (!{}.hasOwnProperty.call(this.observers, type)) {
       this.observers[type] = []
     }
     this.observers[type].push(observer)
   }
 
   removeSubscriber = (type, observer) => {
-    if (this.observers.hasOwnProperty(type)) {
+    if ({}.hasOwnProperty.call(this.observers, type)) {
       this.observers[type] = this.observers[type].filter(item => item !== observer)
     }
   }
