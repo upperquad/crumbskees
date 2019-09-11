@@ -24,7 +24,7 @@ const STAGE_TRANSITION_OUT = 1300
 const STAGE_TRANSITION_IN = 800
 
 const DisplayDevice = () => {
-  const [stage, setStage] = useState('setup')
+  const [stage, setStage] = useState('play')
   const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()

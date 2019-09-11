@@ -10,10 +10,11 @@ import { RED } from '~utils/colors'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
+import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
 
 let timeInterval
-const TIME = 100
+const TIME = 40
 
 const Scene = props => {
   const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
@@ -22,7 +23,7 @@ const Scene = props => {
   const [items, setItems] = useState([])
   const [debugItems, setDebugItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([[], []])
 
   const sceneRef = useRef(null)
 
@@ -81,8 +82,11 @@ const Scene = props => {
               items={items}
               power={power}
               itemImage={itemImage}
-              onCatchItems={(item, player) => {
-                onCatchItems(item, player, items, setItems, messages, setMessages, endScene, endMessage)
+              onCatchItems={(item, index) => {
+                onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
+              }}
+              onShowTap={index => {
+                onShowTap(index, messages, setMessages)
               }}
             />
             <PlayerCursor
@@ -91,8 +95,11 @@ const Scene = props => {
               items={items}
               power={power}
               itemImage={itemImage}
-              onCatchItems={(item, player) => {
-                onCatchItems(item, player, items, setItems, messages, setMessages, endScene, endMessage)
+              onCatchItems={(item, index) => {
+                onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
+              }}
+              onShowTap={index => {
+                onShowTap(index, messages, setMessages)
               }}
             />
             <g
@@ -130,7 +137,15 @@ const Scene = props => {
           ))}
         </div>
         <div className={styles.messages}>
-          {messages.map(message => (
+          {messages[0].map(message => (
+            <div
+              className={classNames(styles.message, { [styles.messageEnd]: message.end })}
+              style={{ left: message.left, top: message.top, color: message.color }}
+            >
+              {message.text}
+            </div>
+          ))}
+          {messages[1].map(message => (
             <div
               className={classNames(styles.message, { [styles.messageEnd]: message.end })}
               style={{ left: message.left, top: message.top, color: message.color }}
@@ -169,7 +184,8 @@ const Scene = props => {
   )
 }
 
-function onCatchItems(itemsCaught, player, items, setItems, messages, setMessages, endScene, endMessage) {
+function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, endScene, endMessage) {
+  const player = PlayersManager.players[index]
   // Update items in the scene (remove what is caught)
   const newItems = items.filter(item => !itemsCaught.includes(item))
   setItems(newItems)
@@ -180,13 +196,13 @@ function onCatchItems(itemsCaught, player, items, setItems, messages, setMessage
   // Pop up message
   itemsCaught.forEach(item => {
     const message = {
-      left: `${(player.targetX / VB_WIDTH + 0.5) * 100}%`,
-      top: `${(player.targetY / VB_HEIGHT + 0.5) * 100}%`,
+      left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
+      top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
       text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
       color: item.type === 'target' ? player.color : item.color,
     }
 
-    messages.push(message)
+    messages[index].push(message)
   })
 
   // If no more targets left, end scene
@@ -199,9 +215,22 @@ function onCatchItems(itemsCaught, player, items, setItems, messages, setMessage
       end: true,
     }
 
-    messages.push(message)
+    messages[index].push(message)
     endScene()
   }
+
+  setMessages([...messages])
+}
+
+function onShowTap(index, messages, setMessages) {
+  const player = PlayersManager.players[index]
+  const message = {
+    left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
+    top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
+    text: 'TAP',
+    color: player.color,
+  }
+  messages[index].push(message)
 
   setMessages([...messages])
 }

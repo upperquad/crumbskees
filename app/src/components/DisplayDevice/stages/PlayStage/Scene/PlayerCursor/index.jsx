@@ -9,8 +9,10 @@ import { clamp } from '~utils/math'
 
 import PlayersManager from '~managers/PlayersManager'
 
+const INTERVAL_TAP = 800
+
 const PlayerCursor = props => {
-  const { extraClassName, index, onCatchItems, sceneUnits } = props
+  const { extraClassName, index, onCatchItems, onShowTap, sceneUnits } = props
 
   // updated on index props change
   useEffect(() => {
@@ -35,14 +37,33 @@ const PlayerCursor = props => {
       window.addEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
     }
 
+    let showTapInterval
+
+    // if player's score is 0, show tap message
+    if (PlayersManager.players[index]._score === 0) {
+      // call it at 0 second
+      // showTap(props, () => {
+      //   onShowTap(index)
+      // })
+
+      // set interval
+      showTapInterval = setInterval(() => {
+        showTap(props, () => {
+          onShowTap(index)
+        })
+      }, INTERVAL_TAP)
+    }
+
     return () => {
       if (DEBUG && index === 0) {
         window.removeEventListener('click', effectClick)
       } else {
         window.removeEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
       }
+
+      clearInterval(showTapInterval)
     }
-  }, [props, onCatchItems, index])
+  }, [props, onCatchItems, onShowTap, index])
 
 
   // updated on sceneUnits change
@@ -97,29 +118,27 @@ function handleClick(e, props, onCatchItems) {
   const powers = items.filter(item => item.type !== 'target')
   const targets = items.filter(item => item.type === 'target')
 
-  const player = PlayersManager.players[index]
+  const targetsCaught = itemsInCursor(targets, index)
 
-  const targetsCaught = catchItems(targets, player, index)
-
-  const powersCaught = catchItems(powers, player, index)
+  const powersCaught = itemsInCursor(powers, index)
 
   if (targetsCaught.length > 0) {
-    player.addScore(targetsCaught.length)
-    // kill player intervalTap
-    clearInterval(player.isCloseToItemInterval)
+    PlayersManager.players[index].addScore(targetsCaught.length)
   }
 
   // Remove items from the scene
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    onCatchItems([...targetsCaught, ...powersCaught], player)
+    onCatchItems([...targetsCaught, ...powersCaught], index)
   }
 }
 
-function catchItems(items, player, index) {
+function itemsInCursor(items, index, triggerPower = true) {
   const itemsCaught = []
 
-  const x = (player.targetX / VB_WIDTH) + 0.5
-  const y = (player.targetY / VB_HEIGHT) + 0.5
+  const player = PlayersManager.players[index]
+
+  const x = (player.x / VB_WIDTH) + 0.5
+  const y = (player.y / VB_HEIGHT) + 0.5
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
@@ -134,26 +153,38 @@ function catchItems(items, player, index) {
     if (distance <= minDistance) {
       itemsCaught.push(item)
 
-      let playerIndex
-      let playerAffected
+      if (triggerPower) {
+        let playerIndex
+        let playerAffected
 
-      switch (item.type) {
-        default:
-          break
-        case 'grow':
-          player.setPower(item.type)
-          break
-        case 'freeze':
-          // affect other player
-          playerIndex = index === 0 ? 1 : 0
-          playerAffected = PlayersManager.players[playerIndex]
-          playerAffected.setPower(item.type)
-          break
+        switch (item.type) {
+          default:
+            break
+          case 'grow':
+            player.setPower(item.type)
+            break
+          case 'freeze':
+            // affect other player
+            playerIndex = index === 0 ? 1 : 0
+            playerAffected = PlayersManager.players[playerIndex]
+            playerAffected.setPower(item.type)
+            break
+        }
       }
     }
   }
 
   return itemsCaught
+}
+
+function showTap(props, onShowTap) {
+  const { index, items } = props
+
+  const itemsCaught = itemsInCursor(items, index, false)
+
+  if (itemsCaught.length > 0) {
+    onShowTap()
+  }
 }
 
 function handleRAF(e, index) {
