@@ -12,7 +12,7 @@ import PlayersManager from '~managers/PlayersManager'
 const INTERVAL_TAP = 800
 
 const PlayerCursor = props => {
-  const { extraClassName, index, onCatchItems, onShowTap, sceneUnits } = props
+  const { extraClassName, index, items, onCatchItems, onShowTap, sceneUnits } = props
 
   // updated on index props change
   useEffect(() => {
@@ -25,9 +25,9 @@ const PlayerCursor = props => {
     }
   }, [index])
 
-  // updated on props change
+  // updated on index, items change
   useEffect(() => {
-    const effectClick = e => handleClick(e, props, (item, player) => {
+    const effectClick = e => handleClick(e, index, items, (item, player) => {
       onCatchItems(item, player)
     })
 
@@ -42,13 +42,10 @@ const PlayerCursor = props => {
     // if player's score is 0, show tap message
     if (PlayersManager.players[index]._score === 0) {
       // call it at 0 second
-      // showTap(props, () => {
-      //   onShowTap(index)
-      // })
-
       // set interval
+      // Bug to fix, when clicking on a target, it clear the interval of the second player
       showTapInterval = setInterval(() => {
-        showTap(props, () => {
+        showTap(index, items, () => {
           onShowTap(index)
         })
       }, INTERVAL_TAP)
@@ -63,7 +60,7 @@ const PlayerCursor = props => {
 
       clearInterval(showTapInterval)
     }
-  }, [props, onCatchItems, onShowTap, index])
+  }, [index, items, onCatchItems, onShowTap])
 
 
   // updated on sceneUnits change
@@ -112,9 +109,7 @@ function handleMouseMove(e, sceneUnits) {
   player.targetY -= VB_HEIGHT / 2
 }
 
-function handleClick(e, props, onCatchItems) {
-  const { index, items } = props
-
+function handleClick(e, index, items, onCatchItems) {
   const powers = items.filter(item => item.type !== 'target')
   const targets = items.filter(item => item.type === 'target')
 
@@ -177,9 +172,7 @@ function itemsInCursor(items, index, triggerPower = true) {
   return itemsCaught
 }
 
-function showTap(props, onShowTap) {
-  const { index, items } = props
-
+function showTap(index, items, onShowTap) {
   const itemsCaught = itemsInCursor(items, index, false)
 
   if (itemsCaught.length > 0) {
