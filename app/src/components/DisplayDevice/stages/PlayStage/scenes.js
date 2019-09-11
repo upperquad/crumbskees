@@ -1,5 +1,4 @@
 // Maybe put this file in a Data/ folder?
-
 import { ORANGE, BLUE } from '~utils/colors'
 
 // assets
@@ -24,7 +23,7 @@ const scenes = [
     frontBkg: scene1Front,
     itemImage: scene1Item,
     videoIntro: scene1IntroVideo,
-    numItems: 2,
+    numItems: 10,
     gridCols: 32,
     gridLines: 14,
     endMessage: 'DOPE.',

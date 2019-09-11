@@ -98,13 +98,10 @@ function handleClick(e, props, onCatchItems) {
   const targets = items.filter(item => item.type === 'target')
 
   const player = PlayersManager.players[index]
-  // if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
-  const x = (player.targetX / VB_WIDTH) + 0.5
-  const y = (player.targetY / VB_HEIGHT) + 0.5
 
-  const targetsCaught = catchItems(targets, x, y, player, index)
+  const targetsCaught = catchItems(targets, player, index)
 
-  const powersCaught = catchItems(powers, x, y, player, index)
+  const powersCaught = catchItems(powers, player, index)
 
   if (targetsCaught.length > 0) {
     player.addScore(targetsCaught.length)
@@ -118,13 +115,21 @@ function handleClick(e, props, onCatchItems) {
   }
 }
 
-function catchItems(items, x, y, player, index) {
+function catchItems(items, player, index) {
   const itemsCaught = []
+
+  const x = (player.targetX / VB_WIDTH) + 0.5
+  const y = (player.targetY / VB_HEIGHT) + 0.5
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
-    const distance = Math.hypot(x - item.x, y - item.y)
-    const minDistance = player.grown ? 0.19 : 0.08 // --> need a calcul based on window size for that
+    // --> need a calcul based on Ratio scene
+    const xPx = x * VB_WIDTH
+    const itemXPx = item.x * VB_WIDTH
+    const yPx = y * VB_HEIGHT
+    const itemYPx = item.y * VB_HEIGHT
+    const distance = Math.hypot(xPx - itemXPx, yPx - itemYPx)
+    const minDistance = player.grown ? 185 : 95
 
     if (distance <= minDistance) {
       itemsCaught.push(item)

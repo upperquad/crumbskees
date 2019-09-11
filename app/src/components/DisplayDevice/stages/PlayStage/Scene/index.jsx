@@ -13,7 +13,7 @@ import PlayerCursor from './PlayerCursor'
 import Board from './Board'
 
 let timeInterval
-const TIME = 40
+const TIME = 100
 
 const Scene = props => {
   const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
@@ -163,6 +163,7 @@ const Scene = props => {
           </div>
         </div>
       </div>
+      <img src="" className={styles.itemToFind} alt="" />
       <Board time={time} itemImage={itemImage} />
     </Fragment>
   )

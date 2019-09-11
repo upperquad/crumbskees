@@ -49,7 +49,6 @@ const Board = props => {
 
   return (
     <Fragment>
-      <img src="" className={styles.itemToFind} alt="" />
       <div className={styles.board}>
         {playersContent[0]}
         <div className={styles.center}>
