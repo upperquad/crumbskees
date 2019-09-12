@@ -1,4 +1,5 @@
 import React from 'react'
+
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 // import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import character1 from '~assets/images/character1.png'
@@ -8,7 +9,9 @@ import '~styles/common/control-device.scss'
 import Circle from '~components/ControlDevice/Circle'
 import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
 
-const MeetCharacterStage = () => {
+const MeetCharacterStage = props => {
+  const { onFinish } = props
+
   const character = {
     color: 'purple',
     image: character1,
@@ -26,7 +29,7 @@ const MeetCharacterStage = () => {
         <AutoplayVideo src={character.video} extraClassName={styles.video} poster={character.image} />
       </div>
       <div className={styles.placeholder} />
-      <div className={styles.button} role="button" ng-click="phoneCtrl.handleConfirm()">
+      <div className={styles.button} onClick={() => onFinish()}>
         Ready
       </div>
     </section>

@@ -10,39 +10,20 @@ import ResultStage from './stages/ResultStage'
 import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 
+const STAGE_TRANSITION_OUT = 0
+const STAGE_TRANSITION_IN = 0
+
 const ControlDevice = () => {
   // set hasPlayed when game starts
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
-
-  useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
-      switch (type) {
-        case 'accepted': {
-          setStage('meet_character')
-          break
-        }
-        case 'phone_left': {
-          break
-        }
-        default:
-          break
-      }
-    }
-    window.addEventListener('MESSAGE', messageHandler)
-
-    return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
-    }
-  }, [])
 
   return (
     <TransitionGroup>
       {stage === 'pre_connect' && (
         <Transition
           key="stage-pre-connect"
-          timeout={500}
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
         >
           <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')} />
         </Transition>
@@ -50,7 +31,7 @@ const ControlDevice = () => {
       {stage === 'meet_character' && (
         <Transition
           key="stage-meet-character"
-          timeout={500}
+          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
         >
           <MeetCharacterStage onFinish={() => setStage('play')} />
         </Transition>
