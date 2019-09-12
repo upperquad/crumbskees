@@ -72,36 +72,24 @@ const Scene = props => {
           <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
             <defs>
               <clipPath id={clipPathId} className={styles.svgClipPath}>
-                <use xlinkHref="#player0" />
-                <use xlinkHref="#player1" />
+                {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
               </clipPath>
             </defs>
-            <PlayerCursor
-              index={0}
-              sceneUnits={sceneUnits}
-              items={items}
-              power={power}
-              itemImage={itemImage}
-              onCatchItems={(item, index) => {
-                onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
-              }}
-              onShowTap={index => {
-                onShowTap(index, messages, setMessages)
-              }}
-            />
-            <PlayerCursor
-              index={1}
-              sceneUnits={sceneUnits}
-              items={items}
-              power={power}
-              itemImage={itemImage}
-              onCatchItems={(item, index) => {
-                onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
-              }}
-              onShowTap={index => {
-                onShowTap(index, messages, setMessages)
-              }}
-            />
+            {PlayersManager.players.map((player, index) => (
+              <PlayerCursor
+                index={index}
+                sceneUnits={sceneUnits}
+                items={items}
+                power={power}
+                itemImage={itemImage}
+                onCatchItems={item => {
+                  onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
+                }}
+                onShowTap={() => {
+                  onShowTap(index, messages, setMessages)
+                }}
+              />
+            ))}
             <g
               className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}

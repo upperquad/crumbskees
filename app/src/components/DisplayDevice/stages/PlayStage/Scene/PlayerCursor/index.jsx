@@ -27,8 +27,8 @@ const PlayerCursor = props => {
 
   // updated on index, items change
   useEffect(() => {
-    const effectClick = e => handleClick(e, index, items, (item, player) => {
-      onCatchItems(item, player)
+    const effectClick = e => handleClick(e, index, items, itemsCaught => {
+      onCatchItems(itemsCaught)
     })
 
     if (DEBUG && index === 0) { // only click for player one on debug
@@ -46,7 +46,7 @@ const PlayerCursor = props => {
       // Bug to fix, when clicking on a target, it clear the interval of the second player
       showTapInterval = setInterval(() => {
         showTap(index, items, () => {
-          onShowTap(index)
+          onShowTap()
         })
       }, INTERVAL_TAP)
     }
@@ -123,7 +123,7 @@ function handleClick(e, index, items, onCatchItems) {
 
   // Remove items from the scene
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    onCatchItems([...targetsCaught, ...powersCaught], index)
+    onCatchItems([...targetsCaught, ...powersCaught])
   }
 }
 
