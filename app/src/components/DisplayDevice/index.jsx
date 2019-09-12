@@ -13,8 +13,7 @@ import ErrorStage from './stages/ErrorStage'
 import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 import Player from '~managers/PlayersManager/Player'
-import { DEBUG } from '~constants'
-import { PURPLE, RED } from '~utils/colors'
+import { DEBUG, COLORS } from '~constants'
 
 // assets
 import character1 from '~assets/images/character1.mp4'
@@ -24,7 +23,7 @@ const STAGE_TRANSITION_OUT = 1300
 const STAGE_TRANSITION_IN = 800
 
 const DisplayDevice = () => {
-  const [stage, setStage] = useState('setup')
+  const [stage, setStage] = useState('play')
   const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
@@ -40,8 +39,8 @@ const DisplayDevice = () => {
     PlayersManager.addSubscriber('player_change', forceUpdate)
 
     if (DEBUG) { // just for test debug mode
-      PlayersManager.players[0] = new Player({ id: 123, character: character1, color: PURPLE })
-      PlayersManager.players[1] = new Player({ id: 345, character: character2, color: RED })
+      PlayersManager.players[0] = new Player({ id: 123, character: character1, color: COLORS.purple })
+      PlayersManager.players[1] = new Player({ id: 345, character: character2, color: COLORS.red })
     }
 
     return () => {

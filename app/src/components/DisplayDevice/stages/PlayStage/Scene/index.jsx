@@ -3,10 +3,10 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import '~managers/RAFManager'
 import SoundManager from '~managers/SoundManager'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG } from '~constants'
+import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
 import { uuid, randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
-import { RED, hexToRgb } from '~utils/colors'
+import { hexToRgb } from '~utils/colors'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
@@ -203,7 +203,7 @@ function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages
       left: '50%',
       top: '50%',
       text: endMessage,
-      color: RED,
+      color: COLORS.red,
       end: true,
     }
 
@@ -313,7 +313,7 @@ function startTime(time, setTime, endScene, setMessages) {
           left: '50%',
           top: '50%',
           text: "TIME'S UP!",
-          color: RED,
+          color: COLORS.red,
           end: true,
         },
       ])

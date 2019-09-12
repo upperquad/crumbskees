@@ -1,5 +1,5 @@
 // Maybe put this file in a Data/ folder?
-import { ORANGE, BLUE } from '~utils/colors'
+import { COLORS } from '~constants'
 
 // assets
 import scene1Pattern from '~assets/images/scene_1/s1-pattern.gif'
@@ -31,7 +31,7 @@ const scenes = [
     power: {
       type: 'grow',
       image: growItem,
-      color: ORANGE,
+      color: COLORS.orange,
     },
   }, {
     bkg: scene2Pattern,
@@ -46,7 +46,7 @@ const scenes = [
     power: {
       type: 'freeze',
       image: freezeItem,
-      color: BLUE,
+      color: COLORS.blue,
     },
   }, {
     bkg: scene3Pattern,
@@ -61,7 +61,7 @@ const scenes = [
     power: {
       type: 'grow',
       image: growItem,
-      color: ORANGE,
+      color: COLORS.orange,
     },
   },
 ]
