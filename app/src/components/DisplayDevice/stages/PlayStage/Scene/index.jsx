@@ -1,20 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import '~managers/RAFManager'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG } from '~constants'
+import SoundManager from '~managers/SoundManager'
+import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
 import { uuid, randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
+import { hexToRgb } from '~utils/colors'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
+import PlayersManager from '~managers/PlayersManager'
+import Board from './Board'
+
+let timeInterval
+const TIME = 40
 
 const Scene = props => {
-  const { bkg, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   const [debugItems, setDebugItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
+  const [messages, setMessages] = useState([])
 
   const sceneRef = useRef(null)
 
@@ -33,8 +42,10 @@ const Scene = props => {
     const id = uuid()
     setClipPathId(id)
 
-    // events
+    // StartTime
+    startTime(TIME, setTime, endScene, setMessages)
 
+    // Events
     // Call effectUnits the first time
     effectUnits(setSceneUnits, sceneRef)
     const effectResize = () => effectUnits(setSceneUnits, sceneRef)
@@ -43,106 +54,166 @@ const Scene = props => {
 
     return () => {
       window.removeEventListener('resize', effectResize)
+
+      clearInterval(timeInterval) // clear startTime interval
     }
-  }, [])
+  }, [endScene])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
   // }, this.props.delayGif)
 
   return (
-    <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
-      <img className={styles.frontBkg} src={frontBkg} alt="" />
-      <img className={styles.reveal} src={bkg} alt="" />
-      <div className={styles.wrapper}>
-        <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
-          <defs>
-            <clipPath id={clipPathId} className={styles.svgClipPath}>
-              <use xlinkHref="#player0" />
-              <use xlinkHref="#player1" />
-            </clipPath>
-          </defs>
-          <PlayerCursor
-            index={0}
-            sceneUnits={sceneUnits}
-            extraClassName={styles.playerCursor1}
-            items={items}
-            power={power}
-            itemImage={itemImage}
-            removeItem={item => {
-              removeItem(item, items, setItems, endScene)
-            }}
-          />
-          <PlayerCursor
-            index={1}
-            sceneUnits={sceneUnits}
-            extraClassName={styles.playerCursor2}
-            items={items}
-            power={power}
-            itemImage={itemImage}
-            removeItem={item => {
-              removeItem(item, items, setItems, endScene)
-            }}
-          />
-          <g
-            className={styles.svgClipPathRef}
-            width={`${VB_WIDTH}px`}
-            height={`${VB_HEIGHT}px`}
-            clipPath={`url(#${clipPathId})`}
-          >
-            <image
-              className={styles.svgImage}
-              xlinkHref={bkg}
-              preserveAspectRatio="xMidYMid slice"
-              width={`${VB_WIDTH}px`}
-              height={`${VB_HEIGHT}px`}
-            />
-            {items.map(item => (
-              <image
-                className={styles.svgImage}
-                xlinkHref={item.image}
-                preserveAspectRatio="xMidYMid slice"
-                width={item.size}
-                height={item.size}
-                x={`${item.x * 100}%`}
-                y={`${item.y * 100}%`}
-                style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+    <Fragment>
+      <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
+        <img className={styles.frontBkg} src={frontBkg} alt="" />
+        <img className={styles.reveal} src={bkg} alt="" />
+        <div className={styles.wrapper}>
+          <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
+            <defs>
+              <clipPath id={clipPathId} className={styles.svgClipPath}>
+                {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
+              </clipPath>
+            </defs>
+            {PlayersManager.players.map((player, index) => (
+              <PlayerCursor
+                index={index}
+                sceneUnits={sceneUnits}
+                items={items}
+                power={power}
+                itemImage={itemImage}
+                onCatchItems={item => {
+                  onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
+                }}
+                onShowTap={() => {
+                  onShowTap(index, messages, setMessages)
+                }}
               />
             ))}
-          </g>
-        </svg>
-        {debugItems.map(item => (
-          <div
-            className={classNames(styles.debugItem, { [styles.debugItemPower]: item.power })}
-            style={{ left: item.left, top: item.top }}
-          />
-        ))}
-      </div>
-      <div className={styles.intros}>
-        <div className={styles.intro}>
-          <div className={classNames(styles.introRound, styles.red)} />
+            <g
+              className={styles.svgClipPathRef}
+              width={`${VB_WIDTH}px`}
+              height={`${VB_HEIGHT}px`}
+              clipPath={`url(#${clipPathId})`}
+            >
+              <image
+                className={styles.svgImage}
+                xlinkHref={bkg}
+                preserveAspectRatio="xMidYMid slice"
+                width={`${VB_WIDTH}px`}
+                height={`${VB_HEIGHT}px`}
+              />
+              {items.map(item => (
+                <image
+                  className={styles.svgImage}
+                  xlinkHref={item.image}
+                  preserveAspectRatio="xMidYMid slice"
+                  width={item.size}
+                  height={item.size}
+                  x={`${item.x * 100}%`}
+                  y={`${item.y * 100}%`}
+                  style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+                />
+              ))}
+            </g>
+          </svg>
+          {debugItems.map(item => (
+            <div
+              className={classNames(styles.debugItem, { [styles.debugItemPower]: item.power })}
+              style={{ left: item.left, top: item.top }}
+            />
+          ))}
         </div>
-        <div className={styles.intro}>
-          <div className={styles.introCircle} />
-          <div className={classNames(styles.introItemToFind, styles.black)}>
-            <div className={classNames(styles.introItemToFindText)}>
-              ITEM
-              <br />
-              TO FIND
+        <div className={styles.messages}>
+          {messages.map(message => (
+            <div
+              className={classNames(styles.message, { [styles.messageEnd]: message.end })}
+              style={{ left: message.left, top: message.top, color: message.color }}
+            >
+              {message.text}
             </div>
-          </div>
-          <video width={`${VB_WIDTH}px`} height={`${VB_HEIGHT}px`} autoPlay loop muted />
+          ))}
         </div>
-        <div className={styles.intro}>
-          <div className={styles.introReadyWrapper}>
-            <div className={classNames(styles.introReady, styles.red)}>READY</div>
-            <div className={classNames(styles.introSet, styles.red)}>SET</div>
+        <div className={styles.intros}>
+          <div className={styles.intro}>
+            <div className={styles.introRound} />
           </div>
-          <div className={classNames(styles.introGo, styles.red)}>GO</div>
+          <div className={styles.intro}>
+            <div className={styles.introCircle} />
+            <div className={styles.introItemToFind}>
+              <div className={styles.introItemToFindText}>
+                ITEM
+                <br />
+                TO FIND
+              </div>
+            </div>
+            <video width={`${VB_WIDTH}px`} height={`${VB_HEIGHT}px`} autoPlay loop muted />
+          </div>
+          <div className={styles.intro}>
+            <div className={styles.introReadyWrapper}>
+              <div className={styles.introReady}>READY</div>
+              <div className={styles.introSet}>SET</div>
+            </div>
+            <div className={styles.introGo}>GO</div>
+          </div>
         </div>
       </div>
-    </div>
+      <img src="" className={styles.itemToFind} alt="" />
+      <Board time={time} itemImage={itemImage} />
+    </Fragment>
   )
+}
+
+function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, endScene, endMessage) {
+  const player = PlayersManager.players[index]
+  // Update items in the scene (remove what is caught)
+  const newItems = items.filter(item => !itemsCaught.includes(item))
+  setItems(newItems)
+
+  const targetsCaught = itemsCaught.filter(item => item.type === 'target')
+  const targets = newItems.filter(item => item.type === 'target')
+
+  // Pop up message
+  itemsCaught.forEach(item => {
+    const message = {
+      left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
+      top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
+      text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
+      color: item.type === 'target' ? player.color : item.color,
+    }
+
+    messages.push(message)
+  })
+
+  // If no more targets left, end scene
+  if (targets.length === 0) {
+    const message = {
+      left: '50%',
+      top: '50%',
+      text: endMessage,
+      color: COLORS.red,
+      end: true,
+    }
+
+    messages.push(message)
+    endScene()
+  }
+
+  setMessages([...messages])
+}
+
+function onShowTap(index, messages, setMessages) {
+  const player = PlayersManager.players[index]
+
+  const message = {
+    left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
+    top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
+    text: 'TAP',
+    color: `rgba(${hexToRgb(player.color)}, 0.8)`,
+  }
+  messages.push(message)
+
+  setMessages([...messages])
 }
 
 function effectItems(setItems, setDebugItems, props) {
@@ -166,7 +237,7 @@ function effectItems(setItems, setDebugItems, props) {
   const debugItems = []
 
   if (power) {
-    const item = createItem(props, grid, power.image, power.type)
+    const item = createItem(props, grid, power.image, power.type, power.color)
     items.push(item)
 
     if (DEBUG) {
@@ -193,7 +264,7 @@ function effectItems(setItems, setDebugItems, props) {
   }
 }
 
-function createItem(props, grid, image, type = 'target') {
+function createItem(props, grid, image, type = 'target', color = null) {
   const { gridCols, gridLines } = props
   // randomize
   const rd = randomInt(0, grid.length - 1)
@@ -209,23 +280,36 @@ function createItem(props, grid, image, type = 'target') {
     size,
     image,
     type,
+    color,
   }
 
   return obj
 }
 
-function removeItem(itemsCaught, items, setItems, endScene) {
-  const newItems = items.filter(item => !itemsCaught.includes(item))
+function startTime(time, setTime, endScene, setMessages) {
+  setTime(time)
 
-  setItems(newItems)
+  timeInterval = setInterval(() => {
+    time -= 1
+    setTime(time)
 
-  const targets = newItems.filter(item => item.type === 'target')
-
-  if (targets.length === 0) {
-    // if no more targets left
-    endScene()
-    // window.GameManager.endScene(scene.props.message)
-  }
+    // if time is 0
+    if (time === 0) {
+      endScene()
+      setMessages([
+        {
+          left: '50%',
+          top: '50%',
+          text: "TIME'S UP!",
+          color: COLORS.red,
+          end: true,
+        },
+      ])
+    } else if (time === 10) {
+      // play sound countdown
+      SoundManager.countdown.play()
+    }
+  }, 1000)
 }
 
 function effectUnits(setSceneUnits, sceneRef) {

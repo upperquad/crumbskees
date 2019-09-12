@@ -9,8 +9,10 @@ import { clamp } from '~utils/math'
 
 import PlayersManager from '~managers/PlayersManager'
 
+const INTERVAL_TAP = 800
+
 const PlayerCursor = props => {
-  const { extraClassName, index, removeItem, sceneUnits } = props
+  const { extraClassName, index, items, onCatchItems, onShowTap, sceneUnits } = props
 
   // updated on index props change
   useEffect(() => {
@@ -23,10 +25,10 @@ const PlayerCursor = props => {
     }
   }, [index])
 
-  // updated on props change
+  // updated on index, items change
   useEffect(() => {
-    const effectClick = e => handleClick(e, props, item => {
-      removeItem(item)
+    const effectClick = e => handleClick(e, index, items, itemsCaught => {
+      onCatchItems(itemsCaught)
     })
 
     if (DEBUG && index === 0) { // only click for player one on debug
@@ -35,14 +37,30 @@ const PlayerCursor = props => {
       window.addEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
     }
 
+    let showTapInterval
+
+    // if player's score is 0, show tap message
+    if (PlayersManager.players[index]._score === 0) {
+      // call it at 0 second
+      // set interval
+      // Bug to fix, when clicking on a target, it clear the interval of the second player
+      showTapInterval = setInterval(() => {
+        showTap(index, items, () => {
+          onShowTap()
+        })
+      }, INTERVAL_TAP)
+    }
+
     return () => {
       if (DEBUG && index === 0) {
         window.removeEventListener('click', effectClick)
       } else {
         window.removeEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
       }
+
+      clearInterval(showTapInterval)
     }
-  }, [props, removeItem, index])
+  }, [index, items, onCatchItems, onShowTap])
 
 
   // updated on sceneUnits change
@@ -68,6 +86,8 @@ const PlayerCursor = props => {
       id={`player${index}`}
       className={classNames(styles.cursor, extraClassName)}
       strokeWidth="6"
+      stroke={PlayersManager.players[index].color}
+      style={{ transition: 'stroke 1s ease' }}
     />
   )
 }
@@ -89,59 +109,62 @@ function handleMouseMove(e, sceneUnits) {
   player.targetY -= VB_HEIGHT / 2
 }
 
-function handleClick(e, props, callback) {
-  const { index, items } = props
-
+function handleClick(e, index, items, onCatchItems) {
   const powers = items.filter(item => item.type !== 'target')
   const targets = items.filter(item => item.type === 'target')
 
-  const player = PlayersManager.players[index]
-  // if (scene.targetsDestroyed) return // if targets are destroy, don't listen to click event
-  const x = (player.targetX / VB_WIDTH) + 0.5
-  const y = (player.targetY / VB_HEIGHT) + 0.5
+  const targetsCaught = itemsInCursor(targets, index)
 
-  const targetsCaught = catchItems(targets, x, y, player, index)
-
-  const powersCaught = catchItems(powers, x, y, player, index)
+  const powersCaught = itemsInCursor(powers, index)
 
   if (targetsCaught.length > 0) {
-    player.addScore(targetsCaught.length)
-    // kill player intervalTap
-    clearInterval(player.isCloseToItemInterval)
+    PlayersManager.players[index].addScore(targetsCaught.length)
   }
 
   // Remove items from the scene
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    callback([...targetsCaught, ...powersCaught])
+    onCatchItems([...targetsCaught, ...powersCaught])
   }
 }
 
-function catchItems(items, x, y, player, index) {
+function itemsInCursor(items, index, triggerPower = true) {
   const itemsCaught = []
+
+  const player = PlayersManager.players[index]
+
+  const x = (player.x / VB_WIDTH) + 0.5
+  const y = (player.y / VB_HEIGHT) + 0.5
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
-    const distance = Math.hypot(x - item.x, y - item.y)
-    const minDistance = player.grown ? 0.19 : 0.08
+    // --> need a calcul based on Ratio scene
+    const xPx = x * VB_WIDTH
+    const itemXPx = item.x * VB_WIDTH
+    const yPx = y * VB_HEIGHT
+    const itemYPx = item.y * VB_HEIGHT
+    const distance = Math.hypot(xPx - itemXPx, yPx - itemYPx)
+    const minDistance = player.grown ? 185 : 95
 
     if (distance <= minDistance) {
       itemsCaught.push(item)
 
-      let playerIndex
-      let playerAffected
+      if (triggerPower) {
+        let playerIndex
+        let playerAffected
 
-      switch (item.type) {
-        default:
-          break
-        case 'grow':
-          player.setPower(item.type)
-          break
-        case 'freeze':
-          // affect other player
-          playerIndex = index === 0 ? 1 : 0
-          playerAffected = PlayersManager.players[playerIndex]
-          playerAffected.setPower(item.type)
-          break
+        switch (item.type) {
+          default:
+            break
+          case 'grow':
+            player.setPower(item.type)
+            break
+          case 'freeze':
+            // affect other player
+            playerIndex = index === 0 ? 1 : 0
+            playerAffected = PlayersManager.players[playerIndex]
+            playerAffected.setPower(item.type)
+            break
+        }
       }
     }
   }
@@ -149,10 +172,16 @@ function catchItems(items, x, y, player, index) {
   return itemsCaught
 }
 
+function showTap(index, items, onShowTap) {
+  const itemsCaught = itemsInCursor(items, index, false)
+
+  if (itemsCaught.length > 0) {
+    onShowTap()
+  }
+}
+
 function handleRAF(e, index) {
-  // console.log('raf')
   const { now } = e.detail
-  // console.log(playersRef)
   // this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
   const player = PlayersManager.players[index]

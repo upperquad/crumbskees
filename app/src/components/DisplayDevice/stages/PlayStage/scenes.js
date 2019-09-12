@@ -1,4 +1,5 @@
 // Maybe put this file in a Data/ folder?
+import { COLORS } from '~constants'
 
 // assets
 import scene1Pattern from '~assets/images/scene_1/s1-pattern.gif'
@@ -22,28 +23,30 @@ const scenes = [
     frontBkg: scene1Front,
     itemImage: scene1Item,
     videoIntro: scene1IntroVideo,
-    numItems: 1,
+    numItems: 10,
     gridCols: 32,
     gridLines: 14,
-    message: 'DOPE.',
+    endMessage: 'DOPE.',
     delayGif: 1000,
     power: {
       type: 'grow',
       image: growItem,
+      color: COLORS.orange,
     },
   }, {
     bkg: scene2Pattern,
     frontBkg: scene2Front,
     itemImage: scene2Item,
     videoIntro: scene2IntroVideo,
-    numItems: 1,
+    numItems: 10,
     gridCols: 32,
     gridLines: 14,
-    message: 'GOOD JOB!',
+    endMessage: 'GOOD JOB!',
     delayGif: 2750,
     power: {
       type: 'freeze',
       image: freezeItem,
+      color: COLORS.blue,
     },
   }, {
     bkg: scene3Pattern,
@@ -53,11 +56,12 @@ const scenes = [
     numItems: 1,
     gridCols: 32,
     gridLines: 14,
-    message: 'AWESOME!',
+    endMessage: 'AWESOME!',
     delayGif: 0,
     power: {
       type: 'grow',
       image: growItem,
+      color: COLORS.orange,
     },
   },
 ]
