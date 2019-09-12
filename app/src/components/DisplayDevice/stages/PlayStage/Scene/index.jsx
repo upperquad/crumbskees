@@ -148,12 +148,12 @@ const Scene = props => {
         </div>
         <div className={styles.intros}>
           <div className={styles.intro}>
-            <div className={classNames(styles.introRound, styles.red)} />
+            <div className={styles.introRound} />
           </div>
           <div className={styles.intro}>
             <div className={styles.introCircle} />
-            <div className={classNames(styles.introItemToFind, styles.black)}>
-              <div className={classNames(styles.introItemToFindText)}>
+            <div className={styles.introItemToFind}>
+              <div className={styles.introItemToFindText}>
                 ITEM
                 <br />
                 TO FIND
@@ -163,10 +163,10 @@ const Scene = props => {
           </div>
           <div className={styles.intro}>
             <div className={styles.introReadyWrapper}>
-              <div className={classNames(styles.introReady, styles.red)}>READY</div>
-              <div className={classNames(styles.introSet, styles.red)}>SET</div>
+              <div className={styles.introReady}>READY</div>
+              <div className={styles.introSet}>SET</div>
             </div>
-            <div className={classNames(styles.introGo, styles.red)}>GO</div>
+            <div className={styles.introGo}>GO</div>
           </div>
         </div>
       </div>
