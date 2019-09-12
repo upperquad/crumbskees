@@ -149,21 +149,19 @@ function itemsInCursor(items, index, triggerPower = true) {
       itemsCaught.push(item)
 
       if (triggerPower) {
-        let playerIndex
-        let playerAffected
-
         switch (item.type) {
           default:
             break
           case 'grow':
             player.setPower(item.type)
             break
-          case 'freeze':
+          case 'freeze': {
             // affect other player
-            playerIndex = index === 0 ? 1 : 0
-            playerAffected = PlayersManager.players[playerIndex]
+            const playerIndex = index === 0 ? 1 : 0
+            const playerAffected = PlayersManager.players[playerIndex]
             playerAffected.setPower(item.type)
             break
+          }
         }
       }
     }
