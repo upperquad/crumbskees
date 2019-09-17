@@ -1,21 +1,40 @@
 import React from 'react'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
-// import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
+import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import character1 from '~assets/images/character1.png'
-// import character2 from '~assets/images/character2.png'
+import character2 from '~assets/images/character2.png'
 import styles from './style.module.scss'
 import '~styles/common/control-device.scss'
 import Circle from '~components/ControlDevice/Circle'
 import AutoplayVideo from '~components/ControlDevice/AutoplayVideo'
 
 const MeetCharacterStage = props => {
-  const { onFinish } = props
+  const { onFinish, playerData } = props
+  const { playerIndex } = playerData
 
   const character = {
     color: 'purple',
     image: character1,
     video: characterVideoWhite1,
+  }
+
+  switch (playerIndex) {
+    case '0':
+      character.color = 'purple'
+      character.image = character1
+      character.video = characterVideoWhite1
+      break
+    case '1':
+      character.color = 'red'
+      character.image = character2
+      character.video = characterVideoWhite2
+      break
+    default:
+      character.color = 'red'
+      character.image = character1
+      character.video = characterVideoWhite1
+      break
   }
 
   return (

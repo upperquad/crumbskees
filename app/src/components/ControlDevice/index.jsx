@@ -7,9 +7,6 @@ import MeetCharacterStage from './stages/MeetCharacterStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
 
-import WebSocketManager from '~managers/WebSocketManager'
-import PlayersManager from '~managers/PlayersManager'
-
 const STAGE_TRANSITION_OUT = 0
 const STAGE_TRANSITION_IN = 0
 
@@ -17,6 +14,28 @@ const ControlDevice = () => {
   // set hasPlayed when game starts
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
+
+  const [playerData, setPlayerData] = useState({})
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+
+      switch (type) {
+        case 'accepted': {
+          setPlayerData(data)
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
 
   return (
     <TransitionGroup>
@@ -33,7 +52,10 @@ const ControlDevice = () => {
           key="stage-meet-character"
           timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
         >
-          <MeetCharacterStage onFinish={() => setStage('play')} />
+          <MeetCharacterStage
+            playerData={playerData}
+            onFinish={() => setStage('play')}
+          />
         </Transition>
       )}
       {stage === 'play' && (

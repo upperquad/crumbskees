@@ -11,7 +11,6 @@ const PreConnectStage = props => {
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
-  console.log('PreConnectStage')
 
   useEffect(() => effectWebsocket(), [])
   useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [
@@ -28,7 +27,6 @@ const PreConnectStage = props => {
       switch (type) {
         case 'accepted': {
           onFinish()
-          console.log('pkk')
           break
         }
         default:
