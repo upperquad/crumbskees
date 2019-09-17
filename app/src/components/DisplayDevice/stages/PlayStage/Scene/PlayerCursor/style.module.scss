@@ -1,0 +1,17 @@
+@import "~styles/imports/index";
+
+.playerCursor {
+  stroke-width: grid(.2);
+
+  // &.good {
+  //   fill: green !important;
+  // }
+
+  // &.wrong {
+  //   fill: red !important;
+  // }
+}
+
+:global(.frozenCursor) {
+  stroke: $color-gray !important;
+}

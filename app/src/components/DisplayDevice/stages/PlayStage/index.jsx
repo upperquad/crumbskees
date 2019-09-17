@@ -1,28 +1,45 @@
-import React from 'react'
-// import styles from './style.module.scss'
+import React, { useState } from 'react'
+import classNames from 'classnames'
+import styles from './style.module.scss'
 
-// Get character from PlayerManager
-// PlayerManager.player[token] ??
+import PlayersManager from '~managers/PlayersManager'
 
-// const scene = [{
-//   bkg: scene1,
-// }, {
-//   bkg: scene2,
-// }, {
-//   bkg: scene3,
-// }]
-// this can come from a JSON
+import Scene from './Scene'
 
-// when scene is over call onEnding(), go to next current scene
+// data for scenes
+import scenes from './scenes'
 
-// {/* <Scene bkg="scene[currentScene].bkg" onEnding={() => {}} /> */}
+const PlayStage = props => {
+  const { onFinish } = props
+  const [sceneIndex, setSceneIndex] = useState(0)
 
-// function onEnding = () => {
-//   Do out transitions... etc...
-//   currentScene += 1
-//   Do in transitions... etc...
-// }
+  return (
+    <section className={classNames(styles.game, styles.isIntro)}>
+      <Scene
+        {...scenes[sceneIndex]}
+        endScene={() => {
+          endScene(sceneIndex, setSceneIndex, onFinish)
+        }}
+      />
+    </section>
+  )
+}
 
-const PlayStage = () => <></>
+function endScene(sceneIndex, setSceneIndex, onFinish) {
+  PlayersManager.players.forEach(player => {
+    player.cleanPowers()
+    player._scoreInScene = 0
+  })
+
+  sceneIndex += 1
+  if (sceneIndex === scenes.length) {
+    // Go to ResultPage
+    onFinish()
+  } else {
+    // Do out transitions... etc...
+    setSceneIndex(sceneIndex)
+    // Do in transitions... etc...
+  }
+}
 
 export default PlayStage

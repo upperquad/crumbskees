@@ -1,9 +1,0 @@
-@import "~styles/imports/index";
-
-.text-18 {
-  font-size: responsive-font(18);
-
-  &--bold {
-    @extend %Bold;
-  }
-}

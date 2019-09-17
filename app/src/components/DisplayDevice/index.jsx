@@ -12,12 +12,19 @@ import ErrorStage from './stages/ErrorStage'
 
 import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
+import Player from '~managers/PlayersManager/Player'
+import { DEBUG, COLORS } from '~constants'
+
+// assets
+import character1 from '~assets/images/character1.mp4'
+import character2 from '~assets/images/character2.mp4'
 
 const STAGE_TRANSITION_OUT = 1300
 const STAGE_TRANSITION_IN = 800
 
 const DisplayDevice = () => {
   const [stage, setStage] = useState('setup')
+  const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
 
@@ -29,10 +36,15 @@ const DisplayDevice = () => {
   // subscribe to PlayersManager
   useEffect(() => {
     // This should trigger on all children components so don't have to do this anywhere else
-    PlayersManager.addSubscriber(forceUpdate)
+    PlayersManager.addSubscriber('player_change', forceUpdate)
+
+    if (DEBUG) { // just for test debug mode
+      PlayersManager.players[0] = new Player({ id: 123, character: character1, color: COLORS.purple })
+      PlayersManager.players[1] = new Player({ id: 345, character: character2, color: COLORS.red })
+    }
 
     return () => {
-      PlayersManager.removeSubscriber(forceUpdate)
+      PlayersManager.removeSubscriber('player_change', forceUpdate)
     }
   }, [forceUpdate])
 
@@ -40,10 +52,8 @@ const DisplayDevice = () => {
   useEffect(() => {
     const errorListener = event => {
       const { detail: { reason } } = event
-      if (reason === 'new_game_started' || reason === 'active_game_exist') {
-        // maybe also pass the error message to ErrorStage?
-        setStage('error')
-      }
+      setStage('error')
+      setErrorReason(reason)
     }
     window.addEventListener('WS_CLOSE', errorListener)
 
@@ -115,7 +125,12 @@ const DisplayDevice = () => {
                 [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
               })}
             >
-              <TutorialStage extraClassName={styles.stage} onFinish={() => setStage('play')} />
+              <TutorialStage
+                extraClassName={styles.stage}
+                bothConnected={bothConnected}
+                rollback={() => setStage('setup')}
+                onFinish={() => setStage('play')}
+              />
             </div>
           )}
         </Transition>
@@ -166,7 +181,7 @@ const DisplayDevice = () => {
                 [styles.stageWrapperExiting]: status === 'exiting' || status === 'exited',
               })}
             >
-              <ErrorStage extraClassName={styles.stage} />
+              <ErrorStage extraClassName={styles.stage} reason={errorReason} />
             </div>
           )}
         </Transition>

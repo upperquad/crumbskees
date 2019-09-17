@@ -3,13 +3,12 @@ import QRCode from 'qrcode'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import styles from './style.module.scss'
-import typography from '~styles/modules/typography.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
 import JumpUpText from '~components/JumpUpText'
 import DisplayFooter from '~components/DisplayFooter'
 import PlayersManager from '~managers/PlayersManager'
-import WebSocketManager from '~managers/WebSocketManager'
+import AutoplayVideo from '~components/AutoplayVideo'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
 
@@ -50,7 +49,7 @@ const SetupStage = props => {
 
   return (
     <div className={classNames(styles.setup, extraClassName)}>
-      <video className={styles.video} src={homeBgVideo} playsInline autoPlay muted loop />
+      <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => (
@@ -67,7 +66,7 @@ const SetupStage = props => {
                         [styles.qrTransitioning]: status === 'exiting' || status === 'exited' || status === 'entering'
                       })}>
                         <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
-                        <div className={classNames(styles.qrUrl, typography.text18)}>
+                        <div className={styles.qrUrl}>
                           Think QR codes are stupid?
                           <br />
                           Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
