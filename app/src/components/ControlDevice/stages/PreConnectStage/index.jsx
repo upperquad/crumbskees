@@ -7,10 +7,10 @@ import Circle from '~components/ControlDevice/Circle'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PreConnectStage = props => {
+  const { onFinish } = props
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
-  console.log('PreConnectStage')
 
   useEffect(() => effectWebsocket(), [])
   useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [
@@ -20,6 +20,25 @@ const PreConnectStage = props => {
   ])
 
   const { hasPlayed } = props
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+      switch (type) {
+        case 'accepted': {
+          onFinish()
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
 
   return (
     <div className={styles.preConnect}>
@@ -44,7 +63,7 @@ const PreConnectStage = props => {
             {key}
           </div>
         ))}
-        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1)}>
+        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1, token, setToken, setErrorReason)}>
           ←
         </div>
       </div>
