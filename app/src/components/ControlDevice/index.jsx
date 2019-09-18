@@ -40,30 +40,6 @@ const ControlDevice = () => {
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
 
-  useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
-
-      switch (type) {
-        case 'score': {
-          // TODO:
-          break
-        }
-        case 'result': {
-          // TODO:
-          break
-        }
-        default:
-          break
-      }
-    }
-    window.addEventListener('MESSAGE', messageHandler)
-
-    return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
-    }
-  }, [])
-
   const [playerData, setPlayerData] = useState({})
 
   useEffect(() => {
@@ -73,6 +49,7 @@ const ControlDevice = () => {
       switch (type) {
         case 'accepted': {
           setPlayerData(data)
+          setCharacter(CHARACTERS[data.playerIndex])
           break
         }
         default:
@@ -119,7 +96,8 @@ const ControlDevice = () => {
             color={character.color}
             secondaryColor={character.secondaryColor}
             image={character.image}
-            onFinish={() => setStage('result')} />
+            onFinish={() => setStage('result')}
+          />
         </Transition>
       )}
       {stage === 'result' && (
