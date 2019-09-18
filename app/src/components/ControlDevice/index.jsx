@@ -41,31 +41,7 @@ const ControlDevice = () => {
   const [character, setCharacter] = useState(CHARACTERS[0])
   const [score, setScore] = useState(0)
 
-  useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
-
-      switch (type) {
-        case 'score': {
-          // TODO:
-          break
-        }
-        case 'result': {
-          // TODO:
-          break
-        }
-        default:
-          break
-      }
-    }
-    window.addEventListener('MESSAGE', messageHandler)
-
-    return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
-    }
-  }, [])
-
-  const [playerData, setPlayerData] = useState({})
+  const [userId, setUserId] = useState('')
 
   useEffect(() => {
     const messageHandler = event => {
@@ -73,7 +49,11 @@ const ControlDevice = () => {
 
       switch (type) {
         case 'accepted': {
-          setPlayerData(data)
+          const { playerIndex, id } = data
+          setUserId(id)
+          if (CHARACTERS[playerIndex]) {
+            setCharacter(CHARACTERS[playerIndex])
+          }
           break
         }
         default:
@@ -106,7 +86,6 @@ const ControlDevice = () => {
             color={character.color}
             video={character.video}
             image={character.image}
-            playerData={playerData}
             onFinish={() => setStage('play')}
           />
         </Transition>
@@ -120,7 +99,8 @@ const ControlDevice = () => {
             color={character.color}
             secondaryColor={character.secondaryColor}
             image={character.image}
-            onFinish={() => setStage('result')} />
+            onFinish={() => setStage('result')}
+          />
         </Transition>
       )}
       {stage === 'result' && (
