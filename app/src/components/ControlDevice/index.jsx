@@ -40,7 +40,7 @@ const ControlDevice = () => {
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
 
-  const [playerData, setPlayerData] = useState({})
+  const [userId, setUserId] = useState('')
 
   useEffect(() => {
     const messageHandler = event => {
@@ -48,8 +48,11 @@ const ControlDevice = () => {
 
       switch (type) {
         case 'accepted': {
-          setPlayerData(data)
-          setCharacter(CHARACTERS[data.playerIndex])
+          const { playerIndex, id } = data
+          setUserId(id)
+          if (CHARACTERS[playerIndex]) {
+            setCharacter(CHARACTERS[playerIndex])
+          }
           break
         }
         default:
@@ -82,7 +85,6 @@ const ControlDevice = () => {
             color={character.color}
             video={character.video}
             image={character.image}
-            playerData={playerData}
             onFinish={() => setStage('play')}
           />
         </Transition>
