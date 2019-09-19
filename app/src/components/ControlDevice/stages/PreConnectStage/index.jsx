@@ -83,7 +83,7 @@ function effectWebsocket() {
   }
 
   return () => {
-    WebSocketManager.disconnect()
+    // WebSocketManager.disconnect()
   }
 }
 

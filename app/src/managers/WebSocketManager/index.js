@@ -23,7 +23,6 @@ class WebSocketManager {
   }
 
   connect = ({ id = null, token = null } = {}) => {
-    console.log('connect')
     if (this._ws) {
       return console.error('Connection already exists')
     }
@@ -108,6 +107,7 @@ class WebSocketManager {
   disconnect = () => {}
 
   send = (messageType, attributes = {}) => {
+    console.log(messageType, attributes)
     if (!this._ws) {
       if (this._id) {
         this.connect({ id: this._id })

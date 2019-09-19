@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { throttle } from 'throttle-debounce'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
+import WebSocketManager from '~managers/WebSocketManager'
 
 const PlayStage = props => {
   const { color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
-  const touchpadRef = useRef(null)
-  const touchBubbleRef = useRef(null)
+
+  const [coordX, setCoordX] = useState(0)
+  const [coordY, setCoordY] = useState(0)
 
   let originCoord = {
     x: 0,
@@ -16,14 +19,10 @@ const PlayStage = props => {
 
   useEffect(() => {
     const touchStartHandler = event => {
-      // event.stopPropagation()
-      console.log('touchstart')
       const { clientX, clientY } = event.touches[0]
-      originCoord.x = clientX
-      originCoord.y = clientY
-      updateBubble(clientX, clientY)
+      setCoordX(clientX)
+      setCoordY(clientY)
       setIsTouching(true)
-
     }
     window.addEventListener('touchstart', touchStartHandler, { passive: false })
 
@@ -36,13 +35,14 @@ const PlayStage = props => {
     const touchMoveHandler = event => {
       event.preventDefault()
       event.stopPropagation()
-      const { x: originX, y: originY } = originCoord
       const { clientX, clientY } = event.touches[0]
       originCoord.x = clientX
       originCoord.y = clientY
-      updatePosition(clientX, clientY, originX, originY)
+      updatePosition(clientX, clientY, coordX, coordY)
     }
-    window.addEventListener('touchmove', touchMoveHandler, { passive: false })
+    const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
+
+    window.addEventListener('touchmove', touchMoveHandlerThrottle, { passive: false })
 
     return () => {
       window.removeEventListener('touchmove', touchMoveHandler)
@@ -61,14 +61,11 @@ const PlayStage = props => {
     }
   }, [])
 
-  const updateBubble = (clientX, clientY) => {
-    touchBubbleRef.current.style.left = `${clientX}px`
-    touchBubbleRef.current.style.top = `${clientY}px`
-  }
-
   const updatePosition = (clientX, clientY, originX, originY) => {
-    updateBubble(clientX, clientY)
+    setCoordX(clientX)
+    setCoordY(clientY)
     // this.websocket.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
+    WebSocketManager.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
   }
 
   return (
@@ -82,7 +79,6 @@ const PlayStage = props => {
         The Upperquadrant
       </h2>
       <div
-        ref={touchpadRef}
         className={classNames(styles.block, {
           [styles.blockRed]: color === 'red',
           [styles.blockPurple]: color === 'purple',
@@ -93,7 +89,7 @@ const PlayStage = props => {
       </div>
       <MarqueeText extraClassName={styles.marquee} text="What up tiny type that is distracting —" duration="12s" />
       <div
-        ref={touchBubbleRef}
+        style={{top: coordY, left: coordX}}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
       {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}"
        role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
