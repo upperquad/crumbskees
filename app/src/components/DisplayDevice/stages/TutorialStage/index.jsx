@@ -55,13 +55,13 @@ const TutorialStage = props => {
     return () => {
       clearInterval(progressInterval)
     }
-  }, [])
+  }, [onFinish, bothConnected])
 
   useEffect(() => {
     if (!bothConnected) {
       rollback()
     }
-  }, [bothConnected])
+  }, [bothConnected, rollback])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
