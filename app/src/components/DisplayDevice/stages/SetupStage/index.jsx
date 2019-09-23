@@ -15,20 +15,19 @@ import homeBgVideo from '~assets/images/home-bg.mp4'
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 const SetupStage = props => {
-  const { extraClassName, onFinish, bothConnected } = props
+  const { bothConnected, extraClassName, onFinish } = props
   const [qrCode, setQrCode] = useState([null, null])
 
   useEffect(() => {
     let didCancel = false
 
-    Promise.all(PlayersManager.players.map((player, index) => {
+    Promise.all(PlayersManager.players.map(player => {
       const { token } = player
       if (token) {
         const tokenUrl = `${BASE_URL}${token}`
         return QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
-      } else {
-        return Promise.resolve('')
       }
+      return Promise.resolve('')
     })).then(values => {
       if (!didCancel) {
         setQrCode(values)
@@ -53,7 +52,7 @@ const SetupStage = props => {
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => (
-          <div key={`player-${index}`} className={styles.player}>
+          <div key={player.id} className={styles.player}>
             <div className={styles.qrWrapper}>
               <TransitionGroup>
                 {player.token && qrCode[index] && (
@@ -69,7 +68,9 @@ const SetupStage = props => {
                         <div className={styles.qrUrl}>
                           Think QR codes are stupid?
                           <br />
-                          Go to {BASE_URL}<span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
+                          Go to
+                          {BASE_URL}
+                          <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
                         </div>
                       </div>
                     )}
@@ -92,21 +93,21 @@ const SetupStage = props => {
               </TransitionGroup>
             </div>
             <div className={styles.playerName}>
-              Player {index + 1}
+              Player
+              {index + 1}
             </div>
           </div>
         ))}
       </div>
       {bothConnected && (
         <div className={styles.instruction}>
-          <JumpUpText text='Lets Play' />
+          <JumpUpText text="Lets Play" />
         </div>
       )}
       <DisplayFooter />
     </div>
   )
 }
-
 
 
 // TD:
