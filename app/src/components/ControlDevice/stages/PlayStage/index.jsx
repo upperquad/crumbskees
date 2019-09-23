@@ -29,7 +29,7 @@ const PlayStage = props => {
     return () => {
       window.removeEventListener('touchstart', touchStartHandler)
     }
-  }, [])
+  }, [setCoordX, setCoordY, setIsTouching])
 
   useEffect(() => {
     const touchMoveHandler = event => {
@@ -64,7 +64,7 @@ const PlayStage = props => {
   const updatePosition = (clientX, clientY, originX, originY) => {
     setCoordX(clientX)
     setCoordY(clientY)
-    WebSocketManager.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
+    WebSocketManager.send(`cursor_move, {x: ${(clientX - originX) / window.innerWidth}, y: ${(clientY - originY) / window.innerHeight}}`)
   }
 
   return (
