@@ -74,7 +74,7 @@ const PlayerCursor = props => {
         window.removeEventListener('mousemove', effectMouseMove)
       }
     }
-    return false
+    return undefined
   }, [sceneUnits])
 
 
