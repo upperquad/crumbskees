@@ -64,7 +64,6 @@ const PlayStage = props => {
   const updatePosition = (clientX, clientY, originX, originY) => {
     setCoordX(clientX)
     setCoordY(clientY)
-    // this.websocket.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
     WebSocketManager.send(`cursor_move,${(clientX - originX) / window.innerWidth},${(clientY - originY) / window.innerHeight}`)
   }
 
