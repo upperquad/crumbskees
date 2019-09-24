@@ -21,10 +21,12 @@ const PlayerCursor = props => {
 
       switch (type) {
         case 'cursor_move': {
-          _player.targetX = data.x * VB_WIDTH
-          _player.targetX -= VB_WIDTH / 2
-          _player.targetY = data.y * VB_HEIGHT
-          _player.targetY -= VB_HEIGHT / 2
+          if (_player.id === data.id) {
+            _player.targetX = data.x * VB_WIDTH
+            _player.targetX -= VB_WIDTH / 2
+            _player.targetY = data.y * VB_HEIGHT
+            _player.targetY -= VB_HEIGHT / 2
+          }
           break
         }
         default:
