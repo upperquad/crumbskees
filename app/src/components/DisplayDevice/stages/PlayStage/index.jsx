@@ -13,6 +13,7 @@ const PlayStage = props => {
   const { onFinish } = props
   const [sceneIndex, setSceneIndex] = useState(0)
 
+  // REVIEW: add page transition here
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
       <Scene

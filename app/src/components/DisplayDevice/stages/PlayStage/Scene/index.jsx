@@ -27,6 +27,7 @@ const Scene = props => {
   // them in production, instead of just suppressing them, and still let them be in the file
   const [debugItems, setDebugItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
+  // REVIEW: makes more sense to break this into a manager so both scene and cursor can use it
   const [messages, setMessages] = useState([])
 
   const sceneRef = useRef(null)
@@ -72,6 +73,7 @@ const Scene = props => {
   //   this.dom.frontBkg.src = frontBkg
   // }, this.props.delayGif)
 
+  // REVIEW: break intro into a new component
   return (
     <Fragment>
       <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
@@ -173,6 +175,7 @@ const Scene = props => {
   )
 }
 
+// REVIEW: I'm starting to believe that all game logic should be in scene, and cursor is just for display
 function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, endScene, endMessage) {
   const player = PlayersManager.players[index]
   // Update items in the scene (remove what is caught)

@@ -18,6 +18,7 @@ const PlayerCursor = props => {
   useEffect(() => {
     const effectRAF = e => handleRAF(e, index)
 
+    // REVIEW: rewrite to sub/pub
     window.addEventListener('RAF', effectRAF)
 
     return () => {
@@ -31,6 +32,7 @@ const PlayerCursor = props => {
       onCatchItems(itemsCaught)
     })
 
+    // REVIEW: we really need a better way to debug, this isn't even gonna be consistent
     if (DEBUG && index === 0) { // only click for player one on debug
       window.addEventListener('click', effectClick)
     } else {
@@ -62,7 +64,8 @@ const PlayerCursor = props => {
     }
   }, [index, items, onCatchItems, onShowTap])
 
-
+  // REVIEW: note to reviewer: check this again after merging
+  // with control device is complete.
   // updated on sceneUnits change
   useEffect(() => {
     if (DEBUG) {
@@ -171,6 +174,7 @@ function itemsInCursor(items, index, triggerPower = true) {
 }
 
 function showTap(index, items, onShowTap) {
+  // REVIEWER: optimization: stop when you find one
   const itemsCaught = itemsInCursor(items, index, false)
 
   if (itemsCaught.length > 0) {
