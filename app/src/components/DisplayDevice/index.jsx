@@ -35,6 +35,7 @@ const DisplayDevice = () => {
     PlayersManager.addSubscriber('player_change', forceUpdate)
 
     if (DEBUG) { // just for test debug mode
+      // REVIEW: remove these from here, this creates unnessesary imports
       PlayersManager.players[0] = new Player({ id: 123, character: character1, color: COLORS.purple })
       PlayersManager.players[1] = new Player({ id: 345, character: character2, color: COLORS.red })
     }

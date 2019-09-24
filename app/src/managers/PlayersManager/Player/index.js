@@ -2,7 +2,6 @@ import getNow from '~utils/time'
 import { random } from '~utils/math'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
-import PlayersManager from '~managers/PlayersManager'
 
 export default class Player {
   _score = 0;
@@ -23,7 +22,9 @@ export default class Player {
     this.el = el
     this.id = id
     this.lost = false
+    // REVIEW: shouldn't use index as the identifier, use id instead?
     this.index = index
+    // REVIEW: check if this is aligned with the control device
     this.color = color
     this.character = character
     this.centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
@@ -108,6 +109,7 @@ export default class Player {
         // window.GameManager.popUpMessage('FREEZE', 'blue', false)
         SoundManager.freeze.play()
         timeClean = 4000
+        // REVIEW: no direct DOM edit, no global class
         this.el.classList.add('frozenCursor')
         break
     }
@@ -140,6 +142,7 @@ export default class Player {
     this._scoreInScene += nbItemsCaught
     SoundManager.score.play()
     // update manager
+    // REVIEW: remove, this creates import cycle
     PlayersManager.callObservers('player_score')
 
     // Todo:
@@ -190,6 +193,7 @@ export default class Player {
     this.grown = false
     this.frozen = false
     this.updateRadius(0)
+    // REVIEW: no direct DOM edit, no global class
     this.el.classList.remove('frozenCursor')
   }
 }

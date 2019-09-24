@@ -1,5 +1,6 @@
 import '../../scss/game.scss'
 
+// REVIEW: remove
 import './managers/RAFManager'
 import GameManager from './managers/GameManager'
 import RouterManager from './managers/RouterManager'

@@ -25,9 +25,12 @@ const PlayStage = props => {
   )
 }
 
+// REVIEW: consider putting this in function
 function endScene(sceneIndex, setSceneIndex, onFinish) {
+  // REVIEW: do not edit players directly, go through the manager
   PlayersManager.players.forEach(player => {
     player.cleanPowers()
+    // REVIEW: do not edit scores directly
     player._scoreInScene = 0
   })
 

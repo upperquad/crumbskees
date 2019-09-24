@@ -19,8 +19,6 @@ const ResultStage = () => {
     winners.push(player2)
   }
 
-  console.log(PlayersManager.players)
-
   // TODO: align property names when Players are finalized
   return (
     <div className={styles.result}>

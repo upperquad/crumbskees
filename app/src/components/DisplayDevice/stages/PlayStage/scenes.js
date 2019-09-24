@@ -1,4 +1,4 @@
-// Maybe put this file in a Data/ folder?
+// Maybe put this file in a Data/ folder? Together with characters data
 import { COLORS } from '~constants'
 
 // assets
