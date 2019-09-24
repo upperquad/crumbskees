@@ -13,6 +13,30 @@ const INTERVAL_TAP = 800
 
 const PlayerCursor = props => {
   const { extraClassName, index, items, onCatchItems, onShowTap, sceneUnits } = props
+  const _player = PlayersManager.players[index]
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+
+      switch (type) {
+        case 'cursor_move': {
+          _player.targetX = data.x * VB_WIDTH
+          _player.targetX -= VB_WIDTH / 2
+          _player.targetY = data.y * VB_HEIGHT
+          _player.targetY -= VB_HEIGHT / 2
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
 
   // updated on index props change
   useEffect(() => {
@@ -61,7 +85,6 @@ const PlayerCursor = props => {
       clearInterval(showTapInterval)
     }
   }, [index, items, onCatchItems, onShowTap])
-
 
   // updated on sceneUnits change
   useEffect(() => {

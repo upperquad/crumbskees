@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { throttle } from 'throttle-debounce'
 import classNames from 'classnames'
 import styles from './style.module.scss'
@@ -12,9 +12,15 @@ const PlayStage = props => {
   const [coordX, setCoordX] = useState(0)
   const [coordY, setCoordY] = useState(0)
 
-  let originCoord = {
+  const originCoord = {
     x: 0,
     y: 0,
+  }
+
+  const updatePosition = (clientX, clientY, originX, originY) => {
+    setCoordX(clientX)
+    setCoordY(clientY)
+    WebSocketManager.send('cursor_move', { x: (clientX - originX) / window.innerWidth, y: (clientY - originY) / window.innerHeight })
   }
 
   useEffect(() => {
@@ -60,12 +66,6 @@ const PlayStage = props => {
       window.removeEventListener('touchend', touchEndHandler)
     }
   }, [])
-
-  const updatePosition = (clientX, clientY, originX, originY) => {
-    setCoordX(clientX)
-    setCoordY(clientY)
-    WebSocketManager.send(`cursor_move, {x: ${(clientX - originX) / window.innerWidth}, y: ${(clientY - originY) / window.innerHeight}}`)
-  }
 
   return (
     <section className={styles.play}>

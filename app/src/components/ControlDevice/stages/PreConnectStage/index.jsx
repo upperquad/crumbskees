@@ -23,7 +23,7 @@ const PreConnectStage = props => {
 
   useEffect(() => {
     const messageHandler = event => {
-      const { detail: { data, type } } = event
+      const { detail: { type } } = event
       switch (type) {
         case 'accepted': {
           onFinish()
