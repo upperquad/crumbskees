@@ -13,6 +13,7 @@ const PlayStage = props => {
   const { onFinish } = props
   const [sceneIndex, setSceneIndex] = useState(0)
 
+  // REVIEW: add page transition here
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
       <Scene
@@ -25,9 +26,12 @@ const PlayStage = props => {
   )
 }
 
+// REVIEW: consider putting this in function
 function endScene(sceneIndex, setSceneIndex, onFinish) {
+  // REVIEW: do not edit players directly, go through the manager
   PlayersManager.players.forEach(player => {
     player.cleanPowers()
+    // REVIEW: do not edit scores directly
     player._scoreInScene = 0
   })
 

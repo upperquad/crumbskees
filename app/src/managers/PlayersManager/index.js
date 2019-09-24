@@ -1,7 +1,6 @@
 import Player from './Player'
 import WebSocketManager from '~managers/WebSocketManager'
 
-
 class PlayersManager {
   constructor() {
     if (!PlayersManager.instance) {
@@ -11,10 +10,11 @@ class PlayersManager {
     return PlayersManager.instance
   }
 
-  gameStarted = false
+  _gameStarted = false
 
   _players = [{ token: getNewToken() }, { token: getNewToken() }]
 
+  // REVIEW: players should really be private, but readable
   players = new Proxy(this._players, {
     get: (obj, prop) => obj[prop],
     set: (obj, prop, value) => {
@@ -39,6 +39,7 @@ class PlayersManager {
     }
   }
 
+  // REVIEW: this should be private
   callObservers = type => {
     if (this.observers[type]) {
       this.observers[type].forEach(observer => observer())
@@ -46,20 +47,25 @@ class PlayersManager {
   }
 
   newConnect = (submittedToken, userId) => {
-    const matchIndex = this.players.findIndex(playerObj => {
-      const { token } = playerObj
-      return token === submittedToken
-    })
-    if (matchIndex !== -1) {
-      this.players[matchIndex] = new Player({ id: userId })
-      WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
-    } else {
-      WebSocketManager.send('auth_result', { id: userId, result: 0 })
+    if (submittedToken) {
+      const matchIndex = this.players.findIndex(playerObj => {
+        const { token } = playerObj
+        return token === submittedToken
+      })
+      if (matchIndex !== -1) {
+        this.players[matchIndex] = new Player({ id: userId })
+        WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
+      } else {
+        WebSocketManager.send('auth_result', { id: userId, result: 0 })
+      }
+    } else if (userId) {
+      // REVIEW: todo
     }
   }
 
+  // REVIEW: this needs to be called when game starts
   startGame = () => {
-    this.gameStarted = true
+    this._gameStarted = true
   }
 
   closeConnection = submittedId => {
@@ -69,7 +75,7 @@ class PlayersManager {
     })
 
     if (matchIndex !== -1) {
-      if (this.gameStarted) {
+      if (this._gameStarted) {
         this.players[matchIndex].lost()
       } else {
         this.players[matchIndex].destroy()

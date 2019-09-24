@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
+// REVIEW: remove
 import '~managers/RAFManager'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
@@ -17,12 +18,16 @@ let timeInterval
 const TIME = 40
 
 const Scene = props => {
+  // REVIEW: some of these props need more self-explanatory names
   const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
   const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
+  // REVIEW: this and all the DEBUG code below: should look into ways of removing
+  // them in production, instead of just suppressing them, and still let them be in the file
   const [debugItems, setDebugItems] = useState([])
   const [sceneUnits, setSceneUnits] = useState()
+  // REVIEW: makes more sense to break this into a manager so both scene and cursor can use it
   const [messages, setMessages] = useState([])
 
   const sceneRef = useRef(null)
@@ -47,6 +52,9 @@ const Scene = props => {
 
     // Events
     // Call effectUnits the first time
+    // REVIEW: this will run for every render after we fix the dependency
+    // array, should set this in a different effect?
+    // also, maybe choose a clearer name?
     effectUnits(setSceneUnits, sceneRef)
     const effectResize = () => effectUnits(setSceneUnits, sceneRef)
 
@@ -55,14 +63,17 @@ const Scene = props => {
     return () => {
       window.removeEventListener('resize', effectResize)
 
+      // REVIEW: BUG? you don't have access to timeInterval here
       clearInterval(timeInterval) // clear startTime interval
     }
+    // REVIEW: dependency array
   }, [endScene])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
   // }, this.props.delayGif)
 
+  // REVIEW: break intro into a new component
   return (
     <Fragment>
       <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
@@ -164,6 +175,7 @@ const Scene = props => {
   )
 }
 
+// REVIEW: I'm starting to believe that all game logic should be in scene, and cursor is just for display
 function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, endScene, endMessage) {
   const player = PlayersManager.players[index]
   // Update items in the scene (remove what is caught)

@@ -26,6 +26,7 @@ const Board = props => {
 
   // Generate player content
   PlayersManager.players.forEach((player, index) => {
+    // REVIEW: read okay, but read from a function?
     const items = [...new Array(player._scoreInScene)]
 
     const content = (
@@ -35,11 +36,12 @@ const Board = props => {
         </div>
         <div className={styles.score}>{zeroUnit(player._score)}</div>
         <div className={styles.name}>
+          {/* REVIEW: can we remove the nbsp by putting them in the same line? */}
           PLAYER&nbsp;
           {index + 1}
         </div>
         <div className={styles.items}>
-          {items.map(() => (<img className={styles.item} src={itemImage} alt="" />))}
+          {items.map(() => <img className={styles.item} src={itemImage} alt="" />)}
         </div>
       </div>
     )
@@ -47,9 +49,12 @@ const Board = props => {
     playersContent.push(content)
   })
 
+  // REVIEW: remove fragment
   return (
     <Fragment>
       <div className={styles.board}>
+        {/* REVIEWER: potentially dangerous, check? */}
+        {/* alternatively, can put it in a function and do player[0] && renderPlayer(player[0]) */}
         {playersContent[0]}
         <div className={styles.center}>
           <div className={styles.timer}>{zeroUnit(time)}</div>
