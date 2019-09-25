@@ -27,6 +27,10 @@ class PlayersManager extends Observable {
     },
   })
 
+  player = id => {
+    this.players.find(player => player.id === id)
+  }
+
   newConnect = (submittedToken, userId) => {
     if (submittedToken) {
       const matchIndex = this.players.findIndex(playerObj => {
@@ -67,6 +71,17 @@ class PlayersManager extends Observable {
         this.players[matchIndex].destroy()
         this.players[matchIndex] = { token: getNewToken() }
       }
+    }
+  }
+
+  bothConnected = () => this.players.every(item => item.id)
+
+  addScore = (score, id) => {
+    const player = this.player(id)
+
+    if (player) {
+      player.addScore(score)
+      this._callObservers('player_score')
     }
   }
 }
