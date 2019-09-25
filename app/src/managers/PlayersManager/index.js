@@ -63,7 +63,6 @@ class PlayersManager {
     }
   }
 
-  // REVIEW: this needs to be called when game starts
   startGame = () => {
     this._gameStarted = true
   }

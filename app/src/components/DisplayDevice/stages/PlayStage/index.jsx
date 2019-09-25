@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
@@ -12,6 +12,10 @@ import scenes from './scenes'
 const PlayStage = props => {
   const { onFinish } = props
   const [sceneIndex, setSceneIndex] = useState(0)
+
+  useEffect(() => {
+    PlayersManager.startGame()
+  }, [])
 
   // REVIEW: add page transition here
   return (
