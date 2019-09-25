@@ -1,8 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-// REVIEW: remove
-import '~managers/RAFManager'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
 import { uuid, randomInt } from '~utils/math'
@@ -17,9 +15,9 @@ import Board from './Board'
 let timeInterval
 const TIME = 40
 
-const Scene = props => {
+const Round = props => {
   // REVIEW: some of these props need more self-explanatory names
-  const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const { bkg, endMessage, onSceneEnd, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
   const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
@@ -52,7 +50,7 @@ const Scene = props => {
     setClipPathId(id)
 
     // StartTime
-    startTime(TIME, setTime, endScene, setMessages)
+    startTime(TIME, setTime, onSceneEnd, setMessages)
 
     // Events
     // Call effectUnits the first time
@@ -70,8 +68,7 @@ const Scene = props => {
       // REVIEW: BUG? you don't have access to timeInterval here
       clearInterval(timeInterval) // clear startTime interval
     }
-    // REVIEW: dependency array
-  }, [endScene])
+  }, [])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
@@ -98,7 +95,7 @@ const Scene = props => {
                 power={power}
                 itemImage={itemImage}
                 onCatchItems={item => {
-                  onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
+                  onCatchItems(item, index, items, setItems, messages, setMessages, onSceneEnd, endMessage)
                 }}
                 onShowTap={() => {
                   onShowTap(index, messages, setMessages)
@@ -180,7 +177,7 @@ const Scene = props => {
 }
 
 // REVIEW: I'm starting to believe that all game logic should be in scene, and cursor is just for display
-function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, endScene, endMessage) {
+function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, onSceneEnd, endMessage) {
   const player = PlayersManager.players[index]
   // Update items in the scene (remove what is caught)
   const newItems = items.filter(item => !itemsCaught.includes(item))
@@ -212,7 +209,7 @@ function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages
     }
 
     messages.push(message)
-    endScene()
+    onSceneEnd()
   }
 
   setMessages([...messages])
@@ -302,7 +299,7 @@ function createItem(props, grid, image, type = 'target', color = null) {
   return obj
 }
 
-function startTime(time, setTime, endScene, setMessages) {
+function startTime(time, setTime, onSceneEnd, setMessages) {
   setTime(time)
 
   timeInterval = setInterval(() => {
@@ -311,7 +308,7 @@ function startTime(time, setTime, endScene, setMessages) {
 
     // if time is 0
     if (time === 0) {
-      endScene()
+      onSceneEnd()
       setMessages([
         {
           left: '50%',
@@ -337,4 +334,4 @@ function effectUnits(setSceneUnits, sceneRef) {
   setSceneUnits({ offsetTop, offsetLeft, width, height })
 }
 
-export default Scene
+export default Round

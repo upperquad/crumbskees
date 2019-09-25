@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import scenes from './scenes'
+import GAME_ROUNDS from '~constants'
 import PlayersManager from '~managers/PlayersManager'
 
-import Scene from './Scene'
+import Round from './Round'
 
 const PlayStage = props => {
   const { onFinish } = props
   const [sceneIndex, setSceneIndex] = useState(0)
 
-  const endScene = () => {
-    if (sceneIndex === scenes.length - 1) {
+  const onRoundEnd = () => {
+    if (sceneIndex === GAME_ROUNDS.length - 1) {
       onFinish()
     } else {
       setSceneIndex(sceneIndex + 1)
@@ -25,11 +25,9 @@ const PlayStage = props => {
   // REVIEW: add page transition here
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
-      <Scene
-        {...scenes[sceneIndex]}
-        endScene={() => {
-          endScene(sceneIndex, setSceneIndex, onFinish)
-        }}
+      <Round
+        {...GAME_ROUNDS[sceneIndex]}
+        onSceneEnd={onRoundEnd}
       />
     </section>
   )
