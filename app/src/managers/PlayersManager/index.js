@@ -69,8 +69,7 @@ class PlayersManager {
 
   startNewRound = () => {
     this.players.forEach(player => {
-      player.cleanPowers()
-      player._scoreInScene = 0
+      player.startNewRound()
     })
   }
 
