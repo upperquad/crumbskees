@@ -1,5 +1,5 @@
 import createCustomEvent from '~utils/createCustomEvent'
-
+// REVIEW: maybe rewrite this
 class RAFManager {
   constructor() {
     this.handleRAF(0)

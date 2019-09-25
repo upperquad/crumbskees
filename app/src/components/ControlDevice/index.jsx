@@ -39,6 +39,7 @@ const ControlDevice = () => {
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
+  const [score, setScore] = useState(0)
 
   const [userId, setUserId] = useState('')
 

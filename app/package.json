@@ -4,14 +4,15 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "howler": "^2.1.2",
     "qrcode": "^1.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "howler": "^2.1.2",
-    "stylelint-scss": "^3.10.0",
-    "use-force-update": "^1.0.7",
     "react-spring": "^8.0.27",
-    "react-transition-group": "^4.2.2"
+    "react-transition-group": "^4.2.2",
+    "stylelint-scss": "^3.10.0",
+    "throttle-debounce": "^2.1.0",
+    "use-force-update": "^1.0.7"
   },
   "scripts": {
     "start": "yarn watch:build",

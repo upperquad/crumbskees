@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import '~managers/RAFManager'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
 import { uuid, randomInt } from '~utils/math'
@@ -16,16 +15,24 @@ import Board from './Board'
 let timeInterval
 const TIME = 40
 
-const Scene = props => {
-  const { bkg, endMessage, endScene, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+const Round = props => {
+  // REVIEW: some of these props need more self-explanatory names
+  const { bkg, endMessage, onRoundEnd, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
   const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
+  // REVIEW: this and all the DEBUG code below: should look into ways of removing
+  // them in production, instead of just suppressing them, and still let them be in the file
   const [debugItems, setDebugItems] = useState([])
-  const [sceneUnits, setSceneUnits] = useState()
+  const [roundUnits, setRoundUnits] = useState()
+  // REVIEW: makes more sense to break this into a manager so both round and cursor can use it
   const [messages, setMessages] = useState([])
 
-  const sceneRef = useRef(null)
+  const roundRef = useRef(null)
+
+  useEffect(() => {
+    PlayersManager.startNewRound()
+  }, [])
 
   // updated on props change
   useEffect(() => effectItems(setItems, setDebugItems, { gridCols, gridLines, itemImage, numItems, power }), [
@@ -43,29 +50,34 @@ const Scene = props => {
     setClipPathId(id)
 
     // StartTime
-    startTime(TIME, setTime, endScene, setMessages)
+    startTime(TIME, setTime, onRoundEnd, setMessages)
 
     // Events
     // Call effectUnits the first time
-    effectUnits(setSceneUnits, sceneRef)
-    const effectResize = () => effectUnits(setSceneUnits, sceneRef)
+    // REVIEW: this will run for every render after we fix the dependency
+    // array, should set this in a different effect?
+    // also, maybe choose a clearer name?
+    effectUnits(setRoundUnits, roundRef)
+    const effectResize = () => effectUnits(setRoundUnits, roundRef)
 
     window.addEventListener('resize', effectResize)
 
     return () => {
       window.removeEventListener('resize', effectResize)
 
+      // REVIEW: BUG? you don't have access to timeInterval here
       clearInterval(timeInterval) // clear startTime interval
     }
-  }, [endScene])
+  }, [])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
   // }, this.props.delayGif)
 
+  // REVIEW: break intro into a new component
   return (
     <Fragment>
-      <div ref={sceneRef} className={classNames(styles.scene, styles.started)}>
+      <div ref={roundRef} className={classNames(styles.round, styles.started)}>
         <img className={styles.frontBkg} src={frontBkg} alt="" />
         <img className={styles.reveal} src={bkg} alt="" />
         <div className={styles.wrapper}>
@@ -78,12 +90,12 @@ const Scene = props => {
             {PlayersManager.players.map((player, index) => (
               <PlayerCursor
                 index={index}
-                sceneUnits={sceneUnits}
+                roundUnits={roundUnits}
                 items={items}
                 power={power}
                 itemImage={itemImage}
                 onCatchItems={item => {
-                  onCatchItems(item, index, items, setItems, messages, setMessages, endScene, endMessage)
+                  onCatchItems(item, index, items, setItems, messages, setMessages, onRoundEnd, endMessage)
                 }}
                 onShowTap={() => {
                   onShowTap(index, messages, setMessages)
@@ -164,9 +176,10 @@ const Scene = props => {
   )
 }
 
-function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, endScene, endMessage) {
+// REVIEW: I'm starting to believe that all game logic should be in round, and cursor is just for display
+function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, onRoundEnd, endMessage) {
   const player = PlayersManager.players[index]
-  // Update items in the scene (remove what is caught)
+  // Update items in the round (remove what is caught)
   const newItems = items.filter(item => !itemsCaught.includes(item))
   setItems(newItems)
 
@@ -185,7 +198,7 @@ function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages
     messages.push(message)
   })
 
-  // If no more targets left, end scene
+  // If no more targets left, end round
   if (targets.length === 0) {
     const message = {
       left: '50%',
@@ -196,7 +209,7 @@ function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages
     }
 
     messages.push(message)
-    endScene()
+    onRoundEnd()
   }
 
   setMessages([...messages])
@@ -286,7 +299,7 @@ function createItem(props, grid, image, type = 'target', color = null) {
   return obj
 }
 
-function startTime(time, setTime, endScene, setMessages) {
+function startTime(time, setTime, onRoundEnd, setMessages) {
   setTime(time)
 
   timeInterval = setInterval(() => {
@@ -295,7 +308,7 @@ function startTime(time, setTime, endScene, setMessages) {
 
     // if time is 0
     if (time === 0) {
-      endScene()
+      onRoundEnd()
       setMessages([
         {
           left: '50%',
@@ -312,13 +325,13 @@ function startTime(time, setTime, endScene, setMessages) {
   }, 1000)
 }
 
-function effectUnits(setSceneUnits, sceneRef) {
-  const offsetTop = getOffsetTop(sceneRef.current)
-  const offsetLeft = getOffsetLeft(sceneRef.current)
-  const width = sceneRef.current.offsetWidth
-  const height = sceneRef.current.offsetHeight
+function effectUnits(setRoundUnits, roundRef) {
+  const offsetTop = getOffsetTop(roundRef.current)
+  const offsetLeft = getOffsetLeft(roundRef.current)
+  const width = roundRef.current.offsetWidth
+  const height = roundRef.current.offsetHeight
 
-  setSceneUnits({ offsetTop, offsetLeft, width, height })
+  setRoundUnits({ offsetTop, offsetLeft, width, height })
 }
 
-export default Scene
+export default Round

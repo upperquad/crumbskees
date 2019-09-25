@@ -1,5 +1,4 @@
 const HOST = window.location.origin.replace(/^http/, 'ws')
-// const HOST = 'wss://uq.fyi'
 
 class WebSocketManager {
   constructor() {
@@ -13,6 +12,7 @@ class WebSocketManager {
 
   _broadcast = (eventType, detail = null) => {
     // TODO: rewrite this into pub/sub
+    // REVIEW: ^
     window.dispatchEvent(new CustomEvent(eventType, { detail }))
   }
 
@@ -23,7 +23,6 @@ class WebSocketManager {
   }
 
   connect = ({ id = null, token = null } = {}) => {
-    console.log('connect')
     if (this._ws) {
       return console.error('Connection already exists')
     }
@@ -102,7 +101,6 @@ class WebSocketManager {
     }
 
     this._broadcast('MESSAGE', { type, data: messageAttributes })
-    console.log('on message')
   }
 
   disconnect = () => {}

@@ -55,13 +55,13 @@ const TutorialStage = props => {
     return () => {
       clearInterval(progressInterval)
     }
-  }, [])
+  }, [onFinish, bothConnected])
 
   useEffect(() => {
     if (!bothConnected) {
       rollback()
     }
-  }, [bothConnected])
+  }, [bothConnected, rollback])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
@@ -87,7 +87,7 @@ const TutorialStage = props => {
           </Transition>
         </TransitionGroup>
         <div className={styles.timebar}>
-          <div className={styles.timebarColor} style={{transform: `scaleX(${progress / 100})`}} id="tutorial-timebar-color" />
+          <div className={styles.timebarColor} style={{ transform: `scaleX(${progress / 100})` }} id="tutorial-timebar-color" />
           <div className={styles.timebarText} id="tutorial-timebar-number">{progress}</div>
         </div>
       </div>

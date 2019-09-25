@@ -37,7 +37,7 @@ const initControl = (wssDisplay, wssControl, wssAdmin) => {
       }
 
       const { type, data } = decodeMessage(message)
-      switch(messageList[0]) {
+      switch(type) {
         case 'character_pick':
           wssDisplay.clients[0].send(message)
           break

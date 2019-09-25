@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useTrail, animated, config } from 'react-spring'
+import { useTrail, animated } from 'react-spring'
 import styles from './style.module.scss'
 
 const JumpUpText = props => {

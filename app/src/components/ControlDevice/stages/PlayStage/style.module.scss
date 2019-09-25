@@ -1,6 +1,6 @@
 @import "~styles/imports/index";
 
-.inGame {
+.play {
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
@@ -18,7 +18,14 @@
   color: $color-red;
   font-size: 5.98vw;
   letter-spacing: .007em;
-  text-transform: uppercase;
+
+  &.titlePurple {
+    color: $color-purple;
+  }
+
+  &.titleRed {
+    color: $color-red;
+  }
 }
 
 .marquee {
@@ -29,7 +36,7 @@
   text-transform: uppercase;
 }
 
-.touch-bubble {
+.touchBubble {
   border: 2px $color-white solid;
   border-radius: 50%;
   height: 74px;
@@ -39,10 +46,11 @@
   transition: opacity .3s, transform ease-in-out .1s;
   width: 74px;
 
-  &.is-touching {
+  &.touchBubbleVisible {
     opacity: 1;
     transform: translate(-50%, -50%);
-    transition: opacity .3s, transform ease-in-out .3s, left .1s, top .1s;;
+    // transition: opacity .3s, transform ease-in-out .3s, left .1s, top .1s;
+    transition: opacity .3s;
   }
 }
 
@@ -55,14 +63,14 @@
   flex-grow: 1;
   margin: 20px 5vw 24px;
   position: relative;
-}
 
-.blockPurple {
-  background: $color-purple;
-}
-
-.blockRed {
-  background: $color-red;
+  &.blockPurple {
+    background: $color-purple;
+  }
+  
+  &.blockRed {
+    background: $color-red;
+  }
 }
 
 .image {

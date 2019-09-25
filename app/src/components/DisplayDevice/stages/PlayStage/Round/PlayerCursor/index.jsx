@@ -12,12 +12,39 @@ import PlayersManager from '~managers/PlayersManager'
 const INTERVAL_TAP = 800
 
 const PlayerCursor = props => {
-  const { extraClassName, index, items, onCatchItems, onShowTap, sceneUnits } = props
+  const { extraClassName, index, items, onCatchItems, onShowTap, roundUnits } = props
+  const _player = PlayersManager.players[index]
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+
+      switch (type) {
+        case 'cursor_move': {
+          if (_player.id === data.id) {
+            _player.targetX = data.x * VB_WIDTH
+            _player.targetX -= VB_WIDTH / 2
+            _player.targetY = data.y * VB_HEIGHT
+            _player.targetY -= VB_HEIGHT / 2
+          }
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
 
   // updated on index props change
   useEffect(() => {
     const effectRAF = e => handleRAF(e, index)
 
+    // REVIEW: rewrite to sub/pub
     window.addEventListener('RAF', effectRAF)
 
     return () => {
@@ -31,6 +58,7 @@ const PlayerCursor = props => {
       onCatchItems(itemsCaught)
     })
 
+    // REVIEW: we really need a better way to debug, this isn't even gonna be consistent
     if (DEBUG && index === 0) { // only click for player one on debug
       window.addEventListener('click', effectClick)
     } else {
@@ -62,11 +90,12 @@ const PlayerCursor = props => {
     }
   }, [index, items, onCatchItems, onShowTap])
 
-
-  // updated on sceneUnits change
+  // REVIEW: note to reviewer: check this again after merging
+  // with control device is complete.
+  // updated on roundUnits change
   useEffect(() => {
     if (DEBUG) {
-      const effectMouseMove = e => handleMouseMove(e, sceneUnits)
+      const effectMouseMove = e => handleMouseMove(e, roundUnits)
 
       window.addEventListener('mousemove', effectMouseMove)
 
@@ -74,8 +103,8 @@ const PlayerCursor = props => {
         window.removeEventListener('mousemove', effectMouseMove)
       }
     }
-    return false
-  }, [sceneUnits])
+    return undefined
+  }, [roundUnits])
 
 
   return (
@@ -92,20 +121,20 @@ const PlayerCursor = props => {
   )
 }
 
-function handleMouseMove(e, sceneUnits) {
-  if (!sceneUnits) return
+function handleMouseMove(e, roundUnits) {
+  if (!roundUnits) return
   // if (window.GameManager.players[window.GameManager.playerIds[0]].frozen) return
   const scrollY = window.scrollY || document.documentElement.scrollTop
   const player = PlayersManager.players[0]
 
   player.eventX = e.touches ? e.touches[0].clientX : e.clientX
-  player.eventX -= sceneUnits.offsetLeft
+  player.eventX -= roundUnits.offsetLeft
   player.eventY = e.touches ? e.touches[0].clientY : e.clientY
   player.eventY += scrollY
 
-  player.targetX = (player.eventX / sceneUnits.width) * VB_WIDTH // because we're using viewbox units here
+  player.targetX = (player.eventX / roundUnits.width) * VB_WIDTH // because we're using viewbox units here
   player.targetX -= VB_WIDTH / 2 // because starting point is player.centerX
-  player.targetY = (player.eventY / sceneUnits.height) * VB_HEIGHT - sceneUnits.offsetTop
+  player.targetY = (player.eventY / roundUnits.height) * VB_HEIGHT - roundUnits.offsetTop
   player.targetY -= VB_HEIGHT / 2
 }
 
@@ -121,7 +150,7 @@ function handleClick(e, index, items, onCatchItems) {
     PlayersManager.players[index].addScore(targetsCaught.length)
   }
 
-  // Remove items from the scene
+  // Remove items from the round
   if (targetsCaught.length > 0 || powersCaught.length > 0) {
     onCatchItems([...targetsCaught, ...powersCaught])
   }
@@ -137,7 +166,7 @@ function itemsInCursor(items, index, triggerPower = true) {
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
-    // --> need a calcul based on Ratio scene
+    // --> need a calcul based on Ratio round
     const xPx = x * VB_WIDTH
     const itemXPx = item.x * VB_WIDTH
     const yPx = y * VB_HEIGHT
@@ -171,6 +200,7 @@ function itemsInCursor(items, index, triggerPower = true) {
 }
 
 function showTap(index, items, onShowTap) {
+  // REVIEWER: optimization: stop when you find one
   const itemsCaught = itemsInCursor(items, index, false)
 
   if (itemsCaught.length > 0) {
@@ -186,7 +216,7 @@ function handleRAF(e, index) {
 
   if (!player.frozen) {
     // if player not frozen
-    // clamp player position to limit of the scene
+    // clamp player position to limit of the round
     player.targetX = clamp(player.targetX, -VB_WIDTH / 2, VB_WIDTH / 2)
     player.targetY = clamp(player.targetY, -VB_HEIGHT / 2, VB_HEIGHT / 2)
 
