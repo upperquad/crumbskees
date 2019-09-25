@@ -67,6 +67,13 @@ class PlayersManager {
     this._gameStarted = true
   }
 
+  startNewRound = () => {
+    this.players.forEach(player => {
+      player.cleanPowers()
+      player._scoreInScene = 0
+    })
+  }
+
   closeConnection = submittedId => {
     const matchIndex = this.players.findIndex(player => {
       const { id } = player

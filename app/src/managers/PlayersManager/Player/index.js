@@ -17,7 +17,6 @@ export default class Player {
       color,
       el,
       id,
-      index,
     } = props
 
     this.el = el
