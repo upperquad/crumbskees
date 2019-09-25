@@ -8,13 +8,13 @@ import Round from './Round'
 
 const PlayStage = props => {
   const { onFinish } = props
-  const [sceneIndex, setSceneIndex] = useState(0)
+  const [roundIndex, setroundIndex] = useState(0)
 
   const onRoundEnd = () => {
-    if (sceneIndex === GAME_ROUNDS.length - 1) {
+    if (roundIndex === GAME_ROUNDS.length - 1) {
       onFinish()
     } else {
-      setSceneIndex(sceneIndex + 1)
+      setroundIndex(roundIndex + 1)
     }
   }
 
@@ -26,8 +26,8 @@ const PlayStage = props => {
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
       <Round
-        {...GAME_ROUNDS[sceneIndex]}
-        onSceneEnd={onRoundEnd}
+        {...GAME_ROUNDS[roundIndex]}
+        onRoundEnd={onRoundEnd}
       />
     </section>
   )
