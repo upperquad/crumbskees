@@ -32,6 +32,16 @@ const Scene = props => {
 
   const sceneRef = useRef(null)
 
+  useEffect(() => {
+    // PlayersManager.players.forEach(player => {
+    //   player.cleanPowers()
+    //   player._scoreInScene = 0
+    // })
+
+    // TODO: add this to the manager, do the above
+    PlayersManager.startNewRound()
+  }, [])
+
   // updated on props change
   useEffect(() => effectItems(setItems, setDebugItems, { gridCols, gridLines, itemImage, numItems, power }), [
     gridCols,

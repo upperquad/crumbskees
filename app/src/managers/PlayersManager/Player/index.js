@@ -23,8 +23,6 @@ export default class Player {
     this.el = el
     this.id = id
     this.lost = false
-    // REVIEW: shouldn't use index as the identifier, use id instead?
-    this.index = index
     // REVIEW: check if this is aligned with the control device
     this.color = color
     this.character = character

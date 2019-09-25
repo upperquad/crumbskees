@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-
+import scenes from './scenes'
 import PlayersManager from '~managers/PlayersManager'
 
 import Scene from './Scene'
 
-// data for scenes
-import scenes from './scenes'
-
 const PlayStage = props => {
   const { onFinish } = props
   const [sceneIndex, setSceneIndex] = useState(0)
+
+  const endScene = () => {
+    if (sceneIndex === scenes.length - 1) {
+      onFinish()
+    } else {
+      setSceneIndex(sceneIndex + 1)
+    }
+  }
 
   useEffect(() => {
     PlayersManager.startGame()
@@ -28,26 +33,6 @@ const PlayStage = props => {
       />
     </section>
   )
-}
-
-// REVIEW: consider putting this in function
-function endScene(sceneIndex, setSceneIndex, onFinish) {
-  // REVIEW: do not edit players directly, go through the manager
-  PlayersManager.players.forEach(player => {
-    player.cleanPowers()
-    // REVIEW: do not edit scores directly
-    player._scoreInScene = 0
-  })
-
-  sceneIndex += 1
-  if (sceneIndex === scenes.length) {
-    // Go to ResultPage
-    onFinish()
-  } else {
-    // Do out transitions... etc...
-    setSceneIndex(sceneIndex)
-    // Do in transitions... etc...
-  }
 }
 
 export default PlayStage
