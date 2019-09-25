@@ -5,7 +5,7 @@ import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 
-import resultBg from '~assets/images/scene_3/s3-intro.mp4'
+import resultBg from '~assets/images/round_3/s3-intro.mp4'
 
 import PlayersManager from '~managers/PlayersManager'
 

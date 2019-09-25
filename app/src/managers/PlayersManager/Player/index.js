@@ -4,12 +4,11 @@ import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
 
 export default class Player {
+  static _numPoints = 8;
+
   _score = 0;
 
-  // REVIEW: we shouldn't need this here
   _scoreInScene = 0;
-
-  static _numPoints = 8;
 
   constructor(props) {
     const {
@@ -17,7 +16,6 @@ export default class Player {
       color,
       el,
       id,
-      index,
     } = props
 
     this.el = el
@@ -194,5 +192,10 @@ export default class Player {
     this.updateRadius(0)
     // REVIEW: no direct DOM edit, no global class
     this.el.classList.remove('frozenCursor')
+  }
+
+  startNewRound = () => {
+    this.cleanPowers()
+    this._scoreInScene = 0
   }
 }

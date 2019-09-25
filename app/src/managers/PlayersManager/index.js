@@ -67,6 +67,12 @@ class PlayersManager {
     this._gameStarted = true
   }
 
+  startNewRound = () => {
+    this.players.forEach(player => {
+      player.startNewRound()
+    })
+  }
+
   closeConnection = submittedId => {
     const matchIndex = this.players.findIndex(player => {
       const { id } = player
