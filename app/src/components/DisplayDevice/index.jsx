@@ -12,12 +12,6 @@ import ErrorStage from './stages/ErrorStage'
 
 import WebSocketManager from '~managers/WebSocketManager'
 import PlayersManager from '~managers/PlayersManager'
-import Player from '~managers/PlayersManager/Player'
-import { DEBUG, COLORS } from '~constants'
-
-// assets
-import character1 from '~assets/images/character1.mp4'
-import character2 from '~assets/images/character2.mp4'
 
 const STAGE_TRANSITION_OUT = 1300
 const STAGE_TRANSITION_IN = 800
