@@ -67,7 +67,7 @@ const TutorialStage = props => {
     <div className={classNames(styles.tutorial, extraClassName)}>
       <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
       <MarqueeText extraClassName={styles.welcome} text="Welcome to The Upperquadrant -" duration="12s" />
-      <div className={styles.tutorialCard} id="tutorial-content">
+      <div className={styles.tutorialCard}>
         <div className={styles.tutorialHeader}>Your instructions</div>
         <TransitionGroup>
           <Transition
@@ -77,7 +77,8 @@ const TutorialStage = props => {
             {status => (
               <div
                 className={classNames(styles.tutorialContent, {
-                  [styles.tutorialContentTransitioning]: status === 'entering' || status === 'exiting' || status === 'exited',
+                  [styles.tutorialContentTransitioning]:
+                    status === 'entering' || status === 'exiting' || status === 'exited',
                 })}
               >
                 <img className={styles.tutorialImage} src={TUTORIALS[step].img} alt="" />
@@ -87,8 +88,11 @@ const TutorialStage = props => {
           </Transition>
         </TransitionGroup>
         <div className={styles.timebar}>
-          <div className={styles.timebarColor} style={{ transform: `scaleX(${progress / 100})` }} id="tutorial-timebar-color" />
-          <div className={styles.timebarText} id="tutorial-timebar-number">{progress}</div>
+          <div
+            className={styles.timebarColor}
+            style={{ transform: `scaleX(${progress / 100})` }}
+          />
+          <div className={styles.timebarText}>{progress}</div>
         </div>
       </div>
       <DisplayFooter />

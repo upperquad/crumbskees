@@ -38,7 +38,7 @@ const PreConnectStage = props => {
     return () => {
       window.removeEventListener('MESSAGE', messageHandler)
     }
-  }, [])
+  }, [onFinish])
 
   return (
     <div className={styles.preConnect}>
@@ -118,7 +118,6 @@ function updateToken(key, token, setToken, setErrorReason, setIsConnecting) {
     if (newToken.length >= 3) {
       setIsConnecting(true)
       WebSocketManager.connect({ token: newToken })
-
     }
 
     setToken(newToken)

@@ -17,7 +17,7 @@ const TIME = 40
 
 const Round = props => {
   // REVIEW: some of these props need more self-explanatory names
-  const { bkg, endMessage, onRoundEnd, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const { bkg, endMessage, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
   const [time, setTime] = useState(TIME)
   const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
@@ -68,7 +68,7 @@ const Round = props => {
       // REVIEW: BUG? you don't have access to timeInterval here
       clearInterval(timeInterval) // clear startTime interval
     }
-  }, [])
+  }, [onRoundEnd])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg

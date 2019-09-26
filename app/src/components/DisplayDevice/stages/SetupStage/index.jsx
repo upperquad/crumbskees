@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
+import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
 
 import MarqueeText from '~components/MarqueeText'
@@ -17,6 +18,7 @@ const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 const SetupStage = props => {
   const { bothConnected, extraClassName, onFinish } = props
   const [qrCode, setQrCode] = useState([null, null])
+  const [player1, player2] = PlayersManager.players
 
   useEffect(() => {
     let didCancel = false
@@ -37,14 +39,15 @@ const SetupStage = props => {
     return () => {
       didCancel = true
     }
-  }, [...PlayersManager.players])
+  }, [player1, player2])
 
   useEffect(() => {
     if (bothConnected) {
       const nextStageTimeout = setTimeout(onFinish, 2000)
       return () => clearTimeout(nextStageTimeout)
     }
-  }, [bothConnected])
+    return undefined
+  }, [bothConnected, onFinish])
 
   return (
     <div className={classNames(styles.setup, extraClassName)}>
@@ -52,7 +55,7 @@ const SetupStage = props => {
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => (
-          <div key={player.id} className={styles.player}>
+          <div key={`${player.id}-${player.token}`} className={styles.player}>
             <div className={styles.qrWrapper}>
               <TransitionGroup>
                 {player.token && qrCode[index] && (
@@ -61,15 +64,17 @@ const SetupStage = props => {
                     timeout={{ enter: 100, exit: 300 }}
                   >
                     {status => (
-                      <div className={classNames(styles.qr, {
-                        [styles.qrTransitioning]: status === 'exiting' || status === 'exited' || status === 'entering'
-                      })}>
+                      <div
+                        className={classNames(styles.qr, {
+                          [styles.qrTransitioning]:
+                            status === 'exiting' || status === 'exited' || status === 'entering',
+                        })}
+                      >
                         <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
                         <div className={styles.qrUrl}>
                           Think QR codes are stupid?
                           <br />
-                          Go to
-                          {BASE_URL}
+                          {`Go to ${BASE_URL}`}
                           <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
                         </div>
                       </div>
@@ -82,9 +87,12 @@ const SetupStage = props => {
                     timeout={{ enter: 100, exit: 300 }}
                   >
                     {status => (
-                      <div className={classNames(styles.playerConnected, {
-                        [styles.playerConnectedTransitioning]: status === 'exiting' || status === 'exited' || status === 'entering'
-                      })}>
+                      <div
+                        className={classNames(styles.playerConnected, {
+                          [styles.playerConnectedTransitioning]:
+                            status === 'exiting' || status === 'exited' || status === 'entering',
+                        })}
+                      >
                         <span className={styles.playerConnectedText}>Connected!</span>
                       </div>
                     )}
@@ -93,8 +101,7 @@ const SetupStage = props => {
               </TransitionGroup>
             </div>
             <div className={styles.playerName}>
-              Player
-              {index + 1}
+              {CHARACTERS[index].name}
             </div>
           </div>
         ))}
@@ -108,42 +115,5 @@ const SetupStage = props => {
     </div>
   )
 }
-
-
-// TD:
-
-// Update these functions from app-old in GameManager with the hook
-// Most important right now are verifyToken and setPlayer which should be handle by the PlayerManager
-// so we keep players' data in this manager
-
-//   function setPlayers() {
-//     const colors = [
-//       'purple',
-//       'red',
-//     ]
-
-//     // each player is an object with a key/id
-//     this.players = {}
-//     if (this.playerIds.length === 2) {
-//       this.players[this.playerIds[0]] = new Player({
-//         el: this.dom.cursors[0],
-//         index: 0,
-//         color: colors[0],
-//         id: this.playerIds[0],
-//         character: this.playersCharacter[0],
-
-//       })
-//       this.players[this.playerIds[1]] = new Player({
-//         el: this.dom.cursors[1],
-//         index: 1,
-//         color: colors[1],
-//         id: this.playerIds[1],
-//         character: this.playersCharacter[1],
-//       })
-//     }
-//     this.updatePlayerConnectionStatus()
-//     console.log(this.players)
-//   }
-
 
 export default SetupStage

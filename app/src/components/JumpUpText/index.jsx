@@ -15,7 +15,6 @@ const JumpUpText = props => {
     <div className={styles.jumpUpText}>
       {trail.map((animationProps, index) => (
         <animated.span
-          key={`${letterArray[index]}${index}`}
           className={styles.letter}
           style={animationProps}
         >

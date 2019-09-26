@@ -15,8 +15,7 @@ const ControlDevice = () => {
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
-  const [score, setScore] = useState(0)
-  const [userId, setUserId] = useState('')
+  // const [score, setScore] = useState(0)
 
   useEffect(() => {
     const messageHandler = event => {
@@ -24,8 +23,7 @@ const ControlDevice = () => {
 
       switch (type) {
         case 'accepted': {
-          const { id, playerIndex } = data
-          setUserId(id)
+          const { playerIndex } = data
           if (CHARACTERS[playerIndex]) {
             setCharacter(CHARACTERS[playerIndex])
           }
