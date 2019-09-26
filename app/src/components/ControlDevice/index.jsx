@@ -57,7 +57,7 @@ const ControlDevice = () => {
         >
           <MeetCharacterStage
             color={character.color}
-            video={character.video}
+            video={character.videoWhite}
             image={character.image}
             onFinish={() => setStage('play')}
           />
