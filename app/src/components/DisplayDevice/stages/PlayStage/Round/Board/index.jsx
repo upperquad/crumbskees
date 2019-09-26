@@ -27,7 +27,7 @@ const Board = props => {
   // Generate player content
   PlayersManager.players.forEach((player, index) => {
     // REVIEW: read okay, but read from a function?
-    const items = [...new Array(player._scoreInScene)]
+    const items = [...new Array(player._scoreInRound)]
 
     const content = (
       <div className={styles.player}>
