@@ -6,6 +6,7 @@ import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { VB_WIDTH, VB_HEIGHT, DEBUG } from '~constants'
 import { clamp } from '~utils/math'
+import createCustomEvent from '~utils/createCustomEvent'
 
 import PlayersManager from '~managers/PlayersManager'
 
@@ -15,18 +16,24 @@ const PlayerCursor = props => {
   const { extraClassName, index, items, onCatchItems, onShowTap, sceneUnits } = props
   const _player = PlayersManager.players[index]
 
+  const sceneUnitsWidth = 1440
+  const sceneUnitsHeight = 630
+
   useEffect(() => {
     const messageHandler = event => {
       const { detail: { data, type } } = event
-
       switch (type) {
         case 'cursor_move': {
           if (_player.id === data.id) {
-            _player.targetX = data.x * VB_WIDTH
-            _player.targetX -= VB_WIDTH / 2
-            _player.targetY = data.y * VB_HEIGHT
-            _player.targetY -= VB_HEIGHT / 2
+            const x = parseFloat(data.x, 10) * VB_WIDTH
+            const y = parseFloat(data.y, 10) * VB_HEIGHT
+            _player.targetX = x + _player.targetX
+            _player.targetY = y + _player.targetY
           }
+          break
+        }
+        case 'click': {
+          window.dispatchEvent(createCustomEvent('CLICK_PLAYER', { index: 0 }))
           break
         }
         default:
