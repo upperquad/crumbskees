@@ -28,7 +28,7 @@ const Board = props => {
     return (
       <div className={styles.player}>
         <div className={styles.character}>
-          <AutoplayVideo src={player.character} extraClassName={styles.characterVideo} />
+          <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} />
         </div>
         <div className={styles.score}>{zeroUnit(player._score)}</div>
         <div className={styles.name}>
@@ -43,11 +43,11 @@ const Board = props => {
 
   return (
     <div className={styles.board}>
-      {PlayersManager.player[0] && renderPlayerBlock(PlayersManager.player[0])}
+      {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0])}
       <div className={styles.center}>
         <div className={styles.timer}>{zeroUnit(time)}</div>
       </div>
-      {PlayersManager.player[1] && renderPlayerBlock(PlayersManager.player[1])}
+      {PlayersManager.players[1] && renderPlayerBlock(PlayersManager.players[1])}
     </div>
   )
 }

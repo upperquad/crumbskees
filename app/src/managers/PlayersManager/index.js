@@ -1,6 +1,7 @@
 import Player from './Player'
 import WebSocketManager from '~managers/WebSocketManager'
 import Observable from '~managers/abstracts/Observable'
+import { CHARACTERS } from '~constants'
 
 class PlayersManager extends Observable {
   constructor() {
@@ -38,7 +39,7 @@ class PlayersManager extends Observable {
         return token === submittedToken
       })
       if (matchIndex !== -1) {
-        this.players[matchIndex] = new Player({ id: userId })
+        this.players[matchIndex] = new Player({ id: userId, character: CHARACTERS[matchIndex] })
         WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
       } else {
         WebSocketManager.send('auth_result', { id: userId, result: 0 })

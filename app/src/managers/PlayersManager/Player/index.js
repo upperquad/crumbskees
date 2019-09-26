@@ -10,20 +10,27 @@ export default class Player {
 
   _scoreInScene = 0
 
-  constructor({
-    character,
-    color,
-    el,
-    id,
-    name,
-  }) {
+  constructor({ character, el, id }) {
+    const {
+      color,
+      image,
+      name,
+      secondaryColor,
+      video,
+      videoWhite,
+    } = character
     this.el = el
     this.id = id
-    this.name = name
     this.lost = false
+
     // REVIEW: check if this is aligned with the control device
     this.color = color
-    this.character = character
+    this.secondaryColor = secondaryColor
+    this.video = video
+    this.videoWhite = videoWhite
+    this.image = image
+    this.name = name
+
     this.centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
     this.centerY = VB_HEIGHT / 2 // equal to svg viewbox / 2
     this.minRadius = GRID_UNIT * 1.1 // 3.125 == 1 unit grid (1920 / 32)

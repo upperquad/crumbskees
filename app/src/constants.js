@@ -13,6 +13,13 @@ import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
 import growItem from '~assets/images/grow.png'
 import freezeItem from '~assets/images/freeze.png'
 
+import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
+import characterVideo1 from '~assets/images/character1.mp4'
+import characterImage1 from '~assets/images/character1.png'
+import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
+import characterVideo2 from '~assets/images/character2.mp4'
+import characterImage2 from '~assets/images/character2.png'
+
 export const DEBUG = false
 
 export const BREAKPOINT = 768
@@ -33,6 +40,25 @@ export const COLORS = {
   orange: '#ff9d21',
   blue: '#00c1ff',
 }
+
+export const CHARACTERS = [
+  {
+    color: 'purple',
+    secondaryColor: 'red',
+    video: characterVideo1,
+    videoWhite: characterVideoWhite1,
+    image: characterImage1,
+    name: 'Player 1',
+  },
+  {
+    color: 'red',
+    secondaryColor: 'purple',
+    video: characterVideo2,
+    videoWhite: characterVideoWhite2,
+    image: characterImage2,
+    name: 'Player 2',
+  },
+]
 
 export const GAME_ROUNDS = [
   {
