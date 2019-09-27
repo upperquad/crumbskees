@@ -39,11 +39,11 @@ const PlayStage = props => {
 
   useEffect(() => {
     const touchMoveHandler = event => {
-      forceUpdate()
       event.preventDefault()
       event.stopPropagation()
       const { clientX, clientY } = event.touches[0]
       updatePosition(clientX, clientY)
+      forceUpdate()
     }
     const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
 
