@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import GAME_ROUNDS from '~constants'
+import { GAME_ROUNDS } from '~constants'
 import PlayersManager from '~managers/PlayersManager'
 
 import Round from './Round'

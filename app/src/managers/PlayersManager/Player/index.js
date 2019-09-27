@@ -140,7 +140,7 @@ export default class Player {
     SoundManager.score.play()
     // update manager
     // REVIEW: remove, this creates import cycle
-    PlayersManager.callObservers('player_score')
+    // PlayersManager.callObservers('player_score')
 
     // Todo:
 
