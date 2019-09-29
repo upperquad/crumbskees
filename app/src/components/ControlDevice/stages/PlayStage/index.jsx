@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { throttle } from 'throttle-debounce'
 import classNames from 'classnames'
+import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
 import WebSocketManager from '~managers/WebSocketManager'
@@ -8,43 +9,41 @@ import WebSocketManager from '~managers/WebSocketManager'
 const PlayStage = props => {
   const { color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
+  const forceUpdate = useForceUpdate()
 
-  const [coordX, setCoordX] = useState(0)
-  const [coordY, setCoordY] = useState(0)
+  const coordX = useRef(0)
+  const coordY = useRef(0)
 
-  const originCoord = {
-    x: 0,
-    y: 0,
-  }
-
-  const updatePosition = (clientX, clientY, originX, originY) => {
-    setCoordX(clientX)
-    setCoordY(clientY)
-    WebSocketManager.send('cursor_move', { x: (clientX - originX) / window.innerWidth, y: (clientY - originY) / window.innerHeight })
+  const updatePosition = (clientX, clientY) => {
+    const x = (clientX - coordX.current) / window.innerWidth
+    const y = (clientY - coordY.current) / window.innerHeight
+    WebSocketManager.send('cursor_move', { x, y })
+    coordX.current = clientX
+    coordY.current = clientY
   }
 
   useEffect(() => {
     const touchStartHandler = event => {
       const { clientX, clientY } = event.touches[0]
-      setCoordX(clientX)
-      setCoordY(clientY)
+      coordX.current = clientX
+      coordY.current = clientY
       setIsTouching(true)
+      WebSocketManager.send('click', { x: clientX, y: clientY })
     }
     window.addEventListener('touchstart', touchStartHandler, { passive: false })
 
     return () => {
       window.removeEventListener('touchstart', touchStartHandler)
     }
-  }, [setCoordX, setCoordY, setIsTouching])
+  }, [setIsTouching])
 
   useEffect(() => {
     const touchMoveHandler = event => {
       event.preventDefault()
       event.stopPropagation()
       const { clientX, clientY } = event.touches[0]
-      originCoord.x = clientX
-      originCoord.y = clientY
-      updatePosition(clientX, clientY, coordX, coordY)
+      updatePosition(clientX, clientY)
+      forceUpdate()
     }
     const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
 
@@ -88,7 +87,7 @@ const PlayStage = props => {
       </div>
       <MarqueeText extraClassName={styles.marquee} text="What up tiny type that is distracting —" duration="12s" />
       <div
-        style={{top: coordY, left: coordX}}
+        style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
       {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}"
        role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
