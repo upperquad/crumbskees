@@ -62,6 +62,7 @@ export const CHARACTERS = [
 
 export const GAME_ROUNDS = [
   {
+    key: 'game-round-1',
     bkg: round1Pattern,
     frontBkg: round1Front,
     itemImage: round1Item,
@@ -77,6 +78,7 @@ export const GAME_ROUNDS = [
       color: COLORS.orange,
     },
   }, {
+    key: 'game-round-2',
     bkg: round2Pattern,
     frontBkg: round2Front,
     itemImage: round2Item,
@@ -92,6 +94,7 @@ export const GAME_ROUNDS = [
       color: COLORS.blue,
     },
   }, {
+    key: 'game-round-3',
     bkg: round3Pattern,
     frontBkg: round3Front,
     itemImage: round3Item,

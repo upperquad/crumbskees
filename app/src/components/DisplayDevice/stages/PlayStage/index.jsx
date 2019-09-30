@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { TransitionGroup, Transition } from 'react-transition-group'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import { GAME_ROUNDS } from '~constants'
@@ -8,13 +9,13 @@ import Round from './Round'
 
 const PlayStage = props => {
   const { onFinish } = props
-  const [roundIndex, setroundIndex] = useState(0)
+  const [roundIndex, setRoundIndex] = useState(0)
 
   const onRoundEnd = () => {
     if (roundIndex === GAME_ROUNDS.length - 1) {
       onFinish()
     } else {
-      setroundIndex(roundIndex + 1)
+      setRoundIndex(roundIndex + 1)
     }
   }
 
@@ -22,13 +23,23 @@ const PlayStage = props => {
     PlayersManager.startGame()
   }, [])
 
-  // REVIEW: add page transition here
+  // TODO: add transition based on transitionStatus
   return (
     <section className={classNames(styles.game, styles.isIntro)}>
-      <Round
-        {...GAME_ROUNDS[roundIndex]}
-        onRoundEnd={onRoundEnd}
-      />
+      <TransitionGroup>
+        <Transition
+          key={GAME_ROUNDS[roundIndex].key}
+          timeout={{ enter: 0, exit: 0 }}
+        >
+          {status => (
+            <Round
+              transitionStatus={status}
+              {...GAME_ROUNDS[roundIndex]}
+              onRoundEnd={onRoundEnd}
+            />
+          )}
+        </Transition>
+      </TransitionGroup>
     </section>
   )
 }
