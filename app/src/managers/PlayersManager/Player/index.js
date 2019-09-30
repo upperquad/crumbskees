@@ -8,8 +8,6 @@ const POINTS_COUNT = 8
 export default class Player {
   _score = 0
 
-  _scoreInScene = 0
-
   constructor({ character, el, id }) {
     const {
       color,
@@ -142,7 +140,6 @@ export default class Player {
 
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
-    this._scoreInScene += nbItemsCaught
     SoundManager.score.play()
 
     // Todo:
@@ -199,6 +196,5 @@ export default class Player {
 
   startNewRound = () => {
     this.cleanPowers()
-    this._scoreInScene = 0
   }
 }
