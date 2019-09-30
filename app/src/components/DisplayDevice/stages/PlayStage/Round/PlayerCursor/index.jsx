@@ -154,7 +154,7 @@ function handleClick(e, index, items, onCatchItems) {
   const powersCaught = itemsInCursor(powers, index)
 
   if (targetsCaught.length > 0) {
-    PlayersManager.players[index].addScore(targetsCaught.length)
+    PlayersManager.addScore(targetsCaught.length, PlayersManager.players[index].id)
   }
 
   // Remove items from the round

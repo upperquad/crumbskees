@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
-import { uuid, randomInt } from '~utils/math'
+import { randomInt } from '~utils/math'
 import { getOffsetTop, getOffsetLeft } from '~utils/dom'
 import { hexToRgb } from '~utils/colors'
 
@@ -12,14 +12,12 @@ import PlayerCursor from './PlayerCursor'
 import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
 
-let timeInterval
 const TIME = 40
 
 const Round = props => {
   // REVIEW: some of these props need more self-explanatory names
-  const { bkg, endMessage, onRoundEnd, frontBkg, gridCols, gridLines, itemImage, numItems, power } = props
+  const { bkg, endMessage, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
   const [time, setTime] = useState(TIME)
-  const [clipPathId, setClipPathId] = useState()
   const [items, setItems] = useState([])
   // REVIEW: this and all the DEBUG code below: should look into ways of removing
   // them in production, instead of just suppressing them, and still let them be in the file
@@ -30,10 +28,33 @@ const Round = props => {
 
   const roundRef = useRef(null)
 
+  // Reset players for the new rounds
   useEffect(() => {
     PlayersManager.startNewRound()
   }, [])
 
+  // Game zone
+  useEffect(() => {
+    const setGameZone = () => {
+      if (roundRef.current) {
+        const offsetTop = getOffsetTop(roundRef.current)
+        const offsetLeft = getOffsetLeft(roundRef.current)
+        const width = roundRef.current.offsetWidth
+        const height = roundRef.current.offsetHeight
+
+        setRoundUnits({ offsetTop, offsetLeft, width, height })
+      }
+    }
+
+    window.addEventListener('resize', setGameZone)
+    setGameZone()
+
+    return () => {
+      window.removeEventListener('resize', setGameZone)
+    }
+  }, [roundRef, setRoundUnits])
+
+  // TODO: rewrite this
   // updated on props change
   useEffect(() => effectItems(setItems, setDebugItems, { gridCols, gridLines, itemImage, numItems, power }), [
     gridCols,
@@ -43,32 +64,35 @@ const Round = props => {
     power,
   ])
 
-  // never updated
+  // Timer
   useEffect(() => {
-    // Set clip path id
-    const id = uuid()
-    setClipPathId(id)
+    const timerInterval = setInterval(() => {
+      setTime(prevTime => {
+        const time = prevTime - 1
 
-    // StartTime
-    startTime(TIME, setTime, onRoundEnd, setMessages)
+        if (time === 0) {
+          onRoundEnd()
+          setMessages([
+            {
+              left: '50%',
+              top: '50%',
+              text: "TIME'S UP!",
+              color: COLORS.red,
+              end: true,
+            },
+          ])
+        } else if (time === 10) {
+          SoundManager.countdown.play()
+        }
 
-    // Events
-    // Call effectUnits the first time
-    // REVIEW: this will run for every render after we fix the dependency
-    // array, should set this in a different effect?
-    // also, maybe choose a clearer name?
-    effectUnits(setRoundUnits, roundRef)
-    const effectResize = () => effectUnits(setRoundUnits, roundRef)
-
-    window.addEventListener('resize', effectResize)
+        return time
+      })
+    }, 1000)
 
     return () => {
-      window.removeEventListener('resize', effectResize)
-
-      // REVIEW: BUG? you don't have access to timeInterval here
-      clearInterval(timeInterval) // clear startTime interval
+      clearInterval(timerInterval)
     }
-  }, [])
+  }, [onRoundEnd])
 
   // setTimeout(() => {
   //   this.dom.frontBkg.src = frontBkg
@@ -83,7 +107,7 @@ const Round = props => {
         <div className={styles.wrapper}>
           <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
             <defs>
-              <clipPath id={clipPathId} className={styles.svgClipPath}>
+              <clipPath id="game-round-clippath" className={styles.svgClipPath}>
                 {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
               </clipPath>
             </defs>
@@ -106,7 +130,7 @@ const Round = props => {
               className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}
               height={`${VB_HEIGHT}px`}
-              clipPath={`url(#${clipPathId})`}
+              clipPath={`url(#game-round-clippath)`}
             >
               <image
                 className={styles.svgImage}
@@ -297,41 +321,6 @@ function createItem(props, grid, image, type = 'target', color = null) {
   }
 
   return obj
-}
-
-function startTime(time, setTime, onRoundEnd, setMessages) {
-  setTime(time)
-
-  timeInterval = setInterval(() => {
-    time -= 1
-    setTime(time)
-
-    // if time is 0
-    if (time === 0) {
-      onRoundEnd()
-      setMessages([
-        {
-          left: '50%',
-          top: '50%',
-          text: "TIME'S UP!",
-          color: COLORS.red,
-          end: true,
-        },
-      ])
-    } else if (time === 10) {
-      // play sound countdown
-      SoundManager.countdown.play()
-    }
-  }, 1000)
-}
-
-function effectUnits(setRoundUnits, roundRef) {
-  const offsetTop = getOffsetTop(roundRef.current)
-  const offsetLeft = getOffsetLeft(roundRef.current)
-  const width = roundRef.current.offsetWidth
-  const height = roundRef.current.offsetHeight
-
-  setRoundUnits({ offsetTop, offsetLeft, width, height })
 }
 
 export default Round

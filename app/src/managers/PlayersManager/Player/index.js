@@ -3,27 +3,34 @@ import { random } from '~utils/math'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
 
+const POINTS_COUNT = 8
+
 export default class Player {
-  static _numPoints = 8;
+  _score = 0
 
-  _score = 0;
+  _scoreInScene = 0
 
-  _scoreInScene = 0;
-
-  constructor(props) {
+  constructor({ character, el, id }) {
     const {
-      character,
       color,
-      el,
-      id,
-    } = props
-
+      image,
+      name,
+      secondaryColor,
+      video,
+      videoWhite,
+    } = character
     this.el = el
     this.id = id
     this.lost = false
+
     // REVIEW: check if this is aligned with the control device
     this.color = color
-    this.character = character
+    this.secondaryColor = secondaryColor
+    this.video = video
+    this.videoWhite = videoWhite
+    this.image = image
+    this.name = name
+
     this.centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
     this.centerY = VB_HEIGHT / 2 // equal to svg viewbox / 2
     this.minRadius = GRID_UNIT * 1.1 // 3.125 == 1 unit grid (1920 / 32)
@@ -57,11 +64,10 @@ export default class Player {
 
   setPoints() {
     this.points = []
-    // create "_numPoints" x points
-    const slice = (Math.PI * 2) / Player._numPoints
+    const slice = (Math.PI * 2) / POINTS_COUNT
     this.startAngle = random(0, Math.PI * 2)
 
-    for (let i = 0; i < Player._numPoints; i++) {
+    for (let i = 0; i < POINTS_COUNT; i++) {
       const margeAngle = random(0, 0.28) // i / 1.2
       // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
       const startAnim = getNow() + i * random(0, this.minDuration)
@@ -138,9 +144,6 @@ export default class Player {
     this._score += nbItemsCaught
     this._scoreInScene += nbItemsCaught
     SoundManager.score.play()
-    // update manager
-    // REVIEW: remove, this creates import cycle
-    // PlayersManager.callObservers('player_score')
 
     // Todo:
 
