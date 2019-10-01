@@ -1,55 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
 import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
-import { VB_WIDTH, VB_HEIGHT, DEBUG } from '~constants'
+import { VB_WIDTH, VB_HEIGHT } from '~constants'
 import { clamp } from '~utils/math'
-import createCustomEvent from '~utils/createCustomEvent'
 
 import PlayersManager from '~managers/PlayersManager'
-
-const INTERVAL_TAP = 800
+import RAFManager from '~managers/RAFManager'
 
 const PlayerCursor = props => {
-  const { extraClassName, index, items, onCatchItems, onShowTap, roundUnits } = props
+  const { cancelPower, color, index, position } = props
   const _player = PlayersManager.players[index]
-
-  const sceneUnitsWidth = 1440
-  const sceneUnitsHeight = 630
-
-  useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
-      switch (type) {
-        case 'cursor_move': {
-          if (_player.id === data.id) {
-            const x = parseFloat(data.x, 10) * VB_WIDTH
-            const y = parseFloat(data.y, 10) * VB_HEIGHT
-            _player.targetX = x + _player.targetX
-            _player.targetY = y + _player.targetY
-          }
-          break
-        }
-        case 'click': {
-          window.dispatchEvent(createCustomEvent('CLICK_PLAYER', { index: 0 }))
-          break
-        }
-        default:
-          break
-      }
-    }
-    window.addEventListener('MESSAGE', messageHandler)
-
-    return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
-    }
-  }, [])
+  const [pathD, setPathD] = useState('')
 
   // updated on index props change
   useEffect(() => {
-    const effectRAF = e => handleRAF(e, index)
+    const effectRAF = e => handleRAF(e, _player, position, setPathD)
 
     // REVIEW: rewrite to sub/pub
     window.addEventListener('RAF', effectRAF)
@@ -57,62 +25,7 @@ const PlayerCursor = props => {
     return () => {
       window.removeEventListener('RAF', effectRAF)
     }
-  }, [index])
-
-  // updated on index, items change
-  useEffect(() => {
-    const effectClick = e => handleClick(e, index, items, itemsCaught => {
-      onCatchItems(itemsCaught)
-    })
-
-    // REVIEW: we really need a better way to debug, this isn't even gonna be consistent
-    if (DEBUG && index === 0) { // only click for player one on debug
-      window.addEventListener('click', effectClick)
-    } else {
-      window.addEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
-    }
-
-    let showTapInterval
-
-    // if player's score is 0, show tap message
-    if (PlayersManager.players[index]._score === 0) {
-      // call it at 0 second
-      // set interval
-      // Bug to fix, when clicking on a target, it clear the interval of the second player
-      showTapInterval = setInterval(() => {
-        showTap(index, items, () => {
-          onShowTap()
-        })
-      }, INTERVAL_TAP)
-    }
-
-    return () => {
-      if (DEBUG && index === 0) {
-        window.removeEventListener('click', effectClick)
-      } else {
-        window.removeEventListener('CLICK_PLAYER', effectClick) // --> from WebSocketServer
-      }
-
-      clearInterval(showTapInterval)
-    }
-  }, [index, items, onCatchItems, onShowTap])
-
-  // REVIEW: note to reviewer: check this again after merging
-  // with control device is complete.
-  // updated on roundUnits change
-  useEffect(() => {
-    if (DEBUG) {
-      const effectMouseMove = e => handleMouseMove(e, roundUnits)
-
-      window.addEventListener('mousemove', effectMouseMove)
-
-      return () => {
-        window.removeEventListener('mousemove', effectMouseMove)
-      }
-    }
-    return undefined
-  }, [roundUnits])
-
+  }, [position])
 
   return (
     <path
@@ -120,115 +33,28 @@ const PlayerCursor = props => {
         PlayersManager.players[index].el = ref
       }}
       id={`player${index}`}
-      className={classNames(styles.cursor, extraClassName)}
+      className={classNames(styles.cursor)}
       strokeWidth="6"
-      stroke={PlayersManager.players[index].color}
+      stroke={color}
       style={{ transition: 'stroke 1s ease' }}
+      d={pathD}
     />
   )
 }
 
-function handleMouseMove(e, roundUnits) {
-  if (!roundUnits) return
-  // if (window.GameManager.players[window.GameManager.playerIds[0]].frozen) return
-  const scrollY = window.scrollY || document.documentElement.scrollTop
-  const player = PlayersManager.players[0]
-
-  player.eventX = e.touches ? e.touches[0].clientX : e.clientX
-  player.eventX -= roundUnits.offsetLeft
-  player.eventY = e.touches ? e.touches[0].clientY : e.clientY
-  player.eventY += scrollY
-
-  player.targetX = (player.eventX / roundUnits.width) * VB_WIDTH // because we're using viewbox units here
-  player.targetX -= VB_WIDTH / 2 // because starting point is player.centerX
-  player.targetY = (player.eventY / roundUnits.height) * VB_HEIGHT - roundUnits.offsetTop
-  player.targetY -= VB_HEIGHT / 2
-}
-
-function handleClick(e, index, items, onCatchItems) {
-  const powers = items.filter(item => item.type !== 'target')
-  const targets = items.filter(item => item.type === 'target')
-
-  const targetsCaught = itemsInCursor(targets, index)
-
-  const powersCaught = itemsInCursor(powers, index)
-
-  if (targetsCaught.length > 0) {
-    PlayersManager.addScore(targetsCaught.length, PlayersManager.players[index].id)
-  }
-
-  // Remove items from the round
-  if (targetsCaught.length > 0 || powersCaught.length > 0) {
-    onCatchItems([...targetsCaught, ...powersCaught])
-  }
-}
-
-function itemsInCursor(items, index, triggerPower = true) {
-  const itemsCaught = []
-
-  const player = PlayersManager.players[index]
-
-  const x = (player.x / VB_WIDTH) + 0.5
-  const y = (player.y / VB_HEIGHT) + 0.5
-
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i]
-    // --> need a calcul based on Ratio round
-    const xPx = x * VB_WIDTH
-    const itemXPx = item.x * VB_WIDTH
-    const yPx = y * VB_HEIGHT
-    const itemYPx = item.y * VB_HEIGHT
-    const distance = Math.hypot(xPx - itemXPx, yPx - itemYPx)
-    const minDistance = player.grown ? 185 : 95
-
-    if (distance <= minDistance) {
-      itemsCaught.push(item)
-
-      if (triggerPower) {
-        switch (item.type) {
-          default:
-            break
-          case 'grow':
-            player.setPower(item.type)
-            break
-          case 'freeze': {
-            // affect other player
-            const playerIndex = index === 0 ? 1 : 0
-            const playerAffected = PlayersManager.players[playerIndex]
-            playerAffected.setPower(item.type)
-            break
-          }
-        }
-      }
-    }
-  }
-
-  return itemsCaught
-}
-
-function showTap(index, items, onShowTap) {
-  // REVIEWER: optimization: stop when you find one
-  const itemsCaught = itemsInCursor(items, index, false)
-
-  if (itemsCaught.length > 0) {
-    onShowTap()
-  }
-}
-
-function handleRAF(e, index) {
+function handleRAF(e, player, position, setPathD) {
   const { now } = e.detail
   // this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
-  const player = PlayersManager.players[index]
-
   if (!player.frozen) {
+    const { x, y } = position
     // if player not frozen
     // clamp player position to limit of the round
-    player.targetX = clamp(player.targetX, -VB_WIDTH / 2, VB_WIDTH / 2)
-    player.targetY = clamp(player.targetY, -VB_HEIGHT / 2, VB_HEIGHT / 2)
+    const targetX = clamp(x, -VB_WIDTH / 2, VB_WIDTH / 2)
+    const targetY = clamp(y, -VB_HEIGHT / 2, VB_HEIGHT / 2)
 
-    player.x += (player.targetX - player.x) * 0.1
-    player.y += (player.targetY - player.y) * 0.1
+    player.x += (targetX - player.x) * 0.1
+    player.y += (targetY - player.y) * 0.1
 
     // For each points of the player (organic shape)
     // Create organic shape / Tween all points
@@ -271,9 +97,7 @@ function handleRAF(e, index) {
     }
   }
 
-  if (player.el) {
-    player.el.setAttribute('d', cardinal(player.points))
-  }
+  setPathD(cardinal(player.points))
 }
 
 // Create circle distorsion based on the given coordinates points

@@ -28,9 +28,9 @@ class PlayersManager extends Observable {
     },
   })
 
-  player = id => {
-    this.players.find(player => player.id === id)
-  }
+  player = id => this.players.find(player => player.id === id)
+
+  playerIndex = id => this.players.findIndex(player => player.id === id)
 
   newConnect = (submittedToken, userId) => {
     if (submittedToken) {
