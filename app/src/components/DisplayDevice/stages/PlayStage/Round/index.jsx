@@ -27,6 +27,73 @@ const Round = props => {
 
   // Players input
   useEffect(() => {
+    const removeItems = itemsCaught => {
+      setItems(prevItems => {
+        const newItems = prevItems.filter(item => !itemsCaught.includes(item))
+        const newTargets = newItems.filter(item => item.type === 'target')
+
+        // If no more targets left, end round
+        if (newTargets.length === 0) {
+          // TODO: emmit message
+          // const message = {
+          //   left: '50%',
+          //   top: '50%',
+          //   text: endMessage,
+          //   color: COLORS.red,
+          //   end: true,
+          // }
+
+          // messages.push(message)
+          onRoundEnd()
+        }
+
+        return newItems
+      })
+    }
+
+    const handleClick = playerIndex => {
+      const itemsCaught = getItemsInCursor(items, PlayersManager.players[playerIndex])
+      const targetsCaught = itemsCaught.filter(item => item.type === 'target')
+
+      // TODO:
+      // if (triggerPower) {
+      //   switch (item.type) {
+      //     default:
+      //       break
+      //     case 'grow':
+      //       player.setPower(item.type)
+      //       break
+      //     case 'freeze': {
+      //       // affect other player
+      //       const playerAffected = PlayersManager.players[1 - playerIndex]
+      //       playerAffected.setPower(item.type)
+      //       break
+      //     }
+      //   }
+      // }
+
+      if (targetsCaught.length > 0) {
+        addScore(targetsCaught.length, playerIndex)
+      }
+
+      // Remove items from the round
+      if (itemsCaught.length > 0) {
+        removeItems(itemsCaught)
+        // emmit message
+        // Pop up message
+        // itemsCaught.forEach(item => {
+        //   const message = {
+        //     left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
+        //     top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
+        //     text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
+        //     color: item.type === 'target' ? player.color : item.color,
+        //   }
+
+        //   messages.push(message)
+        // })
+      }
+    }
+
     const messageHandler = event => {
       const { detail: { data, type } } = event
       switch (type) {
@@ -59,7 +126,7 @@ const Round = props => {
     return () => {
       window.removeEventListener('MESSAGE', messageHandler)
     }
-  }, [])
+  }, [items, onRoundEnd])
 
   // TODO: rewrite this
   // updated on props change
@@ -144,7 +211,7 @@ const Round = props => {
   //   this.dom.frontBkg.src = frontBkg
   // }, this.props.delayGif)
 
-  const addScore = (score, index) => {
+  function addScore(score, index) {
     setRoundScoreArray(prevScoreArray => {
       // clone array so we trigger all re-render
       const newScoreArray = prevScoreArray.slice(0)
@@ -155,77 +222,10 @@ const Round = props => {
     PlayersManager.addScore(score, PlayersManager.players[index].id)
   }
 
-  const removeItems = itemsCaught => {
-    setItems(prevItems => {
-      const newItems = prevItems.filter(item => !itemsCaught.includes(item))
-      const newTargets = newItems.filter(item => item.type === 'target')
-
-      // If no more targets left, end round
-      if (newTargets.length === 0) {
-        // TODO: emmit message
-        // const message = {
-        //   left: '50%',
-        //   top: '50%',
-        //   text: endMessage,
-        //   color: COLORS.red,
-        //   end: true,
-        // }
-
-        // messages.push(message)
-        onRoundEnd()
-      }
-
-      return newItems
-    })
-  }
-
-  const handleClick = playerIndex => {
-    const itemsCaught = getItemsInCursor(items, PlayersManager.players[playerIndex])
-    const targetsCaught = itemsCaught.filter(item => item.type === 'target')
-
-    // TODO:
-    // if (triggerPower) {
-    //   switch (item.type) {
-    //     default:
-    //       break
-    //     case 'grow':
-    //       player.setPower(item.type)
-    //       break
-    //     case 'freeze': {
-    //       // affect other player
-    //       const playerAffected = PlayersManager.players[1 - playerIndex]
-    //       playerAffected.setPower(item.type)
-    //       break
-    //     }
-    //   }
-    // }
-
-    if (targetsCaught.length > 0) {
-      addScore(targetsCaught.length, playerIndex)
-    }
-
-    // Remove items from the round
-    if (itemsCaught.length > 0) {
-      removeItems(itemsCaught)
-      // emmit message
-      // Pop up message
-      // itemsCaught.forEach(item => {
-      //   const message = {
-      //     left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
-      //     top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
-      //     text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
-      //     color: item.type === 'target' ? player.color : item.color,
-      //   }
-
-      //   messages.push(message)
-      // })
-    }
-  }
-
   // REVIEW: all alt tags
   return (
     <Fragment>
-      <div ref={roundRef} className={classNames(styles.round, styles.started)}>
+      <div className={classNames(styles.round, styles.started)}>
         <img className={styles.frontBkg} src={frontBkg} alt="" />
         <img className={styles.reveal} src={bkg} alt="" />
         <div className={styles.wrapper}>
@@ -347,7 +347,8 @@ function createItem(props, grid, image, type = 'target', color = null) {
 
 function getItemsInCursor(items, player) {
   const xPx = player.x + 0.5 * VB_WIDTH
-  const yPx = player.y + 0.5 * VB_WIDTH
+  const yPx = player.y + 0.5 * VB_HEIGHT
+
   const minDistanceSquare = 95 ** 2
   // TODO
   // const minDistance = player.grown ? 185 : 95
