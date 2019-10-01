@@ -1,6 +1,7 @@
 import getNow from '~utils/time'
 import { random } from '~utils/math'
 import SoundManager from '~managers/SoundManager'
+import WebSocketManager from '~managers/WebSocketManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
 
 const POINTS_COUNT = 8
@@ -48,8 +49,6 @@ export default class Player {
     this.frozen = false
 
     this.setPoints()
-
-    this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
   }
 
   destroy = () => {
@@ -120,27 +119,10 @@ export default class Player {
     }, timeClean)
   }
 
-  isCloseToItem = () => {
-    // const scene = window.GameManager.currentScene
-
-    // if (scene) {
-    //   const x = (this.targetX / VB_WIDTH) + 0.5
-    //   const y = (this.targetY / VB_HEIGHT) + 0.5
-
-    //   for (let i = 0; i < scene.items.length; i++) {
-    //     const item = scene.items[i]
-    //     const distance = Math.hypot(x - item.x, y - item.y)
-
-    //     if (!item.found && distance <= 0.08) {
-    //       window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
-    //     }
-    //   }
-    // }
-  }
-
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
-    SoundManager.score.play()
+    WebSocketManager.send('score', { id: this.id, score: this._score })
+
 
     // Todo:
 
@@ -149,10 +131,9 @@ export default class Player {
 
     // Add class item-found
     // this.element.classList.add('item-found')
-
-    // Send score to server
-    // Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
+
+  score = () => this._score
 
   updateRadius(incr) {
     for (let i = 0; i < this.points.length; i++) {

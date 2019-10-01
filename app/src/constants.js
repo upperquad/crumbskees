@@ -70,8 +70,6 @@ export const GAME_ROUNDS = [
     numItems: 10,
     gridCols: 32,
     gridLines: 14,
-    endMessage: 'DOPE.',
-    delayGif: 1000,
     power: {
       type: 'grow',
       image: growItem,
@@ -86,8 +84,6 @@ export const GAME_ROUNDS = [
     numItems: 10,
     gridCols: 32,
     gridLines: 14,
-    endMessage: 'GOOD JOB!',
-    delayGif: 2750,
     power: {
       type: 'freeze',
       image: freezeItem,
@@ -99,11 +95,9 @@ export const GAME_ROUNDS = [
     frontBkg: round3Front,
     itemImage: round3Item,
     videoIntro: round3IntroVideo,
-    numItems: 1,
+    numItems: 10,
     gridCols: 32,
     gridLines: 14,
-    endMessage: 'AWESOME!',
-    delayGif: 0,
     power: {
       type: 'grow',
       image: growItem,

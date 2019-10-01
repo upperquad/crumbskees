@@ -22,52 +22,41 @@ const PlayStage = props => {
     coordY.current = clientY
   }
 
-  useEffect(() => {
-    const touchStartHandler = event => {
-      const { clientX, clientY } = event.touches[0]
-      coordX.current = clientX
-      coordY.current = clientY
-      setIsTouching(true)
-      WebSocketManager.send('click', { x: clientX, y: clientY })
-    }
-    window.addEventListener('touchstart', touchStartHandler, { passive: false })
+  const touchStartHandler = event => {
+    const { clientX, clientY } = event.touches[0]
+    coordX.current = clientX
+    coordY.current = clientY
+    setIsTouching(true)
+  }
 
-    return () => {
-      window.removeEventListener('touchstart', touchStartHandler)
-    }
-  }, [setIsTouching])
+  const touchMoveHandler = event => {
+    event.preventDefault()
+    event.stopPropagation()
+    const { clientX, clientY } = event.touches[0]
+    updatePosition(clientX, clientY)
+    forceUpdate()
+  }
+  const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
 
-  useEffect(() => {
-    const touchMoveHandler = event => {
-      event.preventDefault()
-      event.stopPropagation()
-      const { clientX, clientY } = event.touches[0]
-      updatePosition(clientX, clientY)
-      forceUpdate()
-    }
-    const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
+  const touchEndHandler = event => {
+    event.stopPropagation()
+    setIsTouching(false)
+  }
 
-    window.addEventListener('touchmove', touchMoveHandlerThrottle, { passive: false })
-
-    return () => {
-      window.removeEventListener('touchmove', touchMoveHandler)
-    }
-  }, [])
-
-  useEffect(() => {
-    const touchEndHandler = event => {
-      event.stopPropagation()
-      setIsTouching(false)
-    }
-    window.addEventListener('touchend', touchEndHandler, { passive: false })
-
-    return () => {
-      window.removeEventListener('touchend', touchEndHandler)
-    }
-  }, [])
+  const tapHandler = event => {
+    event.stopPropagation()
+    WebSocketManager.send('click')
+  }
 
   return (
-    <section className={styles.play}>
+    // eslint-disable-next-line
+    <section
+      className={styles.play}
+      onTouchStart={touchStartHandler}
+      onTouchMove={touchMoveHandlerThrottle}
+      onTouchEnd={touchEndHandler}
+      onClick={tapHandler}
+    >
       <h2
         className={classNames(styles.title, {
           [styles.titleRed]: secondaryColor === 'red',

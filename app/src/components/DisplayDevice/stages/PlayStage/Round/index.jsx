@@ -4,10 +4,11 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { randomInt } from '~utils/math'
-import { hexToRgb } from '~utils/colors'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
+import PlayerMessage from './PlayerMessage'
+import PopupMessage from './PopupMessage'
 import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
 import Intro from './Intro'
@@ -16,14 +17,22 @@ const TIME = 40
 
 const Round = props => {
   // REVIEW: some of these props need more self-explanatory names
-  const { bkg, endMessage, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
+  const { bkg, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
   const [time, setTime] = useState(TIME)
   const [items, setItems] = useState([])
-  // REVIEW: makes more sense to break this into a manager so both round and cursor can use it
-  const [messages, setMessages] = useState([])
+  const [message, setMessage] = useState({ messageCount: 0 })
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
+
+  const addMessage = messageObj => {
+    setMessage(prevMessage => (
+      {
+        ...messageObj,
+        messageCount: prevMessage.messageCount + 1,
+      }
+    ))
+  }
 
   // Players input
   useEffect(() => {
@@ -34,17 +43,12 @@ const Round = props => {
 
         // If no more targets left, end round
         if (newTargets.length === 0) {
-          // TODO: emmit message
-          // const message = {
-          //   left: '50%',
-          //   top: '50%',
-          //   text: endMessage,
-          //   color: COLORS.red,
-          //   end: true,
-          // }
-
-          // messages.push(message)
-          onRoundEnd()
+          addMessage({
+            text: getEndMessage(),
+            color: COLORS.red,
+            persistent: true,
+            onEnd: onRoundEnd,
+          })
         }
 
         return newItems
@@ -102,8 +106,8 @@ const Round = props => {
           const playerIndex = PlayersManager.playerIndex(id)
           if (playerIndex !== -1) {
             setPositionArray(prevPositionArray => {
-              prevPositionArray[playerIndex].x += parseFloat(x, 10) * VB_WIDTH
-              prevPositionArray[playerIndex].y += parseFloat(y, 10) * VB_HEIGHT
+              prevPositionArray[playerIndex].x += parseFloat(x, 10)
+              prevPositionArray[playerIndex].y += parseFloat(y, 10)
               return prevPositionArray
             })
           }
@@ -145,18 +149,12 @@ const Round = props => {
         const newTime = prevTime - 1
 
         if (newTime === 0) {
-          // emmit message
-          // setMessages([
-          //   {
-          //     left: '50%',
-          //     top: '50%',
-          //     text: "TIME'S UP!",
-          //     color: COLORS.red,
-          //     end: true,
-          //   },
-          // ])
-
-          onRoundEnd()
+          addMessage({
+            text: 'Time\'s up!',
+            color: COLORS.red,
+            persistent: true,
+            onEnd: onRoundEnd,
+          })
         } else if (newTime === 10) {
           SoundManager.countdown.play()
         }
@@ -171,33 +169,19 @@ const Round = props => {
   }, [onRoundEnd])
 
   // tap instruction
-  const zeroScorePlayers = PlayersManager.players.filter(player => player.score === 0)
+  const zeroScorePlayers = PlayersManager.players.filter(player => player.score() === 0)
   useEffect(() => {
-    const zeroScorePlayersInEffect = PlayersManager.players.filter(player => player.score === 0)
-    if (zeroScorePlayersInEffect.length) {
+    if (zeroScorePlayers.length) {
       const tapInstructionInterval = setInterval(() => {
-        zeroScorePlayersInEffect.forEach(player => {
+        zeroScorePlayers.forEach(player => {
           const itemsInCursor = getItemsInCursor(items, player)
           const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
           // TODO: and not frozen
           if (targetsInCursor.length > 0) {
-            // Emmit message
+            // TODO: Emmit message
           }
-          // function onShowTap(index, messages, setMessages) {
-          //   const player = PlayersManager.players[index]
-
-          //   const message = {
-          //     left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
-          //     top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
-          //     text: 'TAP',
-          //     color: `rgba(${hexToRgb(player.color)}, 0.8)`,
-          //   }
-          //   messages.push(message)
-
-          //   setMessages([...messages])
-          // }
         })
-      })
+      }, 800)
 
       return () => {
         clearInterval(tapInstructionInterval)
@@ -205,11 +189,8 @@ const Round = props => {
     }
 
     return undefined
+  // eslint-disable-next-line
   }, [items, zeroScorePlayers.length])
-
-  // setTimeout(() => {
-  //   this.dom.frontBkg.src = frontBkg
-  // }, this.props.delayGif)
 
   function addScore(score, index) {
     setRoundScoreArray(prevScoreArray => {
@@ -220,6 +201,7 @@ const Round = props => {
     })
 
     PlayersManager.addScore(score, PlayersManager.players[index].id)
+    SoundManager.score.play()
   }
 
   // REVIEW: all alt tags
@@ -241,6 +223,7 @@ const Round = props => {
                 power={powerArray[index]}
                 position={positionArray[index]}
                 color={player.color}
+                roundScore={roundScoreArray[index]}
                 cancelPower={() => {
                   // TODO
                 }}
@@ -274,16 +257,22 @@ const Round = props => {
             </g>
           </svg>
         </div>
-        <div className={styles.messages}>
-          {messages.map(message => (
-            <div
-              className={classNames(styles.message, { [styles.messageEnd]: message.end })}
-              style={{ left: message.left, top: message.top, color: message.color }}
-            >
-              {message.text}
-            </div>
-          ))}
-        </div>
+        {PlayersManager.players.map((player, index) => (
+          <PlayerMessage
+            power={powerArray[index]}
+            position={positionArray[index]}
+            color={player.color}
+            roundScore={roundScoreArray[index]}
+          />
+        ))}
+        <PopupMessage
+          color={message.color}
+          x={message.x}
+          y={message.y}
+          persitent={message.persitent}
+          text={message.text}
+          messageCount={message.messageCount}
+        />
       </div>
       <Board time={time} itemImage={itemImage} scores={roundScoreArray} />
       <Intro />
@@ -360,6 +349,12 @@ function getItemsInCursor(items, player) {
 
     return distanceSquare <= minDistanceSquare
   })
+}
+
+function getEndMessage() {
+  // TODO: we need a larger pool of messages, this is top priority
+  const phrases = ['DOPE.', 'GOOD JOB!', 'AWESOME!']
+  return phrases[Math.floor(Math.random() * phrases.length)]
 }
 
 export default Round
