@@ -12,10 +12,10 @@ import PlayersManager from '~managers/PlayersManager'
 const ResultStage = () => {
   const [player1, player2] = PlayersManager.players
   const winners = []
-  if (player1._score >= player2._score) {
+  if (player1.score() >= player2.score()) {
     winners.push(player1)
   }
-  if (player2._score >= player1._score) {
+  if (player2.score() >= player1.score()) {
     winners.push(player2)
   }
 
@@ -39,7 +39,7 @@ const ResultStage = () => {
             <img src={winner.avatar} className={styles.playerAvatar} alt="" />
           ))}
         </div>
-        <div className={styles.score}>{winners[0]._score}</div>
+        <div className={styles.score}>{winners[0].score()}</div>
         <div className={styles.circle} />
         <div className={classNames(styles.timebar, styles.resultTimebar)} />
       </div>

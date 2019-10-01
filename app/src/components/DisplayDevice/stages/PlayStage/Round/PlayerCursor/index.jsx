@@ -50,8 +50,8 @@ function handleRAF(e, player, position, setPathD) {
     const { x, y } = position
     // if player not frozen
     // clamp player position to limit of the round
-    const targetX = clamp(x, -VB_WIDTH / 2, VB_WIDTH / 2)
-    const targetY = clamp(y, -VB_HEIGHT / 2, VB_HEIGHT / 2)
+    const targetX = clamp(x, -0.5, 0.5) * VB_WIDTH
+    const targetY = clamp(y, -0.5, 0.5) * VB_HEIGHT
 
     player.x += (targetX - player.x) * 0.1
     player.y += (targetY - player.y) * 0.1
