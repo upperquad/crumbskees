@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
@@ -8,14 +8,16 @@ import { VB_WIDTH, VB_HEIGHT } from '~constants'
 import { clamp } from '~utils/math'
 
 import PlayersManager from '~managers/PlayersManager'
+import RAFManager from '~managers/RAFManager'
 
 const PlayerCursor = props => {
   const { cancelPower, color, index, position } = props
   const _player = PlayersManager.players[index]
+  const [pathD, setPathD] = useState('')
 
   // updated on index props change
   useEffect(() => {
-    const effectRAF = e => handleRAF(e, _player, position)
+    const effectRAF = e => handleRAF(e, _player, position, setPathD)
 
     // REVIEW: rewrite to sub/pub
     window.addEventListener('RAF', effectRAF)
@@ -23,7 +25,7 @@ const PlayerCursor = props => {
     return () => {
       window.removeEventListener('RAF', effectRAF)
     }
-  }, [])
+  }, [position])
 
   return (
     <path
@@ -35,11 +37,12 @@ const PlayerCursor = props => {
       strokeWidth="6"
       stroke={color}
       style={{ transition: 'stroke 1s ease' }}
+      d={pathD}
     />
   )
 }
 
-function handleRAF(e, player, position) {
+function handleRAF(e, player, position, setPathD) {
   const { now } = e.detail
   // this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
@@ -94,9 +97,7 @@ function handleRAF(e, player, position) {
     }
   }
 
-  if (player.el) {
-    player.el.setAttribute('d', cardinal(player.points))
-  }
+  setPathD(cardinal(player.points))
 }
 
 // Create circle distorsion based on the given coordinates points
