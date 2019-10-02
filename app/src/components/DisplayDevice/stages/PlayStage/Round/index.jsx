@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import { DEBUG, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { randomInt } from '~utils/math'
 
 // import SceneContext from './context'
@@ -229,14 +229,31 @@ const Round = props => {
                 }}
               />
             ))}
+            {DEBUG && (
+              <g
+                width={`${VB_WIDTH}px`}
+                height={`${VB_HEIGHT}px`}
+                className={styles.debugItems}
+              >
+                {items.map(item => (
+                  <image
+                    xlinkHref={item.image}
+                    preserveAspectRatio="xMidYMid slice"
+                    width={item.size}
+                    height={item.size}
+                    x={`${item.x * 100}%`}
+                    y={`${item.y * 100}%`}
+                    style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+                  />
+                ))}
+              </g>
+            )}
             <g
-              className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}
               height={`${VB_HEIGHT}px`}
               clipPath="url(#game-round-clippath)"
             >
               <image
-                className={styles.svgImage}
                 xlinkHref={bkg}
                 preserveAspectRatio="xMidYMid slice"
                 width={`${VB_WIDTH}px`}
@@ -244,7 +261,6 @@ const Round = props => {
               />
               {items.map(item => (
                 <image
-                  className={styles.svgImage}
                   xlinkHref={item.image}
                   preserveAspectRatio="xMidYMid slice"
                   width={item.size}
