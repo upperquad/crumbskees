@@ -24,6 +24,7 @@ const Round = props => {
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
+  const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
 
   const addMessage = messageObj => {
     setMessage(prevMessage => (
@@ -173,17 +174,21 @@ const Round = props => {
   useEffect(() => {
     if (zeroScorePlayers.length) {
       const tapInstructionInterval = setInterval(() => {
-        zeroScorePlayers.forEach(player => {
-          const itemsInCursor = getItemsInCursor(items, player)
-          const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
-          // TODO: and not frozen
-          if (targetsInCursor.length > 0) {
-            // TODO: Emmit message
+        const newTapInstructionArray = []
+        PlayersManager.players.forEach(player => {
+          if (player.score() === 0) {
+            const itemsInCursor = getItemsInCursor(items, player)
+            const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
+            newTapInstructionArray.push(targetsInCursor.length > 0)
+          } else {
+            newTapInstructionArray.push(false)
           }
         })
-      }, 800)
+        setTapInstructionArray(newTapInstructionArray)
+      }, 400)
 
       return () => {
+        setTapInstructionArray(prevArray => prevArray.map(() => false))
         clearInterval(tapInstructionInterval)
       }
     }
@@ -194,10 +199,8 @@ const Round = props => {
 
   function addScore(score, index) {
     setRoundScoreArray(prevScoreArray => {
-      // clone array so we trigger all re-render
-      const newScoreArray = prevScoreArray.slice(0)
-      newScoreArray[index] += score
-      return newScoreArray
+      prevScoreArray[index] += score
+      return prevScoreArray
     })
 
     PlayersManager.addScore(score, PlayersManager.players[index].id)
@@ -279,6 +282,7 @@ const Round = props => {
             position={positionArray[index]}
             color={player.color}
             roundScore={roundScoreArray[index]}
+            tapInstruction={tapInstructionArray[index]}
           />
         ))}
         <PopupMessage

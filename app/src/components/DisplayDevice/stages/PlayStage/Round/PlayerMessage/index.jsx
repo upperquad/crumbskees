@@ -6,17 +6,17 @@ import { COLORS } from '~constants'
 import { hexToRgb } from '~utils/colors'
 
 const PlayerMessage = props => {
-  const { color, position, roundScore } = props
+  const { color, position, roundScore, tapInstruction } = props
   const prevScore = useRef(0)
   const [message, setMessage] = useState({ messageCount: 0 })
 
   const addMessage = messageObj => {
-    setMessage(prevMessage => (
-      {
-        ...messageObj,
-        messageCount: prevMessage.messageCount + 1,
-      }
-    ))
+    setMessage(prevMessage => ({
+      ...messageObj,
+      x: position.x + 0.5,
+      y: position.y + 0.5,
+      messageCount: prevMessage.messageCount + 1,
+    }))
   }
 
   useEffect(() => {
@@ -25,12 +25,26 @@ const PlayerMessage = props => {
       addMessage({
         text: `+${scoreAdded}`,
         color: `rgba(${hexToRgb(COLORS[color])}, .8)`,
-        x: position.x + 0.5,
-        y: position.y + 0.5,
       })
       prevScore.current = roundScore
     }
   }, [roundScore])
+
+  useEffect(() => {
+    if (tapInstruction) {
+      const timerInterval = setInterval(() => {
+        addMessage({
+          text: 'Tap',
+          color: `rgba(${hexToRgb(COLORS[color])}, .8)`,
+        })
+      }, 800)
+
+      return () => {
+        clearInterval(timerInterval)
+      }
+    }
+    return undefined
+  }, [tapInstruction])
 
   return (
     <PopupMessage
