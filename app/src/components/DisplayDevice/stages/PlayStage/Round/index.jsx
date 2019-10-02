@@ -354,7 +354,7 @@ function getItemsInCursor(items, player) {
 
 function getEndMessage() {
   // TODO: we need a larger pool of messages, this is top priority
-  const phrases = ['DOPE.', 'GOOD JOB!', 'AWESOME!']
+  const phrases = ['Dope.', 'Good job!', 'Awesome!']
   return phrases[Math.floor(Math.random() * phrases.length)]
 }
 

@@ -9,7 +9,7 @@ const POINTS_COUNT = 8
 export default class Player {
   _score = 0
 
-  constructor({ character, el, id }) {
+  constructor({ character, id }) {
     const {
       color,
       image,
@@ -18,7 +18,7 @@ export default class Player {
       video,
       videoWhite,
     } = character
-    this.el = el
+    // this.el = el
     this.id = id
     this.lost = false
 
@@ -110,7 +110,7 @@ export default class Player {
         SoundManager.freeze.play()
         timeClean = 4000
         // REVIEW: no direct DOM edit, no global class
-        this.el.classList.add('frozenCursor')
+        // this.el.classList.add('frozenCursor')
         break
     }
 
@@ -123,12 +123,7 @@ export default class Player {
     this._score += nbItemsCaught
     WebSocketManager.send('score', { id: this.id, score: this._score })
 
-
     // Todo:
-
-    // display +1 message
-    // this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
-
     // Add class item-found
     // this.element.classList.add('item-found')
   }
@@ -172,7 +167,7 @@ export default class Player {
     this.frozen = false
     this.updateRadius(0)
     // REVIEW: no direct DOM edit, no global class
-    this.el.classList.remove('frozenCursor')
+    // this.el.classList.remove('frozenCursor')
   }
 
   startNewRound = () => {
