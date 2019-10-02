@@ -21,9 +21,10 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onScore(data)
           break
         case 'tutorial_start':
-          wssControl.clients.forEach(client => {
-            client.send('tutorial_start')
-          })        
+          onTutorialStart()       
+          break
+        case 'tutorial_over':
+          onTutorialEnd()
           break
         case 'game_start':
           onGameStart()
@@ -68,6 +69,18 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
       return
     }
     wsPhone.send(encodeMessage('score', { score }))
+  }
+
+  function onTutorialStart() {
+    wssControl.clients.forEach(client => {
+      client.send('tutorial_start')
+    }) 
+  }
+
+  function onTutorialEnd() {
+    wssControl.clients.forEach(client => {
+      client.send('tutorial_over')
+    }) 
   }
 
   function onResult(data) {

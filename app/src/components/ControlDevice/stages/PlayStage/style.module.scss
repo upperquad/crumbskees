@@ -93,3 +93,32 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+
+.skipTutorialBtn {
+  @extend %Bold;
+
+  background: $color-yellow;
+  border: 1px solid $color-black;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 18px;
+  left: 0;
+  letter-spacing: .024em;
+  margin: auto;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  top: 40%;
+  width: 80%;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+
+  &.skipTutorialBtnVisible {
+    opacity: 1;
+    pointer-events: all;
+  }
+}

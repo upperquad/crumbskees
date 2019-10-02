@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
+import WebSocketManager from '~managers/WebSocketManager'
 
 import MarqueeText from '~components/MarqueeText'
 import JumpUpText from '~components/JumpUpText'
@@ -43,7 +44,10 @@ const SetupStage = props => {
 
   useEffect(() => {
     if (bothConnected) {
-      const nextStageTimeout = setTimeout(onFinish, 2000)
+      const nextStageTimeout = setTimeout(() => {
+        WebSocketManager.send('tutorial_start')
+        onFinish()
+      }, 2000)
       return () => clearTimeout(nextStageTimeout)
     }
     return undefined

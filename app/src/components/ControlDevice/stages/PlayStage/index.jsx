@@ -9,14 +9,21 @@ import WebSocketManager from '~managers/WebSocketManager'
 const PlayStage = props => {
   const { color, onFinish, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
+  const [activeTutorial, setActiveTutorial] = useState(false)
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
     const messageHandler = event => {
       const { detail: { type } } = event
+
       switch (type) {
+        case 'tutorial_start': {
+          setActiveTutorial(true)
+          break
+        }
         case 'result': {
           onFinish()
+          break
         }
       }
     }
@@ -64,6 +71,11 @@ const PlayStage = props => {
     WebSocketManager.send('click')
   }
 
+  const skipTutorial = () => {
+    setActiveTutorial(false)
+    WebSocketManager.send('skip_tutorial')
+  }
+
   return (
     // eslint-disable-next-line
     <section
@@ -94,8 +106,12 @@ const PlayStage = props => {
       <div
         style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
-      {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}"
-       role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
+      <div
+        className={classNames(styles.skipTutorialBtn, { [styles.skipTutorialBtnVisible]: activeTutorial })}
+        onClick={skipTutorial}
+      >
+        Skip tutorial
+      </div>
     </section>
   )
 }
