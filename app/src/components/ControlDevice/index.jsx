@@ -33,7 +33,6 @@ const ControlDevice = () => {
           break
         }
         case 'result': {
-          console.log(data)
           setWinner(data.winner)
         }
         default:

@@ -15,9 +15,7 @@ const PlayStage = props => {
   const onRoundEnd = () => {
     if (roundIndex === GAME_ROUNDS.length - 1) {
       const result = getResult()
-      console.log(getResult())
       WebSocketManager.send('result', { winner: result })
-      console.log('result', { winner: result })
       onFinish()
     } else {
       setRoundIndex(roundIndex + 1)
