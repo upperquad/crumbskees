@@ -7,32 +7,9 @@ import MarqueeText from '~components/MarqueeText'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PlayStage = props => {
-  const { color, onFinish, image, score, secondaryColor } = props
+  const { activeTutorial, color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
-  const [activeTutorial, setActiveTutorial] = useState(false)
   const forceUpdate = useForceUpdate()
-
-  useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { type } } = event
-
-      switch (type) {
-        case 'tutorial_start': {
-          setActiveTutorial(true)
-          break
-        }
-        case 'result': {
-          onFinish()
-          break
-        }
-      }
-    }
-    window.addEventListener('MESSAGE', messageHandler)
-
-    return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
-    }
-  }, [])
 
   const coordX = useRef(0)
   const coordY = useRef(0)
@@ -72,7 +49,6 @@ const PlayStage = props => {
   }
 
   const skipTutorial = () => {
-    setActiveTutorial(false)
     WebSocketManager.send('skip_tutorial')
   }
 
@@ -106,12 +82,14 @@ const PlayStage = props => {
       <div
         style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
-      <div
-        className={classNames(styles.skipTutorialBtn, { [styles.skipTutorialBtnVisible]: activeTutorial })}
-        onClick={skipTutorial}
-      >
-        Skip tutorial
-      </div>
+      {activeTutorial && (
+        <div
+          className={styles.skipTutorialBtn}
+          onClick={skipTutorial}
+        >
+          Skip tutorial
+        </div>
+      )}
     </section>
   )
 }
