@@ -7,9 +7,25 @@ import MarqueeText from '~components/MarqueeText'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PlayStage = props => {
-  const { color, image, score, secondaryColor } = props
+  const { color, onFinish, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
   const forceUpdate = useForceUpdate()
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { type } } = event
+      switch (type) {
+        case 'result': {
+          onFinish()
+        }
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [])
 
   const coordX = useRef(0)
   const coordY = useRef(0)

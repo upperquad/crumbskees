@@ -70,15 +70,13 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     wsPhone.send(encodeMessage('score', { score }))
   }
 
-  function onResult(messageList) {
-    const { result } = data
-    if (result === undefined) {
+  function onResult(data) {
+    const { winner } = data
+    if (winner === undefined) {
       return
     }
     wssControl.clients.forEach(client => {
-      const message = encodeMessage('result', {
-        result: result === 'tied' ? 'tied' : client.id === result ? 'won' : 'lost'
-      })
+      const message = encodeMessage('result', { winner })
       client.send(message)
     })
   }
