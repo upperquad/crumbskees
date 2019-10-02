@@ -29,9 +29,6 @@ const PlayerCursor = props => {
 
   return (
     <path
-      ref={ref => {
-        PlayersManager.players[index].el = ref
-      }}
       id={`player${index}`}
       className={classNames(styles.cursor)}
       strokeWidth="6"

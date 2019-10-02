@@ -16,8 +16,8 @@
   },
   "scripts": {
     "start": "yarn watch:build",
+    "start:fast": "webpack --config webpack.watch-build-fast.js",
     "watch:build": "webpack --config webpack.watch-build.js",
-    "frontend": "yarn watch",
     "watch": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.build.js"
   },
