@@ -159,7 +159,7 @@ const Round = props => {
           SoundManager.countdown.play()
         }
 
-        return newTime
+        return newTime >= 0 ? newTime : 0
       })
     }, 1000)
 
@@ -272,6 +272,7 @@ const Round = props => {
           persitent={message.persitent}
           text={message.text}
           messageCount={message.messageCount}
+          onEnd={message.onEnd}
         />
       </div>
       <Board time={time} itemImage={itemImage} scores={roundScoreArray} />
