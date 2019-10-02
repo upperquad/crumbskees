@@ -6,7 +6,7 @@ import { COLORS } from '~constants'
 import { hexToRgb } from '~utils/colors'
 
 const PlayerMessage = props => {
-  const { color, position, roundScore, tapInstruction } = props
+  const { color, position, power, roundScore, tapInstruction } = props
   const prevScore = useRef(0)
   const [message, setMessage] = useState({ messageCount: 0 })
 
@@ -29,6 +29,16 @@ const PlayerMessage = props => {
       prevScore.current = roundScore
     }
   }, [roundScore])
+
+  useEffect(() => {
+    if (power) {
+      addMessage({
+        text: power,
+        color: power === 'grow' ? COLORS.orange : COLORS.blue,
+      })
+      prevScore.current = roundScore
+    }
+  }, [power])
 
   useEffect(() => {
     if (tapInstruction) {

@@ -1,6 +1,5 @@
 import getNow from '~utils/time'
 import { random } from '~utils/math'
-import SoundManager from '~managers/SoundManager'
 import WebSocketManager from '~managers/WebSocketManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
 
@@ -38,15 +37,6 @@ export default class Player {
     this.maxMiddleRadius = this.minRadius + (this.maxRadius - this.minRadius) * 0.55
     this.minDuration = 500
     this.maxDuration = 700
-    // cursor position
-    this.x = 0
-    this.y = 0
-    this.targetX = 0
-    this.targetY = 0
-    this.isInsideTime = 0
-    this.increaseMax = VB_WIDTH * 0.05
-    this.grown = false
-    this.frozen = false
 
     this.setPoints()
   }
@@ -93,30 +83,15 @@ export default class Player {
   }
 
   setPower = type => {
-    let timeClean
     switch (type) {
       default:
         break
       case 'grow':
-        this.grown = true
-        this.updateRadius(this.increaseMax)
+        this.updateRadius(VB_WIDTH * 0.05)
         // window.GameManager.popUpMessage('GROW', 'orange', false)
-        SoundManager.grow.play()
         timeClean = 6000
         break
-      case 'freeze':
-        this.frozen = true
-        // window.GameManager.popUpMessage('FREEZE', 'blue', false)
-        SoundManager.freeze.play()
-        timeClean = 4000
-        // REVIEW: no direct DOM edit, no global class
-        // this.el.classList.add('frozenCursor')
-        break
     }
-
-    this.timePower = setTimeout(() => {
-      this.cleanPowers()
-    }, timeClean)
   }
 
   addScore = nbItemsCaught => {
@@ -162,12 +137,7 @@ export default class Player {
   }
 
   cleanPowers = () => {
-    clearTimeout(this.timePower)
-    this.grown = false
-    this.frozen = false
     this.updateRadius(0)
-    // REVIEW: no direct DOM edit, no global class
-    // this.el.classList.remove('frozenCursor')
   }
 
   startNewRound = () => {

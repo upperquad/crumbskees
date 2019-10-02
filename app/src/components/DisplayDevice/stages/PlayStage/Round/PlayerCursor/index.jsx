@@ -11,13 +11,13 @@ import PlayersManager from '~managers/PlayersManager'
 import RAFManager from '~managers/RAFManager'
 
 const PlayerCursor = props => {
-  const { cancelPower, color, index, position } = props
+  const { cancelPower, color, index, position, power } = props
   const _player = PlayersManager.players[index]
   const [pathD, setPathD] = useState('')
 
   // updated on index props change
   useEffect(() => {
-    const effectRAF = e => handleRAF(e, _player, position, setPathD)
+    const effectRAF = e => handleRAF(e, _player, position, setPathD, power)
 
     // REVIEW: rewrite to sub/pub
     window.addEventListener('RAF', effectRAF)
@@ -25,12 +25,21 @@ const PlayerCursor = props => {
     return () => {
       window.removeEventListener('RAF', effectRAF)
     }
-  }, [position])
+  }, [position, power])
+
+  useEffect(() => {
+    if (power) {
+      const timeout = setTimeout(cancelPower, power === 'grow' ? 6000 : 4000)
+
+      return () => clearTimeout(timeout)
+    }
+    return undefined
+  }, [power])
 
   return (
     <path
       id={`player${index}`}
-      className={classNames(styles.cursor)}
+      className={classNames(styles.playerCursor, { [styles.playerCursorFrozen]: power === 'freeze' })}
       strokeWidth="6"
       stroke={color}
       style={{ transition: 'stroke 1s ease' }}
@@ -39,59 +48,59 @@ const PlayerCursor = props => {
   )
 }
 
-function handleRAF(e, player, position, setPathD) {
+function handleRAF(e, player, position, setPathD, power) {
+  if (power === 'freeze') {
+    return
+  }
+
   const { now } = e.detail
-  // this.acceleration = this.acceleration + (this.destAcceleration - this.acceleration) * this.coefAcceleration
 
-  if (!player.frozen) {
-    const { x, y } = position
-    // if player not frozen
-    // clamp player position to limit of the round
-    const targetX = clamp(x, -0.5, 0.5) * VB_WIDTH
-    const targetY = clamp(y, -0.5, 0.5) * VB_HEIGHT
+  const { x, y } = position
+  // if player not frozen
+  // clamp player position to limit of the round
+  const targetX = clamp(x, -0.5, 0.5) * VB_WIDTH
+  const targetY = clamp(y, -0.5, 0.5) * VB_HEIGHT
 
-    player.x += (targetX - player.x) * 0.1
-    player.y += (targetY - player.y) * 0.1
+  player.x += (targetX - player.x) * 0.1
+  player.y += (targetY - player.y) * 0.1
 
-    // For each points of the player (organic shape)
-    // Create organic shape / Tween all points
-    for (let i = 0; i < player.points.length; i++) {
-      const point = player.points[i]
+  // For each points of the player (organic shape)
+  // Create organic shape / Tween all points
+  for (let i = 0; i < player.points.length; i++) {
+    const point = player.points[i]
 
-      // From scratch tween:
-      // percent is going from 0 to 1 in X seconds where X is the "duration variable".
-      // Each points starting value is going to his destination value in X seconds
-      // then I use easing functions to modify the value curve through time.
-      const percent = (now - point.startAnim) / point.duration
-      // const percent = ((now - point.startAnim) / point.duration) * this.acceleration
+    // From scratch tween:
+    // percent is going from 0 to 1 in X seconds where X is the "duration variable".
+    // Each points starting value is going to his destination value in X seconds
+    // then I use easing functions to modify the value curve through time.
+    const percent = (now - point.startAnim) / point.duration
 
-      point.x = point.startX + (point.destX - point.startX) * inOutSine(percent)
-      point.y = point.startY + (point.destY - point.startY) * inOutSine(percent)
+    point.x = point.startX + (point.destX - point.startX) * inOutSine(percent)
+    point.y = point.startY + (point.destY - point.startY) * inOutSine(percent)
 
-      if (percent >= 1) {
-        // end of animation,
-        // restart animation by going back
-        if (point.reverseAnim) {
-          point.startX = point.x
-          point.startY = point.y
-          point.destX = point.targetMaxX
-          point.destY = point.targetMaxY
-          point.reverseAnim = false
-          point.startAnim = getNow()
-        } else {
-          point.startX = point.x
-          point.startY = point.y
-          point.destX = point.targetMinX
-          point.destY = point.targetMinY
-          point.reverseAnim = true
-          point.startAnim = getNow()
-        }
+    if (percent >= 1) {
+      // end of animation,
+      // restart animation by going back
+      if (point.reverseAnim) {
+        point.startX = point.x
+        point.startY = point.y
+        point.destX = point.targetMaxX
+        point.destY = point.targetMaxY
+        point.reverseAnim = false
+        point.startAnim = getNow()
+      } else {
+        point.startX = point.x
+        point.startY = point.y
+        point.destX = point.targetMinX
+        point.destY = point.targetMinY
+        point.reverseAnim = true
+        point.startAnim = getNow()
       }
-
-      // move player based on mouse
-      point.x += player.x
-      point.y += player.y
     }
+
+    // move player based on mouse
+    point.x += player.x
+    point.y += player.y
   }
 
   setPathD(cardinal(player.points))
