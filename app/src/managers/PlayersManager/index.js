@@ -1,7 +1,7 @@
 import Player from './Player'
 import WebSocketManager from '~managers/WebSocketManager'
 import Observable from '~managers/abstracts/Observable'
-import { CHARACTERS } from '~constants'
+import { CHARACTERS, DEBUG } from '~constants'
 
 class PlayersManager extends Observable {
   constructor() {
@@ -16,7 +16,7 @@ class PlayersManager extends Observable {
 
   _gameStarted = false
 
-  _players = [{ token: getNewToken() }, { token: getNewToken() }]
+  _players = [{ token: getNewToken(0) }, { token: getNewToken(1) }]
 
   // REVIEW: players should really be private, but readable
   players = new Proxy(this._players, {
@@ -28,9 +28,9 @@ class PlayersManager extends Observable {
     },
   })
 
-  player = id => {
-    this.players.find(player => player.id === id)
-  }
+  player = id => this.players.find(player => player.id === id)
+
+  playerIndex = id => this.players.findIndex(player => player.id === id)
 
   newConnect = (submittedToken, userId) => {
     if (submittedToken) {
@@ -70,7 +70,7 @@ class PlayersManager extends Observable {
         this.players[matchIndex].lost()
       } else {
         this.players[matchIndex].destroy()
-        this.players[matchIndex] = { token: getNewToken() }
+        this.players[matchIndex] = { token: getNewToken(matchIndex) }
       }
     }
   }
@@ -87,7 +87,10 @@ class PlayersManager extends Observable {
   }
 }
 
-function getNewToken() {
+function getNewToken(index) {
+  if (DEBUG) {
+    return index === 0 ? '000' : '999'
+  }
   return Math.random().toString(10).substr(2, 3)
 }
 

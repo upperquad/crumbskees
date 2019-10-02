@@ -2,61 +2,139 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, DEBUG, COLORS } from '~constants'
+import { DEBUG, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { randomInt } from '~utils/math'
-import { getOffsetTop, getOffsetLeft } from '~utils/dom'
-import { hexToRgb } from '~utils/colors'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
+import PlayerMessage from './PlayerMessage'
+import PopupMessage from './PopupMessage'
 import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
+import Intro from './Intro'
 
 const TIME = 40
 
 const Round = props => {
   // REVIEW: some of these props need more self-explanatory names
-  const { bkg, endMessage, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
+  const { bkg, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
   const [time, setTime] = useState(TIME)
   const [items, setItems] = useState([])
-  // REVIEW: this and all the DEBUG code below: should look into ways of removing
-  // them in production, instead of just suppressing them, and still let them be in the file
-  const [debugItems, setDebugItems] = useState([])
-  const [roundUnits, setRoundUnits] = useState()
-  // REVIEW: makes more sense to break this into a manager so both round and cursor can use it
-  const [messages, setMessages] = useState([])
+  const [message, setMessage] = useState({ messageCount: 0 })
+  const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
+  const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
+  const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
 
-  const roundRef = useRef(null)
+  const addMessage = messageObj => {
+    setMessage(prevMessage => (
+      {
+        ...messageObj,
+        messageCount: prevMessage.messageCount + 1,
+      }
+    ))
+  }
 
-  // Reset players for the new rounds
+  // Players input
   useEffect(() => {
-    PlayersManager.startNewRound()
-  }, [])
+    const removeItems = itemsCaught => {
+      setItems(prevItems => {
+        const newItems = prevItems.filter(item => !itemsCaught.includes(item))
+        const newTargets = newItems.filter(item => item.type === 'target')
 
-  // Game zone
-  useEffect(() => {
-    const setGameZone = () => {
-      if (roundRef.current) {
-        const offsetTop = getOffsetTop(roundRef.current)
-        const offsetLeft = getOffsetLeft(roundRef.current)
-        const width = roundRef.current.offsetWidth
-        const height = roundRef.current.offsetHeight
+        // If no more targets left, end round
+        if (newTargets.length === 0) {
+          addMessage({
+            text: getEndMessage(),
+            color: COLORS.red,
+            persistent: true,
+            onEnd: onRoundEnd,
+          })
+        }
 
-        setRoundUnits({ offsetTop, offsetLeft, width, height })
+        return newItems
+      })
+    }
+
+    const handleClick = playerIndex => {
+      const itemsCaught = getItemsInCursor(items, PlayersManager.players[playerIndex])
+      const targetsCaught = itemsCaught.filter(item => item.type === 'target')
+
+      // TODO:
+      // if (triggerPower) {
+      //   switch (item.type) {
+      //     default:
+      //       break
+      //     case 'grow':
+      //       player.setPower(item.type)
+      //       break
+      //     case 'freeze': {
+      //       // affect other player
+      //       const playerAffected = PlayersManager.players[1 - playerIndex]
+      //       playerAffected.setPower(item.type)
+      //       break
+      //     }
+      //   }
+      // }
+
+      if (targetsCaught.length > 0) {
+        addScore(targetsCaught.length, playerIndex)
+      }
+
+      // Remove items from the round
+      if (itemsCaught.length > 0) {
+        removeItems(itemsCaught)
+        // emmit message
+        // Pop up message
+        // itemsCaught.forEach(item => {
+        //   const message = {
+        //     left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
+        //     top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
+        //     text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
+        //     color: item.type === 'target' ? player.color : item.color,
+        //   }
+
+        //   messages.push(message)
+        // })
       }
     }
 
-    window.addEventListener('resize', setGameZone)
-    setGameZone()
+    const messageHandler = event => {
+      const { detail: { data, type } } = event
+      switch (type) {
+        case 'cursor_move': {
+          const { id, x, y } = data
+          const playerIndex = PlayersManager.playerIndex(id)
+          if (playerIndex !== -1) {
+            setPositionArray(prevPositionArray => {
+              prevPositionArray[playerIndex].x += parseFloat(x, 10)
+              prevPositionArray[playerIndex].y += parseFloat(y, 10)
+              return prevPositionArray
+            })
+          }
+          break
+        }
+        case 'click': {
+          const { id } = data
+          const playerIndex = PlayersManager.playerIndex(id)
+          if (playerIndex !== -1) {
+            handleClick(playerIndex)
+          }
+          break
+        }
+        default:
+          break
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('resize', setGameZone)
+      window.removeEventListener('MESSAGE', messageHandler)
     }
-  }, [roundRef, setRoundUnits])
+  }, [items, onRoundEnd])
 
   // TODO: rewrite this
   // updated on props change
-  useEffect(() => effectItems(setItems, setDebugItems, { gridCols, gridLines, itemImage, numItems, power }), [
+  useEffect(() => effectItems(setItems, { gridCols, gridLines, itemImage, numItems, power }), [
     gridCols,
     gridLines,
     itemImage,
@@ -68,24 +146,20 @@ const Round = props => {
   useEffect(() => {
     const timerInterval = setInterval(() => {
       setTime(prevTime => {
-        const time = prevTime - 1
+        const newTime = prevTime - 1
 
-        if (time === 0) {
-          onRoundEnd()
-          setMessages([
-            {
-              left: '50%',
-              top: '50%',
-              text: "TIME'S UP!",
-              color: COLORS.red,
-              end: true,
-            },
-          ])
-        } else if (time === 10) {
+        if (newTime === 0) {
+          addMessage({
+            text: 'Time\'s up!',
+            color: COLORS.red,
+            persistent: true,
+            onEnd: onRoundEnd,
+          })
+        } else if (newTime === 10) {
           SoundManager.countdown.play()
         }
 
-        return time
+        return newTime >= 0 ? newTime : 0
       })
     }, 1000)
 
@@ -94,14 +168,46 @@ const Round = props => {
     }
   }, [onRoundEnd])
 
-  // setTimeout(() => {
-  //   this.dom.frontBkg.src = frontBkg
-  // }, this.props.delayGif)
+  // tap instruction
+  const zeroScorePlayers = PlayersManager.players.filter(player => player.score() === 0)
+  useEffect(() => {
+    if (zeroScorePlayers.length) {
+      const tapInstructionInterval = setInterval(() => {
+        zeroScorePlayers.forEach(player => {
+          const itemsInCursor = getItemsInCursor(items, player)
+          const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
+          // TODO: and not frozen
+          if (targetsInCursor.length > 0) {
+            // TODO: Emmit message
+          }
+        })
+      }, 800)
 
-  // REVIEW: break intro into a new component
+      return () => {
+        clearInterval(tapInstructionInterval)
+      }
+    }
+
+    return undefined
+  // eslint-disable-next-line
+  }, [items, zeroScorePlayers.length])
+
+  function addScore(score, index) {
+    setRoundScoreArray(prevScoreArray => {
+      // clone array so we trigger all re-render
+      const newScoreArray = prevScoreArray.slice(0)
+      newScoreArray[index] += score
+      return newScoreArray
+    })
+
+    PlayersManager.addScore(score, PlayersManager.players[index].id)
+    SoundManager.score.play()
+  }
+
+  // REVIEW: all alt tags
   return (
     <Fragment>
-      <div ref={roundRef} className={classNames(styles.round, styles.started)}>
+      <div className={classNames(styles.round, styles.started)}>
         <img className={styles.frontBkg} src={frontBkg} alt="" />
         <img className={styles.reveal} src={bkg} alt="" />
         <div className={styles.wrapper}>
@@ -114,26 +220,40 @@ const Round = props => {
             {PlayersManager.players.map((player, index) => (
               <PlayerCursor
                 index={index}
-                roundUnits={roundUnits}
-                items={items}
-                power={power}
-                itemImage={itemImage}
-                onCatchItems={item => {
-                  onCatchItems(item, index, items, setItems, messages, setMessages, onRoundEnd, endMessage)
-                }}
-                onShowTap={() => {
-                  onShowTap(index, messages, setMessages)
+                power={powerArray[index]}
+                position={positionArray[index]}
+                color={player.color}
+                roundScore={roundScoreArray[index]}
+                cancelPower={() => {
+                  // TODO
                 }}
               />
             ))}
+            {DEBUG && (
+              <g
+                width={`${VB_WIDTH}px`}
+                height={`${VB_HEIGHT}px`}
+                className={styles.debugItems}
+              >
+                {items.map(item => (
+                  <image
+                    xlinkHref={item.image}
+                    preserveAspectRatio="xMidYMid slice"
+                    width={item.size}
+                    height={item.size}
+                    x={`${item.x * 100}%`}
+                    y={`${item.y * 100}%`}
+                    style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+                  />
+                ))}
+              </g>
+            )}
             <g
-              className={styles.svgClipPathRef}
               width={`${VB_WIDTH}px`}
               height={`${VB_HEIGHT}px`}
-              clipPath={`url(#game-round-clippath)`}
+              clipPath="url(#game-round-clippath)"
             >
               <image
-                className={styles.svgImage}
                 xlinkHref={bkg}
                 preserveAspectRatio="xMidYMid slice"
                 width={`${VB_WIDTH}px`}
@@ -141,7 +261,6 @@ const Round = props => {
               />
               {items.map(item => (
                 <image
-                  className={styles.svgImage}
                   xlinkHref={item.image}
                   preserveAspectRatio="xMidYMid slice"
                   width={item.size}
@@ -153,107 +272,32 @@ const Round = props => {
               ))}
             </g>
           </svg>
-          {debugItems.map(item => (
-            <div
-              className={classNames(styles.debugItem, { [styles.debugItemPower]: item.power })}
-              style={{ left: item.left, top: item.top }}
-            />
-          ))}
         </div>
-        <div className={styles.messages}>
-          {messages.map(message => (
-            <div
-              className={classNames(styles.message, { [styles.messageEnd]: message.end })}
-              style={{ left: message.left, top: message.top, color: message.color }}
-            >
-              {message.text}
-            </div>
-          ))}
-        </div>
-        <div className={styles.intros}>
-          <div className={styles.intro}>
-            <div className={styles.introRound} />
-          </div>
-          <div className={styles.intro}>
-            <div className={styles.introCircle} />
-            <div className={styles.introItemToFind}>
-              <div className={styles.introItemToFindText}>
-                ITEM
-                <br />
-                TO FIND
-              </div>
-            </div>
-            <video width={`${VB_WIDTH}px`} height={`${VB_HEIGHT}px`} autoPlay loop muted />
-          </div>
-          <div className={styles.intro}>
-            <div className={styles.introReadyWrapper}>
-              <div className={styles.introReady}>READY</div>
-              <div className={styles.introSet}>SET</div>
-            </div>
-            <div className={styles.introGo}>GO</div>
-          </div>
-        </div>
+        {PlayersManager.players.map((player, index) => (
+          <PlayerMessage
+            power={powerArray[index]}
+            position={positionArray[index]}
+            color={player.color}
+            roundScore={roundScoreArray[index]}
+          />
+        ))}
+        <PopupMessage
+          color={message.color}
+          x={message.x}
+          y={message.y}
+          persitent={message.persitent}
+          text={message.text}
+          messageCount={message.messageCount}
+          onEnd={message.onEnd}
+        />
       </div>
-      <img src="" className={styles.itemToFind} alt="" />
-      <Board time={time} itemImage={itemImage} />
+      <Board time={time} itemImage={itemImage} scores={roundScoreArray} />
+      <Intro />
     </Fragment>
   )
 }
 
-// REVIEW: I'm starting to believe that all game logic should be in round, and cursor is just for display
-function onCatchItems(itemsCaught, index, items, setItems, messages, setMessages, onRoundEnd, endMessage) {
-  const player = PlayersManager.players[index]
-  // Update items in the round (remove what is caught)
-  const newItems = items.filter(item => !itemsCaught.includes(item))
-  setItems(newItems)
-
-  const targetsCaught = itemsCaught.filter(item => item.type === 'target')
-  const targets = newItems.filter(item => item.type === 'target')
-
-  // Pop up message
-  itemsCaught.forEach(item => {
-    const message = {
-      left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
-      top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
-      text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
-      color: item.type === 'target' ? player.color : item.color,
-    }
-
-    messages.push(message)
-  })
-
-  // If no more targets left, end round
-  if (targets.length === 0) {
-    const message = {
-      left: '50%',
-      top: '50%',
-      text: endMessage,
-      color: COLORS.red,
-      end: true,
-    }
-
-    messages.push(message)
-    onRoundEnd()
-  }
-
-  setMessages([...messages])
-}
-
-function onShowTap(index, messages, setMessages) {
-  const player = PlayersManager.players[index]
-
-  const message = {
-    left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
-    top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
-    text: 'TAP',
-    color: `rgba(${hexToRgb(player.color)}, 0.8)`,
-  }
-  messages.push(message)
-
-  setMessages([...messages])
-}
-
-function effectItems(setItems, setDebugItems, props) {
+function effectItems(setItems, props) {
   // generate grid
 
   const grid = []
@@ -271,34 +315,18 @@ function effectItems(setItems, setDebugItems, props) {
   }
 
   const items = []
-  const debugItems = []
 
   if (power) {
     const item = createItem(props, grid, power.image, power.type, power.color)
     items.push(item)
-
-    if (DEBUG) {
-      // fake item for debugging
-      const debugItem = { left: `${item.x * 100}%`, top: `${item.y * 100}%`, power: true }
-      debugItems.push(debugItem)
-    }
   }
 
   for (let i = 0; i < numItems; i++) {
     const item = createItem(props, grid, itemImage)
     items.push(item)
-
-    if (DEBUG) {
-      const debugItem = { left: `${item.x * 100}%`, top: `${item.y * 100}%` }
-      debugItems.push(debugItem)
-    }
   }
 
   setItems(items)
-
-  if (DEBUG) {
-    setDebugItems(debugItems)
-  }
 }
 
 function createItem(props, grid, image, type = 'target', color = null) {
@@ -321,6 +349,29 @@ function createItem(props, grid, image, type = 'target', color = null) {
   }
 
   return obj
+}
+
+function getItemsInCursor(items, player) {
+  const xPx = player.x + 0.5 * VB_WIDTH
+  const yPx = player.y + 0.5 * VB_HEIGHT
+
+  const minDistanceSquare = 95 ** 2
+  // TODO
+  // const minDistance = player.grown ? 185 : 95
+
+  return items.filter(item => {
+    const itemXPx = item.x * VB_WIDTH
+    const itemYPx = item.y * VB_HEIGHT
+    const distanceSquare = (xPx - itemXPx) ** 2 + (yPx - itemYPx) ** 2
+
+    return distanceSquare <= minDistanceSquare
+  })
+}
+
+function getEndMessage() {
+  // TODO: we need a larger pool of messages, this is top priority
+  const phrases = ['Dope.', 'Good job!', 'Awesome!']
+  return phrases[Math.floor(Math.random() * phrases.length)]
 }
 
 export default Round

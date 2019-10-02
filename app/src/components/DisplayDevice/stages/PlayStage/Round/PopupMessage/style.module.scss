@@ -1,0 +1,49 @@
+@import "~styles/imports/index";
+
+.messageContainer {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+@keyframes message-fade-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.7);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes message-fade-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.7);
+  }
+}
+
+.message {
+  @extend %Bold;
+
+  animation: message-fade-in 1s $expo-out forwards, message-fade-out 1s $expo-out forwards .7s;
+  display: inline-block;
+  font-size: responsive-font(120);
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.messagePersistent {
+  animation: message-fade-in 1s $expo-out forwards, message-fade-out 1s $expo-out forwards 1s;
+}

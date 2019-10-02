@@ -3,6 +3,8 @@ import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import styles from './style.module.scss'
 
+import { DEBUG } from '~constants'
+
 import MarqueeText from '~components/MarqueeText'
 import DisplayFooter from '~components/DisplayFooter'
 import AutoplayVideo from '~components/AutoplayVideo'
@@ -50,7 +52,7 @@ const TutorialStage = props => {
         }
         return counter + 1
       })
-    }, 100)
+    }, DEBUG ? 1 : 100)
 
     return () => {
       clearInterval(progressInterval)

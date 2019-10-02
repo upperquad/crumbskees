@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import useForceUpdate from 'use-force-update'
+import React from 'react'
 
 import styles from './style.module.scss'
 
@@ -7,30 +6,17 @@ import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
-  const { itemImage, time } = props
+  const { itemImage, scores, time } = props
 
-  const forceUpdate = useForceUpdate()
-
-  // subscribe to PlayersManager
-  useEffect(() => {
-    // This should trigger on all children components so don't have to do this anywhere else
-    PlayersManager.addSubscriber('player_score', forceUpdate)
-
-    return () => {
-      PlayersManager.removeSubscriber('player_score', forceUpdate)
-    }
-  }, [forceUpdate])
-
-  const renderPlayerBlock = player => {
-    // REVIEW: read okay, but read from a function?
-    const items = [...new Array(player._scoreInRound)]
+  const renderPlayerBlock = (player, score) => {
+    const items = [...new Array(score)]
 
     return (
       <div className={styles.player}>
         <div className={styles.character}>
           <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} />
         </div>
-        <div className={styles.score}>{zeroUnit(player._score)}</div>
+        <div className={styles.score}>{zeroUnit(player.score())}</div>
         <div className={styles.name}>
           {player.name}
         </div>
@@ -43,11 +29,11 @@ const Board = props => {
 
   return (
     <div className={styles.board}>
-      {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0])}
+      {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0], scores[0])}
       <div className={styles.center}>
         <div className={styles.timer}>{zeroUnit(time)}</div>
       </div>
-      {PlayersManager.players[1] && renderPlayerBlock(PlayersManager.players[1])}
+      {PlayersManager.players[1] && renderPlayerBlock(PlayersManager.players[1], scores[1])}
     </div>
   )
 }

@@ -9,7 +9,7 @@ import PlayersManager from '~managers/PlayersManager'
 import Round from './Round'
 
 const PlayStage = props => {
-  const { characterIndex, onFinish } = props
+  const { characterIndex, extraClassName, onFinish } = props
   const [roundIndex, setRoundIndex] = useState(0)
 
   const onRoundEnd = () => {
@@ -42,7 +42,7 @@ const PlayStage = props => {
 
   // TODO: add transition based on transitionStatus
   return (
-    <section className={classNames(styles.game, styles.isIntro)}>
+    <section className={classNames(styles.play, extraClassName)}>
       <TransitionGroup>
         <Transition
           key={GAME_ROUNDS[roundIndex].key}

@@ -1,6 +1,7 @@
 import getNow from '~utils/time'
 import { random } from '~utils/math'
 import SoundManager from '~managers/SoundManager'
+import WebSocketManager from '~managers/WebSocketManager'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT } from '~constants'
 
 const POINTS_COUNT = 8
@@ -8,9 +9,7 @@ const POINTS_COUNT = 8
 export default class Player {
   _score = 0
 
-  _scoreInScene = 0
-
-  constructor({ character, el, id }) {
+  constructor({ character, id }) {
     const {
       color,
       image,
@@ -19,7 +18,7 @@ export default class Player {
       video,
       videoWhite,
     } = character
-    this.el = el
+    // this.el = el
     this.id = id
     this.lost = false
 
@@ -50,8 +49,6 @@ export default class Player {
     this.frozen = false
 
     this.setPoints()
-
-    this.isCloseToItemInterval = setInterval(this.isCloseToItem, 800)
   }
 
   destroy = () => {
@@ -113,7 +110,7 @@ export default class Player {
         SoundManager.freeze.play()
         timeClean = 4000
         // REVIEW: no direct DOM edit, no global class
-        this.el.classList.add('frozenCursor')
+        // this.el.classList.add('frozenCursor')
         break
     }
 
@@ -122,40 +119,16 @@ export default class Player {
     }, timeClean)
   }
 
-  isCloseToItem = () => {
-    // const scene = window.GameManager.currentScene
-
-    // if (scene) {
-    //   const x = (this.targetX / VB_WIDTH) + 0.5
-    //   const y = (this.targetY / VB_HEIGHT) + 0.5
-
-    //   for (let i = 0; i < scene.items.length; i++) {
-    //     const item = scene.items[i]
-    //     const distance = Math.hypot(x - item.x, y - item.y)
-
-    //     if (!item.found && distance <= 0.08) {
-    //       window.GameManager.popUpMessage('TAP', `${this.color}--fade`, false, { x, y })
-    //     }
-    //   }
-    // }
-  }
-
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
-    this._scoreInScene += nbItemsCaught
-    SoundManager.score.play()
+    WebSocketManager.send('score', { id: this.id, score: this._score })
 
     // Todo:
-
-    // display +1 message
-    // this.popUpMessage(`+${score}`, player.color, false, pos) // + color player
-
     // Add class item-found
     // this.element.classList.add('item-found')
-
-    // Send score to server
-    // Server.websocket.send(`score,${player.id},${this.scores[player.index]}`)
   }
+
+  score = () => this._score
 
   updateRadius(incr) {
     for (let i = 0; i < this.points.length; i++) {
@@ -194,11 +167,10 @@ export default class Player {
     this.frozen = false
     this.updateRadius(0)
     // REVIEW: no direct DOM edit, no global class
-    this.el.classList.remove('frozenCursor')
+    // this.el.classList.remove('frozenCursor')
   }
 
   startNewRound = () => {
     this.cleanPowers()
-    this._scoreInScene = 0
   }
 }

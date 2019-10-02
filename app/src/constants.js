@@ -20,7 +20,7 @@ import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import characterVideo2 from '~assets/images/character2.mp4'
 import characterImage2 from '~assets/images/character2.png'
 
-export const DEBUG = false
+export const DEBUG = typeof DEBUG_VALUE !== 'undefined'
 
 export const BREAKPOINT = 768
 
@@ -67,11 +67,9 @@ export const GAME_ROUNDS = [
     frontBkg: round1Front,
     itemImage: round1Item,
     videoIntro: round1IntroVideo,
-    numItems: 10,
+    numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
-    endMessage: 'DOPE.',
-    delayGif: 1000,
     power: {
       type: 'grow',
       image: growItem,
@@ -83,11 +81,9 @@ export const GAME_ROUNDS = [
     frontBkg: round2Front,
     itemImage: round2Item,
     videoIntro: round2IntroVideo,
-    numItems: 10,
+    numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
-    endMessage: 'GOOD JOB!',
-    delayGif: 2750,
     power: {
       type: 'freeze',
       image: freezeItem,
@@ -99,11 +95,9 @@ export const GAME_ROUNDS = [
     frontBkg: round3Front,
     itemImage: round3Item,
     videoIntro: round3IntroVideo,
-    numItems: 1,
+    numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
-    endMessage: 'AWESOME!',
-    delayGif: 0,
     power: {
       type: 'grow',
       image: growItem,
