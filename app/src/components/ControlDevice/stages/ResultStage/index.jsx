@@ -8,12 +8,12 @@ import Circle from '~components/ControlDevice/Circle'
 import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 
-const ResultStage = (props) => {
+const ResultStage = props => {
   const { characterIndex, winner } = props
   let resultTop
   let resultBottom
   let circleColor
-  let video = []
+  const video = []
 
   if (winner === 'tied') {
     circleColor = 'yellow'

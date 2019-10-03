@@ -12,7 +12,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
 
     ws.on('message', message => {
       const { type, data } = decodeMessage(message)
-    
+
       switch(type) {
         case 'auth_result':
           onAuthResult(data)
@@ -21,7 +21,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onScore(data)
           break
         case 'tutorial_start':
-          onTutorialStart()       
+          onTutorialStart()
           break
         case 'tutorial_over':
           onTutorialEnd()
@@ -33,6 +33,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onDisconnectAll()
           break
         case 'result':
+          console.log(data)
           onResult(data)
           break
         default:
@@ -74,13 +75,13 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   function onTutorialStart() {
     wssControl.clients.forEach(client => {
       client.send('tutorial_start')
-    }) 
+    })
   }
 
   function onTutorialEnd() {
     wssControl.clients.forEach(client => {
       client.send('tutorial_over')
-    }) 
+    })
   }
 
   function onResult(data) {
@@ -88,10 +89,11 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     if (winner === undefined) {
       return
     }
+    const message = encodeMessage('result', { winner })
     wssControl.clients.forEach(client => {
-      const message = encodeMessage('result', { winner })
       client.send(message)
     })
+    wssDisplay.clients[0].send(message)
   }
 
   function onGameStart() {
