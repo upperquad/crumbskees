@@ -74,13 +74,13 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   function onTutorialStart() {
     wssControl.clients.forEach(client => {
       client.send('tutorial_start')
-    }) 
+    })
   }
 
   function onTutorialEnd() {
     wssControl.clients.forEach(client => {
       client.send('tutorial_over')
-    }) 
+    })
   }
 
   function onResult(data) {

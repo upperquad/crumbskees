@@ -41,6 +41,10 @@ const ControlDevice = () => {
           setActiveTutorial(false)
           break
         }
+        case 'tutorial_over': {
+          setActiveTutorial(false)
+          break
+        }
         case 'result': {
           setWinner(data.winner)
           setStage('result')
