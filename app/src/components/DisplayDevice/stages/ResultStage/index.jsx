@@ -10,37 +10,32 @@ import resultBg from '~assets/images/round_3/s3-intro.mp4'
 import PlayersManager from '~managers/PlayersManager'
 
 const ResultStage = () => {
-  const winners = []
+  const players = []
   const results = []
+  const winners = []
+  let tie = false
+
   PlayersManager.players.forEach(player => {
-    winners.push(player)
+    players.push(player)
   })
+
   PlayersManager.players.forEach(player => {
     results.push(player.score())
   })
-  console.log('result', results)
-  const winners_ = []
-  let tie = false
 
-  for (let i = 0; i <= PlayersManager.players.length - 1; i++) {
-    if (i < PlayersManager.players.length - 1) {
-      if (winners[i].score() > winners[i + 1].score()) {
-        winners_.push(winners[i])
-      }
-    } else if (winners[i].score() > winners[i - 1].score()) {
-      winners_.push(winners[i])
+  const maxScore = Math.max(...results)
+
+  players.forEach(player => {
+    if (player.score() === maxScore) {
+      winners.push(player)
     }
-  }
-
-  if (winners_.length !== 1) {
+  })
+  if (winners.length !== 1) {
     tie = true
   }
 
-  console.log(tie, winners_)
-
   const winnerImage = []
-
-  winners_.forEach(winner => {
+  winners.forEach(winner => {
     winnerImage.push(<img src={winner.image} className={styles.playerAvatar} alt="" />)
   })
 
@@ -58,11 +53,11 @@ const ResultStage = () => {
             duration="5s"
           />
         </div>
-        <div className={styles.player}>{tie ? 'Tied!' : winners_[0].name}</div>
+        <div className={styles.player}>{tie ? 'Tied!' : winners[0].name}</div>
         <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: tie })}>
           { winnerImage }
         </div>
-        <div className={styles.score}>{winners_[0].score()}</div>
+        <div className={styles.score}>{maxScore}</div>
         <div className={styles.circle} />
         <div className={classNames(styles.timebar, styles.resultTimebar)} />
       </div>
