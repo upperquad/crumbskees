@@ -121,16 +121,6 @@
   position: absolute;
   top: 0;
   width: 100%;
-
-  .playerCursor1 {
-    stroke: $color-purple;
-    transition: stroke 1s ease;
-  }
-
-  .playerCursor2 {
-    stroke: $color-red;
-    transition: stroke 1s ease;
-  }
 }
 
 .debugItems {

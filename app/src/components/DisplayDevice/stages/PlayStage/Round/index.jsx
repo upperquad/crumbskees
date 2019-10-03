@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { DEBUG, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
-import { randomInt } from '~utils/math'
+import { clamp, randomInt } from '~utils/math'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
@@ -24,6 +24,7 @@ const Round = props => {
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
+  const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
 
   const addMessage = messageObj => {
     setMessage(prevMessage => (
@@ -56,45 +57,49 @@ const Round = props => {
     }
 
     const handleClick = playerIndex => {
-      const itemsCaught = getItemsInCursor(items, PlayersManager.players[playerIndex])
-      const targetsCaught = itemsCaught.filter(item => item.type === 'target')
+      const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] === 'grow')
 
-      // TODO:
-      // if (triggerPower) {
-      //   switch (item.type) {
-      //     default:
-      //       break
-      //     case 'grow':
-      //       player.setPower(item.type)
-      //       break
-      //     case 'freeze': {
-      //       // affect other player
-      //       const playerAffected = PlayersManager.players[1 - playerIndex]
-      //       playerAffected.setPower(item.type)
-      //       break
-      //     }
-      //   }
-      // }
+      let targetCount = 0
+      let growFound
+      let freezeFound
+      itemsCaught.forEach(item => {
+        switch (item.type) {
+          case 'grow':
+            growFound = true
+            break
+          case 'freeze':
+            freezeFound = true
+            break
+          default:
+          case 'target':
+            targetCount += 1
+            break
+        }
+      })
 
-      if (targetsCaught.length > 0) {
-        addScore(targetsCaught.length, playerIndex)
+      if (growFound) {
+        SoundManager.grow.play()
+        setPowerArray(prevArray => {
+          prevArray[playerIndex] = 'grow'
+          return prevArray
+        })
+      }
+
+      if (freezeFound) {
+        SoundManager.freeze.play()
+        setPowerArray(prevArray => {
+          prevArray[1 - playerIndex] = 'freeze'
+          return prevArray
+        })
+      }
+
+      if (targetCount > 0) {
+        addScore(targetCount, playerIndex)
       }
 
       // Remove items from the round
       if (itemsCaught.length > 0) {
         removeItems(itemsCaught)
-        // emmit message
-        // Pop up message
-        // itemsCaught.forEach(item => {
-        //   const message = {
-        //     left: `${(player.x / VB_WIDTH + 0.5) * 100}%`,
-        //     top: `${(player.y / VB_HEIGHT + 0.5) * 100}%`,
-        //     text: item.type === 'target' ? `+${targetsCaught.length}` : item.type,
-        //     color: item.type === 'target' ? player.color : item.color,
-        //   }
-
-        //   messages.push(message)
-        // })
       }
     }
 
@@ -134,13 +139,18 @@ const Round = props => {
 
   // TODO: rewrite this
   // updated on props change
-  useEffect(() => effectItems(setItems, { gridCols, gridLines, itemImage, numItems, power }), [
-    gridCols,
-    gridLines,
-    itemImage,
-    numItems,
-    power,
-  ])
+  useEffect(() => (
+    effectItems(
+      setItems,
+      {
+        gridCols,
+        gridLines,
+        itemImage,
+        numItems,
+        power,
+      },
+    )
+  ), [gridCols, gridLines, itemImage, numItems, power])
 
   // Timer
   useEffect(() => {
@@ -173,17 +183,21 @@ const Round = props => {
   useEffect(() => {
     if (zeroScorePlayers.length) {
       const tapInstructionInterval = setInterval(() => {
-        zeroScorePlayers.forEach(player => {
-          const itemsInCursor = getItemsInCursor(items, player)
-          const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
-          // TODO: and not frozen
-          if (targetsInCursor.length > 0) {
-            // TODO: Emmit message
+        const newTapInstructionArray = []
+        PlayersManager.players.forEach((player, index) => {
+          if (player.score() === 0) {
+            const itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] === 'grow')
+            const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
+            newTapInstructionArray.push(targetsInCursor.length > 0)
+          } else {
+            newTapInstructionArray.push(false)
           }
         })
-      }, 800)
+        setTapInstructionArray(newTapInstructionArray)
+      }, 400)
 
       return () => {
+        setTapInstructionArray(prevArray => prevArray.map(() => false))
         clearInterval(tapInstructionInterval)
       }
     }
@@ -194,10 +208,8 @@ const Round = props => {
 
   function addScore(score, index) {
     setRoundScoreArray(prevScoreArray => {
-      // clone array so we trigger all re-render
-      const newScoreArray = prevScoreArray.slice(0)
-      newScoreArray[index] += score
-      return newScoreArray
+      prevScoreArray[index] += score
+      return prevScoreArray
     })
 
     PlayersManager.addScore(score, PlayersManager.players[index].id)
@@ -225,7 +237,10 @@ const Round = props => {
                 color={player.color}
                 roundScore={roundScoreArray[index]}
                 cancelPower={() => {
-                  // TODO
+                  setPowerArray(prevArray => {
+                    prevArray[index] = null
+                    return prevArray
+                  })
                 }}
               />
             ))}
@@ -279,6 +294,7 @@ const Round = props => {
             position={positionArray[index]}
             color={player.color}
             roundScore={roundScoreArray[index]}
+            tapInstruction={tapInstructionArray[index]}
           />
         ))}
         <PopupMessage
@@ -351,18 +367,16 @@ function createItem(props, grid, image, type = 'target', color = null) {
   return obj
 }
 
-function getItemsInCursor(items, player) {
-  const xPx = player.x + 0.5 * VB_WIDTH
-  const yPx = player.y + 0.5 * VB_HEIGHT
+function getItemsInCursor(items, position, isGrown) {
+  const xPx = clamp(position.x, -0.5, 0.5) + 0.5
+  const yPx = clamp(position.y, -0.5, 0.5) + 0.5
 
-  const minDistanceSquare = 95 ** 2
-  // TODO
-  // const minDistance = player.grown ? 185 : 95
+  const minDistanceSquare = isGrown ? 185 ** 2 : 95 ** 2
 
   return items.filter(item => {
-    const itemXPx = item.x * VB_WIDTH
-    const itemYPx = item.y * VB_HEIGHT
-    const distanceSquare = (xPx - itemXPx) ** 2 + (yPx - itemYPx) ** 2
+    const itemXPx = item.x
+    const itemYPx = item.y
+    const distanceSquare = ((xPx - itemXPx) * VB_WIDTH) ** 2 + ((yPx - itemYPx) * VB_HEIGHT) ** 2
 
     return distanceSquare <= minDistanceSquare
   })
