@@ -12,17 +12,6 @@ const PlayStage = props => {
   const { extraClassName, onFinish } = props
   const [roundIndex, setRoundIndex] = useState(0)
 
-  const getResult = () => {
-    const _players = PlayersManager.players
-
-    if (_players[0]._score > _players[1]._score) {
-      return 0
-    } if (_players[0]._score < _players[1]._score) {
-      return 1
-    }
-    return 'tied'
-  }
-
   const onRoundEnd = () => {
     if (roundIndex === GAME_ROUNDS.length - 1) {
       const result = getResult()

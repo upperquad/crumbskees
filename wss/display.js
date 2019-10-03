@@ -33,7 +33,6 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onDisconnectAll()
           break
         case 'result':
-          console.log(data)
           onResult(data)
           break
         default:

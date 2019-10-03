@@ -10,26 +10,14 @@ import resultBg from '~assets/images/round_3/s3-intro.mp4'
 import PlayersManager from '~managers/PlayersManager'
 
 const ResultStage = () => {
-  const players = []
-  const results = []
-  const winners = []
+  const players = PlayersManager.players
   let tie = false
 
-  PlayersManager.players.forEach(player => {
-    players.push(player)
-  })
+  const scores = PlayersManager.players.map(player => player.score())
+  const maxScore = Math.max(...scores)
 
-  PlayersManager.players.forEach(player => {
-    results.push(player.score())
-  })
+  const winners = players.filter(player => player.score() === maxScore)
 
-  const maxScore = Math.max(...results)
-
-  players.forEach(player => {
-    if (player.score() === maxScore) {
-      winners.push(player)
-    }
-  })
   if (winners.length !== 1) {
     tie = true
   }
