@@ -2,7 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
-import { DEBUG, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import WebSocketManager from '~managers/WebSocketManager'
+import { DEBUG, GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
 // import SceneContext from './context'
@@ -16,8 +17,8 @@ import Intro from './Intro'
 const TIME = 40
 
 const Round = props => {
-  // REVIEW: some of these props need more self-explanatory names
-  const { bkg, frontBkg, gridCols, gridLines, itemImage, numItems, onRoundEnd, power } = props
+  const { onRoundEnd, roundIndex } = props
+  const { bkg, frontBkg, itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [items, setItems] = useState([])
   const [message, setMessage] = useState({ messageCount: 0 })
@@ -42,7 +43,6 @@ const Round = props => {
         const newItems = prevItems.filter(item => !itemsCaught.includes(item))
         const newTargets = newItems.filter(item => item.type === 'target')
 
-        // If no more targets left, end round
         if (newTargets.length === 0) {
           addMessage({
             text: getEndMessage(),
@@ -97,14 +97,13 @@ const Round = props => {
         addScore(targetCount, playerIndex)
       }
 
-      // Remove items from the round
       if (itemsCaught.length > 0) {
         removeItems(itemsCaught)
       }
     }
 
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
+    const messageHandler = detail => {
+      const { data, type } = detail
       switch (type) {
         case 'cursor_move': {
           const { id, x, y } = data
@@ -130,27 +129,17 @@ const Round = props => {
           break
       }
     }
-    window.addEventListener('MESSAGE', messageHandler)
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [items, onRoundEnd])
 
-  // TODO: rewrite this
-  // updated on props change
+  // Grid setup
   useEffect(() => (
-    effectItems(
-      setItems,
-      {
-        gridCols,
-        gridLines,
-        itemImage,
-        numItems,
-        power,
-      },
-    )
-  ), [gridCols, gridLines, itemImage, numItems, power])
+    setupGrid(setItems, roundIndex)
+  ), [roundIndex])
 
   // Timer
   useEffect(() => {
@@ -216,7 +205,6 @@ const Round = props => {
     SoundManager.score.play()
   }
 
-  // REVIEW: all alt tags
   return (
     <Fragment>
       <div className={classNames(styles.round, styles.started)}>
@@ -313,19 +301,13 @@ const Round = props => {
   )
 }
 
-function effectItems(setItems, props) {
-  // generate grid
-
+function setupGrid(setItems, roundIndex) {
+  // REVIEW: this is really inefficient
   const grid = []
-  const { gridCols, gridLines, itemImage, numItems, power } = props
-  let x
-  let y
-
+  const { gridCols, gridLines, itemImage, numItems, power } = GAME_ROUNDS[roundIndex]
   for (let i = 0; i < gridCols; i++) {
-    x = i
     for (let j = 0; j < gridLines; j++) {
-      y = j
-      const obj = { x, y }
+      const obj = { x: i, y: j }
       grid.push(obj)
     }
   }
@@ -333,20 +315,20 @@ function effectItems(setItems, props) {
   const items = []
 
   if (power) {
-    const item = createItem(props, grid, power.image, power.type, power.color)
+    const item = createItem(roundIndex, grid, power)
     items.push(item)
   }
 
   for (let i = 0; i < numItems; i++) {
-    const item = createItem(props, grid, itemImage)
+    const item = createItem(roundIndex, grid, { image: itemImage })
     items.push(item)
   }
 
   setItems(items)
 }
 
-function createItem(props, grid, image, type = 'target', color = null) {
-  const { gridCols, gridLines } = props
+function createItem(roundIndex, grid, powerItem) {
+  const { gridCols, gridLines } = GAME_ROUNDS[roundIndex]
   // randomize
   const rd = randomInt(0, grid.length - 1)
   const x = grid[rd].x / gridCols + GRID_UNIT_VW / 200 // 200?
@@ -355,7 +337,9 @@ function createItem(props, grid, image, type = 'target', color = null) {
 
   const size = GRID_UNIT
 
-  const obj = {
+  const { color = null, image, type = 'target' } = powerItem
+
+  return {
     x,
     y,
     size,
@@ -363,8 +347,6 @@ function createItem(props, grid, image, type = 'target', color = null) {
     type,
     color,
   }
-
-  return obj
 }
 
 function getItemsInCursor(items, position, isGrown) {

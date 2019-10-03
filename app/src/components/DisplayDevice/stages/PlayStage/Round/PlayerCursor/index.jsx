@@ -6,12 +6,11 @@ import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
 import { clamp, random } from '~utils/math'
+import AnimationFrameManager from '~managers/AnimationFrameManager'
 
-import RAFManager from '~managers/RAFManager'
-
-const centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
-const centerY = VB_HEIGHT / 2 // equal to svg viewbox / 2
-const minRadius = GRID_UNIT * 1.1 // 3.125 == 1 unit grid (1920 / 32)
+const centerX = VB_WIDTH / 2
+const centerY = VB_HEIGHT / 2
+const minRadius = GRID_UNIT * 1.1
 const maxRadius = minRadius + minRadius * 0.45
 const minMiddleRadius = minRadius + (maxRadius - minRadius) * 0.45
 const maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55
@@ -30,21 +29,20 @@ const PlayerCursor = props => {
 
   // updated on index props change
   useEffect(() => {
-    const updateFrame = event => {
+    const updateFrame = now => {
       if (power === 'freeze') {
         return
       }
       const newPosition = getNewPosition(position.current, targetPosition)
-      const newPathD = getPathD(event, points.current, newPosition)
+      const newPathD = getPathD(now, points.current, newPosition)
       position.current = newPosition
       setPathD(newPathD)
     }
 
-    // REVIEW: rewrite to sub/pub
-    window.addEventListener('RAF', updateFrame)
+    AnimationFrameManager.addSubscriber(updateFrame)
 
     return () => {
-      window.removeEventListener('RAF', updateFrame)
+      AnimationFrameManager.removeSubscriber(updateFrame)
     }
   }, [power, targetPosition])
 
@@ -59,7 +57,6 @@ const PlayerCursor = props => {
   useEffect(() => {
     if (power) {
       const timeout = setTimeout(cancelPower, power === 'grow' ? 6000 : 4000)
-      console.log('timer set')
 
       return () => clearTimeout(timeout)
     }
@@ -126,8 +123,7 @@ function getNewPosition(position, targetPosition) {
   return { x, y }
 }
 
-function getPathD(event, points, position) {
-  const { now } = event.detail
+function getPathD(now, points, position) {
   const { x, y } = position
 
   // For each points of the player (organic shape)
@@ -141,32 +137,29 @@ function getPathD(event, points, position) {
     // then I use easing functions to modify the value curve through time.
     const percent = (now - point.startAnim) / point.duration
 
-    point.x = point.startX + (point.destX - point.startX) * inOutSine(percent)
-    point.y = point.startY + (point.destY - point.startY) * inOutSine(percent)
+    const relativeX = point.startX + (point.destX - point.startX) * inOutSine(percent)
+    const relativeY = point.startY + (point.destY - point.startY) * inOutSine(percent)
 
     if (percent >= 1) {
       // end of animation,
       // restart animation by going back
+      point.startX = relativeX
+      point.startY = relativeY
+      point.reverseAnim = !point.reverseAnim
+      point.startAnim = now
+
       if (point.reverseAnim) {
-        point.startX = point.x
-        point.startY = point.y
         point.destX = point.targetMaxX
         point.destY = point.targetMaxY
-        point.reverseAnim = false
-        point.startAnim = getNow()
       } else {
-        point.startX = point.x
-        point.startY = point.y
         point.destX = point.targetMinX
         point.destY = point.targetMinY
-        point.reverseAnim = true
-        point.startAnim = getNow()
       }
     }
 
     // move player based on mouse
-    point.x += x
-    point.y += y
+    point.x = relativeX + x
+    point.y = relativeY + y
   }
 
   return cardinal(points)

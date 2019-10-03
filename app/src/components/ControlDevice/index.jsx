@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { CHARACTERS } from '~constants'
+import WebSocketManager from '~managers/WebSocketManager'
 
 import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
@@ -21,8 +22,8 @@ const ControlDevice = () => {
   // const [score, setScore] = useState(0)
 
   useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
+    const messageHandler = detail => {
+      const { data, type } = detail
 
       switch (type) {
         case 'accepted': {
@@ -54,10 +55,10 @@ const ControlDevice = () => {
           break
       }
     }
-    window.addEventListener('MESSAGE', messageHandler)
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [])
 
