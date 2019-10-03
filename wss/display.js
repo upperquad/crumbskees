@@ -93,7 +93,6 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     wssControl.clients.forEach(client => {
       client.send(message)
     })
-    wssDisplay.clients[0].send(message)
   }
 
   function onGameStart() {
