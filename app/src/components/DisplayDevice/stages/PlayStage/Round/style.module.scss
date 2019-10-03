@@ -82,7 +82,7 @@
   object-fit: cover;
   position: absolute;
   top: 0;
-  transition: clip-path 1.3s $circ-in-out;
+  transition: clip-path 1.3s $easing-circle-in-out;
   width: 100%;
   z-index: 0;
 
@@ -104,13 +104,13 @@
     top: 0;
     transform: scaleX(0);
     transform-origin: 0% center;
-    transition: transform 1.3s $circ-in-out;
+    transition: transform 1.3s $easing-circle-in-out;
     width: 100%;
     z-index: 9;
 
     .isIntro & {
       transform: scaleX(1);
-      transition: transform 1.3s $circ-in-out;
+      transition: transform 1.3s $easing-circle-in-out;
     }
   }
 }

@@ -1,19 +1,17 @@
+import Observable from '~managers/abstracts/Observable'
+
 const HOST = window.location.origin.replace(/^http/, 'ws')
 
-class WebSocketManager {
+class WebSocketManager extends Observable {
   constructor() {
+    super()
+
     if (!WebSocketManager.instance) {
       WebSocketManager.instance = this
       this._ws = null
     }
 
     return WebSocketManager.instance
-  }
-
-  _broadcast = (eventType, detail = null) => {
-    // TODO: rewrite this into pub/sub
-    // REVIEW: ^
-    window.dispatchEvent(new CustomEvent(eventType, { detail }))
   }
 
   init = deviceType => {
@@ -62,7 +60,7 @@ class WebSocketManager {
 
   onWsClose = event => {
     const { reason } = event
-    this._broadcast('WS_CLOSE', { reason })
+    this._callObservers('WS_CLOSE', reason)
     console.warn('Connection closed:', reason)
     this._ws = null
 
@@ -100,7 +98,7 @@ class WebSocketManager {
         break
     }
 
-    this._broadcast('MESSAGE', { type, data: messageAttributes })
+    this._callObservers('MESSAGE', { type, data: messageAttributes })
   }
 
   disconnect = () => {}

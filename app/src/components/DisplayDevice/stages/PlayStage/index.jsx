@@ -48,7 +48,7 @@ const PlayStage = props => {
           {status => (
             <Round
               transitionStatus={status}
-              {...GAME_ROUNDS[roundIndex]}
+              roundIndex={roundIndex}
               onRoundEnd={onRoundEnd}
             />
           )}
@@ -56,6 +56,21 @@ const PlayStage = props => {
       </TransitionGroup>
     </section>
   )
+}
+
+function getResult() {
+  const { players } = PlayersManager
+  let result
+
+  if (players[0].score() > players[1].score()) {
+    result = 0
+  } else if (players[0].score() < players[1].score()) {
+    result = 1
+  } else {
+    result = 'tied'
+  }
+
+  return result
 }
 
 export default PlayStage
