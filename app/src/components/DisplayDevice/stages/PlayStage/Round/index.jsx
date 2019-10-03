@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { DEBUG, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
-import { randomInt } from '~utils/math'
+import { clamp, randomInt } from '~utils/math'
 
 // import SceneContext from './context'
 import PlayerCursor from './PlayerCursor'
@@ -57,7 +57,7 @@ const Round = props => {
     }
 
     const handleClick = playerIndex => {
-      const itemsCaught = getItemsInCursor(items, PlayersManager.players[playerIndex])
+      const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] === 'grow')
 
       let targetCount = 0
       let growFound
@@ -184,9 +184,9 @@ const Round = props => {
     if (zeroScorePlayers.length) {
       const tapInstructionInterval = setInterval(() => {
         const newTapInstructionArray = []
-        PlayersManager.players.forEach(player => {
+        PlayersManager.players.forEach((player, index) => {
           if (player.score() === 0) {
-            const itemsInCursor = getItemsInCursor(items, player)
+            const itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] === 'grow')
             const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
             newTapInstructionArray.push(targetsInCursor.length > 0)
           } else {
@@ -367,18 +367,16 @@ function createItem(props, grid, image, type = 'target', color = null) {
   return obj
 }
 
-function getItemsInCursor(items, player) {
-  const xPx = player.x + 0.5 * VB_WIDTH
-  const yPx = player.y + 0.5 * VB_HEIGHT
+function getItemsInCursor(items, position, isGrown) {
+  const xPx = clamp(position.x, -0.5, 0.5) + 0.5
+  const yPx = clamp(position.y, -0.5, 0.5) + 0.5
 
-  const minDistanceSquare = 95 ** 2
-  // TODO
-  // const minDistance = player.grown ? 185 : 95
+  const minDistanceSquare = isGrown ? 185 ** 2 : 95 ** 2
 
   return items.filter(item => {
-    const itemXPx = item.x * VB_WIDTH
-    const itemYPx = item.y * VB_HEIGHT
-    const distanceSquare = (xPx - itemXPx) ** 2 + (yPx - itemYPx) ** 2
+    const itemXPx = item.x
+    const itemYPx = item.y
+    const distanceSquare = ((xPx - itemXPx) * VB_WIDTH) ** 2 + ((yPx - itemYPx) * VB_HEIGHT) ** 2
 
     return distanceSquare <= minDistanceSquare
   })

@@ -49,13 +49,22 @@ const PlayerCursor = props => {
   }, [power, targetPosition])
 
   useEffect(() => {
+    if (power === 'grow') {
+      updateRadius(points.current, VB_WIDTH * 0.05)
+    } else {
+      updateRadius(points.current, 0)
+    }
+  }, [power])
+
+  useEffect(() => {
     if (power) {
       const timeout = setTimeout(cancelPower, power === 'grow' ? 6000 : 4000)
+      console.log('timer set')
 
       return () => clearTimeout(timeout)
     }
     return undefined
-  }, [cancelPower, power])
+  }, [power])
 
   return (
     <path
@@ -189,6 +198,37 @@ function cardinal(points, tension = 1.2) {
   }
 
   return `${path}z`
+}
+
+function updateRadius(points, increment) {
+  for (let i = 0; i < points.length; i++) {
+    const point = points[i]
+    // Increase each points
+    // if player has grown power, increase player radius
+    const newMaxRadius = maxRadius + increment
+    const newMaxMiddleRadius = maxMiddleRadius + increment
+    const newMinRadius = minRadius + increment
+    const newMinMiddleRadius = minMiddleRadius + increment
+
+    point.duration += 250
+
+    point.targetMaxX = centerX + Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+    point.targetMinX = centerX + Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+    point.destX = point.targetMaxX
+
+    point.targetMaxY = centerY + Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+    point.targetMinY = centerY + Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+    point.destY = point.targetMaxY
+    point.startAnim = getNow()
+  }
+
+  setTimeout(() => { // when growing animation finish
+    for (let i = 0; i < points.length; i++) {
+      points[i].duration -= 250
+    }
+  }, 1000)
 }
 
 export default PlayerCursor
