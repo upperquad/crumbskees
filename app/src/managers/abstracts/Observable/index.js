@@ -14,9 +14,9 @@ export default class Observable {
     }
   }
 
-  _callObservers = type => {
+  _callObservers = (type, detail) => {
     if (this._observers[type]) {
-      this._observers[type].forEach(observer => observer())
+      this._observers[type].forEach(observer => observer(detail))
     }
   }
 }

@@ -8,9 +8,9 @@ import { GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
 import { clamp, random } from '~utils/math'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 
-const centerX = VB_WIDTH / 2 // equal to svg viewbox / 2
-const centerY = VB_HEIGHT / 2 // equal to svg viewbox / 2
-const minRadius = GRID_UNIT * 1.1 // 3.125 == 1 unit grid (1920 / 32)
+const centerX = VB_WIDTH / 2
+const centerY = VB_HEIGHT / 2
+const minRadius = GRID_UNIT * 1.1
 const maxRadius = minRadius + minRadius * 0.45
 const minMiddleRadius = minRadius + (maxRadius - minRadius) * 0.45
 const maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55

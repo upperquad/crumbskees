@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
+import WebSocketManager from '~managers/WebSocketManager'
 import { DEBUG, GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
@@ -101,8 +102,8 @@ const Round = props => {
       }
     }
 
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
+    const messageHandler = detail => {
+      const { data, type } = detail
       switch (type) {
         case 'cursor_move': {
           const { id, x, y } = data
@@ -128,10 +129,10 @@ const Round = props => {
           break
       }
     }
-    window.addEventListener('MESSAGE', messageHandler)
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [items, onRoundEnd])
 

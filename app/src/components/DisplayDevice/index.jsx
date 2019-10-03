@@ -37,21 +37,21 @@ const DisplayDevice = () => {
 
   // listener for error states
   useEffect(() => {
-    const errorListener = event => {
-      const { detail: { reason } } = event
+    const errorListener = detail => {
+      const { reason } = detail
       setStage('error')
       setErrorReason(reason)
     }
-    window.addEventListener('WS_CLOSE', errorListener)
+    WebSocketManager.addSubscriber('WS_CLOSE', errorListener)
 
     return () => {
-      window.removeEventListener('WS_CLOSE', errorListener)
+      WebSocketManager.removeSubscriber('WS_CLOSE', errorListener)
     }
   }, [setStage])
 
   useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { data, type } } = event
+    const messageHandler = detail => {
+      const { data, type } = detail
 
       switch (type) {
         case 'token_submit': {
@@ -70,10 +70,10 @@ const DisplayDevice = () => {
           break
       }
     }
-    window.addEventListener('MESSAGE', messageHandler)
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [])
 
