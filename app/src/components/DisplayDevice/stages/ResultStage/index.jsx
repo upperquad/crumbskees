@@ -34,9 +34,9 @@ const ResultStage = () => {
           />
         </div>
         <div className={styles.player}>{winners.length === 1 ? winners[0].name : 'Tied!'}</div>
-        <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: false })}>
+        <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: winners.length >= 1 })}>
           {winners.map(winner => (
-            <img src={winner.avatar} className={styles.playerAvatar} alt="" />
+            <img src={winner.image} className={styles.playerAvatar} alt="" />
           ))}
         </div>
         <div className={styles.score}>{winners[0].score()}</div>
