@@ -9,7 +9,7 @@ import PlayersManager from '~managers/PlayersManager'
 import Round from './Round'
 
 const PlayStage = props => {
-  const { characterIndex, extraClassName, onFinish } = props
+  const { extraClassName, onFinish } = props
   const [roundIndex, setRoundIndex] = useState(0)
 
   const getResult = () => {
