@@ -7,7 +7,7 @@
   padding-bottom: 1080 / 1920 * 100%;
   position: absolute;
   top: 0;
-  transition: transform 1.3s $easing-circle-ease-out;
+  transition: transform 1.3s $easing-circle-out;
   width: 100%;
 }
 
@@ -21,11 +21,11 @@
 
 .stageWrapperExiting {
   transform: translateX(-100%);
-  transition-timing-function: $easing-circle-ease-in-out;
+  transition-timing-function: $easing-circle-in-out;
 
   .stage {
     transform: translateX(100%);
-    transition-timing-function: $easing-circle-ease-in-out;
+    transition-timing-function: $easing-circle-in-out;
   }
 }
 
@@ -34,6 +34,6 @@
   left: 0;
   position: absolute;
   top: 0;
-  transition: transform 1.3s $easing-circle-ease-out;
+  transition: transform 1.3s $easing-circle-out;
   width: 100%;
 }

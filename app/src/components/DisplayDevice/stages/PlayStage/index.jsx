@@ -9,7 +9,7 @@ import PlayersManager from '~managers/PlayersManager'
 import Round from './Round'
 
 const PlayStage = props => {
-  const { characterIndex, extraClassName, onFinish } = props
+  const { extraClassName, onFinish } = props
   const [roundIndex, setRoundIndex] = useState(0)
 
   const onRoundEnd = () => {
@@ -19,18 +19,6 @@ const PlayStage = props => {
       onFinish()
     } else {
       setRoundIndex(roundIndex + 1)
-    }
-  }
-
-  const getResult = () => {
-    const players = PlayersManager.players
-
-    if (players[0]._score > players[1]._score) {
-      return 0
-    } else if (players[0]._score < players[1]._score) {
-      return 1
-    } else {
-      return 'tied'
     }
   }
 
@@ -49,7 +37,7 @@ const PlayStage = props => {
           {status => (
             <Round
               transitionStatus={status}
-              {...GAME_ROUNDS[roundIndex]}
+              roundIndex={roundIndex}
               onRoundEnd={onRoundEnd}
             />
           )}
@@ -57,6 +45,21 @@ const PlayStage = props => {
       </TransitionGroup>
     </section>
   )
+}
+
+function getResult() {
+  const { players } = PlayersManager
+  let result
+
+  if (players[0].score() > players[1].score()) {
+    result = 0
+  } else if (players[0].score() < players[1].score()) {
+    result = 1
+  } else {
+    result = 'tied'
+  }
+
+  return result
 }
 
 export default PlayStage

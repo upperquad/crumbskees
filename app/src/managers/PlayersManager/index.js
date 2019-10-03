@@ -18,7 +18,6 @@ class PlayersManager extends Observable {
 
   _players = [{ token: getNewToken(0) }, { token: getNewToken(1) }]
 
-  // REVIEW: players should really be private, but readable
   players = new Proxy(this._players, {
     get: (obj, prop) => obj[prop],
     set: (obj, prop, value) => {

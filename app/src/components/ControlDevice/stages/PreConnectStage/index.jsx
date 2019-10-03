@@ -22,8 +22,8 @@ const PreConnectStage = props => {
   const { hasPlayed } = props
 
   useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { type } } = event
+    const messageHandler = detail => {
+      const { type } = detail
       switch (type) {
         case 'accepted': {
           onFinish()
@@ -33,10 +33,10 @@ const PreConnectStage = props => {
           break
       }
     }
-    window.addEventListener('MESSAGE', messageHandler)
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [onFinish])
 
@@ -88,10 +88,8 @@ function effectWebsocket() {
 }
 
 function effectWebsocketClose(setToken, setErrorReason, setIsConnecting) {
-  const onWebSocketClose = event => {
-    const {
-      detail: { reason },
-    } = event
+  const onWebSocketClose = detail => {
+    const { reason } = detail
     if (reason === 'invalid_token') {
       setErrorReason('Invalid token')
     } else if (reason === 'no_active_game') {
@@ -101,10 +99,10 @@ function effectWebsocketClose(setToken, setErrorReason, setIsConnecting) {
     setToken('')
   }
 
-  window.addEventListener('WS_CLOSE', onWebSocketClose)
+  WebSocketManager.addSubscriber('WS_CLOSE', onWebSocketClose)
 
   return () => {
-    window.removeEventListener('WS_CLOSE', onWebSocketClose)
+    WebSocketManager.removeSubscriber('WS_CLOSE', onWebSocketClose)
   }
 }
 

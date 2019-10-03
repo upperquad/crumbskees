@@ -62,20 +62,22 @@ const TutorialStage = props => {
   }, [onFinish, bothConnected])
 
   useEffect(() => {
-    const messageHandler = event => {
-      const { detail: { type } } = event
+    const messageHandler = detail => {
+      const { type } = detail
       switch (type) {
         case 'skip_tutorial': {
           WebSocketManager.send('tutorial_over')
           onFinish()
           break
         }
+        default:
+          break
       }
     }
-    window.addEventListener('MESSAGE', messageHandler)
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      window.removeEventListener('MESSAGE', messageHandler)
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [onFinish])
 
