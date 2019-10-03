@@ -15,6 +15,9 @@ const ControlDevice = () => {
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
+  const [characterIndex, setCharacterIndex] = useState(null)
+  const [activeTutorial, setActiveTutorial] = useState(false)
+  const [winner, setWinner] = useState(null)
   // const [score, setScore] = useState(0)
 
   useEffect(() => {
@@ -24,9 +27,23 @@ const ControlDevice = () => {
       switch (type) {
         case 'accepted': {
           const { playerIndex } = data
+          setCharacterIndex(playerIndex)
           if (CHARACTERS[playerIndex]) {
             setCharacter(CHARACTERS[playerIndex])
           }
+          break
+        }
+        case 'tutorial_start': {
+          setActiveTutorial(true)
+          break
+        }
+        case 'skip_tutorial': {
+          setActiveTutorial(false)
+          break
+        }
+        case 'result': {
+          setWinner(data.winner)
+          setStage('result')
           break
         }
         default:
@@ -69,10 +86,12 @@ const ControlDevice = () => {
           timeout={500}
         >
           <PlayStage
+            activeTutorial={activeTutorial}
+            setActiveTutorial={setActiveTutorial}
+            characterIndex={characterIndex}
             color={character.color}
             secondaryColor={character.secondaryColor}
             image={character.image}
-            onFinish={() => setStage('result')}
           />
         </Transition>
       )}
@@ -81,7 +100,10 @@ const ControlDevice = () => {
           key="stage-result"
           timeout={500}
         >
-          <ResultStage onFinish={() => setStage('pre_connect')} />
+          <ResultStage
+            winner={winner}
+            characterIndex={characterIndex}
+            onFinish={() => setStage('pre_connect')} />
         </Transition>
       )}
     </TransitionGroup>

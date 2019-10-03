@@ -7,7 +7,7 @@ import MarqueeText from '~components/MarqueeText'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PlayStage = props => {
-  const { color, image, score, secondaryColor } = props
+  const { activeTutorial, color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
   const forceUpdate = useForceUpdate()
 
@@ -48,6 +48,10 @@ const PlayStage = props => {
     WebSocketManager.send('click')
   }
 
+  const skipTutorial = () => {
+    WebSocketManager.send('skip_tutorial')
+  }
+
   return (
     // eslint-disable-next-line
     <section
@@ -78,8 +82,14 @@ const PlayStage = props => {
       <div
         style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
-      {/* <div className="button skip-tutorial" ng-className="{'is-shown': (phoneCtrl.tutorialActive === true)}"
-       role="button" ng-click="phoneCtrl.skipTutorial()">Skip tutorial</div> */}
+      {activeTutorial && (
+        <div
+          className={styles.skipTutorialBtn}
+          onClick={skipTutorial}
+        >
+          Skip tutorial
+        </div>
+      )}
     </section>
   )
 }

@@ -42,7 +42,10 @@ const initControl = (wssDisplay, wssControl, wssAdmin) => {
           wssDisplay.clients[0].send(message)
           break
         case 'skip_tutorial':
-          wssDisplay.clients[0].send(encodeMessage('skip_tutorial', { id: ws.id }))
+          wssDisplay.clients[0].send('skip_tutorial')
+          wssControl.clients.forEach(wssPhone => {
+            wssPhone.send('skip_tutorial')
+          });
           break
         case 'tutorial_start':
           wssControl.clients.forEach(wssPhone => {

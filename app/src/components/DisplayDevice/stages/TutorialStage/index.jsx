@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
+import WebSocketManager from '~managers/WebSocketManager'
 import styles from './style.module.scss'
 
 import { DEBUG } from '~constants'
@@ -46,6 +47,7 @@ const TutorialStage = props => {
           clearInterval(progressInterval)
           // so we don't kick off the next stage when trying to rollback
           if (bothConnected) {
+            WebSocketManager.send('tutorial_over')
             onFinish()
           }
           return counter
@@ -58,6 +60,24 @@ const TutorialStage = props => {
       clearInterval(progressInterval)
     }
   }, [onFinish, bothConnected])
+
+  useEffect(() => {
+    const messageHandler = event => {
+      const { detail: { type } } = event
+      switch (type) {
+        case 'skip_tutorial': {
+          WebSocketManager.send('tutorial_over')
+          onFinish()
+          break
+        }
+      }
+    }
+    window.addEventListener('MESSAGE', messageHandler)
+
+    return () => {
+      window.removeEventListener('MESSAGE', messageHandler)
+    }
+  }, [onFinish])
 
   useEffect(() => {
     if (!bothConnected) {
