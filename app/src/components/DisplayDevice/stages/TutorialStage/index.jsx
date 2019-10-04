@@ -41,10 +41,10 @@ const TutorialStage = props => {
       const { type } = detail
 
       switch (type) {
-        case 'game_start': {
+        case 'skip_tutorial':
+          WebSocketManager.send('game_start')
           onFinish()
           break
-        }
         default:
           break
       }
