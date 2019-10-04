@@ -49,7 +49,7 @@ const PlayStage = props => {
   }
 
   const skipTutorial = () => {
-    WebSocketManager.send('skip_tutorial')
+    WebSocketManager.send('game_start')
   }
 
   return (

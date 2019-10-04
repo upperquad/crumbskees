@@ -41,20 +41,15 @@ const initControl = (wssDisplay, wssControl, wssAdmin) => {
         case 'character_pick':
           wssDisplay.clients[0].send(message)
           break
-        case 'skip_tutorial':
-          wssDisplay.clients[0].send('skip_tutorial')
+        case 'game_start':
+          wssDisplay.clients[0].send('game_start')
           wssControl.clients.forEach(wssPhone => {
-            wssPhone.send('skip_tutorial')
+            wssPhone.send('game_start')
           });
           break
         case 'tutorial_start':
           wssControl.clients.forEach(wssPhone => {
             wssPhone.send('tutorial_start')
-          });
-          break
-        case 'tutorial_over':
-          wssControl.clients.forEach(wssPhone => {
-            wssPhone.send('tutorial_over')
           });
           break
         case 'cursor_move':
