@@ -11,21 +11,13 @@ import PlayersManager from '~managers/PlayersManager'
 
 const ResultStage = () => {
   const players = PlayersManager.players
-  let tie = false
 
   const scores = PlayersManager.players.map(player => player.score())
   const maxScore = Math.max(...scores)
 
   const winners = players.filter(player => player.score() === maxScore)
 
-  if (winners.length !== 1) {
-    tie = true
-  }
-
-  const winnerImage = []
-  winners.forEach(winner => {
-    winnerImage.push(<img src={winner.image} className={styles.playerAvatar} alt="" />)
-  })
+  const tie = winners.length !== 1
 
   // TODO: align property names when Players are finalized
   return (
@@ -43,7 +35,9 @@ const ResultStage = () => {
         </div>
         <div className={styles.player}>{tie ? 'Tied!' : winners[0].name}</div>
         <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: tie })}>
-          { winnerImage }
+          {winners.map(winner => (
+            <img src={winner.image} className={styles.playerAvatar} alt="" />
+          ))}
         </div>
         <div className={styles.score}>{maxScore}</div>
         <div className={styles.circle} />
