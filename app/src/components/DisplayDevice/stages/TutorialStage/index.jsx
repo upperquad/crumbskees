@@ -42,7 +42,6 @@ const TutorialStage = props => {
 
       switch (type) {
         case 'skip_tutorial':
-          WebSocketManager.send('game_start')
           onFinish()
           break
         default:
@@ -67,7 +66,6 @@ const TutorialStage = props => {
           clearInterval(progressInterval)
           // so we don't kick off the next stage when trying to rollback
           if (bothConnected) {
-            WebSocketManager.send('game_start')
             onFinish()
           }
           return counter
