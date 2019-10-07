@@ -7,7 +7,7 @@ import MarqueeText from '~components/MarqueeText'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PlayStage = props => {
-  const { activeTutorial, color, image, score, secondaryColor } = props
+  const { activeTutorial, setActiveTutorial, color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
   const forceUpdate = useForceUpdate()
 
@@ -50,6 +50,7 @@ const PlayStage = props => {
 
   const skipTutorial = () => {
     WebSocketManager.send('skip_tutorial')
+    setActiveTutorial(false)
   }
 
   return (
@@ -81,7 +82,8 @@ const PlayStage = props => {
       <MarqueeText extraClassName={styles.marquee} text="What up tiny type that is distracting —" duration="12s" />
       <div
         style={{ top: coordY.current, left: coordX.current }}
-        className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })} />
+        className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
+      />
       {activeTutorial && (
         <div
           className={styles.skipTutorialBtn}

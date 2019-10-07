@@ -23,6 +23,7 @@ const PlayStage = props => {
   }
 
   useEffect(() => {
+    WebSocketManager.send('game_start')
     PlayersManager.startGame()
   }, [])
 

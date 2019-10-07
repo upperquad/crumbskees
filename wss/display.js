@@ -12,7 +12,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
 
     ws.on('message', message => {
       const { type, data } = decodeMessage(message)
-    
+
       switch(type) {
         case 'auth_result':
           onAuthResult(data)
@@ -21,10 +21,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onScore(data)
           break
         case 'tutorial_start':
-          onTutorialStart()       
-          break
-        case 'tutorial_over':
-          onTutorialEnd()
+          onTutorialStart()
           break
         case 'game_start':
           onGameStart()
@@ -74,13 +71,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   function onTutorialStart() {
     wssControl.clients.forEach(client => {
       client.send('tutorial_start')
-    }) 
-  }
-
-  function onTutorialEnd() {
-    wssControl.clients.forEach(client => {
-      client.send('tutorial_over')
-    }) 
+    })
   }
 
   function onResult(data) {
