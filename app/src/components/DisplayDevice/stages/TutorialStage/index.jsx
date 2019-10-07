@@ -37,6 +37,25 @@ const TutorialStage = props => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    const messageHandler = detail => {
+      const { type } = detail
+
+      switch (type) {
+        case 'skip_tutorial':
+          onFinish()
+          break
+        default:
+          break
+      }
+    }
+    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
+
+    return () => {
+      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
+    }
+  }, [onFinish])
+
+  useEffect(() => {
     const progressInterval = setInterval(() => {
       setProgress(counter => {
         if (counter === 33) {
@@ -47,7 +66,6 @@ const TutorialStage = props => {
           clearInterval(progressInterval)
           // so we don't kick off the next stage when trying to rollback
           if (bothConnected) {
-            WebSocketManager.send('tutorial_over')
             onFinish()
           }
           return counter
@@ -60,26 +78,6 @@ const TutorialStage = props => {
       clearInterval(progressInterval)
     }
   }, [onFinish, bothConnected])
-
-  useEffect(() => {
-    const messageHandler = detail => {
-      const { type } = detail
-      switch (type) {
-        case 'skip_tutorial': {
-          WebSocketManager.send('tutorial_over')
-          onFinish()
-          break
-        }
-        default:
-          break
-      }
-    }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
-
-    return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
-    }
-  }, [onFinish])
 
   useEffect(() => {
     if (!bothConnected) {
