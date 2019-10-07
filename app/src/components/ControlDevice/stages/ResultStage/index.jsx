@@ -23,9 +23,9 @@ const ResultStage = props => {
       video.push(<AutoplayVideo src={character.videoWhite} extraClassName={styles.video} poster={character.image} />)
     })
   } else {
-    resultBottom = CHARACTERS[characterIndex].name
+    resultBottom = CHARACTERS[winner].name
     circleColor = CHARACTERS[winner].color
-    video.push(<AutoplayVideo src={CHARACTERS[characterIndex].videoWhite} extraClassName={styles.video} poster={CHARACTERS[characterIndex].image} />)
+    video.push(<AutoplayVideo src={CHARACTERS[winner].videoWhite} extraClassName={styles.video} poster={CHARACTERS[winner].image} />)
     winner === characterIndex ? resultTop = 'You won! ' : resultTop = 'You’re bad! '
   }
 
