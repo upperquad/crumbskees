@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 import styles from './style.module.scss'
 
@@ -13,7 +14,7 @@ const Board = props => {
 
     return (
       <div className={styles.player}>
-        <div className={styles.character}>
+        <div className={classNames(styles.character, { [styles.lost]: player.lost })}>
           <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} />
         </div>
         <div className={styles.score}>{zeroUnit(player.score())}</div>

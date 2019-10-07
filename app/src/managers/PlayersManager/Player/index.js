@@ -28,7 +28,7 @@ export default class Player {
     // Do all clean ups here
   }
 
-  lost = () => {
+  setLost = () => {
     this.lost = true
   }
 

@@ -1,4 +1,5 @@
 import Observable from '~managers/abstracts/Observable'
+import PlayersManager from '~managers/PlayersManager'
 
 const HOST = window.location.origin.replace(/^http/, 'ws')
 
@@ -58,6 +59,7 @@ class WebSocketManager extends Observable {
     this._ws.onmessage = this.onWsMessage
 
     window.closeConnection = this._ws.close.bind(this._ws)
+    window.PlayersManager = PlayersManager
   }
 
   onWsClose = event => {

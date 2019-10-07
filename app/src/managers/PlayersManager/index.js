@@ -60,7 +60,7 @@ class PlayersManager extends Observable {
 
     if (matchIndex !== -1) {
       if (this._gameStarted) {
-        this.players[matchIndex].lost()
+        this.players[matchIndex].setLost()
       } else {
         this.players[matchIndex].destroy()
         this.players[matchIndex] = { token: getNewToken(matchIndex) }
