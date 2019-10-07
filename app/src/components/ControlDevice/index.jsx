@@ -38,7 +38,7 @@ const ControlDevice = () => {
           setActiveTutorial(true)
           break
         }
-        case 'skip_tutorial': {
+        case 'game_start': {
           setActiveTutorial(false)
           break
         }

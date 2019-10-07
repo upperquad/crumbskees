@@ -23,9 +23,6 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
         case 'tutorial_start':
           onTutorialStart()
           break
-        case 'tutorial_over':
-          onTutorialEnd()
-          break
         case 'game_start':
           onGameStart()
           break
@@ -74,12 +71,6 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
   function onTutorialStart() {
     wssControl.clients.forEach(client => {
       client.send('tutorial_start')
-    })
-  }
-
-  function onTutorialEnd() {
-    wssControl.clients.forEach(client => {
-      client.send('tutorial_over')
     })
   }
 
