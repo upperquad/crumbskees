@@ -79,8 +79,8 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     if (winner === undefined) {
       return
     }
+    const message = encodeMessage('result', { winner })
     wssControl.clients.forEach(client => {
-      const message = encodeMessage('result', { winner })
       client.send(message)
     })
   }

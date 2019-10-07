@@ -10,14 +10,14 @@ import resultBg from '~assets/images/round_3/s3-intro.mp4'
 import PlayersManager from '~managers/PlayersManager'
 
 const ResultStage = () => {
-  const [player1, player2] = PlayersManager.players
-  const winners = []
-  if (player1.score() >= player2.score()) {
-    winners.push(player1)
-  }
-  if (player2.score() >= player1.score()) {
-    winners.push(player2)
-  }
+  const players = PlayersManager.players
+
+  const scores = PlayersManager.players.map(player => player.score())
+  const maxScore = Math.max(...scores)
+
+  const winners = players.filter(player => player.score() === maxScore)
+
+  const tie = winners.length !== 1
 
   // TODO: align property names when Players are finalized
   return (
@@ -27,19 +27,19 @@ const ResultStage = () => {
         <div className={styles.titleWrapper}>
           <MarqueeText
             extraClassName={styles.title}
-            text={winners.length === 1 ? 'Winner!' : 'Nobody wins!'}
+            text={tie ? 'Nobody wins!' : 'Winner!'}
             isAlternate
             isWhite
             duration="5s"
           />
         </div>
-        <div className={styles.player}>{winners.length === 1 ? winners[0].name : 'Tied!'}</div>
-        <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: false })}>
+        <div className={styles.player}>{tie ? 'Tied!' : winners[0].name}</div>
+        <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: tie })}>
           {winners.map(winner => (
-            <img src={winner.avatar} className={styles.playerAvatar} alt="" />
+            <img src={winner.image} className={styles.playerAvatar} alt="" />
           ))}
         </div>
-        <div className={styles.score}>{winners[0].score()}</div>
+        <div className={styles.score}>{maxScore}</div>
         <div className={styles.circle} />
         <div className={classNames(styles.timebar, styles.resultTimebar)} />
       </div>
