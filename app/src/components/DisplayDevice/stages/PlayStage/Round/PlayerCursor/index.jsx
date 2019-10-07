@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
@@ -20,7 +20,7 @@ const pointsCount = 8
 
 const PlayerCursor = props => {
   const { cancelPower, color, index, position: targetPosition, power } = props
-  const [pathD, setPathD] = useState('')
+  const pathRef = useRef()
   const position = useRef({ x: 0, y: 0 })
   const points = useRef(null)
   if (points.current === null) {
@@ -36,7 +36,7 @@ const PlayerCursor = props => {
       const newPosition = getNewPosition(position.current, targetPosition)
       const newPathD = getPathD(now, points.current, newPosition)
       position.current = newPosition
-      setPathD(newPathD)
+      pathRef.current.setAttribute('d', newPathD)
     }
 
     AnimationFrameManager.addSubscriber(updateFrame)
@@ -70,7 +70,7 @@ const PlayerCursor = props => {
       strokeWidth="6"
       stroke={color}
       style={{ transition: 'stroke 1s ease' }}
-      d={pathD}
+      ref={pathRef}
     />
   )
 }
