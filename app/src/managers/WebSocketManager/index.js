@@ -56,6 +56,8 @@ class WebSocketManager extends Observable {
   onWsOpen = () => {
     this._ws.onclose = this.onWsClose
     this._ws.onmessage = this.onWsMessage
+
+    window.closeConnection = this._ws.close.bind(this._ws)
   }
 
   onWsClose = event => {
