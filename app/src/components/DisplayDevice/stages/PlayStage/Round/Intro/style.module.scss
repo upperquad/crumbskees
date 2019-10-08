@@ -1,5 +1,26 @@
 @import "~styles/imports/index";
 
+@keyframes intro-blink-color {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: $color-red;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+.video {
+  height: grid(14);
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
 .intro {
   align-items: center;
   display: none;
@@ -16,25 +37,6 @@
     overflow: visible;
     z-index: 11;
   }
-
-  video {
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-  }
-
-  @keyframes blink-color {
-    0% {
-      color: transparent;
-    }
-    50% {
-      color: $color-red;
-    }
-    100% {
-      color: transparent;
-    }
-  }
 }
 
 .introRound {
@@ -47,7 +49,7 @@
   z-index: 10;
 
   &.blink {
-    animation: blink-color .1s linear 6;
+    animation: intro-blink-color .1s linear 6;
     color: $color-white;
     -webkit-text-stroke-color: $color-black;
     -webkit-text-stroke-width: grid(.06);
