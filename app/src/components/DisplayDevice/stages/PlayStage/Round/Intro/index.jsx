@@ -53,6 +53,7 @@ const Intro = props => {
     }, currentStep.tillNextStep)
 
     return () => clearTimeout(timeout.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
 
   let readyDropState
@@ -78,7 +79,7 @@ const Intro = props => {
       {!finished && (
         <div
           className={classNames(styles.introBgContainer, {
-            [styles.introBgContainerOut]: step >= stepsDict.slideAway
+            [styles.introBgContainerOut]: step >= stepsDict.slideAway,
           })}
         >
           <AutoplayVideo extraClassName={styles.video} src={videoIntro} />

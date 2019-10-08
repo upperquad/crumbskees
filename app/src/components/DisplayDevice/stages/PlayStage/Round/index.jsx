@@ -135,6 +135,8 @@ const Round = props => {
     return () => {
       WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, onRoundEnd])
 
   // Grid setup
@@ -197,7 +199,7 @@ const Round = props => {
     }
 
     return undefined
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length])
 
   function addScore(score, index) {

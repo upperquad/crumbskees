@@ -15,6 +15,8 @@ const PopupMessage = props => {
       }
     }
     return undefined
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onEnd])
 
   return (
