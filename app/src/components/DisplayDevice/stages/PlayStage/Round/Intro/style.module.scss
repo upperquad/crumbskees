@@ -1,76 +1,63 @@
 @import "~styles/imports/index";
 
+@keyframes intro-blink-color {
+  0% {
+    color: $color-white;
+  }
+  50% {
+    color: $color-red;
+  }
+  100% {
+    color: $color-white;
+  }
+}
+
+@keyframes intro-go {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .intro {
-  align-items: center;
-  display: none;
   height: 100%;
-  justify-content: center;
   left: 0;
   overflow: hidden;
+  pointer-events: none;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 10;
-
-  &:first-child {
-    overflow: visible;
-    z-index: 11;
-  }
-
-  video {
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-  }
-
-  @keyframes blink-color {
-    0% {
-      color: transparent;
-    }
-    50% {
-      color: $color-red;
-    }
-    100% {
-      color: transparent;
-    }
-  }
 }
 
-.introRound {
-  align-items: flex-end;
-  display: flex;
-  height: grid(6);
-  margin-top: grid(-2.4);
+.introBgContainer {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+  height: grid(14);
+  left: 0;
   overflow: hidden;
-  position: relative;
-  z-index: 10;
-
-  &.blink {
-    animation: blink-color .1s linear 6;
-    color: $color-white;
-    -webkit-text-stroke-color: $color-black;
-    -webkit-text-stroke-width: grid(.06);
-  }
-
-  span {
-    display: inline-block;
-    line-height: 1;
-    min-width: grid(.8);
-    vertical-align: bottom;
-  }
+  position: absolute;
+  top: 0;
+  transition: clip-path 1.3s $easing-circle-in-out;
+  width: 100%;
+  z-index: -1;
 }
 
-.introItemToFindText {
-  line-height: 1.2;
-  margin-top: grid(-2);
-  opacity: 0;
-  position: relative;
-  width: grid(6);
-  z-index: 10;
+.introBgContainerOut {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
 
-.introCircle {
+.video {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.circle {
   background-color: $color-white;
   border: grid(.3) solid $color-black;
   border-radius: 50%;
@@ -80,8 +67,85 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%) scale(4);
+  transition: transform 1.2s $easing-circle-in-out;
   width: grid(11);
+}
+
+.circleIn {
+  transform: translate(-50%, -50%);
+}
+
+.introRoundWrapper {
+  bottom: grid(14 / 2 + 4 + 5 / 3);
+  left: 50%;
+  overflow: hidden;
+  padding-top: grid(10 / 3);
+  pointer-events: none;
+  position: absolute;
+  transform: translate(-50%, 50%);
+  transform-origin: bottom;
+  width: 100%;
+}
+
+.introRound {
+  color: $color-red;
+  font-size: responsive-font(200);
+  -webkit-text-stroke-color: transparent;
+}
+
+.introRoundBlink {
+  animation: intro-blink-color .1s linear 6;
+  color: $color-white;
+  -webkit-text-stroke-color: $color-black;
+  -webkit-text-stroke-width: $border-width;
+}
+
+.introRoundWrapperDown {
+  bottom: grid(.4);
+  transform: translateX(-50%) scale(.12);
+  transition: bottom 1.2s $easing-circle-in-out, transform 1.2s $easing-circle-in-out;
+}
+
+.itemToFindText {
+  @extend %Bold;
+
+  font-size: responsive-font(48);
+  left: 50%;
+  line-height: 1.2;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: grid(5);
+  transform: translateX(-50%);
+  transition: opacity .3s;
+  width: grid(6);
   z-index: 10;
+}
+
+.itemToFindTextIn {
+  opacity: 1;
+}
+
+.itemToFindImage {
+  bottom: grid(8.6);
+  height: grid(2);
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  transition: opacity .3s;
+  width: grid(2);
+  z-index: 40;
+}
+
+.itemToFindImageIn {
+  opacity: 1;
+}
+
+.itemToFindImageDown {
+  bottom: grid(2.3);
+  transform: translateX(-50%) scale(.45);
+  transition: transform 1s $easing-circle-in-out, bottom 1s $easing-circle-in-out;
 }
 
 .introReadyWrapper {
@@ -90,32 +154,37 @@
   position: relative;
 }
 
-.introReady {
-  transform: translateY(-100%);
+.countdown {
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: grid(7);
+  transform: translate(-50%, -50%);
+  width: 100%;
 }
 
-.introSet {
-  left: 50%;
+.set {
+  left: 0;
   position: absolute;
   top: 0;
-  transform: translate(-50%, -100%);
+  width: 100%;
 }
 
-.introGo {
+.go {
+  @extend %Bold;
+
+  color: $color-red;
+  font-size: responsive-font(600);
   left: 50%;
   opacity: 0;
   position: absolute;
-  top: 50%;
+  text-align: center;
+  top: grid(7);
+  transform: translate(-50%, -50%) scale(.2);
+}
+
+.goStart {
+  animation: intro-go 1s linear 1 both;
   transform: translate(-50%, -50%);
-}
-
-.itemToFind {
-  height: grid(2);
-  left: 50%;
-  opacity: 0;
-  position: absolute;
-  top: grid(6.4);
-  transform: translate(-50%, 50%);
-  width: grid(2);
-  z-index: 40;
+  transition: transform 1s $easing-circle-in-out;
 }

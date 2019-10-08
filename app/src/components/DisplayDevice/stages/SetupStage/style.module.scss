@@ -14,28 +14,28 @@
 
 .pullOutPhone {
   font-size: responsive-font(56);
-  padding-top: 48/$base-width*100vw;
+  padding-top: grid(.8);
 }
 
 .players {
   display: flex;
   justify-content: center;
-  padding-top: 70/$base-width*100vw;
+  padding-top: grid(3.5 / 3);
 }
 
 .player {
   background: $color-white;
   border: 2px solid $color-black;
   text-align: center;
-  width: 720/$base-width*100%;
+  width: grid(12);
 
   &:first-of-type {
-    margin-right: 120/$base-width*100%;
+    margin-right: grid(2);
   }
 }
 
 .qrWrapper {
-  height: 293/$base-width*100vw;
+  height: grid(14.65 / 3);
   position: relative;
 }
 
@@ -53,9 +53,9 @@
     border: 2px solid $color-black;
     border-radius: 50%;
     content: '';
-    height: 166/$base-width*100vw;
+    height: grid(8.3 / 3);
     position: absolute;
-    width: 166/$base-width*100vw;
+    width: grid(8.3 / 3);
   }
 }
 
@@ -89,7 +89,7 @@
   border-top: 2px solid $color-black;
   display: flex;
   font-size: responsive-font(48);
-  height: 130/$base-width*100vw;
+  height: grid(6.5 / 3);
   justify-content: center;
   text-transform: uppercase;
 }
@@ -98,9 +98,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  margin-bottom: 12/$base-width*100vw;
+  margin-bottom: grid(0.2);
   position: relative;
-  width: 181/$base-width*100vw;
+  width: grid(3);
 
   &::before {
     content: '';
@@ -122,6 +122,6 @@
 
 .instruction {
   overflow: hidden;
-  padding-top: 200/$base-width*100vw;
+  padding-top: grid(10 / 3);
   position: relative;
 }

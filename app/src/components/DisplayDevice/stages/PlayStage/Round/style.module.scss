@@ -5,13 +5,22 @@
     background-color: $color-green;
     width: 100%;
   }
-  50% {
-    background-color: $color-orange;
-    width: 50%;
+
+  70% {
+    background-color: $color-green;
+    width: 30%;
   }
+
+  73% {
+    background-color: $color-orange;
+    width: 27%;
+  }
+
   75% {
     background-color: $color-red;
+    width: 25%;
   }
+
   100% {
     background-color: $color-red;
     width: 0%;
@@ -22,21 +31,30 @@
   0% {
     opacity: 0;
   }
-  25% {
-    opacity: 1;
-  }
+
   50% {
-    opacity: 0;
-  }
-  75% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
 
 .round {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.roundExiting {
+  z-index: 0;
+}
+
+.gameZone {
   background-position: center center;
   background-size: cover;
   cursor: none;
@@ -45,13 +63,8 @@
   text-align: center;
   z-index: 10;
 
-  &.started {
-    &::after {
-      animation: playstage-bar-change-color 40s linear infinite forwards, playstage-blink-bar-color 1s linear infinite forwards 30s;
-    }
-  }
-
   &::after {
+    animation: playstage-bar-change-color 40s linear 1 forwards, playstage-blink-bar-color .5s linear infinite forwards 30s;
     background-color: $color-green;
     bottom: 0;
     content: '';
@@ -85,10 +98,10 @@
   transition: clip-path 1.3s $easing-circle-in-out;
   width: 100%;
   z-index: 0;
+}
 
-  .isOutro & {
-    clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
-  }
+.revealVisible {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
 }
 
 .wrapper {

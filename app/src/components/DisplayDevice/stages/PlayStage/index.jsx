@@ -27,13 +27,12 @@ const PlayStage = props => {
     PlayersManager.startGame()
   }, [])
 
-  // TODO: add transition based on transitionStatus
   return (
     <section className={classNames(styles.play, extraClassName)}>
       <TransitionGroup>
         <Transition
           key={GAME_ROUNDS[roundIndex].key}
-          timeout={{ enter: 0, exit: 0 }}
+          timeout={{ enter: 0, exit: 800 }}
         >
           {status => (
             <Round

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
@@ -17,10 +17,11 @@ import Intro from './Intro'
 const TIME = 40
 
 const Round = props => {
-  const { onRoundEnd, roundIndex } = props
+  const { onRoundEnd, roundIndex, transitionStatus } = props
   const { bkg, frontBkg, itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [items, setItems] = useState([])
+  const [gameState, setGameState] = useState('before-game')
   const [message, setMessage] = useState({ messageCount: 0 })
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
@@ -143,29 +144,33 @@ const Round = props => {
 
   // Timer
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      setTime(prevTime => {
-        const newTime = prevTime - 1
+    if (gameState === 'in-game') {
+      const timerInterval = setInterval(() => {
+        setTime(prevTime => {
+          const newTime = prevTime - 1
 
-        if (newTime === 0) {
-          addMessage({
-            text: 'Time\'s up!',
-            color: COLORS.red,
-            persistent: true,
-            onEnd: onRoundEnd,
-          })
-        } else if (newTime === 10) {
-          SoundManager.countdown.play()
-        }
+          if (newTime === 0) {
+            addMessage({
+              text: 'Time\'s up!',
+              color: COLORS.red,
+              persistent: true,
+              onEnd: onRoundEnd,
+            })
+          } else if (newTime === 10) {
+            SoundManager.countdown.play()
+          }
 
-        return newTime >= 0 ? newTime : 0
-      })
-    }, 1000)
+          return newTime >= 0 ? newTime : 0
+        })
+      }, 1000)
 
-    return () => {
-      clearInterval(timerInterval)
+      return () => {
+        clearInterval(timerInterval)
+      }
     }
-  }, [onRoundEnd])
+
+    return undefined
+  }, [onRoundEnd, gameState])
 
   // tap instruction
   const zeroScorePlayers = PlayersManager.players.filter(player => player.score() === 0)
@@ -206,38 +211,68 @@ const Round = props => {
   }
 
   return (
-    <Fragment>
-      <div className={classNames(styles.round, styles.started)}>
-        <img className={styles.frontBkg} src={frontBkg} alt="" />
-        <img className={styles.reveal} src={bkg} alt="" />
-        <div className={styles.wrapper}>
-          <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
-            <defs>
-              <clipPath id="game-round-clippath" className={styles.svgClipPath}>
-                {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
-              </clipPath>
-            </defs>
-            {PlayersManager.players.map((player, index) => (
-              <PlayerCursor
-                index={index}
-                power={powerArray[index]}
-                position={positionArray[index]}
-                color={player.color}
-                roundScore={roundScoreArray[index]}
-                cancelPower={() => {
-                  setPowerArray(prevArray => {
-                    prevArray[index] = null
-                    return prevArray
-                  })
-                }}
-              />
-            ))}
-            {DEBUG && (
+    <div
+      className={classNames(
+        styles.round,
+        { [styles.roundExiting]: transitionStatus === 'exiting' },
+      )}
+    >
+      {gameState === 'in-game' && (
+        <div className={classNames(styles.gameZone)}>
+          <img className={styles.frontBkg} src={frontBkg} alt="" />
+          <img className={styles.reveal} src={bkg} alt="" />
+          <div className={styles.wrapper}>
+            <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
+              <defs>
+                <clipPath id="game-round-clippath" className={styles.svgClipPath}>
+                  {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
+                </clipPath>
+              </defs>
+              {PlayersManager.players.map((player, index) => (
+                <PlayerCursor
+                  index={index}
+                  power={powerArray[index]}
+                  position={positionArray[index]}
+                  color={player.color}
+                  roundScore={roundScoreArray[index]}
+                  cancelPower={() => {
+                    setPowerArray(prevArray => {
+                      prevArray[index] = null
+                      return prevArray
+                    })
+                  }}
+                />
+              ))}
+              {DEBUG && (
+                <g
+                  width={`${VB_WIDTH}px`}
+                  height={`${VB_HEIGHT}px`}
+                  className={styles.debugItems}
+                >
+                  {items.map(item => (
+                    <image
+                      xlinkHref={item.image}
+                      preserveAspectRatio="xMidYMid slice"
+                      width={item.size}
+                      height={item.size}
+                      x={`${item.x * 100}%`}
+                      y={`${item.y * 100}%`}
+                      style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
+                    />
+                  ))}
+                </g>
+              )}
               <g
                 width={`${VB_WIDTH}px`}
                 height={`${VB_HEIGHT}px`}
-                className={styles.debugItems}
+                clipPath="url(#game-round-clippath)"
               >
+                <image
+                  xlinkHref={bkg}
+                  preserveAspectRatio="xMidYMid slice"
+                  width={`${VB_WIDTH}px`}
+                  height={`${VB_HEIGHT}px`}
+                />
                 {items.map(item => (
                   <image
                     xlinkHref={item.image}
@@ -250,54 +285,36 @@ const Round = props => {
                   />
                 ))}
               </g>
-            )}
-            <g
-              width={`${VB_WIDTH}px`}
-              height={`${VB_HEIGHT}px`}
-              clipPath="url(#game-round-clippath)"
-            >
-              <image
-                xlinkHref={bkg}
-                preserveAspectRatio="xMidYMid slice"
-                width={`${VB_WIDTH}px`}
-                height={`${VB_HEIGHT}px`}
-              />
-              {items.map(item => (
-                <image
-                  xlinkHref={item.image}
-                  preserveAspectRatio="xMidYMid slice"
-                  width={item.size}
-                  height={item.size}
-                  x={`${item.x * 100}%`}
-                  y={`${item.y * 100}%`}
-                  style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
-                />
-              ))}
-            </g>
-          </svg>
-        </div>
-        {PlayersManager.players.map((player, index) => (
-          <PlayerMessage
-            power={powerArray[index]}
-            position={positionArray[index]}
-            color={player.color}
-            roundScore={roundScoreArray[index]}
-            tapInstruction={tapInstructionArray[index]}
+            </svg>
+          </div>
+          {PlayersManager.players.map((player, index) => (
+            <PlayerMessage
+              power={powerArray[index]}
+              position={positionArray[index]}
+              color={player.color}
+              roundScore={roundScoreArray[index]}
+              tapInstruction={tapInstructionArray[index]}
+            />
+          ))}
+          <PopupMessage
+            color={message.color}
+            x={message.x}
+            y={message.y}
+            persitent={message.persitent}
+            text={message.text}
+            messageCount={message.messageCount}
+            onEnd={message.onEnd}
           />
-        ))}
-        <PopupMessage
-          color={message.color}
-          x={message.x}
-          y={message.y}
-          persitent={message.persitent}
-          text={message.text}
-          messageCount={message.messageCount}
-          onEnd={message.onEnd}
-        />
-      </div>
-      <Board time={time} itemImage={itemImage} scores={roundScoreArray} />
-      <Intro />
-    </Fragment>
+        </div>
+      )}
+      <Board time={time} itemImage={itemImage} scores={roundScoreArray} transitionStatus={transitionStatus} />
+      <Intro
+        roundIndex={roundIndex}
+        onFinish={() => {
+          setGameState('in-game')
+        }}
+      />
+    </div>
   )
 }
 
