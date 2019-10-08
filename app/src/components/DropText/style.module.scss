@@ -1,0 +1,9 @@
+@import "~styles/imports/index";
+
+.dropText {
+  @extend %Bold;
+
+  color: $color-red;
+  font-size: responsive-font(200);
+  text-align: center;
+}

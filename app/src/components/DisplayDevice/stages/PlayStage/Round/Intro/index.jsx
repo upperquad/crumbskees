@@ -1,22 +1,27 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import classNames from 'classnames'
 import styles from './style.module.scss'
 
 import { GAME_ROUNDS } from '~constants'
 import AutoplayVideo from '~components/AutoplayVideo'
+import DropText from '~components/DropText'
+import JumpUpText from '~components/JumpUpText'
 
 const stepsArray = [
-  { name: 'initialization', tillNextStep: 0 },
-  { name: 'roundPopup', tillNextStep: 1000 },
-  { name: 'roundBlink', tillNextStep: 600 },
+  { name: 'initialization', tillNextStep: 1000 },
+  { name: 'roundPopup', tillNextStep: 1300 },
+  { name: 'roundBlink', tillNextStep: 1200 },
   { name: 'roundDown', tillNextStep: 0 },
-  { name: 'circleIn', tillNextStep: 200 },
+  { name: 'circleIn', tillNextStep: 600 },
   { name: 'itemText', tillNextStep: 200 },
   { name: 'itemImage', tillNextStep: 1000 },
   { name: 'circleOut', tillNextStep: 0 },
   { name: 'itemTextOut', tillNextStep: 0 },
   { name: 'itemImageDown', tillNextStep: 1000 },
-  { name: 'ready', tillNextStep: 600 },
-  { name: 'set', tillNextStep: 600 },
+  { name: 'readyIn', tillNextStep: 600 },
+  { name: 'readyOut', tillNextStep: 0 },
+  { name: 'setIn', tillNextStep: 600 },
+  { name: 'setOut', tillNextStep: 0 },
   { name: 'go', tillNextStep: 200, startGame: true },
   { name: 'slideAway', tillNextStep: 800 },
 ]
@@ -48,25 +53,80 @@ const Intro = props => {
     return () => clearTimeout(timeout.current)
   }, [step])
 
+  let readyDropState
+  if (step < stepsDict.readyIn) {
+    readyDropState = 'before'
+  } else if (step < stepsDict.readyOut) {
+    readyDropState = 'in'
+  } else {
+    readyDropState = 'after'
+  }
+
+  let setDropState
+  if (step < stepsDict.setIn) {
+    setDropState = 'before'
+  } else if (step < stepsDict.setOut) {
+    setDropState = 'in'
+  } else {
+    setDropState = 'after'
+  }
+
   return (
-    <Fragment>
+    <div className={styles.intro}>
       <div className={styles.introBgContainer}>
         <AutoplayVideo extraClassName={styles.video} src={videoIntro} />
-        <div className={styles.circle} />
+        <div
+          className={classNames(styles.circle, {
+            [styles.circleIn]: step >= stepsDict.circleIn && step < stepsDict.circleOut,
+          })}
+        />
       </div>
-      <div className={styles.introRound}>{roundNameText}</div>
-      <div className={styles.itemToFind}>
-        <div className={styles.itemToFindText}>
-          {'Item\nto find'}
+      {step >= stepsDict.roundPopup && (
+        <div
+          className={classNames(styles.introRoundWrapper, {
+            [styles.introRoundWrapperDown]: step >= stepsDict.roundDown,
+          })}
+        >
+          <JumpUpText
+            extraClassName={classNames(styles.introRound, {
+              [styles.introRoundBlink]: step >= stepsDict.roundBlink,
+              [styles.introRoundDown]: step >= stepsDict.roundDown,
+            })}
+            text={roundNameText}
+          />
         </div>
-        <img src={itemImage} className={styles.itemToFindImage} alt="" />
+      )}
+      <div
+        className={classNames(styles.itemToFindText, {
+          [styles.itemToFindTextIn]: step >= stepsDict.itemText && step < stepsDict.itemTextOut,
+        })}
+      >
+        Item
+        <br />
+        to find
       </div>
+      <img
+        src={itemImage}
+        alt=""
+        className={classNames(styles.itemToFindImage, {
+          [styles.itemToFindImageIn]: step >= stepsDict.itemImage,
+          [styles.itemToFindImageDown]: step >= stepsDict.itemImageDown,
+        })}
+      />
       <div className={styles.countdown}>
-        <div className={styles.introReady}>Ready</div>
-        <div className={styles.introSet}>Set</div>
+        <DropText
+          text="Ready"
+          state={readyDropState}
+          extraClassName={styles.ready}
+        />
+        <DropText
+          text="Set"
+          state={setDropState}
+          extraClassName={styles.set}
+        />
         <div className={styles.introGo}>Go</div>
       </div>
-    </Fragment>
+    </div>
   )
 }
 
