@@ -14,7 +14,7 @@ const Board = props => {
 
     return (
       <div className={styles.player}>
-        <div className={classNames(styles.character, { [styles.lost]: player.lost })}>
+        <div className={classNames(styles.character, { [styles.characterLost]: player.lost })}>
           <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} />
         </div>
         <div className={styles.score}>{zeroUnit(player.score())}</div>

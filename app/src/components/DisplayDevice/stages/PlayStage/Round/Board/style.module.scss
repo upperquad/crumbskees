@@ -59,8 +59,7 @@
     width: 100%;
   }
 
-  &.is-dead,
-  &.lost {
+  &--Lost {
     filter: grayscale(100%);
   }
 }
