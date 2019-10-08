@@ -32,11 +32,11 @@ class PlayersManager extends Observable {
   playerIndex = id => this.players.findIndex(player => player.id === id)
 
   newConnect = (submittedToken, userId) => {
+    const matchIndex = this.players.findIndex(playerObj => {
+      const { token } = playerObj
+      return token === submittedToken
+    })
     if (submittedToken) {
-      const matchIndex = this.players.findIndex(playerObj => {
-        const { token } = playerObj
-        return token === submittedToken
-      })
       if (matchIndex !== -1) {
         this.players[matchIndex] = new Player({ id: userId, character: CHARACTERS[matchIndex] })
         WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
@@ -44,7 +44,7 @@ class PlayersManager extends Observable {
         WebSocketManager.send('auth_result', { id: userId, result: 0 })
       }
     } else if (userId) {
-      // REVIEW: todo
+      this.players[matchIndex].reconnect()
     }
   }
 

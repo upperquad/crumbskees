@@ -32,6 +32,10 @@ export default class Player {
     this.lost = true
   }
 
+  reconnect = () => {
+    this.lost = false
+  }
+
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
     WebSocketManager.send('score', { id: this.id, score: this._score })
