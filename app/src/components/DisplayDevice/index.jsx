@@ -60,6 +60,11 @@ const DisplayDevice = () => {
           setBothConnected(PlayersManager.bothConnected())
           break
         }
+        case 'reconnect_phone': {
+          const { id, playerIndex } = data
+          PlayersManager.newConnect(null, id, playerIndex)
+          break
+        }
         case 'phone_left': {
           const { id } = data
           PlayersManager.closeConnection(id)

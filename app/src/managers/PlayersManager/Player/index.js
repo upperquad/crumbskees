@@ -28,8 +28,8 @@ export default class Player {
     // Do all clean ups here
   }
 
-  setLost = () => {
-    this.lost = true
+  setLostStatus = status => {
+    this.lost = status
   }
 
   reconnect = () => {

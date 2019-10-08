@@ -31,7 +31,7 @@ class PlayersManager extends Observable {
 
   playerIndex = id => this.players.findIndex(player => player.id === id)
 
-  newConnect = (submittedToken, userId) => {
+  newConnect = (submittedToken, userId, playerIndex) => {
     const matchIndex = this.players.findIndex(playerObj => {
       const { token } = playerObj
       return token === submittedToken
@@ -43,8 +43,9 @@ class PlayersManager extends Observable {
       } else {
         WebSocketManager.send('auth_result', { id: userId, result: 0 })
       }
-    } else if (userId) {
-      this.players[matchIndex].reconnect()
+    } else if (userId && playerIndex) {
+      WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex })
+      this.players[playerIndex].setLostStatus(false)
     }
   }
 
@@ -60,7 +61,7 @@ class PlayersManager extends Observable {
 
     if (matchIndex !== -1) {
       if (this._gameStarted) {
-        this.players[matchIndex].setLost()
+        this.players[matchIndex].setLostStatus(true)
       } else {
         this.players[matchIndex].destroy()
         this.players[matchIndex] = { token: getNewToken(matchIndex) }
