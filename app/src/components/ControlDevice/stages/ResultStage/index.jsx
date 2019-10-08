@@ -1,7 +1,5 @@
 import React from 'react'
 import styles from './style.module.scss'
-import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
-import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import { CHARACTERS } from '~constants'
 
 import Circle from '~components/ControlDevice/Circle'
@@ -25,8 +23,18 @@ const ResultStage = props => {
   } else {
     resultBottom = CHARACTERS[winner].name
     circleColor = CHARACTERS[winner].color
-    video.push(<AutoplayVideo src={CHARACTERS[winner].videoWhite} extraClassName={styles.video} poster={CHARACTERS[winner].image} />)
-    winner === characterIndex ? resultTop = 'You won! ' : resultTop = 'You’re bad! '
+    video.push((
+      <AutoplayVideo
+        src={CHARACTERS[winner].videoWhite}
+        extraClassName={styles.video}
+        poster={CHARACTERS[winner].image}
+      />
+    ))
+    if (winner === characterIndex) {
+      resultTop = 'You won!'
+    } else {
+      resultTop = 'You’re bad!'
+    }
   }
 
   return (

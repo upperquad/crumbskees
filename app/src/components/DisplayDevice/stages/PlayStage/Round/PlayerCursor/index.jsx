@@ -61,6 +61,8 @@ const PlayerCursor = props => {
       return () => clearTimeout(timeout)
     }
     return undefined
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [power])
 
   return (

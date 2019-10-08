@@ -3,7 +3,7 @@
 .jumpUpText {
   @extend %Bold;
 
-  color: white;
+  color: $color-white;
   font-size: responsive-font(120);
   line-height: .8em;
   pointer-events: none;
