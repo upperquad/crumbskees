@@ -7,7 +7,7 @@ const DropText = props => {
   const { extraClassName, state, text } = props
   const [animProps, setAnimProps] = useSpring(() => ({
     transform: 'translateY(-150%)',
-    config: { mass: 1, tension: 200, friction: 17.5 },
+    config: { mass: 1, tension: 300, friction: 17.5 },
   }))
 
   useEffect(() => {

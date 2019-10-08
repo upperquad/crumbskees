@@ -10,17 +10,17 @@ import JumpUpText from '~components/JumpUpText'
 const stepsArray = [
   { name: 'initialization', tillNextStep: 1000 },
   { name: 'roundPopup', tillNextStep: 1300 },
-  { name: 'roundBlink', tillNextStep: 1200 },
-  { name: 'roundDown', tillNextStep: 0 },
+  { name: 'roundBlink', tillNextStep: 1100 },
+  { name: 'roundDown', tillNextStep: 200 },
   { name: 'circleIn', tillNextStep: 600 },
   { name: 'itemText', tillNextStep: 200 },
   { name: 'itemImage', tillNextStep: 1000 },
   { name: 'circleOut', tillNextStep: 0 },
   { name: 'itemTextOut', tillNextStep: 0 },
   { name: 'itemImageDown', tillNextStep: 1000 },
-  { name: 'readyIn', tillNextStep: 600 },
+  { name: 'readyIn', tillNextStep: 800 },
   { name: 'readyOut', tillNextStep: 0 },
-  { name: 'setIn', tillNextStep: 600 },
+  { name: 'setIn', tillNextStep: 800 },
   { name: 'setOut', tillNextStep: 0 },
   { name: 'go', tillNextStep: 200, startGame: true },
   { name: 'slideAway', tillNextStep: 800 },
@@ -35,6 +35,7 @@ const Intro = props => {
   const { onFinish, roundIndex } = props
   const { itemImage, roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
   const [step, setStep] = useState(0)
+  const [finished, setFinished] = useState(false)
   const timeout = useRef()
 
   // steps
@@ -43,6 +44,7 @@ const Intro = props => {
     timeout.current = setTimeout(() => {
       if (currentStep.startGame) {
         onFinish()
+        timeout.current = setTimeout(() => setFinished(true), 1000)
       }
 
       if (step < stepsArray.length - 1) {
@@ -73,14 +75,20 @@ const Intro = props => {
 
   return (
     <div className={styles.intro}>
-      <div className={styles.introBgContainer}>
-        <AutoplayVideo extraClassName={styles.video} src={videoIntro} />
+      {!finished && (
         <div
-          className={classNames(styles.circle, {
-            [styles.circleIn]: step >= stepsDict.circleIn && step < stepsDict.circleOut,
+          className={classNames(styles.introBgContainer, {
+            [styles.introBgContainerOut]: step >= stepsDict.slideAway
           })}
-        />
-      </div>
+        >
+          <AutoplayVideo extraClassName={styles.video} src={videoIntro} />
+          <div
+            className={classNames(styles.circle, {
+              [styles.circleIn]: step >= stepsDict.circleIn && step < stepsDict.circleOut,
+            })}
+          />
+        </div>
+      )}
       {step >= stepsDict.roundPopup && (
         <div
           className={classNames(styles.introRoundWrapper, {
@@ -96,15 +104,17 @@ const Intro = props => {
           />
         </div>
       )}
-      <div
-        className={classNames(styles.itemToFindText, {
-          [styles.itemToFindTextIn]: step >= stepsDict.itemText && step < stepsDict.itemTextOut,
-        })}
-      >
-        Item
-        <br />
-        to find
-      </div>
+      {!finished && (
+        <div
+          className={classNames(styles.itemToFindText, {
+            [styles.itemToFindTextIn]: step >= stepsDict.itemText && step < stepsDict.itemTextOut,
+          })}
+        >
+          Item
+          <br />
+          to find
+        </div>
+      )}
       <img
         src={itemImage}
         alt=""
@@ -113,19 +123,29 @@ const Intro = props => {
           [styles.itemToFindImageDown]: step >= stepsDict.itemImageDown,
         })}
       />
-      <div className={styles.countdown}>
-        <DropText
-          text="Ready"
-          state={readyDropState}
-          extraClassName={styles.ready}
-        />
-        <DropText
-          text="Set"
-          state={setDropState}
-          extraClassName={styles.set}
-        />
-        <div className={styles.introGo}>Go</div>
-      </div>
+      {!finished && (
+        <div className={styles.countdown}>
+          <DropText
+            text="Ready"
+            state={readyDropState}
+            extraClassName={styles.ready}
+          />
+          <DropText
+            text="Set"
+            state={setDropState}
+            extraClassName={styles.set}
+          />
+        </div>
+      )}
+      {!finished && (
+        <div
+          className={classNames(styles.go, {
+            [styles.goStart]: step >= stepsDict.go,
+          })}
+        >
+          Go
+        </div>
+      )}
     </div>
   )
 }

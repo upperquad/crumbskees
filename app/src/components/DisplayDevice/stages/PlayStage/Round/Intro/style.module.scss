@@ -12,10 +12,23 @@
   }
 }
 
+@keyframes intro-go {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .intro {
-  left: 0;
   height: 100%;
+  left: 0;
   overflow: hidden;
+  pointer-events: none;
   position: absolute;
   top: 0;
   width: 100%;
@@ -23,13 +36,19 @@
 }
 
 .introBgContainer {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
   height: grid(14);
   left: 0;
   overflow: hidden;
   position: absolute;
   top: 0;
+  transition: clip-path 1.3s $easing-circle-in-out;
   width: 100%;
   z-index: -1;
+}
+
+.introBgContainerOut {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
 
 .video {
@@ -61,8 +80,8 @@
   left: 50%;
   overflow: hidden;
   padding-top: grid(10 / 3);
-  position: absolute;
   pointer-events: none;
+  position: absolute;
   transform: translate(-50%, 50%);
   transform-origin: bottom;
   width: 100%;
@@ -83,22 +102,22 @@
 
 .introRoundWrapperDown {
   bottom: grid(.4);
-  transition: bottom 1.2s $easing-circle-in-out, transform 1.2s $easing-circle-in-out;
   transform: translateX(-50%) scale(.12);
+  transition: bottom 1.2s $easing-circle-in-out, transform 1.2s $easing-circle-in-out;
 }
 
 .itemToFindText {
   @extend %Bold;
 
   font-size: responsive-font(48);
-  line-height: 1.2;
   left: 50%;
+  line-height: 1.2;
   opacity: 0;
   position: absolute;
-  transition: opacity .3s;
-  top: grid(5);
   text-align: center;
+  top: grid(5);
   transform: translateX(-50%);
+  transition: opacity .3s;
   width: grid(6);
   z-index: 10;
 }
@@ -108,11 +127,11 @@
 }
 
 .itemToFindImage {
+  bottom: grid(8.6);
   height: grid(2);
   left: 50%;
   opacity: 0;
   position: absolute;
-  bottom: grid(8.6);
   transform: translateX(-50%);
   transition: opacity .3s;
   width: grid(2);
@@ -137,18 +156,35 @@
 
 .countdown {
   left: 50%;
+  overflow: hidden;
   position: absolute;
   top: grid(7);
   transform: translate(-50%, -50%);
   width: 100%;
 }
 
-.introGo {
+.set {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.go {
+  @extend %Bold;
+
+  color: $color-red;
+  font-size: responsive-font(600);
   left: 50%;
   opacity: 0;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  text-align: center;
+  top: grid(7);
+  transform: translate(-50%, -50%) scale(.2);
 }
 
-
+.goStart {
+  animation: intro-go 1s linear 1 both;
+  transform: translate(-50%, -50%);
+  transition: transform 1s $easing-circle-in-out;
+}
