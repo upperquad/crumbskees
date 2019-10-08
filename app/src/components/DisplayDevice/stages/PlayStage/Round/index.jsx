@@ -218,7 +218,7 @@ const Round = props => {
       )}
     >
       {gameState === 'in-game' && (
-        <div className={classNames(styles.gameZone, styles.started)}>
+        <div className={classNames(styles.gameZone)}>
           <img className={styles.frontBkg} src={frontBkg} alt="" />
           <img className={styles.reveal} src={bkg} alt="" />
           <div className={styles.wrapper}>
