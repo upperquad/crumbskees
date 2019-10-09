@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
+import useForceUpdate from 'use-force-update'
+
 import styles from './style.module.scss'
 
 import PlayersManager from '~managers/PlayersManager'
@@ -7,13 +9,22 @@ import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
   const { itemImage, scores, time, transitionStatus } = props
+  const forceUpdate = useForceUpdate()
+
+  useEffect(() => {
+    PlayersManager.addSubscriber('player_connection_change', forceUpdate)
+
+    return () => {
+      PlayersManager.removeSubscriber('player_connection_change', forceUpdate)
+    }
+  }, [forceUpdate])
 
   const renderPlayerBlock = (player, score) => {
     const items = [...new Array(score)]
 
     return (
       <div className={styles.player}>
-        <div className={styles.character}>
+        <div className={classNames(styles.character, { [styles.characterLost]: player.lost })}>
           <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} />
         </div>
         <div className={styles.score}>{zeroUnit(player.score())}</div>

@@ -28,8 +28,8 @@ export default class Player {
     // Do all clean ups here
   }
 
-  lost = () => {
-    this.lost = true
+  setLostStatus = status => {
+    this.lost = status
   }
 
   addScore = nbItemsCaught => {

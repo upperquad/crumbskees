@@ -17,6 +17,9 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
         case 'auth_result':
           onAuthResult(data)
           break
+        case 'reconnect_result':
+          onReconnectResult(data)
+          break
         case 'score':
           onScore(data)
           break
@@ -56,6 +59,19 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
       wsPhone.send(encodeMessage('accepted', { playerIndex, id: wsPhone.id }))
     } else {
       wsPhone.close(1000, 'invalid_token')
+    }
+  }
+
+  function onReconnectResult(data) {
+    const { id, result } = data
+    const wsPhone = wssControl.clients.find(elem => elem.id === id)
+    if (!wsPhone || id === undefined || result === undefined ) {
+      return
+    }
+    if (result === '1') {
+      wsPhone.accepted = true
+    } else {
+      wsPhone.close(1000, 'invalid_id')
     }
   }
 

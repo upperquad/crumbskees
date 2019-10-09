@@ -106,6 +106,7 @@ const Round = props => {
 
     const messageHandler = detail => {
       const { data, type } = detail
+
       switch (type) {
         case 'cursor_move': {
           const { id, x, y } = data
