@@ -47,8 +47,7 @@ class PlayersManager extends Observable {
       const player = this.players.find(ply => ply.id === userId)
       if (player) {
         WebSocketManager.send('reconnect_result', { id: userId, result: 1 })
-        const playerIndex = this.players.indexOf(player)
-        this.players[playerIndex].setLostStatus(false)
+        player.setLostStatus(false)
         this._callObservers('player_connection_change')
       } else {
         WebSocketManager.send('reconnect_result', { id: userId, result: 0 })

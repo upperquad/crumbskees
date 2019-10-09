@@ -70,7 +70,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     if (result === '1') {
       wsPhone.accepted = true
     } else {
-      wsPhone.close(1000, 'invalid_token')
+      wsPhone.close(1000, 'invalid_id')
     }
   }
 
