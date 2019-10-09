@@ -9,7 +9,8 @@ import resultBg from '~assets/images/round_3/s3-intro.mp4'
 
 import PlayersManager from '~managers/PlayersManager'
 
-const ResultStage = () => {
+const ResultStage = props => {
+  const { extraClassName } = props
   const scores = PlayersManager.players.map(player => player.score())
   const maxScore = Math.max(...scores)
 
@@ -18,7 +19,7 @@ const ResultStage = () => {
   const tie = winners.length !== 1
 
   return (
-    <div className={styles.result}>
+    <div className={classNames(styles.result, extraClassName)}>
       <AutoplayVideo extraClassName={styles.background} src={resultBg} />
       <div className={styles.card}>
         <div className={styles.titleWrapper}>

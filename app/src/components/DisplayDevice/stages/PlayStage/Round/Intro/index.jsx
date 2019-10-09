@@ -8,13 +8,14 @@ import DropText from '~components/DropText'
 import JumpUpText from '~components/JumpUpText'
 
 const stepsArray = [
-  { name: 'initialization', tillNextStep: 1000 },
+  { name: 'initialization', tillNextStep: 100 },
+  { name: 'slideIn', tillNextStep: 1000 },
   { name: 'roundPopup', tillNextStep: 1300 },
   { name: 'roundBlink', tillNextStep: 1100 },
   { name: 'roundDown', tillNextStep: 200 },
   { name: 'circleIn', tillNextStep: 600 },
   { name: 'itemText', tillNextStep: 200 },
-  { name: 'itemImage', tillNextStep: 1000 },
+  { name: 'itemImage', tillNextStep: 2000 },
   { name: 'circleOut', tillNextStep: 0 },
   { name: 'itemTextOut', tillNextStep: 0 },
   { name: 'itemImageDown', tillNextStep: 1000 },
@@ -23,7 +24,7 @@ const stepsArray = [
   { name: 'setIn', tillNextStep: 800 },
   { name: 'setOut', tillNextStep: 0 },
   { name: 'go', tillNextStep: 200, startGame: true },
-  { name: 'slideAway', tillNextStep: 800 },
+  { name: 'slideAway', tillNextStep: 1800 },
 ]
 
 const stepsDict = {}
@@ -79,7 +80,7 @@ const Intro = props => {
       {!finished && (
         <div
           className={classNames(styles.introBgContainer, {
-            [styles.introBgContainerOut]: step >= stepsDict.slideAway,
+            [styles.introBgContainerVisible]: step >= stepsDict.slideIn && step < stepsDict.slideAway,
           })}
         >
           <AutoplayVideo extraClassName={styles.video} src={videoIntro} />

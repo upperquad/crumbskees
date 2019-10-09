@@ -16,7 +16,10 @@
   0% {
     opacity: 0;
   }
-  30% {
+  15% {
+    opacity: 1;
+  }
+  60% {
     opacity: 1;
   }
   100% {
@@ -36,7 +39,7 @@
 }
 
 .introBgContainer {
-  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
   height: grid(14);
   left: 0;
   overflow: hidden;
@@ -47,8 +50,8 @@
   z-index: -1;
 }
 
-.introBgContainerOut {
-  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+.introBgContainerVisible {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
 }
 
 .video {
@@ -174,7 +177,7 @@
   @extend %Bold;
 
   color: $color-red;
-  font-size: responsive-font(600);
+  font-size: responsive-font(800);
   left: 50%;
   opacity: 0;
   position: absolute;
@@ -186,5 +189,5 @@
 .goStart {
   animation: intro-go 1s linear 1 both;
   transform: translate(-50%, -50%);
-  transition: transform 1s $easing-circle-in-out;
+  transition: transform 1.5s $easing-circle-in-out;
 }
