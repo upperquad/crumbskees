@@ -59,7 +59,7 @@
     width: 100%;
   }
 
-  &--Lost {
+  &.characterLost {
     filter: grayscale(100%);
   }
 }
