@@ -32,7 +32,7 @@ const PlayStage = props => {
       <TransitionGroup>
         <Transition
           key={GAME_ROUNDS[roundIndex].key}
-          timeout={{ enter: 0, exit: 800 }}
+          timeout={{ enter: 0, exit: 1000 }}
         >
           {status => (
             <Round

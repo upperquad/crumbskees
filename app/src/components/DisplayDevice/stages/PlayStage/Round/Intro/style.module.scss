@@ -36,7 +36,7 @@
 }
 
 .introBgContainer {
-  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
   height: grid(14);
   left: 0;
   overflow: hidden;
@@ -47,8 +47,8 @@
   z-index: -1;
 }
 
-.introBgContainerOut {
-  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+.introBgContainerVisible {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
 }
 
 .video {
