@@ -22,9 +22,8 @@ const initControl = (wssDisplay, wssControl, wssAdmin) => {
       wssDisplay.clients[0].send(encodeMessage('token_submit', { token: query.token, id: ws.id }))
     } else if (query.id && !wssControl.clients.find(elem => elem.id === query.id)) {
       ws.id = query.id
-      const controller = wssControl.clients.find(elem => elem.id === query.id)
       console.log(`reconnect phone: ${ws.id}`)
-      wssDisplay.clients[0].send(encodeMessage('reconnect_phone', { id: ws.id, playerIndex: wssControl.clients.indexOf(controller) }))
+      wssDisplay.clients[0].send(encodeMessage('reconnect_phone', { id: ws.id }))
     }
 
     ws.on('message', message => {

@@ -64,9 +64,10 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
 
   function onReconnectResult(data) {
     const { id, result } = data
-    console.log('reco')
     const wsPhone = wssControl.clients.find(elem => elem.id === id)
-    console.log('onReconnectResult', wsPhone.id)
+    if (!wsPhone || id === undefined || result === undefined ) {
+      return
+    }
     if (result === '1') {
       wsPhone.accepted = true
     } else {

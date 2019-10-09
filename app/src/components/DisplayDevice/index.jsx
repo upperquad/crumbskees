@@ -61,8 +61,8 @@ const DisplayDevice = () => {
           break
         }
         case 'reconnect_phone': {
-          const { id, playerIndex } = data
-          PlayersManager.newConnect(null, id, playerIndex)
+          const { id } = data
+          PlayersManager.newConnect(null, id)
           break
         }
         case 'phone_left': {
