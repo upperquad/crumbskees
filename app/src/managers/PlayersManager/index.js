@@ -31,21 +31,27 @@ class PlayersManager extends Observable {
 
   playerIndex = id => this.players.findIndex(player => player.id === id)
 
-  newConnect = (submittedToken, userId, playerIndex) => {
-    const matchIndex = this.players.findIndex(playerObj => {
-      const { token } = playerObj
-      return token === submittedToken
-    })
+  newConnect = (submittedToken, userId) => {
     if (submittedToken) {
+      const matchIndex = this.players.findIndex(playerObj => {
+        const { token } = playerObj
+        return token === submittedToken
+      })
       if (matchIndex !== -1) {
         this.players[matchIndex] = new Player({ id: userId, character: CHARACTERS[matchIndex] })
         WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
       } else {
         WebSocketManager.send('auth_result', { id: userId, result: 0 })
       }
-    } else if (userId && playerIndex) {
-      WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex })
-      this.players[playerIndex].setLostStatus(false)
+    } else if (userId) {
+      const player = this.players.find(ply => ply.id === userId)
+      if (player) {
+        WebSocketManager.send('reconnect_result', { id: userId, result: 1 })
+        const playerIndex = this.players.indexOf(player)
+        this.players[playerIndex].setLostStatus(false)
+      } else {
+        WebSocketManager.send('reconnect_result', { id: userId, result: 0 })
+      }
     }
   }
 
