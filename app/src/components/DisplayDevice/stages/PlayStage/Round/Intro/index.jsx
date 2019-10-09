@@ -15,7 +15,7 @@ const stepsArray = [
   { name: 'roundDown', tillNextStep: 200 },
   { name: 'circleIn', tillNextStep: 600 },
   { name: 'itemText', tillNextStep: 200 },
-  { name: 'itemImage', tillNextStep: 1000 },
+  { name: 'itemImage', tillNextStep: 2000 },
   { name: 'circleOut', tillNextStep: 0 },
   { name: 'itemTextOut', tillNextStep: 0 },
   { name: 'itemImageDown', tillNextStep: 1000 },

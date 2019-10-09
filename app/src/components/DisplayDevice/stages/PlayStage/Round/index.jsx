@@ -233,7 +233,7 @@ const Round = props => {
         {gameState === 'in-game' && (
           <Transition
             key="play-stage-in-game"
-            timeout={{ enter: 0, exit: 1000 }}
+            timeout={{ enter: 0, exit: 1300 }}
           >
             <div className={classNames(styles.gameZone)}>
               <img className={styles.frontBkg} src={frontBkg} alt="" />
@@ -326,7 +326,7 @@ const Round = props => {
         {gameState === 'after-game' && (
           <Transition
             key="play-stage-reveal"
-            timeout={{ enter: 100, exit: 1000 }}
+            timeout={{ enter: 100, exit: 0 }}
           >
             {status => (
               <img
