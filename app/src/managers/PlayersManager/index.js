@@ -49,6 +49,7 @@ class PlayersManager extends Observable {
         WebSocketManager.send('reconnect_result', { id: userId, result: 1 })
         const playerIndex = this.players.indexOf(player)
         this.players[playerIndex].setLostStatus(false)
+        this._callObservers('player_connection_change')
       } else {
         WebSocketManager.send('reconnect_result', { id: userId, result: 0 })
       }
@@ -68,6 +69,7 @@ class PlayersManager extends Observable {
     if (matchIndex !== -1) {
       if (this._gameStarted) {
         this.players[matchIndex].setLostStatus(true)
+        this._callObservers('player_connection_change')
       } else {
         this.players[matchIndex].destroy()
         this.players[matchIndex] = { token: getNewToken(matchIndex) }

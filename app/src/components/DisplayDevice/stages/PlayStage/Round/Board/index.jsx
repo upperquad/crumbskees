@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
+import useForceUpdate from 'use-force-update'
 
 import styles from './style.module.scss'
 
@@ -8,6 +9,15 @@ import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
   const { itemImage, scores, time } = props
+  const forceUpdate = useForceUpdate()
+
+  useEffect(() => {
+    PlayersManager.addSubscriber('player_connection_change', forceUpdate)
+
+    return () => {
+      PlayersManager.removeSubscriber('player_connection_change', forceUpdate)
+    }
+  }, [forceUpdate])
 
   const renderPlayerBlock = (player, score) => {
     const items = [...new Array(score)]
