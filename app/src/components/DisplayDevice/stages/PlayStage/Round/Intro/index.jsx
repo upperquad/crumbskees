@@ -24,7 +24,7 @@ const stepsArray = [
   { name: 'setIn', tillNextStep: 800 },
   { name: 'setOut', tillNextStep: 0 },
   { name: 'go', tillNextStep: 200, startGame: true },
-  { name: 'slideAway', tillNextStep: 800 },
+  { name: 'slideAway', tillNextStep: 1800 },
 ]
 
 const stepsDict = {}
