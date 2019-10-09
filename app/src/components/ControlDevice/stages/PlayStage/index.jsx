@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { throttle } from 'throttle-debounce'
 import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
@@ -7,7 +7,7 @@ import MarqueeText from '~components/MarqueeText'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PlayStage = props => {
-  const { activeTutorial, setActiveTutorial, color, image, score, secondaryColor } = props
+  const { activeTutorial, color, image, score, secondaryColor, setActiveTutorial } = props
   const [isTouching, setIsTouching] = useState(false)
   const forceUpdate = useForceUpdate()
 
@@ -54,7 +54,7 @@ const PlayStage = props => {
   }
 
   return (
-    // eslint-disable-next-line
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <section
       className={styles.play}
       onTouchStart={touchStartHandler}

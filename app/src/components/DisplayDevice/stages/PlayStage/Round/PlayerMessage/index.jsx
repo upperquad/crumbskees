@@ -28,6 +28,8 @@ const PlayerMessage = props => {
       })
       prevScore.current = roundScore
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roundScore])
 
   useEffect(() => {
@@ -38,6 +40,8 @@ const PlayerMessage = props => {
       })
       prevScore.current = roundScore
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [power])
 
   useEffect(() => {
@@ -54,6 +58,8 @@ const PlayerMessage = props => {
       }
     }
     return undefined
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tapInstruction])
 
   return (

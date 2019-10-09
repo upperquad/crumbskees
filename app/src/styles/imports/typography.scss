@@ -18,5 +18,5 @@
 }
 
 @function responsive-font($unit) {
-  @return calc(#{$unit} / #{$base-width} * 100vw);
+  @return $unit / $base-width * 100vw;
 }

@@ -12,14 +12,13 @@ const STAGE_TRANSITION_OUT = 0
 const STAGE_TRANSITION_IN = 0
 
 const ControlDevice = () => {
-  // set hasPlayed when game starts
+  // TODO: handle it differently if hasPlayed
   const [hasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
   const [characterIndex, setCharacterIndex] = useState(null)
   const [activeTutorial, setActiveTutorial] = useState(false)
   const [winner, setWinner] = useState(null)
-  // const [score, setScore] = useState(0)
 
   useEffect(() => {
     const messageHandler = detail => {
@@ -104,7 +103,8 @@ const ControlDevice = () => {
           <ResultStage
             winner={winner}
             characterIndex={characterIndex}
-            onFinish={() => setStage('pre_connect')} />
+            onFinish={() => setStage('pre_connect')}
+          />
         </Transition>
       )}
     </TransitionGroup>

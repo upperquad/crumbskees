@@ -8,7 +8,7 @@ import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
-  const { itemImage, scores, time } = props
+  const { itemImage, scores, time, transitionStatus } = props
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -39,7 +39,12 @@ const Board = props => {
   }
 
   return (
-    <div className={styles.board}>
+    <div
+      className={classNames(
+        styles.board,
+        { [styles.boardEntering]: transitionStatus === 'entering' },
+      )}
+    >
       {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0], scores[0])}
       <div className={styles.center}>
         <div className={styles.timer}>{zeroUnit(time)}</div>

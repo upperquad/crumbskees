@@ -1,12 +1,21 @@
 @import "~styles/imports/index";
 
 .board {
+  background: $color-white;
   border-bottom: $border;
   border-top: $border;
+  bottom: 0;
   display: flex;
   height: grid(4);
-  position: relative;
+  left: 0;
+  position: absolute;
+  transition: opacity .3s;
+  width: 100%;
   z-index: 1;
+}
+
+.boardEntering {
+  opacity: 0;
 }
 
 .player {

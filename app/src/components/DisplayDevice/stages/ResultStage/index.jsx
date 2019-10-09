@@ -9,19 +9,17 @@ import resultBg from '~assets/images/round_3/s3-intro.mp4'
 
 import PlayersManager from '~managers/PlayersManager'
 
-const ResultStage = () => {
-  const players = PlayersManager.players
-
+const ResultStage = props => {
+  const { extraClassName } = props
   const scores = PlayersManager.players.map(player => player.score())
   const maxScore = Math.max(...scores)
 
-  const winners = players.filter(player => player.score() === maxScore)
+  const winners = PlayersManager.players.filter(player => player.score() === maxScore)
 
   const tie = winners.length !== 1
 
-  // TODO: align property names when Players are finalized
   return (
-    <div className={styles.result}>
+    <div className={classNames(styles.result, extraClassName)}>
       <AutoplayVideo extraClassName={styles.background} src={resultBg} />
       <div className={styles.card}>
         <div className={styles.titleWrapper}>

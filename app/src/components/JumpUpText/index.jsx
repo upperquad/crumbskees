@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
+import classNames from 'classnames'
 import { useTrail, animated } from 'react-spring'
 import styles from './style.module.scss'
 
 const JumpUpText = props => {
-  const { text } = props
+  const { extraClassName, text } = props
   const [letterArray] = useState(() => text.split(''))
   const [trail, setTrail] = useTrail(letterArray.length, () => ({
     transform: 'translateY(150%)',
@@ -12,7 +13,7 @@ const JumpUpText = props => {
   setTrail({ transform: 'translateY(0%)' })
 
   return (
-    <div className={styles.jumpUpText}>
+    <div className={classNames(styles.jumpUpText, extraClassName)}>
       {trail.map((animationProps, index) => (
         <animated.span
           className={styles.letter}
