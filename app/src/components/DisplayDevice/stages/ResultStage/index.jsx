@@ -13,7 +13,7 @@ const ResultStage = props => {
   const { extraClassName, onFinish } = props
   const [maxScore, setMaxScore] = useState(null)
   const [winners, setWinners] = useState([])
-  const [isTie, setIsTie] = useState([])
+  const [isTie, setIsTie] = useState(null)
 
   useEffect(() => {
     // special handling for the short amount of time after
