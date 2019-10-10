@@ -101,7 +101,14 @@ class WebSocketManager extends Observable {
     this._callObservers('MESSAGE', { type, data: messageAttributes })
   }
 
-  disconnect = () => {}
+  disconnect = () => {
+    if (this._ws) {
+      this._ws.onclose = undefined
+      this._ws.onmessage = undefined
+      this._ws.close(1000, 'disconnect')
+      this._ws = null
+    }
+  }
 
   send = (messageType, attributes = {}) => {
     if (!this._ws) {

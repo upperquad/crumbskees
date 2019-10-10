@@ -27,6 +27,16 @@ class PlayersManager extends Observable {
     },
   })
 
+  reset = () => {
+    this._players.forEach((player, index) => {
+      if (typeof player.destroy === 'function') {
+        player.destroy()
+      }
+      this._players[index] = { token: getNewToken(index) }
+    })
+    this._gameStarted = false
+  }
+
   player = id => this.players.find(player => player.id === id)
 
   playerIndex = id => this.players.findIndex(player => player.id === id)
@@ -70,7 +80,9 @@ class PlayersManager extends Observable {
         this.players[matchIndex].setLostStatus(true)
         this._callObservers('player_connection_change')
       } else {
-        this.players[matchIndex].destroy()
+        if (typeof this.players[matchIndex].destroy === 'function') {
+          this.players[matchIndex].destroy()
+        }
         this.players[matchIndex] = { token: getNewToken(matchIndex) }
       }
     }

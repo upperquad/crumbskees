@@ -35,10 +35,6 @@ export default class Player {
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
     WebSocketManager.send('score', { id: this.id, score: this._score })
-
-    // Todo:
-    // Add class item-found
-    // this.element.classList.add('item-found')
   }
 
   score = () => this._score
