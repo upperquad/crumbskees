@@ -19,11 +19,18 @@ const DisplayDevice = () => {
   const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
+  const [gameCount, setGameCount] = useState(0)
+
+  const resetGame = () => setGameCount(prevCount => prevCount + 1)
 
   useEffect(() => {
+    setStage('setup')
+    PlayersManager.reset()
     WebSocketManager.init('display')
     WebSocketManager.connect()
-  }, [])
+
+    return () => WebSocketManager.disconnect()
+  }, [gameCount])
 
   // subscribe to PlayersManager
   useEffect(() => {
@@ -119,7 +126,7 @@ const DisplayDevice = () => {
         <Transition key="stage-result" timeout={TRANSITION_TIMEOUTS}>
           {status => (
             <StageWrapper status={status}>
-              <ResultStage onFinish={() => setStage('setup')} />
+              <ResultStage onFinish={resetGame} />
             </StageWrapper>
           )}
         </Transition>
