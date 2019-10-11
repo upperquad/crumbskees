@@ -48,8 +48,7 @@ const ResultStage = props => {
         <MarqueeText text={resultBottom} duration="6s" isAlternate isWhite />
       </div>
       <div className={styles.smallText}>
-        {winner === characterIndex && 'Winner!'}
-        {winner === 'tied' && 'Tie!'}
+        {winner === 'tied' ? 'Tie!' : 'Winner!'}
       </div>
       <div className={styles.button} ng-click="phoneCtrl.playAgain()">
         Play again
