@@ -51,26 +51,28 @@ const ResultStage = props => {
   return (
     <div className={classNames(styles.result, extraClassName)}>
       <AutoplayVideo extraClassName={styles.background} src={resultBg} />
-      <div className={styles.card}>
-        <div className={styles.titleWrapper}>
-          <MarqueeText
-            extraClassName={styles.title}
-            text={isTie ? 'Nobody wins!' : 'Winner!'}
-            isAlternate
-            isWhite
-            duration="5s"
-          />
+      {winners.length && (
+        <div className={styles.card}>
+          <div className={styles.titleWrapper}>
+            <MarqueeText
+              extraClassName={styles.title}
+              text={isTie ? 'Nobody wins!' : 'Winner!'}
+              isAlternate
+              isWhite
+              duration="5s"
+            />
+          </div>
+          <div className={styles.player}>{isTie ? 'Tied!' : winners[0].name}</div>
+          <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: isTie })}>
+            {winners.map(winner => (
+              <img src={winner.image} className={styles.playerAvatar} alt="" />
+            ))}
+          </div>
+          <div className={styles.score}>{maxScore}</div>
+          <div className={styles.circle} />
+          <div className={classNames(styles.timebar, styles.resultTimebar)} />
         </div>
-        <div className={styles.player}>{isTie ? 'Tied!' : winners[0].name}</div>
-        <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: isTie })}>
-          {winners.map(winner => (
-            <img src={winner.image} className={styles.playerAvatar} alt="" />
-          ))}
-        </div>
-        <div className={styles.score}>{maxScore}</div>
-        <div className={styles.circle} />
-        <div className={classNames(styles.timebar, styles.resultTimebar)} />
-      </div>
+      )}
     </div>
   )
 }
