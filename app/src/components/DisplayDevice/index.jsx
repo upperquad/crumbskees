@@ -44,8 +44,7 @@ const DisplayDevice = () => {
 
   // listener for error states
   useEffect(() => {
-    const errorListener = detail => {
-      const { reason } = detail
+    const errorListener = reason => {
       setStage('error')
       setErrorReason(reason)
     }
