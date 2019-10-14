@@ -134,7 +134,10 @@ const DisplayDevice = () => {
         <Transition key="stage-error" timeout={TRANSITION_TIMEOUTS}>
           {status => (
             <StageWrapper status={status}>
-              <ErrorStage reason={errorReason} />
+              <ErrorStage
+                reason={errorReason}
+                resetGame={resetGame}
+              />
             </StageWrapper>
           )}
         </Transition>
