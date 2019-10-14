@@ -65,7 +65,7 @@ const ResultStage = props => {
           <div className={styles.player}>{isTie ? 'Tied!' : winners[0].name}</div>
           <div className={classNames(styles.playersImages, { [styles.playersImagesTied]: isTie })}>
             {winners.map(winner => (
-              <img src={winner.image} className={styles.playerAvatar} alt="" />
+              <AutoplayVideo src={winner.videoWhite} extraClassName={styles.playerAvatar} poster={winner.image} />
             ))}
           </div>
           <div className={styles.score}>{maxScore}</div>
