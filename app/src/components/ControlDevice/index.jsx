@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { CHARACTERS } from '~constants'
 import WebSocketManager from '~managers/WebSocketManager'
-import PlayersManager from '~managers/PlayersManager'
 
 import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
