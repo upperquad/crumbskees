@@ -21,7 +21,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
           onReconnectResult(data)
           break
         case 'score':
-          onScore(data)
+          onScoreUpdate(data)
           break
         case 'tutorial_start':
           onTutorialStart()
@@ -75,7 +75,7 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
     }
   }
 
-  function onScore(data) {
+  function onScoreUpdate(data) {
     const { id, score } = data
     const wsPhone = wssControl.clients.find(elem => elem.id === id)
     if (!wsPhone || id === undefined || score === undefined ) {

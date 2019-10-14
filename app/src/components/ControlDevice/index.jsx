@@ -18,6 +18,7 @@ const ControlDevice = () => {
   const [character, setCharacter] = useState(CHARACTERS[0])
   const [characterIndex, setCharacterIndex] = useState(null)
   const [activeTutorial, setActiveTutorial] = useState(false)
+  const [score, setScore] = useState(0)
   const [winner, setWinner] = useState(null)
 
   useEffect(() => {
@@ -39,6 +40,10 @@ const ControlDevice = () => {
         }
         case 'game_start': {
           setActiveTutorial(false)
+          break
+        }
+        case 'score': {
+          setScore(data.score)
           break
         }
         case 'result': {
@@ -91,6 +96,7 @@ const ControlDevice = () => {
             characterIndex={characterIndex}
             color={character.color}
             secondaryColor={character.secondaryColor}
+            score={score}
             image={character.image}
           />
         </Transition>
