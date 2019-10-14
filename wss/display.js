@@ -77,12 +77,11 @@ const initDisplay = (wssDisplay, wssControl, wssAdmin) => {
 
   function onScoreUpdate(data) {
     const { id, score } = data
-    const message = encodeMessage('score', { score })
-    wssControl.clients.forEach(client => {
-      if (client.id === id) {
-        client.send(message)
-      }
-    })
+    const wsPhone = wssControl.clients.find(elem => elem.id === id)
+    if (!wsPhone || id === undefined || score === undefined ) {
+      return
+    }
+    wsPhone.send(encodeMessage('score', { score }))
   }
 
   function onTutorialStart() {
