@@ -315,7 +315,7 @@ const Round = props => {
                 color={message.color}
                 x={message.x}
                 y={message.y}
-                persitent={message.persitent}
+                persistent={message.persistent}
                 text={message.text}
                 messageCount={message.messageCount}
                 onEnd={message.onEnd}
