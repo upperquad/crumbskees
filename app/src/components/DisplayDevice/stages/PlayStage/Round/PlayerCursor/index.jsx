@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
-import { COLORS } from '~constants'
 
 import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
-import { GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
+import { COLORS, GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
 import { clamp, random } from '~utils/math'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 

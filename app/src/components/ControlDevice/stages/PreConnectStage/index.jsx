@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-// import classNames from 'classnames'
 import styles from './style.module.scss'
 
 import Circle from '~components/ControlDevice/Circle'
@@ -7,19 +6,41 @@ import Circle from '~components/ControlDevice/Circle'
 import WebSocketManager from '~managers/WebSocketManager'
 
 const PreConnectStage = props => {
-  const { onFinish } = props
+  const { hasPlayed, onFinish } = props
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
 
-  useEffect(() => effectWebsocket(), [])
-  useEffect(() => effectWebsocketClose(setToken, setErrorReason, setIsConnecting), [
-    setToken,
-    setErrorReason,
-    setIsConnecting,
-  ])
+  useEffect(() => {
+    if (!hasPlayed) {
+      WebSocketManager.init('control')
 
-  const { hasPlayed } = props
+      const path = window.location.pathname
+      if (/^\/\d{3}$/.test(path)) {
+        const urlToken = path.slice(1)
+        WebSocketManager.connect({ token: urlToken })
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const onWebSocketClose = detail => {
+      const { reason } = detail
+      if (reason === 'invalid_token') {
+        setErrorReason('Invalid token')
+      } else if (reason === 'no_active_game') {
+        setErrorReason("There's no active game")
+      }
+      setIsConnecting(false)
+      setToken('')
+    }
+
+    WebSocketManager.addSubscriber('WS_CLOSE', onWebSocketClose)
+
+    return () => {
+      WebSocketManager.removeSubscriber('WS_CLOSE', onWebSocketClose)
+    }
+  }, [])
 
   useEffect(() => {
     const messageHandler = detail => {
@@ -40,6 +61,25 @@ const PreConnectStage = props => {
     }
   }, [onFinish])
 
+  const updateToken = key => {
+    setErrorReason(null)
+
+    if (key === -1) {
+      setToken(prevToken => prevToken.slice(0, -1))
+    } else {
+      setToken(prevToken => {
+        const newToken = prevToken + key
+
+        if (newToken.length >= 3) {
+          setIsConnecting(true)
+          WebSocketManager.connect({ token: newToken })
+        }
+
+        return newToken
+      })
+    }
+  }
+
   return (
     <div className={styles.preConnect}>
       <Circle color="yellow" />
@@ -58,12 +98,12 @@ const PreConnectStage = props => {
           <div
             className={styles.tokenInputKey}
             key={key}
-            onClick={() => updateToken(key, token, setToken, setErrorReason, setIsConnecting)}
+            onClick={() => updateToken(key)}
           >
             {key}
           </div>
         ))}
-        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1, token, setToken, setErrorReason)}>
+        <div className={styles.tokenInputKey} key={-1} onClick={() => updateToken(-1)}>
           ←
         </div>
       </div>
@@ -71,55 +111,6 @@ const PreConnectStage = props => {
       <div className={styles.bottomPattern} />
     </div>
   )
-}
-
-function effectWebsocket() {
-  WebSocketManager.init('control')
-
-  const path = window.location.pathname
-  if (/^\/\d{3}$/.test(path)) {
-    const token = path.slice(1)
-    WebSocketManager.connect({ token })
-  }
-
-  return () => {
-    // WebSocketManager.disconnect()
-  }
-}
-
-function effectWebsocketClose(setToken, setErrorReason, setIsConnecting) {
-  const onWebSocketClose = detail => {
-    const { reason } = detail
-    if (reason === 'invalid_token') {
-      setErrorReason('Invalid token')
-    } else if (reason === 'no_active_game') {
-      setErrorReason("There's no active game")
-    }
-    setIsConnecting(false)
-    setToken('')
-  }
-
-  WebSocketManager.addSubscriber('WS_CLOSE', onWebSocketClose)
-
-  return () => {
-    WebSocketManager.removeSubscriber('WS_CLOSE', onWebSocketClose)
-  }
-}
-
-function updateToken(key, token, setToken, setErrorReason, setIsConnecting) {
-  setErrorReason(null)
-
-  if (key === -1) {
-    setToken(token.slice(0, -1))
-  } else {
-    const newToken = token + key
-    if (newToken.length >= 3) {
-      setIsConnecting(true)
-      WebSocketManager.connect({ token: newToken })
-    }
-
-    setToken(newToken)
-  }
 }
 
 export default PreConnectStage

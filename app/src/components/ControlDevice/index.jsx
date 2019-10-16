@@ -12,8 +12,7 @@ const STAGE_TRANSITION_OUT = 0
 const STAGE_TRANSITION_IN = 0
 
 const ControlDevice = () => {
-  // TODO: handle it differently if hasPlayed
-  const [hasPlayed] = useState(false)
+  const [hasPlayed, setHasPlayed] = useState(false)
   const [stage, setStage] = useState('pre_connect')
   const [character, setCharacter] = useState(CHARACTERS[0])
   const [characterIndex, setCharacterIndex] = useState(null)
@@ -69,7 +68,13 @@ const ControlDevice = () => {
           key="stage-pre-connect"
           timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
         >
-          <PreConnectStage hasPlayed={hasPlayed} onFinish={() => setStage('meet_character')} />
+          <PreConnectStage
+            hasPlayed={hasPlayed}
+            onFinish={() => {
+              setHasPlayed(true)
+              setStage('meet_character')
+            }}
+          />
         </Transition>
       )}
       {stage === 'meet_character' && (
@@ -109,7 +114,15 @@ const ControlDevice = () => {
           <ResultStage
             winner={winner}
             characterIndex={characterIndex}
-            onFinish={() => setStage('pre_connect')}
+            resetGame={() => {
+              setScore(0)
+              setWinner(null)
+              setStage('pre_connect')
+              setCharacter(CHARACTERS[0])
+              setCharacterIndex(null)
+              setActiveTutorial(false)
+              WebSocketManager.disconnect()
+            }}
           />
         </Transition>
       )}

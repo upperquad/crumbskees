@@ -186,7 +186,7 @@ const Round = props => {
   }, [gameState])
 
   // tap instruction
-  const zeroScorePlayers = PlayersManager.players.filter(player => player.score() === 0)
+  const zeroScorePlayers = PlayersManager.players.filter(player => player.score && player.score() === 0)
   useEffect(() => {
     if (zeroScorePlayers.length) {
       const tapInstructionInterval = setInterval(() => {

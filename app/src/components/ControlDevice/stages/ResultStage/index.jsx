@@ -7,7 +7,7 @@ import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const ResultStage = props => {
-  const { characterIndex, winner } = props
+  const { characterIndex, resetGame, winner } = props
   let resultTop
   let resultBottom
   let circleColor
@@ -50,7 +50,7 @@ const ResultStage = props => {
       <div className={styles.smallText}>
         {winner === 'tied' ? 'Tie!' : 'Winner!'}
       </div>
-      <div className={styles.button} ng-click="phoneCtrl.playAgain()">
+      <div className={styles.button} onClick={resetGame}>
         Play again
       </div>
     </section>
