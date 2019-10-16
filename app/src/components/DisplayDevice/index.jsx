@@ -44,8 +44,7 @@ const DisplayDevice = () => {
 
   // listener for error states
   useEffect(() => {
-    const errorListener = detail => {
-      const { reason } = detail
+    const errorListener = reason => {
       setStage('error')
       setErrorReason(reason)
     }
@@ -135,7 +134,10 @@ const DisplayDevice = () => {
         <Transition key="stage-error" timeout={TRANSITION_TIMEOUTS}>
           {status => (
             <StageWrapper status={status}>
-              <ErrorStage reason={errorReason} />
+              <ErrorStage
+                reason={errorReason}
+                resetGame={resetGame}
+              />
             </StageWrapper>
           )}
         </Transition>

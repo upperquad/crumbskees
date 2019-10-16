@@ -7,31 +7,32 @@ import AutoplayVideo from '~components/AutoplayVideo'
 
 import resultBg from '~assets/images/round_3/s3-intro.mp4'
 
-const ERROR_DISPLAYS = {
-  active_game_exist: {
-    message: 'Another game is in progress',
-    buttonText: 'Kick\'em off',
-    buttonFunc: () => {
-      // move this to the WebsocketManager? Or maybe just keep this until we kill it?
-      const websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/admin?command=disconnect_all`)
-      websocket.onopen = () => {
-        websocket.close()
-        window.location.reload()
-      }
-    },
-  },
-  default: {
-    message: 'We\'ve lost connection!',
-    buttonText: 'Restart',
-    buttonFunc: () => {
-      window.location.reload()
-    },
-    hasTimebar: true,
-  },
-}
-
 const ErrorStage = props => {
-  const { extraClassName, reason } = props
+  const { extraClassName, reason, resetGame } = props
+
+  const ERROR_DISPLAYS = {
+    active_game_exist: {
+      message: 'Another game is in progress',
+      buttonText: 'Kick\'em off',
+      buttonFunc: () => {
+        // move this to the WebsocketManager? Or maybe just keep this until we kill it?
+        const websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/admin?command=disconnect_all`)
+        websocket.onopen = () => {
+          websocket.close()
+          resetGame()
+        }
+      },
+    },
+    default: {
+      message: 'We\'ve lost connection!',
+      buttonText: 'Restart',
+      buttonFunc: () => {
+        resetGame()
+      },
+      hasTimebar: true,
+    },
+  }
+
   const reasonObj = ERROR_DISPLAYS[reason] ? ERROR_DISPLAYS[reason] : ERROR_DISPLAYS.default
 
   useEffect(() => {
