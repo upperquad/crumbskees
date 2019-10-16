@@ -48,7 +48,8 @@ const PlayStage = props => {
     WebSocketManager.send('click')
   }
 
-  const skipTutorial = () => {
+  const skipTutorial = event => {
+    event.stopPropagation()
     WebSocketManager.send('skip_tutorial')
     setActiveTutorial(false)
   }
