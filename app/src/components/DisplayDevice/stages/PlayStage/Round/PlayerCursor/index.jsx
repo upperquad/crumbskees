@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
+import { COLORS } from '~constants'
 
 import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
@@ -70,7 +71,7 @@ const PlayerCursor = props => {
       id={`player${index}`}
       className={classNames(styles.playerCursor, { [styles.playerCursorFrozen]: power === 'freeze' })}
       strokeWidth="6"
-      stroke={color}
+      stroke={COLORS[color]}
       style={{ transition: 'stroke 1s ease' }}
       ref={pathRef}
     />
