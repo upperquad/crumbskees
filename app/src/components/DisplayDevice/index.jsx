@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import useForceUpdate from 'use-force-update'
+import styles from './style.module.scss'
 
 import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
@@ -20,8 +21,26 @@ const DisplayDevice = () => {
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
   const [gameCount, setGameCount] = useState(0)
+  const [zoom, setZoom] = useState(1)
 
   const resetGame = () => setGameCount(prevCount => prevCount + 1)
+
+  useEffect(() => {
+    const resizeHandler = () => {
+      const displayRatio = window.innerHeight / window.innerWidth
+      const threshold = 9 / 16
+      if (displayRatio < threshold) {
+        setZoom(displayRatio / threshold)
+      } else {
+        setZoom(1)
+      }
+    }
+
+    resizeHandler()
+    window.addEventListener('resize', resizeHandler)
+
+    return () => window.removeEventListener('resize', resizeHandler)
+  }, [])
 
   useEffect(() => {
     setStage('setup')
@@ -89,60 +108,62 @@ const DisplayDevice = () => {
   }, [])
 
   return (
-    <TransitionGroup>
-      {stage === 'setup' && (
-        <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
-          {status => (
-            <StageWrapper status={status}>
-              <SetupStage onFinish={() => setStage('tutorial')} bothConnected={bothConnected} />
-            </StageWrapper>
-          )}
-        </Transition>
-      )}
-      {stage === 'tutorial' && (
-        <Transition key="stage-tutorial" timeout={TRANSITION_TIMEOUTS}>
-          {status => (
-            <StageWrapper status={status}>
-              <TutorialStage
-                bothConnected={bothConnected}
-                rollback={() => setStage('setup')}
-                onFinish={() => setStage('play')}
-              />
-            </StageWrapper>
-          )}
-        </Transition>
-      )}
-      {stage === 'play' && (
-        <Transition key="stage-play" timeout={TRANSITION_TIMEOUTS}>
-          {status => (
-            <StageWrapper status={status}>
-              <PlayStage onFinish={() => setStage('result')} />
-            </StageWrapper>
-          )}
-        </Transition>
-      )}
-      {stage === 'result' && (
-        <Transition key="stage-result" timeout={TRANSITION_TIMEOUTS}>
-          {status => (
-            <StageWrapper status={status}>
-              <ResultStage onFinish={resetGame} />
-            </StageWrapper>
-          )}
-        </Transition>
-      )}
-      {stage === 'error' && (
-        <Transition key={`stage-error-${errorReason}`} timeout={TRANSITION_TIMEOUTS}>
-          {status => (
-            <StageWrapper status={status}>
-              <ErrorStage
-                reason={errorReason}
-                resetGame={resetGame}
-              />
-            </StageWrapper>
-          )}
-        </Transition>
-      )}
-    </TransitionGroup>
+    <div className={styles.displayDevice} style={{ transform: `translate(-50%, -50%) scale(${zoom})` }}>
+      <TransitionGroup>
+        {stage === 'setup' && (
+          <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <SetupStage onFinish={() => setStage('tutorial')} bothConnected={bothConnected} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+        {stage === 'tutorial' && (
+          <Transition key="stage-tutorial" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <TutorialStage
+                  bothConnected={bothConnected}
+                  rollback={() => setStage('setup')}
+                  onFinish={() => setStage('play')}
+                />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+        {stage === 'play' && (
+          <Transition key="stage-play" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <PlayStage onFinish={() => setStage('result')} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+        {stage === 'result' && (
+          <Transition key="stage-result" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <ResultStage onFinish={resetGame} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+        {stage === 'error' && (
+          <Transition key={`stage-error-${errorReason}`} timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <ErrorStage
+                  reason={errorReason}
+                  resetGame={resetGame}
+                />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+      </TransitionGroup>
+    </div>
   )
 }
 

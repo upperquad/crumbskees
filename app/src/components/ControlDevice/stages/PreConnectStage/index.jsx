@@ -21,6 +21,7 @@ const PreConnectStage = props => {
         WebSocketManager.connect({ token: urlToken })
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

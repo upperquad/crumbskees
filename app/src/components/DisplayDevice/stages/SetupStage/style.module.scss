@@ -9,7 +9,6 @@
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: -1;
 }
 
 .pullOutPhone {
@@ -21,6 +20,7 @@
   display: flex;
   justify-content: center;
   padding-top: grid(3.5 / 3);
+  position: relative;
 }
 
 .player {

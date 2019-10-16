@@ -2,11 +2,13 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
 
-  &.is-desktop {
-
+  &:global(.is-desktop) {
+    body {
+      background: $color-beige;
+    }
   }
 
-  &:not(.is-desktop) {
+  &:not(:global(.is-desktop)) {
     overscroll-behavior-x: none;
 
     body {
