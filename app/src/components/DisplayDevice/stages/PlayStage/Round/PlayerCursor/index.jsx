@@ -5,7 +5,7 @@ import styles from './style.module.scss'
 import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { COLORS, GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
-import { clamp, random } from '~utils/math'
+import { random } from '~utils/math'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 
 const centerX = VB_WIDTH / 2
@@ -113,14 +113,11 @@ function setPoints() {
 }
 
 function getNewPosition(position, targetPosition) {
-  let { x: targetX, y: targetY } = targetPosition
+  const { x: targetX, y: targetY } = targetPosition
   let { x, y } = position
 
-  targetX = clamp(targetX, -0.5, 0.5) * VB_WIDTH
-  targetY = clamp(targetY, -0.5, 0.5) * VB_HEIGHT
-
-  x += (targetX - x) * 0.1
-  y += (targetY - y) * 0.1
+  x += (targetX * VB_WIDTH - x) * 0.1
+  y += (targetY * VB_HEIGHT - y) * 0.1
 
   return { x, y }
 }

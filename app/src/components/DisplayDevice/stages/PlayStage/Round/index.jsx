@@ -113,8 +113,11 @@ const Round = props => {
           const playerIndex = PlayersManager.playerIndex(id)
           if (playerIndex !== -1) {
             setPositionArray(prevPositionArray => {
-              prevPositionArray[playerIndex].x += parseFloat(x, 10)
-              prevPositionArray[playerIndex].y += parseFloat(y, 10)
+              const positionObj = prevPositionArray[playerIndex]
+
+              positionObj.x = clamp(positionObj.x + parseFloat(x, 10), -0.5, 0.5)
+              positionObj.y = clamp(positionObj.y + parseFloat(y, 10), -0.5, 0.5)
+
               return prevPositionArray
             })
           }
@@ -402,8 +405,8 @@ function createItem(roundIndex, grid, powerItem) {
 }
 
 function getItemsInCursor(items, position, isGrown) {
-  const xPx = clamp(position.x, -0.5, 0.5) + 0.5
-  const yPx = clamp(position.y, -0.5, 0.5) + 0.5
+  const xPx = position.x + 0.5
+  const yPx = position.y + 0.5
 
   const minDistanceSquare = isGrown ? 185 ** 2 : 95 ** 2
 
