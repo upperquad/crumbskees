@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { TransitionGroup, Transition } from 'react-transition-group'
+import React, { Fragment, useState, useEffect } from 'react'
 import { CHARACTERS } from '~constants'
 import WebSocketManager from '~managers/WebSocketManager'
 
@@ -7,9 +6,6 @@ import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
-
-const STAGE_TRANSITION_OUT = 0
-const STAGE_TRANSITION_IN = 0
 
 const ControlDevice = () => {
   const [hasPlayed, setHasPlayed] = useState(false)
@@ -62,71 +58,51 @@ const ControlDevice = () => {
   }, [])
 
   return (
-    <TransitionGroup>
+    <Fragment>
       {stage === 'pre_connect' && (
-        <Transition
-          key="stage-pre-connect"
-          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
-        >
-          <PreConnectStage
-            hasPlayed={hasPlayed}
-            onFinish={() => {
-              setHasPlayed(true)
-              setStage('meet_character')
-            }}
-          />
-        </Transition>
+        <PreConnectStage
+          hasPlayed={hasPlayed}
+          onFinish={() => {
+            setHasPlayed(true)
+            setStage('meet_character')
+          }}
+        />
       )}
       {stage === 'meet_character' && (
-        <Transition
-          key="stage-meet-character"
-          timeout={{ enter: STAGE_TRANSITION_IN, exit: STAGE_TRANSITION_OUT }}
-        >
-          <MeetCharacterStage
-            color={character.color}
-            video={character.videoWhite}
-            image={character.image}
-            onFinish={() => setStage('play')}
-          />
-        </Transition>
+        <MeetCharacterStage
+          color={character.color}
+          video={character.videoWhite}
+          image={character.image}
+          onFinish={() => setStage('play')}
+        />
       )}
       {stage === 'play' && (
-        <Transition
-          key="stage-play"
-          timeout={500}
-        >
-          <PlayStage
-            activeTutorial={activeTutorial}
-            setActiveTutorial={setActiveTutorial}
-            characterIndex={characterIndex}
-            color={character.color}
-            secondaryColor={character.secondaryColor}
-            score={score}
-            image={character.image}
-          />
-        </Transition>
+        <PlayStage
+          activeTutorial={activeTutorial}
+          setActiveTutorial={setActiveTutorial}
+          characterIndex={characterIndex}
+          color={character.color}
+          secondaryColor={character.secondaryColor}
+          score={score}
+          image={character.image}
+        />
       )}
       {stage === 'result' && (
-        <Transition
-          key="stage-result"
-          timeout={500}
-        >
-          <ResultStage
-            winner={winner}
-            characterIndex={characterIndex}
-            resetGame={() => {
-              setScore(0)
-              setWinner(null)
-              setStage('pre_connect')
-              setCharacter(CHARACTERS[0])
-              setCharacterIndex(null)
-              setActiveTutorial(false)
-              WebSocketManager.disconnect()
-            }}
-          />
-        </Transition>
+        <ResultStage
+          winner={winner}
+          characterIndex={characterIndex}
+          resetGame={() => {
+            setScore(0)
+            setWinner(null)
+            setStage('pre_connect')
+            setCharacter(CHARACTERS[0])
+            setCharacterIndex(null)
+            setActiveTutorial(false)
+            WebSocketManager.disconnect()
+          }}
+        />
       )}
-    </TransitionGroup>
+    </Fragment>
   )
 }
 
