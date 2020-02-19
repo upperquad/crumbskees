@@ -17,6 +17,7 @@ const SoundManager = {
   countdown: new Howl({
     src: [countdown],
   }),
+  // missing winner and woosh sounds
 }
 
 export default SoundManager

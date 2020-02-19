@@ -69,6 +69,22 @@ export default class GameManager {
       volume: 1,
     })
 
+    // Sounds
+    this.countdownSound = new Howl({
+      src: [countdownSound],
+      volume: 0.5,
+    })
+
+    this.winnerSound = new Howl({
+      src: [winnerSound],
+      volume: 1,
+    })
+
+    this.wooshSound = new Howl({
+      src: [wooshSound],
+      volume: 1,
+    })
+
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
       Server.websocket.onclose = this.onWsClose
@@ -457,6 +473,11 @@ export default class GameManager {
       if (timer === 0) {
         this.endScene('TIME\'S UP!')
         // this.destroyTargetScene(this.currentScene)
+      }
+
+      if (timer === 10) {
+        // play sound countdown
+        this.countdownSound.play()
       }
 
       if (timer === 10) {
