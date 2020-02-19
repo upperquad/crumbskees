@@ -1,5 +1,6 @@
 import QRCode from 'qrcode'
 import { TimelineMax } from 'gsap/TweenMax'
+import { Howl } from 'howler'
 import { splitText } from '../utils/dom'
 
 // components
@@ -29,8 +30,12 @@ import scene3IntroVideo from '../../../assets/game/images/round_3/r3-intro.mp4'
 import freezeItem from '../../../assets/game/images/freeze.png'
 import growItem from '../../../assets/game/images/grow.png'
 
-import character1 from '../../../assets/game/images/character1.png'
-import character2 from '../../../assets/game/images/character2.png'
+import characterVideoWhite1 from '../../../assets/game/images/character-white-1.mp4'
+import characterVideoWhite2 from '../../../assets/game/images/character-white-2.mp4'
+
+import countdownSound from '../../../assets/game/sounds/countdown.mp3'
+import winnerSound from '../../../assets/game/sounds/winner.mp3'
+import wooshSound from '../../../assets/game/sounds/woosh.mp3'
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
@@ -45,6 +50,22 @@ export default class GameManager {
     this.tokens = [this.getNewToken(), this.getNewToken()]
     this.gameStarted = false
     this.tutorialStarted = false
+
+    // Sounds
+    this.countdownSound = new Howl({
+      src: [countdownSound],
+      volume: 0.5,
+    })
+
+    this.winnerSound = new Howl({
+      src: [winnerSound],
+      volume: 1,
+    })
+
+    this.wooshSound = new Howl({
+      src: [wooshSound],
+      volume: 1,
+    })
 
     if (!DEBUG) {
       Server.websocket.onopen = this.onWsOpen
@@ -405,6 +426,11 @@ export default class GameManager {
         this.endScene('TIME\'S UP!')
       }
 
+      if (timer === 10) {
+        // play sound countdown
+        this.countdownSound.play()
+      }
+
       timer -= 1
     }, 1000)
 
@@ -462,11 +488,13 @@ export default class GameManager {
 
     setTimeout(() => {
       this.element.classList.add('isOutro')
+      this.wooshSound.play()
     }, 1000)
 
     setTimeout(() => {
       this.element.classList.remove('isOutro')
       this.element.classList.add('isIntro')
+      this.wooshSound.play()
     }, 5000)
 
     setTimeout(() => {
@@ -507,7 +535,7 @@ export default class GameManager {
   }
 
   initFinal = () => {
-    this.charactersImg = [character1, character2]
+    const charactersVideos = [characterVideoWhite1, characterVideoWhite2]
     let playerIndex
     let tie = false
     if (this.scores[0] > this.scores[1]) {
@@ -522,24 +550,31 @@ export default class GameManager {
 
     const scoreEl = document.querySelector('.final__score')
     const playerEl = document.querySelector('.final__player')
-    const playerImgEl = document.querySelector('.final__player-img')
-    const playersImgEl = document.querySelector('.final__players-img')
+    const playerVideoEl = document.querySelector('.final__player-video')
+    const playersVideoEl = document.querySelector('.final__players-video')
+    const spans = document.querySelectorAll('.final__title-wrapper > span')
 
     if (!tie) {
       playerEl.innerHTML = `player ${playerIndex + 1}`
       scoreEl.innerHTML = this.scores[playerIndex]
-      playerImgEl.src = this.charactersImg[playerIndex]
+      playerVideoEl.src = charactersVideos[playerIndex]
       playerEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
       scoreEl.classList.add(`color--${this.players[this.playerIds[playerIndex]].color}`)
     } else {
       playerEl.innerHTML = 'TIE!'
       scoreEl.innerHTML = this.scores[0]
-      const playerImgEl2 = playerImgEl.cloneNode(true)
-      playerImgEl2.src = this.charactersImg[1]
-      playerImgEl.src = this.charactersImg[0]
-      playersImgEl.appendChild(playerImgEl2)
-      playersImgEl.classList.add('tie')
+      const playerVideoEl2 = playerVideoEl.cloneNode(true)
+      playerVideoEl2.src = charactersVideos[1]
+      playerVideoEl.src = charactersVideos[0]
+      playersVideoEl.appendChild(playerVideoEl2)
+      playersVideoEl.classList.add('tie')
+
+      for (let i = 0; i < spans.length; i++) {
+        spans[i].innerHTML = 'Nobody wins!'
+      }
     }
+
+    this.winnerSound.play()
 
     setTimeout(() => {
       Server.websocket.send('disconnect_users')

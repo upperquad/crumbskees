@@ -62,7 +62,7 @@ module.exports = {
       use: {
         loader: 'html-loader',
         options: {
-          attrs: [':src', ':xlink:href']
+          attrs: [':src', ':xlink:href', ':poster']
         }
       }
     }]
