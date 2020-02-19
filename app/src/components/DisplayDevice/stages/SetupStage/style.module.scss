@@ -1,0 +1,127 @@
+@import "~styles/imports/index";
+
+.setup {
+  color: $color-black;
+}
+
+.video {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.pullOutPhone {
+  font-size: responsive-font(56);
+  padding-top: grid(.8);
+}
+
+.players {
+  display: flex;
+  justify-content: center;
+  padding-top: grid(3.5 / 3);
+  position: relative;
+}
+
+.player {
+  background: $color-white;
+  border: 2px solid $color-black;
+  text-align: center;
+  width: grid(12);
+
+  &:first-of-type {
+    margin-right: grid(2);
+  }
+}
+
+.qrWrapper {
+  height: grid(14.65 / 3);
+  position: relative;
+}
+
+.playerConnected {
+  @extend %Bold;
+
+  color: $color-green;
+  font-size: responsive-font(48);
+  pointer-events: none;
+  position: relative;
+  text-transform: uppercase;
+
+  &::before {
+    background: $color-red;
+    border: 2px solid $color-black;
+    border-radius: 50%;
+    content: '';
+    height: grid(8.3 / 3);
+    position: absolute;
+    width: grid(8.3 / 3);
+  }
+}
+
+.playerConnectedText {
+  position: relative;
+}
+
+.playerConnected,
+.qr {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity .3s;
+  width: 100%;
+}
+
+.playerConnectedTransitioning,
+.qrTransitioning {
+  opacity: 0;
+}
+
+.playerName {
+  @extend %Bold;
+
+  align-items: center;
+  border-top: 2px solid $color-black;
+  display: flex;
+  font-size: responsive-font(48);
+  height: grid(6.5 / 3);
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.qrQr {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-bottom: grid(.2);
+  position: relative;
+  width: grid(3);
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+}
+
+.qrUrl {
+  font-size: responsive-font(18);
+  line-height: 1.4;
+}
+
+.qrUrlToken {
+  color: $color-red;
+  font-weight: bold;
+  text-transform: none;
+}
+
+.instruction {
+  overflow: hidden;
+  padding-top: grid(10 / 3);
+  position: relative;
+}

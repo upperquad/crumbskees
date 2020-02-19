@@ -1,0 +1,122 @@
+@import "~styles/imports/index";
+
+@keyframes playstage-bar-change-color {
+  0% {
+    background-color: $color-green;
+    width: 100%;
+  }
+
+  70% {
+    background-color: $color-green;
+    width: 30%;
+  }
+
+  73% {
+    background-color: $color-orange;
+    width: 27%;
+  }
+
+  75% {
+    background-color: $color-red;
+    width: 25%;
+  }
+
+  100% {
+    background-color: $color-red;
+    width: 0%;
+  }
+}
+
+@keyframes playstage-blink-bar-color {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.round {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.roundExiting {
+  z-index: 0;
+}
+
+.gameZone {
+  background-position: center center;
+  background-size: cover;
+  cursor: none;
+  height: grid(14);
+  position: relative;
+  text-align: center;
+  z-index: 10;
+
+  &::after {
+    animation: playstage-bar-change-color 40s linear 1 forwards, playstage-blink-bar-color .5s linear infinite forwards 30s;
+    background-color: $color-green;
+    bottom: 0;
+    content: '';
+    height: grid(.3);
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10;
+  }
+}
+
+
+.frontBkg {
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.reveal {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  height: grid(14);
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  transition: clip-path 1.3s $easing-circle-in-out;
+  width: 100%;
+  z-index: 100;
+}
+
+.revealVisible {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+}
+
+.wrapper {
+  height: 100%;
+  position: relative;
+}
+
+.svg {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.debugItems {
+  opacity: .3;
+}

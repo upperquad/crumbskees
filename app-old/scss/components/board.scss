@@ -1,0 +1,112 @@
+.board {
+  border-bottom: $border;
+  border-top: $border;
+  display: flex;
+  height: grid(4);
+  position: relative;
+  z-index: 1;
+
+  // players
+  &__player {
+    align-items: flex-end;
+    display: flex;
+    position: relative;
+    width: grid(14);
+
+    &__character {
+      background-color: $color-purple;
+      border-right: $border;
+      height: 100%;
+      width: grid(4);
+
+      img {
+        width: 100%;
+      }
+
+      &.is-dead {
+        filter: grayscale(100%);
+      }
+    }
+
+    &__score {
+      border-right: $border;
+      border-top: $border;
+      color: transparent !important;
+      display: inline-block;
+      height: grid(3);
+      line-height: grid(3);
+      text-align: center;
+      vertical-align: middle;
+      width: grid(3);
+      -webkit-text-stroke-color: $color-black;
+      -webkit-text-stroke-width: 2px;
+    }
+
+    &__name {
+      align-items: center;
+      border-top: $border;
+      display: flex;
+      height: grid(3);
+      padding: grid(1);
+      vertical-align: top;
+      width: grid(7);
+    }
+
+    &__items {
+      align-items: center;
+      display: flex;
+      height: grid(1);
+      justify-content: flex-end;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: grid(10);
+    }
+
+    &__item {
+      height: grid(0.5);
+      margin-right: grid(0.3);
+      width: grid(0.5);
+    }
+
+    &:last-child {
+      flex-direction: row-reverse;
+
+      .board__player__character {
+        background-color: $color-red;
+        border-left: $border;
+        border-right: none;
+        border-width: $border-width;
+        display: flex;
+      }
+
+      .board__player__score {
+        border-left: $border;
+        border-right: none;
+      }
+
+      .board__player__name {
+        text-align: right;
+      }
+
+      .board__player__items {
+        justify-content: flex-start;
+        left: 0;
+        right: auto;
+      }
+
+      .board__player__item {
+        margin-left: grid(0.3);
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__center {
+    align-items: flex-end;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2vw;
+    width: grid(4);
+  }
+}

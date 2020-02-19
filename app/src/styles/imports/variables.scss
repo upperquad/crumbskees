@@ -1,0 +1,35 @@
+/* Colors */
+$color-black: #000;
+$color-white: #fff;
+$color-offwhite: #e7e7e7;
+$color-gray: #c6c6c6;
+$color-blue: #00c1ff;
+$color-green: #00f384;
+$color-pink: #feb8ee;
+$color-orange: #ff9d21;
+$color-red: #ff4047;
+$color-red-fade: rgba($color-red, .8);
+$color-purple: #6d12e3;
+$color-beige: #fffaf2;
+$color-yellow: #ffe947;
+$color-mint: #6ce9a7;
+
+/* Breakpoints */
+$breakpoint-tablet: 1168px;
+$breakpoint-smartphone: 920px;
+$large-desktop-width: 1600px;
+$short-smartphone-height: 800px;
+
+$base-width: 1920;
+
+/* Easings*/
+$easing-expo-out: cubic-bezier(.19, 1, .22, 1);
+$easing-circle-out: cubic-bezier(.075, .82, .165, 1);
+$easing-circle-in-out: cubic-bezier(.785, .135, .15, .86);
+
+/* Timings */
+
+$grid-unit: 3.125vw;
+
+$border-width: 2px;
+$border: $border-width solid $color-black;

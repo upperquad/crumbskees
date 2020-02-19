@@ -1,0 +1,117 @@
+@import "~styles/imports/index";
+
+.play {
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  left: 0;
+  padding: 20px 0 24px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+
+.title {
+  @extend %Bold;
+
+  color: $color-red;
+  font-size: 5.98vw;
+  letter-spacing: .007em;
+
+  &.titlePurple {
+    color: $color-purple;
+  }
+
+  &.titleRed {
+    color: $color-red;
+  }
+}
+
+.marquee {
+  @extend %Regular;
+
+  font-size: 13px;
+  letter-spacing: .008em;
+  text-transform: uppercase;
+}
+
+.touchBubble {
+  border: 2px $color-white solid;
+  border-radius: 50%;
+  height: 74px;
+  opacity: 0;
+  position: absolute;
+  transform: translate(-50%, -50%) scale(.2);
+  transition: opacity .3s, transform ease-in-out .1s;
+  width: 74px;
+
+  &.touchBubbleVisible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    // transition: opacity .3s, transform ease-in-out .3s, left .1s, top .1s;
+    transition: opacity .3s;
+  }
+}
+
+.score {
+  pointer-events: none;
+}
+
+.block {
+  border: 1px solid $color-black;
+  flex-grow: 1;
+  margin: 20px 5vw 24px;
+  position: relative;
+
+  &.blockPurple {
+    background: $color-purple;
+  }
+  
+  &.blockRed {
+    background: $color-red;
+  }
+}
+
+.image {
+  bottom: 4px;
+  height: 100px;
+  position: absolute;
+  right: 0;
+}
+
+.score {
+  @extend %Bold;
+
+  font-size: 40vw;
+  left: 50%;
+  opacity: .2;
+  position: absolute;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-color: $color-white;
+  -webkit-text-stroke-width: 2px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.skipTutorialBtn {
+  @extend %Bold;
+
+  background: $color-yellow;
+  border: 1px solid $color-black;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 18px;
+  left: 0;
+  letter-spacing: .024em;
+  margin: auto;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  top: 40%;
+  width: 80%;
+  z-index: 20;
+}

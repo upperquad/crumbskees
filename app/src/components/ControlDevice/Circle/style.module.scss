@@ -1,0 +1,28 @@
+@import "~styles/imports/index";
+
+.circle {
+  border-radius: 50%;
+  height: 446/320*100vw;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -20%);
+  width: 446/320*100vw;
+  z-index: -1;
+
+  @media only screen and (max-height: 630px) {
+    transform: translate(-50%, -40%);
+  }
+}
+
+.circleYellow {
+  background: $color-yellow;
+}
+
+.circleRed {
+  background: $color-red;
+}
+
+.circlePurple {
+  background: $color-purple;
+}

@@ -1,0 +1,42 @@
+@import "~styles/imports/index";
+
+.marquee {
+  white-space: nowrap;
+}
+
+.marqueeInnerText {
+  animation: marquee-text-inner 12s infinite linear;
+  display: inline-block;
+}
+
+@keyframes marquee-text-inner {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+.marqueeAlternate {
+  @extend %Bold;
+
+  color: $color-white;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 50px;
+  padding: 12px 0 9px;
+  text-transform: uppercase;
+
+  .marqueeInnerText:nth-child(even) {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: $color-white;
+    -webkit-text-stroke-width: 1px;
+  }
+}
+
+.marqueeWhite {
+  background: $color-black;
+  color: $color-white;
+}

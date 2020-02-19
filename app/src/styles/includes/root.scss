@@ -1,0 +1,39 @@
+html {
+  box-sizing: border-box;
+  overflow-x: hidden;
+
+  &:global(.is-desktop) {
+    body {
+      background: $color-beige;
+    }
+  }
+
+  &:not(:global(.is-desktop)) {
+    overscroll-behavior-x: none;
+
+    body {
+      overscroll-behavior-x: none;
+    }
+  }
+}
+
+body {
+  color: $color-black;
+  font-family: Calibre;
+  font-size: 18px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  line-height: 26px;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+

@@ -1,0 +1,22 @@
+%Regular {
+  font-family: 'Fakt Medium', serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+%Light {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+}
+
+%Bold {
+  font-family: 'Ginto Nord Black';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+@function responsive-font($unit) {
+  @return $unit / $base-width * 100vw;
+}
