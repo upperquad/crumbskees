@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
-import WebSocketManager from '~managers/WebSocketManager'
+import Player1Peer from '~managers/PeerManager/Player1Peer'
+import Player2Peer from '~managers/PeerManager/Player2Peer'
 import styles from './style.module.scss'
 
 import { DEBUG } from '~constants'
@@ -48,10 +49,12 @@ const TutorialStage = props => {
           break
       }
     }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
+    Player1Peer.addSubscriber('MESSAGE', messageHandler)
+    Player2Peer.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
+      Player1Peer.removeSubscriber('MESSAGE', messageHandler)
+      Player2Peer.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [onFinish])
 

@@ -3,7 +3,8 @@ import { TransitionGroup, Transition } from 'react-transition-group'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import { GAME_ROUNDS } from '~constants'
-import WebSocketManager from '~managers/WebSocketManager'
+import Player1Peer from '~managers/PeerManager/Player1Peer'
+import Player2Peer from '~managers/PeerManager/Player2Peer'
 import PlayersManager from '~managers/PlayersManager'
 
 import Round from './Round'
@@ -15,7 +16,8 @@ const PlayStage = props => {
   const onRoundEnd = () => {
     if (roundIndex === GAME_ROUNDS.length - 1) {
       const result = getResult()
-      WebSocketManager.send('result', { winner: result })
+      Player1Peer.send('result', { winner: result })
+      Player2Peer.send('result', { winner: result })
       onFinish()
     } else {
       setRoundIndex(roundIndex + 1)
@@ -23,7 +25,8 @@ const PlayStage = props => {
   }
 
   useEffect(() => {
-    WebSocketManager.send('game_start')
+    Player1Peer.send('game_start')
+    Player2Peer.send('game_start')
     PlayersManager.startGame()
   }, [])
 

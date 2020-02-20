@@ -3,7 +3,8 @@ import { TransitionGroup, Transition } from 'react-transition-group'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
-import WebSocketManager from '~managers/WebSocketManager'
+import Player1Peer from '~managers/PeerManager/Player1Peer'
+import Player2Peer from '~managers/PeerManager/Player2Peer'
 import { DEBUG, GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
@@ -104,41 +105,39 @@ const Round = props => {
       }
     }
 
-    const messageHandler = detail => {
+    const messageHandler = (detail, playerIndex) => {
       const { data, type } = detail
 
       switch (type) {
         case 'cursor_move': {
-          const { id, x, y } = data
-          const playerIndex = PlayersManager.playerIndex(id)
-          if (playerIndex !== -1) {
-            setPositionArray(prevPositionArray => {
-              const positionObj = prevPositionArray[playerIndex]
+          const { x, y } = data
+          setPositionArray(prevPositionArray => {
+            const positionObj = prevPositionArray[playerIndex]
 
-              positionObj.x = clamp(positionObj.x + parseFloat(x, 10), -0.5, 0.5)
-              positionObj.y = clamp(positionObj.y + parseFloat(y, 10), -0.5, 0.5)
+            positionObj.x = clamp(positionObj.x + parseFloat(x, 10), -0.5, 0.5)
+            positionObj.y = clamp(positionObj.y + parseFloat(y, 10), -0.5, 0.5)
 
-              return prevPositionArray
-            })
-          }
+            return prevPositionArray
+          })
           break
         }
         case 'click': {
-          const { id } = data
-          const playerIndex = PlayersManager.playerIndex(id)
-          if (playerIndex !== -1) {
-            handleClick(playerIndex)
-          }
+          handleClick(playerIndex)
           break
         }
         default:
           break
       }
     }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
+
+    const player1MessageHandler = detail => messageHandler(detail, 0)
+    const player2MessageHandler = detail => messageHandler(detail, 1)
+    Player1Peer.addSubscriber('MESSAGE', player1MessageHandler)
+    Player2Peer.addSubscriber('MESSAGE', player2MessageHandler)
 
     return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
+      Player1Peer.removeSubscriber('MESSAGE', player1MessageHandler)
+      Player2Peer.removeSubscriber('MESSAGE', player2MessageHandler)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

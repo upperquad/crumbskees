@@ -8,11 +8,12 @@ import AutoplayVideo from '~components/AutoplayVideo'
 import resultBg from '~assets/images/round_3/s3-intro.mp4'
 
 const ERROR_DISPLAYS = {
+  // TODO: kill this
   active_game_exist: {
     message: 'Another game is in progress',
     buttonText: 'Kick\'em off',
     buttonFunc: resetGame => {
-      // move this to the WebsocketManager? Or maybe just keep this until we kill it?
+      // move this to the PeerManager? Or maybe just keep this until we kill it?
       const websocket = new WebSocket(`${window.location.origin.replace(/^http/, 'ws')}/admin?command=disconnect_all`)
       websocket.onopen = () => {
         websocket.close()

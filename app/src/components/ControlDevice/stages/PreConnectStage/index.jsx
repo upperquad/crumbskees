@@ -3,7 +3,8 @@ import styles from './style.module.scss'
 
 import Circle from '~components/ControlDevice/Circle'
 
-import WebSocketManager from '~managers/WebSocketManager'
+import TokenSocketManager from '~managers/TokenSocketManager'
+import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PreConnectStage = props => {
   const { hasPlayed, onFinish } = props
@@ -13,12 +14,12 @@ const PreConnectStage = props => {
 
   useEffect(() => {
     if (!hasPlayed) {
-      WebSocketManager.init('control')
+      TokenSocketManager.init('control')
 
       const path = window.location.pathname
       if (/^\/\d{3}$/.test(path)) {
         const urlToken = path.slice(1)
-        WebSocketManager.connect({ token: urlToken })
+        TokenSocketManager.connect({ token: urlToken })
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,36 +30,57 @@ const PreConnectStage = props => {
       const { reason } = detail
       if (reason === 'invalid_token') {
         setErrorReason('Invalid token')
-      } else if (reason === 'no_active_game') {
-        setErrorReason("There's no active game")
+        setIsConnecting(false)
+        setToken('')
       }
-      setIsConnecting(false)
-      setToken('')
     }
 
-    WebSocketManager.addSubscriber('WS_CLOSE', onWebSocketClose)
+    TokenSocketManager.addSubscriber('WS_CLOSE', onWebSocketClose)
 
     return () => {
-      WebSocketManager.removeSubscriber('WS_CLOSE', onWebSocketClose)
+      TokenSocketManager.removeSubscriber('WS_CLOSE', onWebSocketClose)
     }
   }, [])
 
   useEffect(() => {
     const messageHandler = detail => {
-      const { type } = detail
+      const { data, type } = detail
       switch (type) {
-        case 'accepted': {
-          onFinish()
+        case 'player_token_accepted': {
+          const { id } = data
+          ServerPeer.connect(id)
           break
         }
         default:
           break
       }
     }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
+    TokenSocketManager.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
+      TokenSocketManager.removeSubscriber('MESSAGE', messageHandler)
+    }
+  }, [])
+
+  useEffect(() => {
+    const onPeerTimeout = () => {
+      setErrorReason('Cannot connect to the game')
+      setIsConnecting(false)
+      setToken('')
+    }
+
+    ServerPeer.addSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
+
+    return () => {
+      ServerPeer.removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
+    }
+  }, [])
+
+  useEffect(() => {
+    ServerPeer.addSubscriber('CONNECTED', onFinish)
+
+    return () => {
+      ServerPeer.removeSubscriber('CONNECTED', onFinish)
     }
   }, [onFinish])
 
@@ -73,7 +95,7 @@ const PreConnectStage = props => {
 
         if (newToken.length >= 3) {
           setIsConnecting(true)
-          WebSocketManager.connect({ token: newToken })
+          TokenSocketManager.connect({ token: newToken })
         }
 
         return newToken

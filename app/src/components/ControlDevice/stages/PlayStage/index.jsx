@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
-import WebSocketManager from '~managers/WebSocketManager'
+import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PlayStage = props => {
   const { activeTutorial, color, image, score, secondaryColor, setActiveTutorial } = props
@@ -17,7 +17,7 @@ const PlayStage = props => {
   const updatePosition = (clientX, clientY) => {
     const x = (clientX - coordX.current) / window.innerWidth
     const y = (clientY - coordY.current) / window.innerHeight
-    WebSocketManager.send('cursor_move', { x, y })
+    ServerPeer.send('cursor_move', { x, y })
     coordX.current = clientX
     coordY.current = clientY
   }
@@ -45,12 +45,12 @@ const PlayStage = props => {
 
   const tapHandler = event => {
     event.stopPropagation()
-    WebSocketManager.send('click')
+    ServerPeer.send('click')
   }
 
   const skipTutorial = event => {
     event.stopPropagation()
-    WebSocketManager.send('skip_tutorial')
+    ServerPeer.send('skip_tutorial')
     setActiveTutorial(false)
   }
 

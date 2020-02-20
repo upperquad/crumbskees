@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { CHARACTERS } from '~constants'
-import WebSocketManager from '~managers/WebSocketManager'
+import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
@@ -50,10 +50,10 @@ const ControlDevice = () => {
           break
       }
     }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
+    ServerPeer.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
+      ServerPeer.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [])
 
@@ -98,7 +98,7 @@ const ControlDevice = () => {
             setCharacter(CHARACTERS[0])
             setCharacterIndex(null)
             setActiveTutorial(false)
-            WebSocketManager.disconnect()
+            ServerPeer.disconnect()
           }}
         />
       )}
