@@ -154,8 +154,9 @@ function getNewToken(index) {
   let token
   if (DEBUG) {
     token = index === 0 ? '000' : '999'
+  } else {
+    token = Math.random().toString(10).substr(2, 3)
   }
-  token = Math.random().toString(10).substr(2, 3)
 
   TokenSocketManager.send('new_token', { token })
   return token
