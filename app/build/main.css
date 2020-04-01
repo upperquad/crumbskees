@@ -524,6 +524,7 @@ a {
   position: relative; }
 
 .Round-svg--2qJHy {
+  display: none;
   height: 100%;
   left: 0;
   position: absolute;
@@ -589,6 +590,20 @@ a {
 
 .PopupMessage-messagePersistent--2WAj9 {
   animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s; }
+
+.PixiScene-pixiScene--xdl_n {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
+.PixiScene-canvas--17ngH {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
 
 /* Colors */
 /* Breakpoints */

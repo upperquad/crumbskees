@@ -12,15 +12,16 @@ import { clamp, randomInt } from '~utils/math'
 import PlayerCursor from './PlayerCursor'
 import PlayerMessage from './PlayerMessage'
 import PopupMessage from './PopupMessage'
+import PixiScene from './PixiScene'
 import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
 import Intro from './Intro'
 
-const TIME = 40
+const TIME = 4000
 
 const Round = props => {
   const { onRoundEnd, roundIndex, transitionStatus } = props
-  const { bkg, frontBkg, itemImage } = GAME_ROUNDS[roundIndex]
+  const { itemImage, videoBack, videoFront } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [items, setItems] = useState([])
   const [gameState, setGameState] = useState('before-game')
@@ -239,7 +240,8 @@ const Round = props => {
             timeout={{ enter: 0, exit: 1300 }}
           >
             <div className={classNames(styles.gameZone)}>
-              <img className={styles.frontBkg} src={frontBkg} alt="" />
+              <img className={styles.videoFront} src={videoFront} alt="" />
+              <PixiScene videoFront={videoFront} videoBack={videoBack} />
               <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
                 <defs>
                   <clipPath id="game-round-clippath" className={styles.svgClipPath}>
@@ -286,7 +288,7 @@ const Round = props => {
                   clipPath="url(#game-round-clippath)"
                 >
                   <image
-                    xlinkHref={bkg}
+                    xlinkHref={videoBack}
                     preserveAspectRatio="xMidYMid slice"
                     width={`${VB_WIDTH}px`}
                     height={`${VB_HEIGHT}px`}
@@ -336,7 +338,7 @@ const Round = props => {
                 className={classNames(styles.reveal, {
                   [styles.revealVisible]: status === 'entered',
                 })}
-                src={bkg}
+                src={videoBack}
                 alt=""
               />
             )}

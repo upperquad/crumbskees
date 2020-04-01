@@ -5,6 +5,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "howler": "^2.1.2",
+    "pixi.js": "^5.2.1",
     "qrcode": "^1.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

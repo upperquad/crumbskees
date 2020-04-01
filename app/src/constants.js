@@ -1,5 +1,5 @@
-import round1Pattern from '~assets/images/round_1/s1-pattern.gif'
-import round1Front from '~assets/images/round_1/s1-front.gif'
+import round1VideoBack from '~assets/images/round_1/r1-pattern.mp4'
+import round1VideoFront from '~assets/images/round_1/r1-pattern-bw.mp4'
 import round1Item from '~assets/images/round_1/s1-item.png'
 import round1IntroVideo from '~assets/images/round_1/s1-intro.mp4'
 import round2Pattern from '~assets/images/round_2/s2-pattern.gif'
@@ -63,8 +63,8 @@ export const CHARACTERS = [
 export const GAME_ROUNDS = [
   {
     key: 'game-round-1',
-    bkg: round1Pattern,
-    frontBkg: round1Front,
+    videoBack: round1VideoBack,
+    videoFront: round1VideoFront,
     itemImage: round1Item,
     videoIntro: round1IntroVideo,
     roundNameText: 'Round\xa001',
