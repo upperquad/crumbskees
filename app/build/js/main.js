@@ -97170,14 +97170,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/lib/pixi.es.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/AnimationFrameManager */ "./src/managers/AnimationFrameManager/index.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+
+ // import PlayersManager from '~managers/PlayersManager'
 
 
- // let scene
+ // globals var
+
+var circles;
 
 var PixiScene = function PixiScene(props) {
-  var videoBack = props.videoBack,
+  var playerCursors = props.playerCursors,
+      videoBack = props.videoBack,
       videoFront = props.videoFront;
   var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // init scene
 
@@ -97188,13 +97194,13 @@ var PixiScene = function PixiScene(props) {
       resolution: window.devicePixelRatio,
       antialias: true,
       autoDensity: true,
-      backgroundColor: 0x00FF00
+      backgroundColor: 0xFFFFFF
     }); // , backgroundColor: 0xF7F7F7
     // console.log(this.app.renderer.resolution)
 
     app.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
-    app.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.canvas);
+    app.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.canvas);
     elRef.current.appendChild(app.view);
     var containerFront = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     var containerMasked = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
@@ -97203,8 +97209,8 @@ var PixiScene = function PixiScene(props) {
 
     var setVideo = function setVideo(source, container) {
       var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
-      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // videoSprite.alpha = 0.2
-      // Stetch the fullscreen
+      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture);
+      videoSprite.alpha = 0.2; // Stetch the fullscreen
 
       videoSprite.width = app.screen.width;
       videoSprite.height = app.screen.height;
@@ -97219,17 +97225,22 @@ var PixiScene = function PixiScene(props) {
       // })
 
       return video;
+    };
+
+    var setCircles = function setCircles() {
+      circles = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
+      // this.drawCircle()
+
+      containerFront.addChild(circles); // mask container into circle(s)
+
+      containerMasked.mask = circles;
     }; // // set scene
 
 
     var videoPixiBack = setVideo(videoBack, containerMasked);
-    var videoPixiFront = setVideo(videoFront, containerFront); // this.setCircle()
-    // this.events(true)
+    var videoPixiFront = setVideo(videoFront, containerFront);
+    setCircles(); // this.events(true)
     // this.mainEvents(true)
-    // this.el.addEventListener('click', () => {
-    //   this.textureVideoFront.baseTexture.resource.source.play()
-    // })
-    //
     // loop videos
     // Force syncro, because loop is creating an offset
 
@@ -97239,13 +97250,39 @@ var PixiScene = function PixiScene(props) {
       videoPixiFront.currentTime = 0;
       videoPixiFront.play();
     });
+    console.log('create app');
     return function () {
       console.log('clean up');
       app.destroy();
     };
-  }, [videoBack, videoFront]);
+  }, [videoBack, videoFront]); // on RAF, update when change position
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var updateFrame = function updateFrame() {
+      circles.clear();
+      playerCursors.forEach(function (playerCursor) {
+        circles.lineStyle(10, 0xFFBD01, 1);
+        circles.beginFill(0xC34288, 1); // circles.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
+
+        circles.drawCircle(300, 300, 50);
+
+        if (playerCursor.power === 'freeze') {
+          return;
+        }
+      });
+      circles.endFill(); // const newPosition = getNewPosition(position.current, targetPosition)
+      // const newPathD = getPathD(now, points.current, newPosition)
+      // position.current = newPosition
+      // pathRef.current.setAttribute('d', newPathD)
+    };
+
+    _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(updateFrame);
+    return function () {
+      _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__["default"].removeSubscriber(updateFrame);
+    };
+  }, [playerCursors]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pixiScene,
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.pixiScene,
     ref: elRef
   });
 };
@@ -98051,6 +98088,24 @@ var Round = function Round(props) {
     _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].score.play();
   }
 
+  var playerCursors = [];
+  _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.forEach(function (player, index) {
+    var playerCursor = {
+      index: index,
+      power: powerArray[index],
+      position: positionArray[index],
+      color: player.color,
+      roundScore: roundScoreArray[index],
+      cancelPower: function cancelPower() {
+        setPowerArray(function (prevArray) {
+          console.log('set power suce');
+          prevArray[index] = null;
+          return prevArray;
+        });
+      }
+    };
+    playerCursors.push(playerCursor);
+  });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.roundExiting, transitionStatus === 'exiting'))
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, gameState === 'in-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
@@ -98061,13 +98116,10 @@ var Round = function Round(props) {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameZone)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.videoFront,
-    src: videoFront,
-    alt: ""
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PixiScene__WEBPACK_IMPORTED_MODULE_12__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PixiScene__WEBPACK_IMPORTED_MODULE_12__["default"], {
     videoFront: videoFront,
-    videoBack: videoBack
+    videoBack: videoBack,
+    playerCursors: playerCursors
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.svg,
     viewBox: "0 0 ".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], " ").concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"]),

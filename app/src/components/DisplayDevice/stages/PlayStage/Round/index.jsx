@@ -226,6 +226,27 @@ const Round = props => {
     SoundManager.score.play()
   }
 
+
+  const playerCursors = []
+  PlayersManager.players.forEach((player, index) => {
+    const playerCursor = {
+      index,
+      power: powerArray[index],
+      position: positionArray[index],
+      color: player.color,
+      roundScore: roundScoreArray[index],
+      cancelPower: () => {
+        setPowerArray(prevArray => {
+          console.log('set power suce')
+          prevArray[index] = null
+          return prevArray
+        })
+      },
+    }
+
+    playerCursors.push(playerCursor)
+  })
+
   return (
     <div
       className={classNames(
@@ -240,8 +261,8 @@ const Round = props => {
             timeout={{ enter: 0, exit: 1300 }}
           >
             <div className={classNames(styles.gameZone)}>
-              <img className={styles.videoFront} src={videoFront} alt="" />
-              <PixiScene videoFront={videoFront} videoBack={videoBack} />
+              {/* <img className={styles.videoFront} src={videoFront} alt="" /> */}
+              <PixiScene videoFront={videoFront} videoBack={videoBack} playerCursors={playerCursors} />
               <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
                 <defs>
                   <clipPath id="game-round-clippath" className={styles.svgClipPath}>
