@@ -131,7 +131,8 @@ const PixiScene = props => {
 
   // update items
   useEffect(() => {
-    function setItem(item, index) {
+    // funcs
+    function setItem(item) {
       const sprite = Sprite.from(item.image)
       sprite.height = (item.size / VB_WIDTH) * initWidth.current
       sprite.width = (item.size / VB_WIDTH) * initWidth.current
@@ -141,14 +142,25 @@ const PixiScene = props => {
 
       sprite.anchor.set(0.5, 0.5)
 
-      console.log(sprite.position)
-
       containerFront.current.addChild(sprite)
+
+      return sprite
     }
 
-    items.forEach((item, index) => {
-      setItem(item, index)
+    // init
+    const sprites = []
+
+    items.forEach(item => {
+      const sprite = setItem(item)
+      sprites.push(sprite)
     })
+
+    return () => {
+      // remove all sprite items
+      sprites.forEach(sprite => {
+        containerFront.current.removeChild(sprite)
+      })
+    }
   }, [items])
 
   // RAF

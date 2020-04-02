@@ -97291,20 +97291,30 @@ var PixiScene = function PixiScene(props) {
   }, []); // update items
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    function setItem(item, index) {
+    // funcs
+    function setItem(item) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);
       sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * initWidth.current;
       sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * initWidth.current;
       sprite.position.x = item.x * initWidth.current;
       sprite.position.y = item.y * initHeight.current;
       sprite.anchor.set(0.5, 0.5);
-      console.log(sprite.position);
       containerFront.current.addChild(sprite);
-    }
+      return sprite;
+    } // init
 
-    items.forEach(function (item, index) {
-      setItem(item, index);
+
+    var sprites = [];
+    items.forEach(function (item) {
+      var sprite = setItem(item);
+      sprites.push(sprite);
     });
+    return function () {
+      // remove all sprite items
+      sprites.forEach(function (sprite) {
+        containerFront.current.removeChild(sprite);
+      });
+    };
   }, [items]); // RAF
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
