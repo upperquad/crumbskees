@@ -10,7 +10,7 @@ import {
 } from 'pixi.js'
 // import PlayersManager from '~managers/PlayersManager'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
-import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'
+import { GRID_UNIT, VB_WIDTH } from '~constants'
 
 import styles from './style.module.scss'
 
@@ -88,10 +88,8 @@ const PixiScene = props => {
     const videoPixiFront = setVideo(videoFront, containerFront.current)
     setCircles()
 
-    // this.events(true)
-    // this.mainEvents(true)
-    // loop videos
-    // Force syncro, because loop is creating an offset
+    // Videos looping:
+    // Force syncronize because RAF is creating an offset between the 2 videos
     videoPixiFront.addEventListener('ended', () => {
       videoPixiBack.currentTime = 0
       videoPixiBack.play()
@@ -100,7 +98,13 @@ const PixiScene = props => {
     })
 
     return () => {
-      app.current.destroy()
+      // instead, remove all children and destroy app
+      while (app.current.stage.children[0]) {
+        app.current.stage.removeChild(app.current.stage.children[0])
+      }
+
+      app.current.destroy(true)
+      app.current = null
     }
   }, [videoBack, videoFront])
 
@@ -175,18 +179,12 @@ const PixiScene = props => {
 
         const x = (position.x + 0.5) * initWidth.current
         const y = (position.y + 0.5) * initHeight.current
-        // console.log(position)
         // draw masked circles
-        // circlesMasked.current.lineStyle(10, 0xFFBD01, 1)
         circlesMasked.current.beginFill(0xFFFFFF, 1)
-        // circlesMasked.current.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
-        //
-
         circlesMasked.current.drawCircle(x, y, circlesSize.current)
 
         // draw border circles
-        const hexNb = hexStToNb(COLORS[color])
-        circlesBorder.current.lineStyle(circlesStroke.current, hexNb, 1)
+        circlesBorder.current.lineStyle(circlesStroke.current, color, 1)
         circlesBorder.current.drawCircle(x, y, circlesSize.current)
 
         if (playerCursor.power === 'freeze') {
@@ -213,10 +211,6 @@ const PixiScene = props => {
   return (
     <div className={styles.pixiScene} ref={elRef} />
   )
-}
-
-function hexStToNb(str) {
-  return parseInt(str.replace(/^#/, ''), 16)
 }
 
 export default PixiScene

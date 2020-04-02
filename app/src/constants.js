@@ -68,7 +68,7 @@ export const GAME_ROUNDS = [
     itemImage: round1Item,
     videoIntro: round1IntroVideo,
     roundNameText: 'Round\xa001',
-    numItems: DEBUG ? 10 : 10,
+    numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
     power: {
@@ -78,8 +78,8 @@ export const GAME_ROUNDS = [
     },
   }, {
     key: 'game-round-2',
-    bkg: round2Pattern,
-    frontBkg: round2Front,
+    videoBack: round1VideoBack,
+    videoFront: round1VideoFront,
     itemImage: round2Item,
     videoIntro: round2IntroVideo,
     roundNameText: 'Round\xa002',
@@ -93,8 +93,8 @@ export const GAME_ROUNDS = [
     },
   }, {
     key: 'game-round-3',
-    bkg: round3Pattern,
-    frontBkg: round3Front,
+    videoBack: round1VideoBack,
+    videoFront: round1VideoFront,
     itemImage: round3Item,
     videoIntro: round3IntroVideo,
     roundNameText: 'Last\xa0round',

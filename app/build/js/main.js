@@ -97251,10 +97251,8 @@ var PixiScene = function PixiScene(props) {
 
     var videoPixiBack = setVideo(videoBack, containerMasked.current);
     var videoPixiFront = setVideo(videoFront, containerFront.current);
-    setCircles(); // this.events(true)
-    // this.mainEvents(true)
-    // loop videos
-    // Force syncro, because loop is creating an offset
+    setCircles(); // Videos looping:
+    // Force syncronize because RAF is creating an offset between the 2 videos
 
     videoPixiFront.addEventListener('ended', function () {
       videoPixiBack.currentTime = 0;
@@ -97263,7 +97261,13 @@ var PixiScene = function PixiScene(props) {
       videoPixiFront.play();
     });
     return function () {
-      app.current.destroy();
+      // instead, remove all children and destroy app
+      while (app.current.stage.children[0]) {
+        app.current.stage.removeChild(app.current.stage.children[0]);
+      }
+
+      app.current.destroy(true);
+      app.current = null;
     };
   }, [videoBack, videoFront]); // resize
 
@@ -97326,17 +97330,12 @@ var PixiScene = function PixiScene(props) {
         var color = playerCursor.color,
             position = playerCursor.position;
         var x = (position.x + 0.5) * initWidth.current;
-        var y = (position.y + 0.5) * initHeight.current; // console.log(position)
-        // draw masked circles
-        // circlesMasked.current.lineStyle(10, 0xFFBD01, 1)
+        var y = (position.y + 0.5) * initHeight.current; // draw masked circles
 
-        circlesMasked.current.beginFill(0xFFFFFF, 1); // circlesMasked.current.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
-        //
-
+        circlesMasked.current.beginFill(0xFFFFFF, 1);
         circlesMasked.current.drawCircle(x, y, circlesSize.current); // draw border circles
 
-        var hexNb = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][color]);
-        circlesBorder.current.lineStyle(circlesStroke.current, hexNb, 1);
+        circlesBorder.current.lineStyle(circlesStroke.current, color, 1);
         circlesBorder.current.drawCircle(x, y, circlesSize.current);
 
         if (playerCursor.power === 'freeze') {
@@ -97360,10 +97359,6 @@ var PixiScene = function PixiScene(props) {
     ref: elRef
   });
 };
-
-function hexStToNb(str) {
-  return parseInt(str.replace(/^#/, ''), 16);
-}
 
 /* harmony default export */ __webpack_exports__["default"] = (PixiScene);
 
@@ -98172,7 +98167,8 @@ var Round = function Round(props) {
       index: index,
       power: powerArray[index],
       position: positionArray[index],
-      color: player.color,
+      color: hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"][player.color]),
+      // get Hex nb color (0x000000)
       roundScore: roundScoreArray[index],
       cancelPower: function cancelPower() {
         setPowerArray(function (prevArray) {
@@ -98198,69 +98194,7 @@ var Round = function Round(props) {
     videoBack: videoBack,
     playerCursors: playerCursors,
     items: items
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.svg,
-    viewBox: "0 0 ".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], " ").concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"]),
-    stroke: "black"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("defs", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("clipPath", {
-    id: "game-round-clippath",
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.svgClipPath
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function (player, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("use", {
-      xlinkHref: "#player".concat(index)
-    });
-  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function (player, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerCursor__WEBPACK_IMPORTED_MODULE_9__["default"], {
-      index: index,
-      power: powerArray[index],
-      position: positionArray[index],
-      color: player.color,
-      roundScore: roundScoreArray[index],
-      cancelPower: function cancelPower() {
-        setPowerArray(function (prevArray) {
-          prevArray[index] = null;
-          return prevArray;
-        });
-      }
-    });
-  }), _constants__WEBPACK_IMPORTED_MODULE_7__["DEBUG"] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
-    width: "".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], "px"),
-    height: "".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"], "px"),
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.debugItems
-  }, items.map(function (item) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("image", {
-      xlinkHref: item.image,
-      preserveAspectRatio: "xMidYMid slice",
-      width: item.size,
-      height: item.size,
-      x: "".concat(item.x * 100, "%"),
-      y: "".concat(item.y * 100, "%"),
-      style: {
-        transform: "translate(-".concat(item.size / 2, "px, -").concat(item.size / 2, "px)")
-      }
-    });
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
-    width: "".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], "px"),
-    height: "".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"], "px"),
-    clipPath: "url(#game-round-clippath)"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("image", {
-    xlinkHref: videoBack,
-    preserveAspectRatio: "xMidYMid slice",
-    width: "".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], "px"),
-    height: "".concat(_constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"], "px")
-  }), items.map(function (item) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("image", {
-      xlinkHref: item.image,
-      preserveAspectRatio: "xMidYMid slice",
-      width: item.size,
-      height: item.size,
-      x: "".concat(item.x * 100, "%"),
-      y: "".concat(item.y * 100, "%"),
-      style: {
-        transform: "translate(-".concat(item.size / 2, "px, -").concat(item.size / 2, "px)")
-      }
-    });
-  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function (player, index) {
+  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
       power: powerArray[index],
       position: positionArray[index],
@@ -98381,6 +98315,10 @@ function getEndMessage() {
   // TODO: we need a larger pool of messages, this is top priority
   var phrases = ['Dope.', 'Good job!', 'Awesome!'];
   return phrases[Math.floor(Math.random() * phrases.length)];
+}
+
+function hexStToNb(str) {
+  return parseInt(str.replace(/^#/, ''), 16);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Round);
@@ -99466,7 +99404,7 @@ var GAME_ROUNDS = [{
   itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a,
   roundNameText: 'Round\xa001',
-  numItems: DEBUG ? 10 : 10,
+  numItems: DEBUG ? 2 : 10,
   gridCols: 32,
   gridLines: 14,
   power: {
@@ -99476,8 +99414,8 @@ var GAME_ROUNDS = [{
   }
 }, {
   key: 'game-round-2',
-  bkg: _assets_images_round_2_s2_pattern_gif__WEBPACK_IMPORTED_MODULE_4___default.a,
-  frontBkg: _assets_images_round_2_s2_front_gif__WEBPACK_IMPORTED_MODULE_5___default.a,
+  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
+  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
   itemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
   videoIntro: _assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7___default.a,
   roundNameText: 'Round\xa002',
@@ -99491,8 +99429,8 @@ var GAME_ROUNDS = [{
   }
 }, {
   key: 'game-round-3',
-  bkg: _assets_images_round_3_s3_pattern_gif__WEBPACK_IMPORTED_MODULE_8___default.a,
-  frontBkg: _assets_images_round_3_s3_front_gif__WEBPACK_IMPORTED_MODULE_9___default.a,
+  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
+  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
   itemImage: _assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10___default.a,
   videoIntro: _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
   roundNameText: 'Last\xa0round',

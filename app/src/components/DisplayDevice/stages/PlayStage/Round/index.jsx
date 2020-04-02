@@ -233,7 +233,7 @@ const Round = props => {
       index,
       power: powerArray[index],
       position: positionArray[index],
-      color: player.color,
+      color: hexStToNb(COLORS[player.color]), // get Hex nb color (0x000000)
       roundScore: roundScoreArray[index],
       cancelPower: () => {
         setPowerArray(prevArray => {
@@ -262,7 +262,7 @@ const Round = props => {
             <div className={classNames(styles.gameZone)}>
               {/* <img className={styles.videoFront} src={videoFront} alt="" /> */}
               <PixiScene videoFront={videoFront} videoBack={videoBack} playerCursors={playerCursors} items={items} />
-              <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
+              {/* <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
                 <defs>
                   <clipPath id="game-round-clippath" className={styles.svgClipPath}>
                     {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
@@ -283,25 +283,6 @@ const Round = props => {
                     }}
                   />
                 ))}
-                {DEBUG && (
-                  <g
-                    width={`${VB_WIDTH}px`}
-                    height={`${VB_HEIGHT}px`}
-                    className={styles.debugItems}
-                  >
-                    {items.map(item => (
-                      <image
-                        xlinkHref={item.image}
-                        preserveAspectRatio="xMidYMid slice"
-                        width={item.size}
-                        height={item.size}
-                        x={`${item.x * 100}%`}
-                        y={`${item.y * 100}%`}
-                        style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
-                      />
-                    ))}
-                  </g>
-                )}
                 <g
                   width={`${VB_WIDTH}px`}
                   height={`${VB_HEIGHT}px`}
@@ -325,7 +306,7 @@ const Round = props => {
                     />
                   ))}
                 </g>
-              </svg>
+              </svg> */}
               {PlayersManager.players.map((player, index) => (
                 <PlayerMessage
                   power={powerArray[index]}
@@ -444,6 +425,10 @@ function getEndMessage() {
   // TODO: we need a larger pool of messages, this is top priority
   const phrases = ['Dope.', 'Good job!', 'Awesome!']
   return phrases[Math.floor(Math.random() * phrases.length)]
+}
+
+function hexStToNb(str) {
+  return parseInt(str.replace(/^#/, ''), 16)
 }
 
 export default Round
