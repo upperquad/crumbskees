@@ -10,6 +10,7 @@ import {
 } from 'pixi.js'
 // import PlayersManager from '~managers/PlayersManager'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
+import { COLORS } from '~constants'
 
 import styles from './style.module.scss'
 
@@ -129,7 +130,8 @@ function updateFrame() {
     circlesMasked.drawCircle(300, 300, 50)
 
     // draw border circles
-    circlesBorder.lineStyle(5, 0xFFBD01, 1)
+    const color = hexStToNb(COLORS[playerCursor.color])
+    circlesBorder.lineStyle(5, color, 1)
     circlesBorder.drawCircle(300, 300, 50)
 
     if (playerCursor.power === 'freeze') {
@@ -151,6 +153,10 @@ function resizeHandler() {
     app.view.style.width = `${elRef.current.offsetWidth}px`
     app.view.style.height = `${elRef.current.offsetHeight}px`
   }
+}
+
+function hexStToNb(str) {
+  return parseInt(str.replace(/^#/, ''), 16)
 }
 
 export default PixiScene

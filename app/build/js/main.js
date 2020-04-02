@@ -97171,10 +97171,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/lib/pixi.es.js");
 /* harmony import */ var _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/AnimationFrameManager */ "./src/managers/AnimationFrameManager/index.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 
  // import PlayersManager from '~managers/PlayersManager'
+
 
 
  // globals var
@@ -97204,7 +97206,7 @@ var PixiScene = function PixiScene(props) {
 
     app.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
-    app.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.canvas);
+    app.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.canvas);
     elRef.current.appendChild(app.view);
     var containerFront = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     var containerMasked = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
@@ -97245,7 +97247,7 @@ var PixiScene = function PixiScene(props) {
     };
   }, [playerCursors]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.pixiScene,
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.pixiScene,
     ref: elRef
   });
 };
@@ -97284,7 +97286,8 @@ function updateFrame() {
 
     circlesMasked.drawCircle(300, 300, 50); // draw border circles
 
-    circlesBorder.lineStyle(5, 0xFFBD01, 1);
+    var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][playerCursor.color]);
+    circlesBorder.lineStyle(5, color, 1);
     circlesBorder.drawCircle(300, 300, 50);
 
     if (playerCursor.power === 'freeze') {
@@ -97303,6 +97306,10 @@ function resizeHandler() {
     app.view.style.width = "".concat(elRef.current.offsetWidth, "px");
     app.view.style.height = "".concat(elRef.current.offsetHeight, "px");
   }
+}
+
+function hexStToNb(str) {
+  return parseInt(str.replace(/^#/, ''), 16);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (PixiScene);
