@@ -237,7 +237,6 @@ const Round = props => {
       roundScore: roundScoreArray[index],
       cancelPower: () => {
         setPowerArray(prevArray => {
-          console.log('set power suce')
           prevArray[index] = null
           return prevArray
         })

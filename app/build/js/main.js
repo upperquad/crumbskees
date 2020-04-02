@@ -47983,7 +47983,7 @@ module.exports = function parseURI (str, opts) {
 /*!*********************************************!*\
   !*** ./node_modules/pixi.js/lib/pixi.es.js ***!
   \*********************************************/
-/*! exports provided: accessibility, interaction, utils, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings, VERSION, filters, useDeprecated */
+/*! exports provided: accessibility, interaction, utils, VERSION, filters, useDeprecated, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97181,23 +97181,48 @@ __webpack_require__.r(__webpack_exports__);
 
  // globals var
 
-var circlesMasked;
-var circlesBorder;
-var playerCursorsUpdated;
-var app;
-var elRef;
-var appWidth;
-var appHeight;
 var circleRadius = 50;
+var circleLineStroke = 5;
 
 var PixiScene = function PixiScene(props) {
   var playerCursors = props.playerCursors,
       videoBack = props.videoBack,
       videoFront = props.videoFront;
-  elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // init scene
+  var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var appWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var appHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // init scene
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    app = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Application"]({
+    // funcs
+    function setVideo(source, container) {
+      var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
+      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture);
+      videoSprite.alpha = 0.2; // Stetch the fullscreen
+
+      videoSprite.width = app.current.screen.width;
+      videoSprite.height = app.current.screen.height;
+      container.addChild(videoSprite);
+      texture.baseTexture.resource.autoPlay = true;
+      var video = texture.baseTexture.resource.source;
+      video.muted = true;
+      return video;
+    }
+
+    function setCircles(containerFront, containerMasked) {
+      circlesMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
+
+      containerFront.addChild(circlesMasked.current); // mask container into circle(s)
+
+      containerMasked.mask = circlesMasked.current;
+      circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
+      containerFront.addChild(circlesBorder.current);
+    } // init
+
+
+    app.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Application"]({
       width: elRef.current.offsetWidth,
       height: elRef.current.offsetHeight,
       resolution: window.devicePixelRatio,
@@ -97205,16 +97230,16 @@ var PixiScene = function PixiScene(props) {
       autoDensity: true,
       backgroundColor: 0xFFFFFF
     }); // , backgroundColor: 0xF7F7F7
-    // console.log(this.app.renderer.resolution)
+    // console.log(this.app.currentrenderer.resolution)
 
-    app.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
+    app.current.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
-    app.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.canvas);
-    elRef.current.appendChild(app.view);
+    app.current.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.canvas);
+    elRef.current.appendChild(app.current.view);
     var containerFront = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     var containerMasked = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
-    app.stage.addChild(containerFront);
-    app.stage.addChild(containerMasked); // // set scene
+    app.current.stage.addChild(containerFront);
+    app.current.stage.addChild(containerMasked); // // set scene
 
     var videoPixiBack = setVideo(videoBack, containerMasked);
     var videoPixiFront = setVideo(videoFront, containerFront);
@@ -97230,11 +97255,22 @@ var PixiScene = function PixiScene(props) {
       videoPixiFront.play();
     });
     return function () {
-      app.destroy();
+      app.current.destroy();
     };
   }, [videoBack, videoFront]); // resize
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    // funcs
+    function resizeHandler() {
+      if (app) {
+        app.current.view.style.width = "".concat(elRef.current.offsetWidth, "px");
+        app.current.view.style.height = "".concat(elRef.current.offsetHeight, "px");
+        appWidth.current = elRef.current.offsetWidth;
+        appHeight.current = elRef.current.offsetHeight;
+      }
+    } // init
+
+
     resizeHandler();
     window.addEventListener('resize', resizeHandler);
     return function () {
@@ -97243,7 +97279,37 @@ var PixiScene = function PixiScene(props) {
   }, []); // RAF
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    playerCursorsUpdated = playerCursors;
+    // funcs
+    function updateFrame() {
+      circlesMasked.current.clear();
+      circlesBorder.current.clear();
+      playerCursors.forEach(function (playerCursor) {
+        var color = playerCursor.color,
+            position = playerCursor.position;
+        var x = (position.x + 0.5) * appWidth.current;
+        var y = (position.y + 0.5) * appHeight.current; // console.log(position)
+        // draw masked circles
+        // circlesMasked.current.lineStyle(10, 0xFFBD01, 1)
+
+        circlesMasked.current.beginFill(0xFFFFFF, 1); // circlesMasked.current.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
+
+        circlesMasked.current.drawCircle(x, y, circleRadius); // draw border circles
+
+        var hexNb = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][color]);
+        circlesBorder.current.lineStyle(circleLineStroke, hexNb, 1);
+        circlesBorder.current.drawCircle(x, y, circleRadius);
+
+        if (playerCursor.power === 'freeze') {
+          return;
+        }
+      });
+      circlesMasked.current.endFill(); // const newPosition = getNewPosition(position.current, targetPosition)
+      // const newPathD = getPathD(now, points.current, newPosition)
+      // position.current = newPosition
+      // pathRef.current.setAttribute('d', newPathD).≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥
+    } // init
+
+
     _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(updateFrame);
     return function () {
       _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__["default"].removeSubscriber(updateFrame);
@@ -97254,68 +97320,6 @@ var PixiScene = function PixiScene(props) {
     ref: elRef
   });
 };
-
-function setVideo(source, container) {
-  var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
-  var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // videoSprite.alpha = 0.2
-  // Stetch the fullscreen
-
-  videoSprite.width = app.screen.width;
-  videoSprite.height = app.screen.height;
-  container.addChild(videoSprite);
-  texture.baseTexture.resource.autoPlay = true;
-  var video = texture.baseTexture.resource.source;
-  video.muted = true;
-  return video;
-}
-
-function setCircles(containerFront, containerMasked) {
-  circlesMasked = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
-
-  containerFront.addChild(circlesMasked); // mask container into circle(s)
-
-  containerMasked.mask = circlesMasked;
-  circlesBorder = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
-  containerFront.addChild(circlesBorder);
-}
-
-function updateFrame() {
-  circlesMasked.clear();
-  circlesBorder.clear();
-  playerCursorsUpdated.forEach(function (playerCursor) {
-    var color = playerCursor.color,
-        position = playerCursor.position;
-    var x = (position.x + 0.5) * appWidth;
-    var y = (position.y + 0.5) * appHeight; // console.log(position)
-    // draw masked circles
-    // circlesMasked.lineStyle(10, 0xFFBD01, 1)
-
-    circlesMasked.beginFill(0xFFFFFF, 1); // circlesMasked.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
-
-    circlesMasked.drawCircle(x, y, circleRadius); // draw border circles
-
-    var hexNb = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][color]);
-    circlesBorder.lineStyle(5, hexNb, 1);
-    circlesBorder.drawCircle(x, y, circleRadius);
-
-    if (playerCursor.power === 'freeze') {
-      return;
-    }
-  });
-  circlesMasked.endFill(); // const newPosition = getNewPosition(position.current, targetPosition)
-  // const newPathD = getPathD(now, points.current, newPosition)
-  // position.current = newPosition
-  // pathRef.current.setAttribute('d', newPathD).≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥
-}
-
-function resizeHandler() {
-  if (app) {
-    app.view.style.width = "".concat(elRef.current.offsetWidth, "px");
-    app.view.style.height = "".concat(elRef.current.offsetHeight, "px");
-    appWidth = elRef.current.offsetWidth;
-    appHeight = elRef.current.offsetHeight;
-  }
-}
 
 function hexStToNb(str) {
   return parseInt(str.replace(/^#/, ''), 16);
@@ -98132,7 +98136,6 @@ var Round = function Round(props) {
       roundScore: roundScoreArray[index],
       cancelPower: function cancelPower() {
         setPowerArray(function (prevArray) {
-          console.log('set power suce');
           prevArray[index] = null;
           return prevArray;
         });
