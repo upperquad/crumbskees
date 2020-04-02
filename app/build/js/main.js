@@ -97179,16 +97179,20 @@ __webpack_require__.r(__webpack_exports__);
 
  // globals var
 
-var circles;
+var circlesMasked;
+var circlesBorder;
+var playerCursorsUpdated;
+var app;
+var elRef;
 
 var PixiScene = function PixiScene(props) {
   var playerCursors = props.playerCursors,
       videoBack = props.videoBack,
       videoFront = props.videoFront;
-  var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // init scene
+  elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // init scene
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var app = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Application"]({
+    app = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Application"]({
       width: elRef.current.offsetWidth,
       height: elRef.current.offsetHeight,
       resolution: window.devicePixelRatio,
@@ -97205,41 +97209,11 @@ var PixiScene = function PixiScene(props) {
     var containerFront = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     var containerMasked = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     app.stage.addChild(containerFront);
-    app.stage.addChild(containerMasked);
-
-    var setVideo = function setVideo(source, container) {
-      var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
-      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture);
-      videoSprite.alpha = 0.2; // Stetch the fullscreen
-
-      videoSprite.width = app.screen.width;
-      videoSprite.height = app.screen.height;
-      container.addChild(videoSprite);
-      texture.baseTexture.resource.autoPlay = true;
-      var video = texture.baseTexture.resource.source; // video.loop = true
-
-      video.muted = true; // texture.baseTexture.on('loaded', () => {
-      //   console.log('finish loaded')
-      //   video.pause()
-      //   // pauseVideo(video.baseTexture.source)
-      // })
-
-      return video;
-    };
-
-    var setCircles = function setCircles() {
-      circles = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
-      // this.drawCircle()
-
-      containerFront.addChild(circles); // mask container into circle(s)
-
-      containerMasked.mask = circles;
-    }; // // set scene
-
+    app.stage.addChild(containerMasked); // // set scene
 
     var videoPixiBack = setVideo(videoBack, containerMasked);
     var videoPixiFront = setVideo(videoFront, containerFront);
-    setCircles(); // this.events(true)
+    setCircles(containerFront, containerMasked); // this.events(true)
     // this.mainEvents(true)
     // loop videos
     // Force syncro, because loop is creating an offset
@@ -97250,32 +97224,21 @@ var PixiScene = function PixiScene(props) {
       videoPixiFront.currentTime = 0;
       videoPixiFront.play();
     });
-    console.log('create app');
     return function () {
-      console.log('clean up');
       app.destroy();
     };
-  }, [videoBack, videoFront]); // on RAF, update when change position
+  }, [videoBack, videoFront]); // resize
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var updateFrame = function updateFrame() {
-      circles.clear();
-      playerCursors.forEach(function (playerCursor) {
-        circles.lineStyle(10, 0xFFBD01, 1);
-        circles.beginFill(0xC34288, 1); // circles.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
-
-        circles.drawCircle(300, 300, 50);
-
-        if (playerCursor.power === 'freeze') {
-          return;
-        }
-      });
-      circles.endFill(); // const newPosition = getNewPosition(position.current, targetPosition)
-      // const newPathD = getPathD(now, points.current, newPosition)
-      // position.current = newPosition
-      // pathRef.current.setAttribute('d', newPathD)
+    resizeHandler();
+    window.addEventListener('resize', resizeHandler);
+    return function () {
+      window.removeEventListener('resize', resizeHandler);
     };
+  }, []); // RAF
 
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    playerCursorsUpdated = playerCursors;
     _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(updateFrame);
     return function () {
       _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_2__["default"].removeSubscriber(updateFrame);
@@ -97286,6 +97249,61 @@ var PixiScene = function PixiScene(props) {
     ref: elRef
   });
 };
+
+function setVideo(source, container) {
+  var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
+  var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // videoSprite.alpha = 0.2
+  // Stetch the fullscreen
+
+  videoSprite.width = app.screen.width;
+  videoSprite.height = app.screen.height;
+  container.addChild(videoSprite);
+  texture.baseTexture.resource.autoPlay = true;
+  var video = texture.baseTexture.resource.source;
+  video.muted = true;
+  return video;
+}
+
+function setCircles(containerFront, containerMasked) {
+  circlesMasked = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
+
+  containerFront.addChild(circlesMasked); // mask container into circle(s)
+
+  containerMasked.mask = circlesMasked;
+  circlesBorder = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
+  containerFront.addChild(circlesBorder);
+}
+
+function updateFrame() {
+  circlesMasked.clear();
+  circlesBorder.clear();
+  playerCursorsUpdated.forEach(function (playerCursor) {
+    // draw masked circles
+    // circlesMasked.lineStyle(10, 0xFFBD01, 1)
+    circlesMasked.beginFill(0xFFFFFF, 1); // circlesMasked.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
+
+    circlesMasked.drawCircle(300, 300, 50); // draw border circles
+
+    circlesBorder.lineStyle(5, 0xFFBD01, 1);
+    circlesBorder.drawCircle(300, 300, 50);
+
+    if (playerCursor.power === 'freeze') {
+      return;
+    }
+  });
+  circlesMasked.endFill(); // const newPosition = getNewPosition(position.current, targetPosition)
+  // const newPathD = getPathD(now, points.current, newPosition)
+  // position.current = newPosition
+  // pathRef.current.setAttribute('d', newPathD).≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥
+}
+
+function resizeHandler() {
+  if (app) {
+    console.log('resize');
+    app.view.style.width = "".concat(elRef.current.offsetWidth, "px");
+    app.view.style.height = "".concat(elRef.current.offsetHeight, "px");
+  }
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (PixiScene);
 

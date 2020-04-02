@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import {
   Application,
   Sprite,
-  WRAP_MODES,
+  // WRAP_MODES,
   Container,
-  Loader,
+  // Loader,
   Texture,
   Graphics,
 } from 'pixi.js'
@@ -14,15 +14,19 @@ import AnimationFrameManager from '~managers/AnimationFrameManager'
 import styles from './style.module.scss'
 
 // globals var
-let circles
+let circlesMasked
+let circlesBorder
+let playerCursorsUpdated
+let app
+let elRef
 
 const PixiScene = props => {
   const { playerCursors, videoBack, videoFront } = props
-  const elRef = useRef()
+  elRef = useRef()
 
   // init scene
   useEffect(() => {
-    const app = new Application({ width: elRef.current.offsetWidth, height: elRef.current.offsetHeight, resolution: window.devicePixelRatio, antialias: true, autoDensity: true, backgroundColor: 0xFFFFFF }) // , backgroundColor: 0xF7F7F7
+    app = new Application({ width: elRef.current.offsetWidth, height: elRef.current.offsetHeight, resolution: window.devicePixelRatio, antialias: true, autoDensity: true, backgroundColor: 0xFFFFFF }) // , backgroundColor: 0xF7F7F7
     // console.log(this.app.renderer.resolution)
 
     app.stage.interactive = true
@@ -36,47 +40,10 @@ const PixiScene = props => {
     app.stage.addChild(containerFront)
     app.stage.addChild(containerMasked)
 
-    const setVideo = (source, container) => {
-      const texture = Texture.from(source)
-      const videoSprite = new Sprite(texture)
-
-      videoSprite.alpha = 0.2
-
-      // Stetch the fullscreen
-      videoSprite.width = app.screen.width
-      videoSprite.height = app.screen.height
-
-      container.addChild(videoSprite)
-
-      texture.baseTexture.resource.autoPlay = true
-
-      const video = texture.baseTexture.resource.source
-      // video.loop = true
-      video.muted = true
-
-      // texture.baseTexture.on('loaded', () => {
-      //   console.log('finish loaded')
-      //   video.pause()
-      //   // pauseVideo(video.baseTexture.source)
-      // })
-
-      return video
-    }
-
-    const setCircles = () => {
-      circles = new Graphics()
-      // Circle
-      // this.drawCircle()
-
-      containerFront.addChild(circles)
-      // mask container into circle(s)
-      containerMasked.mask = circles
-    }
-
     // // set scene
     const videoPixiBack = setVideo(videoBack, containerMasked)
     const videoPixiFront = setVideo(videoFront, containerFront)
-    setCircles()
+    setCircles(containerFront, containerMasked)
 
     // this.events(true)
     // this.mainEvents(true)
@@ -89,37 +56,24 @@ const PixiScene = props => {
       videoPixiFront.play()
     })
 
-    console.log('create app')
-
     return () => {
-      console.log('clean up')
       app.destroy()
     }
   }, [videoBack, videoFront])
 
-  // on RAF, update when change position
+  // resize
   useEffect(() => {
-    const updateFrame = () => {
-      circles.clear()
+    resizeHandler()
+    window.addEventListener('resize', resizeHandler)
 
-      playerCursors.forEach(playerCursor => {
-        circles.lineStyle(10, 0xFFBD01, 1)
-        circles.beginFill(0xC34288, 1)
-        // circles.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
-        circles.drawCircle(300, 300, 50)
-        if (playerCursor.power === 'freeze') {
-          return
-        }
-      })
-
-      circles.endFill()
-
-      // const newPosition = getNewPosition(position.current, targetPosition)
-      // const newPathD = getPathD(now, points.current, newPosition)
-      // position.current = newPosition
-      // pathRef.current.setAttribute('d', newPathD)
+    return () => {
+      window.removeEventListener('resize', resizeHandler)
     }
+  }, [])
 
+  // RAF
+  useEffect(() => {
+    playerCursorsUpdated = playerCursors
     AnimationFrameManager.addSubscriber(updateFrame)
 
     return () => {
@@ -130,6 +84,73 @@ const PixiScene = props => {
   return (
     <div className={styles.pixiScene} ref={elRef} />
   )
+}
+
+function setVideo(source, container) {
+  const texture = Texture.from(source)
+  const videoSprite = new Sprite(texture)
+
+  // videoSprite.alpha = 0.2
+
+  // Stetch the fullscreen
+  videoSprite.width = app.screen.width
+  videoSprite.height = app.screen.height
+
+  container.addChild(videoSprite)
+
+  texture.baseTexture.resource.autoPlay = true
+
+  const video = texture.baseTexture.resource.source
+  video.muted = true
+
+  return video
+}
+
+function setCircles(containerFront, containerMasked) {
+  circlesMasked = new Graphics()
+  // Circle
+  containerFront.addChild(circlesMasked)
+  // mask container into circle(s)
+  containerMasked.mask = circlesMasked
+
+  circlesBorder = new Graphics()
+  containerFront.addChild(circlesBorder)
+}
+
+function updateFrame() {
+  circlesMasked.clear()
+  circlesBorder.clear()
+
+  playerCursorsUpdated.forEach(playerCursor => {
+    // draw masked circles
+    // circlesMasked.lineStyle(10, 0xFFBD01, 1)
+    circlesMasked.beginFill(0xFFFFFF, 1)
+    // circlesMasked.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
+    circlesMasked.drawCircle(300, 300, 50)
+
+    // draw border circles
+    circlesBorder.lineStyle(5, 0xFFBD01, 1)
+    circlesBorder.drawCircle(300, 300, 50)
+
+    if (playerCursor.power === 'freeze') {
+      return
+    }
+  })
+
+  circlesMasked.endFill()
+
+  // const newPosition = getNewPosition(position.current, targetPosition)
+  // const newPathD = getPathD(now, points.current, newPosition)
+  // position.current = newPosition
+  // pathRef.current.setAttribute('d', newPathD).≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥
+}
+
+function resizeHandler() {
+  if (app) {
+    console.log('resize')
+    app.view.style.width = `${elRef.current.offsetWidth}px`
+    app.view.style.height = `${elRef.current.offsetHeight}px`
+  }
 }
 
 export default PixiScene
