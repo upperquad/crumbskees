@@ -20,6 +20,10 @@ let circlesBorder
 let playerCursorsUpdated
 let app
 let elRef
+let appWidth
+let appHeight
+
+const circleRadius = 50
 
 const PixiScene = props => {
   const { playerCursors, videoBack, videoFront } = props
@@ -123,16 +127,22 @@ function updateFrame() {
   circlesBorder.clear()
 
   playerCursorsUpdated.forEach(playerCursor => {
+    const { color, position } = playerCursor
+
+    const x = (position.x + 0.5) * appWidth
+    const y = (position.y + 0.5) * appHeight
+    // console.log(position)
     // draw masked circles
     // circlesMasked.lineStyle(10, 0xFFBD01, 1)
     circlesMasked.beginFill(0xFFFFFF, 1)
     // circlesMasked.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
-    circlesMasked.drawCircle(300, 300, 50)
+
+    circlesMasked.drawCircle(x, y, circleRadius)
 
     // draw border circles
-    const color = hexStToNb(COLORS[playerCursor.color])
-    circlesBorder.lineStyle(5, color, 1)
-    circlesBorder.drawCircle(300, 300, 50)
+    const hexNb = hexStToNb(COLORS[color])
+    circlesBorder.lineStyle(5, hexNb, 1)
+    circlesBorder.drawCircle(x, y, circleRadius)
 
     if (playerCursor.power === 'freeze') {
       return
@@ -149,9 +159,10 @@ function updateFrame() {
 
 function resizeHandler() {
   if (app) {
-    console.log('resize')
     app.view.style.width = `${elRef.current.offsetWidth}px`
     app.view.style.height = `${elRef.current.offsetHeight}px`
+    appWidth = elRef.current.offsetWidth
+    appHeight = elRef.current.offsetHeight
   }
 }
 

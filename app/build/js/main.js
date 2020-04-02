@@ -97186,6 +97186,9 @@ var circlesBorder;
 var playerCursorsUpdated;
 var app;
 var elRef;
+var appWidth;
+var appHeight;
+var circleRadius = 50;
 
 var PixiScene = function PixiScene(props) {
   var playerCursors = props.playerCursors,
@@ -97280,15 +97283,20 @@ function updateFrame() {
   circlesMasked.clear();
   circlesBorder.clear();
   playerCursorsUpdated.forEach(function (playerCursor) {
+    var color = playerCursor.color,
+        position = playerCursor.position;
+    var x = (position.x + 0.5) * appWidth;
+    var y = (position.y + 0.5) * appHeight; // console.log(position)
     // draw masked circles
     // circlesMasked.lineStyle(10, 0xFFBD01, 1)
+
     circlesMasked.beginFill(0xFFFFFF, 1); // circlesMasked.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
 
-    circlesMasked.drawCircle(300, 300, 50); // draw border circles
+    circlesMasked.drawCircle(x, y, circleRadius); // draw border circles
 
-    var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][playerCursor.color]);
-    circlesBorder.lineStyle(5, color, 1);
-    circlesBorder.drawCircle(300, 300, 50);
+    var hexNb = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][color]);
+    circlesBorder.lineStyle(5, hexNb, 1);
+    circlesBorder.drawCircle(x, y, circleRadius);
 
     if (playerCursor.power === 'freeze') {
       return;
@@ -97302,9 +97310,10 @@ function updateFrame() {
 
 function resizeHandler() {
   if (app) {
-    console.log('resize');
     app.view.style.width = "".concat(elRef.current.offsetWidth, "px");
     app.view.style.height = "".concat(elRef.current.offsetHeight, "px");
+    appWidth = elRef.current.offsetWidth;
+    appHeight = elRef.current.offsetHeight;
   }
 }
 
