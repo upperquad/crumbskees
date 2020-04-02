@@ -97179,22 +97179,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // globals var
 
-var circleRadius = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"];
-var circleLineStroke = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] * 0.083;
 
 var PixiScene = function PixiScene(props) {
   var items = props.items,
       playerCursors = props.playerCursors,
       videoBack = props.videoBack,
-      videoFront = props.videoFront;
+      videoFront = props.videoFront; // re-used references through hooks
+
   var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var appWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var appHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // keep the width and height the first time the app is initiated
+  // the autoresizing of pixi is handling the rest, no need to update with new width/height
+
+  var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var circlesSize = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var circlesStroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // set up scene
 
@@ -97221,7 +97223,10 @@ var PixiScene = function PixiScene(props) {
 
       containerMasked.current.mask = circlesMasked.current;
       circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
-      containerFront.current.addChild(circlesBorder.current);
+      containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
+
+      circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
+      circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] * 0.083 / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
     } // init
 
 
@@ -97268,13 +97273,17 @@ var PixiScene = function PixiScene(props) {
       if (app) {
         app.current.view.style.width = "".concat(elRef.current.offsetWidth, "px");
         app.current.view.style.height = "".concat(elRef.current.offsetHeight, "px");
-        appWidth.current = elRef.current.offsetWidth;
-        appHeight.current = elRef.current.offsetHeight;
       }
+    }
+
+    function initSizes() {
+      initWidth.current = elRef.current.offsetWidth;
+      initHeight.current = elRef.current.offsetHeight;
     } // init
 
 
     resizeHandler();
+    initSizes();
     window.addEventListener('resize', resizeHandler);
     return function () {
       window.removeEventListener('resize', resizeHandler);
@@ -97284,10 +97293,10 @@ var PixiScene = function PixiScene(props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     function setItem(item, index) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);
-      sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * appWidth.current;
-      sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * appWidth.current;
-      sprite.position.x = item.x * appWidth.current;
-      sprite.position.y = item.y * appHeight.current;
+      sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * initWidth.current;
+      sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * initWidth.current;
+      sprite.position.x = item.x * initWidth.current;
+      sprite.position.y = item.y * initHeight.current;
       sprite.anchor.set(0.5, 0.5);
       console.log(sprite.position);
       containerFront.current.addChild(sprite);
@@ -97306,21 +97315,19 @@ var PixiScene = function PixiScene(props) {
       playerCursors.forEach(function (playerCursor) {
         var color = playerCursor.color,
             position = playerCursor.position;
-        var x = (position.x + 0.5) * appWidth.current;
-        var y = (position.y + 0.5) * appHeight.current;
-        var size = circleRadius / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * appWidth.current;
-        var stroke = circleLineStroke / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * appWidth.current; // console.log(position)
+        var x = (position.x + 0.5) * initWidth.current;
+        var y = (position.y + 0.5) * initHeight.current; // console.log(position)
         // draw masked circles
         // circlesMasked.current.lineStyle(10, 0xFFBD01, 1)
 
         circlesMasked.current.beginFill(0xFFFFFF, 1); // circlesMasked.current.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
         //
 
-        circlesMasked.current.drawCircle(x, y, size); // draw border circles
+        circlesMasked.current.drawCircle(x, y, circlesSize.current); // draw border circles
 
         var hexNb = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_3__["COLORS"][color]);
-        circlesBorder.current.lineStyle(stroke, hexNb, 1);
-        circlesBorder.current.drawCircle(x, y, size);
+        circlesBorder.current.lineStyle(circlesStroke.current, hexNb, 1);
+        circlesBorder.current.drawCircle(x, y, circlesSize.current);
 
         if (playerCursor.power === 'freeze') {
           return;
