@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SocketPeer demo</title>
+    <style>
+      html { font-size: 12px; }
+      body { color: #333; font: 1.5rem/1.3 monospace; }
+      .main { margin: 3vw 10%; }
+      p { color: #333; }
+      .projectName { background: yellow; color: #666; display: inline-block; font-size: 2.5rem; font-weight: 300; margin-bottom: .5rem; position: relative; left: -1rem; padding: .5rem 1rem; }
+      .projectName b { color: #000; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <main id="main" class="main">
+      <h1 class="projectName"><b>SocketPeer</b> demo</h1>
+    </main>
+    <footer id="footer"></footer>
+    <script src="/socketpeer/socketpeer.js"></script>
+    <script>
+
+      var footerEl = document.querySelector('#footer');
+
+      function _append (msg) {
+        main.innerHTML += '<p>' + msg + '</p>';
+        footer.scrollIntoView();
+      }
+
+      function error (msg) {
+        console.error.call(console, arguments);
+        _append(msg);
+      }
+
+      function log (msg) {
+        console.log.call(console, arguments);
+        _append(msg);
+      }
+
+    </script>
+    <script>
+      (function () {
+
+        var peer = new SocketPeer({
+          pairCode: 'yolo',
+          url: 'http://localhost:3000/socketpeer/'
+        });
+
+        peer.on('connect', function () {
+          log('peer connected');
+        });
+
+        peer.on('connect_timeout', function () {
+          error('connection timed out (after ' + peer.timeout + ' ms)');
+        });
+
+        peer.on('data', function (data) {
+          log('data received: ' + JSON.stringify(data));
+        });
+
+        peer.on('busy', function () {
+          error('`pairCode` "' + peer.pairCode + '" is already in use');
+        });
+
+        peer.on('rtc.signal', function () {
+          log('WebRTC signalling');
+        });
+
+        peer.on('peer.found', function (data) {
+          log('peer found (was initiator? ' + (data.initiator ? 'yes' : 'no') + ')');
+          peer.send('hello');
+        });
+
+        peer.on('upgrade', function () {
+          log('successfully upgraded WebSocket ⇒ to WebRTC peer connection');
+          peer.send('upgraded');
+        });
+
+        peer.on('upgrade_attempt', function () {
+          log('attempting to upgrade WebSocket ⇒ to WebRTC peer connection (attempt number: ' + peer._connections.rtc.attempt + ')');
+        });
+
+        peer.on('downgrade', function () {
+          log('downgraded WebRTC peer connection ⇒ to WebSocket connection');
+        });
+
+        peer.on('error', function (err) {
+          error('error:', err);
+        });
+
+        window.peer = peer;
+
+      })();
+    </script>
+  </body>
+</html>

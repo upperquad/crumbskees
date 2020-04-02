@@ -1,0 +1,78 @@
+{
+  "name": "socketpeer",
+  "description": "simple 1:1 messaging via WebRTC Data Channels and WebSockets",
+  "version": "1.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cvan/socketpeer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cvan/socketpeer/issues"
+  },
+  "dependencies": {
+    "cross-env": "^4.0.0",
+    "inherits": "^2.0.1",
+    "simple-peer": "^4.0.2",
+    "ws": "^0.7.1",
+    "xtend": "^4.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "nodemon": "^1.3.7",
+    "onchange": "^1.0.0",
+    "release-it": "^2.7.1",
+    "semistandard": "^10.0.0",
+    "snazzy": "^7.0.0",
+    "tape": "^3.5.0",
+    "uglify-js": "^2.4.17",
+    "zuul": "^2.1.1"
+  },
+  "keywords": [
+    "webrtc",
+    "p2p",
+    "data channel",
+    "data channels",
+    "data",
+    "peer",
+    "stream",
+    "peer-to-peer",
+    "data channel stream",
+    "webrtc stream",
+    "peer",
+    "websocket",
+    "websockets",
+    "socketpeer"
+  ],
+  "license": "MIT",
+  "main": "server/index.js",
+  "browser": "browser/index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "predev": "npm run build",
+    "dev": "cross-env NODE_ENV=development nodemon server",
+    "preprod": "npm run build",
+    "prod": "cross-env NODE_ENV=production node server",
+    "dist": "npm run build",
+    "build": "npm run browserify && npm run minify",
+    "browserify": "browserify -s SocketPeer -r ./browser/ -o socketpeer.js",
+    "minify": "uglifyjs socketpeer.js -c warnings=false -m > socketpeer.min.js",
+    "prewatch": "npm run build",
+    "watch": "onchange browser/* -- npm run build",
+    "lint": "semistandard -v | snazzy || true",
+    "lint-fix": "semistandard -v --fix | snazzy || true",
+    "pretest": "npm run lint",
+    "test": "zuul -- test/*.js",
+    "pretest-local": "npm run lint",
+    "test-local": "zuul --local 3001 -- test/*.js",
+    "release": "release-it",
+    "release-major": "npm run release -- --increment major",
+    "release-minor": "npm run release -- --increment minor",
+    "release-patch": "npm run release -- --increment patch"
+  },
+  "semistandard": {
+    "ignore": [
+      "dist",
+      "socketpeer*.js"
+    ]
+  }
+}
