@@ -68,7 +68,7 @@ export const GAME_ROUNDS = [
     itemImage: round1Item,
     videoIntro: round1IntroVideo,
     roundNameText: 'Round\xa001',
-    numItems: DEBUG ? 2 : 10,
+    numItems: DEBUG ? 10 : 10,
     gridCols: 32,
     gridLines: 14,
     power: {

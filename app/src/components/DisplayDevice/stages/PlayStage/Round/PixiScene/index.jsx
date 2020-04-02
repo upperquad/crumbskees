@@ -10,31 +10,33 @@ import {
 } from 'pixi.js'
 // import PlayersManager from '~managers/PlayersManager'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
-import { COLORS } from '~constants'
+import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'
 
 import styles from './style.module.scss'
 
 // globals var
-const circleRadius = 50
-const circleLineStroke = 5
+const circleRadius = GRID_UNIT
+const circleLineStroke = GRID_UNIT * 0.083
 
 const PixiScene = props => {
-  const { playerCursors, videoBack, videoFront } = props
+  const { items, playerCursors, videoBack, videoFront } = props
   const elRef = useRef()
   const app = useRef()
   const appWidth = useRef()
   const appHeight = useRef()
   const circlesMasked = useRef()
   const circlesBorder = useRef()
+  const containerMasked = useRef()
+  const containerFront = useRef()
 
-  // init scene
+  // set up scene
   useEffect(() => {
     // funcs
     function setVideo(source, container) {
       const texture = Texture.from(source)
       const videoSprite = new Sprite(texture)
 
-      videoSprite.alpha = 0.2
+      // videoSprite.alpha = 0.2
 
       // Stetch the fullscreen
       videoSprite.width = app.current.screen.width
@@ -50,15 +52,15 @@ const PixiScene = props => {
       return video
     }
 
-    function setCircles(containerFront, containerMasked) {
+    function setCircles() {
       circlesMasked.current = new Graphics()
       // Circle
-      containerFront.addChild(circlesMasked.current)
+      containerFront.current.addChild(circlesMasked.current)
       // mask container into circle(s)
-      containerMasked.mask = circlesMasked.current
+      containerMasked.current.mask = circlesMasked.current
 
       circlesBorder.current = new Graphics()
-      containerFront.addChild(circlesBorder.current)
+      containerFront.current.addChild(circlesBorder.current)
     }
 
     // init
@@ -71,15 +73,15 @@ const PixiScene = props => {
     app.current.view.classList.add(styles.canvas)
     elRef.current.appendChild(app.current.view)
 
-    const containerFront = new Container()
-    const containerMasked = new Container()
-    app.current.stage.addChild(containerFront)
-    app.current.stage.addChild(containerMasked)
+    containerFront.current = new Container()
+    containerMasked.current = new Container()
+    app.current.stage.addChild(containerFront.current)
+    app.current.stage.addChild(containerMasked.current)
 
     // // set scene
-    const videoPixiBack = setVideo(videoBack, containerMasked)
-    const videoPixiFront = setVideo(videoFront, containerFront)
-    setCircles(containerFront, containerMasked)
+    const videoPixiBack = setVideo(videoBack, containerMasked.current)
+    const videoPixiFront = setVideo(videoFront, containerFront.current)
+    setCircles()
 
     // this.events(true)
     // this.mainEvents(true)
@@ -118,6 +120,28 @@ const PixiScene = props => {
     }
   }, [])
 
+  // update items
+  useEffect(() => {
+    function setItem(item, index) {
+      const sprite = Sprite.from(item.image)
+      sprite.height = (item.size / VB_WIDTH) * appWidth.current
+      sprite.width = (item.size / VB_WIDTH) * appWidth.current
+
+      sprite.position.x = item.x * appWidth.current
+      sprite.position.y = item.y * appHeight.current
+
+      sprite.anchor.set(0.5, 0.5)
+
+      console.log(sprite.position)
+
+      containerFront.current.addChild(sprite)
+    }
+
+    items.forEach((item, index) => {
+      setItem(item, index)
+    })
+  }, [items])
+
   // RAF
   useEffect(() => {
     // funcs
@@ -130,18 +154,21 @@ const PixiScene = props => {
 
         const x = (position.x + 0.5) * appWidth.current
         const y = (position.y + 0.5) * appHeight.current
+        const size = (circleRadius / VB_WIDTH) * appWidth.current
+        const stroke = (circleLineStroke / VB_WIDTH) * appWidth.current
         // console.log(position)
         // draw masked circles
         // circlesMasked.current.lineStyle(10, 0xFFBD01, 1)
         circlesMasked.current.beginFill(0xFFFFFF, 1)
         // circlesMasked.current.drawCircle(this.mouse.x, this.mouse.y - this.marginTop, 50)
+        //
 
-        circlesMasked.current.drawCircle(x, y, circleRadius)
+        circlesMasked.current.drawCircle(x, y, size)
 
         // draw border circles
         const hexNb = hexStToNb(COLORS[color])
-        circlesBorder.current.lineStyle(circleLineStroke, hexNb, 1)
-        circlesBorder.current.drawCircle(x, y, circleRadius)
+        circlesBorder.current.lineStyle(stroke, hexNb, 1)
+        circlesBorder.current.drawCircle(x, y, size)
 
         if (playerCursor.power === 'freeze') {
           return

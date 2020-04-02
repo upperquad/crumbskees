@@ -261,7 +261,7 @@ const Round = props => {
           >
             <div className={classNames(styles.gameZone)}>
               {/* <img className={styles.videoFront} src={videoFront} alt="" /> */}
-              <PixiScene videoFront={videoFront} videoBack={videoBack} playerCursors={playerCursors} />
+              <PixiScene videoFront={videoFront} videoBack={videoBack} playerCursors={playerCursors} items={items} />
               <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
                 <defs>
                   <clipPath id="game-round-clippath" className={styles.svgClipPath}>
