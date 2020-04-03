@@ -235,18 +235,18 @@ const PixiScene = props => {
 
       playerCursors.forEach((playerCursor, index) => {
         const { color, position, power } = playerCursor
+        // console.log(position)
 
         if (power === 'freeze') {
           // position has to stay and color is gray
           return
         }
-
         const newPosition = getNewPosition(cursorsLastPositions.current[index], position)
-        cursorsLastPositions.current[index].lastPosition = newPosition
+        cursorsLastPositions.current[index] = newPosition
 
         // draw circles
-        const x = (position.x + 0.5) * initWidth.current
-        const y = (position.y + 0.5) * initHeight.current
+        const x = (newPosition.x + 0.5) * initWidth.current
+        const y = (newPosition.y + 0.5) * initHeight.current
         // draw masked circles
         circlesMasked.current.beginFill(0xFFFFFF, 1)
         circlesMasked.current.drawCircle(x, y, circlesSize.current)
@@ -273,11 +273,6 @@ const PixiScene = props => {
 
       return { x, y }
     }
-
-    // save last player position in a ref
-    // playerCursors.forEach((playerCursor, index) => {
-    //   cursorsLastPositions.current[index].lastPosition = playerCursor.position
-    // })
 
     // init RAF
     AnimationFrameManager.addSubscriber(updateFrame)

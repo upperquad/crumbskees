@@ -97393,7 +97393,7 @@ var PixiScene = function PixiScene(props) {
       playerCursors.forEach(function (playerCursor, index) {
         var color = playerCursor.color,
             position = playerCursor.position,
-            power = playerCursor.power;
+            power = playerCursor.power; // console.log(position)
 
         if (power === 'freeze') {
           // position has to stay and color is gray
@@ -97401,10 +97401,10 @@ var PixiScene = function PixiScene(props) {
         }
 
         var newPosition = getNewPosition(cursorsLastPositions.current[index], position);
-        cursorsLastPositions.current[index].lastPosition = newPosition; // draw circles
+        cursorsLastPositions.current[index] = newPosition; // draw circles
 
-        var x = (position.x + 0.5) * initWidth.current;
-        var y = (position.y + 0.5) * initHeight.current; // draw masked circles
+        var x = (newPosition.x + 0.5) * initWidth.current;
+        var y = (newPosition.y + 0.5) * initHeight.current; // draw masked circles
 
         circlesMasked.current.beginFill(0xFFFFFF, 1);
         circlesMasked.current.drawCircle(x, y, circlesSize.current); // draw border circles
@@ -97430,11 +97430,7 @@ var PixiScene = function PixiScene(props) {
         x: x,
         y: y
       };
-    } // save last player position in a ref
-    // playerCursors.forEach((playerCursor, index) => {
-    //   cursorsLastPositions.current[index].lastPosition = playerCursor.position
-    // })
-    // init RAF
+    } // init RAF
 
 
     _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber(updateFrame);
