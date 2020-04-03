@@ -26,7 +26,7 @@ const maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55
 const minDuration = 500
 const maxDuration = 700
 const pointsCount = 8
-const decelerationCircleCoef = 0.1
+const decelerationCircleCoef = 0.15
 
 const PixiScene = props => {
   const { items, playerCursors, videoBack, videoFront } = props
@@ -46,7 +46,7 @@ const PixiScene = props => {
   const circlesPoints = useRef(null)
   const cursorsLastPositionsArr = []
   playerCursors.forEach(() => {
-    cursorsLastPositionsArr.push({ x: 0, y: 0 })
+    cursorsLastPositionsArr.push({ x: 0.5, y: 0.5 })
   })
   const cursorsLastPositions = useRef(cursorsLastPositionsArr)
 

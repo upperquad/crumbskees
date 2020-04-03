@@ -97195,7 +97195,7 @@ var maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55;
 var minDuration = 500;
 var maxDuration = 700;
 var pointsCount = 8;
-var decelerationCircleCoef = 0.1;
+var decelerationCircleCoef = 0.15;
 
 var PixiScene = function PixiScene(props) {
   var items = props.items,
@@ -97219,8 +97219,8 @@ var PixiScene = function PixiScene(props) {
   var cursorsLastPositionsArr = [];
   playerCursors.forEach(function () {
     cursorsLastPositionsArr.push({
-      x: 0,
-      y: 0
+      x: 0.5,
+      y: 0.5
     });
   });
   var cursorsLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(cursorsLastPositionsArr); // set up scene
