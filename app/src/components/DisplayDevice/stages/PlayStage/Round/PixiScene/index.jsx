@@ -17,12 +17,6 @@ import { GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
 
 import styles from './style.module.scss'
 
-const centerX = VB_WIDTH / 2
-const centerY = VB_HEIGHT / 2
-const minRadius = GRID_UNIT * 1.1
-const maxRadius = minRadius + minRadius * 0.45
-const minMiddleRadius = minRadius + (maxRadius - minRadius) * 0.45
-const maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55
 const minDuration = 500
 const maxDuration = 700
 const pointsCount = 8
@@ -31,23 +25,32 @@ const decelerationCircleCoef = 0.15
 const PixiScene = props => {
   const { items, playerCursors, videoBack, videoFront } = props
   // re-used references through hooks
-  const elRef = useRef()
-  const app = useRef()
+  const elRef = useRef(null)
+  const app = useRef(null)
   // keep the width and height the first time the app is initiated
   // the autoresizing of pixi is handling the rest, no need to update with new width/height
+  // pixi scene
   const initWidth = useRef(0)
   const initHeight = useRef(0)
-  const circlesMasked = useRef()
-  const circlesBorder = useRef()
-  const circlesSize = useRef()
-  const circlesStroke = useRef()
-  const containerMasked = useRef()
-  const containerFront = useRef()
+  const containerMasked = useRef(null)
+  const containerFront = useRef(null)
+  // circles
+  const circlesMasked = useRef(null)
+  const circlesBorder = useRef(null)
+  const circlesSize = useRef(0)
+  const circlesStroke = useRef(0)
   const circlesPoints = useRef([])
-  const cursorsLastPositions = useRef([])
+  const circlesLastPositions = useRef([])
   PlayersManager.players.forEach(() => {
-    cursorsLastPositions.current.push({ x: 0.5, y: 0.5 })
+    circlesLastPositions.current.push({ x: 0.5, y: 0.5 })
   })
+  // circles positions
+  const centerX = useRef(0)
+  const centerY = useRef(0)
+  const minRadius = useRef(0)
+  const maxRadius = useRef(0)
+  const minMiddleRadius = useRef(0)
+  const maxMiddleRadius = useRef(0)
 
   // set up scene
   useEffect(() => {
@@ -85,6 +88,19 @@ const PixiScene = props => {
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       circlesSize.current = ((GRID_UNIT * 1.35) / VB_WIDTH) * elRef.current.offsetWidth
       circlesStroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
+      // set centered positions for cubic bezier on circle
+      centerX.current = elRef.current.offsetWidth / 2
+      centerY.current = elRef.current.offsetHeight / 2
+      minRadius.current = ((GRID_UNIT * 1.1) / VB_WIDTH) * elRef.current.offsetWidth
+      maxRadius.current = minRadius.current + minRadius.current * 0.45
+      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45
+      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.55
+
+      PlayersManager.players.forEach(() => {
+        const circlePoints = setCirclePoints()
+        circlesPoints.current.push(circlePoints)
+        circlesLastPositions.current.push({ x: 0.5, y: 0.5 })
+      })
     }
 
     function setCirclePoints() {
@@ -103,12 +119,12 @@ const PixiScene = props => {
           angle,
           duration,
           startAnim,
-          x: centerX + Math.cos(angle) * random(minRadius, maxRadius),
-          y: centerY + Math.sin(angle) * random(minRadius, maxRadius),
-          targetMinX: centerX + Math.cos(angle) * random(minRadius, minMiddleRadius),
-          targetMinY: centerY + Math.sin(angle) * random(minRadius, minMiddleRadius),
-          targetMaxX: centerX + Math.cos(angle) * random(maxMiddleRadius, maxRadius),
-          targetMaxY: centerY + Math.sin(angle) * random(maxMiddleRadius, maxRadius),
+          x: centerX.current + Math.cos(angle) * random(minRadius.current, maxRadius.current),
+          y: centerY.current + Math.sin(angle) * random(minRadius.current, maxRadius.current),
+          targetMinX: centerX.current + Math.cos(angle) * random(minRadius.current, minMiddleRadius.current),
+          targetMinY: centerY.current + Math.sin(angle) * random(minRadius.current, minMiddleRadius.current),
+          targetMaxX: centerX.current + Math.cos(angle) * random(maxMiddleRadius.current, maxRadius.current),
+          targetMaxY: centerY.current + Math.sin(angle) * random(maxMiddleRadius.current, maxRadius.current),
         }
 
         point.startX = point.x
@@ -137,16 +153,10 @@ const PixiScene = props => {
     app.current.stage.addChild(containerFront.current)
     app.current.stage.addChild(containerMasked.current)
 
-    // // set scene
+    // set elements into scene
     const videoPixiBack = setVideo(videoBack, containerMasked.current)
     const videoPixiFront = setVideo(videoFront, containerFront.current)
     setCircles()
-    PlayersManager.players.forEach(() => {
-      const circlePoints = setCirclePoints()
-      circlesPoints.current.push(circlePoints)
-    })
-
-    console.log(circlesPoints.current)
 
     // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
@@ -243,10 +253,11 @@ const PixiScene = props => {
           // position has to stay and color is gray
           return
         }
-        const newPosition = getDelayedPosition(cursorsLastPositions.current[index], position)
+        const newPosition = getDelayedPosition(circlesLastPositions.current[index], position)
         // draw circles
         const points = getPointsAroundCircle(now, circlesPoints.current[index])
-        cursorsLastPositions.current[index] = newPosition
+        circlesLastPositions.current[index] = newPosition
+        console.log(newPosition)
 
         drawCubicBezier(circlesBorder.current, points, newPosition)
 
@@ -350,7 +361,9 @@ const PixiScene = props => {
         container.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
       }
 
-      container.position.x = 0 // (1 - (position.x + 0.5)) * initWidth.current
+      console.log(position.x)
+
+      container.position.x = (position.x) * initWidth.current
       container.position.y = 0 // (position.y + 0.5) * initHeight.current
     }
 

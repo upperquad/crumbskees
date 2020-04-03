@@ -97187,12 +97187,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var centerX = _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] / 2;
-var centerY = _constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"] / 2;
-var minRadius = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.1;
-var maxRadius = minRadius + minRadius * 0.45;
-var minMiddleRadius = minRadius + (maxRadius - minRadius) * 0.45;
-var maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55;
 var minDuration = 500;
 var maxDuration = 700;
 var pointsCount = 8;
@@ -97204,26 +97198,35 @@ var PixiScene = function PixiScene(props) {
       videoBack = props.videoBack,
       videoFront = props.videoFront; // re-used references through hooks
 
-  var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // keep the width and height the first time the app is initiated
+  var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // keep the width and height the first time the app is initiated
   // the autoresizing of pixi is handling the rest, no need to update with new width/height
+  // pixi scene
 
   var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var circlesSize = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var circlesStroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
+
+  var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var circlesSize = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var circlesStroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var circlesPoints = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
-  var cursorsLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
+  var circlesLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
   _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function () {
-    cursorsLastPositions.current.push({
+    circlesLastPositions.current.push({
       x: 0.5,
       y: 0.5
     });
-  }); // set up scene
+  }); // circles positions
+
+  var centerX = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var centerY = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0); // set up scene
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
@@ -97251,7 +97254,22 @@ var PixiScene = function PixiScene(props) {
       containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
       circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.35 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
-      circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
+      circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set centered positions for cubic bezier on circle
+
+      centerX.current = elRef.current.offsetWidth / 2;
+      centerY.current = elRef.current.offsetHeight / 2;
+      minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.1 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
+      maxRadius.current = minRadius.current + minRadius.current * 0.45;
+      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45;
+      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.55;
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function () {
+        var circlePoints = setCirclePoints();
+        circlesPoints.current.push(circlePoints);
+        circlesLastPositions.current.push({
+          x: 0.5,
+          y: 0.5
+        });
+      });
     }
 
     function setCirclePoints() {
@@ -97270,12 +97288,12 @@ var PixiScene = function PixiScene(props) {
           angle: angle,
           duration: duration,
           startAnim: startAnim,
-          x: centerX + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius, maxRadius),
-          y: centerY + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius, maxRadius),
-          targetMinX: centerX + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius, minMiddleRadius),
-          targetMinY: centerY + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius, minMiddleRadius),
-          targetMaxX: centerX + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius, maxRadius),
-          targetMaxY: centerY + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius, maxRadius)
+          x: centerX.current + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
+          y: centerY.current + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
+          targetMinX: centerX.current + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
+          targetMinY: centerY.current + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
+          targetMaxX: centerX.current + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current),
+          targetMaxY: centerY.current + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current)
         };
         point.startX = point.x;
         point.startY = point.y;
@@ -97305,16 +97323,11 @@ var PixiScene = function PixiScene(props) {
     containerFront.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     containerMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     app.current.stage.addChild(containerFront.current);
-    app.current.stage.addChild(containerMasked.current); // // set scene
+    app.current.stage.addChild(containerMasked.current); // set elements into scene
 
     var videoPixiBack = setVideo(videoBack, containerMasked.current);
     var videoPixiFront = setVideo(videoFront, containerFront.current);
-    setCircles();
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function () {
-      var circlePoints = setCirclePoints();
-      circlesPoints.current.push(circlePoints);
-    });
-    console.log(circlesPoints.current); // Videos looping:
+    setCircles(); // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
 
     videoPixiFront.addEventListener('ended', function () {
@@ -97400,10 +97413,11 @@ var PixiScene = function PixiScene(props) {
           return;
         }
 
-        var newPosition = getDelayedPosition(cursorsLastPositions.current[index], position); // draw circles
+        var newPosition = getDelayedPosition(circlesLastPositions.current[index], position); // draw circles
 
         var points = getPointsAroundCircle(now, circlesPoints.current[index]);
-        cursorsLastPositions.current[index] = newPosition;
+        circlesLastPositions.current[index] = newPosition;
+        console.log(newPosition);
         drawCubicBezier(circlesBorder.current, points, newPosition); // const x = (newPosition.x + 0.5) * initWidth.current
         // const y = (newPosition.y + 0.5) * initHeight.current
         // // draw masked circles
@@ -97502,8 +97516,8 @@ var PixiScene = function PixiScene(props) {
         container.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
       }
 
-      container.position.x = 0; // (1 - (position.x + 0.5)) * initWidth.current
-
+      console.log(position.x);
+      container.position.x = position.x * initWidth.current;
       container.position.y = 0; // (position.y + 0.5) * initHeight.current
     } // init RAF
 
