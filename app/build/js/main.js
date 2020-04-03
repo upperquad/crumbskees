@@ -97226,7 +97226,7 @@ var PixiScene = function PixiScene(props) {
       containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
       circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
-      circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] * 0.083 / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
+      circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
     } // init
 
 
@@ -97261,13 +97261,13 @@ var PixiScene = function PixiScene(props) {
       videoPixiFront.play();
     });
     return function () {
-      // instead, remove all children and destroy app
+      // remove all children
       while (app.current.stage.children[0]) {
         app.current.stage.removeChild(app.current.stage.children[0]);
-      }
+      } // destroy app
+
 
       app.current.destroy(true);
-      app.current = null;
     };
   }, [videoBack, videoFront]); // resize
 
@@ -97328,7 +97328,14 @@ var PixiScene = function PixiScene(props) {
       circlesBorder.current.clear();
       playerCursors.forEach(function (playerCursor) {
         var color = playerCursor.color,
-            position = playerCursor.position;
+            position = playerCursor.position,
+            power = playerCursor.power;
+
+        if (power === 'freeze') {
+          // position has to stay and color is gray
+          return;
+        }
+
         var x = (position.x + 0.5) * initWidth.current;
         var y = (position.y + 0.5) * initHeight.current; // draw masked circles
 
@@ -97337,15 +97344,11 @@ var PixiScene = function PixiScene(props) {
 
         circlesBorder.current.lineStyle(circlesStroke.current, color, 1);
         circlesBorder.current.drawCircle(x, y, circlesSize.current);
-
-        if (playerCursor.power === 'freeze') {
-          return;
-        }
       });
       circlesMasked.current.endFill(); // const newPosition = getNewPosition(position.current, targetPosition)
       // const newPathD = getPathD(now, points.current, newPosition)
       // position.current = newPosition
-      // pathRef.current.setAttribute('d', newPathD).≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥
+      // pathRef.current.setAttribute('d', newPathD)
     } // init
 
 

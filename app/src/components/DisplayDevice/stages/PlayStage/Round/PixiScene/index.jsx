@@ -65,7 +65,7 @@ const PixiScene = props => {
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       circlesSize.current = (GRID_UNIT / VB_WIDTH) * elRef.current.offsetWidth
-      circlesStroke.current = ((GRID_UNIT * 0.083) / VB_WIDTH) * elRef.current.offsetWidth
+      circlesStroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
     }
 
     // init
@@ -98,13 +98,13 @@ const PixiScene = props => {
     })
 
     return () => {
-      // instead, remove all children and destroy app
+      // remove all children
       while (app.current.stage.children[0]) {
         app.current.stage.removeChild(app.current.stage.children[0])
       }
 
+      // destroy app
       app.current.destroy(true)
-      app.current = null
     }
   }, [videoBack, videoFront])
 
@@ -175,7 +175,12 @@ const PixiScene = props => {
       circlesBorder.current.clear()
 
       playerCursors.forEach(playerCursor => {
-        const { color, position } = playerCursor
+        const { color, position, power } = playerCursor
+
+        if (power === 'freeze') {
+          // position has to stay and color is gray
+          return
+        }
 
         const x = (position.x + 0.5) * initWidth.current
         const y = (position.y + 0.5) * initHeight.current
@@ -186,10 +191,6 @@ const PixiScene = props => {
         // draw border circles
         circlesBorder.current.lineStyle(circlesStroke.current, color, 1)
         circlesBorder.current.drawCircle(x, y, circlesSize.current)
-
-        if (playerCursor.power === 'freeze') {
-          return
-        }
       })
 
       circlesMasked.current.endFill()
@@ -197,7 +198,7 @@ const PixiScene = props => {
       // const newPosition = getNewPosition(position.current, targetPosition)
       // const newPathD = getPathD(now, points.current, newPosition)
       // position.current = newPosition
-      // pathRef.current.setAttribute('d', newPathD).≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥≥
+      // pathRef.current.setAttribute('d', newPathD)
     }
 
     // init
