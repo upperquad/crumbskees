@@ -64,7 +64,7 @@ const PixiScene = props => {
       containerFront.current.addChild(circlesBorder.current)
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
-      circlesSize.current = (GRID_UNIT / VB_WIDTH) * elRef.current.offsetWidth
+      circlesSize.current = ((GRID_UNIT * 1.35) / VB_WIDTH) * elRef.current.offsetWidth
       circlesStroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
     }
 
@@ -135,6 +135,7 @@ const PixiScene = props => {
 
   // update items
   useEffect(() => {
+    const container = containerMasked.current
     // funcs
     function setItem(item) {
       const sprite = Sprite.from(item.image)
@@ -146,7 +147,7 @@ const PixiScene = props => {
 
       sprite.anchor.set(0.5, 0.5)
 
-      containerFront.current.addChild(sprite)
+      container.addChild(sprite)
 
       return sprite
     }
@@ -162,7 +163,7 @@ const PixiScene = props => {
     return () => {
       // remove all sprite items
       sprites.forEach(sprite => {
-        containerFront.current.removeChild(sprite)
+        container.removeChild(sprite)
       })
     }
   }, [items])

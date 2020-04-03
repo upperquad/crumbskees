@@ -95575,14 +95575,25 @@ module.exports = __webpack_require__.p + "2efe34dfeb739dbf9ddf9cb019856d45.png";
 
 /***/ }),
 
-/***/ "./src/assets/images/round_2/s2-front.gif":
-/*!************************************************!*\
-  !*** ./src/assets/images/round_2/s2-front.gif ***!
-  \************************************************/
+/***/ "./src/assets/images/round_2/r2-pattern-bw.mp4":
+/*!*****************************************************!*\
+  !*** ./src/assets/images/round_2/r2-pattern-bw.mp4 ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "ef36f5d52230d0ea95b6b18c576bfb90.gif";
+module.exports = __webpack_require__.p + "209c0aa2026782ccf6b79427d813484d.mp4";
+
+/***/ }),
+
+/***/ "./src/assets/images/round_2/r2-pattern.mp4":
+/*!**************************************************!*\
+  !*** ./src/assets/images/round_2/r2-pattern.mp4 ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "e844c90696805f93c7f5d02aa6ca77d7.mp4";
 
 /***/ }),
 
@@ -95608,25 +95619,25 @@ module.exports = __webpack_require__.p + "8dc2319e1c3c1bbeeb569d676678b080.png";
 
 /***/ }),
 
-/***/ "./src/assets/images/round_2/s2-pattern.gif":
+/***/ "./src/assets/images/round_3/r3-pattern-bw.mp4":
+/*!*****************************************************!*\
+  !*** ./src/assets/images/round_3/r3-pattern-bw.mp4 ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "5559e8f5f49c08b1d0bb015342b9aba1.mp4";
+
+/***/ }),
+
+/***/ "./src/assets/images/round_3/r3-pattern.mp4":
 /*!**************************************************!*\
-  !*** ./src/assets/images/round_2/s2-pattern.gif ***!
+  !*** ./src/assets/images/round_3/r3-pattern.mp4 ***!
   \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "9b13647553521d6938c97e863da18f46.gif";
-
-/***/ }),
-
-/***/ "./src/assets/images/round_3/s3-front.gif":
-/*!************************************************!*\
-  !*** ./src/assets/images/round_3/s3-front.gif ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "449fa355b3203408fa2cd5c4f0293c44.gif";
+module.exports = __webpack_require__.p + "1a0f59aa96bf0544092f83574a06cf1b.mp4";
 
 /***/ }),
 
@@ -95649,17 +95660,6 @@ module.exports = __webpack_require__.p + "70e128890680209e5b4177aaa0566f63.mp4";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "252d017a143524c6c2de46e3cd5011c6.png";
-
-/***/ }),
-
-/***/ "./src/assets/images/round_3/s3-pattern.gif":
-/*!**************************************************!*\
-  !*** ./src/assets/images/round_3/s3-pattern.gif ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "83bd7a2326ce988308266c257252df80.gif";
 
 /***/ }),
 
@@ -97225,7 +97225,7 @@ var PixiScene = function PixiScene(props) {
       circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
       containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
-      circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
+      circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] * 1.35 / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
       circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * elRef.current.offsetWidth;
     } // init
 
@@ -97295,7 +97295,8 @@ var PixiScene = function PixiScene(props) {
   }, []); // update items
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // funcs
+    var container = containerMasked.current; // funcs
+
     function setItem(item) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);
       sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_3__["VB_WIDTH"] * initWidth.current;
@@ -97303,7 +97304,7 @@ var PixiScene = function PixiScene(props) {
       sprite.position.x = item.x * initWidth.current;
       sprite.position.y = item.y * initHeight.current;
       sprite.anchor.set(0.5, 0.5);
-      containerFront.current.addChild(sprite);
+      container.addChild(sprite);
       return sprite;
     } // init
 
@@ -97316,7 +97317,7 @@ var PixiScene = function PixiScene(props) {
     return function () {
       // remove all sprite items
       sprites.forEach(function (sprite) {
-        containerFront.current.removeChild(sprite);
+        container.removeChild(sprite);
       });
     };
   }, [items]); // RAF
@@ -99320,18 +99321,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~assets/images/round_1/s1-intro.mp4 */ "./src/assets/images/round_1/s1-intro.mp4");
 /* harmony import */ var _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _assets_images_round_2_s2_pattern_gif__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~assets/images/round_2/s2-pattern.gif */ "./src/assets/images/round_2/s2-pattern.gif");
-/* harmony import */ var _assets_images_round_2_s2_pattern_gif__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_2_s2_pattern_gif__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _assets_images_round_2_s2_front_gif__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/round_2/s2-front.gif */ "./src/assets/images/round_2/s2-front.gif");
-/* harmony import */ var _assets_images_round_2_s2_front_gif__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_2_s2_front_gif__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~assets/images/round_2/r2-pattern.mp4 */ "./src/assets/images/round_2/r2-pattern.mp4");
+/* harmony import */ var _assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _assets_images_round_2_r2_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/round_2/r2-pattern-bw.mp4 */ "./src/assets/images/round_2/r2-pattern-bw.mp4");
+/* harmony import */ var _assets_images_round_2_r2_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_2_r2_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~assets/images/round_2/s2-item.png */ "./src/assets/images/round_2/s2-item.png");
 /* harmony import */ var _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~assets/images/round_2/s2-intro.mp4 */ "./src/assets/images/round_2/s2-intro.mp4");
 /* harmony import */ var _assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _assets_images_round_3_s3_pattern_gif__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~assets/images/round_3/s3-pattern.gif */ "./src/assets/images/round_3/s3-pattern.gif");
-/* harmony import */ var _assets_images_round_3_s3_pattern_gif__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_pattern_gif__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _assets_images_round_3_s3_front_gif__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~assets/images/round_3/s3-front.gif */ "./src/assets/images/round_3/s3-front.gif");
-/* harmony import */ var _assets_images_round_3_s3_front_gif__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_front_gif__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _assets_images_round_3_r3_pattern_mp4__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~assets/images/round_3/r3-pattern.mp4 */ "./src/assets/images/round_3/r3-pattern.mp4");
+/* harmony import */ var _assets_images_round_3_r3_pattern_mp4__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_r3_pattern_mp4__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _assets_images_round_3_r3_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~assets/images/round_3/r3-pattern-bw.mp4 */ "./src/assets/images/round_3/r3-pattern-bw.mp4");
+/* harmony import */ var _assets_images_round_3_r3_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_r3_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~assets/images/round_3/s3-item.png */ "./src/assets/images/round_3/s3-item.png");
 /* harmony import */ var _assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/round_3/s3-intro.mp4 */ "./src/assets/images/round_3/s3-intro.mp4");
@@ -99417,8 +99418,8 @@ var GAME_ROUNDS = [{
   }
 }, {
   key: 'game-round-2',
-  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
-  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
+  videoBack: _assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4___default.a,
+  videoFront: _assets_images_round_2_r2_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_5___default.a,
   itemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
   videoIntro: _assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7___default.a,
   roundNameText: 'Round\xa002',
@@ -99432,8 +99433,8 @@ var GAME_ROUNDS = [{
   }
 }, {
   key: 'game-round-3',
-  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
-  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
+  videoBack: _assets_images_round_3_r3_pattern_mp4__WEBPACK_IMPORTED_MODULE_8___default.a,
+  videoFront: _assets_images_round_3_r3_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_9___default.a,
   itemImage: _assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10___default.a,
   videoIntro: _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
   roundNameText: 'Last\xa0round',
