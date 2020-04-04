@@ -97254,8 +97254,8 @@ var PixiScene = function PixiScene(props) {
         var circlePoints = setCirclePoints();
         circlesPoints.current.push(circlePoints);
         circlesLastPositions.current.push({
-          x: 0.5,
-          y: 0.5
+          x: 0,
+          y: 0
         });
       });
     }

@@ -90,7 +90,7 @@ const PixiScene = props => {
       PlayersManager.players.forEach(() => {
         const circlePoints = setCirclePoints()
         circlesPoints.current.push(circlePoints)
-        circlesLastPositions.current.push({ x: 0.5, y: 0.5 })
+        circlesLastPositions.current.push({ x: 0, y: 0 })
       })
     }
 
