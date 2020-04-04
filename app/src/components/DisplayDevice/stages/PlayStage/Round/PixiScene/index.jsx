@@ -13,13 +13,13 @@ import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { random } from '~utils/math'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
-import { GRID_UNIT, VB_WIDTH, VB_HEIGHT } from '~constants'
+import { GRID_UNIT, VB_WIDTH } from '~constants'
 
 import styles from './style.module.scss'
 
 const minDuration = 500
 const maxDuration = 700
-const pointsCount = 8
+const pointsCount = 6
 const decelerationCircleCoef = 0.15
 
 const PixiScene = props => {
@@ -41,12 +41,7 @@ const PixiScene = props => {
   const circlesStroke = useRef(0)
   const circlesPoints = useRef([])
   const circlesLastPositions = useRef([])
-  PlayersManager.players.forEach(() => {
-    circlesLastPositions.current.push({ x: 0.5, y: 0.5 })
-  })
-  // circles positions
-  const centerX = useRef(0)
-  const centerY = useRef(0)
+  // circles size
   const minRadius = useRef(0)
   const maxRadius = useRef(0)
   const minMiddleRadius = useRef(0)
@@ -89,8 +84,6 @@ const PixiScene = props => {
       circlesSize.current = ((GRID_UNIT * 1.35) / VB_WIDTH) * elRef.current.offsetWidth
       circlesStroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
       // set centered positions for cubic bezier on circle
-      centerX.current = elRef.current.offsetWidth / 2
-      centerY.current = elRef.current.offsetHeight / 2
       minRadius.current = ((GRID_UNIT * 1.1) / VB_WIDTH) * elRef.current.offsetWidth
       maxRadius.current = minRadius.current + minRadius.current * 0.45
       minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45
@@ -119,12 +112,12 @@ const PixiScene = props => {
           angle,
           duration,
           startAnim,
-          x: centerX.current + Math.cos(angle) * random(minRadius.current, maxRadius.current),
-          y: centerY.current + Math.sin(angle) * random(minRadius.current, maxRadius.current),
-          targetMinX: centerX.current + Math.cos(angle) * random(minRadius.current, minMiddleRadius.current),
-          targetMinY: centerY.current + Math.sin(angle) * random(minRadius.current, minMiddleRadius.current),
-          targetMaxX: centerX.current + Math.cos(angle) * random(maxMiddleRadius.current, maxRadius.current),
-          targetMaxY: centerY.current + Math.sin(angle) * random(maxMiddleRadius.current, maxRadius.current),
+          x: Math.cos(angle) * random(minRadius.current, maxRadius.current),
+          y: Math.sin(angle) * random(minRadius.current, maxRadius.current),
+          targetMinX: Math.cos(angle) * random(minRadius.current, minMiddleRadius.current),
+          targetMinY: Math.sin(angle) * random(minRadius.current, minMiddleRadius.current),
+          targetMaxX: Math.cos(angle) * random(maxMiddleRadius.current, maxRadius.current),
+          targetMaxY: Math.sin(angle) * random(maxMiddleRadius.current, maxRadius.current),
         }
 
         point.startX = point.x
@@ -254,30 +247,13 @@ const PixiScene = props => {
           return
         }
         const newPosition = getDelayedPosition(circlesLastPositions.current[index], position)
-        // draw circles
-        const points = getPointsAroundCircle(now, circlesPoints.current[index])
         circlesLastPositions.current[index] = newPosition
-        console.log(newPosition)
-
-        drawCubicBezier(circlesBorder.current, points, newPosition)
-
-        // const x = (newPosition.x + 0.5) * initWidth.current
-        // const y = (newPosition.y + 0.5) * initHeight.current
-        // // draw masked circles
-        // circlesMasked.current.beginFill(0xFFFFFF, 1)
-        // circlesMasked.current.drawCircle(x, y, circlesSize.current)
-
-        // // draw border circles
-        // circlesBorder.current.lineStyle(circlesStroke.current, color, 1)
-        // circlesBorder.current.drawCircle(x, y, circlesSize.current)
+        // draw circles
+        const points = getPointsAroundCircle(now, newPosition)
+        drawCubicBezier(points, newPosition, color)
       })
 
       circlesMasked.current.endFill()
-
-      // const newPosition = getDelayedPosition(position.current, targetPosition)
-      // const newPathD = getPathD(now, points.current, newPosition)
-      // position.current = newPosition
-      // pathRef.current.setAttribute('d', newPathD)
     }
 
     // get delayed position
@@ -336,14 +312,19 @@ const PixiScene = props => {
 
     // Create circle distorsion based on the given coordinates points
     // Cardinal spline - a uniform Catmull-Rom spline with a tension option
-    function drawCubicBezier(container, points, position, tension = 1.2) {
+    function drawCubicBezier(points, position, color, tension = 1.2) {
       if (!points) {
         return
       }
+
       const nbPoints = points.length
-      // container.clear()
-      container.lineStyle(10, 0xAA0000, 1)
-      container.moveTo(points[0].x, points[0].y)
+      // draw masked circles
+      circlesMasked.current.moveTo(points[0].x, points[0].y)
+      circlesMasked.current.beginFill(0xFFFFFF, 1)
+
+      // draw border circles
+      circlesBorder.current.moveTo(points[0].x, points[0].y)
+      circlesBorder.current.lineStyle(circlesStroke.current, color, 1)
 
       for (let i = 0; i < nbPoints; i++) {
         const p0 = points[(i - 1 + nbPoints) % nbPoints]
@@ -357,14 +338,16 @@ const PixiScene = props => {
         const x2 = p2.x - ((p3.x - p1.x) / 6) * tension
         const y2 = p2.y - ((p3.y - p1.y) / 6) * tension
 
-        // path += ` ${x1} ${y1} ${x2} ${y2} ${p2.x} ${p2.y}`
-        container.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
+        circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
+        circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
       }
 
-      console.log(position.x)
-
-      container.position.x = (position.x) * initWidth.current
-      container.position.y = 0 // (position.y + 0.5) * initHeight.current
+      // move masked circles
+      circlesMasked.current.position.x = (position.x + 0.5) * initWidth.current
+      circlesMasked.current.position.y = (position.y + 0.5) * initHeight.current
+      // move border circles
+      circlesBorder.current.position.x = (position.x + 0.5) * initWidth.current
+      circlesBorder.current.position.y = (position.y + 0.5) * initHeight.current
     }
 
     // init RAF

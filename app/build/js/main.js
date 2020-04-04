@@ -97189,7 +97189,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var minDuration = 500;
 var maxDuration = 700;
-var pointsCount = 8;
+var pointsCount = 6;
 var decelerationCircleCoef = 0.15;
 
 var PixiScene = function PixiScene(props) {
@@ -97213,16 +97213,8 @@ var PixiScene = function PixiScene(props) {
   var circlesSize = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var circlesStroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var circlesPoints = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
-  var circlesLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
-  _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function () {
-    circlesLastPositions.current.push({
-      x: 0.5,
-      y: 0.5
-    });
-  }); // circles positions
+  var circlesLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]); // circles size
 
-  var centerX = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var centerY = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
@@ -97256,8 +97248,6 @@ var PixiScene = function PixiScene(props) {
       circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.35 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
       circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set centered positions for cubic bezier on circle
 
-      centerX.current = elRef.current.offsetWidth / 2;
-      centerY.current = elRef.current.offsetHeight / 2;
       minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.1 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
       maxRadius.current = minRadius.current + minRadius.current * 0.45;
       minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45;
@@ -97288,12 +97278,12 @@ var PixiScene = function PixiScene(props) {
           angle: angle,
           duration: duration,
           startAnim: startAnim,
-          x: centerX.current + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
-          y: centerY.current + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
-          targetMinX: centerX.current + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
-          targetMinY: centerY.current + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
-          targetMaxX: centerX.current + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current),
-          targetMaxY: centerY.current + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current)
+          x: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
+          y: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
+          targetMinX: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
+          targetMinY: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
+          targetMaxX: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current),
+          targetMaxY: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current)
         };
         point.startX = point.x;
         point.startY = point.y;
@@ -97413,24 +97403,13 @@ var PixiScene = function PixiScene(props) {
           return;
         }
 
-        var newPosition = getDelayedPosition(circlesLastPositions.current[index], position); // draw circles
+        var newPosition = getDelayedPosition(circlesLastPositions.current[index], position);
+        circlesLastPositions.current[index] = newPosition; // draw circles
 
-        var points = getPointsAroundCircle(now, circlesPoints.current[index]);
-        circlesLastPositions.current[index] = newPosition;
-        console.log(newPosition);
-        drawCubicBezier(circlesBorder.current, points, newPosition); // const x = (newPosition.x + 0.5) * initWidth.current
-        // const y = (newPosition.y + 0.5) * initHeight.current
-        // // draw masked circles
-        // circlesMasked.current.beginFill(0xFFFFFF, 1)
-        // circlesMasked.current.drawCircle(x, y, circlesSize.current)
-        // // draw border circles
-        // circlesBorder.current.lineStyle(circlesStroke.current, color, 1)
-        // circlesBorder.current.drawCircle(x, y, circlesSize.current)
+        var points = getPointsAroundCircle(now, newPosition);
+        drawCubicBezier(points, newPosition, color);
       });
-      circlesMasked.current.endFill(); // const newPosition = getDelayedPosition(position.current, targetPosition)
-      // const newPathD = getPathD(now, points.current, newPosition)
-      // position.current = newPosition
-      // pathRef.current.setAttribute('d', newPathD)
+      circlesMasked.current.endFill();
     } // get delayed position
 
 
@@ -97491,17 +97470,20 @@ var PixiScene = function PixiScene(props) {
     // Cardinal spline - a uniform Catmull-Rom spline with a tension option
 
 
-    function drawCubicBezier(container, points, position) {
+    function drawCubicBezier(points, position, color) {
       var tension = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1.2;
 
       if (!points) {
         return;
       }
 
-      var nbPoints = points.length; // container.clear()
+      var nbPoints = points.length; // draw masked circles
 
-      container.lineStyle(10, 0xAA0000, 1);
-      container.moveTo(points[0].x, points[0].y);
+      circlesMasked.current.moveTo(points[0].x, points[0].y);
+      circlesMasked.current.beginFill(0xFFFFFF, 1); // draw border circles
+
+      circlesBorder.current.moveTo(points[0].x, points[0].y);
+      circlesBorder.current.lineStyle(circlesStroke.current, color, 1);
 
       for (var i = 0; i < nbPoints; i++) {
         var p0 = points[(i - 1 + nbPoints) % nbPoints];
@@ -97511,14 +97493,17 @@ var PixiScene = function PixiScene(props) {
         var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
         var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
         var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-        var y2 = p2.y - (p3.y - p1.y) / 6 * tension; // path += ` ${x1} ${y1} ${x2} ${y2} ${p2.x} ${p2.y}`
+        var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+        circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
+        circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
+      } // move masked circles
 
-        container.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
-      }
 
-      console.log(position.x);
-      container.position.x = position.x * initWidth.current;
-      container.position.y = 0; // (position.y + 0.5) * initHeight.current
+      circlesMasked.current.position.x = (position.x + 0.5) * initWidth.current;
+      circlesMasked.current.position.y = (position.y + 0.5) * initHeight.current; // move border circles
+
+      circlesBorder.current.position.x = (position.x + 0.5) * initWidth.current;
+      circlesBorder.current.position.y = (position.y + 0.5) * initHeight.current;
     } // init RAF
 
 
