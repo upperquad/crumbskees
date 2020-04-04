@@ -97396,7 +97396,7 @@ var PixiScene = function PixiScene(props) {
       playerCursors.forEach(function (playerCursor, index) {
         var color = playerCursor.color,
             position = playerCursor.position,
-            power = playerCursor.power; // console.log(position)
+            power = playerCursor.power;
 
         if (power === 'freeze') {
           // position has to stay and color is gray
@@ -97406,7 +97406,7 @@ var PixiScene = function PixiScene(props) {
         var newPosition = getDelayedPosition(circlesLastPositions.current[index], position);
         circlesLastPositions.current[index] = newPosition; // draw circles
 
-        var points = getPointsAroundCircle(now, newPosition);
+        var points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition);
         drawCubicBezier(points, newPosition, color);
       });
       circlesMasked.current.endFill();
@@ -97428,10 +97428,11 @@ var PixiScene = function PixiScene(props) {
     } // get points all around the circle to set up cubic bezier curves
 
 
-    function getPointsAroundCircle(now, points) {
-      // const { x, y } = position
-      // For each points of the player (organic shape)
+    function getPointsAroundCircle(now, points, position) {
+      var x = position.x,
+          y = position.y; // For each points of the player (organic shape)
       // Create organic shape / Tween all points
+
       for (var i = 0; i < points.length; i++) {
         var point = points[i]; // From scratch tween:
         // percent is going from 0 to 1 in X seconds where X is the "duration variable".
@@ -97457,12 +97458,11 @@ var PixiScene = function PixiScene(props) {
             point.destX = point.targetMinX;
             point.destY = point.targetMinY;
           }
-        } // move player based on mouse
+        } // move circle based on mouse
 
 
-        point.x = relativeX; // + x
-
-        point.y = relativeY; // + y
+        point.x = relativeX + (x + 0.5) * initWidth.current;
+        point.y = relativeY + (y + 0.5) * initHeight.current;
       }
 
       return points;
@@ -97496,14 +97496,7 @@ var PixiScene = function PixiScene(props) {
         var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
         circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
         circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
-      } // move masked circles
-
-
-      circlesMasked.current.position.x = (position.x + 0.5) * initWidth.current;
-      circlesMasked.current.position.y = (position.y + 0.5) * initHeight.current; // move border circles
-
-      circlesBorder.current.position.x = (position.x + 0.5) * initWidth.current;
-      circlesBorder.current.position.y = (position.y + 0.5) * initHeight.current;
+      }
     } // init RAF
 
 

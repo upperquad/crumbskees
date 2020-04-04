@@ -240,7 +240,6 @@ const PixiScene = props => {
 
       playerCursors.forEach((playerCursor, index) => {
         const { color, position, power } = playerCursor
-        // console.log(position)
 
         if (power === 'freeze') {
           // position has to stay and color is gray
@@ -249,7 +248,7 @@ const PixiScene = props => {
         const newPosition = getDelayedPosition(circlesLastPositions.current[index], position)
         circlesLastPositions.current[index] = newPosition
         // draw circles
-        const points = getPointsAroundCircle(now, newPosition)
+        const points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition)
         drawCubicBezier(points, newPosition, color)
       })
 
@@ -268,8 +267,8 @@ const PixiScene = props => {
     }
 
     // get points all around the circle to set up cubic bezier curves
-    function getPointsAroundCircle(now, points) {
-      // const { x, y } = position
+    function getPointsAroundCircle(now, points, position) {
+      const { x, y } = position
 
       // For each points of the player (organic shape)
       // Create organic shape / Tween all points
@@ -302,9 +301,9 @@ const PixiScene = props => {
           }
         }
 
-        // move player based on mouse
-        point.x = relativeX // + x
-        point.y = relativeY // + y
+        // move circle based on mouse
+        point.x = relativeX + (x + 0.5) * initWidth.current
+        point.y = relativeY + (y + 0.5) * initHeight.current
       }
 
       return points
@@ -341,13 +340,6 @@ const PixiScene = props => {
         circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
         circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
       }
-
-      // move masked circles
-      circlesMasked.current.position.x = (position.x + 0.5) * initWidth.current
-      circlesMasked.current.position.y = (position.y + 0.5) * initHeight.current
-      // move border circles
-      circlesBorder.current.position.x = (position.x + 0.5) * initWidth.current
-      circlesBorder.current.position.y = (position.y + 0.5) * initHeight.current
     }
 
     // init RAF
