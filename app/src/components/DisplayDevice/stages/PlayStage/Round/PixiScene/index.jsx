@@ -17,8 +17,8 @@ import { GRID_UNIT, VB_WIDTH } from '~constants'
 
 import styles from './style.module.scss'
 
-const minDuration = 500
-const maxDuration = 700
+const minDuration = 700
+const maxDuration = 900
 const pointsCount = 6
 const decelerationCircleCoef = 0.15
 
@@ -37,11 +37,10 @@ const PixiScene = props => {
   // circles
   const circlesMasked = useRef(null)
   const circlesBorder = useRef(null)
-  const circlesSize = useRef(0)
-  const circlesStroke = useRef(0)
   const circlesPoints = useRef([])
   const circlesLastPositions = useRef([])
   // circles size
+  const stroke = useRef(0)
   const minRadius = useRef(0)
   const maxRadius = useRef(0)
   const minMiddleRadius = useRef(0)
@@ -81,13 +80,12 @@ const PixiScene = props => {
       containerFront.current.addChild(circlesBorder.current)
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
-      circlesSize.current = ((GRID_UNIT * 1.35) / VB_WIDTH) * elRef.current.offsetWidth
-      circlesStroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
-      // set centered positions for cubic bezier on circle
-      minRadius.current = ((GRID_UNIT * 1.1) / VB_WIDTH) * elRef.current.offsetWidth
-      maxRadius.current = minRadius.current + minRadius.current * 0.45
-      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45
-      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.55
+      stroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
+      // set min and max radius for the circle
+      minRadius.current = ((GRID_UNIT * 1.2) / VB_WIDTH) * elRef.current.offsetWidth
+      maxRadius.current = minRadius.current + minRadius.current * 0.35
+      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.35
+      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45
 
       PlayersManager.players.forEach(() => {
         const circlePoints = setCirclePoints()
@@ -323,7 +321,7 @@ const PixiScene = props => {
 
       // draw border circles
       circlesBorder.current.moveTo(points[0].x, points[0].y)
-      circlesBorder.current.lineStyle(circlesStroke.current, color, 1)
+      circlesBorder.current.lineStyle(stroke.current, color, 1)
 
       for (let i = 0; i < nbPoints; i++) {
         const p0 = points[(i - 1 + nbPoints) % nbPoints]

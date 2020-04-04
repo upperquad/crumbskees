@@ -97187,8 +97187,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var minDuration = 500;
-var maxDuration = 700;
+var minDuration = 700;
+var maxDuration = 900;
 var pointsCount = 6;
 var decelerationCircleCoef = 0.15;
 
@@ -97210,11 +97210,10 @@ var PixiScene = function PixiScene(props) {
 
   var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var circlesSize = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var circlesStroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var circlesPoints = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
   var circlesLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]); // circles size
 
+  var stroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
@@ -97245,13 +97244,12 @@ var PixiScene = function PixiScene(props) {
       circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
       containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
-      circlesSize.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.35 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
-      circlesStroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set centered positions for cubic bezier on circle
+      stroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set min and max radius for the circle
 
-      minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.1 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
-      maxRadius.current = minRadius.current + minRadius.current * 0.45;
-      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45;
-      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.55;
+      minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.2 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
+      maxRadius.current = minRadius.current + minRadius.current * 0.35;
+      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.35;
+      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45;
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function () {
         var circlePoints = setCirclePoints();
         circlesPoints.current.push(circlePoints);
@@ -97483,7 +97481,7 @@ var PixiScene = function PixiScene(props) {
       circlesMasked.current.beginFill(0xFFFFFF, 1); // draw border circles
 
       circlesBorder.current.moveTo(points[0].x, points[0].y);
-      circlesBorder.current.lineStyle(circlesStroke.current, color, 1);
+      circlesBorder.current.lineStyle(stroke.current, color, 1);
 
       for (var i = 0; i < nbPoints; i++) {
         var p0 = points[(i - 1 + nbPoints) % nbPoints];
