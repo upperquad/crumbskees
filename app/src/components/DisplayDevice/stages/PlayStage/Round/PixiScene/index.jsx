@@ -46,6 +46,8 @@ const PixiScene = props => {
   const minMiddleRadius = useRef(0)
   const maxMiddleRadius = useRef(0)
 
+  const timeFrozen = useRef(null)
+
   // set up scene
   useEffect(() => {
     // funcs
@@ -275,6 +277,8 @@ const PixiScene = props => {
     PlayersManager.players.forEach((player, index) => {
       if (powers[index] === 'grow') {
         updateRadius(circlesPoints.current[index], maxRadius.current * 1.5)
+      } else if (powers[index] === 'freeze') {
+        timeFrozen.current = getNow()
       } else {
         updateRadius(circlesPoints.current[index], 0)
       }
@@ -302,16 +306,22 @@ const PixiScene = props => {
       circlesBorder.current.clear()
 
       PlayersManager.players.forEach((player, index) => {
-        const color = hexStToNb(COLORS[player.color])
+        let color = hexStToNb(COLORS[player.color])
 
-        // if (power === 'freeze') {
-        //   // position has to stay and color is gray
-        //   return
-        // }
-        const newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index])
-        circlesLastPositions.current[index] = newPosition
         // draw circles
-        const points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition)
+        let points
+        let newPosition
+        if (powers[index] === 'freeze') {
+          // position has to stay and color is gray
+          color = 0x7F7F7F
+          newPosition = circlesLastPositions.current[index]
+          points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index])
+        } else {
+          newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index])
+          points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition)
+          circlesLastPositions.current[index] = newPosition
+        }
+        // circlesPoints.current[index] = points
         drawCubicBezier(points, newPosition, color)
       })
 
@@ -411,7 +421,7 @@ const PixiScene = props => {
     return () => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
-  }, [positions])
+  }, [positions, powers])
 
   return <div className={styles.pixiScene} ref={elRef} />
 }

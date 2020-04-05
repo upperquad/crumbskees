@@ -97219,7 +97219,8 @@ var PixiScene = function PixiScene(props) {
   var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0); // set up scene
+  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var timeFrozen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // set up scene
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
@@ -97421,6 +97422,8 @@ var PixiScene = function PixiScene(props) {
     _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
       if (powers[index] === 'grow') {
         updateRadius(circlesPoints.current[index], maxRadius.current * 1.5);
+      } else if (powers[index] === 'freeze') {
+        timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
       } else {
         updateRadius(circlesPoints.current[index], 0);
       }
@@ -97444,15 +97447,23 @@ var PixiScene = function PixiScene(props) {
       circlesMasked.current.clear();
       circlesBorder.current.clear();
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
-        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"][player.color]); // if (power === 'freeze') {
-        //   // position has to stay and color is gray
-        //   return
-        // }
+        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"][player.color]); // draw circles
 
-        var newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index]);
-        circlesLastPositions.current[index] = newPosition; // draw circles
+        var points;
+        var newPosition;
 
-        var points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition);
+        if (powers[index] === 'freeze') {
+          // position has to stay and color is gray
+          color = 0xF7F7F7;
+          newPosition = circlesLastPositions.current[index];
+          points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index]);
+        } else {
+          newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index]);
+          points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition);
+          circlesLastPositions.current[index] = newPosition;
+        } // circlesPoints.current[index] = points
+
+
         drawCubicBezier(points, newPosition, color);
       });
       circlesMasked.current.endFill();
@@ -97550,7 +97561,7 @@ var PixiScene = function PixiScene(props) {
     return function () {
       _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber(updateFrame);
     };
-  }, [positions]);
+  }, [positions, powers]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.pixiScene,
     ref: elRef
@@ -99343,7 +99354,7 @@ var GAME_ROUNDS = [{
   gridCols: 32,
   gridLines: 14,
   power: {
-    type: 'grow',
+    type: 'freeze',
     image: _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default.a,
     color: COLORS.orange
   }
