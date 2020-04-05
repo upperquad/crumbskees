@@ -97454,7 +97454,7 @@ var PixiScene = function PixiScene(props) {
 
         if (powers[index] === 'freeze') {
           // position has to stay and color is gray
-          color = 0xF7F7F7;
+          color = 0x7F7F7F;
           newPosition = circlesLastPositions.current[index];
           points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index]);
         } else {
