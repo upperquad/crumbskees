@@ -13,7 +13,7 @@ import getNow from '~utils/time'
 import { inOutSine } from '~utils/ease'
 import { random } from '~utils/math'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
-import { GRID_UNIT, VB_WIDTH } from '~constants'
+import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'
 
 import styles from './style.module.scss'
 
@@ -23,7 +23,7 @@ const pointsCount = 6
 const decelerationCircleCoef = 0.15
 
 const PixiScene = props => {
-  const { items, playerCursors, videoBack, videoFront } = props
+  const { cancelPower, items, positions, powers, videoBack, videoFront } = props
   // re-used references through hooks
   const elRef = useRef(null)
   const app = useRef(null)
@@ -130,7 +130,14 @@ const PixiScene = props => {
     }
 
     // init
-    app.current = new Application({ width: elRef.current.offsetWidth, height: elRef.current.offsetHeight, resolution: window.devicePixelRatio, antialias: true, autoDensity: true, backgroundColor: 0xFFFFFF }) // , backgroundColor: 0xF7F7F7
+    app.current = new Application({
+      width: elRef.current.offsetWidth,
+      height: elRef.current.offsetHeight,
+      resolution: window.devicePixelRatio,
+      antialias: true,
+      autoDensity: true,
+      backgroundColor: 0xffffff,
+    }) // , backgroundColor: 0xF7F7F7
     // console.log(this.app.currentrenderer.resolution)
 
     app.current.stage.interactive = true
@@ -196,7 +203,7 @@ const PixiScene = props => {
 
   // update items
   useEffect(() => {
-    const container = containerMasked.current
+    const container = containerFront.current
     // funcs
     function setItem(item) {
       const sprite = Sprite.from(item.image)
@@ -229,6 +236,64 @@ const PixiScene = props => {
     }
   }, [items])
 
+  // update powers
+  useEffect(() => {
+    // func
+    function updateRadius(points, increment) {
+      for (let i = 0; i < points.length; i++) {
+        const point = points[i]
+        // Increase each points
+        // if player has grown power, increase player radius
+        const newMaxRadius = maxRadius.current + increment
+        const newMaxMiddleRadius = maxMiddleRadius.current + increment
+        const newMinRadius = minRadius.current + increment
+        const newMinMiddleRadius = minMiddleRadius.current + increment
+
+        point.duration += 250
+
+        point.targetMaxX = Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+        point.targetMinX = Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+        point.destX = point.targetMaxX
+
+        point.targetMaxY = Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+        point.targetMinY = Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+        point.destY = point.targetMaxY
+        point.startAnim = getNow()
+      }
+
+      setTimeout(() => {
+        // when growing animation finish
+        for (let i = 0; i < points.length; i++) {
+          points[i].duration -= 250
+        }
+      }, 1000)
+    }
+
+    // init
+    PlayersManager.players.forEach((player, index) => {
+      if (powers[index] === 'grow') {
+        updateRadius(circlesPoints.current[index], maxRadius.current * 1.5)
+      } else {
+        updateRadius(circlesPoints.current[index], 0)
+      }
+
+      if (powers[index]) {
+        const timeout = setTimeout(
+          () => {
+            cancelPower(index)
+          },
+          powers[index] === 'grow' ? 6000 : 4000,
+        )
+
+        return () => clearTimeout(timeout)
+      }
+
+      return undefined
+    })
+  }, [powers])
+
   // RAF
   useEffect(() => {
     // funcs
@@ -236,14 +301,14 @@ const PixiScene = props => {
       circlesMasked.current.clear()
       circlesBorder.current.clear()
 
-      playerCursors.forEach((playerCursor, index) => {
-        const { color, position, power } = playerCursor
+      PlayersManager.players.forEach((player, index) => {
+        const color = hexStToNb(COLORS[player.color])
 
-        if (power === 'freeze') {
-          // position has to stay and color is gray
-          return
-        }
-        const newPosition = getDelayedPosition(circlesLastPositions.current[index], position)
+        // if (power === 'freeze') {
+        //   // position has to stay and color is gray
+        //   return
+        // }
+        const newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index])
         circlesLastPositions.current[index] = newPosition
         // draw circles
         const points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition)
@@ -317,7 +382,7 @@ const PixiScene = props => {
       const nbPoints = points.length
       // draw masked circles
       circlesMasked.current.moveTo(points[0].x, points[0].y)
-      circlesMasked.current.beginFill(0xFFFFFF, 1)
+      circlesMasked.current.beginFill(0xffffff, 1)
 
       // draw border circles
       circlesBorder.current.moveTo(points[0].x, points[0].y)
@@ -346,11 +411,13 @@ const PixiScene = props => {
     return () => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
-  }, [playerCursors])
+  }, [positions])
 
-  return (
-    <div className={styles.pixiScene} ref={elRef} />
-  )
+  return <div className={styles.pixiScene} ref={elRef} />
+}
+
+function hexStToNb(str) {
+  return parseInt(str.replace(/^#/, ''), 16)
 }
 
 export default PixiScene

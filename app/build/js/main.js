@@ -97193,8 +97193,10 @@ var pointsCount = 6;
 var decelerationCircleCoef = 0.15;
 
 var PixiScene = function PixiScene(props) {
-  var items = props.items,
-      playerCursors = props.playerCursors,
+  var cancelPower = props.cancelPower,
+      items = props.items,
+      positions = props.positions,
+      powers = props.powers,
       videoBack = props.videoBack,
       videoFront = props.videoFront; // re-used references through hooks
 
@@ -97300,7 +97302,7 @@ var PixiScene = function PixiScene(props) {
       resolution: window.devicePixelRatio,
       antialias: true,
       autoDensity: true,
-      backgroundColor: 0xFFFFFF
+      backgroundColor: 0xffffff
     }); // , backgroundColor: 0xF7F7F7
     // console.log(this.app.currentrenderer.resolution)
 
@@ -97359,7 +97361,7 @@ var PixiScene = function PixiScene(props) {
   }, []); // update items
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var container = containerMasked.current; // funcs
+    var container = containerFront.current; // funcs
 
     function setItem(item) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);
@@ -97384,24 +97386,70 @@ var PixiScene = function PixiScene(props) {
         container.removeChild(sprite);
       });
     };
-  }, [items]); // RAF
+  }, [items]); // update powers
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    // func
+    function updateRadius(points, increment) {
+      for (var i = 0; i < points.length; i++) {
+        var point = points[i]; // Increase each points
+        // if player has grown power, increase player radius
+
+        var newMaxRadius = maxRadius.current + increment;
+        var newMaxMiddleRadius = maxMiddleRadius.current + increment;
+        var newMinRadius = minRadius.current + increment;
+        var newMinMiddleRadius = minMiddleRadius.current + increment;
+        point.duration += 250;
+        point.targetMaxX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
+        point.targetMinX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
+        point.destX = point.targetMaxX;
+        point.targetMaxY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
+        point.targetMinY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
+        point.destY = point.targetMaxY;
+        point.startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
+      }
+
+      setTimeout(function () {
+        // when growing animation finish
+        for (var _i = 0; _i < points.length; _i++) {
+          points[_i].duration -= 250;
+        }
+      }, 1000);
+    } // init
+
+
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
+      if (powers[index] === 'grow') {
+        updateRadius(circlesPoints.current[index], maxRadius.current * 1.5);
+      } else {
+        updateRadius(circlesPoints.current[index], 0);
+      }
+
+      if (powers[index]) {
+        var timeout = setTimeout(function () {
+          cancelPower(index);
+        }, powers[index] === 'grow' ? 6000 : 4000);
+        return function () {
+          return clearTimeout(timeout);
+        };
+      }
+
+      return undefined;
+    });
+  }, [powers]); // RAF
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
     function updateFrame(now) {
       circlesMasked.current.clear();
       circlesBorder.current.clear();
-      playerCursors.forEach(function (playerCursor, index) {
-        var color = playerCursor.color,
-            position = playerCursor.position,
-            power = playerCursor.power;
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
+        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"][player.color]); // if (power === 'freeze') {
+        //   // position has to stay and color is gray
+        //   return
+        // }
 
-        if (power === 'freeze') {
-          // position has to stay and color is gray
-          return;
-        }
-
-        var newPosition = getDelayedPosition(circlesLastPositions.current[index], position);
+        var newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index]);
         circlesLastPositions.current[index] = newPosition; // draw circles
 
         var points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition);
@@ -97478,7 +97526,7 @@ var PixiScene = function PixiScene(props) {
       var nbPoints = points.length; // draw masked circles
 
       circlesMasked.current.moveTo(points[0].x, points[0].y);
-      circlesMasked.current.beginFill(0xFFFFFF, 1); // draw border circles
+      circlesMasked.current.beginFill(0xffffff, 1); // draw border circles
 
       circlesBorder.current.moveTo(points[0].x, points[0].y);
       circlesBorder.current.lineStyle(stroke.current, color, 1);
@@ -97502,12 +97550,16 @@ var PixiScene = function PixiScene(props) {
     return function () {
       _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber(updateFrame);
     };
-  }, [playerCursors]);
+  }, [positions]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.pixiScene,
     ref: elRef
   });
 };
+
+function hexStToNb(str) {
+  return parseInt(str.replace(/^#/, ''), 16);
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (PixiScene);
 
@@ -97522,266 +97574,6 @@ var PixiScene = function PixiScene(props) {
 
 // extracted by mini-css-extract-plugin
 module.exports = {"pixiScene":"PixiScene-pixiScene--xdl_n","canvas":"PixiScene-canvas--17ngH"};
-
-/***/ }),
-
-/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerCursor/index.jsx":
-/*!************************************************************************************!*\
-  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/PlayerCursor/index.jsx ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerCursor/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_time__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~utils/time */ "./src/utils/time.js");
-/* harmony import */ var _utils_ease__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~utils/ease */ "./src/utils/ease.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
-/* harmony import */ var _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/AnimationFrameManager */ "./src/managers/AnimationFrameManager/index.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-
-
-
-var centerX = _constants__WEBPACK_IMPORTED_MODULE_5__["VB_WIDTH"] / 2;
-var centerY = _constants__WEBPACK_IMPORTED_MODULE_5__["VB_HEIGHT"] / 2;
-var minRadius = _constants__WEBPACK_IMPORTED_MODULE_5__["GRID_UNIT"] * 1.1;
-var maxRadius = minRadius + minRadius * 0.45;
-var minMiddleRadius = minRadius + (maxRadius - minRadius) * 0.45;
-var maxMiddleRadius = minRadius + (maxRadius - minRadius) * 0.55;
-var minDuration = 500;
-var maxDuration = 700;
-var pointsCount = 8;
-
-var PlayerCursor = function PlayerCursor(props) {
-  var cancelPower = props.cancelPower,
-      color = props.color,
-      index = props.index,
-      targetPosition = props.position,
-      power = props.power;
-  var pathRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  var position = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])({
-    x: 0,
-    y: 0
-  });
-  var points = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-
-  if (points.current === null) {
-    points.current = setPoints();
-  } // updated on index props change
-
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var updateFrame = function updateFrame(now) {
-      if (power === 'freeze') {
-        return;
-      }
-
-      var newPosition = getNewPosition(position.current, targetPosition);
-      var newPathD = getPathD(now, points.current, newPosition);
-      position.current = newPosition;
-      pathRef.current.setAttribute('d', newPathD);
-    };
-
-    _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_7__["default"].addSubscriber(updateFrame);
-    return function () {
-      _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_7__["default"].removeSubscriber(updateFrame);
-    };
-  }, [power, targetPosition]);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (power === 'grow') {
-      updateRadius(points.current, _constants__WEBPACK_IMPORTED_MODULE_5__["VB_WIDTH"] * 0.05);
-    } else {
-      updateRadius(points.current, 0);
-    }
-  }, [power]);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (power) {
-      var timeout = setTimeout(cancelPower, power === 'grow' ? 6000 : 4000);
-      return function () {
-        return clearTimeout(timeout);
-      };
-    }
-
-    return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [power]);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
-    id: "player".concat(index),
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.playerCursor, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.playerCursorFrozen, power === 'freeze')),
-    strokeWidth: "6",
-    stroke: _constants__WEBPACK_IMPORTED_MODULE_5__["COLORS"][color],
-    style: {
-      transition: 'stroke 1s ease'
-    },
-    ref: pathRef
-  });
-};
-
-function setPoints() {
-  var points = [];
-  var slice = Math.PI * 2 / pointsCount;
-  var startAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(0, Math.PI * 2);
-
-  for (var i = 0; i < pointsCount; i++) {
-    var margeAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(0, 0.28); // i / 1.2
-    // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
-
-    var startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])() + i * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(0, minDuration);
-    var angle = startAngle + i * slice + margeAngle;
-    var duration = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(minDuration, maxDuration);
-    var point = {
-      angle: angle,
-      duration: duration,
-      startAnim: startAnim,
-      x: centerX + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(minRadius, maxRadius),
-      y: centerY + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(minRadius, maxRadius),
-      targetMinX: centerX + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(minRadius, minMiddleRadius),
-      targetMinY: centerY + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(minRadius, minMiddleRadius),
-      targetMaxX: centerX + Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(maxMiddleRadius, maxRadius),
-      targetMaxY: centerY + Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(maxMiddleRadius, maxRadius)
-    };
-    point.startX = point.x;
-    point.startY = point.y;
-    point.destX = point.targetMaxX;
-    point.destY = point.targetMaxY;
-    points.push(point);
-  }
-
-  return points;
-}
-
-function getNewPosition(position, targetPosition) {
-  var targetX = targetPosition.x,
-      targetY = targetPosition.y;
-  var x = position.x,
-      y = position.y;
-  x += (targetX * _constants__WEBPACK_IMPORTED_MODULE_5__["VB_WIDTH"] - x) * 0.1;
-  y += (targetY * _constants__WEBPACK_IMPORTED_MODULE_5__["VB_HEIGHT"] - y) * 0.1;
-  return {
-    x: x,
-    y: y
-  };
-}
-
-function getPathD(now, points, position) {
-  var x = position.x,
-      y = position.y; // For each points of the player (organic shape)
-  // Create organic shape / Tween all points
-
-  for (var i = 0; i < points.length; i++) {
-    var point = points[i]; // From scratch tween:
-    // percent is going from 0 to 1 in X seconds where X is the "duration variable".
-    // Each points starting value is going to his destination value in X seconds
-    // then I use easing functions to modify the value curve through time.
-
-    var percent = (now - point.startAnim) / point.duration;
-    var relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_4__["inOutSine"])(percent);
-    var relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_4__["inOutSine"])(percent);
-
-    if (percent >= 1) {
-      // end of animation,
-      // restart animation by going back
-      point.startX = relativeX;
-      point.startY = relativeY;
-      point.reverseAnim = !point.reverseAnim;
-      point.startAnim = now;
-
-      if (point.reverseAnim) {
-        point.destX = point.targetMaxX;
-        point.destY = point.targetMaxY;
-      } else {
-        point.destX = point.targetMinX;
-        point.destY = point.targetMinY;
-      }
-    } // move player based on mouse
-
-
-    point.x = relativeX + x;
-    point.y = relativeY + y;
-  }
-
-  return cardinal(points);
-} // Create circle distorsion based on the given coordinates points
-// Cardinal spline - a uniform Catmull-Rom spline with a tension option
-
-
-function cardinal(points) {
-  var tension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1.2;
-  var nbPoints = points.length;
-
-  if (nbPoints < 1) {
-    return 'M0 0';
-  }
-
-  var path = "M ".concat(points[0].x, " ").concat(points[0].y, " C");
-
-  for (var i = 0; i < nbPoints; i++) {
-    var p0 = points[(i - 1 + nbPoints) % nbPoints];
-    var p1 = points[i];
-    var p2 = points[(i + 1) % nbPoints];
-    var p3 = points[(i + 2) % nbPoints];
-    var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-    var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
-    var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-    var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-    path += " ".concat(x1, " ").concat(y1, " ").concat(x2, " ").concat(y2, " ").concat(p2.x, " ").concat(p2.y);
-  }
-
-  return "".concat(path, "z");
-}
-
-function updateRadius(points, increment) {
-  for (var i = 0; i < points.length; i++) {
-    var point = points[i]; // Increase each points
-    // if player has grown power, increase player radius
-
-    var newMaxRadius = maxRadius + increment;
-    var newMaxMiddleRadius = maxMiddleRadius + increment;
-    var newMinRadius = minRadius + increment;
-    var newMinMiddleRadius = minMiddleRadius + increment;
-    point.duration += 250;
-    point.targetMaxX = centerX + Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(newMaxMiddleRadius, newMaxRadius);
-    point.targetMinX = centerX + Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(newMinRadius, newMinMiddleRadius);
-    point.destX = point.targetMaxX;
-    point.targetMaxY = centerY + Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(newMaxMiddleRadius, newMaxRadius);
-    point.targetMinY = centerY + Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["random"])(newMinRadius, newMinMiddleRadius);
-    point.destY = point.targetMaxY;
-    point.startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  }
-
-  setTimeout(function () {
-    // when growing animation finish
-    for (var _i = 0; _i < points.length; _i++) {
-      points[_i].duration -= 250;
-    }
-  }, 1000);
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (PlayerCursor);
-
-/***/ }),
-
-/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerCursor/style.module.scss":
-/*!********************************************************************************************!*\
-  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/PlayerCursor/style.module.scss ***!
-  \********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-module.exports = {"playerCursor":"PlayerCursor-playerCursor--qpYJv","playerCursorFrozen":"PlayerCursor-playerCursorFrozen--ftrTv"};
 
 /***/ }),
 
@@ -97991,13 +97783,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PeerManager/Player2Peer */ "./src/managers/PeerManager/Player2Peer.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
 /* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
-/* harmony import */ var _PlayerCursor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PlayerCursor */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerCursor/index.jsx");
-/* harmony import */ var _PlayerMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./PlayerMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerMessage/index.jsx");
-/* harmony import */ var _PopupMessage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PopupMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PopupMessage/index.jsx");
-/* harmony import */ var _PixiScene__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./PixiScene */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/index.jsx");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _Board__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
-/* harmony import */ var _Intro__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Intro */ "./src/components/DisplayDevice/stages/PlayStage/Round/Intro/index.jsx");
+/* harmony import */ var _PlayerMessage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PlayerMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerMessage/index.jsx");
+/* harmony import */ var _PopupMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./PopupMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PopupMessage/index.jsx");
+/* harmony import */ var _PixiScene__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PixiScene */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/index.jsx");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _Board__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
+/* harmony import */ var _Intro__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Intro */ "./src/components/DisplayDevice/stages/PlayStage/Round/Intro/index.jsx");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -98021,7 +97820,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // import SceneContext from './context'
-
+// import PlayerCursor from './PlayerCursor'
 
 
 
@@ -98063,7 +97862,7 @@ var Round = function Round(props) {
       setMessage = _useState8[1];
 
   var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.map(function () {
       return 0;
     });
   }),
@@ -98072,7 +97871,7 @@ var Round = function Round(props) {
       setRoundScoreArray = _useState10[1];
 
   var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.map(function () {
       return null;
     });
   }),
@@ -98081,7 +97880,7 @@ var Round = function Round(props) {
       setPowerArray = _useState12[1];
 
   var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.map(function () {
       return {
         x: 0,
         y: 0
@@ -98093,7 +97892,7 @@ var Round = function Round(props) {
       setPositionArray = _useState14[1];
 
   var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.map(function () {
       return false;
     });
   }),
@@ -98161,7 +97960,7 @@ var Round = function Round(props) {
         _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].grow.play();
         setPowerArray(function (prevArray) {
           prevArray[playerIndex] = 'grow';
-          return prevArray;
+          return _toConsumableArray(prevArray);
         });
       }
 
@@ -98169,7 +97968,7 @@ var Round = function Round(props) {
         _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].freeze.play();
         setPowerArray(function (prevArray) {
           prevArray[1 - playerIndex] = 'freeze';
-          return prevArray;
+          return _toConsumableArray(prevArray);
         });
       }
 
@@ -98239,7 +98038,7 @@ var Round = function Round(props) {
 
           if (newTime === 0) {
             addMessage({
-              text: 'Time\'s up!',
+              text: "Time's up!",
               color: _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].red,
               persistent: true,
               onEnd: function onEnd() {
@@ -98268,14 +98067,14 @@ var Round = function Round(props) {
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]); // tap instruction
 
-  var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.filter(function (player) {
+  var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.filter(function (player) {
     return player.score && player.score() === 0;
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (zeroScorePlayers.length) {
       var tapInstructionInterval = setInterval(function () {
         var newTapInstructionArray = [];
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.forEach(function (player, index) {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.forEach(function (player, index) {
           if (player.score() === 0) {
             var itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] === 'grow');
             var targetsInCursor = itemsInCursor.filter(function (item) {
@@ -98306,28 +98105,17 @@ var Round = function Round(props) {
       prevScoreArray[index] += score;
       return prevScoreArray;
     });
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players[index].id);
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players[index].id);
     _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].score.play();
   }
 
-  var playerCursors = [];
-  _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.forEach(function (player, index) {
-    var playerCursor = {
-      index: index,
-      power: powerArray[index],
-      position: positionArray[index],
-      color: hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"][player.color]),
-      // get Hex nb color (0x000000)
-      roundScore: roundScoreArray[index],
-      cancelPower: function cancelPower() {
-        setPowerArray(function (prevArray) {
-          prevArray[index] = null;
-          return prevArray;
-        });
-      }
-    };
-    playerCursors.push(playerCursor);
-  });
+  function cancelPower(index) {
+    setPowerArray(function (prevArray) {
+      prevArray[index] = null;
+      return _toConsumableArray(prevArray);
+    });
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.roundExiting, transitionStatus === 'exiting'))
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, gameState === 'in-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
@@ -98338,20 +98126,22 @@ var Round = function Round(props) {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameZone)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PixiScene__WEBPACK_IMPORTED_MODULE_12__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PixiScene__WEBPACK_IMPORTED_MODULE_11__["default"], {
     videoFront: videoFront,
     videoBack: videoBack,
-    playerCursors: playerCursors,
+    positions: positionArray,
+    powers: powerArray,
+    cancelPower: cancelPower,
     items: items
-  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].players.map(function (player, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
+  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.map(function (player, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__["default"], {
       power: powerArray[index],
       position: positionArray[index],
       color: player.color,
       roundScore: roundScoreArray[index],
       tapInstruction: tapInstructionArray[index]
     });
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PopupMessage__WEBPACK_IMPORTED_MODULE_11__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PopupMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
     color: message.color,
     x: message.x,
     y: message.y,
@@ -98371,12 +98161,12 @@ var Round = function Round(props) {
       src: videoBack,
       alt: ""
     });
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_14__["default"], {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_13__["default"], {
     time: time,
     itemImage: itemImage,
     scores: roundScoreArray,
     transitionStatus: transitionStatus
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Intro__WEBPACK_IMPORTED_MODULE_15__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Intro__WEBPACK_IMPORTED_MODULE_14__["default"], {
     roundIndex: roundIndex,
     onFinish: function onFinish() {
       setGameState('in-game');
@@ -98464,10 +98254,6 @@ function getEndMessage() {
   // TODO: we need a larger pool of messages, this is top priority
   var phrases = ['Dope.', 'Good job!', 'Awesome!'];
   return phrases[Math.floor(Math.random() * phrases.length)];
-}
-
-function hexStToNb(str) {
-  return parseInt(str.replace(/^#/, ''), 16);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Round);

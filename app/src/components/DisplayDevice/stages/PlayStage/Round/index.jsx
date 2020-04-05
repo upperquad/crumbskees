@@ -9,7 +9,7 @@ import { DEBUG, GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_
 import { clamp, randomInt } from '~utils/math'
 
 // import SceneContext from './context'
-import PlayerCursor from './PlayerCursor'
+// import PlayerCursor from './PlayerCursor'
 import PlayerMessage from './PlayerMessage'
 import PopupMessage from './PopupMessage'
 import PixiScene from './PixiScene'
@@ -32,12 +32,10 @@ const Round = props => {
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
 
   const addMessage = messageObj => {
-    setMessage(prevMessage => (
-      {
-        ...messageObj,
-        messageCount: prevMessage.messageCount + 1,
-      }
-    ))
+    setMessage(prevMessage => ({
+      ...messageObj,
+      messageCount: prevMessage.messageCount + 1,
+    }))
   }
 
   // Players input
@@ -85,7 +83,7 @@ const Round = props => {
         SoundManager.grow.play()
         setPowerArray(prevArray => {
           prevArray[playerIndex] = 'grow'
-          return prevArray
+          return [...prevArray]
         })
       }
 
@@ -93,7 +91,7 @@ const Round = props => {
         SoundManager.freeze.play()
         setPowerArray(prevArray => {
           prevArray[1 - playerIndex] = 'freeze'
-          return prevArray
+          return [...prevArray]
         })
       }
 
@@ -145,9 +143,7 @@ const Round = props => {
   }, [items])
 
   // Grid setup
-  useEffect(() => (
-    setupGrid(setItems, roundIndex)
-  ), [roundIndex])
+  useEffect(() => setupGrid(setItems, roundIndex), [roundIndex])
 
   // Timer
   useEffect(() => {
@@ -158,7 +154,7 @@ const Round = props => {
 
           if (newTime === 0) {
             addMessage({
-              text: 'Time\'s up!',
+              text: "Time's up!",
               color: COLORS.red,
               persistent: true,
               onEnd: () => setGameState('after-game'),
@@ -213,7 +209,7 @@ const Round = props => {
     }
 
     return undefined
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length])
 
   function addScore(score, index) {
@@ -226,42 +222,28 @@ const Round = props => {
     SoundManager.score.play()
   }
 
-
-  const playerCursors = []
-  PlayersManager.players.forEach((player, index) => {
-    const playerCursor = {
-      index,
-      power: powerArray[index],
-      position: positionArray[index],
-      color: hexStToNb(COLORS[player.color]), // get Hex nb color (0x000000)
-      roundScore: roundScoreArray[index],
-      cancelPower: () => {
-        setPowerArray(prevArray => {
-          prevArray[index] = null
-          return prevArray
-        })
-      },
-    }
-
-    playerCursors.push(playerCursor)
-  })
+  function cancelPower(index) {
+    setPowerArray(prevArray => {
+      prevArray[index] = null
+      return [...prevArray]
+    })
+  }
 
   return (
-    <div
-      className={classNames(
-        styles.round,
-        { [styles.roundExiting]: transitionStatus === 'exiting' },
-      )}
-    >
+    <div className={classNames(styles.round, { [styles.roundExiting]: transitionStatus === 'exiting' })}>
       <TransitionGroup>
         {gameState === 'in-game' && (
-          <Transition
-            key="play-stage-in-game"
-            timeout={{ enter: 0, exit: 1300 }}
-          >
+          <Transition key="play-stage-in-game" timeout={{ enter: 0, exit: 1300 }}>
             <div className={classNames(styles.gameZone)}>
               {/* <img className={styles.videoFront} src={videoFront} alt="" /> */}
-              <PixiScene videoFront={videoFront} videoBack={videoBack} playerCursors={playerCursors} items={items} />
+              <PixiScene
+                videoFront={videoFront}
+                videoBack={videoBack}
+                positions={positionArray}
+                powers={powerArray}
+                cancelPower={cancelPower}
+                items={items}
+              />
               {/* <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
                 <defs>
                   <clipPath id="game-round-clippath" className={styles.svgClipPath}>
@@ -274,7 +256,6 @@ const Round = props => {
                     power={powerArray[index]}
                     position={positionArray[index]}
                     color={player.color}
-                    roundScore={roundScoreArray[index]}
                     cancelPower={() => {
                       setPowerArray(prevArray => {
                         prevArray[index] = null
@@ -330,10 +311,7 @@ const Round = props => {
         )}
 
         {gameState === 'after-game' && (
-          <Transition
-            key="play-stage-reveal"
-            timeout={{ enter: 100, exit: 0 }}
-          >
+          <Transition key="play-stage-reveal" timeout={{ enter: 100, exit: 0 }}>
             {status => (
               <img
                 className={classNames(styles.reveal, {
@@ -425,10 +403,6 @@ function getEndMessage() {
   // TODO: we need a larger pool of messages, this is top priority
   const phrases = ['Dope.', 'Good job!', 'Awesome!']
   return phrases[Math.floor(Math.random() * phrases.length)]
-}
-
-function hexStToNb(str) {
-  return parseInt(str.replace(/^#/, ''), 16)
 }
 
 export default Round
