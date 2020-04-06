@@ -41,7 +41,7 @@ const Intro = props => {
 
   // steps
   useEffect(() => {
-    onFinish()
+    // onFinish()
     timeout.current = setTimeout(() => setFinished(true), 1000)
 
     const currentStep = stepsArray[step]

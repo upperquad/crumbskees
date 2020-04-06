@@ -313,7 +313,7 @@ const PixiScene = props => {
         let newPosition
         if (powers[index] === 'freeze') {
           // position has to stay and color is gray
-          color = 0x7F7F7F
+          color = 0x00C1FF
           newPosition = circlesLastPositions.current[index]
           points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index])
         } else {
