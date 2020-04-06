@@ -86,6 +86,1713 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "../node_modules/hat/index.js":
+/*!************************************!*\
+  !*** ../node_modules/hat/index.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var hat = module.exports = function (bits, base) {
+    if (!base) base = 16;
+    if (bits === undefined) bits = 128;
+    if (bits <= 0) return '0';
+    
+    var digits = Math.log(Math.pow(2, bits)) / Math.log(base);
+    for (var i = 2; digits === Infinity; i *= 2) {
+        digits = Math.log(Math.pow(2, bits / i)) / Math.log(base) * i;
+    }
+    
+    var rem = digits - Math.floor(digits);
+    
+    var res = '';
+    
+    for (var i = 0; i < Math.floor(digits); i++) {
+        var x = Math.floor(Math.random() * base).toString(base);
+        res = x + res;
+    }
+    
+    if (rem) {
+        var b = Math.pow(base, rem);
+        var x = Math.floor(Math.random() * b).toString(base);
+        res = x + res;
+    }
+    
+    var parsed = parseInt(res, base);
+    if (parsed !== Infinity && parsed >= Math.pow(2, bits)) {
+        return hat(bits, base)
+    }
+    else return res;
+};
+
+hat.rack = function (bits, base, expandBy) {
+    var fn = function (data) {
+        var iters = 0;
+        do {
+            if (iters ++ > 10) {
+                if (expandBy) bits += expandBy;
+                else throw new Error('too many ID collisions, use more bits')
+            }
+            
+            var id = hat(bits, base);
+        } while (Object.hasOwnProperty.call(hats, id));
+        
+        hats[id] = data;
+        return id;
+    };
+    var hats = fn.hats = {};
+    
+    fn.get = function (id) {
+        return fn.hats[id];
+    };
+    
+    fn.set = function (id, value) {
+        fn.hats[id] = value;
+        return fn;
+    };
+    
+    fn.bits = bits || 128;
+    fn.base = base || 16;
+    return fn;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/inherits/inherits_browser.js":
+/*!****************************************************!*\
+  !*** ../node_modules/inherits/inherits_browser.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/is-typedarray/index.js":
+/*!**********************************************!*\
+  !*** ../node_modules/is-typedarray/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports      = isTypedArray
+isTypedArray.strict = isStrictTypedArray
+isTypedArray.loose  = isLooseTypedArray
+
+var toString = Object.prototype.toString
+var names = {
+    '[object Int8Array]': true
+  , '[object Int16Array]': true
+  , '[object Int32Array]': true
+  , '[object Uint8Array]': true
+  , '[object Uint8ClampedArray]': true
+  , '[object Uint16Array]': true
+  , '[object Uint32Array]': true
+  , '[object Float32Array]': true
+  , '[object Float64Array]': true
+}
+
+function isTypedArray(arr) {
+  return (
+       isStrictTypedArray(arr)
+    || isLooseTypedArray(arr)
+  )
+}
+
+function isStrictTypedArray(arr) {
+  return (
+       arr instanceof Int8Array
+    || arr instanceof Int16Array
+    || arr instanceof Int32Array
+    || arr instanceof Uint8Array
+    || arr instanceof Uint8ClampedArray
+    || arr instanceof Uint16Array
+    || arr instanceof Uint32Array
+    || arr instanceof Float32Array
+    || arr instanceof Float64Array
+  )
+}
+
+function isLooseTypedArray(arr) {
+  return names[toString.call(arr)]
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/once/once.js":
+/*!************************************!*\
+  !*** ../node_modules/once/once.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var wrappy = __webpack_require__(/*! wrappy */ "../node_modules/wrappy/wrappy.js")
+module.exports = wrappy(once)
+module.exports.strict = wrappy(onceStrict)
+
+once.proto = once(function () {
+  Object.defineProperty(Function.prototype, 'once', {
+    value: function () {
+      return once(this)
+    },
+    configurable: true
+  })
+
+  Object.defineProperty(Function.prototype, 'onceStrict', {
+    value: function () {
+      return onceStrict(this)
+    },
+    configurable: true
+  })
+})
+
+function once (fn) {
+  var f = function () {
+    if (f.called) return f.value
+    f.called = true
+    return f.value = fn.apply(this, arguments)
+  }
+  f.called = false
+  return f
+}
+
+function onceStrict (fn) {
+  var f = function () {
+    if (f.called)
+      throw new Error(f.onceError)
+    f.called = true
+    return f.value = fn.apply(this, arguments)
+  }
+  var name = fn.name || 'Function wrapped with `once`'
+  f.onceError = name + " shouldn't be called more than once"
+  f.called = false
+  return f
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/simple-peer/index.js":
+/*!********************************************!*\
+  !*** ../node_modules/simple-peer/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Buffer) {/* global Blob */
+
+module.exports = Peer
+
+var debug = __webpack_require__(/*! debug */ "../node_modules/simple-peer/node_modules/debug/src/browser.js")('simple-peer')
+var extend = __webpack_require__(/*! xtend/mutable */ "../node_modules/xtend/mutable.js")
+var hat = __webpack_require__(/*! hat */ "../node_modules/hat/index.js")
+var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js")
+var isTypedArray = __webpack_require__(/*! is-typedarray */ "../node_modules/simple-peer/node_modules/is-typedarray/index.js")
+var once = __webpack_require__(/*! once */ "../node_modules/once/once.js")
+var stream = __webpack_require__(/*! stream */ "./node_modules/stream-browserify/index.js")
+var toBuffer = __webpack_require__(/*! typedarray-to-buffer */ "../node_modules/typedarray-to-buffer/index.js")
+
+var wrtc
+try {
+  wrtc = __webpack_require__(/*! wrtc */ 2) // webrtc in node - will be empty object in browser
+} catch (err) {
+  wrtc = {} // optional dependency failed to install
+}
+
+var RTCPeerConnection = typeof window !== 'undefined'
+  ? window.mozRTCPeerConnection || window.RTCPeerConnection ||
+    window.webkitRTCPeerConnection
+  : wrtc.RTCPeerConnection
+
+var RTCSessionDescription = typeof window !== 'undefined'
+  ? window.mozRTCSessionDescription || window.RTCSessionDescription ||
+    window.webkitRTCSessionDescription
+  : wrtc.RTCSessionDescription
+
+var RTCIceCandidate = typeof window !== 'undefined'
+  ? window.mozRTCIceCandidate || window.RTCIceCandidate || window.webkitRTCIceCandidate
+  : wrtc.RTCIceCandidate
+
+inherits(Peer, stream.Duplex)
+
+/**
+ * WebRTC peer connection. Same API as node core `net.Socket`. Duplex stream.
+ * @param {Object} opts
+ */
+function Peer (opts) {
+  var self = this
+  if (!(self instanceof Peer)) return new Peer(opts)
+  if (!opts) opts = {}
+
+  opts.allowHalfOpen = false
+  stream.Duplex.call(self, opts)
+
+  extend(self, {
+    initiator: false,
+    stream: false,
+    config: Peer.config,
+    constraints: Peer.constraints,
+    channelName: (opts && opts.initiator) ? hat(160) : null,
+    trickle: true
+  }, opts)
+
+  if (typeof RTCPeerConnection !== 'function') {
+    if (typeof window === 'undefined') {
+      throw new Error('Missing WebRTC support - was `wrtc` dependency installed?')
+    } else {
+      throw new Error('Missing WebRTC support - is this a supported browser?')
+    }
+  }
+
+  self._debug('new peer (initiator: %s)', self.initiator)
+
+  self.destroyed = false
+  self.connected = false
+
+  self._pcReady = false
+  self._channelReady = false
+  self._iceComplete = false // done with ice candidate trickle (got null candidate)
+  self._channel = null
+  self._buffer = []
+
+  self._pc = new RTCPeerConnection(self.config, self.constraints)
+  self._pc.oniceconnectionstatechange = self._onIceConnectionStateChange.bind(self)
+  self._pc.onsignalingstatechange = self._onSignalingStateChange.bind(self)
+  self._pc.onicecandidate = self._onIceCandidate.bind(self)
+
+  if (self.stream) self._setupVideo(self.stream)
+  self._pc.onaddstream = self._onAddStream.bind(self)
+
+  if (self.initiator) {
+    self._setupData({ channel: self._pc.createDataChannel(self.channelName) })
+    self._pc.onnegotiationneeded = once(self._createOffer.bind(self))
+    // Only Chrome triggers "negotiationneeded"; this is a workaround for other
+    // implementations
+    if (typeof window === 'undefined' || !window.webkitRTCPeerConnection) {
+      self._pc.onnegotiationneeded()
+    }
+  } else {
+    self._pc.ondatachannel = self._setupData.bind(self)
+  }
+
+  self.on('finish', function () {
+    if (self.connected) {
+      // When local peer is finished writing, close connection to remote peer.
+      // Half open connections are currently not supported.
+      // Wait a bit before destroying so the datachannel flushes.
+      // TODO: does datachannels have a .end() that flushes and closes?
+      setTimeout(function () {
+        self._destroy()
+      }, 100)
+    } else {
+      // If data channel is not connected when local peer is finished writing, wait until
+      // data is flushed to network at "connect" event.
+      // TODO: is there a more reliable way to accomplish this?
+      self.once('connect', function () {
+        setTimeout(function () {
+          self._destroy()
+        }, 100)
+      })
+    }
+  })
+}
+
+/**
+ * Expose config and constraints for overriding all Peer instances. Otherwise, just
+ * set opts.config and opts.constraints when constructing a Peer.
+ */
+Peer.config = {
+  iceServers: [
+    {
+      url: 'stun:23.21.150.121', // deprecated, replaced by `urls`
+      urls: 'stun:23.21.150.121'
+    }
+  ]
+}
+Peer.constraints = {}
+
+Peer.prototype.send = function (chunk, cb) {
+  var self = this
+  if (!cb) cb = noop
+  self._write(chunk, undefined, cb)
+}
+
+Peer.prototype.signal = function (data) {
+  var self = this
+  if (self.destroyed) throw new Error('cannot signal after peer is destroyed')
+  if (typeof data === 'string') {
+    try {
+      data = JSON.parse(data)
+    } catch (err) {
+      data = {}
+    }
+  }
+  self._debug('signal')
+  if (data.sdp) {
+    self._pc.setRemoteDescription(new RTCSessionDescription(data), function () {
+      if (self._pc.remoteDescription.type === 'offer') self._createAnswer()
+    }, self._onError.bind(self))
+  }
+  if (data.candidate) {
+    try {
+      self._pc.addIceCandidate(
+        new RTCIceCandidate(data.candidate), noop, self._onError.bind(self)
+      )
+    } catch (err) {
+      self._destroy(new Error('error adding candidate: ' + err.message))
+    }
+  }
+  if (!data.sdp && !data.candidate) {
+    self._destroy(new Error('signal() called with invalid signal data'))
+  }
+}
+
+Peer.prototype.destroy = function (onclose) {
+  var self = this
+  self._destroy(null, onclose)
+}
+
+Peer.prototype._destroy = function (err, onclose) {
+  var self = this
+  if (self.destroyed) return
+  if (onclose) self.once('close', onclose)
+
+  self._debug('destroy (error: %s)', err && err.message)
+
+  self.destroyed = true
+  self.connected = false
+  self._pcReady = false
+  self._channelReady = false
+
+  if (self._pc) {
+    try {
+      self._pc.close()
+    } catch (err) {}
+
+    self._pc.oniceconnectionstatechange = null
+    self._pc.onsignalingstatechange = null
+    self._pc.onicecandidate = null
+  }
+
+  if (self._channel) {
+    try {
+      self._channel.close()
+    } catch (err) {}
+
+    self._channel.onmessage = null
+    self._channel.onopen = null
+    self._channel.onclose = null
+  }
+  self._pc = null
+  self._channel = null
+
+  this.readable = this.writable = false
+
+  if (!self._readableState.ended) self.push(null)
+  if (!self._writableState.finished) self.end()
+
+  if (err) self.emit('error', err)
+  self.emit('close')
+}
+
+Peer.prototype._setupData = function (event) {
+  var self = this
+  self._channel = event.channel
+  self.channelName = self._channel.label
+
+  self._channel.binaryType = 'arraybuffer'
+  self._channel.onmessage = self._onChannelMessage.bind(self)
+  self._channel.onopen = self._onChannelOpen.bind(self)
+  self._channel.onclose = self._onChannelClose.bind(self)
+}
+
+Peer.prototype._setupVideo = function (stream) {
+  var self = this
+  self._pc.addStream(stream)
+}
+
+Peer.prototype._read = function () {}
+
+/**
+ * Send text/binary data to the remote peer.
+ * @param {string|Buffer|TypedArrayView|ArrayBuffer|Blob} chunk
+ * @param {string} encoding
+ * @param {function} cb
+ */
+Peer.prototype._write = function (chunk, encoding, cb) {
+  var self = this
+  if (self.destroyed) return cb(new Error('cannot write after peer is destroyed'))
+
+  var len = chunk.length || chunk.byteLength || chunk.size
+  if (!self.connected) {
+    self._debug('_write before ready: length %d', len)
+    self._buffer.push(chunk)
+    cb(null)
+    return
+  }
+  self._debug('_write: length %d', len)
+
+  if (isTypedArray.strict(chunk) || chunk instanceof ArrayBuffer ||
+    typeof chunk === 'string' || (typeof Blob !== 'undefined' && chunk instanceof Blob)) {
+    self._channel.send(chunk)
+  } else if (Buffer.isBuffer(chunk)) {
+    // node.js buffer
+    self._channel.send(new Uint8Array(chunk))
+  } else {
+    self._channel.send(JSON.stringify(chunk))
+  }
+
+  cb(null)
+}
+
+Peer.prototype._createOffer = function () {
+  var self = this
+  if (self.destroyed) return
+
+  self._pc.createOffer(function (offer) {
+    if (self.destroyed) return
+    speedHack(offer)
+    self._pc.setLocalDescription(offer, noop, self._onError.bind(self))
+    var sendOffer = function () {
+      self.emit('signal', self._pc.localDescription || offer)
+    }
+    if (self.trickle || self._iceComplete) sendOffer()
+    else self.once('_iceComplete', sendOffer) // wait for candidates
+  }, self._onError.bind(self), self.offerConstraints)
+}
+
+Peer.prototype._createAnswer = function () {
+  var self = this
+  if (self.destroyed) return
+
+  self._pc.createAnswer(function (answer) {
+    if (self.destroyed) return
+    speedHack(answer)
+    self._pc.setLocalDescription(answer, noop, self._onError.bind(self))
+    var sendAnswer = function () {
+      self.emit('signal', self._pc.localDescription || answer)
+    }
+    if (self.trickle || self._iceComplete) sendAnswer()
+    else self.once('_iceComplete', sendAnswer)
+  }, self._onError.bind(self), self.answerConstraints)
+}
+
+Peer.prototype._onIceConnectionStateChange = function () {
+  var self = this
+  if (self.destroyed) return
+  var iceGatheringState = self._pc.iceGatheringState
+  var iceConnectionState = self._pc.iceConnectionState
+  self.emit('iceConnectionStateChange', iceGatheringState, iceConnectionState)
+  self._debug('iceConnectionStateChange %s %s', iceGatheringState, iceConnectionState)
+  if (iceConnectionState === 'connected' || iceConnectionState === 'completed') {
+    self._pcReady = true
+    self._maybeReady()
+  }
+  if (iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
+    self._destroy()
+  }
+}
+
+Peer.prototype._maybeReady = function () {
+  var self = this
+  self._debug('maybeReady pc %s channel %s', self._pcReady, self._channelReady)
+  if (!self.connected && self._pcReady && self._channelReady) {
+    self.connected = true
+    self._buffer.forEach(function (chunk) {
+      self.send(chunk)
+    })
+    self._buffer = []
+
+    self._debug('connect')
+    self.emit('connect')
+  }
+}
+
+Peer.prototype._onSignalingStateChange = function () {
+  var self = this
+  if (self.destroyed) return
+  self.emit('signalingStateChange', self._pc.signalingState)
+  self._debug('signalingStateChange %s', self._pc.signalingState)
+}
+
+Peer.prototype._onIceCandidate = function (event) {
+  var self = this
+  if (self.destroyed) return
+  if (event.candidate && self.trickle) {
+    self.emit('signal', { candidate: event.candidate })
+  } else if (!event.candidate) {
+    self._iceComplete = true
+    self.emit('_iceComplete')
+  }
+}
+
+Peer.prototype._onChannelMessage = function (event) {
+  var self = this
+  if (self.destroyed) return
+  var data = event.data
+  self._debug('on channel message: length %d', data.byteLength || data.length)
+
+  if (data instanceof ArrayBuffer) {
+    data = toBuffer(new Uint8Array(data))
+    self.push(data)
+  } else {
+    try {
+      data = JSON.parse(data)
+    } catch (err) {}
+    self.emit('data', data)
+  }
+}
+
+Peer.prototype._onChannelOpen = function () {
+  var self = this
+  if (self.connected || self.destroyed) return
+  self._debug('on channel open')
+  self._channelReady = true
+  self._maybeReady()
+}
+
+Peer.prototype._onChannelClose = function () {
+  var self = this
+  if (self.destroyed) return
+  self._debug('on channel close')
+  self._destroy()
+}
+
+Peer.prototype._onAddStream = function (event) {
+  var self = this
+  if (self.destroyed) return
+  self._debug('on add stream')
+  self.emit('stream', event.stream)
+}
+
+Peer.prototype._onError = function (err) {
+  var self = this
+  if (self.destroyed) return
+  self._debug('error %s', err.message || err)
+  self._destroy(err)
+}
+
+Peer.prototype._debug = function () {
+  var self = this
+  var args = [].slice.call(arguments)
+  var id = self.channelName && self.channelName.substring(0, 7)
+  args[0] = '[' + id + '] ' + args[0]
+  debug.apply(null, args)
+}
+
+function speedHack (obj) {
+  var s = obj.sdp.split('b=AS:30')
+  if (s.length > 1) obj.sdp = s[0] + 'b=AS:1638400' + s[1]
+}
+
+function noop () {}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../app/node_modules/buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
+
+/***/ }),
+
+/***/ "../node_modules/simple-peer/node_modules/debug/src/browser.js":
+/*!*********************************************************************!*\
+  !*** ../node_modules/simple-peer/node_modules/debug/src/browser.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = __webpack_require__(/*! ./debug */ "../node_modules/simple-peer/node_modules/debug/src/debug.js");
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  }
+
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+    // double check webkit in userAgent just in case we are in a worker
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return;
+
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit')
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = process.env.DEBUG;
+  }
+
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../app/node_modules/process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "../node_modules/simple-peer/node_modules/debug/src/debug.js":
+/*!*******************************************************************!*\
+  !*** ../node_modules/simple-peer/node_modules/debug/src/debug.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = __webpack_require__(/*! ms */ "../node_modules/simple-peer/node_modules/ms/index.js");
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ * @param {String} namespace
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor(namespace) {
+  var hash = 0, i;
+
+  for (i in namespace) {
+    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return exports.colors[Math.abs(hash) % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function createDebug(namespace) {
+
+  function debug() {
+    // disabled?
+    if (!debug.enabled) return;
+
+    var self = debug;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // turn the `arguments` into a proper Array
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %O
+      args.unshift('%O');
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    // apply env-specific formatting (colors, etc.)
+    exports.formatArgs.call(self, args);
+
+    var logFn = debug.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+
+  debug.namespace = namespace;
+  debug.enabled = exports.enabled(namespace);
+  debug.useColors = exports.useColors();
+  debug.color = selectColor(namespace);
+
+  // env-specific initialization logic for debug instances
+  if ('function' === typeof exports.init) {
+    exports.init(debug);
+  }
+
+  return debug;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  exports.names = [];
+  exports.skips = [];
+
+  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/simple-peer/node_modules/is-typedarray/index.js":
+/*!***********************************************************************!*\
+  !*** ../node_modules/simple-peer/node_modules/is-typedarray/index.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports      = isTypedArray
+isTypedArray.strict = isStrictTypedArray
+isTypedArray.loose  = isLooseTypedArray
+
+var toString = Object.prototype.toString
+var names = {
+    '[object Int8Array]': true
+  , '[object Int16Array]': true
+  , '[object Int32Array]': true
+  , '[object Uint8Array]': true
+  , '[object Uint16Array]': true
+  , '[object Uint32Array]': true
+  , '[object Float32Array]': true
+  , '[object Float64Array]': true
+}
+
+function isTypedArray(arr) {
+  return (
+       isStrictTypedArray(arr)
+    || isLooseTypedArray(arr)
+  )
+}
+
+function isStrictTypedArray(arr) {
+  return (
+       arr instanceof Int8Array
+    || arr instanceof Int16Array
+    || arr instanceof Int32Array
+    || arr instanceof Uint8Array
+    || arr instanceof Uint16Array
+    || arr instanceof Uint32Array
+    || arr instanceof Float32Array
+    || arr instanceof Float64Array
+  )
+}
+
+function isLooseTypedArray(arr) {
+  return names[toString.call(arr)]
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/simple-peer/node_modules/ms/index.js":
+/*!************************************************************!*\
+  !*** ../node_modules/simple-peer/node_modules/ms/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 100) {
+    return;
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+    str
+  );
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return;
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name;
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/typedarray-to-buffer/index.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/typedarray-to-buffer/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Buffer) {/**
+ * Convert a typed array to a Buffer without a copy
+ *
+ * Author:   Feross Aboukhadijeh <https://feross.org>
+ * License:  MIT
+ *
+ * `npm install typedarray-to-buffer`
+ */
+
+var isTypedArray = __webpack_require__(/*! is-typedarray */ "../node_modules/is-typedarray/index.js").strict
+
+module.exports = function typedarrayToBuffer (arr) {
+  if (isTypedArray(arr)) {
+    // To avoid a copy, use the typed array's underlying ArrayBuffer to back new Buffer
+    var buf = Buffer.from(arr.buffer)
+    if (arr.byteLength !== arr.buffer.byteLength) {
+      // Respect the "view", i.e. byteOffset and byteLength, without doing a copy
+      buf = buf.slice(arr.byteOffset, arr.byteOffset + arr.byteLength)
+    }
+    return buf
+  } else {
+    // Pass through all other types to `Buffer.from`
+    return Buffer.from(arr)
+  }
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../app/node_modules/buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
+
+/***/ }),
+
+/***/ "../node_modules/wrappy/wrappy.js":
+/*!****************************************!*\
+  !*** ../node_modules/wrappy/wrappy.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// Returns a wrapper function that returns a wrapped callback
+// The wrapper function should do some stuff, and return a
+// presumably different callback function.
+// This makes sure that own properties are retained, so that
+// decorations and such are not lost along the way.
+module.exports = wrappy
+function wrappy (fn, cb) {
+  if (fn && cb) return wrappy(fn)(cb)
+
+  if (typeof fn !== 'function')
+    throw new TypeError('need wrapper function')
+
+  Object.keys(fn).forEach(function (k) {
+    wrapper[k] = fn[k]
+  })
+
+  return wrapper
+
+  function wrapper() {
+    var args = new Array(arguments.length)
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i]
+    }
+    var ret = fn.apply(this, args)
+    var cb = args[args.length-1]
+    if (typeof ret === 'function' && ret !== cb) {
+      Object.keys(cb).forEach(function (k) {
+        ret[k] = cb[k]
+      })
+    }
+    return ret
+  }
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/xtend/mutable.js":
+/*!****************************************!*\
+  !*** ../node_modules/xtend/mutable.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = extend
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function extend(target) {
+    for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+
+        for (var key in source) {
+            if (hasOwnProperty.call(source, key)) {
+                target[key] = source[key]
+            }
+        }
+    }
+
+    return target
+}
+
+
+/***/ }),
+
+/***/ "../vendor/socketpeer/browser/index.js":
+/*!*********************************************!*\
+  !*** ../vendor/socketpeer/browser/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* jshint browserify: true */
+
+/* global WebSocket */
+var events = __webpack_require__(/*! events */ "./node_modules/events/events.js");
+
+var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js"); // A tiny lib containing `util.inherits`.
+
+
+var extend = __webpack_require__(/*! xtend/mutable */ "../node_modules/xtend/mutable.js");
+
+var SimplePeer = __webpack_require__(/*! simple-peer */ "../node_modules/simple-peer/index.js");
+
+var EventEmitter = events.EventEmitter;
+/**
+ * A WebRTC/WebSocket peer connection.
+ * @param {Object} opts
+ */
+
+function SocketPeer(opts) {
+  var self = this;
+
+  if (!(self instanceof SocketPeer)) {
+    return new SocketPeer(opts);
+  }
+
+  opts = opts || {};
+  EventEmitter.call(self);
+  self._connections = {
+    socket: {
+      success: 0,
+      error: 0,
+      attempt: 0
+    },
+    rtc: {
+      success: 0,
+      error: 0,
+      attempt: 0
+    }
+  };
+  self.peer = null;
+  self.rtcConnected = false;
+  self.socketConnected = false;
+  extend(self, {
+    pairCode: 'pairCode' in opts ? opts.pairCode : null,
+    socketFallback: 'socketFallback' in opts ? opts.socketFallback : true,
+    socket: 'socket' in opts ? opts.socket : null,
+    stream: 'stream' in opts ? opts.stream : null,
+    url: 'url' in opts ? opts.url : 'http://localhost',
+    reconnect: 'reconnect' in opts ? opts.reconnect : true,
+    reconnectDelay: 'reconnectDelay' in opts ? opts.reconnectDelay : 1000,
+    timeout: 'timeout' in opts ? opts.timeout : 0,
+    autoconnect: 'autoconnect' in opts ? opts.autoconnect : true,
+    debug: 'debug' in opts ? opts.debug : false
+  }, opts);
+
+  self._debug('New peer');
+
+  self.on('peer.found', function (data) {
+    self.socketConnected = true;
+    clearTimeout(self._socketConnectTimeout);
+    clearTimeout(self._socketReconnectDelayTimeout);
+    self._connections.socket.attempt = 0;
+    self._connections.socket.success++;
+    self.emit('connect');
+
+    if (self._connections.socket.success > 0) {
+      self.emit('reconnect');
+    }
+
+    self.initiator = data.initiator;
+
+    if (data.initiator) {
+      self._send('rtc.connect');
+
+      self._rtcInit();
+    }
+  });
+  self.on('rtc.signal', self._rtcSignal);
+  self.on('rtc.connect', function () {
+    self._rtcInit();
+  });
+  self.on('busy', function () {
+    self._socketError(new Error('Pair code "' + self.pairCode + '" already in use'));
+
+    self.socket.close();
+  });
+
+  if (self.autoconnect) {
+    setTimeout(function () {
+      self.connect();
+    }, 0);
+  }
+}
+
+inherits(SocketPeer, EventEmitter);
+
+SocketPeer.prototype.pair = function (pairCode) {
+  var self = this;
+
+  if (typeof pairCode !== 'undefined') {
+    self.pairCode = pairCode;
+  }
+
+  self._send('pair', self.pairCode);
+};
+
+SocketPeer.prototype.connect = function () {
+  var self = this;
+  self._connections.socket.attempt++;
+
+  if (self.socketConnected) {
+    console.warn('Socket already connected');
+    return;
+  }
+
+  if (self.timeout) {
+    self._socketConnectTimeout = setTimeout(function () {
+      self.socket.close();
+      var err = new Error('Connection timeout after ' + self.timeout + ' ms');
+      self.emit('connect_timeout', err);
+
+      self._socketError(err);
+    }, self.timeout);
+  }
+
+  self.socket = new WebSocket(self.url.replace(/^http/, 'ws'));
+
+  self.socket.onopen = function () {
+    self.pair();
+  };
+
+  self.socket.onerror = function (event) {
+    self._socketError(new Error(event.data || 'Unexpected WebSocket error'));
+  };
+
+  self.socket.onmessage = function (event) {
+    var obj = {};
+
+    try {
+      obj = JSON.parse(event.data);
+    } catch (e) {
+      self.emit(new Error('Expected JSON-formatted WebSocket message'));
+    }
+
+    if (obj.type === 'data') {
+      self.emit('data', obj.data);
+    } else {
+      self.emit(obj.type, obj.data);
+    }
+  };
+
+  self.socket.onclose = function () {
+    self.socketConnected = false;
+
+    self._debug('close');
+
+    if (self.reconnect) {
+      var delay = self._calcReconnectTimeout(self._connections.socket.attempt);
+
+      clearTimeout(self._socketReconnectDelayTimeout);
+      self._socketReconnectDelayTimeout = setTimeout(function () {
+        self.connect();
+      }, delay);
+    }
+  };
+
+  self.emit('connect_attempt');
+
+  if (self._connections.socket.success > 0) {
+    self.emit('reconnect_attempt');
+  }
+};
+
+SocketPeer.prototype._socketError = function (err) {
+  var self = this;
+  self._connections.socket.error++;
+  self.emit('error', err);
+  self.emit('connect_error', err);
+
+  if (self._connections.socket.success > 0) {
+    self.emit('reconnect_error');
+  }
+};
+
+SocketPeer.prototype._calcReconnectTimeout = function (attempts) {
+  var self = this;
+  return Math.min(Math.pow(2, attempts) * self.reconnectDelay, 30000);
+};
+
+SocketPeer.prototype._rtcInit = function () {
+  var self = this;
+
+  if (self.rtcConnected) {
+    console.warn('WebRTC peer already connected');
+    return;
+  }
+
+  self.peer = new SimplePeer({
+    initiator: self.initiator,
+    stream: self.stream
+  });
+  self.peer.on('connect', function () {
+    clearTimeout(self._rtcReconnectTimeout);
+    self._connections.rtc.success++;
+    self._connections.rtc.attempt = 0;
+    self.rtcConnected = true;
+    self.emit('upgrade');
+  });
+  self.peer.on('stream', function (stream) {
+    self.emit('stream', stream);
+  });
+  self.peer.on('error', function (err) {
+    self._connections.rtc.error++;
+    self.emit('upgrade_error', err);
+    self.emit('error', err);
+  });
+  self.peer.on('signal', function (data) {
+    if (self.rtcConnected) {
+      return;
+    }
+
+    self._send('rtc.signal', data);
+  });
+  self.peer.on('data', function (data) {
+    self.emit('data', data);
+  });
+  self.peer.on('close', function (data) {
+    self.destroyPeer();
+
+    if (self.socketConnected) {
+      // NOTE: Currently the server does nothing with this message.
+      // self._send('rtc.close', {pairCode: self.pairCode});
+      if (self.reconnect && self.initiator) {
+        var delay = self._calcReconnectTimeout(self._connections.rtc.attempt);
+
+        clearTimeout(self._rtcReconnectTimeout);
+        self._rtcReconnectTimeout = setTimeout(function () {
+          self._send('rtc.connect');
+
+          self._rtcInit();
+        }, delay);
+      }
+    }
+
+    self.emit('downgrade');
+  });
+  self._connections.rtc.attempt++;
+  self.emit('upgrade_attempt');
+};
+
+SocketPeer.prototype._rtcSignal = function (data) {
+  var self = this;
+
+  if (!self.rtcConnected && self.peer && !self.peer.destroyed) {
+    self.peer.signal(data);
+  }
+};
+
+SocketPeer.prototype._send = function (type, data) {
+  var self = this;
+
+  if (!self.socket) {
+    console.warn('Attempted to send message when socket was closed: %s', type);
+    return;
+  }
+
+  data = JSON.stringify({
+    type: type,
+    data: data
+  });
+
+  self._debug('_send', data);
+
+  self.socket.send(data);
+};
+
+SocketPeer.prototype.send = function (data) {
+  var self = this;
+
+  if (self.rtcConnected) {
+    self.peer.send(data);
+  } else {
+    self._send('data', data);
+  }
+};
+
+SocketPeer.prototype.close = function () {
+  var self = this;
+  self.destroyPeer();
+
+  if (self.socket) {
+    self.socket.close();
+  }
+};
+
+SocketPeer.prototype.destroy = function () {
+  var self = this;
+  self.reconnect = false;
+  self.close();
+  self.peer = null;
+  self.socket = null;
+  self.socketConnected = false;
+  self.rtcConnected = false;
+  clearTimeout(self._socketConnectTimeout);
+  clearTimeout(self._socketReconnectDelayTimeout);
+  clearTimeout(self._rtcReconnectTimeout);
+};
+
+SocketPeer.prototype.destroyPeer = function () {
+  var self = this;
+
+  if (self.peer) {
+    self.peer.destroy();
+  }
+
+  self.peer = null;
+  self.rtcConnected = false;
+};
+
+SocketPeer.prototype._debug = function () {
+  var self = this;
+
+  if (self.debug) {
+    var args = Array.prototype.slice.call(arguments);
+    args[0] = '[' + self.pairCode + '] ' + args[0];
+    console.log.apply(console, args);
+  }
+};
+
+module.exports = SocketPeer;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js ***!
@@ -41061,579 +42768,6 @@ function objectToString(o) {
 
 /***/ }),
 
-/***/ "./node_modules/debug/node_modules/ms/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/debug/node_modules/ms/index.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Helpers.
- */
-
-var s = 1000;
-var m = s * 60;
-var h = m * 60;
-var d = h * 24;
-var y = d * 365.25;
-
-/**
- * Parse or format the given `val`.
- *
- * Options:
- *
- *  - `long` verbose formatting [false]
- *
- * @param {String|Number} val
- * @param {Object} [options]
- * @throws {Error} throw an error if val is not a non-empty string or a number
- * @return {String|Number}
- * @api public
- */
-
-module.exports = function(val, options) {
-  options = options || {};
-  var type = typeof val;
-  if (type === 'string' && val.length > 0) {
-    return parse(val);
-  } else if (type === 'number' && isNaN(val) === false) {
-    return options.long ? fmtLong(val) : fmtShort(val);
-  }
-  throw new Error(
-    'val is not a non-empty string or a valid number. val=' +
-      JSON.stringify(val)
-  );
-};
-
-/**
- * Parse the given `str` and return milliseconds.
- *
- * @param {String} str
- * @return {Number}
- * @api private
- */
-
-function parse(str) {
-  str = String(str);
-  if (str.length > 100) {
-    return;
-  }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
-    str
-  );
-  if (!match) {
-    return;
-  }
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return undefined;
-  }
-}
-
-/**
- * Short format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtShort(ms) {
-  if (ms >= d) {
-    return Math.round(ms / d) + 'd';
-  }
-  if (ms >= h) {
-    return Math.round(ms / h) + 'h';
-  }
-  if (ms >= m) {
-    return Math.round(ms / m) + 'm';
-  }
-  if (ms >= s) {
-    return Math.round(ms / s) + 's';
-  }
-  return ms + 'ms';
-}
-
-/**
- * Long format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
-    plural(ms, h, 'hour') ||
-    plural(ms, m, 'minute') ||
-    plural(ms, s, 'second') ||
-    ms + ' ms';
-}
-
-/**
- * Pluralization helper.
- */
-
-function plural(ms, n, name) {
-  if (ms < n) {
-    return;
-  }
-  if (ms < n * 1.5) {
-    return Math.floor(ms / n) + ' ' + name;
-  }
-  return Math.ceil(ms / n) + ' ' + name + 's';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/debug/src/browser.js":
-/*!*******************************************!*\
-  !*** ./node_modules/debug/src/browser.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = __webpack_require__(/*! ./debug */ "./node_modules/debug/src/debug.js");
-exports.log = log;
-exports.formatArgs = formatArgs;
-exports.save = save;
-exports.load = load;
-exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
-
-/**
- * Colors.
- */
-
-exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
-];
-
-/**
- * Currently only WebKit-based Web Inspectors, Firefox >= v31,
- * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
- *
- * TODO: add a `localStorage` variable to explicitly enable/disable colors
- */
-
-function useColors() {
-  // NB: In an Electron preload script, document will be defined but not fully
-  // initialized. Since we know we're in Chrome, we'll just detect this case
-  // explicitly
-  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-    return true;
-  }
-
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
-    // double check webkit in userAgent just in case we are in a worker
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
-}
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
-
-/**
- * Colorize log arguments if enabled.
- *
- * @api public
- */
-
-function formatArgs(args) {
-  var useColors = this.useColors;
-
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
-
-  if (!useColors) return;
-
-  var c = 'color: ' + this.color;
-  args.splice(1, 0, c, 'color: inherit')
-
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-zA-Z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
-}
-
-/**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
- *
- * @api public
- */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
-
-/**
- * Save `namespaces`.
- *
- * @param {String} namespaces
- * @api private
- */
-
-function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
-}
-
-/**
- * Load `namespaces`.
- *
- * @return {String} returns the previously persisted debug modes
- * @api private
- */
-
-function load() {
-  var r;
-  try {
-    r = exports.storage.debug;
-  } catch(e) {}
-
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = process.env.DEBUG;
-  }
-
-  return r;
-}
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
-
-/**
- * Localstorage attempts to return the localstorage.
- *
- * This is necessary because safari throws
- * when a user disables cookies/localstorage
- * and you attempt to access it.
- *
- * @return {LocalStorage}
- * @api private
- */
-
-function localstorage() {
-  try {
-    return window.localStorage;
-  } catch (e) {}
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./node_modules/debug/src/debug.js":
-/*!*****************************************!*\
-  !*** ./node_modules/debug/src/debug.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * This is the common logic for both the Node.js and web browser
- * implementations of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
-exports.coerce = coerce;
-exports.disable = disable;
-exports.enable = enable;
-exports.enabled = enabled;
-exports.humanize = __webpack_require__(/*! ms */ "./node_modules/debug/node_modules/ms/index.js");
-
-/**
- * The currently active debug mode names, and names to skip.
- */
-
-exports.names = [];
-exports.skips = [];
-
-/**
- * Map of special "%n" handling functions, for the debug "format" argument.
- *
- * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
- */
-
-exports.formatters = {};
-
-/**
- * Previous log timestamp.
- */
-
-var prevTime;
-
-/**
- * Select a color.
- * @param {String} namespace
- * @return {Number}
- * @api private
- */
-
-function selectColor(namespace) {
-  var hash = 0, i;
-
-  for (i in namespace) {
-    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
-
-  return exports.colors[Math.abs(hash) % exports.colors.length];
-}
-
-/**
- * Create a debugger with the given `namespace`.
- *
- * @param {String} namespace
- * @return {Function}
- * @api public
- */
-
-function createDebug(namespace) {
-
-  function debug() {
-    // disabled?
-    if (!debug.enabled) return;
-
-    var self = debug;
-
-    // set `diff` timestamp
-    var curr = +new Date();
-    var ms = curr - (prevTime || curr);
-    self.diff = ms;
-    self.prev = prevTime;
-    self.curr = curr;
-    prevTime = curr;
-
-    // turn the `arguments` into a proper Array
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-
-    args[0] = exports.coerce(args[0]);
-
-    if ('string' !== typeof args[0]) {
-      // anything else let's inspect with %O
-      args.unshift('%O');
-    }
-
-    // apply any `formatters` transformations
-    var index = 0;
-    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
-      // if we encounter an escaped % then don't increase the array index
-      if (match === '%%') return match;
-      index++;
-      var formatter = exports.formatters[format];
-      if ('function' === typeof formatter) {
-        var val = args[index];
-        match = formatter.call(self, val);
-
-        // now we need to remove `args[index]` since it's inlined in the `format`
-        args.splice(index, 1);
-        index--;
-      }
-      return match;
-    });
-
-    // apply env-specific formatting (colors, etc.)
-    exports.formatArgs.call(self, args);
-
-    var logFn = debug.log || exports.log || console.log.bind(console);
-    logFn.apply(self, args);
-  }
-
-  debug.namespace = namespace;
-  debug.enabled = exports.enabled(namespace);
-  debug.useColors = exports.useColors();
-  debug.color = selectColor(namespace);
-
-  // env-specific initialization logic for debug instances
-  if ('function' === typeof exports.init) {
-    exports.init(debug);
-  }
-
-  return debug;
-}
-
-/**
- * Enables a debug mode by namespaces. This can include modes
- * separated by a colon and wildcards.
- *
- * @param {String} namespaces
- * @api public
- */
-
-function enable(namespaces) {
-  exports.save(namespaces);
-
-  exports.names = [];
-  exports.skips = [];
-
-  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-  var len = split.length;
-
-  for (var i = 0; i < len; i++) {
-    if (!split[i]) continue; // ignore empty strings
-    namespaces = split[i].replace(/\*/g, '.*?');
-    if (namespaces[0] === '-') {
-      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-    } else {
-      exports.names.push(new RegExp('^' + namespaces + '$'));
-    }
-  }
-}
-
-/**
- * Disable debug output.
- *
- * @api public
- */
-
-function disable() {
-  exports.enable('');
-}
-
-/**
- * Returns true if the given mode name is enabled, false otherwise.
- *
- * @param {String} name
- * @return {Boolean}
- * @api public
- */
-
-function enabled(name) {
-  var i, len;
-  for (i = 0, len = exports.skips.length; i < len; i++) {
-    if (exports.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (i = 0, len = exports.names.length; i < len; i++) {
-    if (exports.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Coerce `val`.
- *
- * @param {Mixed} val
- * @return {Mixed}
- * @api private
- */
-
-function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/dijkstrajs/dijkstra.js":
 /*!*********************************************!*\
   !*** ./node_modules/dijkstrajs/dijkstra.js ***!
@@ -43727,79 +44861,6 @@ function unwrapListeners(arr) {
   }
   return ret;
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/hat/index.js":
-/*!***********************************!*\
-  !*** ./node_modules/hat/index.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var hat = module.exports = function (bits, base) {
-    if (!base) base = 16;
-    if (bits === undefined) bits = 128;
-    if (bits <= 0) return '0';
-    
-    var digits = Math.log(Math.pow(2, bits)) / Math.log(base);
-    for (var i = 2; digits === Infinity; i *= 2) {
-        digits = Math.log(Math.pow(2, bits / i)) / Math.log(base) * i;
-    }
-    
-    var rem = digits - Math.floor(digits);
-    
-    var res = '';
-    
-    for (var i = 0; i < Math.floor(digits); i++) {
-        var x = Math.floor(Math.random() * base).toString(base);
-        res = x + res;
-    }
-    
-    if (rem) {
-        var b = Math.pow(base, rem);
-        var x = Math.floor(Math.random() * b).toString(base);
-        res = x + res;
-    }
-    
-    var parsed = parseInt(res, base);
-    if (parsed !== Infinity && parsed >= Math.pow(2, bits)) {
-        return hat(bits, base)
-    }
-    else return res;
-};
-
-hat.rack = function (bits, base, expandBy) {
-    var fn = function (data) {
-        var iters = 0;
-        do {
-            if (iters ++ > 10) {
-                if (expandBy) bits += expandBy;
-                else throw new Error('too many ID collisions, use more bits')
-            }
-            
-            var id = hat(bits, base);
-        } while (Object.hasOwnProperty.call(hats, id));
-        
-        hats[id] = data;
-        return id;
-    };
-    var hats = fn.hats = {};
-    
-    fn.get = function (id) {
-        return fn.hats[id];
-    };
-    
-    fn.set = function (id, value) {
-        fn.hats[id] = value;
-        return fn;
-    };
-    
-    fn.bits = bits || 128;
-    fn.base = base || 16;
-    return fn;
-};
 
 
 /***/ }),
@@ -47107,58 +48168,6 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
-/***/ "./node_modules/is-typedarray/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/is-typedarray/index.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports      = isTypedArray
-isTypedArray.strict = isStrictTypedArray
-isTypedArray.loose  = isLooseTypedArray
-
-var toString = Object.prototype.toString
-var names = {
-    '[object Int8Array]': true
-  , '[object Int16Array]': true
-  , '[object Int32Array]': true
-  , '[object Uint8Array]': true
-  , '[object Uint8ClampedArray]': true
-  , '[object Uint16Array]': true
-  , '[object Uint32Array]': true
-  , '[object Float32Array]': true
-  , '[object Float64Array]': true
-}
-
-function isTypedArray(arr) {
-  return (
-       isStrictTypedArray(arr)
-    || isLooseTypedArray(arr)
-  )
-}
-
-function isStrictTypedArray(arr) {
-  return (
-       arr instanceof Int8Array
-    || arr instanceof Int16Array
-    || arr instanceof Int32Array
-    || arr instanceof Uint8Array
-    || arr instanceof Uint8ClampedArray
-    || arr instanceof Uint16Array
-    || arr instanceof Uint32Array
-    || arr instanceof Float32Array
-    || arr instanceof Float64Array
-  )
-}
-
-function isLooseTypedArray(arr) {
-  return names[toString.call(arr)]
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/isarray/index.js":
 /*!***************************************!*\
   !*** ./node_modules/isarray/index.js ***!
@@ -47475,313 +48484,6 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ "./node_modules/node-libs-browser/node_modules/string_decoder/lib/string_decoder.js":
-/*!******************************************************************************************!*\
-  !*** ./node_modules/node-libs-browser/node_modules/string_decoder/lib/string_decoder.js ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-/*<replacement>*/
-
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer;
-/*</replacement>*/
-
-var isEncoding = Buffer.isEncoding || function (encoding) {
-  encoding = '' + encoding;
-  switch (encoding && encoding.toLowerCase()) {
-    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
-      return true;
-    default:
-      return false;
-  }
-};
-
-function _normalizeEncoding(enc) {
-  if (!enc) return 'utf8';
-  var retried;
-  while (true) {
-    switch (enc) {
-      case 'utf8':
-      case 'utf-8':
-        return 'utf8';
-      case 'ucs2':
-      case 'ucs-2':
-      case 'utf16le':
-      case 'utf-16le':
-        return 'utf16le';
-      case 'latin1':
-      case 'binary':
-        return 'latin1';
-      case 'base64':
-      case 'ascii':
-      case 'hex':
-        return enc;
-      default:
-        if (retried) return; // undefined
-        enc = ('' + enc).toLowerCase();
-        retried = true;
-    }
-  }
-};
-
-// Do not cache `Buffer.isEncoding` when checking encoding names as some
-// modules monkey-patch it to support additional encodings
-function normalizeEncoding(enc) {
-  var nenc = _normalizeEncoding(enc);
-  if (typeof nenc !== 'string' && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
-  return nenc || enc;
-}
-
-// StringDecoder provides an interface for efficiently splitting a series of
-// buffers into a series of JS strings without breaking apart multi-byte
-// characters.
-exports.StringDecoder = StringDecoder;
-function StringDecoder(encoding) {
-  this.encoding = normalizeEncoding(encoding);
-  var nb;
-  switch (this.encoding) {
-    case 'utf16le':
-      this.text = utf16Text;
-      this.end = utf16End;
-      nb = 4;
-      break;
-    case 'utf8':
-      this.fillLast = utf8FillLast;
-      nb = 4;
-      break;
-    case 'base64':
-      this.text = base64Text;
-      this.end = base64End;
-      nb = 3;
-      break;
-    default:
-      this.write = simpleWrite;
-      this.end = simpleEnd;
-      return;
-  }
-  this.lastNeed = 0;
-  this.lastTotal = 0;
-  this.lastChar = Buffer.allocUnsafe(nb);
-}
-
-StringDecoder.prototype.write = function (buf) {
-  if (buf.length === 0) return '';
-  var r;
-  var i;
-  if (this.lastNeed) {
-    r = this.fillLast(buf);
-    if (r === undefined) return '';
-    i = this.lastNeed;
-    this.lastNeed = 0;
-  } else {
-    i = 0;
-  }
-  if (i < buf.length) return r ? r + this.text(buf, i) : this.text(buf, i);
-  return r || '';
-};
-
-StringDecoder.prototype.end = utf8End;
-
-// Returns only complete characters in a Buffer
-StringDecoder.prototype.text = utf8Text;
-
-// Attempts to complete a partial non-UTF-8 character using bytes from a Buffer
-StringDecoder.prototype.fillLast = function (buf) {
-  if (this.lastNeed <= buf.length) {
-    buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
-    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-  }
-  buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, buf.length);
-  this.lastNeed -= buf.length;
-};
-
-// Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
-// continuation byte. If an invalid byte is detected, -2 is returned.
-function utf8CheckByte(byte) {
-  if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return byte >> 6 === 0x02 ? -1 : -2;
-}
-
-// Checks at most 3 bytes at the end of a Buffer in order to detect an
-// incomplete multi-byte UTF-8 character. The total number of bytes (2, 3, or 4)
-// needed to complete the UTF-8 character (if applicable) are returned.
-function utf8CheckIncomplete(self, buf, i) {
-  var j = buf.length - 1;
-  if (j < i) return 0;
-  var nb = utf8CheckByte(buf[j]);
-  if (nb >= 0) {
-    if (nb > 0) self.lastNeed = nb - 1;
-    return nb;
-  }
-  if (--j < i || nb === -2) return 0;
-  nb = utf8CheckByte(buf[j]);
-  if (nb >= 0) {
-    if (nb > 0) self.lastNeed = nb - 2;
-    return nb;
-  }
-  if (--j < i || nb === -2) return 0;
-  nb = utf8CheckByte(buf[j]);
-  if (nb >= 0) {
-    if (nb > 0) {
-      if (nb === 2) nb = 0;else self.lastNeed = nb - 3;
-    }
-    return nb;
-  }
-  return 0;
-}
-
-// Validates as many continuation bytes for a multi-byte UTF-8 character as
-// needed or are available. If we see a non-continuation byte where we expect
-// one, we "replace" the validated continuation bytes we've seen so far with
-// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
-// behavior. The continuation byte check is included three times in the case
-// where all of the continuation bytes for a character exist in the same buffer.
-// It is also done this way as a slight performance increase instead of using a
-// loop.
-function utf8CheckExtraBytes(self, buf, p) {
-  if ((buf[0] & 0xC0) !== 0x80) {
-    self.lastNeed = 0;
-    return '\ufffd';
-  }
-  if (self.lastNeed > 1 && buf.length > 1) {
-    if ((buf[1] & 0xC0) !== 0x80) {
-      self.lastNeed = 1;
-      return '\ufffd';
-    }
-    if (self.lastNeed > 2 && buf.length > 2) {
-      if ((buf[2] & 0xC0) !== 0x80) {
-        self.lastNeed = 2;
-        return '\ufffd';
-      }
-    }
-  }
-}
-
-// Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
-function utf8FillLast(buf) {
-  var p = this.lastTotal - this.lastNeed;
-  var r = utf8CheckExtraBytes(this, buf, p);
-  if (r !== undefined) return r;
-  if (this.lastNeed <= buf.length) {
-    buf.copy(this.lastChar, p, 0, this.lastNeed);
-    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-  }
-  buf.copy(this.lastChar, p, 0, buf.length);
-  this.lastNeed -= buf.length;
-}
-
-// Returns all complete UTF-8 characters in a Buffer. If the Buffer ended on a
-// partial character, the character's bytes are buffered until the required
-// number of bytes are available.
-function utf8Text(buf, i) {
-  var total = utf8CheckIncomplete(this, buf, i);
-  if (!this.lastNeed) return buf.toString('utf8', i);
-  this.lastTotal = total;
-  var end = buf.length - (total - this.lastNeed);
-  buf.copy(this.lastChar, 0, end);
-  return buf.toString('utf8', i, end);
-}
-
-// For UTF-8, a replacement character is added when ending on a partial
-// character.
-function utf8End(buf) {
-  var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\ufffd';
-  return r;
-}
-
-// UTF-16LE typically needs two bytes per character, but even if we have an even
-// number of bytes available, we need to check if we end on a leading/high
-// surrogate. In that case, we need to wait for the next two bytes in order to
-// decode the last character properly.
-function utf16Text(buf, i) {
-  if ((buf.length - i) % 2 === 0) {
-    var r = buf.toString('utf16le', i);
-    if (r) {
-      var c = r.charCodeAt(r.length - 1);
-      if (c >= 0xD800 && c <= 0xDBFF) {
-        this.lastNeed = 2;
-        this.lastTotal = 4;
-        this.lastChar[0] = buf[buf.length - 2];
-        this.lastChar[1] = buf[buf.length - 1];
-        return r.slice(0, -1);
-      }
-    }
-    return r;
-  }
-  this.lastNeed = 1;
-  this.lastTotal = 2;
-  this.lastChar[0] = buf[buf.length - 1];
-  return buf.toString('utf16le', i, buf.length - 1);
-}
-
-// For UTF-16LE we do not explicitly append special replacement characters if we
-// end on a partial character, we simply let v8 handle that.
-function utf16End(buf) {
-  var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) {
-    var end = this.lastTotal - this.lastNeed;
-    return r + this.lastChar.toString('utf16le', 0, end);
-  }
-  return r;
-}
-
-function base64Text(buf, i) {
-  var n = (buf.length - i) % 3;
-  if (n === 0) return buf.toString('base64', i);
-  this.lastNeed = 3 - n;
-  this.lastTotal = 3;
-  if (n === 1) {
-    this.lastChar[0] = buf[buf.length - 1];
-  } else {
-    this.lastChar[0] = buf[buf.length - 2];
-    this.lastChar[1] = buf[buf.length - 1];
-  }
-  return buf.toString('base64', i, buf.length - n);
-}
-
-function base64End(buf) {
-  var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + this.lastChar.toString('base64', 0, 3 - this.lastNeed);
-  return r;
-}
-
-// Pass bytes on through for single-byte encodings (e.g. ascii, latin1, hex)
-function simpleWrite(buf) {
-  return buf.toString(this.encoding);
-}
-
-function simpleEnd(buf) {
-  return buf && buf.length ? this.write(buf) : '';
-}
-
-/***/ }),
-
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -47880,59 +48582,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 	return to;
 };
-
-
-/***/ }),
-
-/***/ "./node_modules/once/once.js":
-/*!***********************************!*\
-  !*** ./node_modules/once/once.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var wrappy = __webpack_require__(/*! wrappy */ "./node_modules/wrappy/wrappy.js")
-module.exports = wrappy(once)
-module.exports.strict = wrappy(onceStrict)
-
-once.proto = once(function () {
-  Object.defineProperty(Function.prototype, 'once', {
-    value: function () {
-      return once(this)
-    },
-    configurable: true
-  })
-
-  Object.defineProperty(Function.prototype, 'onceStrict', {
-    value: function () {
-      return onceStrict(this)
-    },
-    configurable: true
-  })
-})
-
-function once (fn) {
-  var f = function () {
-    if (f.called) return f.value
-    f.called = true
-    return f.value = fn.apply(this, arguments)
-  }
-  f.called = false
-  return f
-}
-
-function onceStrict (fn) {
-  var f = function () {
-    if (f.called)
-      throw new Error(f.onceError)
-    f.called = true
-    return f.value = fn.apply(this, arguments)
-  }
-  var name = fn.name || 'Function wrapped with `once`'
-  f.onceError = name + " shouldn't be called more than once"
-  f.called = false
-  return f
-}
 
 
 /***/ }),
@@ -87059,7 +87708,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "./node_modules/node-libs-browser/node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "./node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -87215,7 +87864,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "./node_modules/node-libs-browser/node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "./node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -93208,803 +93857,6 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/simple-peer/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/simple-peer/index.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(Buffer) {/* global Blob */
-
-module.exports = Peer
-
-var debug = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js")('simple-peer')
-var extend = __webpack_require__(/*! xtend/mutable */ "./node_modules/xtend/mutable.js")
-var hat = __webpack_require__(/*! hat */ "./node_modules/hat/index.js")
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var isTypedArray = __webpack_require__(/*! is-typedarray */ "./node_modules/simple-peer/node_modules/is-typedarray/index.js")
-var once = __webpack_require__(/*! once */ "./node_modules/once/once.js")
-var stream = __webpack_require__(/*! stream */ "./node_modules/stream-browserify/index.js")
-var toBuffer = __webpack_require__(/*! typedarray-to-buffer */ "./node_modules/typedarray-to-buffer/index.js")
-
-var wrtc
-try {
-  wrtc = __webpack_require__(/*! wrtc */ 2) // webrtc in node - will be empty object in browser
-} catch (err) {
-  wrtc = {} // optional dependency failed to install
-}
-
-var RTCPeerConnection = typeof window !== 'undefined'
-  ? window.mozRTCPeerConnection || window.RTCPeerConnection ||
-    window.webkitRTCPeerConnection
-  : wrtc.RTCPeerConnection
-
-var RTCSessionDescription = typeof window !== 'undefined'
-  ? window.mozRTCSessionDescription || window.RTCSessionDescription ||
-    window.webkitRTCSessionDescription
-  : wrtc.RTCSessionDescription
-
-var RTCIceCandidate = typeof window !== 'undefined'
-  ? window.mozRTCIceCandidate || window.RTCIceCandidate || window.webkitRTCIceCandidate
-  : wrtc.RTCIceCandidate
-
-inherits(Peer, stream.Duplex)
-
-/**
- * WebRTC peer connection. Same API as node core `net.Socket`. Duplex stream.
- * @param {Object} opts
- */
-function Peer (opts) {
-  var self = this
-  if (!(self instanceof Peer)) return new Peer(opts)
-  if (!opts) opts = {}
-
-  opts.allowHalfOpen = false
-  stream.Duplex.call(self, opts)
-
-  extend(self, {
-    initiator: false,
-    stream: false,
-    config: Peer.config,
-    constraints: Peer.constraints,
-    channelName: (opts && opts.initiator) ? hat(160) : null,
-    trickle: true
-  }, opts)
-
-  if (typeof RTCPeerConnection !== 'function') {
-    if (typeof window === 'undefined') {
-      throw new Error('Missing WebRTC support - was `wrtc` dependency installed?')
-    } else {
-      throw new Error('Missing WebRTC support - is this a supported browser?')
-    }
-  }
-
-  self._debug('new peer (initiator: %s)', self.initiator)
-
-  self.destroyed = false
-  self.connected = false
-
-  self._pcReady = false
-  self._channelReady = false
-  self._iceComplete = false // done with ice candidate trickle (got null candidate)
-  self._channel = null
-  self._buffer = []
-
-  self._pc = new RTCPeerConnection(self.config, self.constraints)
-  self._pc.oniceconnectionstatechange = self._onIceConnectionStateChange.bind(self)
-  self._pc.onsignalingstatechange = self._onSignalingStateChange.bind(self)
-  self._pc.onicecandidate = self._onIceCandidate.bind(self)
-
-  if (self.stream) self._setupVideo(self.stream)
-  self._pc.onaddstream = self._onAddStream.bind(self)
-
-  if (self.initiator) {
-    self._setupData({ channel: self._pc.createDataChannel(self.channelName) })
-    self._pc.onnegotiationneeded = once(self._createOffer.bind(self))
-    // Only Chrome triggers "negotiationneeded"; this is a workaround for other
-    // implementations
-    if (typeof window === 'undefined' || !window.webkitRTCPeerConnection) {
-      self._pc.onnegotiationneeded()
-    }
-  } else {
-    self._pc.ondatachannel = self._setupData.bind(self)
-  }
-
-  self.on('finish', function () {
-    if (self.connected) {
-      // When local peer is finished writing, close connection to remote peer.
-      // Half open connections are currently not supported.
-      // Wait a bit before destroying so the datachannel flushes.
-      // TODO: does datachannels have a .end() that flushes and closes?
-      setTimeout(function () {
-        self._destroy()
-      }, 100)
-    } else {
-      // If data channel is not connected when local peer is finished writing, wait until
-      // data is flushed to network at "connect" event.
-      // TODO: is there a more reliable way to accomplish this?
-      self.once('connect', function () {
-        setTimeout(function () {
-          self._destroy()
-        }, 100)
-      })
-    }
-  })
-}
-
-/**
- * Expose config and constraints for overriding all Peer instances. Otherwise, just
- * set opts.config and opts.constraints when constructing a Peer.
- */
-Peer.config = {
-  iceServers: [
-    {
-      url: 'stun:23.21.150.121', // deprecated, replaced by `urls`
-      urls: 'stun:23.21.150.121'
-    }
-  ]
-}
-Peer.constraints = {}
-
-Peer.prototype.send = function (chunk, cb) {
-  var self = this
-  if (!cb) cb = noop
-  self._write(chunk, undefined, cb)
-}
-
-Peer.prototype.signal = function (data) {
-  var self = this
-  if (self.destroyed) throw new Error('cannot signal after peer is destroyed')
-  if (typeof data === 'string') {
-    try {
-      data = JSON.parse(data)
-    } catch (err) {
-      data = {}
-    }
-  }
-  self._debug('signal')
-  if (data.sdp) {
-    self._pc.setRemoteDescription(new RTCSessionDescription(data), function () {
-      if (self._pc.remoteDescription.type === 'offer') self._createAnswer()
-    }, self._onError.bind(self))
-  }
-  if (data.candidate) {
-    try {
-      self._pc.addIceCandidate(
-        new RTCIceCandidate(data.candidate), noop, self._onError.bind(self)
-      )
-    } catch (err) {
-      self._destroy(new Error('error adding candidate: ' + err.message))
-    }
-  }
-  if (!data.sdp && !data.candidate) {
-    self._destroy(new Error('signal() called with invalid signal data'))
-  }
-}
-
-Peer.prototype.destroy = function (onclose) {
-  var self = this
-  self._destroy(null, onclose)
-}
-
-Peer.prototype._destroy = function (err, onclose) {
-  var self = this
-  if (self.destroyed) return
-  if (onclose) self.once('close', onclose)
-
-  self._debug('destroy (error: %s)', err && err.message)
-
-  self.destroyed = true
-  self.connected = false
-  self._pcReady = false
-  self._channelReady = false
-
-  if (self._pc) {
-    try {
-      self._pc.close()
-    } catch (err) {}
-
-    self._pc.oniceconnectionstatechange = null
-    self._pc.onsignalingstatechange = null
-    self._pc.onicecandidate = null
-  }
-
-  if (self._channel) {
-    try {
-      self._channel.close()
-    } catch (err) {}
-
-    self._channel.onmessage = null
-    self._channel.onopen = null
-    self._channel.onclose = null
-  }
-  self._pc = null
-  self._channel = null
-
-  this.readable = this.writable = false
-
-  if (!self._readableState.ended) self.push(null)
-  if (!self._writableState.finished) self.end()
-
-  if (err) self.emit('error', err)
-  self.emit('close')
-}
-
-Peer.prototype._setupData = function (event) {
-  var self = this
-  self._channel = event.channel
-  self.channelName = self._channel.label
-
-  self._channel.binaryType = 'arraybuffer'
-  self._channel.onmessage = self._onChannelMessage.bind(self)
-  self._channel.onopen = self._onChannelOpen.bind(self)
-  self._channel.onclose = self._onChannelClose.bind(self)
-}
-
-Peer.prototype._setupVideo = function (stream) {
-  var self = this
-  self._pc.addStream(stream)
-}
-
-Peer.prototype._read = function () {}
-
-/**
- * Send text/binary data to the remote peer.
- * @param {string|Buffer|TypedArrayView|ArrayBuffer|Blob} chunk
- * @param {string} encoding
- * @param {function} cb
- */
-Peer.prototype._write = function (chunk, encoding, cb) {
-  var self = this
-  if (self.destroyed) return cb(new Error('cannot write after peer is destroyed'))
-
-  var len = chunk.length || chunk.byteLength || chunk.size
-  if (!self.connected) {
-    self._debug('_write before ready: length %d', len)
-    self._buffer.push(chunk)
-    cb(null)
-    return
-  }
-  self._debug('_write: length %d', len)
-
-  if (isTypedArray.strict(chunk) || chunk instanceof ArrayBuffer ||
-    typeof chunk === 'string' || (typeof Blob !== 'undefined' && chunk instanceof Blob)) {
-    self._channel.send(chunk)
-  } else if (Buffer.isBuffer(chunk)) {
-    // node.js buffer
-    self._channel.send(new Uint8Array(chunk))
-  } else {
-    self._channel.send(JSON.stringify(chunk))
-  }
-
-  cb(null)
-}
-
-Peer.prototype._createOffer = function () {
-  var self = this
-  if (self.destroyed) return
-
-  self._pc.createOffer(function (offer) {
-    if (self.destroyed) return
-    speedHack(offer)
-    self._pc.setLocalDescription(offer, noop, self._onError.bind(self))
-    var sendOffer = function () {
-      self.emit('signal', self._pc.localDescription || offer)
-    }
-    if (self.trickle || self._iceComplete) sendOffer()
-    else self.once('_iceComplete', sendOffer) // wait for candidates
-  }, self._onError.bind(self), self.offerConstraints)
-}
-
-Peer.prototype._createAnswer = function () {
-  var self = this
-  if (self.destroyed) return
-
-  self._pc.createAnswer(function (answer) {
-    if (self.destroyed) return
-    speedHack(answer)
-    self._pc.setLocalDescription(answer, noop, self._onError.bind(self))
-    var sendAnswer = function () {
-      self.emit('signal', self._pc.localDescription || answer)
-    }
-    if (self.trickle || self._iceComplete) sendAnswer()
-    else self.once('_iceComplete', sendAnswer)
-  }, self._onError.bind(self), self.answerConstraints)
-}
-
-Peer.prototype._onIceConnectionStateChange = function () {
-  var self = this
-  if (self.destroyed) return
-  var iceGatheringState = self._pc.iceGatheringState
-  var iceConnectionState = self._pc.iceConnectionState
-  self.emit('iceConnectionStateChange', iceGatheringState, iceConnectionState)
-  self._debug('iceConnectionStateChange %s %s', iceGatheringState, iceConnectionState)
-  if (iceConnectionState === 'connected' || iceConnectionState === 'completed') {
-    self._pcReady = true
-    self._maybeReady()
-  }
-  if (iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
-    self._destroy()
-  }
-}
-
-Peer.prototype._maybeReady = function () {
-  var self = this
-  self._debug('maybeReady pc %s channel %s', self._pcReady, self._channelReady)
-  if (!self.connected && self._pcReady && self._channelReady) {
-    self.connected = true
-    self._buffer.forEach(function (chunk) {
-      self.send(chunk)
-    })
-    self._buffer = []
-
-    self._debug('connect')
-    self.emit('connect')
-  }
-}
-
-Peer.prototype._onSignalingStateChange = function () {
-  var self = this
-  if (self.destroyed) return
-  self.emit('signalingStateChange', self._pc.signalingState)
-  self._debug('signalingStateChange %s', self._pc.signalingState)
-}
-
-Peer.prototype._onIceCandidate = function (event) {
-  var self = this
-  if (self.destroyed) return
-  if (event.candidate && self.trickle) {
-    self.emit('signal', { candidate: event.candidate })
-  } else if (!event.candidate) {
-    self._iceComplete = true
-    self.emit('_iceComplete')
-  }
-}
-
-Peer.prototype._onChannelMessage = function (event) {
-  var self = this
-  if (self.destroyed) return
-  var data = event.data
-  self._debug('on channel message: length %d', data.byteLength || data.length)
-
-  if (data instanceof ArrayBuffer) {
-    data = toBuffer(new Uint8Array(data))
-    self.push(data)
-  } else {
-    try {
-      data = JSON.parse(data)
-    } catch (err) {}
-    self.emit('data', data)
-  }
-}
-
-Peer.prototype._onChannelOpen = function () {
-  var self = this
-  if (self.connected || self.destroyed) return
-  self._debug('on channel open')
-  self._channelReady = true
-  self._maybeReady()
-}
-
-Peer.prototype._onChannelClose = function () {
-  var self = this
-  if (self.destroyed) return
-  self._debug('on channel close')
-  self._destroy()
-}
-
-Peer.prototype._onAddStream = function (event) {
-  var self = this
-  if (self.destroyed) return
-  self._debug('on add stream')
-  self.emit('stream', event.stream)
-}
-
-Peer.prototype._onError = function (err) {
-  var self = this
-  if (self.destroyed) return
-  self._debug('error %s', err.message || err)
-  self._destroy(err)
-}
-
-Peer.prototype._debug = function () {
-  var self = this
-  var args = [].slice.call(arguments)
-  var id = self.channelName && self.channelName.substring(0, 7)
-  args[0] = '[' + id + '] ' + args[0]
-  debug.apply(null, args)
-}
-
-function speedHack (obj) {
-  var s = obj.sdp.split('b=AS:30')
-  if (s.length > 1) obj.sdp = s[0] + 'b=AS:1638400' + s[1]
-}
-
-function noop () {}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
-
-/***/ }),
-
-/***/ "./node_modules/simple-peer/node_modules/is-typedarray/index.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/simple-peer/node_modules/is-typedarray/index.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports      = isTypedArray
-isTypedArray.strict = isStrictTypedArray
-isTypedArray.loose  = isLooseTypedArray
-
-var toString = Object.prototype.toString
-var names = {
-    '[object Int8Array]': true
-  , '[object Int16Array]': true
-  , '[object Int32Array]': true
-  , '[object Uint8Array]': true
-  , '[object Uint16Array]': true
-  , '[object Uint32Array]': true
-  , '[object Float32Array]': true
-  , '[object Float64Array]': true
-}
-
-function isTypedArray(arr) {
-  return (
-       isStrictTypedArray(arr)
-    || isLooseTypedArray(arr)
-  )
-}
-
-function isStrictTypedArray(arr) {
-  return (
-       arr instanceof Int8Array
-    || arr instanceof Int16Array
-    || arr instanceof Int32Array
-    || arr instanceof Uint8Array
-    || arr instanceof Uint16Array
-    || arr instanceof Uint32Array
-    || arr instanceof Float32Array
-    || arr instanceof Float64Array
-  )
-}
-
-function isLooseTypedArray(arr) {
-  return names[toString.call(arr)]
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/socketpeer/browser/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/socketpeer/browser/index.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var events = __webpack_require__(/*! events */ "./node_modules/events/events.js");
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js");  // A tiny lib containing `util.inherits`.
-
-var extend = __webpack_require__(/*! xtend/mutable */ "./node_modules/xtend/mutable.js");
-var SimplePeer = __webpack_require__(/*! simple-peer */ "./node_modules/simple-peer/index.js");
-
-
-var EventEmitter = events.EventEmitter;
-
-
-/**
- * A WebRTC/WebSocket peer connection.
- * @param {Object} opts
- */
-function SocketPeer(opts) {
-  var self = this;
-
-  if (!(self instanceof SocketPeer)) {
-    return new SocketPeer(opts);
-  }
-
-  opts = opts || {};
-
-  EventEmitter.call(self);
-
-  self._connections = {
-    socket: {success: 0, error: 0, attempt: 0},
-    rtc: {success: 0, error: 0, attempt: 0}
-  };
-  self.peer = null;
-  self.rtcConnected = false;
-  self.socketConnected = false;
-
-  extend(self, {
-    pairCode: 'pairCode' in opts ? opts.pairCode : null,
-    socketFallback: 'socketFallback' in opts ? opts.socketFallback : true,
-    socket: 'socket' in opts ? opts.socket : null,
-    stream: 'stream' in opts ? opts.stream : null,
-    url: 'url' in opts ? opts.url : 'http://localhost',
-    reconnect: 'reconnect' in opts ? opts.reconnect : true,
-    reconnectDelay: 'reconnectDelay' in opts ? opts.reconnectDelay : 1000,
-    timeout: 'timeout' in opts ? opts.timeout : 0,
-    autoconnect: 'autoconnect' in opts ? opts.autoconnect : true
-  }, opts);
-
-  self._debug('New peer');
-
-  self.on('peer.found', function (data) {
-    self.socketConnected = true;
-    clearTimeout(self._socketConnectTimeout);
-    clearTimeout(self._socketReconnectDelayTimeout);
-    self._connections.socket.attempt = 0;
-    self._connections.socket.success++;
-
-    self.emit('connect');
-    if (self._connections.socket.success > 0) {
-      self.emit('reconnect');
-    }
-
-    self.initiator = data.initiator;
-
-    if (data.initiator) {
-      self._send('rtc.connect');
-      self._rtcInit();
-    }
-  });
-  self.on('rtc.signal', self._rtcSignal);
-  self.on('rtc.connect', function () {
-    self._rtcInit();
-  });
-
-  self.on('busy', function () {
-    self._socketError(new Error('Pair code "' + self.pairCode + '" already in use'));
-    self.socket.close();
-  });
-
-  if (self.autoconnect) {
-    setTimeout(function () {
-      self.connect();
-    }, 0);
-  }
-}
-
-
-inherits(SocketPeer, EventEmitter);
-
-
-SocketPeer.prototype.pair = function (pairCode) {
-  var self = this;
-
-  if (typeof pairCode !== 'undefined') {
-    self.pairCode = pairCode;
-  }
-
-  self._send('pair', self.pairCode);
-};
-
-
-SocketPeer.prototype.connect = function () {
-  var self = this;
-
-  self._connections.socket.attempt++;
-
-  if (self.socketConnected) {
-    console.warn('Socket already connected');
-    return;
-  }
-
-  if (self.timeout) {
-    self._socketConnectTimeout = setTimeout(function () {
-      self.socket.close();
-      var err = new Error('Connection timeout after ' + self.timeout + ' ms');
-      self.emit('connect_timeout', err);
-      self._socketError(err);
-    }, self.timeout);
-  }
-
-  self.socket = new WebSocket(self.url.replace(/^http/, 'ws'));
-  self.socket.onopen = function () {
-    self.pair();
-  };
-  self.socket.onerror = function (event) {
-    self._socketError(new Error(event.data || 'Unexpected WebSocket error'));
-  };
-  self.socket.onmessage = function (event) {
-    var obj = {};
-    try {
-      obj = JSON.parse(event.data);
-    } catch (e) {
-      self.emit(new Error('Expected JSON-formatted WebSocket message'));
-    }
-
-    if (obj.type === 'data') {
-      self.emit('data', obj.data);
-    } else {
-      self.emit(obj.type, obj.data);
-    }
-  };
-  self.socket.onclose = function () {
-    self.socketConnected = false;
-    self._debug('close');
-
-    if (self.reconnect) {
-      var delay = self._calcReconnectTimeout(self._connections.socket.attempt);
-      clearTimeout(self._socketReconnectDelayTimeout);
-      self._socketReconnectDelayTimeout = setTimeout(function () {
-        self.connect();
-      }, delay);
-    }
-  };
-
-  self.emit('connect_attempt');
-  if (self._connections.socket.success > 0) {
-    self.emit('reconnect_attempt');
-  }
-};
-
-
-SocketPeer.prototype._socketError = function (err) {
-  var self = this;
-  self._connections.socket.error++;
-  self.emit('error', err);
-  self.emit('connect_error', err);
-  if (self._connections.socket.success > 0) {
-    self.emit('reconnect_error');
-  }
-};
-
-
-SocketPeer.prototype._calcReconnectTimeout = function (attempts) {
-  var self = this;
-  return Math.min(Math.pow(2, attempts) * self.reconnectDelay, 30000);
-};
-
-
-SocketPeer.prototype._rtcInit = function () {
-  var self = this;
-
-  if (self.rtcConnected) {
-    console.warn('WebRTC peer already connected');
-    return;
-  }
-
-  self.peer = new SimplePeer({
-    initiator: self.initiator,
-    stream: self.stream
-  });
-
-  self.peer.on('connect', function () {
-    clearTimeout(self._rtcReconnectTimeout);
-    self._connections.rtc.success++;
-    self._connections.rtc.attempt = 0;
-    self.rtcConnected = true;
-    self.emit('upgrade');
-  });
-
-  self.peer.on('stream', function (stream) {
-    self.emit('stream', stream);
-  });
-
-  self.peer.on('error', function (err) {
-    self._connections.rtc.error++;
-    self.emit('upgrade_error', err);
-    self.emit('error', err);
-  });
-
-  self.peer.on('signal', function (data) {
-    if (self.rtcConnected) {
-      return;
-    }
-    self._send('rtc.signal', data);
-  });
-
-  self.peer.on('data', function (data) {
-    self.emit('data', data);
-  });
-
-  self.peer.on('close', function (data) {
-    self.destroyPeer();
-
-    if (self.socketConnected) {
-      // NOTE: Currently the server does nothing with this message.
-      // self._send('rtc.close', {pairCode: self.pairCode});
-
-      if (self.reconnect && self.initiator) {
-        var delay = self._calcReconnectTimeout(self._connections.rtc.attempt);
-        clearTimeout(self._rtcReconnectTimeout);
-        self._rtcReconnectTimeout = setTimeout(function () {
-          self._send('rtc.connect');
-          self._rtcInit();
-        }, delay);
-      }
-    }
-
-    self.emit('downgrade');
-  });
-
-  self._connections.rtc.attempt++;
-  self.emit('upgrade_attempt');
-};
-
-
-SocketPeer.prototype._rtcSignal = function (data) {
-  var self = this;
-  if (!self.rtcConnected && self.peer && !self.peer.destroyed) {
-    self.peer.signal(data);
-  }
-};
-
-
-SocketPeer.prototype._send = function (type, data) {
-  var self = this;
-  if (!self.socket) {
-    console.warn('Attempted to send message when socket was closed: %s', type);
-    return;
-  }
-  data = JSON.stringify({
-    type: type,
-    data: data
-  });
-  self._debug('_send', data);
-  self.socket.send(data);
-};
-
-
-SocketPeer.prototype.send = function (data) {
-  var self = this;
-  if (self.rtcConnected) {
-    self.peer.send(data);
-  } else {
-    self._send('data', data);
-  }
-};
-
-
-SocketPeer.prototype.close = function () {
-  var self = this;
-  self.destroyPeer();
-  if (self.socket) {
-    self.socket.close();
-  }
-};
-
-
-SocketPeer.prototype.destroy = function() {
-  var self = this;
-  self.reconnect = false;
-  self.close();
-  self.peer = null;
-  self.socket = null;
-  self.socketConnected = false;
-  self.rtcConnected = false;
-  clearTimeout(self._socketConnectTimeout);
-  clearTimeout(self._socketReconnectDelayTimeout);
-  clearTimeout(self._rtcReconnectTimeout);
-};
-
-
-SocketPeer.prototype.destroyPeer = function() {
-  var self = this;
-  if (self.peer) {
-    self.peer.destroy();
-  }
-  self.peer = null;
-  self.rtcConnected = false;
-};
-
-
-SocketPeer.prototype._debug = function () {
-  var self = this;
-  var args = Array.prototype.slice.call(arguments);
-  args[0] = '[' + self.pairCode + '] ' + args[0];
-  console.log.apply(console, args);
-};
-
-
-module.exports = SocketPeer;
-
-
-/***/ }),
-
 /***/ "./node_modules/stream-browserify/index.js":
 /*!*************************************************!*\
   !*** ./node_modules/stream-browserify/index.js ***!
@@ -94140,6 +93992,313 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
+
+/***/ }),
+
+/***/ "./node_modules/string_decoder/lib/string_decoder.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/string_decoder/lib/string_decoder.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+/*<replacement>*/
+
+var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer;
+/*</replacement>*/
+
+var isEncoding = Buffer.isEncoding || function (encoding) {
+  encoding = '' + encoding;
+  switch (encoding && encoding.toLowerCase()) {
+    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
+      return true;
+    default:
+      return false;
+  }
+};
+
+function _normalizeEncoding(enc) {
+  if (!enc) return 'utf8';
+  var retried;
+  while (true) {
+    switch (enc) {
+      case 'utf8':
+      case 'utf-8':
+        return 'utf8';
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return 'utf16le';
+      case 'latin1':
+      case 'binary':
+        return 'latin1';
+      case 'base64':
+      case 'ascii':
+      case 'hex':
+        return enc;
+      default:
+        if (retried) return; // undefined
+        enc = ('' + enc).toLowerCase();
+        retried = true;
+    }
+  }
+};
+
+// Do not cache `Buffer.isEncoding` when checking encoding names as some
+// modules monkey-patch it to support additional encodings
+function normalizeEncoding(enc) {
+  var nenc = _normalizeEncoding(enc);
+  if (typeof nenc !== 'string' && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
+  return nenc || enc;
+}
+
+// StringDecoder provides an interface for efficiently splitting a series of
+// buffers into a series of JS strings without breaking apart multi-byte
+// characters.
+exports.StringDecoder = StringDecoder;
+function StringDecoder(encoding) {
+  this.encoding = normalizeEncoding(encoding);
+  var nb;
+  switch (this.encoding) {
+    case 'utf16le':
+      this.text = utf16Text;
+      this.end = utf16End;
+      nb = 4;
+      break;
+    case 'utf8':
+      this.fillLast = utf8FillLast;
+      nb = 4;
+      break;
+    case 'base64':
+      this.text = base64Text;
+      this.end = base64End;
+      nb = 3;
+      break;
+    default:
+      this.write = simpleWrite;
+      this.end = simpleEnd;
+      return;
+  }
+  this.lastNeed = 0;
+  this.lastTotal = 0;
+  this.lastChar = Buffer.allocUnsafe(nb);
+}
+
+StringDecoder.prototype.write = function (buf) {
+  if (buf.length === 0) return '';
+  var r;
+  var i;
+  if (this.lastNeed) {
+    r = this.fillLast(buf);
+    if (r === undefined) return '';
+    i = this.lastNeed;
+    this.lastNeed = 0;
+  } else {
+    i = 0;
+  }
+  if (i < buf.length) return r ? r + this.text(buf, i) : this.text(buf, i);
+  return r || '';
+};
+
+StringDecoder.prototype.end = utf8End;
+
+// Returns only complete characters in a Buffer
+StringDecoder.prototype.text = utf8Text;
+
+// Attempts to complete a partial non-UTF-8 character using bytes from a Buffer
+StringDecoder.prototype.fillLast = function (buf) {
+  if (this.lastNeed <= buf.length) {
+    buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
+    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
+  }
+  buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, buf.length);
+  this.lastNeed -= buf.length;
+};
+
+// Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
+// continuation byte. If an invalid byte is detected, -2 is returned.
+function utf8CheckByte(byte) {
+  if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
+  return byte >> 6 === 0x02 ? -1 : -2;
+}
+
+// Checks at most 3 bytes at the end of a Buffer in order to detect an
+// incomplete multi-byte UTF-8 character. The total number of bytes (2, 3, or 4)
+// needed to complete the UTF-8 character (if applicable) are returned.
+function utf8CheckIncomplete(self, buf, i) {
+  var j = buf.length - 1;
+  if (j < i) return 0;
+  var nb = utf8CheckByte(buf[j]);
+  if (nb >= 0) {
+    if (nb > 0) self.lastNeed = nb - 1;
+    return nb;
+  }
+  if (--j < i || nb === -2) return 0;
+  nb = utf8CheckByte(buf[j]);
+  if (nb >= 0) {
+    if (nb > 0) self.lastNeed = nb - 2;
+    return nb;
+  }
+  if (--j < i || nb === -2) return 0;
+  nb = utf8CheckByte(buf[j]);
+  if (nb >= 0) {
+    if (nb > 0) {
+      if (nb === 2) nb = 0;else self.lastNeed = nb - 3;
+    }
+    return nb;
+  }
+  return 0;
+}
+
+// Validates as many continuation bytes for a multi-byte UTF-8 character as
+// needed or are available. If we see a non-continuation byte where we expect
+// one, we "replace" the validated continuation bytes we've seen so far with
+// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
+// behavior. The continuation byte check is included three times in the case
+// where all of the continuation bytes for a character exist in the same buffer.
+// It is also done this way as a slight performance increase instead of using a
+// loop.
+function utf8CheckExtraBytes(self, buf, p) {
+  if ((buf[0] & 0xC0) !== 0x80) {
+    self.lastNeed = 0;
+    return '\ufffd';
+  }
+  if (self.lastNeed > 1 && buf.length > 1) {
+    if ((buf[1] & 0xC0) !== 0x80) {
+      self.lastNeed = 1;
+      return '\ufffd';
+    }
+    if (self.lastNeed > 2 && buf.length > 2) {
+      if ((buf[2] & 0xC0) !== 0x80) {
+        self.lastNeed = 2;
+        return '\ufffd';
+      }
+    }
+  }
+}
+
+// Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
+function utf8FillLast(buf) {
+  var p = this.lastTotal - this.lastNeed;
+  var r = utf8CheckExtraBytes(this, buf, p);
+  if (r !== undefined) return r;
+  if (this.lastNeed <= buf.length) {
+    buf.copy(this.lastChar, p, 0, this.lastNeed);
+    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
+  }
+  buf.copy(this.lastChar, p, 0, buf.length);
+  this.lastNeed -= buf.length;
+}
+
+// Returns all complete UTF-8 characters in a Buffer. If the Buffer ended on a
+// partial character, the character's bytes are buffered until the required
+// number of bytes are available.
+function utf8Text(buf, i) {
+  var total = utf8CheckIncomplete(this, buf, i);
+  if (!this.lastNeed) return buf.toString('utf8', i);
+  this.lastTotal = total;
+  var end = buf.length - (total - this.lastNeed);
+  buf.copy(this.lastChar, 0, end);
+  return buf.toString('utf8', i, end);
+}
+
+// For UTF-8, a replacement character is added when ending on a partial
+// character.
+function utf8End(buf) {
+  var r = buf && buf.length ? this.write(buf) : '';
+  if (this.lastNeed) return r + '\ufffd';
+  return r;
+}
+
+// UTF-16LE typically needs two bytes per character, but even if we have an even
+// number of bytes available, we need to check if we end on a leading/high
+// surrogate. In that case, we need to wait for the next two bytes in order to
+// decode the last character properly.
+function utf16Text(buf, i) {
+  if ((buf.length - i) % 2 === 0) {
+    var r = buf.toString('utf16le', i);
+    if (r) {
+      var c = r.charCodeAt(r.length - 1);
+      if (c >= 0xD800 && c <= 0xDBFF) {
+        this.lastNeed = 2;
+        this.lastTotal = 4;
+        this.lastChar[0] = buf[buf.length - 2];
+        this.lastChar[1] = buf[buf.length - 1];
+        return r.slice(0, -1);
+      }
+    }
+    return r;
+  }
+  this.lastNeed = 1;
+  this.lastTotal = 2;
+  this.lastChar[0] = buf[buf.length - 1];
+  return buf.toString('utf16le', i, buf.length - 1);
+}
+
+// For UTF-16LE we do not explicitly append special replacement characters if we
+// end on a partial character, we simply let v8 handle that.
+function utf16End(buf) {
+  var r = buf && buf.length ? this.write(buf) : '';
+  if (this.lastNeed) {
+    var end = this.lastTotal - this.lastNeed;
+    return r + this.lastChar.toString('utf16le', 0, end);
+  }
+  return r;
+}
+
+function base64Text(buf, i) {
+  var n = (buf.length - i) % 3;
+  if (n === 0) return buf.toString('base64', i);
+  this.lastNeed = 3 - n;
+  this.lastTotal = 3;
+  if (n === 1) {
+    this.lastChar[0] = buf[buf.length - 1];
+  } else {
+    this.lastChar[0] = buf[buf.length - 2];
+    this.lastChar[1] = buf[buf.length - 1];
+  }
+  return buf.toString('base64', i, buf.length - n);
+}
+
+function base64End(buf) {
+  var r = buf && buf.length ? this.write(buf) : '';
+  if (this.lastNeed) return r + this.lastChar.toString('base64', 0, 3 - this.lastNeed);
+  return r;
+}
+
+// Pass bytes on through for single-byte encodings (e.g. ascii, latin1, hex)
+function simpleWrite(buf) {
+  return buf.toString(this.encoding);
+}
+
+function simpleEnd(buf) {
+  return buf && buf.length ? this.write(buf) : '';
+}
 
 /***/ }),
 
@@ -94366,43 +94525,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (this && this.clearImmediate);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/typedarray-to-buffer/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/typedarray-to-buffer/index.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(Buffer) {/**
- * Convert a typed array to a Buffer without a copy
- *
- * Author:   Feross Aboukhadijeh <https://feross.org>
- * License:  MIT
- *
- * `npm install typedarray-to-buffer`
- */
-
-var isTypedArray = __webpack_require__(/*! is-typedarray */ "./node_modules/is-typedarray/index.js").strict
-
-module.exports = function typedarrayToBuffer (arr) {
-  if (isTypedArray(arr)) {
-    // To avoid a copy, use the typed array's underlying ArrayBuffer to back new Buffer
-    var buf = Buffer.from(arr.buffer)
-    if (arr.byteLength !== arr.buffer.byteLength) {
-      // Respect the "view", i.e. byteOffset and byteLength, without doing a copy
-      buf = buf.slice(arr.byteOffset, arr.byteOffset + arr.byteLength)
-    }
-    return buf
-  } else {
-    // Pass through all other types to `Buffer.from`
-    return Buffer.from(arr)
-  }
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -95356,78 +95478,6 @@ module.exports = function(module) {
 	}
 	return module;
 };
-
-
-/***/ }),
-
-/***/ "./node_modules/wrappy/wrappy.js":
-/*!***************************************!*\
-  !*** ./node_modules/wrappy/wrappy.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// Returns a wrapper function that returns a wrapped callback
-// The wrapper function should do some stuff, and return a
-// presumably different callback function.
-// This makes sure that own properties are retained, so that
-// decorations and such are not lost along the way.
-module.exports = wrappy
-function wrappy (fn, cb) {
-  if (fn && cb) return wrappy(fn)(cb)
-
-  if (typeof fn !== 'function')
-    throw new TypeError('need wrapper function')
-
-  Object.keys(fn).forEach(function (k) {
-    wrapper[k] = fn[k]
-  })
-
-  return wrapper
-
-  function wrapper() {
-    var args = new Array(arguments.length)
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i]
-    }
-    var ret = fn.apply(this, args)
-    var cb = args[args.length-1]
-    if (typeof ret === 'function' && ret !== cb) {
-      Object.keys(cb).forEach(function (k) {
-        ret[k] = cb[k]
-      })
-    }
-    return ret
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/xtend/mutable.js":
-/*!***************************************!*\
-  !*** ./node_modules/xtend/mutable.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = extend
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function extend(target) {
-    for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i]
-
-        for (var key in source) {
-            if (hasOwnProperty.call(source, key)) {
-                target[key] = source[key]
-            }
-        }
-    }
-
-    return target
-}
 
 
 /***/ }),
@@ -97071,8 +97121,6 @@ var Intro = function Intro(props) {
   var timeout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // steps
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // onFinish()
-    // timeout.current = setTimeout(() => setFinished(true), 1000)
     var currentStep = stepsArray[step];
     timeout.current = setTimeout(function () {
       if (currentStep.startGame) {
@@ -99657,7 +99705,7 @@ function (_PeerManager) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var socketpeer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socketpeer */ "./node_modules/socketpeer/browser/index.js");
+/* harmony import */ var socketpeer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socketpeer */ "../vendor/socketpeer/browser/index.js");
 /* harmony import */ var socketpeer__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(socketpeer__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _managers_abstracts_Observable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~managers/abstracts/Observable */ "./src/managers/abstracts/Observable/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
