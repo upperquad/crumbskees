@@ -97460,9 +97460,9 @@ var PixiScene = function PixiScene(props) {
         } else {
           newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index]);
           points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition);
-          circlesLastPositions.current[index] = newPosition;
-        } // circlesPoints.current[index] = points
+        }
 
+        circlesLastPositions.current[index] = newPosition; // circlesPoints.current[index] = points
 
         drawCubicBezier(points, newPosition, color);
       });
@@ -99354,7 +99354,7 @@ var GAME_ROUNDS = [{
   gridCols: 32,
   gridLines: 14,
   power: {
-    type: 'freeze',
+    type: 'grow',
     image: _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default.a,
     color: COLORS.orange
   }

@@ -72,7 +72,7 @@ export const GAME_ROUNDS = [
     gridCols: 32,
     gridLines: 14,
     power: {
-      type: 'freeze',
+      type: 'grow',
       image: growItem,
       color: COLORS.orange,
     },

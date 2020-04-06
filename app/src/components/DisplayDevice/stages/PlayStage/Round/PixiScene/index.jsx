@@ -319,8 +319,8 @@ const PixiScene = props => {
         } else {
           newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index])
           points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition)
-          circlesLastPositions.current[index] = newPosition
         }
+        circlesLastPositions.current[index] = newPosition
         // circlesPoints.current[index] = points
         drawCubicBezier(points, newPosition, color)
       })
