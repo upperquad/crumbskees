@@ -78,6 +78,8 @@ const Intro = props => {
     setDropState = 'after'
   }
 
+  console.log(videoIntro)
+
   return (
     <div className={styles.intro}>
       {!finished && (
