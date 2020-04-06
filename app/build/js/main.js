@@ -97443,7 +97443,7 @@ var PixiScene = function PixiScene(props) {
       }
 
       return undefined;
-    });
+    }); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [powers]); // RAF
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -97459,7 +97459,7 @@ var PixiScene = function PixiScene(props) {
 
         if (powers[index] === 'freeze') {
           // position has to stay and color is gray
-          color = 0x00C1FF;
+          color = 0x00c1ff;
           newPosition = circlesLastPositions.current[index];
           points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index]);
         } else {
@@ -97569,7 +97569,7 @@ var PixiScene = function PixiScene(props) {
     function drawTransitionOut(now) {
       var percent = (now - startTransitionOut.current) / transitionOutDuration;
       var positionX = initWidth.current - initWidth.current * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_4__["inOutQuad"])(percent);
-      circlesMasked.current.beginFill(0xFFFFFF);
+      circlesMasked.current.beginFill(0xffffff);
 
       if (percent < 1) {
         circlesMasked.current.drawRect(positionX, 0, initWidth.current, initHeight.current);
@@ -97860,8 +97860,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- // import SceneContext from './context'
-// import PlayerCursor from './PlayerCursor'
 
 
 
@@ -98302,7 +98300,7 @@ function getEndMessage() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"round":"Round-round--3UuRv","roundExiting":"Round-roundExiting--2e9P1","gameZone":"Round-gameZone--3AdDr","playstage-bar-change-color":"Round-playstage-bar-change-color--1HoBY","playstageBarChangeColor":"Round-playstage-bar-change-color--1HoBY","playstage-blink-bar-color":"Round-playstage-blink-bar-color--2pndY","playstageBlinkBarColor":"Round-playstage-blink-bar-color--2pndY","frontBkg":"Round-frontBkg--1H_mj","reveal":"Round-reveal--3HNbj","revealVisible":"Round-revealVisible--O1y5A","wrapper":"Round-wrapper--2wout","svg":"Round-svg--2qJHy","debugItems":"Round-debugItems--Cxuls"};
+module.exports = {"round":"Round-round--3UuRv","roundExiting":"Round-roundExiting--2e9P1","gameZone":"Round-gameZone--3AdDr","playstage-bar-change-color":"Round-playstage-bar-change-color--1HoBY","playstageBarChangeColor":"Round-playstage-bar-change-color--1HoBY","playstage-blink-bar-color":"Round-playstage-blink-bar-color--2pndY","playstageBlinkBarColor":"Round-playstage-blink-bar-color--2pndY","wrapper":"Round-wrapper--2wout"};
 
 /***/ }),
 

@@ -8,8 +8,6 @@ import Player2Peer from '~managers/PeerManager/Player2Peer'
 import { GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
-// import SceneContext from './context'
-// import PlayerCursor from './PlayerCursor'
 import PlayerMessage from './PlayerMessage'
 import PopupMessage from './PopupMessage'
 import PixiScene from './PixiScene'

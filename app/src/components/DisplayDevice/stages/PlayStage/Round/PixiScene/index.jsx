@@ -1,13 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import {
-  Application,
-  Sprite,
-  // WRAP_MODES,
-  Container,
-  // Loader,
-  Texture,
-  Graphics,
-} from 'pixi.js'
+import { Application, Sprite, Container, Texture, Graphics } from 'pixi.js'
 import PlayersManager from '~managers/PlayersManager'
 import getNow from '~utils/time'
 import { inOutSine, inOutQuad } from '~utils/ease'
@@ -296,6 +288,8 @@ const PixiScene = props => {
 
       return undefined
     })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [powers])
 
   // RAF
@@ -313,9 +307,13 @@ const PixiScene = props => {
         let newPosition
         if (powers[index] === 'freeze') {
           // position has to stay and color is gray
-          color = 0x00C1FF
+          color = 0x00c1ff
           newPosition = circlesLastPositions.current[index]
-          points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index])
+          points = getPointsAroundCircle(
+            timeFrozen.current,
+            circlesPoints.current[index],
+            circlesLastPositions.current[index],
+          )
         } else {
           newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index])
           points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition)
@@ -425,7 +423,7 @@ const PixiScene = props => {
       const percent = (now - startTransitionOut.current) / transitionOutDuration
       const positionX = initWidth.current - initWidth.current * inOutQuad(percent)
 
-      circlesMasked.current.beginFill(0xFFFFFF)
+      circlesMasked.current.beginFill(0xffffff)
 
       if (percent < 1) {
         circlesMasked.current.drawRect(positionX, 0, initWidth.current, initHeight.current)
@@ -442,7 +440,6 @@ const PixiScene = props => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
   }, [positions, powers])
-
 
   // on update game state
   useEffect(() => {

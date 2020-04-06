@@ -496,42 +496,9 @@ a {
     width: 100%;
     z-index: 10; }
 
-.Round-frontBkg--1H_mj {
-  height: 100%;
-  left: 0;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -1; }
-
-.Round-reveal--3HNbj {
-  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-  height: 43.75vw;
-  left: 0;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  transition: clip-path 1.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-  width: 100%;
-  z-index: 100; }
-
-.Round-revealVisible--O1y5A {
-  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%); }
-
 .Round-wrapper--2wout {
   height: 100%;
   position: relative; }
-
-.Round-svg--2qJHy {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%; }
-
-.Round-debugItems--Cxuls {
-  opacity: .3; }
 
 /* Colors */
 /* Breakpoints */
