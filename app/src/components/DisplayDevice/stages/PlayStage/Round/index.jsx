@@ -232,8 +232,6 @@ const Round = props => {
     })
   }
 
-  console.log(gameState)
-
   return (
     <div className={classNames(styles.round, { [styles.roundExiting]: transitionStatus === 'exiting' })}>
       <TransitionGroup>

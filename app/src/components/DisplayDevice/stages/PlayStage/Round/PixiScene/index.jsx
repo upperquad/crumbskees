@@ -35,7 +35,6 @@ const PixiScene = props => {
   const initHeight = useRef(0)
   const containerMasked = useRef(null)
   const containerFront = useRef(null)
-  const containerCirclesBorder = useRef(null)
   // circles
   const circlesMasked = useRef(null)
   const circlesBorder = useRef(null)
@@ -80,7 +79,7 @@ const PixiScene = props => {
       containerMasked.current.mask = circlesMasked.current
 
       circlesBorder.current = new Graphics()
-      containerCirclesBorder.current.addChild(circlesBorder.current)
+      containerFront.current.addChild(circlesBorder.current)
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       stroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
@@ -150,10 +149,8 @@ const PixiScene = props => {
 
     containerFront.current = new Container()
     containerMasked.current = new Container()
-    containerCirclesBorder.current = new Container()
     app.current.stage.addChild(containerFront.current)
     app.current.stage.addChild(containerMasked.current)
-    app.current.stage.addChild(containerCirclesBorder.current)
 
     // set elements into scene
     const videoPixiBack = setVideo(videoBack, containerMasked.current)
@@ -279,7 +276,7 @@ const PixiScene = props => {
     // init
     PlayersManager.players.forEach((player, index) => {
       if (powers[index] === 'grow') {
-        updateRadius(circlesPoints.current[index], maxRadius.current * 1.5)
+        updateRadius(circlesPoints.current[index], maxRadius.current * 1.45)
       } else if (powers[index] === 'freeze') {
         timeFrozen.current = getNow()
       } else {

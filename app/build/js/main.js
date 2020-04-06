@@ -97213,8 +97213,7 @@ var PixiScene = function PixiScene(props) {
   var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var containerCirclesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
+  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
 
   var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
@@ -97251,7 +97250,7 @@ var PixiScene = function PixiScene(props) {
 
       containerMasked.current.mask = circlesMasked.current;
       circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
-      containerCirclesBorder.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
+      containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
       stroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set min and max radius for the circle
 
@@ -97317,10 +97316,8 @@ var PixiScene = function PixiScene(props) {
     elRef.current.appendChild(app.current.view);
     containerFront.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     containerMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
-    containerCirclesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     app.current.stage.addChild(containerFront.current);
-    app.current.stage.addChild(containerMasked.current);
-    app.current.stage.addChild(containerCirclesBorder.current); // set elements into scene
+    app.current.stage.addChild(containerMasked.current); // set elements into scene
 
     var videoPixiBack = setVideo(videoBack, containerMasked.current);
     var videoPixiFront = setVideo(videoFront, containerFront.current);
@@ -97429,7 +97426,7 @@ var PixiScene = function PixiScene(props) {
 
     _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
       if (powers[index] === 'grow') {
-        updateRadius(circlesPoints.current[index], maxRadius.current * 1.5);
+        updateRadius(circlesPoints.current[index], maxRadius.current * 1.45);
       } else if (powers[index] === 'freeze') {
         timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
       } else {
@@ -98164,7 +98161,6 @@ var Round = function Round(props) {
     });
   }
 
-  console.log(gameState);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.roundExiting, transitionStatus === 'exiting'))
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, gameState !== 'before-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
