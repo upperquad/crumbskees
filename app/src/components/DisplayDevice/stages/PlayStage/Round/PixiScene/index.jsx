@@ -139,8 +139,7 @@ const PixiScene = props => {
       antialias: true,
       autoDensity: true,
       backgroundColor: 0xffffff,
-    }) // , backgroundColor: 0xF7F7F7
-    // console.log(this.app.currentrenderer.resolution)
+    })
 
     app.current.stage.interactive = true
 
@@ -205,7 +204,7 @@ const PixiScene = props => {
 
   // update items
   useEffect(() => {
-    const container = containerFront.current
+    const container = containerMasked.current
     // funcs
     function setItem(item) {
       const sprite = Sprite.from(item.image)

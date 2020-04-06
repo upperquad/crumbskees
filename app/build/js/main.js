@@ -97074,18 +97074,23 @@ var Intro = function Intro(props) {
     onFinish();
     timeout.current = setTimeout(function () {
       return setFinished(true);
-    }, 1000); // const currentStep = stepsArray[step]
-    // timeout.current = setTimeout(() => {
-    //   if (currentStep.startGame) {
-    //     onFinish()
-    //     timeout.current = setTimeout(() => setFinished(true), 1000)
-    //   }
-    //   if (step < stepsArray.length - 1) {
-    //     setStep(step + 1)
-    //   }
-    // }, currentStep.tillNextStep)
-    // return () => clearTimeout(timeout.current)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 1000);
+    var currentStep = stepsArray[step];
+    timeout.current = setTimeout(function () {
+      if (currentStep.startGame) {
+        onFinish();
+        timeout.current = setTimeout(function () {
+          return setFinished(true);
+        }, 1000);
+      }
+
+      if (step < stepsArray.length - 1) {
+        setStep(step + 1);
+      }
+    }, currentStep.tillNextStep);
+    return function () {
+      return clearTimeout(timeout.current);
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
   var readyDropState;
 
@@ -97304,9 +97309,7 @@ var PixiScene = function PixiScene(props) {
       antialias: true,
       autoDensity: true,
       backgroundColor: 0xffffff
-    }); // , backgroundColor: 0xF7F7F7
-    // console.log(this.app.currentrenderer.resolution)
-
+    });
     app.current.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
     app.current.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.canvas);
@@ -97362,7 +97365,7 @@ var PixiScene = function PixiScene(props) {
   }, []); // update items
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var container = containerFront.current; // funcs
+    var container = containerMasked.current; // funcs
 
     function setItem(item) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);

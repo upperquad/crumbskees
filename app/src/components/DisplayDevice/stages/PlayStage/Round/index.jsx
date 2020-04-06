@@ -5,7 +5,7 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
-import { DEBUG, GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import { GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
 // import SceneContext from './context'
