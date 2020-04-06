@@ -97072,9 +97072,7 @@ var Intro = function Intro(props) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // onFinish()
-    timeout.current = setTimeout(function () {
-      return setFinished(true);
-    }, 1000);
+    // timeout.current = setTimeout(() => setFinished(true), 1000)
     var currentStep = stepsArray[step];
     timeout.current = setTimeout(function () {
       if (currentStep.startGame) {
@@ -97112,7 +97110,6 @@ var Intro = function Intro(props) {
     setDropState = 'after';
   }
 
-  console.log(videoIntro);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.intro
   }, !finished && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -97197,9 +97194,11 @@ var minDuration = 700;
 var maxDuration = 900;
 var pointsCount = 6;
 var decelerationCircleCoef = 0.15;
+var transitionOutDuration = 1000;
 
 var PixiScene = function PixiScene(props) {
   var cancelPower = props.cancelPower,
+      gameState = props.gameState,
       items = props.items,
       positions = props.positions,
       powers = props.powers,
@@ -97214,7 +97213,8 @@ var PixiScene = function PixiScene(props) {
   var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
+  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var containerCirclesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
 
   var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
@@ -97226,14 +97226,14 @@ var PixiScene = function PixiScene(props) {
   var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var timeFrozen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // set up scene
+  var timeFrozen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var startTransitionOut = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0); // set up scene
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
     function setVideo(source, container) {
       var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
-      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // videoSprite.alpha = 0.2
-      // Stetch the fullscreen
+      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // Stetch the fullscreen
 
       videoSprite.width = app.current.screen.width;
       videoSprite.height = app.current.screen.height;
@@ -97251,7 +97251,7 @@ var PixiScene = function PixiScene(props) {
 
       containerMasked.current.mask = circlesMasked.current;
       circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
-      containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
+      containerCirclesBorder.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
       stroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set min and max radius for the circle
 
@@ -97317,8 +97317,10 @@ var PixiScene = function PixiScene(props) {
     elRef.current.appendChild(app.current.view);
     containerFront.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     containerMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
+    containerCirclesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     app.current.stage.addChild(containerFront.current);
-    app.current.stage.addChild(containerMasked.current); // set elements into scene
+    app.current.stage.addChild(containerMasked.current);
+    app.current.stage.addChild(containerCirclesBorder.current); // set elements into scene
 
     var videoPixiBack = setVideo(videoBack, containerMasked.current);
     var videoPixiFront = setVideo(videoFront, containerFront.current);
@@ -97472,7 +97474,11 @@ var PixiScene = function PixiScene(props) {
 
         drawCubicBezier(points, newPosition, color);
       });
-      circlesMasked.current.endFill();
+      circlesMasked.current.endFill(); // draw transition out rect
+
+      if (startTransitionOut.current > 0) {
+        drawTransitionOut(now);
+      }
     } // get delayed position
 
 
@@ -97560,6 +97566,21 @@ var PixiScene = function PixiScene(props) {
         circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
         circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
       }
+    } // draw transition out
+
+
+    function drawTransitionOut(now) {
+      var percent = (now - startTransitionOut.current) / transitionOutDuration;
+      var positionX = initWidth.current - initWidth.current * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_4__["inOutQuad"])(percent);
+      circlesMasked.current.beginFill(0xFFFFFF);
+
+      if (percent < 1) {
+        circlesMasked.current.drawRect(positionX, 0, initWidth.current, initHeight.current);
+      } else {
+        circlesMasked.current.drawRect(0, 0, initWidth.current, initHeight.current);
+      }
+
+      circlesMasked.current.endFill();
     } // init RAF
 
 
@@ -97567,7 +97588,13 @@ var PixiScene = function PixiScene(props) {
     return function () {
       _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber(updateFrame);
     };
-  }, [positions, powers]);
+  }, [positions, powers]); // on update game state
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (gameState === 'after-game') {
+      startTransitionOut.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    }
+  }, [gameState]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.pixiScene,
     ref: elRef
@@ -97845,7 +97872,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var TIME = 4000;
+var TIME = 40;
 
 var Round = function Round(props) {
   var onRoundEnd = props.onRoundEnd,
@@ -98018,7 +98045,11 @@ var Round = function Round(props) {
 
         case 'click':
           {
-            handleClick(playerIndex);
+            // prevent clicks after game ends
+            if (gameState !== 'after-game') {
+              handleClick(playerIndex);
+            }
+
             break;
           }
 
@@ -98041,7 +98072,7 @@ var Round = function Round(props) {
       _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber('MESSAGE', player1MessageHandler);
       _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber('MESSAGE', player2MessageHandler);
     }; // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]); // Grid setup
+  }, [gameState, items]); // Grid setup
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     return setupGrid(setItems, roundIndex);
@@ -98133,9 +98164,10 @@ var Round = function Round(props) {
     });
   }
 
+  console.log(gameState);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.roundExiting, transitionStatus === 'exiting'))
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, gameState === 'in-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, gameState !== 'before-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
     key: "play-stage-in-game",
     timeout: {
       enter: 0,
@@ -98149,7 +98181,8 @@ var Round = function Round(props) {
     positions: positionArray,
     powers: powerArray,
     cancelPower: cancelPower,
-    items: items
+    items: items,
+    gameState: gameState
   }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__["default"], {
       power: powerArray[index],
@@ -98166,19 +98199,7 @@ var Round = function Round(props) {
     text: message.text,
     messageCount: message.messageCount,
     onEnd: message.onEnd
-  }))), gameState === 'after-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
-    key: "play-stage-reveal",
-    timeout: {
-      enter: 100,
-      exit: 0
-    }
-  }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.reveal, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.revealVisible, status === 'entered')),
-      src: videoBack,
-      alt: ""
-    });
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_13__["default"], {
+  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_13__["default"], {
     time: time,
     itemImage: itemImage,
     scores: roundScoreArray,
@@ -100460,13 +100481,14 @@ function hexToRgb(hex) {
 /*!***************************!*\
   !*** ./src/utils/ease.js ***!
   \***************************/
-/*! exports provided: outExpo, inOutSine */
+/*! exports provided: outExpo, inOutSine, inOutQuad */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "outExpo", function() { return outExpo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inOutSine", function() { return inOutSine; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inOutQuad", function() { return inOutQuad; });
 function outExpo(n) {
   if (n === 1) {
     return n;
@@ -100476,6 +100498,11 @@ function outExpo(n) {
 }
 function inOutSine(n) {
   return 0.5 * (1 - Math.cos(Math.PI * n));
+}
+function inOutQuad(n) {
+  n *= 2;
+  if (n < 1) return 0.5 * n * n;
+  return -0.5 * (--n * (n - 2) - 1);
 }
 
 /***/ }),

@@ -10,7 +10,7 @@ import {
 } from 'pixi.js'
 import PlayersManager from '~managers/PlayersManager'
 import getNow from '~utils/time'
-import { inOutSine } from '~utils/ease'
+import { inOutSine, inOutQuad } from '~utils/ease'
 import { random } from '~utils/math'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'
@@ -21,9 +21,10 @@ const minDuration = 700
 const maxDuration = 900
 const pointsCount = 6
 const decelerationCircleCoef = 0.15
+const transitionOutDuration = 1000
 
 const PixiScene = props => {
-  const { cancelPower, items, positions, powers, videoBack, videoFront } = props
+  const { cancelPower, gameState, items, positions, powers, videoBack, videoFront } = props
   // re-used references through hooks
   const elRef = useRef(null)
   const app = useRef(null)
@@ -34,6 +35,7 @@ const PixiScene = props => {
   const initHeight = useRef(0)
   const containerMasked = useRef(null)
   const containerFront = useRef(null)
+  const containerCirclesBorder = useRef(null)
   // circles
   const circlesMasked = useRef(null)
   const circlesBorder = useRef(null)
@@ -47,6 +49,7 @@ const PixiScene = props => {
   const maxMiddleRadius = useRef(0)
 
   const timeFrozen = useRef(null)
+  const startTransitionOut = useRef(0)
 
   // set up scene
   useEffect(() => {
@@ -54,8 +57,6 @@ const PixiScene = props => {
     function setVideo(source, container) {
       const texture = Texture.from(source)
       const videoSprite = new Sprite(texture)
-
-      // videoSprite.alpha = 0.2
 
       // Stetch the fullscreen
       videoSprite.width = app.current.screen.width
@@ -79,7 +80,7 @@ const PixiScene = props => {
       containerMasked.current.mask = circlesMasked.current
 
       circlesBorder.current = new Graphics()
-      containerFront.current.addChild(circlesBorder.current)
+      containerCirclesBorder.current.addChild(circlesBorder.current)
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       stroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * elRef.current.offsetWidth
@@ -149,8 +150,10 @@ const PixiScene = props => {
 
     containerFront.current = new Container()
     containerMasked.current = new Container()
+    containerCirclesBorder.current = new Container()
     app.current.stage.addChild(containerFront.current)
     app.current.stage.addChild(containerMasked.current)
+    app.current.stage.addChild(containerCirclesBorder.current)
 
     // set elements into scene
     const videoPixiBack = setVideo(videoBack, containerMasked.current)
@@ -326,6 +329,11 @@ const PixiScene = props => {
       })
 
       circlesMasked.current.endFill()
+
+      // draw transition out rect
+      if (startTransitionOut.current > 0) {
+        drawTransitionOut(now)
+      }
     }
 
     // get delayed position
@@ -415,6 +423,21 @@ const PixiScene = props => {
       }
     }
 
+    // draw transition out
+    function drawTransitionOut(now) {
+      const percent = (now - startTransitionOut.current) / transitionOutDuration
+      const positionX = initWidth.current - initWidth.current * inOutQuad(percent)
+
+      circlesMasked.current.beginFill(0xFFFFFF)
+
+      if (percent < 1) {
+        circlesMasked.current.drawRect(positionX, 0, initWidth.current, initHeight.current)
+      } else {
+        circlesMasked.current.drawRect(0, 0, initWidth.current, initHeight.current)
+      }
+      circlesMasked.current.endFill()
+    }
+
     // init RAF
     AnimationFrameManager.addSubscriber(updateFrame)
 
@@ -422,6 +445,14 @@ const PixiScene = props => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
   }, [positions, powers])
+
+
+  // on update game state
+  useEffect(() => {
+    if (gameState === 'after-game') {
+      startTransitionOut.current = getNow()
+    }
+  }, [gameState])
 
   return <div className={styles.pixiScene} ref={elRef} />
 }

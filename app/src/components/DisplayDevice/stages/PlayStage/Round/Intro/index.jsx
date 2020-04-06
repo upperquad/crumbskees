@@ -42,7 +42,7 @@ const Intro = props => {
   // steps
   useEffect(() => {
     // onFinish()
-    timeout.current = setTimeout(() => setFinished(true), 1000)
+    // timeout.current = setTimeout(() => setFinished(true), 1000)
 
     const currentStep = stepsArray[step]
     timeout.current = setTimeout(() => {
@@ -77,8 +77,6 @@ const Intro = props => {
   } else {
     setDropState = 'after'
   }
-
-  console.log(videoIntro)
 
   return (
     <div className={styles.intro}>

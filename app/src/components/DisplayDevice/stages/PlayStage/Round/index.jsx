@@ -17,7 +17,7 @@ import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
 import Intro from './Intro'
 
-const TIME = 4000
+const TIME = 40
 
 const Round = props => {
   const { onRoundEnd, roundIndex, transitionStatus } = props
@@ -121,7 +121,10 @@ const Round = props => {
           break
         }
         case 'click': {
-          handleClick(playerIndex)
+          // prevent clicks after game ends
+          if (gameState !== 'after-game') {
+            handleClick(playerIndex)
+          }
           break
         }
         default:
@@ -140,7 +143,7 @@ const Round = props => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items])
+  }, [gameState, items])
 
   // Grid setup
   useEffect(() => setupGrid(setItems, roundIndex), [roundIndex])
@@ -229,13 +232,14 @@ const Round = props => {
     })
   }
 
+  console.log(gameState)
+
   return (
     <div className={classNames(styles.round, { [styles.roundExiting]: transitionStatus === 'exiting' })}>
       <TransitionGroup>
-        {gameState === 'in-game' && (
+        {gameState !== 'before-game' && (
           <Transition key="play-stage-in-game" timeout={{ enter: 0, exit: 1300 }}>
             <div className={classNames(styles.gameZone)}>
-              {/* <img className={styles.videoFront} src={videoFront} alt="" /> */}
               <PixiScene
                 videoFront={videoFront}
                 videoBack={videoBack}
@@ -243,51 +247,8 @@ const Round = props => {
                 powers={powerArray}
                 cancelPower={cancelPower}
                 items={items}
+                gameState={gameState}
               />
-              {/* <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
-                <defs>
-                  <clipPath id="game-round-clippath" className={styles.svgClipPath}>
-                    {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
-                  </clipPath>
-                </defs>
-                {PlayersManager.players.map((player, index) => (
-                  <PlayerCursor
-                    index={index}
-                    power={powerArray[index]}
-                    position={positionArray[index]}
-                    color={player.color}
-                    cancelPower={() => {
-                      setPowerArray(prevArray => {
-                        prevArray[index] = null
-                        return prevArray
-                      })
-                    }}
-                  />
-                ))}
-                <g
-                  width={`${VB_WIDTH}px`}
-                  height={`${VB_HEIGHT}px`}
-                  clipPath="url(#game-round-clippath)"
-                >
-                  <image
-                    xlinkHref={videoBack}
-                    preserveAspectRatio="xMidYMid slice"
-                    width={`${VB_WIDTH}px`}
-                    height={`${VB_HEIGHT}px`}
-                  />
-                  {items.map(item => (
-                    <image
-                      xlinkHref={item.image}
-                      preserveAspectRatio="xMidYMid slice"
-                      width={item.size}
-                      height={item.size}
-                      x={`${item.x * 100}%`}
-                      y={`${item.y * 100}%`}
-                      style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
-                    />
-                  ))}
-                </g>
-              </svg> */}
               {PlayersManager.players.map((player, index) => (
                 <PlayerMessage
                   power={powerArray[index]}
@@ -307,20 +268,6 @@ const Round = props => {
                 onEnd={message.onEnd}
               />
             </div>
-          </Transition>
-        )}
-
-        {gameState === 'after-game' && (
-          <Transition key="play-stage-reveal" timeout={{ enter: 100, exit: 0 }}>
-            {status => (
-              <img
-                className={classNames(styles.reveal, {
-                  [styles.revealVisible]: status === 'entered',
-                })}
-                src={videoBack}
-                alt=""
-              />
-            )}
           </Transition>
         )}
       </TransitionGroup>
