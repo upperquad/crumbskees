@@ -242,6 +242,7 @@ const PixiScene = props => {
   useEffect(() => {
     // func
     function updateRadius(points, increment) {
+      const now = getNow()
       for (let i = 0; i < points.length; i++) {
         const point = points[i]
         // Increase each points
@@ -262,7 +263,7 @@ const PixiScene = props => {
         point.targetMinY = Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
 
         point.destY = point.targetMaxY
-        point.startAnim = getNow()
+        point.startAnim = now
       }
 
       setTimeout(() => {
@@ -270,7 +271,7 @@ const PixiScene = props => {
         for (let i = 0; i < points.length; i++) {
           points[i].duration -= 250
         }
-      }, 1000)
+      }, 2000)
     }
 
     // init

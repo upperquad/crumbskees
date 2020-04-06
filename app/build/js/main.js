@@ -97392,6 +97392,8 @@ var PixiScene = function PixiScene(props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // func
     function updateRadius(points, increment) {
+      var now = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
+
       for (var i = 0; i < points.length; i++) {
         var point = points[i]; // Increase each points
         // if player has grown power, increase player radius
@@ -97407,7 +97409,7 @@ var PixiScene = function PixiScene(props) {
         point.targetMaxY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
         point.targetMinY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
         point.destY = point.targetMaxY;
-        point.startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
+        point.startAnim = now;
       }
 
       setTimeout(function () {
@@ -97415,7 +97417,7 @@ var PixiScene = function PixiScene(props) {
         for (var _i = 0; _i < points.length; _i++) {
           points[_i].duration -= 250;
         }
-      }, 1000);
+      }, 2000);
     } // init
 
 
