@@ -159,13 +159,8 @@ const PixiScene = props => {
     })
 
     return () => {
-      // remove all children
-      while (app.current.stage.children[0]) {
-        app.current.stage.removeChild(app.current.stage.children[0])
-      }
-
       // destroy app
-      app.current.destroy(true)
+      app.current.destroy(true, true)
     }
   }, [videoBack, videoFront])
 
