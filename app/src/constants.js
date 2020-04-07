@@ -1,13 +1,13 @@
-import round1Pattern from '~assets/images/round_1/s1-pattern.gif'
-import round1Front from '~assets/images/round_1/s1-front.gif'
+import round1VideoBack from '~assets/images/round_1/r1-pattern.mp4'
+import round1VideoFront from '~assets/images/round_1/r1-pattern-bw.mp4'
 import round1Item from '~assets/images/round_1/s1-item.png'
 import round1IntroVideo from '~assets/images/round_1/s1-intro.mp4'
-import round2Pattern from '~assets/images/round_2/s2-pattern.gif'
-import round2Front from '~assets/images/round_2/s2-front.gif'
+import round2VideoBack from '~assets/images/round_2/r2-pattern.mp4'
+import round2VideoFront from '~assets/images/round_2/r2-pattern-bw.mp4'
 import round2Item from '~assets/images/round_2/s2-item.png'
 import round2IntroVideo from '~assets/images/round_2/s2-intro.mp4'
-import round3Pattern from '~assets/images/round_3/s3-pattern.gif'
-import round3Front from '~assets/images/round_3/s3-front.gif'
+import round3VideoBack from '~assets/images/round_3/r3-pattern.mp4'
+import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
 import round3Item from '~assets/images/round_3/s3-item.png'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
 import growItem from '~assets/images/grow.png'
@@ -63,8 +63,8 @@ export const CHARACTERS = [
 export const GAME_ROUNDS = [
   {
     key: 'game-round-1',
-    bkg: round1Pattern,
-    frontBkg: round1Front,
+    videoBack: round1VideoBack,
+    videoFront: round1VideoFront,
     itemImage: round1Item,
     videoIntro: round1IntroVideo,
     roundNameText: 'Round\xa001',
@@ -78,8 +78,8 @@ export const GAME_ROUNDS = [
     },
   }, {
     key: 'game-round-2',
-    bkg: round2Pattern,
-    frontBkg: round2Front,
+    videoBack: round2VideoBack,
+    videoFront: round2VideoFront,
     itemImage: round2Item,
     videoIntro: round2IntroVideo,
     roundNameText: 'Round\xa002',
@@ -93,8 +93,8 @@ export const GAME_ROUNDS = [
     },
   }, {
     key: 'game-round-3',
-    bkg: round3Pattern,
-    frontBkg: round3Front,
+    videoBack: round3VideoBack,
+    videoFront: round3VideoFront,
     itemImage: round3Item,
     videoIntro: round3IntroVideo,
     roundNameText: 'Last\xa0round',

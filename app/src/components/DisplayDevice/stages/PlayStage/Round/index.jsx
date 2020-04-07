@@ -5,13 +5,12 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
-import { DEBUG, GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import { GAME_ROUNDS, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
-// import SceneContext from './context'
-import PlayerCursor from './PlayerCursor'
 import PlayerMessage from './PlayerMessage'
 import PopupMessage from './PopupMessage'
+import PixiScene from './PixiScene'
 import PlayersManager from '~managers/PlayersManager'
 import Board from './Board'
 import Intro from './Intro'
@@ -20,7 +19,7 @@ const TIME = 40
 
 const Round = props => {
   const { onRoundEnd, roundIndex, transitionStatus } = props
-  const { bkg, frontBkg, itemImage } = GAME_ROUNDS[roundIndex]
+  const { itemImage, videoBack, videoFront } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [items, setItems] = useState([])
   const [gameState, setGameState] = useState('before-game')
@@ -31,12 +30,10 @@ const Round = props => {
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
 
   const addMessage = messageObj => {
-    setMessage(prevMessage => (
-      {
-        ...messageObj,
-        messageCount: prevMessage.messageCount + 1,
-      }
-    ))
+    setMessage(prevMessage => ({
+      ...messageObj,
+      messageCount: prevMessage.messageCount + 1,
+    }))
   }
 
   // Players input
@@ -84,7 +81,7 @@ const Round = props => {
         SoundManager.grow.play()
         setPowerArray(prevArray => {
           prevArray[playerIndex] = 'grow'
-          return prevArray
+          return [...prevArray]
         })
       }
 
@@ -92,7 +89,7 @@ const Round = props => {
         SoundManager.freeze.play()
         setPowerArray(prevArray => {
           prevArray[1 - playerIndex] = 'freeze'
-          return prevArray
+          return [...prevArray]
         })
       }
 
@@ -122,7 +119,10 @@ const Round = props => {
           break
         }
         case 'click': {
-          handleClick(playerIndex)
+          // prevent clicks after game ends
+          if (gameState !== 'after-game') {
+            handleClick(playerIndex)
+          }
           break
         }
         default:
@@ -141,12 +141,10 @@ const Round = props => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items])
+  }, [gameState, items])
 
   // Grid setup
-  useEffect(() => (
-    setupGrid(setItems, roundIndex)
-  ), [roundIndex])
+  useEffect(() => setupGrid(setItems, roundIndex), [roundIndex])
 
   // Timer
   useEffect(() => {
@@ -157,7 +155,7 @@ const Round = props => {
 
           if (newTime === 0) {
             addMessage({
-              text: 'Time\'s up!',
+              text: "Time's up!",
               color: COLORS.red,
               persistent: true,
               onEnd: () => setGameState('after-game'),
@@ -212,7 +210,7 @@ const Round = props => {
     }
 
     return undefined
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length])
 
   function addScore(score, index) {
@@ -225,85 +223,28 @@ const Round = props => {
     SoundManager.score.play()
   }
 
+  function cancelPower(index) {
+    setPowerArray(prevArray => {
+      prevArray[index] = null
+      return [...prevArray]
+    })
+  }
+
   return (
-    <div
-      className={classNames(
-        styles.round,
-        { [styles.roundExiting]: transitionStatus === 'exiting' },
-      )}
-    >
+    <div className={classNames(styles.round, { [styles.roundExiting]: transitionStatus === 'exiting' })}>
       <TransitionGroup>
-        {gameState === 'in-game' && (
-          <Transition
-            key="play-stage-in-game"
-            timeout={{ enter: 0, exit: 1300 }}
-          >
+        {gameState !== 'before-game' && (
+          <Transition key="play-stage-in-game" timeout={{ enter: 0, exit: 1300 }}>
             <div className={classNames(styles.gameZone)}>
-              <img className={styles.frontBkg} src={frontBkg} alt="" />
-              <svg className={styles.svg} viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`} stroke="black">
-                <defs>
-                  <clipPath id="game-round-clippath" className={styles.svgClipPath}>
-                    {PlayersManager.players.map((player, index) => <use xlinkHref={`#player${index}`} />)}
-                  </clipPath>
-                </defs>
-                {PlayersManager.players.map((player, index) => (
-                  <PlayerCursor
-                    index={index}
-                    power={powerArray[index]}
-                    position={positionArray[index]}
-                    color={player.color}
-                    roundScore={roundScoreArray[index]}
-                    cancelPower={() => {
-                      setPowerArray(prevArray => {
-                        prevArray[index] = null
-                        return prevArray
-                      })
-                    }}
-                  />
-                ))}
-                {DEBUG && (
-                  <g
-                    width={`${VB_WIDTH}px`}
-                    height={`${VB_HEIGHT}px`}
-                    className={styles.debugItems}
-                  >
-                    {items.map(item => (
-                      <image
-                        xlinkHref={item.image}
-                        preserveAspectRatio="xMidYMid slice"
-                        width={item.size}
-                        height={item.size}
-                        x={`${item.x * 100}%`}
-                        y={`${item.y * 100}%`}
-                        style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
-                      />
-                    ))}
-                  </g>
-                )}
-                <g
-                  width={`${VB_WIDTH}px`}
-                  height={`${VB_HEIGHT}px`}
-                  clipPath="url(#game-round-clippath)"
-                >
-                  <image
-                    xlinkHref={bkg}
-                    preserveAspectRatio="xMidYMid slice"
-                    width={`${VB_WIDTH}px`}
-                    height={`${VB_HEIGHT}px`}
-                  />
-                  {items.map(item => (
-                    <image
-                      xlinkHref={item.image}
-                      preserveAspectRatio="xMidYMid slice"
-                      width={item.size}
-                      height={item.size}
-                      x={`${item.x * 100}%`}
-                      y={`${item.y * 100}%`}
-                      style={{ transform: `translate(-${item.size / 2}px, -${item.size / 2}px)` }}
-                    />
-                  ))}
-                </g>
-              </svg>
+              <PixiScene
+                videoFront={videoFront}
+                videoBack={videoBack}
+                positions={positionArray}
+                powers={powerArray}
+                cancelPower={cancelPower}
+                items={items}
+                gameState={gameState}
+              />
               {PlayersManager.players.map((player, index) => (
                 <PlayerMessage
                   power={powerArray[index]}
@@ -323,23 +264,6 @@ const Round = props => {
                 onEnd={message.onEnd}
               />
             </div>
-          </Transition>
-        )}
-
-        {gameState === 'after-game' && (
-          <Transition
-            key="play-stage-reveal"
-            timeout={{ enter: 100, exit: 0 }}
-          >
-            {status => (
-              <img
-                className={classNames(styles.reveal, {
-                  [styles.revealVisible]: status === 'entered',
-                })}
-                src={bkg}
-                alt=""
-              />
-            )}
           </Transition>
         )}
       </TransitionGroup>
