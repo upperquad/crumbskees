@@ -22,6 +22,8 @@ import characterImage2 from '~assets/images/character2.png'
 
 export const DEBUG = typeof DEBUG_VALUE !== 'undefined'
 
+export const MODE = 'SINGLE_PLAYER'
+
 export const BREAKPOINT = 768
 
 export const VB_WIDTH = 1920

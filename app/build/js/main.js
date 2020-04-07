@@ -96787,6 +96787,7 @@ var DisplayDevice = function DisplayDevice() {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // This should trigger on all children components so don't have to do this anywhere else
     var onPlayerUpdate = function onPlayerUpdate() {
+      console.log('both connected');
       setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_10__["default"].bothConnected());
       forceUpdate();
     };
@@ -99304,12 +99305,13 @@ module.exports = {"marqueeAlternate":"MarqueeText-marqueeAlternate---84_Y","marq
 /*!**************************!*\
   !*** ./src/constants.js ***!
   \**************************/
-/*! exports provided: DEBUG, BREAKPOINT, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS, CHARACTERS, GAME_ROUNDS */
+/*! exports provided: DEBUG, MODE, BREAKPOINT, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS, CHARACTERS, GAME_ROUNDS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEBUG", function() { return DEBUG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MODE", function() { return MODE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BREAKPOINT", function() { return BREAKPOINT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VB_WIDTH", function() { return VB_WIDTH; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VB_HEIGHT", function() { return VB_HEIGHT; });
@@ -99380,6 +99382,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var DEBUG = "boolean" !== 'undefined';
+var MODE = 'SINGLE_PLAYER';
 var BREAKPOINT = 768;
 var VB_WIDTH = 1920;
 var VB_HEIGHT = 840;
@@ -99995,21 +99998,6 @@ function (_Observable) {
 
     _defineProperty(_assertThisInitialized(_this), "_gameStarted", false);
 
-    _defineProperty(_assertThisInitialized(_this), "_players", [{}, {}]);
-
-    _defineProperty(_assertThisInitialized(_this), "players", new Proxy(_this._players, {
-      get: function get(obj, prop) {
-        return obj[prop];
-      },
-      set: function set(obj, prop, value) {
-        obj[prop] = value;
-
-        _this._callObservers('player_change');
-
-        return obj[prop];
-      }
-    }));
-
     _defineProperty(_assertThisInitialized(_this), "_onMessage", function (detail) {
       var data = detail.data,
           type = detail.type;
@@ -100032,6 +100020,7 @@ function (_Observable) {
               playerPeer = _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"];
             }
 
+            console.log('new token accepted');
             _this.players[targetPlayerIndex] = new _Player__WEBPACK_IMPORTED_MODULE_0__["default"]({
               id: id,
               character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][targetPlayerIndex],
@@ -100134,8 +100123,29 @@ function (_Observable) {
 
     if (!PlayersManager.instance) {
       PlayersManager.instance = _assertThisInitialized(_this);
+
+      if (_constants__WEBPACK_IMPORTED_MODULE_5__["MODE"] === 'SINGLE_-PLAYER') {
+        _this._players = [{}];
+      } else {
+        _this._players = [{}, {}];
+      }
+
+      _this.players = new Proxy(_this._players, {
+        get: function get(obj, prop) {
+          return obj[prop];
+        },
+        set: function set(obj, prop, value) {
+          obj[prop] = value;
+
+          _this._callObservers('player_change');
+
+          return obj[prop];
+        }
+      });
       _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_3__["default"].addSubscriber('MESSAGE', _this._onMessage);
       _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('CONNECTED', function () {
+        console.log('player 1 connected');
+
         if (_this.players[0].setConnected) {
           _this.players[0].setConnected(true);
         }
@@ -100143,6 +100153,8 @@ function (_Observable) {
         _this._callObservers('player_change');
       });
       _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
+        console.log('player 2 connected');
+
         if (_this.players[1].setConnected) {
           _this.players[1].setConnected(true);
         }
@@ -100518,14 +100530,13 @@ function hexToRgb(hex) {
 /*!***************************!*\
   !*** ./src/utils/ease.js ***!
   \***************************/
-/*! exports provided: outExpo, inOutSine, inOutQuad */
+/*! exports provided: outExpo, inOutSine */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "outExpo", function() { return outExpo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inOutSine", function() { return inOutSine; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inOutQuad", function() { return inOutQuad; });
 function outExpo(n) {
   if (n === 1) {
     return n;
@@ -100535,11 +100546,6 @@ function outExpo(n) {
 }
 function inOutSine(n) {
   return 0.5 * (1 - Math.cos(Math.PI * n));
-}
-function inOutQuad(n) {
-  n *= 2;
-  if (n < 1) return 0.5 * n * n;
-  return -0.5 * ((n - 1) * (n - 3) - 1);
 }
 
 /***/ }),
