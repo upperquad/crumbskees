@@ -3,7 +3,7 @@ import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
 import TokenSocketManager from '~managers/TokenSocketManager'
 import Observable from '~managers/abstracts/Observable'
-import { CHARACTERS, DEBUG, MODE } from '~constants'
+import { CHARACTERS, DEBUG } from '~constants'
 
 class PlayersManager extends Observable {
   constructor() {
@@ -18,17 +18,6 @@ class PlayersManager extends Observable {
 
   _gameStarted = false
 
-  // _players = [{}, {}]
-
-  // players = new Proxy(this._players, {
-  //   get: (obj, prop) => obj[prop],
-  //   set: (obj, prop, value) => {
-  //     obj[prop] = value
-  //     this._callObservers('player_change')
-  //     return obj[prop]
-  //   },
-  // })
-
   _onMessage = detail => {
     const { data, type } = detail
 
@@ -42,7 +31,6 @@ class PlayersManager extends Observable {
         } else {
           playerPeer = Player2Peer
         }
-        console.log('new token accepted')
         this.players[targetPlayerIndex] = new Player({
           id,
           character: CHARACTERS[targetPlayerIndex],
@@ -89,12 +77,14 @@ class PlayersManager extends Observable {
       this._callObservers('player_change')
     })
 
-    Player2Peer.addSubscriber('CONNECTED', () => {
-      if (this.players[1].setConnected) {
-        this.players[1].setConnected(true)
-      }
-      this._callObservers('player_change')
-    })
+    if (this.players.length > 1) {
+      Player2Peer.addSubscriber('CONNECTED', () => {
+        if (this.players[1].setConnected) {
+          this.players[1].setConnected(true)
+        }
+        this._callObservers('player_change')
+      })
+    }
 
     this.reset()
   }
@@ -160,7 +150,7 @@ class PlayersManager extends Observable {
     }
   }
 
-  bothConnected = () => this.players.every(item => item.connected) // if true, it means all players are connected
+  bothConnected = () => this.players.every(item => item.connected)
 
   addScore = (score, id) => {
     const player = this.player(id)

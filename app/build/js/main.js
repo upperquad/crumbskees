@@ -96789,7 +96789,6 @@ var DisplayDevice = function DisplayDevice() {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // This should trigger on all children components so don't have to do this anywhere else
     var onPlayerUpdate = function onPlayerUpdate() {
-      console.log('both connected');
       setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].bothConnected());
       forceUpdate();
     };
@@ -99405,13 +99404,12 @@ module.exports = {"marqueeAlternate":"MarqueeText-marqueeAlternate---84_Y","marq
 /*!**************************!*\
   !*** ./src/constants.js ***!
   \**************************/
-/*! exports provided: DEBUG, MODE, BREAKPOINT, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS, CHARACTERS, GAME_ROUNDS */
+/*! exports provided: DEBUG, BREAKPOINT, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS, CHARACTERS, GAME_ROUNDS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEBUG", function() { return DEBUG; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MODE", function() { return MODE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BREAKPOINT", function() { return BREAKPOINT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VB_WIDTH", function() { return VB_WIDTH; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VB_HEIGHT", function() { return VB_HEIGHT; });
@@ -99482,7 +99480,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var DEBUG = "boolean" !== 'undefined';
-var MODE = 'SINGLE_PLAYER';
 var BREAKPOINT = 768;
 var VB_WIDTH = 1920;
 var VB_HEIGHT = 840;
@@ -100120,7 +100117,6 @@ function (_Observable) {
               playerPeer = _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"];
             }
 
-            console.log('new token accepted');
             _this.players[targetPlayerIndex] = new _Player__WEBPACK_IMPORTED_MODULE_0__["default"]({
               id: id,
               character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][targetPlayerIndex],
@@ -100181,13 +100177,16 @@ function (_Observable) {
 
         _this._callObservers('player_change');
       });
-      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
-        if (_this.players[1].setConnected) {
-          _this.players[1].setConnected(true);
-        }
 
-        _this._callObservers('player_change');
-      });
+      if (_this.players.length > 1) {
+        _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
+          if (_this.players[1].setConnected) {
+            _this.players[1].setConnected(true);
+          }
+
+          _this._callObservers('player_change');
+        });
+      }
 
       _this.reset();
     });

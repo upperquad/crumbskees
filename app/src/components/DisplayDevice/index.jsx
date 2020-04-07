@@ -63,7 +63,6 @@ const DisplayDevice = () => {
   useEffect(() => {
     // This should trigger on all children components so don't have to do this anywhere else
     const onPlayerUpdate = () => {
-      console.log('both connected')
       setBothConnected(PlayersManager.bothConnected())
       forceUpdate()
     }
