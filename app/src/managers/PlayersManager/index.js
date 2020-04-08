@@ -11,37 +11,12 @@ class PlayersManager extends Observable {
 
     if (!PlayersManager.instance) {
       PlayersManager.instance = this
-
-      TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
-      Player1Peer.addSubscriber('CONNECTED', () => {
-        if (this.players[0].setConnected) {
-          this.players[0].setConnected(true)
-        }
-        this._callObservers('player_change')
-      })
-      Player2Peer.addSubscriber('CONNECTED', () => {
-        if (this.players[1].setConnected) {
-          this.players[1].setConnected(true)
-        }
-        this._callObservers('player_change')
-      })
     }
 
     return PlayersManager.instance
   }
 
   _gameStarted = false
-
-  _players = [{}, {}]
-
-  players = new Proxy(this._players, {
-    get: (obj, prop) => obj[prop],
-    set: (obj, prop, value) => {
-      obj[prop] = value
-      this._callObservers('player_change')
-      return obj[prop]
-    },
-  })
 
   _onMessage = detail => {
     const { data, type } = detail
@@ -75,6 +50,46 @@ class PlayersManager extends Observable {
       default:
         break
     }
+  }
+
+  init = mode => {
+    this.mode = mode
+
+    if (this.mode === 'SINGLE_PLAYER') {
+      this._players = [{}]
+    } else {
+      this._players = [{}, {}]
+    }
+
+    this.players = new Proxy(this._players, {
+      get: (obj, prop) => obj[prop],
+      set: (obj, prop, value) => {
+        obj[prop] = value
+        this._callObservers('player_change')
+        return obj[prop]
+      },
+    })
+
+    TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
+    Player1Peer.addSubscriber('CONNECTED', () => {
+      if (this.players[0].setConnected) {
+        this.players[0].setConnected(true)
+        Player1Peer.send('accepted', { playerIndex: 0 })
+      }
+      this._callObservers('player_change')
+    })
+
+    if (this.mode !== 'SINGLE_PLAYER') {
+      Player2Peer.addSubscriber('CONNECTED', () => {
+        if (this.players[1].setConnected) {
+          this.players[1].setConnected(true)
+          Player2Peer.send('accepted', { playerIndex: 1 })
+        }
+        this._callObservers('player_change')
+      })
+    }
+
+    this.reset()
   }
 
   reset = () => {

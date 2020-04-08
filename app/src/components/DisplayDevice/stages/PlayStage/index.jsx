@@ -54,7 +54,10 @@ function getResult() {
   const { players } = PlayersManager
   let result
 
-  if (players[0].score() > players[1].score()) {
+  if (players.length === 1) {
+    // add a specific ending here
+    result = '0'
+  } else if (players[0].score() > players[1].score()) {
     result = 0
   } else if (players[0].score() < players[1].score()) {
     result = 1

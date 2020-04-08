@@ -7,6 +7,7 @@ import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
+import ModeStage from './stages/ModeStage'
 // import ErrorStage from './stages/ErrorStage'
 import StageWrapper from './StageWrapper'
 
@@ -16,7 +17,7 @@ import PlayersManager from '~managers/PlayersManager'
 const TRANSITION_TIMEOUTS = { enter: 800, exit: 1300 }
 
 const DisplayDevice = () => {
-  const [stage, setStage] = useState('setup')
+  const [stage, setStage] = useState('mode')
   // const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
@@ -44,8 +45,8 @@ const DisplayDevice = () => {
 
   useEffect(() => {
     const connectHandler = () => {
-      PlayersManager.reset()
-      setStage('setup')
+      // PlayersManager.reset()
+      setStage('mode')
     }
 
     TokenSocketManager.init('display')
@@ -121,6 +122,15 @@ const DisplayDevice = () => {
   return (
     <div className={styles.displayDevice} style={{ transform: `translate(-50%, -50%) scale(${zoom})` }}>
       <TransitionGroup>
+        {stage === 'mode' && (
+          <Transition key="stage-mode" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <ModeStage onFinish={() => setStage('setup')} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
         {stage === 'setup' && (
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (

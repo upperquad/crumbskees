@@ -135,10 +135,9 @@ a {
 .SetupStage-player--2JGID {
   background: #fff;
   border: 2px solid #000;
+  margin: 0 3.125vw;
   text-align: center;
   width: 37.5vw; }
-  .SetupStage-player--2JGID:first-of-type {
-    margin-right: 6.25vw; }
 
 .SetupStage-qrWrapper--3-nvG {
   height: 15.26042vw;
@@ -953,6 +952,62 @@ a {
   position: absolute;
   transform: translate(-50%, 50%);
   width: 18.75vw; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.ModeStage-modeHeader--3Nh71, .ModeStage-modeContent--2tSc4 {
+  font-family: 'Ginto Nord Black';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: normal;
+  text-transform: uppercase; }
+
+.ModeStage-mode--19l2S {
+  color: #000; }
+
+.ModeStage-video--2-VQp {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1; }
+
+.ModeStage-welcome--3xMvc {
+  font-size: 2.91667vw;
+  padding-top: 2.5vw; }
+
+.ModeStage-modeCard--1Jkg8 {
+  background-color: #fffaf2;
+  border-color: #000;
+  border-style: solid;
+  border-width: 0.15625vw;
+  height: 28.125vw;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 12.5vw;
+  transform: translateX(-50%);
+  width: 54.6875vw; }
+
+.ModeStage-modeHeader--3Nh71 {
+  border-bottom: 0.15625vw solid #000;
+  font-size: 2.91667vw;
+  height: 4.6875vw;
+  padding-top: 1.09375vw; }
+
+.ModeStage-modeContent--2tSc4 {
+  align-items: center;
+  display: flex;
+  font-size: 2.5vw;
+  height: calc(100% - 4.6875vw);
+  justify-content: space-around; }
+
+.ModeStage-modeOption--2eAOQ {
+  cursor: pointer;
+  text-align: center;
+  width: 42%; }
 
 /* Colors */
 /* Breakpoints */
