@@ -100173,6 +100173,10 @@ function (_Observable) {
       _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('CONNECTED', function () {
         if (_this.players[0].setConnected) {
           _this.players[0].setConnected(true);
+
+          _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].send('accepted', {
+            playerIndex: 0
+          });
         }
 
         _this._callObservers('player_change');
@@ -100182,6 +100186,10 @@ function (_Observable) {
         _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
           if (_this.players[1].setConnected) {
             _this.players[1].setConnected(true);
+
+            _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].send('accepted', {
+              playerIndex: 1
+            });
           }
 
           _this._callObservers('player_change');
