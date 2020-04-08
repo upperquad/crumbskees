@@ -54,7 +54,8 @@ class PlayersManager extends Observable {
 
   init = mode => {
     this.mode = mode
-    if (mode === 'SINGLE_PLAYER') {
+
+    if (this.mode === 'SINGLE_PLAYER') {
       this._players = [{}]
     } else {
       this._players = [{}, {}]
@@ -78,7 +79,7 @@ class PlayersManager extends Observable {
       this._callObservers('player_change')
     })
 
-    if (this.players.length > 1) {
+    if (this.mode !== 'SINGLE_PLAYER') {
       Player2Peer.addSubscriber('CONNECTED', () => {
         if (this.players[1].setConnected) {
           this.players[1].setConnected(true)

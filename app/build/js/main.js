@@ -100151,7 +100151,7 @@ function (_Observable) {
     _defineProperty(_assertThisInitialized(_this), "init", function (mode) {
       _this.mode = mode;
 
-      if (mode === 'SINGLE_PLAYER') {
+      if (_this.mode === 'SINGLE_PLAYER') {
         _this._players = [{}];
       } else {
         _this._players = [{}, {}];
@@ -100182,7 +100182,7 @@ function (_Observable) {
         _this._callObservers('player_change');
       });
 
-      if (_this.players.length > 1) {
+      if (_this.mode !== 'SINGLE_PLAYER') {
         _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
           if (_this.players[1].setConnected) {
             _this.players[1].setConnected(true);
