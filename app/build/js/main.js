@@ -97725,24 +97725,29 @@ module.exports = {"pixiScene":"PixiScene-pixiScene--xdl_n","canvas":"PixiScene-c
 
 /***/ }),
 
-/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/index.jsx":
+/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/hooks.jsx":
 /*!*****************************************************************************************!*\
-  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/index.jsx ***!
+  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/hooks.jsx ***!
   \*****************************************************************************************/
-/*! exports provided: default */
+/*! exports provided: useSetScene, useResizeScene, useUpdateItems, useUpdatePowers, useRAF */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useSetScene", function() { return useSetScene; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useResizeScene", function() { return useResizeScene; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useUpdateItems", function() { return useUpdateItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useUpdatePowers", function() { return useUpdatePowers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useRAF", function() { return useRAF; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/lib/pixi.es.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _utils_time__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~utils/time */ "./src/utils/time.js");
-/* harmony import */ var _utils_ease__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~utils/ease */ "./src/utils/ease.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/AnimationFrameManager */ "./src/managers/AnimationFrameManager/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
 /* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
-/* harmony import */ var _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/AnimationFrameManager */ "./src/managers/AnimationFrameManager/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _utils_time__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~utils/time */ "./src/utils/time.js");
+/* harmony import */ var _utils_ease__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~utils/ease */ "./src/utils/ease.js");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_8__);
 
@@ -97758,45 +97763,15 @@ var minDuration = 700;
 var maxDuration = 900;
 var pointsCount = 6;
 var decelerationCircleCoef = 0.15;
-
-var PixiSceneTutorial = function PixiSceneTutorial(props) {
-  var cancelPower = props.cancelPower,
-      items = props.items,
-      positions = props.positions,
-      powers = props.powers,
-      videoBack = props.videoBack,
-      videoFront = props.videoFront; // re-used references through hooks
-
-  var elRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // keep the width and height the first time the app is initiated
-  // the autoresizing of pixi is handling the rest, no need to update with new width/height
-  // pixi scene
-
-  var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
-
-  var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var circlesPoints = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
-  var circlesLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]); // circles size
-
-  var stroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var timeFrozen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // set up scene
-
+function useSetScene(refs, props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
     function setVideo(source, container) {
       var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
       var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // Stetch the fullscreen
 
-      videoSprite.width = app.current.screen.width;
-      videoSprite.height = app.current.screen.height;
+      videoSprite.width = refs.app.current.screen.width;
+      videoSprite.height = refs.app.current.screen.height;
       videoSprite.alpha = 0.4;
       container.addChild(videoSprite);
       texture.baseTexture.resource.autoPlay = true;
@@ -97806,24 +97781,24 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
     }
 
     function setCircles() {
-      circlesMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
+      refs.circlesMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
 
-      containerFront.current.addChild(circlesMasked.current); // mask container into circle(s)
-      // containerMasked.current.mask = circlesMasked.current
+      refs.containerFront.current.addChild(refs.circlesMasked.current); // mask container into circle(s)
+      // refs.containerMasked.current.mask = refs.circlesMasked.current
 
-      circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
-      containerFront.current.addChild(circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
+      refs.circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
+      refs.containerFront.current.addChild(refs.circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
-      stroke.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth; // set min and max radius for the circle
+      refs.stroke.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth; // set min and max radius for the circle
 
-      minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 1.2 / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * elRef.current.offsetWidth;
-      maxRadius.current = minRadius.current + minRadius.current * 0.35;
-      minMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.35;
-      maxMiddleRadius.current = minRadius.current + (maxRadius.current - minRadius.current) * 0.45;
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function () {
+      refs.minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 1.2 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
+      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.35;
+      refs.minMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.35;
+      refs.maxMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.45;
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function () {
         var circlePoints = setCirclePoints();
-        circlesPoints.current.push(circlePoints);
-        circlesLastPositions.current.push({
+        refs.circlesPoints.current.push(circlePoints);
+        refs.circlesLastPositions.current.push({
           x: 0,
           y: 0
         });
@@ -97839,19 +97814,19 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
         var margeAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, 0.28); // i / 1.2
         // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
 
-        var startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])() + i * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, minDuration);
+        var startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])() + i * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, minDuration);
         var angle = startAngle + i * slice + margeAngle;
         var duration = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minDuration, maxDuration);
         var point = {
           angle: angle,
           duration: duration,
           startAnim: startAnim,
-          x: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
-          y: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, maxRadius.current),
-          targetMinX: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
-          targetMinY: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minRadius.current, minMiddleRadius.current),
-          targetMaxX: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current),
-          targetMaxY: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(maxMiddleRadius.current, maxRadius.current)
+          x: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(refs.minRadius.current, refs.maxRadius.current),
+          y: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(refs.minRadius.current, refs.maxRadius.current),
+          targetMinX: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(refs.minRadius.current, refs.minMiddleRadius.current),
+          targetMinY: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(refs.minRadius.current, refs.minMiddleRadius.current),
+          targetMaxX: Math.cos(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(refs.maxMiddleRadius.current, refs.maxRadius.current),
+          targetMaxY: Math.sin(angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(refs.maxMiddleRadius.current, refs.maxRadius.current)
         };
         point.startX = point.x;
         point.startY = point.y;
@@ -97864,25 +97839,25 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
     } // init
 
 
-    app.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Application"]({
-      width: elRef.current.offsetWidth,
-      height: elRef.current.offsetHeight,
+    refs.app.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Application"]({
+      width: refs.el.current.offsetWidth,
+      height: refs.el.current.offsetHeight,
       resolution: window.devicePixelRatio,
       antialias: true,
       autoDensity: true,
       backgroundColor: 0xffffff
     });
-    app.current.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
+    refs.app.current.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
-    app.current.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.canvas);
-    elRef.current.appendChild(app.current.view);
-    containerFront.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
-    containerMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
-    app.current.stage.addChild(containerFront.current);
-    app.current.stage.addChild(containerMasked.current); // set elements into scene
+    refs.app.current.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.canvas);
+    refs.el.current.appendChild(refs.app.current.view);
+    refs.containerFront.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
+    refs.containerMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
+    refs.app.current.stage.addChild(refs.containerFront.current);
+    refs.app.current.stage.addChild(refs.containerMasked.current); // set elements into scene
 
-    var videoPixiBack = setVideo(videoBack, containerMasked.current);
-    var videoPixiFront = setVideo(videoFront, containerFront.current);
+    var videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current);
+    var videoPixiFront = setVideo(props.videoFront, refs.containerFront.current);
     setCircles(); // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
 
@@ -97894,22 +97869,23 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
     });
     return function () {
       // destroy app
-      app.current.destroy(true, true);
+      refs.app.current.destroy(true, true);
     };
-  }, [videoBack, videoFront]); // resize
-
+  }, [props.videoBack, props.videoFront]); // return isOnline;
+}
+function useResizeScene(refs) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
     function resizeHandler() {
-      if (app) {
-        app.current.view.style.width = "".concat(elRef.current.offsetWidth, "px");
-        app.current.view.style.height = "".concat(elRef.current.offsetHeight, "px");
+      if (refs.app) {
+        refs.app.current.view.style.width = "".concat(refs.el.current.offsetWidth, "px");
+        refs.app.current.view.style.height = "".concat(refs.el.current.offsetHeight, "px");
       }
     }
 
     function initSizes() {
-      initWidth.current = elRef.current.offsetWidth;
-      initHeight.current = elRef.current.offsetHeight;
+      refs.initWidth.current = refs.el.current.offsetWidth;
+      refs.initHeight.current = refs.el.current.offsetHeight;
     } // init
 
 
@@ -97919,17 +97895,18 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
     return function () {
       window.removeEventListener('resize', resizeHandler);
     };
-  }, []); // update items
-
+  }, []);
+}
+function useUpdateItems(refs, props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var container = containerMasked.current; // funcs
+    var container = refs.containerMasked.current; // funcs
 
     function setItem(item) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);
-      sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * initWidth.current;
-      sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"] * initWidth.current;
-      sprite.position.x = item.x * initWidth.current;
-      sprite.position.y = item.y * initHeight.current;
+      sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current;
+      sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current;
+      sprite.position.x = item.x * refs.initWidth.current;
+      sprite.position.y = item.y * refs.initHeight.current;
       sprite.anchor.set(0.5, 0.5);
       container.addChild(sprite);
       return sprite;
@@ -97937,7 +97914,7 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
 
 
     var sprites = [];
-    items.forEach(function (item) {
+    props.items.forEach(function (item) {
       var sprite = setItem(item);
       sprites.push(sprite);
     });
@@ -97947,21 +97924,23 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
         container.removeChild(sprite);
       });
     };
-  }, [items]); // update powers
-
+  }, [props.items]);
+}
+function useUpdatePowers(refs, props) {
+  // update powers
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // func
     function updateRadius(points, increment) {
-      var now = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
+      var now = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
       for (var i = 0; i < points.length; i++) {
         var point = points[i]; // Increase each points
         // if player has grown power, increase player radius
 
-        var newMaxRadius = maxRadius.current + increment;
-        var newMaxMiddleRadius = maxMiddleRadius.current + increment;
-        var newMinRadius = minRadius.current + increment;
-        var newMinMiddleRadius = minMiddleRadius.current + increment;
+        var newMaxRadius = refs.maxRadius.current + increment;
+        var newMaxMiddleRadius = refs.maxMiddleRadius.current + increment;
+        var newMinRadius = refs.minRadius.current + increment;
+        var newMinMiddleRadius = refs.minMiddleRadius.current + increment;
         point.duration += 250;
         point.targetMaxX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
         point.targetMinX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
@@ -97981,19 +97960,19 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
     } // init
 
 
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
-      if (powers[index] === 'grow') {
-        updateRadius(circlesPoints.current[index], maxRadius.current * 1.45);
-      } else if (powers[index] === 'freeze') {
-        timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
+      if (props.powers[index] === 'grow') {
+        updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45);
+      } else if (props.powers[index] === 'freeze') {
+        refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
       } else {
-        updateRadius(circlesPoints.current[index], 0);
+        updateRadius(refs.circlesPoints.current[index], 0);
       }
 
-      if (powers[index]) {
+      if (props.powers[index]) {
         var timeout = setTimeout(function () {
-          cancelPower(index);
-        }, powers[index] === 'grow' ? 6000 : 4000);
+          props.cancelPower(index);
+        }, props.powers[index] === 'grow' ? 6000 : 4000);
         return function () {
           return clearTimeout(timeout);
         };
@@ -98001,34 +97980,36 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
 
       return undefined;
     }); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [powers]); // RAF
-
+  }, [props.powers]);
+}
+function useRAF(refs, props) {
+  // RAF
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
     function updateFrame(now) {
-      circlesMasked.current.clear();
-      circlesBorder.current.clear();
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
-        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"][player.color]); // draw circles
+      refs.circlesMasked.current.clear();
+      refs.circlesBorder.current.clear();
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
+        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]); // draw circles
 
         var points;
         var newPosition;
 
-        if (powers[index] === 'freeze') {
+        if (props.powers[index] === 'freeze') {
           // position has to stay and color is gray
           color = 0x00c1ff;
-          newPosition = circlesLastPositions.current[index];
-          points = getPointsAroundCircle(timeFrozen.current, circlesPoints.current[index], circlesLastPositions.current[index]);
+          newPosition = refs.circlesLastPositions.current[index];
+          points = getPointsAroundCircle(refs.timeFrozen.current, refs.circlesPoints.current[index], refs.circlesLastPositions.current[index]);
         } else {
-          newPosition = getDelayedPosition(circlesLastPositions.current[index], positions[index]);
-          points = getPointsAroundCircle(now, circlesPoints.current[index], newPosition);
+          newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index]);
+          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition);
         }
 
-        circlesLastPositions.current[index] = newPosition; // circlesPoints.current[index] = points
+        refs.circlesLastPositions.current[index] = newPosition; // circlesPoints.current[index] = points
 
         drawCubicBezier(points, newPosition, color);
       });
-      circlesMasked.current.endFill();
+      refs.circlesMasked.current.endFill();
     } // get delayed position
 
 
@@ -98059,8 +98040,8 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
         // then I use easing functions to modify the value curve through time.
 
         var percent = (now - point.startAnim) / point.duration;
-        var relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_4__["inOutSine"])(percent);
-        var relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_4__["inOutSine"])(percent);
+        var relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+        var relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
 
         if (percent >= 1) {
           // end of animation,
@@ -98080,8 +98061,8 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
         } // move circle based on mouse
 
 
-        point.x = relativeX + (x + 0.5) * initWidth.current;
-        point.y = relativeY + (y + 0.5) * initHeight.current;
+        point.x = relativeX + (x + 0.5) * refs.initWidth.current;
+        point.y = relativeY + (y + 0.5) * refs.initHeight.current;
       }
 
       return points;
@@ -98098,11 +98079,11 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
 
       var nbPoints = points.length; // draw masked circles
 
-      circlesMasked.current.moveTo(points[0].x, points[0].y);
-      circlesMasked.current.beginFill(0xffffff, 1); // draw border circles
+      refs.circlesMasked.current.moveTo(points[0].x, points[0].y);
+      refs.circlesMasked.current.beginFill(0xffffff, 1); // draw border circles
 
-      circlesBorder.current.moveTo(points[0].x, points[0].y);
-      circlesBorder.current.lineStyle(stroke.current, color, 1);
+      refs.circlesBorder.current.moveTo(points[0].x, points[0].y);
+      refs.circlesBorder.current.lineStyle(refs.stroke.current, color, 1);
 
       for (var i = 0; i < nbPoints; i++) {
         var p0 = points[(i - 1 + nbPoints) % nbPoints];
@@ -98113,26 +98094,136 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
         var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
         var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
         var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-        circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
-        circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
+        refs.circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
+        refs.circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y);
       }
     } // init RAF
 
 
-    _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_6__["default"].addSubscriber(updateFrame);
+    _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_3__["default"].addSubscriber(updateFrame);
     return function () {
-      _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber(updateFrame);
+      _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_3__["default"].removeSubscriber(updateFrame);
     };
-  }, [positions, powers]);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.pixiScene,
-    ref: elRef
-  });
-};
+  }, [props.positions, props.powers]);
+}
 
 function hexStToNb(str) {
   return parseInt(str.replace(/^#/, ''), 16);
 }
+
+/***/ }),
+
+/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/index.jsx":
+/*!*****************************************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/index.jsx ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hooks */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/hooks.jsx");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiSceneTutorial/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+var PixiSceneTutorial = function PixiSceneTutorial(props) {
+  var cancelPower = props.cancelPower,
+      items = props.items,
+      positions = props.positions,
+      powers = props.powers,
+      videoBack = props.videoBack,
+      videoFront = props.videoFront; // re-used references through hooks
+
+  var el = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var app = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // keep the width and height the first time the app is initiated
+  // the autoresizing of pixi is handling the rest, no need to update with new width/height
+  // pixi scene
+
+  var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
+
+  var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var circlesPoints = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]);
+  var circlesLastPositions = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([]); // circles size
+
+  var stroke = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var timeFrozen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // set up scene
+
+  Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useSetScene"])({
+    el: el,
+    app: app,
+    containerMasked: containerMasked,
+    containerFront: containerFront,
+    circlesMasked: circlesMasked,
+    circlesBorder: circlesBorder,
+    circlesPoints: circlesPoints,
+    circlesLastPositions: circlesLastPositions,
+    stroke: stroke,
+    minRadius: minRadius,
+    maxRadius: maxRadius,
+    minMiddleRadius: minMiddleRadius,
+    maxMiddleRadius: maxMiddleRadius
+  }, {
+    videoBack: videoBack,
+    videoFront: videoFront
+  }); // Resize scene
+
+  Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useResizeScene"])({
+    el: el,
+    app: app,
+    initHeight: initHeight,
+    initWidth: initWidth
+  }); // update items
+
+  Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useUpdateItems"])({
+    containerMasked: containerMasked,
+    initHeight: initHeight,
+    initWidth: initWidth
+  }, {
+    items: items
+  }); // update powers
+
+  Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useUpdatePowers"])({
+    circlesPoints: circlesPoints,
+    minRadius: minRadius,
+    maxRadius: maxRadius,
+    minMiddleRadius: minMiddleRadius,
+    maxMiddleRadius: maxMiddleRadius,
+    timeFrozen: timeFrozen
+  }, {
+    cancelPower: cancelPower,
+    powers: powers
+  });
+  Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useRAF"])({
+    circlesMasked: circlesMasked,
+    circlesBorder: circlesBorder,
+    circlesLastPositions: circlesLastPositions,
+    circlesPoints: circlesPoints,
+    timeFrozen: timeFrozen,
+    initHeight: initHeight,
+    initWidth: initWidth,
+    stroke: stroke
+  }, {
+    positions: positions,
+    powers: powers
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pixiScene,
+    ref: el
+  });
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (PixiSceneTutorial);
 
