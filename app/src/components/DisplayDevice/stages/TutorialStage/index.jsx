@@ -119,10 +119,7 @@ const TutorialStage = props => {
           break
         }
         case 'click': {
-          // prevent clicks after game ends
-          if (gameState !== 'after-game') {
-            handleClick(playerIndex)
-          }
+          handleClick(playerIndex)
           break
         }
         default:
@@ -195,6 +192,7 @@ const TutorialStage = props => {
           cancelPower={cancelPower}
           items={items}
           gameState={gameState}
+          type="tutorial"
         />
         {PlayersManager.players.map((player, index) => (
           <PlayerMessage

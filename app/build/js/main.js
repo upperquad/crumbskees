@@ -97772,7 +97772,11 @@ function useSetScene(refs, props) {
 
       videoSprite.width = refs.app.current.screen.width;
       videoSprite.height = refs.app.current.screen.height;
-      videoSprite.alpha = 0.4;
+
+      if (props.type === 'tutorial') {
+        videoSprite.alpha = 0.4;
+      }
+
       container.addChild(videoSprite);
       texture.baseTexture.resource.autoPlay = true;
       var video = texture.baseTexture.resource.source;
@@ -97784,7 +97788,10 @@ function useSetScene(refs, props) {
       refs.circlesMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"](); // Circle
 
       refs.containerFront.current.addChild(refs.circlesMasked.current); // mask container into circle(s)
-      // refs.containerMasked.current.mask = refs.circlesMasked.current
+
+      if (props.type === 'game') {
+        refs.containerMasked.current.mask = refs.circlesMasked.current;
+      }
 
       refs.circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
       refs.containerFront.current.addChild(refs.circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
@@ -97871,7 +97878,7 @@ function useSetScene(refs, props) {
       // destroy app
       refs.app.current.destroy(true, true);
     };
-  }, [props.videoBack, props.videoFront]); // return isOnline;
+  }, [props.videoBack, props.videoFront]);
 }
 function useResizeScene(refs) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -97997,7 +98004,7 @@ function useRAF(refs, props) {
 
         if (props.powers[index] === 'freeze') {
           // position has to stay and color is gray
-          color = 0x00c1ff;
+          color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"].blue);
           newPosition = refs.circlesLastPositions.current[index];
           points = getPointsAroundCircle(refs.timeFrozen.current, refs.circlesPoints.current[index], refs.circlesLastPositions.current[index]);
         } else {
@@ -98136,6 +98143,7 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
       items = props.items,
       positions = props.positions,
       powers = props.powers,
+      type = props.type,
       videoBack = props.videoBack,
       videoFront = props.videoFront; // re-used references through hooks
 
@@ -98176,6 +98184,7 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
     minMiddleRadius: minMiddleRadius,
     maxMiddleRadius: maxMiddleRadius
   }, {
+    type: type,
     videoBack: videoBack,
     videoFront: videoFront
   }); // Resize scene
@@ -98205,7 +98214,8 @@ var PixiSceneTutorial = function PixiSceneTutorial(props) {
   }, {
     cancelPower: cancelPower,
     powers: powers
-  });
+  }); // on RAF
+
   Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useRAF"])({
     circlesMasked: circlesMasked,
     circlesBorder: circlesBorder,
@@ -99605,11 +99615,7 @@ var TutorialStage = function TutorialStage(props) {
 
         case 'click':
           {
-            // prevent clicks after game ends
-            if (gameState !== 'after-game') {
-              handleClick(playerIndex);
-            }
-
+            handleClick(playerIndex);
             break;
           }
 
@@ -99693,7 +99699,8 @@ var TutorialStage = function TutorialStage(props) {
     powers: powerArray,
     cancelPower: cancelPower,
     items: items,
-    gameState: gameState
+    gameState: gameState,
+    type: "tutorial"
   }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_11__["default"], {
       power: powerArray[index],

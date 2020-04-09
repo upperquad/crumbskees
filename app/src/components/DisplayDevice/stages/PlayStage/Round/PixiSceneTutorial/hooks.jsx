@@ -25,7 +25,10 @@ export function useSetScene(refs, props) {
       videoSprite.width = refs.app.current.screen.width
       videoSprite.height = refs.app.current.screen.height
 
-      videoSprite.alpha = 0.4
+
+      if (props.type === 'tutorial') {
+        videoSprite.alpha = 0.4
+      }
 
       container.addChild(videoSprite)
 
@@ -42,7 +45,9 @@ export function useSetScene(refs, props) {
       // Circle
       refs.containerFront.current.addChild(refs.circlesMasked.current)
       // mask container into circle(s)
-      // refs.containerMasked.current.mask = refs.circlesMasked.current
+      if (props.type === 'game') {
+        refs.containerMasked.current.mask = refs.circlesMasked.current
+      }
 
       refs.circlesBorder.current = new Graphics()
       refs.containerFront.current.addChild(refs.circlesBorder.current)
@@ -137,8 +142,6 @@ export function useSetScene(refs, props) {
       refs.app.current.destroy(true, true)
     }
   }, [props.videoBack, props.videoFront])
-
-  // return isOnline;
 }
 
 
@@ -286,7 +289,7 @@ export function useRAF(refs, props) {
         let newPosition
         if (props.powers[index] === 'freeze') {
           // position has to stay and color is gray
-          color = 0x00c1ff
+          color = hexStToNb(COLORS.blue)
           newPosition = refs.circlesLastPositions.current[index]
           points = getPointsAroundCircle(
             refs.timeFrozen.current,

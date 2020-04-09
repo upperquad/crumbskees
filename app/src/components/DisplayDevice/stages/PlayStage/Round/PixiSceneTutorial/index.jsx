@@ -5,7 +5,7 @@ import { useUpdateItems, useUpdatePowers, useRAF, useResizeScene, useSetScene } 
 import styles from './style.module.scss'
 
 const PixiSceneTutorial = props => {
-  const { cancelPower, items, positions, powers, videoBack, videoFront } = props
+  const { cancelPower, items, positions, powers, type, videoBack, videoFront } = props
   // re-used references through hooks
   const el = useRef(null)
   const app = useRef(null)
@@ -47,7 +47,7 @@ const PixiSceneTutorial = props => {
       minMiddleRadius,
       maxMiddleRadius,
     },
-    { videoBack, videoFront },
+    { type, videoBack, videoFront },
   )
 
   // Resize scene
@@ -86,6 +86,7 @@ const PixiSceneTutorial = props => {
     },
   )
 
+  // on RAF
   useRAF(
     {
       circlesMasked,
