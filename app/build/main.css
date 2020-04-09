@@ -347,30 +347,57 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.TutorialStage-heading--3Rx-V .TutorialStage-description--2XJsx {
+  font-family: 'Fakt Medium', serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; }
+
+.TutorialStage-heading--3Rx-V .TutorialStage-title--JVgZx {
+  font-family: 'Ginto Nord Black';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: normal;
+  text-transform: uppercase; }
+
 .TutorialStage-tutorial--3Ybyr {
-  color: #000; }
+  background-color: #3F1BD0;
+  color: #fff; }
 
-.TutorialStage-video--1RHZY {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -1; }
+.TutorialStage-container--13i5g {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  margin-left: 6.25vw;
+  margin-right: 3.125vw; }
 
-.TutorialStage-welcome--1Mnuj {
-  font-size: 2.91667vw;
-  padding-top: 2.5vw; }
+.TutorialStage-heading--3Rx-V {
+  width: 25vw; }
+  .TutorialStage-heading--3Rx-V .TutorialStage-title--JVgZx {
+    font-size: 2.91667vw;
+    margin-bottom: 1.5625vw; }
+  .TutorialStage-heading--3Rx-V .TutorialStage-description--2XJsx {
+    font-size: 1.04167vw;
+    line-height: 1.4em;
+    margin-bottom: 3.125vw; }
+  .TutorialStage-heading--3Rx-V .TutorialStage-image--hrld7 {
+    height: 12.5vw;
+    width: 12.5vw; }
 
 .TutorialStage-gameZone--2i3tQ {
   cursor: none;
   height: 25vw;
-  position: absolute;
-  right: 3.125vw;
+  position: relative;
   text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
   width: 57.14286vw;
   z-index: 10; }
+
+.TutorialStage-buttons--1nSMF {
+  display: flex;
+  margin-top: 1.5625vw;
+  position: absolute;
+  right: 0;
+  top: 100%; }
 
 .PixiScene-pixiScene--xdl_n {
   height: 100%;
@@ -432,6 +459,55 @@ a {
 
 .PopupMessage-messagePersistent--2WAj9 {
   animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.Button-button--2dnz7 .Button-inner--2MU8f {
+  font-family: 'Ginto Nord Black';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: normal;
+  text-transform: uppercase; }
+
+.Button-button--2dnz7 {
+  overflow: hidden;
+  position: relative; }
+  .Button-button--2dnz7:hover .Button-inner--2MU8f {
+    transform: none; }
+  .Button-button--2dnz7 .Button-inner--2MU8f {
+    background-color: #fff;
+    border: 0.3125vw solid #000;
+    box-shadow: 1.5625vw 1.5625vw 0px #000;
+    color: #000;
+    font-size: 1.35417vw;
+    margin-left: 1.5625vw;
+    margin-top: 1.5625vw;
+    padding: 0.9375vw;
+    position: relative;
+    transform: translate(-0.71875vw, -0.5vw);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+    .Button-button--2dnz7 .Button-inner--2MU8f::before {
+      border-left: 2.1875vw solid transparent;
+      border-right: 0 solid transparent;
+      border-top: 2.1875vw solid #000;
+      content: '';
+      height: 0;
+      left: -0.3125vw;
+      position: absolute;
+      top: calc(100% + 0.3125vw);
+      width: 0; }
+    .Button-button--2dnz7 .Button-inner--2MU8f::after {
+      border-bottom: 2.1875vw solid #000;
+      border-left: 0 solid transparent;
+      border-right: 2.1875vw solid transparent;
+      content: '';
+      height: 0;
+      left: calc(100% + 0.3125vw);
+      position: absolute;
+      top: -0.3125vw;
+      width: 0; }
 
 /* Colors */
 /* Breakpoints */
@@ -556,7 +632,7 @@ a {
       margin-right: 0; }
 
 .Board-character--1Sl7a {
-  background-color: #6d12e3;
+  background-color: #3F1BD0;
   border-right: 2px solid #000;
   height: 100%;
   width: 12.5vw; }
@@ -1105,7 +1181,7 @@ a {
   background: #ff4047; }
 
 .Circle-circlePurple--H8ifp {
-  background: #6d12e3; }
+  background: #3F1BD0; }
 
 /* Colors */
 /* Breakpoints */
@@ -1519,7 +1595,7 @@ body {
   .common-circle--yellow--16GTH {
     background: #ffe947; }
   .common-circle--purple--1KeYi {
-    background: #6d12e3; }
+    background: #3F1BD0; }
   .common-circle--red--1UTiQ {
     background: #ff4047; }
   @media only screen and (max-height: 630px) {
@@ -1588,7 +1664,7 @@ body {
   font-size: 5.98vw;
   letter-spacing: .007em; }
   .PlayStage-title--2eNlD.PlayStage-titlePurple--1hNH7 {
-    color: #6d12e3; }
+    color: #3F1BD0; }
   .PlayStage-title--2eNlD.PlayStage-titleRed--1SMZZ {
     color: #ff4047; }
 
@@ -1620,7 +1696,7 @@ body {
   margin: 20px 5vw 24px;
   position: relative; }
   .PlayStage-block--3zdrK.PlayStage-blockPurple--14Epy {
-    background: #6d12e3; }
+    background: #3F1BD0; }
   .PlayStage-block--3zdrK.PlayStage-blockRed--23YCB {
     background: #ff4047; }
 

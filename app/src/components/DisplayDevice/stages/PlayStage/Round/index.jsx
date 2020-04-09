@@ -244,6 +244,7 @@ const Round = props => {
                 cancelPower={cancelPower}
                 items={items}
                 gameState={gameState}
+                type="game"
               />
               {PlayersManager.players.map((player, index) => (
                 <PlayerMessage

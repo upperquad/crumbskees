@@ -12,13 +12,15 @@ import { clamp, randomInt } from '~utils/math'
 import PixiScene from '../PlayStage/Round/PixiScene'
 import PlayerMessage from '../PlayStage/Round/PlayerMessage'
 import PopupMessage from '../PlayStage/Round/PopupMessage'
+import Button from '~components/Button'
+
+import imageHelper from '~assets/images/tutorial/helper.png'
 
 
 const TutorialStage = props => {
   const { extraClassName, onFinish } = props
   const { videoBack, videoFront } = TUTORIAL_ROUND
   const [items, setItems] = useState([])
-  const [gameState, setGameState] = useState('before-game')
   const [message, setMessage] = useState({ messageCount: 0 })
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
@@ -138,7 +140,7 @@ const TutorialStage = props => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState, items])
+  }, [items])
 
   // Grid setup
   useEffect(() => setupGrid(setItems), [])
@@ -180,38 +182,48 @@ const TutorialStage = props => {
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
-      <div className={styles.tutorialCard}>
-        <div className={styles.tutorialHeader}>Warm up</div>
-      </div>
-      <div className={styles.gameZone}>
-        <PixiScene
-          videoFront={videoFront}
-          videoBack={videoBack}
-          positions={positionArray}
-          powers={powerArray}
-          cancelPower={cancelPower}
-          items={items}
-          gameState={gameState}
-          type="tutorial"
-        />
-        {PlayersManager.players.map((player, index) => (
-          <PlayerMessage
-            power={powerArray[index]}
-            position={positionArray[index]}
-            color={player.color}
-            roundScore={roundScoreArray[index]}
-            tapInstruction={tapInstructionArray[index]}
+      <div className={styles.container}>
+        <div className={styles.heading}>
+          <div className={styles.title}>warm up!</div>
+          <div className={styles.description}>Practice using your phone or your mouse to catch the objects before the time runs out by clicking or tapping them! Hit play when you’re ready. Find powerups to help!</div>
+          <img className={styles.image} src={imageHelper} alt="" />
+        </div>
+        <div className={styles.gameZone}>
+          <PixiScene
+            videoFront={videoFront}
+            videoBack={videoBack}
+            positions={positionArray}
+            powers={powerArray}
+            cancelPower={cancelPower}
+            items={items}
+            type="tutorial"
           />
-        ))}
-        <PopupMessage
-          color={message.color}
-          x={message.x}
-          y={message.y}
-          persistent={message.persistent}
-          text={message.text}
-          messageCount={message.messageCount}
-          onEnd={message.onEnd}
-        />
+          {PlayersManager.players.map((player, index) => (
+            <PlayerMessage
+              power={powerArray[index]}
+              position={positionArray[index]}
+              color={player.color}
+              roundScore={roundScoreArray[index]}
+              tapInstruction={tapInstructionArray[index]}
+            />
+          ))}
+          <PopupMessage
+            color={message.color}
+            x={message.x}
+            y={message.y}
+            persistent={message.persistent}
+            text={message.text}
+            messageCount={message.messageCount}
+            onEnd={message.onEnd}
+          />
+          <div className={styles.buttons}>
+            {PlayersManager.players.map((player, index) => {
+              const text = `P${index + 1} ready`
+
+              return <Button text={text} />
+            })}
+          </div>
+        </div>
       </div>
     </div>
   )

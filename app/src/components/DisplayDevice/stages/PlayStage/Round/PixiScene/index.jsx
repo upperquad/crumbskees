@@ -31,6 +31,8 @@ const PixiScene = props => {
   const timeFrozen = useRef(null)
   const startTransitionOut = useRef(0)
 
+  const circleAlpha = type === 'tutorial' ? 0 : 1
+
   // set up scene
   useSetScene(
     {
@@ -101,6 +103,7 @@ const PixiScene = props => {
       startTransitionOut,
     },
     {
+      circleAlpha,
       positions,
       powers,
     },

@@ -1,0 +1,52 @@
+@import "~styles/imports/index";
+
+.button {
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    .inner {
+      transform: none;
+    }
+  }
+
+  .inner {
+    @extend %Bold;
+
+    background-color: $color-white;
+    border: grid(.1) solid $color-black;
+    box-shadow: grid(.5) grid(.5) 0px $color-black;
+    color: $color-black;
+    font-size: responsive-font(26);
+    margin-left: grid(.5);
+    margin-top: grid(.5);
+    padding: grid(.3);
+    position: relative;
+    transform: translate(-#{grid(.23)}, -#{grid(.16)});
+    transition: transform .5s $easing-expo-out;
+
+    &::before {
+      border-left: grid(.7) solid transparent;
+      border-right: 0 solid transparent;
+      border-top: grid(.7) solid $color-black;
+      content: '';
+      height: 0;
+      left: -#{grid(.1)};
+      position: absolute;
+      top: calc(100% + #{grid(.1)});
+      width: 0;
+    }
+
+    &::after {
+      border-bottom: grid(.7) solid $color-black;
+      border-left: 0 solid transparent;
+      border-right: grid(.7) solid transparent;
+      content: '';
+      height: 0;
+      left: calc(100% + #{grid(.1)});
+      position: absolute;
+      top: -#{grid(.1)};
+      width: 0;
+    }
+  }
+}

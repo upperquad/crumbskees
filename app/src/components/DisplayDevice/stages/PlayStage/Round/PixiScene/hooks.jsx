@@ -27,7 +27,7 @@ export function useSetScene(refs, props) {
       videoSprite.height = refs.app.current.screen.height
 
       if (props.type === 'tutorial') {
-        videoSprite.alpha = 0.6
+        videoSprite.alpha = 0.3
       }
 
       container.addChild(videoSprite)
@@ -120,8 +120,13 @@ export function useSetScene(refs, props) {
 
     refs.containerFront.current = new Container()
     refs.containerMasked.current = new Container()
-    refs.app.current.stage.addChild(refs.containerFront.current)
+    if (props.type === 'game') {
+      refs.app.current.stage.addChild(refs.containerFront.current)
+    }
     refs.app.current.stage.addChild(refs.containerMasked.current)
+    if (props.type === 'tutorial') {
+      refs.app.current.stage.addChild(refs.containerFront.current)
+    }
 
     // set elements into scene
     const videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current)
@@ -376,7 +381,7 @@ export function useRAF(refs, props) {
       const nbPoints = points.length
       // draw masked circles
       refs.circlesMasked.current.moveTo(points[0].x, points[0].y)
-      refs.circlesMasked.current.beginFill(0xffffff, 1)
+      refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
 
       // draw border circles
       refs.circlesBorder.current.moveTo(points[0].x, points[0].y)
@@ -420,7 +425,7 @@ export function useRAF(refs, props) {
     return () => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
-  }, [props.positions, props.powers])
+  }, [props.positions, props.powers, props.circleAlpha])
 }
 
 export function useUpdateGameState(refs, props) {
