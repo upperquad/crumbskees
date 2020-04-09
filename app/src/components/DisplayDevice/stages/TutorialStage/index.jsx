@@ -9,7 +9,7 @@ import Player2Peer from '~managers/PeerManager/Player2Peer'
 import { TUTORIAL_ROUND, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
-import PixiSceneTutorial from '../PlayStage/Round/PixiSceneTutorial'
+import PixiScene from '../PlayStage/Round/PixiScene'
 import PlayerMessage from '../PlayStage/Round/PlayerMessage'
 import PopupMessage from '../PlayStage/Round/PopupMessage'
 
@@ -184,7 +184,7 @@ const TutorialStage = props => {
         <div className={styles.tutorialHeader}>Warm up</div>
       </div>
       <div className={styles.gameZone}>
-        <PixiSceneTutorial
+        <PixiScene
           videoFront={videoFront}
           videoBack={videoBack}
           positions={positionArray}

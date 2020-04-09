@@ -372,14 +372,14 @@ a {
   width: 57.14286vw;
   z-index: 10; }
 
-.PixiSceneTutorial-pixiScene--1tsDu {
+.PixiScene-pixiScene--xdl_n {
   height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%; }
 
-.PixiSceneTutorial-canvas--3_Otc {
+.PixiScene-canvas--17ngH {
   height: 100%;
   left: 0;
   position: absolute;
@@ -501,20 +501,6 @@ a {
 .Round-wrapper--2wout {
   height: 100%;
   position: relative; }
-
-.PixiScene-pixiScene--xdl_n {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%; }
-
-.PixiScene-canvas--17ngH {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%; }
 
 /* Colors */
 /* Breakpoints */

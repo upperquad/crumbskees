@@ -5,7 +5,7 @@ import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
 import { random } from '~utils/math'
 import getNow from '~utils/time'
-import { inOutSine } from '~utils/ease'
+import { inOutSine, inOutQuad } from '~utils/ease'
 
 import styles from './style.module.scss'
 
@@ -13,6 +13,7 @@ const minDuration = 700
 const maxDuration = 900
 const pointsCount = 6
 const decelerationCircleCoef = 0.15
+const transitionOutDuration = 1000
 
 export function useSetScene(refs, props) {
   useEffect(() => {
@@ -25,9 +26,8 @@ export function useSetScene(refs, props) {
       videoSprite.width = refs.app.current.screen.width
       videoSprite.height = refs.app.current.screen.height
 
-
       if (props.type === 'tutorial') {
-        videoSprite.alpha = 0.4
+        videoSprite.alpha = 0.6
       }
 
       container.addChild(videoSprite)
@@ -301,11 +301,15 @@ export function useRAF(refs, props) {
           points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition)
         }
         refs.circlesLastPositions.current[index] = newPosition
-        // circlesPoints.current[index] = points
         drawCubicBezier(points, newPosition, color)
       })
 
       refs.circlesMasked.current.endFill()
+
+      // draw transition out rect
+      if (refs.startTransitionOut.current > 0) {
+        drawTransitionOut(now)
+      }
     }
 
     // get delayed position
@@ -395,6 +399,21 @@ export function useRAF(refs, props) {
       }
     }
 
+    // draw transition out
+    function drawTransitionOut(now) {
+      const percent = (now - refs.startTransitionOut.current) / transitionOutDuration
+      const positionX = refs.initWidth.current - refs.initWidth.current * inOutQuad(percent)
+
+      refs.circlesMasked.current.beginFill(0xffffff)
+
+      if (percent < 1) {
+        refs.circlesMasked.current.drawRect(positionX, 0, refs.initWidth.current, refs.initHeight.current)
+      } else {
+        refs.circlesMasked.current.drawRect(0, 0, refs.initWidth.current, refs.initHeight.current)
+      }
+      refs.circlesMasked.current.endFill()
+    }
+
     // init RAF
     AnimationFrameManager.addSubscriber(updateFrame)
 
@@ -402,6 +421,14 @@ export function useRAF(refs, props) {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
   }, [props.positions, props.powers])
+}
+
+export function useUpdateGameState(refs, props) {
+  useEffect(() => {
+    if (props.gameState === 'after-game') {
+      refs.startTransitionOut.current = getNow()
+    }
+  }, [props.gameState])
 }
 
 function hexStToNb(str) {
