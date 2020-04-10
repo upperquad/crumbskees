@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
-import { TUTORIAL_ROUND, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
 import PixiScene from '../stages/PlayStage/Round/PixiScene'
@@ -14,10 +13,19 @@ import PlayerMessage from '../stages/PlayStage/Round/PlayerMessage'
 import PopupMessage from '../stages/PlayStage/Round/PopupMessage'
 
 const GameZone = props => {
-  const { onRoundEnd, round, extraClassName, onFinish, updateScoreBoard, type, roundScoreArray, setRoundScoreArray, gameState, setGameState } = props
+  const {
+    gameState,
+    message,
+    onFinish,
+    round,
+    roundScoreArray,
+    setGameState,
+    setMessage,
+    setRoundScoreArray,
+    type,
+  } = props
   const { videoBack, videoFront } = round
   const [items, setItems] = useState([])
-  const [message, setMessage] = useState({ messageCount: 0 })
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
@@ -292,7 +300,7 @@ function getItemsInCursor(items, position, isGrown) {
   const xPx = position.x + 0.5
   const yPx = position.y + 0.5
 
-  const minDistanceSquare = isGrown ? 185 ** 2 : 95 ** 2
+  const minDistanceSquare = isGrown ? 195 ** 2 : 95 ** 2
 
   return items.filter(item => {
     const itemXPx = item.x

@@ -10,7 +10,7 @@ import Board from './Board'
 import Intro from './Intro'
 import GameZone from '~components/DisplayDevice/GameZone'
 
-const TIME = 40
+const TIME = 10
 
 const Round = props => {
   const { onRoundEnd, roundIndex, transitionStatus } = props
@@ -33,8 +33,11 @@ const Round = props => {
       const timerInterval = setInterval(() => {
         setTime(prevTime => {
           const newTime = prevTime - 1
+          console.log(newTime)
 
           if (newTime === 0) {
+            console.log(message)
+            console.log('add message')
             addMessage({
               text: "Time's up!",
               color: COLORS.red,
@@ -72,7 +75,16 @@ const Round = props => {
         {gameState !== 'before-game' && (
           <Transition key="play-stage-in-game" timeout={{ enter: 0, exit: 1300 }}>
             <div className={classNames(styles.gameContent)}>
-              <GameZone type="game" round={GAME_ROUNDS[roundIndex]} roundScoreArray={roundScoreArray} setRoundScoreArray={setRoundScoreArray} gameState={gameState} setGameState={setGameState} />
+              <GameZone
+                type="game"
+                round={GAME_ROUNDS[roundIndex]}
+                roundScoreArray={roundScoreArray}
+                setRoundScoreArray={setRoundScoreArray}
+                gameState={gameState}
+                setGameState={setGameState}
+                message={message}
+                setMessage={setMessage}
+              />
             </div>
           </Transition>
         )}
