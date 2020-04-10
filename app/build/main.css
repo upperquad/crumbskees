@@ -472,6 +472,7 @@ a {
   text-transform: uppercase; }
 
 .Button-button--2dnz7 {
+  display: inline-block;
   overflow: hidden;
   position: relative; }
   .Button-button--2dnz7:hover .Button-inner--2MU8f {
@@ -482,6 +483,7 @@ a {
     box-shadow: 1.5625vw 1.5625vw 0px #000;
     color: #000;
     font-size: 1.35417vw;
+    line-height: 1;
     margin-left: 1.5625vw;
     margin-top: 1.5625vw;
     padding: 0.9375vw;
@@ -508,6 +510,29 @@ a {
       position: absolute;
       top: -0.3125vw;
       width: 0; }
+  .Button-button--2dnz7.Button-mobile--3d-tn {
+    display: inline-block; }
+    .Button-button--2dnz7.Button-mobile--3d-tn:hover .Button-inner--2MU8f {
+      transform: none; }
+    .Button-button--2dnz7.Button-mobile--3d-tn .Button-inner--2MU8f {
+      border: 4px solid #000;
+      box-shadow: 20px 20px 0px #000;
+      display: inline-block;
+      font-size: 24px;
+      margin-left: 20px;
+      margin-top: 20px;
+      padding: 12px;
+      transform: translate(-10px, -6px); }
+      .Button-button--2dnz7.Button-mobile--3d-tn .Button-inner--2MU8f::before {
+        border-left: 28px solid transparent;
+        border-top: 28px solid #000;
+        left: -4px;
+        top: calc(100% + 4px); }
+      .Button-button--2dnz7.Button-mobile--3d-tn .Button-inner--2MU8f::after {
+        border-bottom: 28px solid #000;
+        border-right: 28px solid transparent;
+        left: calc(100% + 4px);
+        top: -4px; }
 
 /* Colors */
 /* Breakpoints */

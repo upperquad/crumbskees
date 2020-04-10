@@ -18,7 +18,7 @@ import imageHelper from '~assets/images/tutorial/helper.png'
 
 
 const TutorialStage = props => {
-  const { extraClassName, onFinish } = props
+  const { bothReady, extraClassName, onFinish } = props
   const { videoBack, videoFront } = TUTORIAL_ROUND
   const [items, setItems] = useState([])
   const [message, setMessage] = useState({ messageCount: 0 })
@@ -26,6 +26,8 @@ const TutorialStage = props => {
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
+
+  console.log(bothReady, extraClassName)
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -122,6 +124,10 @@ const TutorialStage = props => {
         }
         case 'click': {
           handleClick(playerIndex)
+          break
+        }
+        case 'player_ready': {
+          console.log('is ready')
           break
         }
         default:

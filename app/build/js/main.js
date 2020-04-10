@@ -95881,15 +95881,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/Button/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 
 var Button = function Button(props) {
-  var extraClassName = props.extraClassName,
-      text = props.text;
+  var text = props.text,
+      type = props.type;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, extraClassName)
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.mobile, type === 'mobile'))
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.inner
   }, text));
@@ -95907,7 +95909,7 @@ var Button = function Button(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"button":"Button-button--2dnz7","inner":"Button-inner--2MU8f"};
+module.exports = {"button":"Button-button--2dnz7","inner":"Button-inner--2MU8f","mobile":"Button-mobile--3d-tn"};
 
 /***/ }),
 
@@ -96209,7 +96211,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/PlayStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -96219,6 +96222,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -96250,7 +96254,7 @@ var PlayStage = function PlayStage(props) {
   var updatePosition = function updatePosition(clientX, clientY) {
     var x = (clientX - coordX.current) / window.innerWidth;
     var y = (clientY - coordY.current) / window.innerHeight;
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].send('cursor_move', {
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('cursor_move', {
       x: x,
       y: y
     });
@@ -96286,14 +96290,18 @@ var PlayStage = function PlayStage(props) {
 
   var tapHandler = function tapHandler(event) {
     event.stopPropagation();
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].send('click');
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('click');
   };
 
-  var skipTutorial = function skipTutorial(event) {
-    event.stopPropagation();
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].send('skip_tutorial');
-    setActiveTutorial(false);
-  };
+  var ready = function ready() {
+    console.log('ready tutorial');
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('player_ready'); // setActiveTutorial(false)
+  }; // const skipTutorial = event => {
+  //   event.stopPropagation()
+  //   ServerPeer.send('skip_tutorial')
+  //   setActiveTutorial(false)
+  // }
+
 
   return (// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -96305,6 +96313,11 @@ var PlayStage = function PlayStage(props) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.title, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titleRed, secondaryColor === 'red'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titlePurple, secondaryColor === 'purple'), _classNames))
     }, "The Upperquadrant"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      onTouchStart: ready
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      type: "mobile",
+      text: "ready"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block, (_classNames2 = {}, _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockRed, color === 'red'), _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockPurple, color === 'purple'), _classNames2))
     }, !!score && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.score
@@ -96322,10 +96335,7 @@ var PlayStage = function PlayStage(props) {
         left: coordX.current
       },
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.touchBubble, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.touchBubbleVisible, isTouching))
-    }), activeTutorial && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.skipTutorialBtn,
-      onClick: skipTutorial
-    }, "Skip tutorial"))
+    }))
   );
 };
 
@@ -96758,17 +96768,22 @@ var DisplayDevice = function DisplayDevice() {
       bothConnected = _useState4[0],
       setBothConnected = _useState4[1];
 
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      bothReady = _useState6[0],
+      setBothReady = _useState6[1];
+
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState6 = _slicedToArray(_useState5, 2),
-      gameCount = _useState6[0],
-      setGameCount = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
       _useState8 = _slicedToArray(_useState7, 2),
-      zoom = _useState8[0],
-      setZoom = _useState8[1];
+      gameCount = _useState8[0],
+      setGameCount = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+      _useState10 = _slicedToArray(_useState9, 2),
+      zoom = _useState10[0],
+      setZoom = _useState10[1];
 
   var resetGame = function resetGame() {
     return setGameCount(function (prevCount) {
@@ -96820,7 +96835,20 @@ var DisplayDevice = function DisplayDevice() {
     return function () {
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('player_change', onPlayerUpdate);
     };
-  }, [setBothConnected, forceUpdate]); //   listener for error states
+  }, [setBothConnected, forceUpdate]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    // This should trigger on all children components so don't have to do this anywhere else
+    var onPlayerUpdate = function onPlayerUpdate() {
+      console.log('on player update ready');
+      setBothReady(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].bothReady());
+      forceUpdate();
+    };
+
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('player_ready', onPlayerUpdate);
+    return function () {
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('player_ready', onPlayerUpdate);
+    };
+  }, [setBothReady, forceUpdate]); //   listener for error states
   //   useEffect(() => {
   //     const errorListener = reason => {
   //       setStage('error')
@@ -96901,7 +96929,7 @@ var DisplayDevice = function DisplayDevice() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_TutorialStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      bothConnected: bothConnected,
+      bothReady: bothReady,
       rollback: function rollback() {
         return setStage('setup');
       },
@@ -96978,7 +97006,7 @@ var ModeStage = function ModeStage(props) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     setTimeout(function () {
-      handleClick('TWO_PLAYERS');
+      handleClick('SINGLE_PLAYER');
     }, 200);
   }, []);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -99113,7 +99141,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var TutorialStage = function TutorialStage(props) {
-  var extraClassName = props.extraClassName,
+  var bothReady = props.bothReady,
+      extraClassName = props.extraClassName,
       onFinish = props.onFinish;
   var videoBack = _constants__WEBPACK_IMPORTED_MODULE_8__["TUTORIAL_ROUND"].videoBack,
       videoFront = _constants__WEBPACK_IMPORTED_MODULE_8__["TUTORIAL_ROUND"].videoFront;
@@ -99168,6 +99197,8 @@ var TutorialStage = function TutorialStage(props) {
       _useState12 = _slicedToArray(_useState11, 2),
       tapInstructionArray = _useState12[0],
       setTapInstructionArray = _useState12[1];
+
+  console.log(bothReady, extraClassName);
 
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
@@ -99273,6 +99304,12 @@ var TutorialStage = function TutorialStage(props) {
         case 'click':
           {
             handleClick(playerIndex);
+            break;
+          }
+
+        case 'player_ready':
+          {
+            console.log('is ready');
             break;
           }
 
@@ -100421,6 +100458,10 @@ var Player = function Player(_ref) {
     _this.lost = status;
   });
 
+  _defineProperty(this, "setReady", function (ready) {
+    _this.ready = ready;
+  });
+
   _defineProperty(this, "addScore", function (nbItemsCaught) {
     _this._score += nbItemsCaught;
 
@@ -100451,6 +100492,8 @@ var Player = function Player(_ref) {
   this.image = image;
   this.name = name;
   this.connected = false;
+  this.ready = false; // boolean to know if player is ready after trying the tutorial
+
   this.playerPeer.connect(id);
 };
 
