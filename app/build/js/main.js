@@ -96839,7 +96839,6 @@ var GameZone = function GameZone(props) {
       }
 
       if (itemsCaught.length > 0) {
-        console.log('call remove items');
         removeItems(itemsCaught);
       }
     };
