@@ -96695,18 +96695,17 @@ module.exports = {"smallText":"ResultStage-smallText--3ZhnY","winner":"ResultSta
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZone/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
-/* harmony import */ var _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/PeerManager/Player1Peer */ "./src/managers/PeerManager/Player1Peer.js");
-/* harmony import */ var _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PeerManager/Player2Peer */ "./src/managers/PeerManager/Player2Peer.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
-/* harmony import */ var _stages_PlayStage_Round_PixiScene__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../stages/PlayStage/Round/PixiScene */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/index.jsx");
-/* harmony import */ var _stages_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../stages/PlayStage/Round/PlayerMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerMessage/index.jsx");
-/* harmony import */ var _stages_PlayStage_Round_PopupMessage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../stages/PlayStage/Round/PopupMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PopupMessage/index.jsx");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZone/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
+/* harmony import */ var _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PeerManager/Player1Peer */ "./src/managers/PeerManager/Player1Peer.js");
+/* harmony import */ var _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/PeerManager/Player2Peer */ "./src/managers/PeerManager/Player2Peer.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
+/* harmony import */ var _stages_PlayStage_Round_PixiScene__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../stages/PlayStage/Round/PixiScene */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/index.jsx");
+/* harmony import */ var _stages_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../stages/PlayStage/Round/PlayerMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerMessage/index.jsx");
+/* harmony import */ var _stages_PlayStage_Round_PopupMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../stages/PlayStage/Round/PopupMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PopupMessage/index.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -96722,7 +96721,6 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -96755,7 +96753,7 @@ var GameZone = function GameZone(props) {
       setItems = _useState2[1];
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function () {
       return null;
     });
   }),
@@ -96764,7 +96762,7 @@ var GameZone = function GameZone(props) {
       setPowerArray = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function () {
       return {
         x: 0,
         y: 0
@@ -96776,7 +96774,7 @@ var GameZone = function GameZone(props) {
       setPositionArray = _useState6[1];
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function () {
       return false;
     });
   }),
@@ -96819,7 +96817,7 @@ var GameZone = function GameZone(props) {
       });
 
       if (growFound) {
-        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].grow.play();
+        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].grow.play();
         setPowerArray(function (prevArray) {
           prevArray[playerIndex] = 'grow';
           return _toConsumableArray(prevArray);
@@ -96827,7 +96825,7 @@ var GameZone = function GameZone(props) {
       }
 
       if (freezeFound) {
-        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].freeze.play();
+        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].freeze.play();
         setPowerArray(function (prevArray) {
           prevArray[1 - playerIndex] = 'freeze';
           return _toConsumableArray(prevArray);
@@ -96854,8 +96852,8 @@ var GameZone = function GameZone(props) {
                 y = data.y;
             setPositionArray(function (prevPositionArray) {
               var positionObj = prevPositionArray[playerIndex];
-              positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["clamp"])(positionObj.x + parseFloat(x, 10), -0.5, 0.5);
-              positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["clamp"])(positionObj.y + parseFloat(y, 10), -0.5, 0.5);
+              positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["clamp"])(positionObj.x + parseFloat(x, 10), -0.5, 0.5);
+              positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["clamp"])(positionObj.y + parseFloat(y, 10), -0.5, 0.5);
               return prevPositionArray;
             });
             break;
@@ -96875,8 +96873,8 @@ var GameZone = function GameZone(props) {
         case 'player_ready':
           {
             if (type === 'tutorial') {
-              _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[playerIndex].setReady(true);
-              var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].bothReady();
+              _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[playerIndex].setReady(true);
+              var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].bothReady();
 
               if (arePlayersReady) {
                 setTimeout(function () {
@@ -96901,8 +96899,8 @@ var GameZone = function GameZone(props) {
       return messageHandler(detail, 1);
     };
 
-    _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber('MESSAGE', player1MessageHandler);
-    _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].addSubscriber('MESSAGE', player2MessageHandler); // check if no item left
+    _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_4__["default"].addSubscriber('MESSAGE', player1MessageHandler);
+    _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber('MESSAGE', player2MessageHandler); // check if no item left
 
     var targets = items.filter(function (item) {
       return item.type === 'target';
@@ -96912,7 +96910,7 @@ var GameZone = function GameZone(props) {
       var persistent = type === 'game';
       addMessage({
         text: getEndMessage(),
-        color: _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].red,
+        color: _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].red,
         persistent: persistent,
         onEnd: function onEnd() {
           if (type === 'game') {
@@ -96923,8 +96921,8 @@ var GameZone = function GameZone(props) {
     }
 
     return function () {
-      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber('MESSAGE', player1MessageHandler);
-      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber('MESSAGE', player2MessageHandler);
+      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_4__["default"].removeSubscriber('MESSAGE', player1MessageHandler);
+      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber('MESSAGE', player2MessageHandler);
     }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, items]); // Grid setup
 
@@ -96932,14 +96930,14 @@ var GameZone = function GameZone(props) {
     return setupGrid();
   }, []); // tap instruction
 
-  var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.filter(function (player) {
+  var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.filter(function (player) {
     return player.score && player.score() === 0;
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (zeroScorePlayers.length) {
       var tapInstructionInterval = setInterval(function () {
         var newTapInstructionArray = [];
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.forEach(function (player, index) {
           if (player.score() === 0) {
             var itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] === 'grow');
             var targetsInCursor = itemsInCursor.filter(function (item) {
@@ -97007,12 +97005,12 @@ var GameZone = function GameZone(props) {
     var gridCols = round.gridCols,
         gridLines = round.gridLines; // randomize
 
-    var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["randomInt"])(0, grid.length - 1);
-    var x = grid[rd].x / gridCols + _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT_VW"] / 200; // 200?
+    var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, grid.length - 1);
+    var x = grid[rd].x / gridCols + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200; // 200?
 
-    var y = grid[rd].y / gridLines + _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT_VH"] / 200;
+    var y = grid[rd].y / gridLines + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
     grid.splice(rd, 1);
-    var size = _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"];
+    var size = _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"];
     var _item$color = item.color,
         color = _item$color === void 0 ? null : _item$color,
         image = item.image,
@@ -97032,10 +97030,10 @@ var GameZone = function GameZone(props) {
     addRoundScoreArray(score, index);
 
     if (type === 'game') {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[index].id);
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
     }
 
-    _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].score.play();
+    _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play();
   }
 
   function cancelPower(index) {
@@ -97046,8 +97044,8 @@ var GameZone = function GameZone(props) {
   }
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameZone
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PixiScene__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.gameZone
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PixiScene__WEBPACK_IMPORTED_MODULE_8__["default"], {
     videoFront: videoFront,
     videoBack: videoBack,
     positions: positionArray,
@@ -97056,15 +97054,15 @@ var GameZone = function GameZone(props) {
     gameState: gameState,
     items: items,
     type: type
-  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function (player, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
+  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function (player, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__["default"], {
       power: powerArray[index],
       position: positionArray[index],
       color: player.color,
       roundScore: roundScoreArray[index],
       tapInstruction: tapInstructionArray[index]
     });
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PopupMessage__WEBPACK_IMPORTED_MODULE_11__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PopupMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
     color: message.color,
     x: message.x,
     y: message.y,
@@ -97082,7 +97080,7 @@ function getItemsInCursor(items, position, isGrown) {
   return items.filter(function (item) {
     var itemXPx = item.x;
     var itemYPx = item.y;
-    var distanceSquare = Math.pow((xPx - itemXPx) * _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], 2) + Math.pow((yPx - itemYPx) * _constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"], 2);
+    var distanceSquare = Math.pow((xPx - itemXPx) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_WIDTH"], 2) + Math.pow((yPx - itemYPx) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_HEIGHT"], 2);
     return distanceSquare <= minDistanceSquare;
   });
 }
@@ -98571,16 +98569,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! use-force-update */ "./node_modules/use-force-update/use-force-update.js");
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _Board__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
-/* harmony import */ var _Intro__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Intro */ "./src/components/DisplayDevice/stages/PlayStage/Round/Intro/index.jsx");
-/* harmony import */ var _components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/DisplayDevice/GameZone */ "./src/components/DisplayDevice/GameZone/index.jsx");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _Board__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
+/* harmony import */ var _Intro__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Intro */ "./src/components/DisplayDevice/stages/PlayStage/Round/Intro/index.jsx");
+/* harmony import */ var _components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/DisplayDevice/GameZone */ "./src/components/DisplayDevice/GameZone/index.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -98613,14 +98609,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var TIME = 40;
 
 var Round = function Round(props) {
   var onRoundEnd = props.onRoundEnd,
       roundIndex = props.roundIndex,
       transitionStatus = props.transitionStatus;
-  var itemImage = _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex].itemImage;
+  var itemImage = _constants__WEBPACK_IMPORTED_MODULE_5__["GAME_ROUNDS"][roundIndex].itemImage;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(TIME),
       _useState2 = _slicedToArray(_useState, 2),
@@ -98640,7 +98635,7 @@ var Round = function Round(props) {
       setGameState = _useState6[1];
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__["default"].players.map(function () {
       return 0;
     });
   }),
@@ -98673,14 +98668,14 @@ var Round = function Round(props) {
           if (newTime === 0) {
             addMessage({
               text: "Time's up!",
-              color: _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].red,
+              color: _constants__WEBPACK_IMPORTED_MODULE_5__["COLORS"].red,
               persistent: true,
               onEnd: function onEnd() {
                 return setGameState('after-game');
               }
             });
           } else if (newTime === 10) {
-            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_5__["default"].countdown.play();
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].countdown.play();
           }
 
           return newTime >= 0 ? newTime : 0;
@@ -98701,7 +98696,7 @@ var Round = function Round(props) {
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.roundExiting, transitionStatus === 'exiting'))
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.roundExiting, transitionStatus === 'exiting'))
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, gameState !== 'before-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
     key: "play-stage-in-game",
     timeout: {
@@ -98709,22 +98704,22 @@ var Round = function Round(props) {
       exit: 1300
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.gameContent)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameContent)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_9__["default"], {
     type: "game",
-    round: _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex],
+    round: _constants__WEBPACK_IMPORTED_MODULE_5__["GAME_ROUNDS"][roundIndex],
     roundScoreArray: roundScoreArray,
     addRoundScoreArray: addRoundScoreArray,
     gameState: gameState,
     setGameState: setGameState,
     message: message,
     addMessage: addMessage
-  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_7__["default"], {
     time: time,
     itemImage: itemImage,
     scores: roundScoreArray,
     transitionStatus: transitionStatus
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Intro__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Intro__WEBPACK_IMPORTED_MODULE_8__["default"], {
     roundIndex: roundIndex,
     onFinish: function onFinish() {
       setGameState('in-game');
@@ -99213,15 +99208,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/TutorialStage/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
-/* harmony import */ var _components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~components/DisplayDevice/GameZone */ "./src/components/DisplayDevice/GameZone/index.jsx");
-/* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~assets/images/tutorial/helper.png */ "./src/assets/images/tutorial/helper.png");
-/* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/TutorialStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/DisplayDevice/GameZone */ "./src/components/DisplayDevice/GameZone/index.jsx");
+/* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~assets/images/tutorial/helper.png */ "./src/assets/images/tutorial/helper.png");
+/* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -99245,7 +99239,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-
+ // import { TransitionGroup, Transition } from 'react-transition-group'
 
 
 
@@ -99271,7 +99265,7 @@ var TutorialStage = function TutorialStage(props) {
       setGameState = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return 0;
     });
   }),
@@ -99295,24 +99289,24 @@ var TutorialStage = function TutorialStage(props) {
   };
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.tutorial, extraClassName)
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.tutorial, extraClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.container
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.container
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.heading
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.heading
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.title
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.title
   }, "warm up!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.description
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.description
   }, "Practice using your phone or your mouse to catch the objects before the time runs out by clicking or tapping them! Hit play when you\u2019re ready. Find powerups to help!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.image,
-    src: _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_8___default.a,
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.image,
+    src: _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7___default.a,
     alt: ""
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.gameContent
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameContent
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_6__["default"], {
     type: "tutorial",
-    round: _constants__WEBPACK_IMPORTED_MODULE_5__["TUTORIAL_ROUND"],
+    round: _constants__WEBPACK_IMPORTED_MODULE_4__["TUTORIAL_ROUND"],
     onFinish: onFinish,
     roundScoreArray: roundScoreArray,
     addRoundScoreArray: addRoundScoreArray,
@@ -99321,10 +99315,10 @@ var TutorialStage = function TutorialStage(props) {
     message: message,
     addMessage: addMessage
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.buttons
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function (player, index) {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.buttons
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function (player, index) {
     var text = "P".concat(index + 1, " ready");
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
       text: text,
       ready: player.ready
     });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import { TransitionGroup, Transition } from 'react-transition-group'
+// import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
 import { TUTORIAL_ROUND } from '~constants'

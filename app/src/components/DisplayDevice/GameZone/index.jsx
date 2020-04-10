@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
