@@ -22,7 +22,7 @@ const ModeStage = props => {
 
   useEffect(() => {
     setTimeout(() => {
-      handleClick('SINGLE_PLAYER')
+      handleClick('TWO_PLAYERS')
     }, 200)
   }, [])
 

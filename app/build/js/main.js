@@ -96768,22 +96768,17 @@ var DisplayDevice = function DisplayDevice() {
       bothConnected = _useState4[0],
       setBothConnected = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState6 = _slicedToArray(_useState5, 2),
-      bothReady = _useState6[0],
-      setBothReady = _useState6[1];
-
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState8 = _slicedToArray(_useState7, 2),
-      gameCount = _useState8[0],
-      setGameCount = _useState8[1];
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState6 = _slicedToArray(_useState5, 2),
+      gameCount = _useState6[0],
+      setGameCount = _useState6[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
-      _useState10 = _slicedToArray(_useState9, 2),
-      zoom = _useState10[0],
-      setZoom = _useState10[1];
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+      _useState8 = _slicedToArray(_useState7, 2),
+      zoom = _useState8[0],
+      setZoom = _useState8[1];
 
   var resetGame = function resetGame() {
     return setGameCount(function (prevCount) {
@@ -96835,20 +96830,7 @@ var DisplayDevice = function DisplayDevice() {
     return function () {
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('player_change', onPlayerUpdate);
     };
-  }, [setBothConnected, forceUpdate]);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // This should trigger on all children components so don't have to do this anywhere else
-    var onPlayerUpdate = function onPlayerUpdate() {
-      console.log('on player update ready');
-      setBothReady(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].bothReady());
-      forceUpdate();
-    };
-
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('player_ready', onPlayerUpdate);
-    return function () {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('player_ready', onPlayerUpdate);
-    };
-  }, [setBothReady, forceUpdate]); //   listener for error states
+  }, [setBothConnected, forceUpdate]); //   listener for error states
   //   useEffect(() => {
   //     const errorListener = reason => {
   //       setStage('error')
@@ -96929,7 +96911,6 @@ var DisplayDevice = function DisplayDevice() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_TutorialStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      bothReady: bothReady,
       rollback: function rollback() {
         return setStage('setup');
       },
@@ -97006,7 +96987,7 @@ var ModeStage = function ModeStage(props) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     setTimeout(function () {
-      handleClick('SINGLE_PLAYER');
+      handleClick('TWO_PLAYERS');
     }, 200);
   }, []);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -99141,8 +99122,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var TutorialStage = function TutorialStage(props) {
-  var bothReady = props.bothReady,
-      extraClassName = props.extraClassName,
+  var extraClassName = props.extraClassName,
       onFinish = props.onFinish;
   var videoBack = _constants__WEBPACK_IMPORTED_MODULE_8__["TUTORIAL_ROUND"].videoBack,
       videoFront = _constants__WEBPACK_IMPORTED_MODULE_8__["TUTORIAL_ROUND"].videoFront;
@@ -99152,32 +99132,37 @@ var TutorialStage = function TutorialStage(props) {
       items = _useState2[0],
       setItems = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      bothReady = _useState4[0],
+      setBothReady = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     messageCount: 0
   }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      message = _useState4[0],
-      setMessage = _useState4[1];
+      _useState6 = _slicedToArray(_useState5, 2),
+      message = _useState6[0],
+      setMessage = _useState6[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return 0;
     });
   }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      roundScoreArray = _useState6[0],
-      setRoundScoreArray = _useState6[1];
+      _useState8 = _slicedToArray(_useState7, 2),
+      roundScoreArray = _useState8[0],
+      setRoundScoreArray = _useState8[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return null;
     });
   }),
-      _useState8 = _slicedToArray(_useState7, 2),
-      powerArray = _useState8[0],
-      setPowerArray = _useState8[1];
+      _useState10 = _slicedToArray(_useState9, 2),
+      powerArray = _useState10[0],
+      setPowerArray = _useState10[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return {
         x: 0,
@@ -99185,20 +99170,18 @@ var TutorialStage = function TutorialStage(props) {
       };
     });
   }),
-      _useState10 = _slicedToArray(_useState9, 2),
-      positionArray = _useState10[0],
-      setPositionArray = _useState10[1];
+      _useState12 = _slicedToArray(_useState11, 2),
+      positionArray = _useState12[0],
+      setPositionArray = _useState12[1];
 
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return false;
     });
   }),
-      _useState12 = _slicedToArray(_useState11, 2),
-      tapInstructionArray = _useState12[0],
-      setTapInstructionArray = _useState12[1];
-
-  console.log(bothReady, extraClassName);
+      _useState14 = _slicedToArray(_useState13, 2),
+      tapInstructionArray = _useState14[0],
+      setTapInstructionArray = _useState14[1];
 
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
@@ -99309,7 +99292,14 @@ var TutorialStage = function TutorialStage(props) {
 
         case 'player_ready':
           {
-            console.log('is ready');
+            _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players[playerIndex].setReady(true);
+            var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].bothReady();
+            setBothReady(arePlayersReady);
+
+            if (arePlayersReady) {
+              onFinish();
+            }
+
             break;
           }
 
@@ -100713,6 +100703,12 @@ function (_Observable) {
     _defineProperty(_assertThisInitialized(_this), "bothConnected", function () {
       return _this.players.every(function (item) {
         return item.connected;
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "bothReady", function () {
+      return _this.players.every(function (item) {
+        return item.ready;
       });
     });
 

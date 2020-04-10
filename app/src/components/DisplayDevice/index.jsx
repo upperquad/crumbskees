@@ -20,7 +20,6 @@ const DisplayDevice = () => {
   const [stage, setStage] = useState('mode')
   // const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
-  const [bothReady, setBothReady] = useState(false)
   const forceUpdate = useForceUpdate()
   const [gameCount, setGameCount] = useState(0)
   const [zoom, setZoom] = useState(1)
@@ -73,20 +72,6 @@ const DisplayDevice = () => {
       PlayersManager.removeSubscriber('player_change', onPlayerUpdate)
     }
   }, [setBothConnected, forceUpdate])
-
-  useEffect(() => {
-    // This should trigger on all children components so don't have to do this anywhere else
-    const onPlayerUpdate = () => {
-      console.log('on player update ready')
-      setBothReady(PlayersManager.bothReady())
-      forceUpdate()
-    }
-    PlayersManager.addSubscriber('player_ready', onPlayerUpdate)
-
-    return () => {
-      PlayersManager.removeSubscriber('player_ready', onPlayerUpdate)
-    }
-  }, [setBothReady, forceUpdate])
 
   //   listener for error states
   //   useEffect(() => {
@@ -160,7 +145,6 @@ const DisplayDevice = () => {
             {status => (
               <StageWrapper status={status}>
                 <TutorialStage
-                  bothReady={bothReady}
                   rollback={() => setStage('setup')}
                   onFinish={() => setStage('play')}
                 />
