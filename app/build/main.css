@@ -384,14 +384,6 @@ a {
     height: 12.5vw;
     width: 12.5vw; }
 
-.TutorialStage-gameZone--2i3tQ {
-  cursor: none;
-  height: 25vw;
-  position: relative;
-  text-align: center;
-  width: 57.14286vw;
-  z-index: 10; }
-
 .TutorialStage-buttons--1nSMF {
   display: flex;
   margin-top: 1.5625vw;
@@ -399,66 +391,10 @@ a {
   right: 0;
   top: 100%; }
 
-.PixiScene-pixiScene--xdl_n {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%; }
-
-.PixiScene-canvas--17ngH {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%; }
-
-/* Colors */
-/* Breakpoints */
-/* Easings*/
-/* Timings */
-.PopupMessage-message--1Zfsp {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
-.PopupMessage-messageContainer--1WKlW {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 20; }
-
-@keyframes PopupMessage-message-fade-in--2r6Iv {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.7); }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1); } }
-
-@keyframes PopupMessage-message-fade-out--J9frd {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1); }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.7); } }
-
-.PopupMessage-message--1Zfsp {
-  animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
-  display: inline-block;
-  font-size: 6.25vw;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%); }
-
-.PopupMessage-messagePersistent--2WAj9 {
-  animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s; }
+.TutorialStage-gameContent--8CqgM {
+  height: 25vw;
+  position: relative;
+  width: 57.14286vw; }
 
 /* Colors */
 /* Breakpoints */
@@ -536,6 +472,75 @@ a {
         left: calc(100% + 4px);
         top: -4px; }
 
+.GameZone-gameZone--1gqvO {
+  cursor: none;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 10; }
+
+.PixiScene-pixiScene--xdl_n {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
+.PixiScene-canvas--17ngH {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.PopupMessage-message--1Zfsp {
+  font-family: 'Ginto Nord Black';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: normal;
+  text-transform: uppercase; }
+
+.PopupMessage-messageContainer--1WKlW {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 20; }
+
+@keyframes PopupMessage-message-fade-in--2r6Iv {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7); }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); } }
+
+@keyframes PopupMessage-message-fade-out--J9frd {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7); } }
+
+.PopupMessage-message--1Zfsp {
+  animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
+  display: inline-block;
+  font-size: 6.25vw;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%); }
+
+.PopupMessage-messagePersistent--2WAj9 {
+  animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s; }
+
 /* Colors */
 /* Breakpoints */
 /* Easings*/
@@ -581,15 +586,12 @@ a {
 .Round-roundExiting--2e9P1 {
   z-index: 0; }
 
-.Round-gameZone--3AdDr {
-  background-position: center center;
-  background-size: cover;
-  cursor: none;
+.Round-gameContent--16S_I {
   height: 43.75vw;
   position: relative;
-  text-align: center;
+  width: 100%;
   z-index: 10; }
-  .Round-gameZone--3AdDr::after {
+  .Round-gameContent--16S_I::after {
     animation: Round-playstage-bar-change-color--1HoBY 40s linear 1 forwards, Round-playstage-blink-bar-color--2pndY .5s linear infinite forwards 30s;
     background-color: #00f384;
     bottom: 0;

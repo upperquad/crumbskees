@@ -41,17 +41,23 @@ const Intro = props => {
 
   // steps
   useEffect(() => {
-    const currentStep = stepsArray[step]
+    // onFinish()
     timeout.current = setTimeout(() => {
-      if (currentStep.startGame) {
-        onFinish()
-        timeout.current = setTimeout(() => setFinished(true), 1000)
-      }
+      onFinish()
+      setFinished(true)
+    }, 2000)
 
-      if (step < stepsArray.length - 1) {
-        setStep(step + 1)
-      }
-    }, currentStep.tillNextStep)
+    // const currentStep = stepsArray[step]
+    // timeout.current = setTimeout(() => {
+    //   if (currentStep.startGame) {
+    //     onFinish()
+    //     timeout.current = setTimeout(() => setFinished(true), 1000)
+    //   }
+
+    //   if (step < stepsArray.length - 1) {
+    //     setStep(step + 1)
+    //   }
+    // }, currentStep.tillNextStep)
 
     return () => clearTimeout(timeout.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps

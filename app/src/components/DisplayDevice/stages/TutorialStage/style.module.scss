@@ -38,20 +38,17 @@
   }
 }
 
-.gameZone {
-  cursor: none;
-  height: grid(8);
-  position: relative;
-  text-align: center;
-  width: grid(8 * 32 / 14); // keep game ratio
-  z-index: 10;
-}
-
 .buttons {
   display: flex;
   margin-top: grid(.5);
   position: absolute;
   right: 0;
   top: 100%;
+}
+
+.gameContent {
+  height: grid(8);
+  position: relative;
+  width: grid(8 * 32 / 14);
 }
 
