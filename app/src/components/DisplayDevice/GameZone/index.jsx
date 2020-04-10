@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
@@ -14,14 +14,14 @@ import PopupMessage from '../stages/PlayStage/Round/PopupMessage'
 
 const GameZone = props => {
   const {
+    addMessage,
+    addRoundScoreArray,
     gameState,
     message,
     onFinish,
     round,
     roundScoreArray,
     setGameState,
-    setMessage,
-    setRoundScoreArray,
     type,
   } = props
   const { videoBack, videoFront } = round
@@ -29,34 +29,13 @@ const GameZone = props => {
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
-
-  const addMessage = messageObj => {
-    setMessage(prevMessage => ({
-      ...messageObj,
-      messageCount: prevMessage.messageCount + 1,
-    }))
-  }
+  const sceneInit = useRef(false)
 
   // Players input
   useEffect(() => {
     const removeItems = itemsCaught => {
       setItems(prevItems => {
         const newItems = prevItems.filter(item => !itemsCaught.includes(item))
-        const newTargets = newItems.filter(item => item.type === 'target')
-
-        if (newTargets.length === 0) {
-          const persistent = type === 'game'
-          addMessage({
-            text: getEndMessage(),
-            color: COLORS.red,
-            persistent,
-            onEnd: () => {
-              if (type === 'game') {
-                setGameState('after-game')
-              }
-            },
-          })
-        }
 
         return newItems
       })
@@ -104,6 +83,7 @@ const GameZone = props => {
       }
 
       if (itemsCaught.length > 0) {
+        console.log('call remove items')
         removeItems(itemsCaught)
       }
     }
@@ -154,6 +134,23 @@ const GameZone = props => {
     const player2MessageHandler = detail => messageHandler(detail, 1)
     Player1Peer.addSubscriber('MESSAGE', player1MessageHandler)
     Player2Peer.addSubscriber('MESSAGE', player2MessageHandler)
+
+    // check if no item left
+    const targets = items.filter(item => item.type === 'target')
+
+    if (targets.length === 0 && sceneInit.current && gameState !== 'after-game') {
+      const persistent = type === 'game'
+      addMessage({
+        text: getEndMessage(),
+        color: COLORS.red,
+        persistent,
+        onEnd: () => {
+          if (type === 'game') {
+            setGameState('after-game')
+          }
+        },
+      })
+    }
 
     return () => {
       Player1Peer.removeSubscriber('MESSAGE', player1MessageHandler)
@@ -218,6 +215,8 @@ const GameZone = props => {
     }
 
     setItems(newItems)
+
+    sceneInit.current = true
   }
 
   function createItem(grid, item) {
@@ -243,10 +242,7 @@ const GameZone = props => {
   }
 
   function addScore(score, index) {
-    setRoundScoreArray(prevScoreArray => {
-      prevScoreArray[index] += score
-      return [...prevScoreArray]
-    })
+    addRoundScoreArray(score, index)
 
     if (type === 'game') {
       PlayersManager.addScore(score, PlayersManager.players[index].id)
@@ -300,7 +296,7 @@ function getItemsInCursor(items, position, isGrown) {
   const xPx = position.x + 0.5
   const yPx = position.y + 0.5
 
-  const minDistanceSquare = isGrown ? 195 ** 2 : 95 ** 2
+  const minDistanceSquare = isGrown ? 205 ** 2 : 95 ** 2
 
   return items.filter(item => {
     const itemXPx = item.x

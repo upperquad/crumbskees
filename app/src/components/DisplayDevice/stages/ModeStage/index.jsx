@@ -20,12 +20,6 @@ const ModeStage = props => {
     onFinish()
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      handleClick('SINGLE_PLAYER')
-    }, 200)
-  }, [])
-
   return (
     <div className={classNames(styles.mode, extraClassName)}>
       <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />

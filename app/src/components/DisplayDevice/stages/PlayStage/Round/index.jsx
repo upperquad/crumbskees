@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import classNames from 'classnames'
+import useForceUpdate from 'use-force-update'
+
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { GAME_ROUNDS, COLORS } from '~constants'
@@ -10,7 +12,7 @@ import Board from './Board'
 import Intro from './Intro'
 import GameZone from '~components/DisplayDevice/GameZone'
 
-const TIME = 10
+const TIME = 40
 
 const Round = props => {
   const { onRoundEnd, roundIndex, transitionStatus } = props
@@ -27,17 +29,21 @@ const Round = props => {
     }))
   }
 
+  const addRoundScoreArray = (score, index) => {
+    setRoundScoreArray(prevScoreArray => {
+      prevScoreArray[index] += score
+      return [...prevScoreArray]
+    })
+  }
+
   // Timer
   useEffect(() => {
     if (gameState === 'in-game') {
       const timerInterval = setInterval(() => {
         setTime(prevTime => {
           const newTime = prevTime - 1
-          console.log(newTime)
 
           if (newTime === 0) {
-            console.log(message)
-            console.log('add message')
             addMessage({
               text: "Time's up!",
               color: COLORS.red,
@@ -79,11 +85,11 @@ const Round = props => {
                 type="game"
                 round={GAME_ROUNDS[roundIndex]}
                 roundScoreArray={roundScoreArray}
-                setRoundScoreArray={setRoundScoreArray}
+                addRoundScoreArray={addRoundScoreArray}
                 gameState={gameState}
                 setGameState={setGameState}
                 message={message}
-                setMessage={setMessage}
+                addMessage={addMessage}
               />
             </div>
           </Transition>

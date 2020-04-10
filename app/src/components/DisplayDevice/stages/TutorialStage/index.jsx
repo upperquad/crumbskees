@@ -16,6 +16,20 @@ const TutorialStage = props => {
   const [gameState, setGameState] = useState('before-game')
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
 
+  const addMessage = messageObj => {
+    setMessage(prevMessage => ({
+      ...messageObj,
+      messageCount: prevMessage.messageCount + 1,
+    }))
+  }
+
+  const addRoundScoreArray = (score, index) => {
+    setRoundScoreArray(prevScoreArray => {
+      prevScoreArray[index] += score
+      return [...prevScoreArray]
+    })
+  }
+
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
       <div className={styles.container}>
@@ -33,11 +47,11 @@ const TutorialStage = props => {
             round={TUTORIAL_ROUND}
             onFinish={onFinish}
             roundScoreArray={roundScoreArray}
-            setRoundScoreArray={setRoundScoreArray}
+            addRoundScoreArray={addRoundScoreArray}
             gameState={gameState}
             setGameState={setGameState}
             message={message}
-            setMessage={setMessage}
+            addMessage={addMessage}
           />
           <div className={styles.buttons}>
             {PlayersManager.players.map((player, index) => {
