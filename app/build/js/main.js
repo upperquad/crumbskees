@@ -95883,15 +95883,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
 
 var Button = function Button(props) {
-  var text = props.text,
+  var _classNames;
+
+  var ready = props.ready,
+      text = props.text,
       type = props.type;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      pressed = _useState2[0],
+      setPressed = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      pressedOnce = _useState4[0],
+      setPressedOne = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (ready === true && pressed === false) {
+      setPressed(true);
+      setTimeout(function () {
+        setPressedOne(true);
+        setPressed(false);
+      }, 300);
+    }
+  }, [ready]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.mobile, type === 'mobile'))
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.mobile, type === 'mobile'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pressed, pressed), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pressedOnce, pressedOnce), _classNames))
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.inner
   }, text));
@@ -95909,7 +95940,7 @@ var Button = function Button(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"button":"Button-button--2dnz7","inner":"Button-inner--2MU8f","mobile":"Button-mobile--3d-tn"};
+module.exports = {"button":"Button-button--2dnz7","inner":"Button-inner--2MU8f","pressed":"Button-pressed--2CJ-B","pressedOnce":"Button-pressedOnce--1CMzT","mobile":"Button-mobile--3d-tn"};
 
 /***/ }),
 
@@ -96235,17 +96266,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var PlayStage = function PlayStage(props) {
   var _classNames, _classNames2;
 
-  var activeTutorial = props.activeTutorial,
-      color = props.color,
+  var color = props.color,
       image = props.image,
       score = props.score,
-      secondaryColor = props.secondaryColor,
-      setActiveTutorial = props.setActiveTutorial;
+      secondaryColor = props.secondaryColor;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
       isTouching = _useState2[0],
       setIsTouching = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      ready = _useState4[0],
+      setReady = _useState4[1];
 
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_3___default()();
   var coordX = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
@@ -96293,15 +96327,10 @@ var PlayStage = function PlayStage(props) {
     _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('click');
   };
 
-  var ready = function ready() {
-    console.log('ready tutorial');
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('player_ready'); // setActiveTutorial(false)
-  }; // const skipTutorial = event => {
-  //   event.stopPropagation()
-  //   ServerPeer.send('skip_tutorial')
-  //   setActiveTutorial(false)
-  // }
-
+  var onTouchStartButton = function onTouchStartButton() {
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('player_ready');
+    setReady(true);
+  };
 
   return (// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -96313,10 +96342,11 @@ var PlayStage = function PlayStage(props) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.title, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titleRed, secondaryColor === 'red'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titlePurple, secondaryColor === 'purple'), _classNames))
     }, "The Upperquadrant"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      onTouchStart: ready
+      onTouchStart: onTouchStartButton
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
       type: "mobile",
-      text: "ready"
+      text: "ready",
+      ready: ready
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block, (_classNames2 = {}, _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockRed, color === 'red'), _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockPurple, color === 'purple'), _classNames2))
     }, !!score && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -99132,37 +99162,32 @@ var TutorialStage = function TutorialStage(props) {
       items = _useState2[0],
       setItems = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      bothReady = _useState4[0],
-      setBothReady = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     messageCount: 0
   }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      message = _useState6[0],
-      setMessage = _useState6[1];
+      _useState4 = _slicedToArray(_useState3, 2),
+      message = _useState4[0],
+      setMessage = _useState4[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return 0;
     });
   }),
-      _useState8 = _slicedToArray(_useState7, 2),
-      roundScoreArray = _useState8[0],
-      setRoundScoreArray = _useState8[1];
+      _useState6 = _slicedToArray(_useState5, 2),
+      roundScoreArray = _useState6[0],
+      setRoundScoreArray = _useState6[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return null;
     });
   }),
-      _useState10 = _slicedToArray(_useState9, 2),
-      powerArray = _useState10[0],
-      setPowerArray = _useState10[1];
+      _useState8 = _slicedToArray(_useState7, 2),
+      powerArray = _useState8[0],
+      setPowerArray = _useState8[1];
 
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return {
         x: 0,
@@ -99170,18 +99195,18 @@ var TutorialStage = function TutorialStage(props) {
       };
     });
   }),
-      _useState12 = _slicedToArray(_useState11, 2),
-      positionArray = _useState12[0],
-      setPositionArray = _useState12[1];
+      _useState10 = _slicedToArray(_useState9, 2),
+      positionArray = _useState10[0],
+      setPositionArray = _useState10[1];
 
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
       return false;
     });
   }),
-      _useState14 = _slicedToArray(_useState13, 2),
-      tapInstructionArray = _useState14[0],
-      setTapInstructionArray = _useState14[1];
+      _useState12 = _slicedToArray(_useState11, 2),
+      tapInstructionArray = _useState12[0],
+      setTapInstructionArray = _useState12[1];
 
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
@@ -99294,10 +99319,11 @@ var TutorialStage = function TutorialStage(props) {
           {
             _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players[playerIndex].setReady(true);
             var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].bothReady();
-            setBothReady(arePlayersReady);
 
             if (arePlayersReady) {
-              onFinish();
+              setTimeout(function () {
+                onFinish();
+              }, 1000);
             }
 
             break;
@@ -99413,7 +99439,8 @@ var TutorialStage = function TutorialStage(props) {
   }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function (player, index) {
     var text = "P".concat(index + 1, " ready");
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_13__["default"], {
-      text: text
+      text: text,
+      ready: player.ready
     });
   })))));
 };

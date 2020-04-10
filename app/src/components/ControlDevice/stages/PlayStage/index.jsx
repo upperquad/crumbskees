@@ -9,8 +9,9 @@ import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 
 const PlayStage = props => {
-  const { activeTutorial, color, image, score, secondaryColor, setActiveTutorial } = props
+  const { color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
+  const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
 
   const coordX = useRef(0)
@@ -50,17 +51,10 @@ const PlayStage = props => {
     ServerPeer.send('click')
   }
 
-  const ready = () => {
-    console.log('ready tutorial')
+  const onTouchStartButton = () => {
     ServerPeer.send('player_ready')
-    // setActiveTutorial(false)
+    setReady(true)
   }
-
-  // const skipTutorial = event => {
-  //   event.stopPropagation()
-  //   ServerPeer.send('skip_tutorial')
-  //   setActiveTutorial(false)
-  // }
 
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -79,8 +73,8 @@ const PlayStage = props => {
       >
         The Upperquadrant
       </h2>
-      <div onTouchStart={ready}>
-        <Button type="mobile" text="ready" />
+      <div onTouchStart={onTouchStartButton}>
+        <Button type="mobile" text="ready" ready={ready} />
       </div>
       <div
         className={classNames(styles.block, {
@@ -96,14 +90,6 @@ const PlayStage = props => {
         style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
       />
-      {/* {activeTutorial && (
-        <div
-          className={styles.skipTutorialBtn}
-          onClick={skipTutorial}
-        >
-          Skip tutorial
-        </div>
-      )} */}
     </section>
   )
 }

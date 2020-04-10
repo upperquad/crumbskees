@@ -21,7 +21,6 @@ const TutorialStage = props => {
   const { extraClassName, onFinish } = props
   const { videoBack, videoFront } = TUTORIAL_ROUND
   const [items, setItems] = useState([])
-  const [bothReady, setBothReady] = useState([])
   const [message, setMessage] = useState({ messageCount: 0 })
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
@@ -128,10 +127,11 @@ const TutorialStage = props => {
         case 'player_ready': {
           PlayersManager.players[playerIndex].setReady(true)
           const arePlayersReady = PlayersManager.bothReady()
-          setBothReady(arePlayersReady)
 
           if (arePlayersReady) {
-            onFinish()
+            setTimeout(() => {
+              onFinish()
+            }, 1000)
           }
           break
         }
@@ -231,7 +231,7 @@ const TutorialStage = props => {
             {PlayersManager.players.map((player, index) => {
               const text = `P${index + 1} ready`
 
-              return <Button text={text} />
+              return <Button text={text} ready={player.ready} />
             })}
           </div>
         </div>

@@ -5,9 +5,16 @@
   overflow: hidden;
   position: relative;
 
-  &:hover {
+  &:hover,
+  &.pressed {
     .inner {
       transform: none;
+    }
+  }
+
+  &.pressedOnce {
+    .inner {
+      background-color: $color-mint;
     }
   }
 
@@ -25,7 +32,7 @@
     padding: grid(.3);
     position: relative;
     transform: translate(-#{grid(.23)}, -#{grid(.16)});
-    transition: transform .5s $easing-expo-out;
+    transition: transform .4s $easing-quad-out, background .2s ease;
 
     &::before {
       border-left: grid(.7) solid transparent;
@@ -55,7 +62,8 @@
   &.mobile {
     display: inline-block;
 
-    &:hover {
+    &:hover,
+    &.pressed {
       .inner {
         transform: none;
       }
