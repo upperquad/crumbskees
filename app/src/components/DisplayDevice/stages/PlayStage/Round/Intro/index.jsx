@@ -41,12 +41,6 @@ const Intro = props => {
 
   // steps
   useEffect(() => {
-    // DEBUG
-    // timeout.current = setTimeout(() => {
-    //   onFinish()
-    //   setFinished(true)
-    // }, 2000)
-
     const currentStep = stepsArray[step]
     timeout.current = setTimeout(() => {
       if (currentStep.startGame) {
