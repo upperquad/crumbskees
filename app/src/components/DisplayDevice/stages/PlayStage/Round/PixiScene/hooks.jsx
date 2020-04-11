@@ -17,7 +17,6 @@ const transitionOutDuration = 1000
 
 export function useSetScene(refs, props) {
   useEffect(() => {
-    console.log('set up scene')
     // funcs
     function setVideo(source, container) {
       const texture = Texture.from(source)

@@ -97703,11 +97703,6 @@ var Intro = function Intro(props) {
   var timeout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // steps
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // DEBUG
-    // timeout.current = setTimeout(() => {
-    //   onFinish()
-    //   setFinished(true)
-    // }, 2000)
     var currentStep = stepsArray[step];
     timeout.current = setTimeout(function () {
       if (currentStep.startGame) {
@@ -97838,8 +97833,7 @@ var decelerationCircleCoef = 0.15;
 var transitionOutDuration = 1000;
 function useSetScene(refs, props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log('set up scene'); // funcs
-
+    // funcs
     function setVideo(source, container) {
       var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
       var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // Stetch the fullscreen
