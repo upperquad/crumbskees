@@ -91,6 +91,7 @@ const ControlDevice = () => {
         <ResultStage
           winner={winner}
           characterIndex={characterIndex}
+          score={score}
           resetGame={() => {
             setScore(0)
             setWinner(null)
