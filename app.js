@@ -29,20 +29,31 @@ const replaceMeta = (data, req, isShared = false) => {
         description = `I won and scored ${score}pts at this game!`
         break
       case 'lose':
-        description = `I lost at the game but I'll have my revenge!`
+        description = `I lost at this game but I'll have my revenge!`
         break
-      case 'tied':
+      case 'tie':
         description = `I tied, ${score}pts!`
+        image = 'https://dummyimage.com/600x400/6c12e3/ff4046'
         break
     }
 
-    switch(player) {
-      case '1':
-        image = 'https://dummyimage.com/600x400/6c12e3/fff'
-        break
-      case '2':
-        image = 'https://dummyimage.com/600x400/ff4046/fff'
-        break
+    if (result !== 'tie') {
+      switch(player) {
+        case '1':
+          if (result === 'win') {
+            image = 'https://dummyimage.com/600x400/6c12e3/000'
+          } else {
+            image = 'https://dummyimage.com/600x400/6c12e3/fff'
+          }
+          break
+        case '2':
+          if (result === 'win') {
+            image = 'https://dummyimage.com/600x400/ff4046/000'
+          } else {
+            image = 'https://dummyimage.com/600x400/ff4046/fff'
+          }
+          break
+      }
     }
   }
 
