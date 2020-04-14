@@ -17,7 +17,7 @@ const page = path.join(__dirname, `${frontEndRoot}index.html`)
 // replace the special strings with server generated strings
 const replaceMeta = (data, req, isShared = false) => {
   const url = `${req.protocol}://${req.get('host') + req.originalUrl}`
-  // All copy below are just placeholder and needs to be replaced
+  // All copy below are just placeholder and need to be replaced
   let title = 'Upperquad game' // Should we modify the title when sharing or always keep the same?
   let description = 'Come play this amazing game!'
   let image = 'https://i.imgur.com/V7irMl8.png'
@@ -31,13 +31,13 @@ const replaceMeta = (data, req, isShared = false) => {
       case 'lose':
         description = `I lost at this game but I'll have my revenge!`
         break
-      case 'tie':
+      case 'tied':
         description = `I tied, ${score}pts!`
         image = 'https://dummyimage.com/600x400/6c12e3/ff4046'
         break
     }
 
-    if (result !== 'tie') {
+    if (result !== 'tied') {
       switch(player) {
         case '1':
           if (result === 'win') {
