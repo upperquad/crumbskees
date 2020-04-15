@@ -38,7 +38,7 @@ const ResultStage = props => {
     if (winner === characterIndex) {
       resultTop = 'You won!'
       shareURL += '&result=win'
-      shareDescription = `I tied, ${score}pts!`
+      shareDescription = `I won and scored ${score}pts at this game!`
     } else {
       resultTop = 'You’re bad!'
       shareURL += '&result=lose'
