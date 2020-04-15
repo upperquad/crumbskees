@@ -96632,6 +96632,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stages_PlayStage_Round_PixiScene__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../stages/PlayStage/Round/PixiScene */ "./src/components/DisplayDevice/stages/PlayStage/Round/PixiScene/index.jsx");
 /* harmony import */ var _stages_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../stages/PlayStage/Round/PlayerMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PlayerMessage/index.jsx");
 /* harmony import */ var _stages_PlayStage_Round_PopupMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../stages/PlayStage/Round/PopupMessage */ "./src/components/DisplayDevice/stages/PlayStage/Round/PopupMessage/index.jsx");
+/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/grow.png */ "./src/assets/images/grow.png");
+/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/freeze.png */ "./src/assets/images/freeze.png");
+/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -96647,6 +96651,8 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -96900,7 +96906,7 @@ var GameZone = function GameZone(props) {
         gridLines = round.gridLines,
         itemImage = round.itemImage,
         numItems = round.numItems,
-        power = round.power;
+        powers = round.powers;
 
     for (var i = 0; i < gridCols; i++) {
       for (var j = 0; j < gridLines; j++) {
@@ -96914,17 +96920,41 @@ var GameZone = function GameZone(props) {
 
     var newItems = [];
 
-    if (power) {
-      var item = createItem(grid, power);
-      newItems.push(item);
+    for (var _i2 = 0; _i2 < powers.length; _i2++) {
+      var power = {
+        type: powers[_i2]
+      };
+
+      switch (powers[_i2]) {
+        default:
+        case 'grow':
+          power.image = _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11___default.a;
+          power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].orange;
+          break;
+
+        case 'freeze':
+          power.image = _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12___default.a;
+          power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].blue;
+
+          if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'SINGLE_PLAYER') {
+            // change freeze item to time item
+            // power.image = freezeItem // need a related image
+            power.type = 'time';
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].red;
+          }
+
+          break;
+      }
+
+      var powerItem = createItem(grid, power);
+      newItems.push(powerItem);
     }
 
-    for (var _i2 = 0; _i2 < numItems; _i2++) {
-      var _item = createItem(grid, {
+    for (var _i3 = 0; _i3 < numItems; _i3++) {
+      var item = createItem(grid, {
         image: itemImage
       });
-
-      newItems.push(_item);
+      newItems.push(item);
     }
 
     setItems(newItems);
@@ -97633,22 +97663,22 @@ var Intro = function Intro(props) {
   var timeout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // steps
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var currentStep = stepsArray[step];
     timeout.current = setTimeout(function () {
-      if (currentStep.startGame) {
-        onFinish();
-        timeout.current = setTimeout(function () {
-          return setFinished(true);
-        }, 1000);
-      }
-
-      if (step < stepsArray.length - 1) {
-        setStep(step + 1);
-      }
-    }, currentStep.tillNextStep);
-    return function () {
-      return clearTimeout(timeout.current);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+      onFinish();
+      setFinished(true);
+      console.log(setStep);
+    }, 1500); // const currentStep = stepsArray[step]
+    // timeout.current = setTimeout(() => {
+    //   if (currentStep.startGame) {
+    //     onFinish()
+    //     timeout.current = setTimeout(() => setFinished(true), 1000)
+    //   }
+    //   if (step < stepsArray.length - 1) {
+    //     setStep(step + 1)
+    //   }
+    // }, currentStep.tillNextStep)
+    // return () => clearTimeout(timeout.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
   var readyDropState;
 
@@ -98767,7 +98797,7 @@ function getResult() {
   var result;
 
   if (players.length === 1) {
-    // add a specific ending here
+    // single player: add a specific ending here
     result = '0';
   } else if (players[0].score() > players[1].score()) {
     result = 0;
@@ -99720,24 +99750,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_item_png__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/round_3/s3-intro.mp4 */ "./src/assets/images/round_3/s3-intro.mp4");
 /* harmony import */ var _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/grow.png */ "./src/assets/images/grow.png");
-/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/freeze.png */ "./src/assets/images/freeze.png");
-/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/character-white-1.mp4 */ "./src/assets/images/character-white-1.mp4");
-/* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/character1.mp4 */ "./src/assets/images/character1.mp4");
-/* harmony import */ var _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ~assets/images/character1.png */ "./src/assets/images/character1.png");
-/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ~assets/images/character-white-2.mp4 */ "./src/assets/images/character-white-2.mp4");
-/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ~assets/images/character2.mp4 */ "./src/assets/images/character2.mp4");
-/* harmony import */ var _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ~assets/images/character2.png */ "./src/assets/images/character2.png");
-/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_png__WEBPACK_IMPORTED_MODULE_19__);
-
-
+/* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/character-white-1.mp4 */ "./src/assets/images/character-white-1.mp4");
+/* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/character1.mp4 */ "./src/assets/images/character1.mp4");
+/* harmony import */ var _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/character1.png */ "./src/assets/images/character1.png");
+/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_png__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/character-white-2.mp4 */ "./src/assets/images/character-white-2.mp4");
+/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ~assets/images/character2.mp4 */ "./src/assets/images/character2.mp4");
+/* harmony import */ var _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ~assets/images/character2.png */ "./src/assets/images/character2.png");
+/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_png__WEBPACK_IMPORTED_MODULE_17__);
 
 
 
@@ -99772,16 +99796,16 @@ var COLORS = {
 var CHARACTERS = [{
   color: 'purple',
   secondaryColor: 'red',
-  video: _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_15___default.a,
-  videoWhite: _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_14___default.a,
-  image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16___default.a,
+  video: _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_13___default.a,
+  videoWhite: _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_12___default.a,
+  image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_14___default.a,
   name: 'Player 1'
 }, {
   color: 'red',
   secondaryColor: 'purple',
-  video: _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_18___default.a,
-  videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17___default.a,
-  image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_19___default.a,
+  video: _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_16___default.a,
+  videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_15___default.a,
+  image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_17___default.a,
   name: 'Player 2'
 }];
 var TUTORIAL_ROUND = {
@@ -99792,11 +99816,7 @@ var TUTORIAL_ROUND = {
   numItems: 10,
   gridCols: 32,
   gridLines: 14,
-  power: {
-    type: 'grow',
-    image: _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-    color: COLORS.orange
-  }
+  powers: ['grow', 'freeze']
 };
 var GAME_ROUNDS = [{
   key: 'game-round-1',
@@ -99808,11 +99828,7 @@ var GAME_ROUNDS = [{
   numItems: DEBUG ? 2 : 10,
   gridCols: 32,
   gridLines: 14,
-  power: {
-    type: 'grow',
-    image: _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-    color: COLORS.orange
-  }
+  powers: ['grow']
 }, {
   key: 'game-round-2',
   videoBack: _assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4___default.a,
@@ -99823,11 +99839,7 @@ var GAME_ROUNDS = [{
   numItems: DEBUG ? 2 : 10,
   gridCols: 32,
   gridLines: 14,
-  power: {
-    type: 'freeze',
-    image: _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13___default.a,
-    color: COLORS.blue
-  }
+  powers: ['freeze']
 }, {
   key: 'game-round-3',
   videoBack: _assets_images_round_3_r3_pattern_mp4__WEBPACK_IMPORTED_MODULE_8___default.a,
@@ -99838,11 +99850,7 @@ var GAME_ROUNDS = [{
   numItems: DEBUG ? 2 : 10,
   gridCols: 32,
   gridLines: 14,
-  power: {
-    type: 'grow',
-    image: _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-    color: COLORS.orange
-  }
+  powers: ['grow']
 }];
 
 /***/ }),

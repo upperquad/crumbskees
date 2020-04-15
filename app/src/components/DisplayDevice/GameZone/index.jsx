@@ -11,6 +11,9 @@ import PixiScene from '../stages/PlayStage/Round/PixiScene'
 import PlayerMessage from '../stages/PlayStage/Round/PlayerMessage'
 import PopupMessage from '../stages/PlayStage/Round/PopupMessage'
 
+import growItem from '~assets/images/grow.png'
+import freezeItem from '~assets/images/freeze.png'
+
 const GameZone = props => {
   const {
     addMessage,
@@ -195,7 +198,7 @@ const GameZone = props => {
   function setupGrid() {
     // REVIEW: this is really inefficient
     const grid = []
-    const { gridCols, gridLines, itemImage, numItems, power } = round
+    const { gridCols, gridLines, itemImage, numItems, powers } = round
     for (let i = 0; i < gridCols; i++) {
       for (let j = 0; j < gridLines; j++) {
         const obj = { x: i, y: j }
@@ -205,9 +208,28 @@ const GameZone = props => {
 
     const newItems = []
 
-    if (power) {
-      const item = createItem(grid, power)
-      newItems.push(item)
+    for (let i = 0; i < powers.length; i++) {
+      const power = { type: powers[i] }
+      switch (powers[i]) {
+        default:
+        case 'grow':
+          power.image = growItem
+          power.color = COLORS.orange
+          break
+        case 'freeze':
+          power.image = freezeItem
+          power.color = COLORS.blue
+
+          if (PlayersManager.mode === 'SINGLE_PLAYER') {
+            // change freeze item to time item
+            // power.image = freezeItem // need a related image
+            power.type = 'time'
+            power.color = COLORS.red
+          }
+          break
+      }
+      const powerItem = createItem(grid, power)
+      newItems.push(powerItem)
     }
 
     for (let i = 0; i < numItems; i++) {

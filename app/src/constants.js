@@ -10,8 +10,6 @@ import round3VideoBack from '~assets/images/round_3/r3-pattern.mp4'
 import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
 import round3Item from '~assets/images/round_3/s3-item.png'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
-import growItem from '~assets/images/grow.png'
-import freezeItem from '~assets/images/freeze.png'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import characterVideo1 from '~assets/images/character1.mp4'
@@ -68,11 +66,7 @@ export const TUTORIAL_ROUND = {
   numItems: 10,
   gridCols: 32,
   gridLines: 14,
-  power: {
-    type: 'grow',
-    image: growItem,
-    color: COLORS.orange,
-  },
+  powers: ['grow', 'freeze'],
 }
 
 export const GAME_ROUNDS = [
@@ -86,11 +80,7 @@ export const GAME_ROUNDS = [
     numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
-    power: {
-      type: 'grow',
-      image: growItem,
-      color: COLORS.orange,
-    },
+    powers: ['grow'],
   }, {
     key: 'game-round-2',
     videoBack: round2VideoBack,
@@ -101,11 +91,7 @@ export const GAME_ROUNDS = [
     numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
-    power: {
-      type: 'freeze',
-      image: freezeItem,
-      color: COLORS.blue,
-    },
+    powers: ['freeze'],
   }, {
     key: 'game-round-3',
     videoBack: round3VideoBack,
@@ -116,10 +102,6 @@ export const GAME_ROUNDS = [
     numItems: DEBUG ? 2 : 10,
     gridCols: 32,
     gridLines: 14,
-    power: {
-      type: 'grow',
-      image: growItem,
-      color: COLORS.orange,
-    },
+    powers: ['grow'],
   },
 ]
