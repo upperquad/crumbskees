@@ -12,7 +12,8 @@ const ResultStage = props => {
   let resultBottom
   let circleColor
   const video = []
-  let shareURL = `${window.location.href}?player=${characterIndex}&score=${score}`
+  const hostURL = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1)
+  let shareURL = `${hostURL}share?player=${characterIndex}&score=${score}`
   let shareDescription
 
   if (winner === 'tied') {
@@ -45,7 +46,7 @@ const ResultStage = props => {
     }
   }
 
-  shareURL = encodeURIComponent(shareURL)
+  // fb result https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fshare%3Fplayer%3D0%26score%3D6%26result%3Dwin
 
   return (
     <section className={styles.result}>
@@ -58,7 +59,7 @@ const ResultStage = props => {
         Share on Facebook
       </a>
       <a
-        href={`http://twitter.com/share?text=${shareDescription}&url=${shareURL}`}
+        href={`http://twitter.com/share?text=${shareDescription}&url=${encodeURIComponent(shareURL)}`}
         rel="noopener noreferrer"
         target="_blank"
         className={styles.shareButton}

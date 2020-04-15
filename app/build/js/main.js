@@ -96540,7 +96540,8 @@ var ResultStage = function ResultStage(props) {
   var resultBottom;
   var circleColor;
   var video = [];
-  var shareURL = "".concat(window.location.href, "?player=").concat(characterIndex, "&score=").concat(score);
+  var hostURL = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+  var shareURL = "".concat(hostURL, "share?player=").concat(characterIndex, "&score=").concat(score);
   var shareDescription;
 
   if (winner === 'tied') {
@@ -96574,9 +96575,9 @@ var ResultStage = function ResultStage(props) {
       shareURL += '&result=lose';
       shareDescription = 'I lost at this game but I\'ll have my revenge!';
     }
-  }
+  } // fb result https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fshare%3Fplayer%3D0%26score%3D6%26result%3Dwin
 
-  shareURL = encodeURIComponent(shareURL);
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.result
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -96585,7 +96586,7 @@ var ResultStage = function ResultStage(props) {
     target: "_blank",
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.shareButton
   }, "Share on Facebook"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "http://twitter.com/share?text=".concat(shareDescription, "&url=").concat(shareURL),
+    href: "http://twitter.com/share?text=".concat(shareDescription, "&url=").concat(encodeURIComponent(shareURL)),
     rel: "noopener noreferrer",
     target: "_blank",
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.shareButton
