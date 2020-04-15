@@ -18,6 +18,7 @@ const GameZone = props => {
     gameState,
     message,
     onFinish,
+    onUpdate,
     round,
     roundScoreArray,
     setGameState,
@@ -84,6 +85,7 @@ const GameZone = props => {
       if (itemsCaught.length > 0) {
         removeItems(itemsCaught)
       }
+      onUpdate()
     }
 
     const messageHandler = (detail, playerIndex) => {
@@ -114,6 +116,7 @@ const GameZone = props => {
           if (type === 'tutorial') {
             PlayersManager.players[playerIndex].setReady(true)
             const arePlayersReady = PlayersManager.bothReady()
+            onUpdate()
 
             if (arePlayersReady) {
               setTimeout(() => {

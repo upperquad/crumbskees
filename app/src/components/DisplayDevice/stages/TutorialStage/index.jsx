@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
+import useForceUpdate from 'use-force-update'
 // import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
@@ -15,6 +16,7 @@ const TutorialStage = props => {
   const [message, setMessage] = useState({ messageCount: 0 })
   const [gameState, setGameState] = useState('before-game')
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
+  const forceUpdate = useForceUpdate()
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -30,6 +32,10 @@ const TutorialStage = props => {
     })
   }
 
+  const onUpdate = () => {
+    forceUpdate()
+  }
+
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
       <div className={styles.container}>
@@ -43,15 +49,16 @@ const TutorialStage = props => {
         </div>
         <div className={styles.gameContent}>
           <GameZone
-            type="tutorial"
-            round={TUTORIAL_ROUND}
-            onFinish={onFinish}
-            roundScoreArray={roundScoreArray}
+            addMessage={addMessage}
             addRoundScoreArray={addRoundScoreArray}
             gameState={gameState}
-            setGameState={setGameState}
             message={message}
-            addMessage={addMessage}
+            onFinish={onFinish}
+            onUpdate={onUpdate}
+            round={TUTORIAL_ROUND}
+            roundScoreArray={roundScoreArray}
+            setGameState={setGameState}
+            type="tutorial"
           />
           <div className={styles.buttons}>
             {PlayersManager.players.map((player, index) => {

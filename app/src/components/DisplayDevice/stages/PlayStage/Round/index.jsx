@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import classNames from 'classnames'
+import useForceUpdate from 'use-force-update'
 
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
@@ -20,6 +21,7 @@ const Round = props => {
   const [message, setMessage] = useState({ messageCount: 0 })
   const [gameState, setGameState] = useState('before-game')
   const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
+  const forceUpdate = useForceUpdate()
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -33,6 +35,10 @@ const Round = props => {
       prevScoreArray[index] += score
       return [...prevScoreArray]
     })
+  }
+
+  const onUpdate = () => {
+    forceUpdate()
   }
 
   // Timer
@@ -63,7 +69,7 @@ const Round = props => {
     }
 
     if (gameState === 'after-game') {
-      const timeout = setTimeout(onRoundEnd, 5000)
+      const timeout = setTimeout(onRoundEnd, 3000)
 
       return () => {
         clearTimeout(timeout)
@@ -81,14 +87,15 @@ const Round = props => {
           <Transition key="play-stage-in-game" timeout={{ enter: 0, exit: 1300 }}>
             <div className={classNames(styles.gameContent)}>
               <GameZone
-                type="game"
-                round={GAME_ROUNDS[roundIndex]}
-                roundScoreArray={roundScoreArray}
+                addMessage={addMessage}
                 addRoundScoreArray={addRoundScoreArray}
                 gameState={gameState}
-                setGameState={setGameState}
                 message={message}
-                addMessage={addMessage}
+                onUpdate={onUpdate}
+                round={GAME_ROUNDS[roundIndex]}
+                roundScoreArray={roundScoreArray}
+                setGameState={setGameState}
+                type="game"
               />
             </div>
           </Transition>
