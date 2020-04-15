@@ -95806,8 +95806,7 @@ var App = function App() {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (isDesktop) {
       document.documentElement.classList.add('is-desktop'); // clear shared url
-
-      window.history.replaceState({}, document.title, '/');
+      // window.history.replaceState({}, document.title, '/')
     } else {
       document.documentElement.classList.remove('is-desktop');
     }
