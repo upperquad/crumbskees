@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
-import Button from '~components/Button'
+import IndicatorLight from '~components/IndicatorLight'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 
@@ -51,7 +51,7 @@ const PlayStage = props => {
     ServerPeer.send('click')
   }
 
-  const onTouchStartButton = () => {
+  const onTouchStartIndicatorLight = () => {
     ServerPeer.send('player_ready')
     setReady(true)
   }
@@ -73,8 +73,8 @@ const PlayStage = props => {
       >
         The Upperquadrant
       </h2>
-      <div onTouchStart={onTouchStartButton}>
-        <Button type="mobile" text="ready" ready={ready} />
+      <div onTouchStart={onTouchStartIndicatorLight}>
+        <IndicatorLight type="mobile" text="ready" ready={ready} />
       </div>
       <div
         className={classNames(styles.block, {

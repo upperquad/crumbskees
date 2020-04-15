@@ -95866,84 +95866,6 @@ var AutoplayVideo = function AutoplayVideo(props) {
 
 /***/ }),
 
-/***/ "./src/components/Button/index.jsx":
-/*!*****************************************!*\
-  !*** ./src/components/Button/index.jsx ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/Button/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-var Button = function Button(props) {
-  var _classNames;
-
-  var ready = props.ready,
-      text = props.text,
-      type = props.type;
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      pressed = _useState2[0],
-      setPressed = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      pressedOnce = _useState4[0],
-      setPressedOne = _useState4[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (ready === true && pressed === false) {
-      setPressed(true);
-      setTimeout(function () {
-        setPressedOne(true);
-        setPressed(false);
-      }, 300);
-    }
-  }, [ready]);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.mobile, type === 'mobile'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pressed, pressed), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pressedOnce, pressedOnce), _classNames))
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.inner
-  }, text));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Button);
-
-/***/ }),
-
-/***/ "./src/components/Button/style.module.scss":
-/*!*************************************************!*\
-  !*** ./src/components/Button/style.module.scss ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-module.exports = {"button":"Button-button--2dnz7","inner":"Button-inner--2MU8f","pressed":"Button-pressed--2CJ-B","pressedOnce":"Button-pressedOnce--1CMzT","mobile":"Button-mobile--3d-tn"};
-
-/***/ }),
-
 /***/ "./src/components/ControlDevice/Circle/index.jsx":
 /*!*******************************************************!*\
   !*** ./src/components/ControlDevice/Circle/index.jsx ***!
@@ -96243,7 +96165,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/PlayStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _components_IndicatorLight__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/IndicatorLight */ "./src/components/IndicatorLight/index.jsx");
 /* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -96328,7 +96250,7 @@ var PlayStage = function PlayStage(props) {
     _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('click');
   };
 
-  var onTouchStartButton = function onTouchStartButton() {
+  var onTouchStartIndicatorLight = function onTouchStartIndicatorLight() {
     _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('player_ready');
     setReady(true);
   };
@@ -96343,8 +96265,8 @@ var PlayStage = function PlayStage(props) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.title, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titleRed, secondaryColor === 'red'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titlePurple, secondaryColor === 'purple'), _classNames))
     }, "The Upperquadrant"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      onTouchStart: onTouchStartButton
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      onTouchStart: onTouchStartIndicatorLight
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_IndicatorLight__WEBPACK_IMPORTED_MODULE_6__["default"], {
       type: "mobile",
       text: "ready",
       ready: ready
@@ -99210,7 +99132,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/TutorialStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _components_IndicatorLight__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/IndicatorLight */ "./src/components/IndicatorLight/index.jsx");
 /* harmony import */ var _components_DisplayDevice_GameZone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/DisplayDevice/GameZone */ "./src/components/DisplayDevice/GameZone/index.jsx");
 /* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~assets/images/tutorial/helper.png */ "./src/assets/images/tutorial/helper.png");
 /* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_7__);
@@ -99316,7 +99238,7 @@ var TutorialStage = function TutorialStage(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.buttons
   }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function (player, index) {
     var text = "P".concat(index + 1, " ready");
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_IndicatorLight__WEBPACK_IMPORTED_MODULE_5__["default"], {
       text: text,
       ready: player.ready
     });
@@ -99488,6 +99410,84 @@ var DropText = function DropText(props) {
 
 // extracted by mini-css-extract-plugin
 module.exports = {"dropText":"DropText-dropText--2Vr_0"};
+
+/***/ }),
+
+/***/ "./src/components/IndicatorLight/index.jsx":
+/*!*************************************************!*\
+  !*** ./src/components/IndicatorLight/index.jsx ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/IndicatorLight/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+var IndicatorLight = function IndicatorLight(props) {
+  var _classNames;
+
+  var ready = props.ready,
+      text = props.text,
+      type = props.type;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      pressed = _useState2[0],
+      setPressed = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      pressedOnce = _useState4[0],
+      setPressedOne = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (ready === true && pressed === false) {
+      setPressed(true);
+      setTimeout(function () {
+        setPressedOne(true);
+        setPressed(false);
+      }, 300);
+    }
+  }, [ready]);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.mobile, type === 'mobile'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pressed, pressed), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pressedOnce, pressedOnce), _classNames))
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.inner
+  }, text));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (IndicatorLight);
+
+/***/ }),
+
+/***/ "./src/components/IndicatorLight/style.module.scss":
+/*!*********************************************************!*\
+  !*** ./src/components/IndicatorLight/style.module.scss ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+module.exports = {"button":"IndicatorLight-button--2XxhC","inner":"IndicatorLight-inner--3v37Y","pressed":"IndicatorLight-pressed--24I-W","pressedOnce":"IndicatorLight-pressedOnce--3DFII","mobile":"IndicatorLight-mobile--18yVT"};
 
 /***/ }),
 

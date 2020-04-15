@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
-const Button = props => {
+const IndicatorLight = props => {
   const { ready, text, type } = props
   const [pressed, setPressed] = useState(false)
   const [pressedOnce, setPressedOne] = useState(false)
@@ -31,4 +31,4 @@ const Button = props => {
   )
 }
 
-export default Button
+export default IndicatorLight

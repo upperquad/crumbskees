@@ -5,7 +5,7 @@ import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
 import { TUTORIAL_ROUND } from '~constants'
 
-import Button from '~components/Button'
+import IndicatorLight from '~components/IndicatorLight'
 import GameZone from '~components/DisplayDevice/GameZone'
 
 import imageHelper from '~assets/images/tutorial/helper.png'
@@ -57,7 +57,7 @@ const TutorialStage = props => {
             {PlayersManager.players.map((player, index) => {
               const text = `P${index + 1} ready`
 
-              return <Button text={text} ready={player.ready} />
+              return <IndicatorLight text={text} ready={player.ready} />
             })}
           </div>
         </div>

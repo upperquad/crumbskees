@@ -400,22 +400,22 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.Button-button--2dnz7 .Button-inner--2MU8f {
+.IndicatorLight-button--2XxhC .IndicatorLight-inner--3v37Y {
   font-family: 'Ginto Nord Black';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: normal;
   text-transform: uppercase; }
 
-.Button-button--2dnz7 {
+.IndicatorLight-button--2XxhC {
   display: inline-block;
   overflow: hidden;
   position: relative; }
-  .Button-button--2dnz7:hover .Button-inner--2MU8f, .Button-button--2dnz7.Button-pressed--2CJ-B .Button-inner--2MU8f {
+  .IndicatorLight-button--2XxhC:hover .IndicatorLight-inner--3v37Y, .IndicatorLight-button--2XxhC.IndicatorLight-pressed--24I-W .IndicatorLight-inner--3v37Y {
     transform: none; }
-  .Button-button--2dnz7.Button-pressedOnce--1CMzT .Button-inner--2MU8f {
+  .IndicatorLight-button--2XxhC.IndicatorLight-pressedOnce--3DFII .IndicatorLight-inner--3v37Y {
     background-color: #69e5ab; }
-  .Button-button--2dnz7 .Button-inner--2MU8f {
+  .IndicatorLight-button--2XxhC .IndicatorLight-inner--3v37Y {
     background-color: #fff;
     border: 0.3125vw solid #000;
     box-shadow: 1.5625vw 1.5625vw 0px #000;
@@ -428,7 +428,7 @@ a {
     position: relative;
     transform: translate(-0.71875vw, -0.5vw);
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background 0.2s ease; }
-    .Button-button--2dnz7 .Button-inner--2MU8f::before {
+    .IndicatorLight-button--2XxhC .IndicatorLight-inner--3v37Y::before {
       border-left: 2.1875vw solid transparent;
       border-right: 0 solid transparent;
       border-top: 2.1875vw solid #000;
@@ -438,7 +438,7 @@ a {
       position: absolute;
       top: calc(100% + 0.3125vw);
       width: 0; }
-    .Button-button--2dnz7 .Button-inner--2MU8f::after {
+    .IndicatorLight-button--2XxhC .IndicatorLight-inner--3v37Y::after {
       border-bottom: 2.1875vw solid #000;
       border-left: 0 solid transparent;
       border-right: 2.1875vw solid transparent;
@@ -448,11 +448,11 @@ a {
       position: absolute;
       top: -0.3125vw;
       width: 0; }
-  .Button-button--2dnz7.Button-mobile--3d-tn {
+  .IndicatorLight-button--2XxhC.IndicatorLight-mobile--18yVT {
     display: inline-block; }
-    .Button-button--2dnz7.Button-mobile--3d-tn:hover .Button-inner--2MU8f, .Button-button--2dnz7.Button-mobile--3d-tn.Button-pressed--2CJ-B .Button-inner--2MU8f {
+    .IndicatorLight-button--2XxhC.IndicatorLight-mobile--18yVT:hover .IndicatorLight-inner--3v37Y, .IndicatorLight-button--2XxhC.IndicatorLight-mobile--18yVT.IndicatorLight-pressed--24I-W .IndicatorLight-inner--3v37Y {
       transform: none; }
-    .Button-button--2dnz7.Button-mobile--3d-tn .Button-inner--2MU8f {
+    .IndicatorLight-button--2XxhC.IndicatorLight-mobile--18yVT .IndicatorLight-inner--3v37Y {
       border: 4px solid #000;
       box-shadow: 20px 20px 0px #000;
       display: inline-block;
@@ -461,12 +461,12 @@ a {
       margin-top: 20px;
       padding: 12px;
       transform: translate(-10px, -6px); }
-      .Button-button--2dnz7.Button-mobile--3d-tn .Button-inner--2MU8f::before {
+      .IndicatorLight-button--2XxhC.IndicatorLight-mobile--18yVT .IndicatorLight-inner--3v37Y::before {
         border-left: 28px solid transparent;
         border-top: 28px solid #000;
         left: -4px;
         top: calc(100% + 4px); }
-      .Button-button--2dnz7.Button-mobile--3d-tn .Button-inner--2MU8f::after {
+      .IndicatorLight-button--2XxhC.IndicatorLight-mobile--18yVT .IndicatorLight-inner--3v37Y::after {
         border-bottom: 28px solid #000;
         border-right: 28px solid transparent;
         left: calc(100% + 4px);
