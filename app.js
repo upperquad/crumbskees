@@ -39,14 +39,14 @@ const replaceMeta = (data, req, isShared = false) => {
 
     if (result !== 'tied') {
       switch(player) {
-        case '1':
+        case '0':
           if (result === 'win') {
             image = 'https://dummyimage.com/600x400/6c12e3/000'
           } else {
             image = 'https://dummyimage.com/600x400/6c12e3/fff'
           }
           break
-        case '2':
+        case '1':
           if (result === 'win') {
             image = 'https://dummyimage.com/600x400/ff4046/000'
           } else {
