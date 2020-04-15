@@ -47,7 +47,7 @@ const replaceMeta = (data, req, isShared = false) => {
         description = global.parseMessage(global.SHARING_MESSAGES.description.tied, score)
         image = global.SHARING_MESSAGES.image.tied
         break
-      case: 'singlemode':
+      case 'singleMode':
         description = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score)
         image = global.SHARING_MESSAGES.image.player0win
         break

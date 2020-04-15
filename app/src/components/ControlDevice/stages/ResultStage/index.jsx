@@ -7,7 +7,7 @@ import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const ResultStage = props => {
-  const { characterIndex, resetGame, score, winner } = props
+  const { characterIndex, mode, resetGame, score, winner } = props
   let resultTop
   let resultBottom
   let circleColor
@@ -24,7 +24,7 @@ const ResultStage = props => {
       video.push(<AutoplayVideo src={character.videoWhite} extraClassName={styles.video} poster={character.image} />)
     })
     shareURL += '&result=tied'
-    shareDescription = `I tied, ${score}pts!`
+    shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.tied, score)
   } else {
     resultBottom = CHARACTERS[winner].name
     circleColor = CHARACTERS[winner].color
@@ -35,14 +35,19 @@ const ResultStage = props => {
         poster={CHARACTERS[winner].image}
       />,
     )
-    if (winner === characterIndex) {
+
+    if (mode === 'SINGLE_PLAYER') {
+      resultTop = 'Good job!'
+      shareURL += '&result=singleMode'
+      shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score)
+    } else if (winner === characterIndex) {
       resultTop = 'You won!'
       shareURL += '&result=win'
-      shareDescription = `I won and scored ${score}pts at this game!`
+      shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.win, score)
     } else {
       resultTop = 'You’re bad!'
       shareURL += '&result=lose'
-      shareDescription = 'I lost at this game but I\'ll have my revenge!'
+      shareDescription = global.SHARING_MESSAGES.description.lose
     }
   }
 
