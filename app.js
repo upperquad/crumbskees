@@ -1,5 +1,7 @@
 'use strict';
 
+require('./app/src/globals.js')
+
 const express = require('express')
 const SocketServer = require('ws').Server
 const SocketPeer = require('socketpeer')
@@ -18,49 +20,44 @@ const page = path.join(__dirname, `${frontEndRoot}index.html`)
 const replaceMeta = (data, req, isShared = false) => {
   const url = `${req.protocol}://${req.get('host') + req.originalUrl}`
   // All copy below are just placeholder and need to be replaced
-  let title = 'Upperquad game' // Should we modify the title when sharing or always keep the same?
-  let description = 'Come play this amazing game!'
-  let image = 'https://i.imgur.com/V7irMl8.png'
+  let title = global.SHARING_MESSAGES.title // Should we modify the title when sharing or always keep the same?
+  let description = global.SHARING_MESSAGES.description.default
+  let image = global.SHARING_MESSAGES.image.default
 
   if (isShared) {
     const { score, player, result } = req.query
     switch (result) {
       case 'win':
-        description = `I won and scored ${score}pts at this game!`
+        description = global.parseMessage(global.SHARING_MESSAGES.description.win, score)
+        if (player === '0') {
+          image = global.SHARING_MESSAGES.image.player0win
+        } else if (player === '1') {
+          image = global.SHARING_MESSAGES.image.player1win
+        }
         break
       case 'lose':
-        description = `I lost at this game but I'll have my revenge!`
+        description = global.SHARING_MESSAGES.description.lose
+        if (player === '0') {
+          image = global.SHARING_MESSAGES.image.player0lose
+        } else if (player === '1') {
+          image = global.SHARING_MESSAGES.image.player1lose
+        }
         break
       case 'tied':
-        description = `I tied, ${score}pts!`
-        image = 'https://dummyimage.com/600x400/6c12e3/ff4046'
+        description = global.parseMessage(global.SHARING_MESSAGES.description.tied, score)
+        image = global.SHARING_MESSAGES.image.tied
         break
-    }
-
-    if (result !== 'tied') {
-      switch(player) {
-        case '0':
-          if (result === 'win') {
-            image = 'https://dummyimage.com/600x400/6c12e3/000'
-          } else {
-            image = 'https://dummyimage.com/600x400/6c12e3/fff'
-          }
-          break
-        case '1':
-          if (result === 'win') {
-            image = 'https://dummyimage.com/600x400/ff4046/000'
-          } else {
-            image = 'https://dummyimage.com/600x400/ff4046/fff'
-          }
-          break
-      }
+      case: 'singlemode':
+        description = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score)
+        image = global.SHARING_MESSAGES.image.player0win
+        break
     }
   }
 
-  data = data.replace(/\__OG_TITLE__/g, title)
-  data = data.replace(/\__OG_DESCRIPTION__/g, description)
-  data = data.replace(/\__OG_IMAGE__/g, image)
-  data = data.replace(/\__OG_URL__/g, url)
+  data = data.replace(/__OG_TITLE__/g, title)
+  data = data.replace(/__OG_DESCRIPTION__/g, description)
+  data = data.replace(/__OG_IMAGE__/g, image)
+  data = data.replace(/__OG_URL__/g, url)
 
   return data
 }
