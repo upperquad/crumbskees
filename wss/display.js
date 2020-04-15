@@ -3,10 +3,8 @@ const encodeMessage = require('./inc/encodeMessage.js')
 const decodeMessage = require('./inc/decodeMessage.js')
 
 const initDisplay = (wssDisplay, existingTokenDict) => {
-  wssDisplay.on('connection', (ws, req) => {
+  wssDisplay.on('connection', ws => {
     ws.tokenList = []
-    // console.log(req.params)
-    // console.log(req.query)
     // if (wssDisplay.clients.length > 1) {
     //   ws.close(1000, 'active_game_exist')
     //   return
