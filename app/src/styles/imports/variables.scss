@@ -9,10 +9,10 @@ $color-pink: #feb8ee;
 $color-orange: #ff9d21;
 $color-red: #ff4047;
 $color-red-fade: rgba($color-red, .8);
-$color-purple: #3F1BD0;
+$color-purple: #3f1bd0;
 $color-beige: #fffaf2;
 $color-yellow: #ffe947;
-$color-mint: #69E5AB;
+$color-mint: #69e5ab;
 
 /* Breakpoints */
 $breakpoint-tablet: 1168px;
@@ -24,7 +24,7 @@ $base-width: 1920;
 
 /* Easings*/
 $easing-expo-out: cubic-bezier(.19, 1, .22, 1);
-$easing-quad-out: cubic-bezier(.165, .840, .440, 1.000);
+$easing-quad-out: cubic-bezier(.165, .84, .44, 1);
 $easing-circle-out: cubic-bezier(.075, .82, .165, 1);
 $easing-circle-in-out: cubic-bezier(.785, .135, .15, .86);
 

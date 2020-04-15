@@ -360,7 +360,7 @@ a {
   text-transform: uppercase; }
 
 .TutorialStage-tutorial--3Ybyr {
-  background-color: #3F1BD0;
+  background-color: #3f1bd0;
   color: #fff; }
 
 .TutorialStage-container--13i5g {
@@ -414,7 +414,7 @@ a {
   .Button-button--2dnz7:hover .Button-inner--2MU8f, .Button-button--2dnz7.Button-pressed--2CJ-B .Button-inner--2MU8f {
     transform: none; }
   .Button-button--2dnz7.Button-pressedOnce--1CMzT .Button-inner--2MU8f {
-    background-color: #69E5AB; }
+    background-color: #69e5ab; }
   .Button-button--2dnz7 .Button-inner--2MU8f {
     background-color: #fff;
     border: 0.3125vw solid #000;
@@ -661,7 +661,7 @@ a {
       margin-right: 0; }
 
 .Board-character--1Sl7a {
-  background-color: #3F1BD0;
+  background-color: #3f1bd0;
   border-right: 2px solid #000;
   height: 100%;
   width: 12.5vw; }
@@ -1210,7 +1210,7 @@ a {
   background: #ff4047; }
 
 .Circle-circlePurple--H8ifp {
-  background: #3F1BD0; }
+  background: #3f1bd0; }
 
 /* Colors */
 /* Breakpoints */
@@ -1278,7 +1278,7 @@ a {
   flex-shrink: 0; }
 
 .MeetCharacterStage-button--1lihH {
-  background: #69E5AB;
+  background: #69e5ab;
   border: 1px solid #000;
   flex-grow: 0;
   flex-shrink: 0;
@@ -1429,7 +1429,7 @@ body {
         height: 60vw;
         width: 60vw; } }
   .common-character-choice--38URy .common-button--VMYN_ {
-    background: #69E5AB;
+    background: #69e5ab;
     border: 1px solid #000;
     flex-grow: 0;
     flex-shrink: 0;
@@ -1476,7 +1476,7 @@ body {
         height: 60vw;
         width: 60vw; } }
   .common-character-confirm--2kUjD .common-button--VMYN_ {
-    background: #69E5AB;
+    background: #69e5ab;
     border: 1px solid #000;
     flex-grow: 0;
     flex-shrink: 0;
@@ -1624,7 +1624,7 @@ body {
   .common-circle--yellow--16GTH {
     background: #ffe947; }
   .common-circle--purple--1KeYi {
-    background: #3F1BD0; }
+    background: #3f1bd0; }
   .common-circle--red--1UTiQ {
     background: #ff4047; }
   @media only screen and (max-height: 630px) {
@@ -1693,7 +1693,7 @@ body {
   font-size: 5.98vw;
   letter-spacing: .007em; }
   .PlayStage-title--2eNlD.PlayStage-titlePurple--1hNH7 {
-    color: #3F1BD0; }
+    color: #3f1bd0; }
   .PlayStage-title--2eNlD.PlayStage-titleRed--1SMZZ {
     color: #ff4047; }
 
@@ -1725,7 +1725,7 @@ body {
   margin: 20px 5vw 24px;
   position: relative; }
   .PlayStage-block--3zdrK.PlayStage-blockPurple--14Epy {
-    background: #3F1BD0; }
+    background: #3f1bd0; }
   .PlayStage-block--3zdrK.PlayStage-blockRed--23YCB {
     background: #ff4047; }
 

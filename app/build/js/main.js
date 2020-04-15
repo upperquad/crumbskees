@@ -96137,6 +96137,7 @@ var ControlDevice = function ControlDevice() {
   }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
     winner: winner,
     characterIndex: characterIndex,
+    score: score,
     resetGame: function resetGame() {
       setScore(0);
       setWinner(null);
@@ -96609,6 +96610,7 @@ __webpack_require__.r(__webpack_exports__);
 var ResultStage = function ResultStage(props) {
   var characterIndex = props.characterIndex,
       resetGame = props.resetGame,
+      score = props.score,
       winner = props.winner;
   var resultTop;
   var resultBottom;
@@ -96663,6 +96665,8 @@ var ResultStage = function ResultStage(props) {
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.smallText
   }, winner === 'tied' ? 'Tie!' : 'Winner!'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.smallText
+  }, "Score:", score), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.button,
     onClick: resetGame
   }, "Play again"));
