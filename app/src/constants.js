@@ -60,6 +60,21 @@ export const CHARACTERS = [
   },
 ]
 
+export const TUTORIAL_ROUND = {
+  videoBack: round1VideoBack,
+  videoFront: round1VideoFront,
+  itemImage: round1Item,
+  videoIntro: round1IntroVideo,
+  numItems: 10,
+  gridCols: 32,
+  gridLines: 14,
+  power: {
+    type: 'grow',
+    image: growItem,
+    color: COLORS.orange,
+  },
+}
+
 export const GAME_ROUNDS = [
   {
     key: 'game-round-1',

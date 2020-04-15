@@ -54,13 +54,10 @@
   z-index: 0;
 }
 
-.gameZone {
-  background-position: center center;
-  background-size: cover;
-  cursor: none;
+.gameContent {
   height: grid(14);
   position: relative;
-  text-align: center;
+  width: 100%;
   z-index: 10;
 
   &::after {

@@ -7,7 +7,7 @@ import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const ResultStage = props => {
-  const { characterIndex, resetGame, winner } = props
+  const { characterIndex, resetGame, score, winner } = props
   let resultTop
   let resultBottom
   let circleColor
@@ -49,6 +49,10 @@ const ResultStage = props => {
       </div>
       <div className={styles.smallText}>
         {winner === 'tied' ? 'Tie!' : 'Winner!'}
+      </div>
+      <div className={styles.smallText}>
+        Score:
+        {score}
       </div>
       <div className={styles.button} onClick={resetGame}>
         Play again

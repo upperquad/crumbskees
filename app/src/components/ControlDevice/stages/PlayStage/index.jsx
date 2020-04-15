@@ -4,11 +4,14 @@ import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
+import IndicatorLight from '~components/IndicatorLight'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
+
 const PlayStage = props => {
-  const { activeTutorial, color, image, score, secondaryColor, setActiveTutorial } = props
+  const { color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
+  const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
 
   const coordX = useRef(0)
@@ -48,10 +51,9 @@ const PlayStage = props => {
     ServerPeer.send('click')
   }
 
-  const skipTutorial = event => {
-    event.stopPropagation()
-    ServerPeer.send('skip_tutorial')
-    setActiveTutorial(false)
+  const onTouchStartIndicatorLight = () => {
+    ServerPeer.send('player_ready')
+    setReady(true)
   }
 
   return (
@@ -71,6 +73,9 @@ const PlayStage = props => {
       >
         The Upperquadrant
       </h2>
+      <div onTouchStart={onTouchStartIndicatorLight}>
+        <IndicatorLight type="mobile" text="ready" ready={ready} />
+      </div>
       <div
         className={classNames(styles.block, {
           [styles.blockRed]: color === 'red',
@@ -85,14 +90,6 @@ const PlayStage = props => {
         style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
       />
-      {activeTutorial && (
-        <div
-          className={styles.skipTutorialBtn}
-          onClick={skipTutorial}
-        >
-          Skip tutorial
-        </div>
-      )}
     </section>
   )
 }
