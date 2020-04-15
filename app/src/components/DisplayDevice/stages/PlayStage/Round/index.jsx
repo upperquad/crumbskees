@@ -11,7 +11,7 @@ import Board from './Board'
 import Intro from './Intro'
 import GameZone from '~components/DisplayDevice/GameZone'
 
-const TIME = 5
+const TIME = 40
 
 const Round = props => {
   const { onRoundEnd, roundIndex, transitionStatus } = props
