@@ -25,6 +25,8 @@ export default class Player {
 
     this.connected = false
 
+    this.ready = false // boolean to know if player is ready after trying the tutorial
+
     this.playerPeer.connect(id)
   }
 
@@ -38,6 +40,10 @@ export default class Player {
 
   setLostStatus = status => {
     this.lost = status
+  }
+
+  setReady = ready => {
+    this.ready = ready
   }
 
   addScore = nbItemsCaught => {

@@ -155,6 +155,8 @@ class PlayersManager extends Observable {
 
   bothConnected = () => this.players.every(item => item.connected)
 
+  bothReady = () => this.players.every(item => item.ready)
+
   addScore = (score, id) => {
     const player = this.player(id)
 

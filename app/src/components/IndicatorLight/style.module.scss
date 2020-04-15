@@ -1,0 +1,97 @@
+@import "~styles/imports/index";
+
+.button {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+
+  &:hover,
+  &.pressed {
+    .inner {
+      transform: none;
+    }
+  }
+
+  &.pressedOnce {
+    .inner {
+      background-color: $color-mint;
+    }
+  }
+
+  .inner {
+    @extend %Bold;
+
+    background-color: $color-white;
+    border: grid(.1) solid $color-black;
+    box-shadow: grid(.5) grid(.5) 0px $color-black;
+    color: $color-black;
+    font-size: responsive-font(26);
+    line-height: 1;
+    margin-left: grid(.5);
+    margin-top: grid(.5);
+    padding: grid(.3);
+    position: relative;
+    transform: translate(-#{grid(.23)}, -#{grid(.16)});
+    transition: transform .4s $easing-quad-out, background .2s ease;
+
+    &::before {
+      border-left: grid(.7) solid transparent;
+      border-right: 0 solid transparent;
+      border-top: grid(.7) solid $color-black;
+      content: '';
+      height: 0;
+      left: -#{grid(.1)};
+      position: absolute;
+      top: calc(100% + #{grid(.1)});
+      width: 0;
+    }
+
+    &::after {
+      border-bottom: grid(.7) solid $color-black;
+      border-left: 0 solid transparent;
+      border-right: grid(.7) solid transparent;
+      content: '';
+      height: 0;
+      left: calc(100% + #{grid(.1)});
+      position: absolute;
+      top: -#{grid(.1)};
+      width: 0;
+    }
+  }
+
+  &.mobile {
+    display: inline-block;
+
+    &:hover,
+    &.pressed {
+      .inner {
+        transform: none;
+      }
+    }
+
+    .inner {
+      border: 4px solid $color-black;
+      box-shadow: 20px 20px 0px $color-black;
+      display: inline-block;
+      font-size: 24px;
+      margin-left: 20px;
+      margin-top: 20px;
+      padding: 12px;
+      transform: translate(-10px, -6px);
+
+      &::before {
+        border-left: 28px solid transparent;
+        border-top: 28px solid $color-black;
+        left: -4px;
+        top: calc(100% + 4px);
+      }
+
+      &::after {
+        border-bottom: 28px solid $color-black;
+        border-right: 28px solid transparent;
+        left: calc(100% + 4px);
+        top: -4px;
+      }
+    }
+  }
+}
