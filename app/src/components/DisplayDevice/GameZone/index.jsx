@@ -27,7 +27,7 @@ const GameZone = props => {
     setGameState,
     type,
   } = props
-  const { videoBack, videoFront } = round
+  const { setTime, time, videoBack, videoFront } = round
   const [items, setItems] = useState([])
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
@@ -284,14 +284,16 @@ const GameZone = props => {
   return (
     <div className={styles.gameZone}>
       <PixiScene
-        videoFront={videoFront}
-        videoBack={videoBack}
-        positions={positionArray}
-        powers={powerArray}
         cancelPower={cancelPower}
         gameState={gameState}
         items={items}
+        positions={positionArray}
+        powers={powerArray}
+        setTime={setTime}
+        time={time}
         type={type}
+        videoBack={videoBack}
+        videoFront={videoFront}
       />
       {PlayersManager.players.map((player, index) => (
         <PlayerMessage

@@ -96677,7 +96677,9 @@ var GameZone = function GameZone(props) {
       roundScoreArray = props.roundScoreArray,
       setGameState = props.setGameState,
       type = props.type;
-  var videoBack = round.videoBack,
+  var setTime = round.setTime,
+      time = round.time,
+      videoBack = round.videoBack,
       videoFront = round.videoFront;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
@@ -97007,14 +97009,16 @@ var GameZone = function GameZone(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.gameZone
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PixiScene__WEBPACK_IMPORTED_MODULE_8__["default"], {
-    videoFront: videoFront,
-    videoBack: videoBack,
-    positions: positionArray,
-    powers: powerArray,
     cancelPower: cancelPower,
     gameState: gameState,
     items: items,
-    type: type
+    positions: positionArray,
+    powers: powerArray,
+    setTime: setTime,
+    time: time,
+    type: type,
+    videoBack: videoBack,
+    videoFront: videoFront
   }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage_Round_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__["default"], {
       power: powerArray[index],
@@ -98015,7 +98019,7 @@ function useUpdatePowers(refs, props) {
           refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
         } else if (props.powers[index].type === 'time') {
           console.log('add time');
-          updateRadius(refs.circlesPoints.current[index], 0);
+          props.setTime(200);
         }
 
         if (props.powers[index].type) {
@@ -98030,7 +98034,7 @@ function useUpdatePowers(refs, props) {
 
       return undefined;
     }); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.powers]);
+  }, [props.powers, props.cancelPower, props.setTime]);
 }
 function useRAF(refs, props) {
   // RAF
@@ -98212,6 +98216,8 @@ var PixiScene = function PixiScene(props) {
       items = props.items,
       positions = props.positions,
       powers = props.powers,
+      setTime = props.setTime,
+      time = props.time,
       type = props.type,
       videoBack = props.videoBack,
       videoFront = props.videoFront; // re-used references through hooks
@@ -98284,7 +98290,9 @@ var PixiScene = function PixiScene(props) {
     timeFrozen: timeFrozen
   }, {
     cancelPower: cancelPower,
-    powers: powers
+    powers: powers,
+    time: time,
+    setTime: setTime
   }); // on RAF
 
   Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useRAF"])({
@@ -98683,6 +98691,8 @@ var Round = function Round(props) {
     round: _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex],
     roundScoreArray: roundScoreArray,
     setGameState: setGameState,
+    setTime: setTime,
+    time: time,
     type: "game"
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_8__["default"], {
     time: time,

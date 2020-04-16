@@ -95,6 +95,8 @@ const Round = props => {
                 round={GAME_ROUNDS[roundIndex]}
                 roundScoreArray={roundScoreArray}
                 setGameState={setGameState}
+                setTime={setTime}
+                time={time}
                 type="game"
               />
             </div>

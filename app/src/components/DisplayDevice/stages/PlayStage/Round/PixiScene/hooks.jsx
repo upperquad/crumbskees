@@ -260,7 +260,7 @@ export function useUpdatePowers(refs, props) {
           refs.timeFrozen.current = getNow()
         } else if (props.powers[index].type === 'time') {
           console.log('add time')
-          updateRadius(refs.circlesPoints.current[index], 0)
+          props.setTime(200)
         }
 
         if (props.powers[index].type) {
@@ -279,7 +279,7 @@ export function useUpdatePowers(refs, props) {
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.powers])
+  }, [props.powers, props.cancelPower, props.setTime])
 }
 
 
