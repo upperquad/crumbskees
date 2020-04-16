@@ -35,7 +35,6 @@ const TutorialStage = props => {
   const onUpdate = () => {
     forceUpdate()
   }
-  console.log('render tuto')
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>

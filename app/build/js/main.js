@@ -96940,11 +96940,17 @@ var GameZone = function GameZone(props) {
           power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].blue;
 
           if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'SINGLE_PLAYER') {
-            // change freeze item to time item
-            // power.image = freezeItem // need a related image
+            // replace freeze power with time power
+            // power.image = freezeItem // need a image for time power
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
             power.type = 'time';
           }
 
+          break;
+
+        case 'time':
+          // power.image = freezeItem // need a image for time power
+          power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
           break;
       }
 
@@ -99273,7 +99279,6 @@ var TutorialStage = function TutorialStage(props) {
     forceUpdate();
   };
 
-  console.log('render tuto');
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.tutorial, extraClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

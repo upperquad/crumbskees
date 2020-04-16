@@ -223,10 +223,15 @@ const GameZone = props => {
           power.color = COLORS.blue
 
           if (PlayersManager.mode === 'SINGLE_PLAYER') {
-            // change freeze item to time item
-            // power.image = freezeItem // need a related image
+            // replace freeze power with time power
+            // power.image = freezeItem // need a image for time power
+            power.color = COLORS.purple
             power.type = 'time'
           }
+          break
+        case 'time':
+          // power.image = freezeItem // need a image for time power
+          power.color = COLORS.purple
           break
       }
       const powerItem = createItem(grid, power)
