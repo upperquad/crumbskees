@@ -258,9 +258,8 @@ export function useUpdatePowers(refs, props) {
           updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45)
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = getNow()
-        } else if (props.powers[index].type === 'time') {
-          console.log('add time')
-          props.setTime(200)
+        } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
+          props.setTime(time => time + 20)
         }
 
         if (props.powers[index].type) {
@@ -279,7 +278,7 @@ export function useUpdatePowers(refs, props) {
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.powers, props.cancelPower, props.setTime])
+  }, [props.powers, props.setTime])
 }
 
 

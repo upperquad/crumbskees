@@ -25,9 +25,10 @@ const GameZone = props => {
     round,
     roundScoreArray,
     setGameState,
+    setTime,
     type,
   } = props
-  const { setTime, time, videoBack, videoFront } = round
+  const { videoBack, videoFront } = round
   const [items, setItems] = useState([])
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
@@ -290,7 +291,6 @@ const GameZone = props => {
         positions={positionArray}
         powers={powerArray}
         setTime={setTime}
-        time={time}
         type={type}
         videoBack={videoBack}
         videoFront={videoFront}

@@ -96676,10 +96676,9 @@ var GameZone = function GameZone(props) {
       round = props.round,
       roundScoreArray = props.roundScoreArray,
       setGameState = props.setGameState,
+      setTime = props.setTime,
       type = props.type;
-  var setTime = round.setTime,
-      time = round.time,
-      videoBack = round.videoBack,
+  var videoBack = round.videoBack,
       videoFront = round.videoFront;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
@@ -97015,7 +97014,6 @@ var GameZone = function GameZone(props) {
     positions: positionArray,
     powers: powerArray,
     setTime: setTime,
-    time: time,
     type: type,
     videoBack: videoBack,
     videoFront: videoFront
@@ -98017,9 +98015,10 @@ function useUpdatePowers(refs, props) {
           updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45);
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
-        } else if (props.powers[index].type === 'time') {
-          console.log('add time');
-          props.setTime(200);
+        } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
+          props.setTime(function (time) {
+            return time + 20;
+          });
         }
 
         if (props.powers[index].type) {
@@ -98034,7 +98033,7 @@ function useUpdatePowers(refs, props) {
 
       return undefined;
     }); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.powers, props.cancelPower, props.setTime]);
+  }, [props.powers, props.setTime]);
 }
 function useRAF(refs, props) {
   // RAF
@@ -98217,7 +98216,6 @@ var PixiScene = function PixiScene(props) {
       positions = props.positions,
       powers = props.powers,
       setTime = props.setTime,
-      time = props.time,
       type = props.type,
       videoBack = props.videoBack,
       videoFront = props.videoFront; // re-used references through hooks
@@ -98291,7 +98289,6 @@ var PixiScene = function PixiScene(props) {
   }, {
     cancelPower: cancelPower,
     powers: powers,
-    time: time,
     setTime: setTime
   }); // on RAF
 
@@ -98692,7 +98689,6 @@ var Round = function Round(props) {
     roundScoreArray: roundScoreArray,
     setGameState: setGameState,
     setTime: setTime,
-    time: time,
     type: "game"
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Board__WEBPACK_IMPORTED_MODULE_8__["default"], {
     time: time,
@@ -99277,6 +99273,7 @@ var TutorialStage = function TutorialStage(props) {
     forceUpdate();
   };
 
+  console.log('render tuto');
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.tutorial, extraClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
