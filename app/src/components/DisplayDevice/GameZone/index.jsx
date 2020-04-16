@@ -356,7 +356,7 @@ function getItemsInCursor(items, position, isGrown) {
   const xPx = position.x + 0.5
   const yPx = position.y + 0.5
 
-  const minDistanceSquare = isGrown ? 205 ** 2 : 95 ** 2
+  const minDistanceSquare = isGrown ? 215 ** 2 : 95 ** 2
 
   return items.filter(item => {
     const itemXPx = item.x

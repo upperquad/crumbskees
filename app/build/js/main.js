@@ -97078,7 +97078,7 @@ var GameZone = function GameZone(props) {
 function getItemsInCursor(items, position, isGrown) {
   var xPx = position.x + 0.5;
   var yPx = position.y + 0.5;
-  var minDistanceSquare = isGrown ? Math.pow(205, 2) : Math.pow(95, 2);
+  var minDistanceSquare = isGrown ? Math.pow(215, 2) : Math.pow(95, 2);
   return items.filter(function (item) {
     var itemXPx = item.x;
     var itemYPx = item.y;
