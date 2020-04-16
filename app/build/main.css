@@ -518,7 +518,7 @@ a {
         left: calc(100% + 4px);
         top: -4px; }
 
-.GameZone-gameZone--1gqvO {
+.GameZone-gameZone--2IEsp {
   cursor: none;
   height: 100%;
   position: absolute;
@@ -526,14 +526,14 @@ a {
   width: 100%;
   z-index: 10; }
 
-.PixiScene-pixiScene--xdl_n {
+.PixiScene-pixiScene--3xIt9 {
   height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%; }
 
-.PixiScene-canvas--17ngH {
+.PixiScene-canvas--3BFfV {
   height: 100%;
   left: 0;
   position: absolute;
@@ -544,14 +544,14 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.PopupMessage-message--1Zfsp {
+.PopupMessage-message--2ZO9X {
   font-family: 'Ginto Nord Black';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: normal;
   text-transform: uppercase; }
 
-.PopupMessage-messageContainer--1WKlW {
+.PopupMessage-messageContainer---DqVT {
   height: 100%;
   left: 0;
   position: absolute;
@@ -559,7 +559,7 @@ a {
   width: 100%;
   z-index: 20; }
 
-@keyframes PopupMessage-message-fade-in--2r6Iv {
+@keyframes PopupMessage-message-fade-in--qtlQv {
   0% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.7); }
@@ -567,7 +567,7 @@ a {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1); } }
 
-@keyframes PopupMessage-message-fade-out--J9frd {
+@keyframes PopupMessage-message-fade-out--1w0F3 {
   0% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1); }
@@ -575,8 +575,8 @@ a {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.7); } }
 
-.PopupMessage-message--1Zfsp {
-  animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
+.PopupMessage-message--2ZO9X {
+  animation: PopupMessage-message-fade-in--qtlQv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--1w0F3 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
   display: inline-block;
   font-size: 6.25vw;
   left: 50%;
@@ -584,8 +584,8 @@ a {
   top: 50%;
   transform: translate(-50%, -50%); }
 
-.PopupMessage-messagePersistent--2WAj9 {
-  animation: PopupMessage-message-fade-in--2r6Iv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--J9frd 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s; }
+.PopupMessage-messagePersistent--xckiR {
+  animation: PopupMessage-message-fade-in--qtlQv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--1w0F3 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s; }
 
 /* Colors */
 /* Breakpoints */

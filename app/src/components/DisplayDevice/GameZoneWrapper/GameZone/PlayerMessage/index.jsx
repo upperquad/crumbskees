@@ -9,7 +9,6 @@ const PlayerMessage = props => {
   const { color, position, power, roundScore, tapInstruction } = props
   const prevScore = useRef(0)
   const [message, setMessage] = useState({ messageCount: 0 })
-  console.log(roundScore)
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({

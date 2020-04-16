@@ -7,9 +7,9 @@ import Player2Peer from '~managers/PeerManager/Player2Peer'
 import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
-import PixiScene from '../stages/PlayStage/Round/PixiScene'
-import PlayerMessage from '../stages/PlayStage/Round/PlayerMessage'
-import PopupMessage from '../stages/PlayStage/Round/PopupMessage'
+import PixiScene from './PixiScene'
+import PlayerMessage from './PlayerMessage'
+import PopupMessage from './PopupMessage'
 
 import growItem from '~assets/images/grow.png'
 import freezeItem from '~assets/images/freeze.png'
@@ -200,20 +200,18 @@ const GameZone = props => {
   useEffect(() => {
     const createItem = (grid, item) => {
       const { gridCols, gridLines } = round
+      const { color = null, image, size = 1, type: itemType = 'target' } = item
+
       // randomize
       const rd = randomInt(0, grid.length - 1)
       const x = grid[rd].x / gridCols + GRID_UNIT_VW / 200 // 200?
       const y = grid[rd].y / gridLines + GRID_UNIT_VH / 200
       grid.splice(rd, 1)
 
-      const size = GRID_UNIT
-
-      const { color = null, image, type: itemType = 'target' } = item
-
       return {
         x,
         y,
-        size,
+        size: size * GRID_UNIT,
         image,
         type: itemType,
         color,
@@ -223,7 +221,7 @@ const GameZone = props => {
     const setupGrid = () => {
       // REVIEW: this is really inefficient
       const grid = []
-      const { badItemImage, gridCols, gridLines, itemImage, numBadItems, numItems, powers } = round
+      const { badItemImage, gridCols, gridLines, itemImage, numBadItems, numBigItems, numItems, powers } = round
       for (let i = 0; i < gridCols; i++) {
         for (let j = 0; j < gridLines; j++) {
           const obj = { x: i, y: j }
@@ -265,6 +263,12 @@ const GameZone = props => {
       // add bad items
       for (let i = 0; i < numBadItems; i++) {
         const item = createItem(grid, { image: badItemImage, type: 'bad' })
+        newItems.push(item)
+      }
+
+      // add big items
+      for (let i = 0; i < numBigItems; i++) {
+        const item = createItem(grid, { image: itemImage, size: 2 })
         newItems.push(item)
       }
 

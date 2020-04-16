@@ -7,7 +7,7 @@ import SoundManager from '~managers/SoundManager'
 import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS } from '~constants'
 
 import IndicatorLight from '~components/IndicatorLight'
-import GameZone from '~components/DisplayDevice/GameZone'
+import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 
 const TIME = 40
