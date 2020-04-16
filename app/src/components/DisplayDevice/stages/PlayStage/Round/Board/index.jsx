@@ -19,8 +19,8 @@ const Board = props => {
     }
   }, [forceUpdate])
 
-  const renderPlayerBlock = (player, score) => {
-    const items = [...new Array(score)]
+  const renderPlayerBlock = (player, scoreForThisRound) => {
+    const items = scoreForThisRound >= 0 ? [...new Array(scoreForThisRound)] : []
 
     return (
       <div className={styles.player}>
@@ -28,23 +28,18 @@ const Board = props => {
           <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} poster={player.image} />
         </div>
         <div className={styles.score}>{zeroUnit(player.score())}</div>
-        <div className={styles.name}>
-          {player.name}
-        </div>
+        <div className={styles.name}>{player.name}</div>
         <div className={styles.items}>
-          {items.map(() => <img className={styles.item} src={itemImage} alt="" />)}
+          {items.map(() => (
+            <img className={styles.item} src={itemImage} alt="" />
+          ))}
         </div>
       </div>
     )
   }
 
   return (
-    <div
-      className={classNames(
-        styles.board,
-        { [styles.boardEntering]: transitionStatus === 'entering' },
-      )}
-    >
+    <div className={classNames(styles.board, { [styles.boardEntering]: transitionStatus === 'entering' })}>
       {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0], scores[0])}
       <div className={styles.center}>
         <div className={styles.timer}>{zeroUnit(time)}</div>
@@ -55,6 +50,9 @@ const Board = props => {
 }
 
 function zeroUnit(number) {
+  if (number < 0) {
+    return '00'
+  }
   return number < 10 ? `0${number}` : number
 }
 

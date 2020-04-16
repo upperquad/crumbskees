@@ -384,17 +384,63 @@ a {
     height: 12.5vw;
     width: 12.5vw; }
 
-.TutorialStage-buttons--1nSMF {
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+@keyframes GameZoneWrapper-playstage-bar-change-color--1gM_1 {
+  0% {
+    background-color: #00f384;
+    width: 100%; }
+  70% {
+    background-color: #00f384;
+    width: 30%; }
+  73% {
+    background-color: #ff9d21;
+    width: 27%; }
+  75% {
+    background-color: #ff4047;
+    width: 25%; }
+  100% {
+    background-color: #ff4047;
+    width: 0%; } }
+
+@keyframes GameZoneWrapper-playstage-blink-bar-color--3P60k {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+.GameZoneWrapper-gameContentTutorial--1KOIM {
+  height: 25vw;
+  position: relative;
+  width: 57.14286vw; }
+
+.GameZoneWrapper-gameContent--3OLh9 {
+  height: 43.75vw;
+  position: relative;
+  width: 100%;
+  z-index: 10; }
+  .GameZoneWrapper-gameContent--3OLh9::after {
+    animation: GameZoneWrapper-playstage-bar-change-color--1gM_1 40s linear 1 forwards, GameZoneWrapper-playstage-blink-bar-color--3P60k .5s linear infinite forwards 30s;
+    background-color: #00f384;
+    bottom: -1px;
+    content: '';
+    height: 0.9375vw;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10; }
+
+.GameZoneWrapper-buttons--IuZa2 {
   display: flex;
   margin-top: 1.5625vw;
   position: absolute;
   right: 0;
   top: 100%; }
-
-.TutorialStage-gameContent--8CqgM {
-  height: 25vw;
-  position: relative;
-  width: 57.14286vw; }
 
 /* Colors */
 /* Breakpoints */
@@ -545,72 +591,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-
-/* Colors */
-/* Breakpoints */
-/* Easings*/
-/* Timings */
-@keyframes Round-playstage-bar-change-color--1HoBY {
-  0% {
-    background-color: #00f384;
-    width: 100%; }
-  70% {
-    background-color: #00f384;
-    width: 30%; }
-  73% {
-    background-color: #ff9d21;
-    width: 27%; }
-  75% {
-    background-color: #ff4047;
-    width: 25%; }
-  100% {
-    background-color: #ff4047;
-    width: 0%; } }
-
-@keyframes Round-playstage-blink-bar-color--2pndY {
-  0% {
-    opacity: 0; }
-  50% {
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
-
-.Round-round--3UuRv {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1; }
-
-.Round-roundExiting--2e9P1 {
-  z-index: 0; }
-
-.Round-gameContent--16S_I {
-  height: 43.75vw;
-  position: relative;
-  width: 100%;
-  z-index: 10; }
-  .Round-gameContent--16S_I::after {
-    animation: Round-playstage-bar-change-color--1HoBY 40s linear 1 forwards, Round-playstage-blink-bar-color--2pndY .5s linear infinite forwards 30s;
-    background-color: #00f384;
-    bottom: 0;
-    content: '';
-    height: 0.9375vw;
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
-    width: 100%;
-    z-index: 10; }
-
-.Round-wrapper--2wout {
-  height: 100%;
-  position: relative; }
-
-/* Colors */
-/* Breakpoints */
-/* Easings*/
-/* Timings */
 .Board-score--3Jfkn, .Board-name--2MohW, .Board-timer--1FYhF {
   font-family: 'Ginto Nord Black';
   -webkit-font-smoothing: antialiased;
@@ -721,6 +701,47 @@ a {
 
 .Board-timer--1FYhF {
   font-size: 5.83333vw; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.Round-round--3UuRv {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1; }
+
+.Round-roundExiting--2e9P1 {
+  z-index: 0; }
+
+.Round-gameContent--16S_I {
+  height: 43.75vw;
+  position: relative;
+  width: 100%;
+  z-index: 10; }
+  .Round-gameContent--16S_I::after {
+    animation: Round-playstage-bar-change-color--1HoBY 40s linear 1 forwards, Round-playstage-blink-bar-color--2pndY .5s linear infinite forwards 30s;
+    background-color: #00f384;
+    bottom: 0;
+    content: '';
+    height: 0.9375vw;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10; }
+
+.Round-wrapper--2wout {
+  height: 100%;
+  position: relative; }
 
 /* Colors */
 /* Breakpoints */

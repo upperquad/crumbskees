@@ -38,17 +38,3 @@
   }
 }
 
-.buttons {
-  display: flex;
-  margin-top: grid(.5);
-  position: absolute;
-  right: 0;
-  top: 100%;
-}
-
-.gameContent {
-  height: grid(8);
-  position: relative;
-  width: grid(8 * 32 / 14);
-}
-

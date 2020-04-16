@@ -78,7 +78,7 @@ export const GAME_ROUNDS = [
     gridLines: 14,
     itemImage: round1Item,
     key: 'game-round-1',
-    numBadItems: 10,
+    numBadItems: 5,
     numItems: DEBUG ? 10 : 10,
     powers: ['grow'],
     roundNameText: 'Round\xa001',

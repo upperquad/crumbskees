@@ -103,7 +103,6 @@ const GameZone = props => {
             targetCount += 1
             break
           case 'bad':
-            console.log('negative')
             badCount += 1
             break
         }
