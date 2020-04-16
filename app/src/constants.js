@@ -59,28 +59,32 @@ export const CHARACTERS = [
 ]
 
 export const TUTORIAL_ROUND = {
-  videoBack: round1VideoBack,
-  videoFront: round1VideoFront,
-  itemImage: round1Item,
-  videoIntro: round1IntroVideo,
-  numItems: 10,
   gridCols: 32,
   gridLines: 14,
+  badItemImage: round2Item,
+  itemImage: round1Item,
+  numBadItems: 2,
+  numItems: 10,
   powers: ['grow', 'freeze'],
+  videoBack: round1VideoBack,
+  videoFront: round1VideoFront,
+  videoIntro: round1IntroVideo,
 }
 
 export const GAME_ROUNDS = [
   {
-    key: 'game-round-1',
-    videoBack: round1VideoBack,
-    videoFront: round1VideoFront,
-    itemImage: round1Item,
-    videoIntro: round1IntroVideo,
-    roundNameText: 'Round\xa001',
-    numItems: DEBUG ? 2 : 10,
+    badItemImage: round2Item,
     gridCols: 32,
     gridLines: 14,
+    itemImage: round1Item,
+    key: 'game-round-1',
+    numBadItems: 10,
+    numItems: DEBUG ? 10 : 10,
     powers: ['grow'],
+    roundNameText: 'Round\xa001',
+    videoBack: round1VideoBack,
+    videoFront: round1VideoFront,
+    videoIntro: round1IntroVideo,
   }, {
     key: 'game-round-2',
     videoBack: round2VideoBack,

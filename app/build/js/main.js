@@ -96673,6 +96673,7 @@ var GameZone = function GameZone(props) {
       message = props.message,
       onFinish = props.onFinish,
       onUpdate = props.onUpdate,
+      removeRoundScoreArray = props.removeRoundScoreArray,
       round = props.round,
       roundScoreArray = props.roundScoreArray,
       setGameState = props.setGameState,
@@ -96728,9 +96729,30 @@ var GameZone = function GameZone(props) {
       });
     };
 
+    var addScore = function addScore(score, index) {
+      addRoundScoreArray(score, index);
+
+      if (type === 'game') {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
+      }
+
+      _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play();
+    };
+
+    var removeScore = function removeScore(score, index) {
+      removeRoundScoreArray(score, index);
+
+      if (type === 'game') {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].removeScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
+      }
+
+      _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play(); // need a different sound for losing point
+    };
+
     var handleClick = function handleClick(playerIndex) {
       var itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow');
       var targetCount = 0;
+      var badCount = 0;
       itemsCaught.forEach(function (item) {
         switch (item.type) {
           case 'grow':
@@ -96765,11 +96787,20 @@ var GameZone = function GameZone(props) {
           case 'target':
             targetCount += 1;
             break;
+
+          case 'bad':
+            console.log('negative');
+            badCount += 1;
+            break;
         }
       });
 
       if (targetCount > 0) {
         addScore(targetCount, playerIndex);
+      }
+
+      if (badCount > 0) {
+        removeScore(badCount, playerIndex);
       }
 
       if (itemsCaught.length > 0) {
@@ -96866,8 +96897,113 @@ var GameZone = function GameZone(props) {
   }, [gameState, items]); // Grid setup
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    return setupGrid();
-  }, []); // tap instruction
+    var createItem = function createItem(grid, item) {
+      var gridCols = round.gridCols,
+          gridLines = round.gridLines; // randomize
+
+      var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, grid.length - 1);
+      var x = grid[rd].x / gridCols + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200; // 200?
+
+      var y = grid[rd].y / gridLines + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
+      grid.splice(rd, 1);
+      var size = _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"];
+      var _item$color = item.color,
+          color = _item$color === void 0 ? null : _item$color,
+          image = item.image,
+          _item$type = item.type,
+          itemType = _item$type === void 0 ? 'target' : _item$type;
+      return {
+        x: x,
+        y: y,
+        size: size,
+        image: image,
+        type: itemType,
+        color: color
+      };
+    };
+
+    var setupGrid = function setupGrid() {
+      // REVIEW: this is really inefficient
+      var grid = [];
+      var badItemImage = round.badItemImage,
+          gridCols = round.gridCols,
+          gridLines = round.gridLines,
+          itemImage = round.itemImage,
+          numBadItems = round.numBadItems,
+          numItems = round.numItems,
+          powers = round.powers;
+
+      for (var i = 0; i < gridCols; i++) {
+        for (var j = 0; j < gridLines; j++) {
+          var obj = {
+            x: i,
+            y: j
+          };
+          grid.push(obj);
+        }
+      }
+
+      var newItems = []; // add powers
+
+      for (var _i2 = 0; _i2 < powers.length; _i2++) {
+        var power = {
+          type: powers[_i2]
+        };
+
+        switch (powers[_i2]) {
+          default:
+          case 'grow':
+            power.image = _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11___default.a;
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].orange;
+            break;
+
+          case 'freeze':
+            power.image = _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12___default.a;
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].blue;
+
+            if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'SINGLE_PLAYER') {
+              // replace freeze power with time power
+              // power.image = freezeItem // need a image for time power
+              power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
+              power.type = 'time';
+            }
+
+            break;
+
+          case 'time':
+            // power.image = freezeItem // need a image for time power
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
+            break;
+        }
+
+        var powerItem = createItem(grid, power);
+        newItems.push(powerItem);
+      } // add bad items
+
+
+      for (var _i3 = 0; _i3 < numBadItems; _i3++) {
+        var item = createItem(grid, {
+          image: badItemImage,
+          type: 'bad'
+        });
+        newItems.push(item);
+      } // add items
+
+
+      for (var _i4 = 0; _i4 < numItems; _i4++) {
+        var _item = createItem(grid, {
+          image: itemImage
+        });
+
+        newItems.push(_item);
+      }
+
+      setItems(newItems);
+      sceneInit.current = true;
+    };
+
+    setupGrid();
+  }, [round]); // tap instruction
 
   var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.filter(function (player) {
     return player.score && player.score() === 0;
@@ -96901,108 +97037,6 @@ var GameZone = function GameZone(props) {
 
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length]);
-
-  function setupGrid() {
-    // REVIEW: this is really inefficient
-    var grid = [];
-    var gridCols = round.gridCols,
-        gridLines = round.gridLines,
-        itemImage = round.itemImage,
-        numItems = round.numItems,
-        powers = round.powers;
-
-    for (var i = 0; i < gridCols; i++) {
-      for (var j = 0; j < gridLines; j++) {
-        var obj = {
-          x: i,
-          y: j
-        };
-        grid.push(obj);
-      }
-    }
-
-    var newItems = [];
-
-    for (var _i2 = 0; _i2 < powers.length; _i2++) {
-      var power = {
-        type: powers[_i2]
-      };
-
-      switch (powers[_i2]) {
-        default:
-        case 'grow':
-          power.image = _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11___default.a;
-          power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].orange;
-          break;
-
-        case 'freeze':
-          power.image = _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12___default.a;
-          power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].blue;
-
-          if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'SINGLE_PLAYER') {
-            // replace freeze power with time power
-            // power.image = freezeItem // need a image for time power
-            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
-            power.type = 'time';
-          }
-
-          break;
-
-        case 'time':
-          // power.image = freezeItem // need a image for time power
-          power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
-          break;
-      }
-
-      var powerItem = createItem(grid, power);
-      newItems.push(powerItem);
-    }
-
-    for (var _i3 = 0; _i3 < numItems; _i3++) {
-      var item = createItem(grid, {
-        image: itemImage
-      });
-      newItems.push(item);
-    }
-
-    setItems(newItems);
-    sceneInit.current = true;
-  }
-
-  function createItem(grid, item) {
-    var gridCols = round.gridCols,
-        gridLines = round.gridLines; // randomize
-
-    var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, grid.length - 1);
-    var x = grid[rd].x / gridCols + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200; // 200?
-
-    var y = grid[rd].y / gridLines + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
-    grid.splice(rd, 1);
-    var size = _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"];
-    var _item$color = item.color,
-        color = _item$color === void 0 ? null : _item$color,
-        image = item.image,
-        _item$type = item.type,
-        itemType = _item$type === void 0 ? 'target' : _item$type;
-    return {
-      x: x,
-      y: y,
-      size: size,
-      image: image,
-      type: itemType,
-      color: color
-    };
-  }
-
-  function addScore(score, index) {
-    addRoundScoreArray(score, index);
-
-    if (type === 'game') {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
-    }
-
-    _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play();
-  }
 
   function cancelPower(index) {
     setPowerArray(function (prevArray) {
@@ -98634,6 +98668,13 @@ var Round = function Round(props) {
     });
   };
 
+  var removeRoundScoreArray = function removeRoundScoreArray(score, index) {
+    setRoundScoreArray(function (prevScoreArray) {
+      prevScoreArray[index] -= score;
+      return _toConsumableArray(prevScoreArray);
+    });
+  };
+
   var onUpdate = function onUpdate() {
     forceUpdate();
   }; // Timer
@@ -98691,6 +98732,7 @@ var Round = function Round(props) {
     gameState: gameState,
     message: message,
     onUpdate: onUpdate,
+    removeRoundScoreArray: removeRoundScoreArray,
     round: _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex],
     roundScoreArray: roundScoreArray,
     setGameState: setGameState,
@@ -99275,6 +99317,13 @@ var TutorialStage = function TutorialStage(props) {
     });
   };
 
+  var removeRoundScoreArray = function removeRoundScoreArray(score, index) {
+    setRoundScoreArray(function (prevScoreArray) {
+      prevScoreArray[index] -= score;
+      return _toConsumableArray(prevScoreArray);
+    });
+  };
+
   var onUpdate = function onUpdate() {
     forceUpdate();
   };
@@ -99302,6 +99351,7 @@ var TutorialStage = function TutorialStage(props) {
     message: message,
     onFinish: onFinish,
     onUpdate: onUpdate,
+    removeRoundScoreArray: removeRoundScoreArray,
     round: _constants__WEBPACK_IMPORTED_MODULE_5__["TUTORIAL_ROUND"],
     roundScoreArray: roundScoreArray,
     setGameState: setGameState,
@@ -99827,26 +99877,30 @@ var CHARACTERS = [{
   name: 'Player 2'
 }];
 var TUTORIAL_ROUND = {
-  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
-  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
-  itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
-  videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a,
-  numItems: 10,
   gridCols: 32,
   gridLines: 14,
-  powers: ['grow', 'freeze']
+  badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
+  itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  numBadItems: 2,
+  numItems: 10,
+  powers: ['grow', 'freeze'],
+  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
+  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
+  videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a
 };
 var GAME_ROUNDS = [{
-  key: 'game-round-1',
-  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
-  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
-  itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
-  videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a,
-  roundNameText: 'Round\xa001',
-  numItems: DEBUG ? 2 : 10,
+  badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
   gridCols: 32,
   gridLines: 14,
-  powers: ['grow']
+  itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  key: 'game-round-1',
+  numBadItems: 10,
+  numItems: DEBUG ? 10 : 10,
+  powers: ['grow'],
+  roundNameText: 'Round\xa001',
+  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
+  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
+  videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a
 }, {
   key: 'game-round-2',
   videoBack: _assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4___default.a,
@@ -100335,6 +100389,14 @@ var Player = function Player(_ref) {
     });
   });
 
+  _defineProperty(this, "removeScore", function (nbItemsCaught) {
+    _this._score -= nbItemsCaught;
+
+    _this.playerPeer.send('score', {
+      score: _this._score
+    });
+  });
+
   _defineProperty(this, "score", function () {
     return _this._score;
   });
@@ -100592,6 +100654,16 @@ function (_Observable) {
 
       if (player) {
         player.addScore(score);
+
+        _this._callObservers('player_score');
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "removeScore", function (score, id) {
+      var player = _this.player(id);
+
+      if (player) {
+        player.removeScore(score);
 
         _this._callObservers('player_score');
       }

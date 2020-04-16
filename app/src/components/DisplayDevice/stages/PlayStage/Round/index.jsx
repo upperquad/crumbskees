@@ -37,6 +37,13 @@ const Round = props => {
     })
   }
 
+  const removeRoundScoreArray = (score, index) => {
+    setRoundScoreArray(prevScoreArray => {
+      prevScoreArray[index] -= score
+      return [...prevScoreArray]
+    })
+  }
+
   const onUpdate = () => {
     forceUpdate()
   }
@@ -92,6 +99,7 @@ const Round = props => {
                 gameState={gameState}
                 message={message}
                 onUpdate={onUpdate}
+                removeRoundScoreArray={removeRoundScoreArray}
                 round={GAME_ROUNDS[roundIndex]}
                 roundScoreArray={roundScoreArray}
                 setGameState={setGameState}

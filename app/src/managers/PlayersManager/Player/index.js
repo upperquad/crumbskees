@@ -51,5 +51,10 @@ export default class Player {
     this.playerPeer.send('score', { score: this._score })
   }
 
+  removeScore = nbItemsCaught => {
+    this._score -= nbItemsCaught
+    this.playerPeer.send('score', { score: this._score })
+  }
+
   score = () => this._score
 }

@@ -165,6 +165,15 @@ class PlayersManager extends Observable {
       this._callObservers('player_score')
     }
   }
+
+  removeScore = (score, id) => {
+    const player = this.player(id)
+
+    if (player) {
+      player.removeScore(score)
+      this._callObservers('player_score')
+    }
+  }
 }
 
 function getNewToken(index) {

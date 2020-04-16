@@ -22,6 +22,7 @@ const GameZone = props => {
     message,
     onFinish,
     onUpdate,
+    removeRoundScoreArray,
     round,
     roundScoreArray,
     setGameState,
@@ -45,10 +46,31 @@ const GameZone = props => {
       })
     }
 
+    const addScore = (score, index) => {
+      addRoundScoreArray(score, index)
+
+      if (type === 'game') {
+        PlayersManager.addScore(score, PlayersManager.players[index].id)
+      }
+
+      SoundManager.score.play()
+    }
+
+    const removeScore = (score, index) => {
+      removeRoundScoreArray(score, index)
+
+      if (type === 'game') {
+        PlayersManager.removeScore(score, PlayersManager.players[index].id)
+      }
+
+      SoundManager.score.play() // need a different sound for losing point
+    }
+
     const handleClick = playerIndex => {
       const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow')
 
       let targetCount = 0
+      let badCount = 0
 
       itemsCaught.forEach(item => {
         switch (item.type) {
@@ -80,6 +102,10 @@ const GameZone = props => {
           case 'target':
             targetCount += 1
             break
+          case 'bad':
+            console.log('negative')
+            badCount += 1
+            break
         }
       })
 
@@ -87,9 +113,14 @@ const GameZone = props => {
         addScore(targetCount, playerIndex)
       }
 
+      if (badCount > 0) {
+        removeScore(badCount, playerIndex)
+      }
+
       if (itemsCaught.length > 0) {
         removeItems(itemsCaught)
       }
+
       onUpdate()
     }
 
@@ -167,7 +198,90 @@ const GameZone = props => {
   }, [gameState, items])
 
   // Grid setup
-  useEffect(() => setupGrid(), [])
+  useEffect(() => {
+    const createItem = (grid, item) => {
+      const { gridCols, gridLines } = round
+      // randomize
+      const rd = randomInt(0, grid.length - 1)
+      const x = grid[rd].x / gridCols + GRID_UNIT_VW / 200 // 200?
+      const y = grid[rd].y / gridLines + GRID_UNIT_VH / 200
+      grid.splice(rd, 1)
+
+      const size = GRID_UNIT
+
+      const { color = null, image, type: itemType = 'target' } = item
+
+      return {
+        x,
+        y,
+        size,
+        image,
+        type: itemType,
+        color,
+      }
+    }
+
+    const setupGrid = () => {
+      // REVIEW: this is really inefficient
+      const grid = []
+      const { badItemImage, gridCols, gridLines, itemImage, numBadItems, numItems, powers } = round
+      for (let i = 0; i < gridCols; i++) {
+        for (let j = 0; j < gridLines; j++) {
+          const obj = { x: i, y: j }
+          grid.push(obj)
+        }
+      }
+
+      const newItems = []
+
+      // add powers
+      for (let i = 0; i < powers.length; i++) {
+        const power = { type: powers[i] }
+        switch (powers[i]) {
+          default:
+          case 'grow':
+            power.image = growItem
+            power.color = COLORS.orange
+            break
+          case 'freeze':
+            power.image = freezeItem
+            power.color = COLORS.blue
+
+            if (PlayersManager.mode === 'SINGLE_PLAYER') {
+              // replace freeze power with time power
+              // power.image = freezeItem // need a image for time power
+              power.color = COLORS.purple
+              power.type = 'time'
+            }
+            break
+          case 'time':
+            // power.image = freezeItem // need a image for time power
+            power.color = COLORS.purple
+            break
+        }
+        const powerItem = createItem(grid, power)
+        newItems.push(powerItem)
+      }
+
+      // add bad items
+      for (let i = 0; i < numBadItems; i++) {
+        const item = createItem(grid, { image: badItemImage, type: 'bad' })
+        newItems.push(item)
+      }
+
+      // add items
+      for (let i = 0; i < numItems; i++) {
+        const item = createItem(grid, { image: itemImage })
+        newItems.push(item)
+      }
+
+      setItems(newItems)
+
+      sceneInit.current = true
+    }
+
+    setupGrid()
+  }, [round])
 
   // tap instruction
   const zeroScorePlayers = PlayersManager.players.filter(player => player.score && player.score() === 0)
@@ -196,89 +310,6 @@ const GameZone = props => {
     return undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length])
-
-  function setupGrid() {
-    // REVIEW: this is really inefficient
-    const grid = []
-    const { gridCols, gridLines, itemImage, numItems, powers } = round
-    for (let i = 0; i < gridCols; i++) {
-      for (let j = 0; j < gridLines; j++) {
-        const obj = { x: i, y: j }
-        grid.push(obj)
-      }
-    }
-
-    const newItems = []
-
-    for (let i = 0; i < powers.length; i++) {
-      const power = { type: powers[i] }
-      switch (powers[i]) {
-        default:
-        case 'grow':
-          power.image = growItem
-          power.color = COLORS.orange
-          break
-        case 'freeze':
-          power.image = freezeItem
-          power.color = COLORS.blue
-
-          if (PlayersManager.mode === 'SINGLE_PLAYER') {
-            // replace freeze power with time power
-            // power.image = freezeItem // need a image for time power
-            power.color = COLORS.purple
-            power.type = 'time'
-          }
-          break
-        case 'time':
-          // power.image = freezeItem // need a image for time power
-          power.color = COLORS.purple
-          break
-      }
-      const powerItem = createItem(grid, power)
-      newItems.push(powerItem)
-    }
-
-    for (let i = 0; i < numItems; i++) {
-      const item = createItem(grid, { image: itemImage })
-      newItems.push(item)
-    }
-
-    setItems(newItems)
-
-    sceneInit.current = true
-  }
-
-  function createItem(grid, item) {
-    const { gridCols, gridLines } = round
-    // randomize
-    const rd = randomInt(0, grid.length - 1)
-    const x = grid[rd].x / gridCols + GRID_UNIT_VW / 200 // 200?
-    const y = grid[rd].y / gridLines + GRID_UNIT_VH / 200
-    grid.splice(rd, 1)
-
-    const size = GRID_UNIT
-
-    const { color = null, image, type: itemType = 'target' } = item
-
-    return {
-      x,
-      y,
-      size,
-      image,
-      type: itemType,
-      color,
-    }
-  }
-
-  function addScore(score, index) {
-    addRoundScoreArray(score, index)
-
-    if (type === 'game') {
-      PlayersManager.addScore(score, PlayersManager.players[index].id)
-    }
-
-    SoundManager.score.play()
-  }
 
   function cancelPower(index) {
     setPowerArray(prevArray => {
