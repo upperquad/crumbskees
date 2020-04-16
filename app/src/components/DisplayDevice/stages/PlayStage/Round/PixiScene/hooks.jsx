@@ -251,23 +251,28 @@ export function useUpdatePowers(refs, props) {
 
     // init
     PlayersManager.players.forEach((player, index) => {
-      if (props.powers[index] === 'grow') {
-        updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45)
-      } else if (props.powers[index] === 'freeze') {
-        refs.timeFrozen.current = getNow()
-      } else {
+      if (!props.powers[index]) {
         updateRadius(refs.circlesPoints.current[index], 0)
-      }
+      } else {
+        if (props.powers[index].type === 'grow') {
+          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45)
+        } else if (props.powers[index].type === 'freeze') {
+          refs.timeFrozen.current = getNow()
+        } else if (props.powers[index].type === 'time') {
+          console.log('add time')
+          updateRadius(refs.circlesPoints.current[index], 0)
+        }
 
-      if (props.powers[index]) {
-        const timeout = setTimeout(
-          () => {
-            props.cancelPower(index)
-          },
-          props.powers[index] === 'grow' ? 6000 : 4000,
-        )
+        if (props.powers[index].type) {
+          const timeout = setTimeout(
+            () => {
+              props.cancelPower(index)
+            },
+            props.powers[index].type === 'grow' ? 6000 : 4000,
+          )
 
-        return () => clearTimeout(timeout)
+          return () => clearTimeout(timeout)
+        }
       }
 
       return undefined
@@ -292,7 +297,7 @@ export function useRAF(refs, props) {
         // draw circles
         let points
         let newPosition
-        if (props.powers[index] === 'freeze') {
+        if (props.powers[index] && props.powers[index].type === 'freeze') {
           // position has to stay and color is gray
           color = hexStToNb(COLORS.blue)
           newPosition = refs.circlesLastPositions.current[index]

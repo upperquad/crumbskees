@@ -96728,18 +96728,36 @@ var GameZone = function GameZone(props) {
     };
 
     var handleClick = function handleClick(playerIndex) {
-      var itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] === 'grow');
+      var itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow');
       var targetCount = 0;
-      var growFound;
-      var freezeFound;
       itemsCaught.forEach(function (item) {
         switch (item.type) {
           case 'grow':
-            growFound = true;
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].grow.play();
+            setPowerArray(function (prevArray) {
+              item.text = 'GROW';
+              prevArray[playerIndex] = item;
+              return _toConsumableArray(prevArray);
+            });
             break;
 
           case 'freeze':
-            freezeFound = true;
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].freeze.play();
+            setPowerArray(function (prevArray) {
+              item.text = 'FREEZE';
+              prevArray[1 - playerIndex] = item;
+              return _toConsumableArray(prevArray);
+            });
+            break;
+
+          case 'time':
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].grow.play(); // need a new sound here?
+
+            setPowerArray(function (prevArray) {
+              item.text = 'ADD TIME';
+              prevArray[playerIndex] = item;
+              return _toConsumableArray(prevArray);
+            });
             break;
 
           default:
@@ -96748,22 +96766,6 @@ var GameZone = function GameZone(props) {
             break;
         }
       });
-
-      if (growFound) {
-        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].grow.play();
-        setPowerArray(function (prevArray) {
-          prevArray[playerIndex] = 'grow';
-          return _toConsumableArray(prevArray);
-        });
-      }
-
-      if (freezeFound) {
-        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].freeze.play();
-        setPowerArray(function (prevArray) {
-          prevArray[1 - playerIndex] = 'freeze';
-          return _toConsumableArray(prevArray);
-        });
-      }
 
       if (targetCount > 0) {
         addScore(targetCount, playerIndex);
@@ -96875,7 +96877,7 @@ var GameZone = function GameZone(props) {
         var newTapInstructionArray = [];
         _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.forEach(function (player, index) {
           if (player.score() === 0) {
-            var itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] === 'grow');
+            var itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] && powerArray[index].type === 'grow');
             var targetsInCursor = itemsInCursor.filter(function (item) {
               return item.type === 'target';
             });
@@ -96940,7 +96942,6 @@ var GameZone = function GameZone(props) {
             // change freeze item to time item
             // power.image = freezeItem // need a related image
             power.type = 'time';
-            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].red;
           }
 
           break;
@@ -98005,21 +98006,26 @@ function useUpdatePowers(refs, props) {
 
 
     _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
-      if (props.powers[index] === 'grow') {
-        updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45);
-      } else if (props.powers[index] === 'freeze') {
-        refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
-      } else {
+      if (!props.powers[index]) {
         updateRadius(refs.circlesPoints.current[index], 0);
-      }
+      } else {
+        if (props.powers[index].type === 'grow') {
+          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45);
+        } else if (props.powers[index].type === 'freeze') {
+          refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
+        } else if (props.powers[index].type === 'time') {
+          console.log('add time');
+          updateRadius(refs.circlesPoints.current[index], 0);
+        }
 
-      if (props.powers[index]) {
-        var timeout = setTimeout(function () {
-          props.cancelPower(index);
-        }, props.powers[index] === 'grow' ? 6000 : 4000);
-        return function () {
-          return clearTimeout(timeout);
-        };
+        if (props.powers[index].type) {
+          var timeout = setTimeout(function () {
+            props.cancelPower(index);
+          }, props.powers[index].type === 'grow' ? 6000 : 4000);
+          return function () {
+            return clearTimeout(timeout);
+          };
+        }
       }
 
       return undefined;
@@ -98039,7 +98045,7 @@ function useRAF(refs, props) {
         var points;
         var newPosition;
 
-        if (props.powers[index] === 'freeze') {
+        if (props.powers[index] && props.powers[index].type === 'freeze') {
           // position has to stay and color is gray
           color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"].blue);
           newPosition = refs.circlesLastPositions.current[index];
@@ -98397,8 +98403,8 @@ var PlayerMessage = function PlayerMessage(props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (power) {
       addMessage({
-        text: power,
-        color: power === 'grow' ? _constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"].orange : _constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"].blue
+        text: power.text,
+        color: power.color
       });
       prevScore.current = roundScore;
     } // eslint-disable-next-line react-hooks/exhaustive-deps

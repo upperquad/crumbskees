@@ -35,8 +35,8 @@ const PlayerMessage = props => {
   useEffect(() => {
     if (power) {
       addMessage({
-        text: power,
-        color: power === 'grow' ? COLORS.orange : COLORS.blue,
+        text: power.text,
+        color: power.color,
       })
       prevScore.current = roundScore
     }

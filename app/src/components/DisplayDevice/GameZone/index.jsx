@@ -45,18 +45,35 @@ const GameZone = props => {
     }
 
     const handleClick = playerIndex => {
-      const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] === 'grow')
+      const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow')
 
       let targetCount = 0
-      let growFound
-      let freezeFound
+
       itemsCaught.forEach(item => {
         switch (item.type) {
           case 'grow':
-            growFound = true
+            SoundManager.grow.play()
+            setPowerArray(prevArray => {
+              item.text = 'GROW'
+              prevArray[playerIndex] = item
+              return [...prevArray]
+            })
             break
           case 'freeze':
-            freezeFound = true
+            SoundManager.freeze.play()
+            setPowerArray(prevArray => {
+              item.text = 'FREEZE'
+              prevArray[1 - playerIndex] = item
+              return [...prevArray]
+            })
+            break
+          case 'time':
+            SoundManager.grow.play() // need a new sound here?
+            setPowerArray(prevArray => {
+              item.text = 'ADD TIME'
+              prevArray[playerIndex] = item
+              return [...prevArray]
+            })
             break
           default:
           case 'target':
@@ -64,22 +81,6 @@ const GameZone = props => {
             break
         }
       })
-
-      if (growFound) {
-        SoundManager.grow.play()
-        setPowerArray(prevArray => {
-          prevArray[playerIndex] = 'grow'
-          return [...prevArray]
-        })
-      }
-
-      if (freezeFound) {
-        SoundManager.freeze.play()
-        setPowerArray(prevArray => {
-          prevArray[1 - playerIndex] = 'freeze'
-          return [...prevArray]
-        })
-      }
 
       if (targetCount > 0) {
         addScore(targetCount, playerIndex)
@@ -175,7 +176,7 @@ const GameZone = props => {
         const newTapInstructionArray = []
         PlayersManager.players.forEach((player, index) => {
           if (player.score() === 0) {
-            const itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] === 'grow')
+            const itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] && powerArray[index].type === 'grow')
             const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
             newTapInstructionArray.push(targetsInCursor.length > 0)
           } else {
@@ -224,7 +225,6 @@ const GameZone = props => {
             // change freeze item to time item
             // power.image = freezeItem // need a related image
             power.type = 'time'
-            power.color = COLORS.red
           }
           break
       }
