@@ -23,18 +23,20 @@ const PlayerMessage = props => {
     let scoreAdded = roundScore - prevScore.current
     let finalColor
 
-    if (scoreAdded > 0) {
-      scoreAdded = `+${scoreAdded}`
-      finalColor = hexToRgb(COLORS[color])
-    } else if (scoreAdded < 0) {
-      finalColor = hexToRgb('#ff0000')
-    }
+    if (scoreAdded !== 0) {
+      if (scoreAdded > 0) {
+        scoreAdded = `+${scoreAdded}`
+        finalColor = hexToRgb(COLORS[color])
+      } else if (scoreAdded < 0) {
+        finalColor = hexToRgb('#ff0000')
+      }
 
-    addMessage({
-      text: scoreAdded,
-      color: `rgba(${finalColor}, .8)`,
-    })
-    prevScore.current = roundScore
+      addMessage({
+        text: scoreAdded,
+        color: `rgba(${finalColor}, .8)`,
+      })
+      prevScore.current = roundScore
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roundScore])
