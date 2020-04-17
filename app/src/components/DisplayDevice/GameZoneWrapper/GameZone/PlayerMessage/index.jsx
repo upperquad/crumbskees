@@ -20,11 +20,20 @@ const PlayerMessage = props => {
   }
 
   useEffect(() => {
-    const scoreAdded = roundScore - prevScore.current
-    if (scoreAdded > 0) {
+    let scoreAdded = roundScore - prevScore.current
+    let finalColor
+
+    if (scoreAdded !== 0) {
+      if (scoreAdded > 0) {
+        scoreAdded = `+${scoreAdded}`
+        finalColor = hexToRgb(COLORS[color])
+      } else if (scoreAdded < 0) {
+        finalColor = hexToRgb('#ff0000')
+      }
+
       addMessage({
-        text: `+${scoreAdded}`,
-        color: `rgba(${hexToRgb(COLORS[color])}, .8)`,
+        text: scoreAdded,
+        color: `rgba(${finalColor}, .8)`,
       })
       prevScore.current = roundScore
     }
@@ -35,8 +44,8 @@ const PlayerMessage = props => {
   useEffect(() => {
     if (power) {
       addMessage({
-        text: power,
-        color: power === 'grow' ? COLORS.orange : COLORS.blue,
+        text: power.text,
+        color: power.color,
       })
       prevScore.current = roundScore
     }

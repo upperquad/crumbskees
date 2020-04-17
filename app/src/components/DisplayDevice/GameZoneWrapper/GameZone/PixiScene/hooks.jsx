@@ -185,10 +185,10 @@ export function useUpdateItems(refs, props) {
       sprite.height = (item.size / VB_WIDTH) * refs.initWidth.current
       sprite.width = (item.size / VB_WIDTH) * refs.initWidth.current
 
-      sprite.position.x = item.x * refs.initWidth.current
-      sprite.position.y = item.y * refs.initHeight.current
+      sprite.position.x = item.x * refs.initWidth.current - ((GRID_UNIT / VB_WIDTH) * refs.initWidth.current) / 2
+      sprite.position.y = item.y * refs.initHeight.current - ((GRID_UNIT / VB_WIDTH) * refs.initWidth.current) / 2
 
-      sprite.anchor.set(0.5, 0.5)
+      sprite.anchor.set(0, 0)
 
       container.addChild(sprite)
 
@@ -251,30 +251,34 @@ export function useUpdatePowers(refs, props) {
 
     // init
     PlayersManager.players.forEach((player, index) => {
-      if (props.powers[index] === 'grow') {
-        updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45)
-      } else if (props.powers[index] === 'freeze') {
-        refs.timeFrozen.current = getNow()
-      } else {
+      if (!props.powers[index]) {
         updateRadius(refs.circlesPoints.current[index], 0)
-      }
+      } else {
+        if (props.powers[index].type === 'grow') {
+          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45)
+        } else if (props.powers[index].type === 'freeze') {
+          refs.timeFrozen.current = getNow()
+        } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
+          props.setTime(time => time + 20)
+        }
 
-      if (props.powers[index]) {
-        const timeout = setTimeout(
-          () => {
-            props.cancelPower(index)
-          },
-          props.powers[index] === 'grow' ? 6000 : 4000,
-        )
+        if (props.powers[index].type) {
+          const timeout = setTimeout(
+            () => {
+              props.cancelPower(index)
+            },
+            props.powers[index].type === 'grow' ? 6000 : 4000,
+          )
 
-        return () => clearTimeout(timeout)
+          return () => clearTimeout(timeout)
+        }
       }
 
       return undefined
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.powers])
+  }, [props.powers, props.setTime])
 }
 
 
@@ -292,7 +296,7 @@ export function useRAF(refs, props) {
         // draw circles
         let points
         let newPosition
-        if (props.powers[index] === 'freeze') {
+        if (props.powers[index] && props.powers[index].type === 'freeze') {
           // position has to stay and color is gray
           color = hexStToNb(COLORS.blue)
           newPosition = refs.circlesLastPositions.current[index]
