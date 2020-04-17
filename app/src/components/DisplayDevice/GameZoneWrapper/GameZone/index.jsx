@@ -73,6 +73,11 @@ const GameZone = props => {
         powerArray[playerIndex] && powerArray[playerIndex].type === 'grow',
       )
 
+      PlayersManager.players[playerIndex].closeMouth = true
+      setTimeout(() => {
+        PlayersManager.players[playerIndex].closeMouth = false
+      }, 100)
+
       let targetCount = 0
       let badCount = 0
 

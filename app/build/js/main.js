@@ -95581,6 +95581,17 @@ module.exports = __webpack_require__.p + "3a9234ee7d6060c7e4912aadbedb4876.mp4";
 
 /***/ }),
 
+/***/ "./src/assets/images/mouth.png":
+/*!*************************************!*\
+  !*** ./src/assets/images/mouth.png ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "73f295f87b906761e31f590c20d943db.png";
+
+/***/ }),
+
 /***/ "./src/assets/images/round_1/r1-pattern-bw.mp4":
 /*!*****************************************************!*\
   !*** ./src/assets/images/round_1/r1-pattern-bw.mp4 ***!
@@ -95611,17 +95622,6 @@ module.exports = __webpack_require__.p + "966fd7146b79e774c2f1fb1f190edb63.mp4";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "4e95cddbbe19488e0795159ea0bed1df.mp4";
-
-/***/ }),
-
-/***/ "./src/assets/images/round_1/s1-item.png":
-/*!***********************************************!*\
-  !*** ./src/assets/images/round_1/s1-item.png ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "2efe34dfeb739dbf9ddf9cb019856d45.png";
 
 /***/ }),
 
@@ -95710,6 +95710,17 @@ module.exports = __webpack_require__.p + "70e128890680209e5b4177aaa0566f63.mp4";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "252d017a143524c6c2de46e3cd5011c6.png";
+
+/***/ }),
+
+/***/ "./src/assets/images/snack-1.png":
+/*!***************************************!*\
+  !*** ./src/assets/images/snack-1.png ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "a00d7f235b62351a59624bbee7df1255.png";
 
 /***/ }),
 
@@ -96670,8 +96681,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
 /* harmony import */ var _utils_time__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~utils/time */ "./src/utils/time.js");
 /* harmony import */ var _utils_ease__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~utils/ease */ "./src/utils/ease.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PixiScene/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~assets/images/mouth.png */ "./src/assets/images/mouth.png");
+/* harmony import */ var _assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PixiScene/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_9__);
+
 
 
 
@@ -96686,12 +96700,14 @@ var maxDuration = 900;
 var pointsCount = 6;
 var decelerationCircleCoef = 0.15;
 var transitionOutDuration = 1000;
+var lipsOffset = 0.07;
+var lipsOffsetClosed = 0.03;
 function useSetScene(refs, props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
     function setVideo(source, container) {
       var texture = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Texture"].from(source);
-      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // Stetch the fullscreen
+      var videoSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture); // Set fullscreen
 
       videoSprite.width = refs.app.current.screen.width;
       videoSprite.height = refs.app.current.screen.height;
@@ -96705,6 +96721,26 @@ function useSetScene(refs, props) {
       var video = texture.baseTexture.resource.source;
       video.muted = true;
       return video;
+    }
+
+    function setMouths() {
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
+        for (var i = 0; i < 2; i++) {
+          var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(_assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8___default.a);
+          sprite.width = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 3.1 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
+          sprite.height = sprite.width / 3;
+          sprite.position.x = 0.5 * refs.el.current.offsetWidth;
+          sprite.position.y = 0.5 * refs.el.current.offsetHeight;
+          sprite.anchor.set(0.5, 0.5);
+
+          if (i === 1) {
+            sprite.angle = 180;
+          }
+
+          refs.containerMouth.current.addChild(sprite);
+          refs.mouths.current[index].push(sprite);
+        }
+      });
     }
 
     function setCircles() {
@@ -96722,7 +96758,7 @@ function useSetScene(refs, props) {
       refs.stroke.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth; // set min and max radius for the circle
 
       refs.minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 1.2 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
-      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.35;
+      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.15;
       refs.minMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.35;
       refs.maxMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.45;
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function () {
@@ -96741,7 +96777,7 @@ function useSetScene(refs, props) {
       var startAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, Math.PI * 2);
 
       for (var i = 0; i < pointsCount; i++) {
-        var margeAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, 0.28); // i / 1.2
+        var margeAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, 0.35); // i / 1.2
         // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
 
         var startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])() + i * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, minDuration);
@@ -96779,10 +96815,12 @@ function useSetScene(refs, props) {
     });
     refs.app.current.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
-    refs.app.current.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.canvas);
-    refs.el.current.appendChild(refs.app.current.view);
+    refs.app.current.view.classList.add(_style_module_scss__WEBPACK_IMPORTED_MODULE_9___default.a.canvas);
+    refs.el.current.appendChild(refs.app.current.view); // set layers
+
     refs.containerFront.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     refs.containerMasked.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
+    refs.containerMouth.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Container"]();
 
     if (props.type === 'game') {
       refs.app.current.stage.addChild(refs.containerFront.current);
@@ -96792,12 +96830,14 @@ function useSetScene(refs, props) {
 
     if (props.type === 'tutorial') {
       refs.app.current.stage.addChild(refs.containerFront.current);
-    } // set elements into scene
+    }
 
+    refs.app.current.stage.addChild(refs.containerMouth.current); // set elements into scene
 
     var videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current);
     var videoPixiFront = setVideo(props.videoFront, refs.containerFront.current);
-    setCircles(); // Videos looping:
+    setCircles();
+    setMouths(); // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
 
     videoPixiFront.addEventListener('ended', function () {
@@ -96935,7 +96975,19 @@ function useRAF(refs, props) {
       refs.circlesMasked.current.clear();
       refs.circlesBorder.current.clear();
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
-        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]); // draw circles
+        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]);
+
+        if (player.closeMouth) {
+          if (!player.mouthIsMoving) {
+            var increment = -refs.maxRadius.current * 0.3;
+            updateRadiusInstantly(refs.circlesPoints.current[index], increment);
+            player.mouthIsMoving = true;
+          }
+        } else if (player.mouthIsMoving === true) {
+          updateRadiusInstantly(refs.circlesPoints.current[index]);
+          player.mouthIsMoving = false;
+        } // draw circles
+
 
         var points;
         var newPosition;
@@ -96944,15 +96996,53 @@ function useRAF(refs, props) {
           // position has to stay and color is gray
           color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"].blue);
           newPosition = refs.circlesLastPositions.current[index];
-          points = getPointsAroundCircle(refs.timeFrozen.current, refs.circlesPoints.current[index], refs.circlesLastPositions.current[index]);
+          points = getPointsAroundCircle(refs.timeFrozen.current, refs.circlesPoints.current[index], newPosition);
         } else {
           newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index]);
-          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition);
+          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition, player.mouthIsMoving);
         }
 
         refs.circlesLastPositions.current[index] = newPosition;
-        drawCubicBezier(points, newPosition, color);
+        drawCubicBezier(points, newPosition, color); // draw lips
+
+        refs.mouths.current[index].forEach(function (lip, lipIndex) {
+          var _newPosition = newPosition,
+              x = _newPosition.x,
+              y = _newPosition.y;
+          var offset = player.closeMouth ? lipsOffsetClosed : lipsOffset;
+          lip.position.x = (x + 0.5) * refs.initWidth.current;
+
+          if (lipIndex === 0) {
+            lip.position.y = (y + 0.5 - offset) * refs.initHeight.current;
+          } else {
+            lip.position.y = (y + 0.5 + offset) * refs.initHeight.current;
+          }
+        });
       });
+
+      function updateRadiusInstantly(points) {
+        var increment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        for (var i = 0; i < points.length; i++) {
+          var point = points[i]; // Increase each points
+          // if player has grown power, increase player radius
+
+          var newMaxRadius = refs.maxRadius.current + increment;
+          var newMaxMiddleRadius = refs.maxMiddleRadius.current + increment;
+          var newMinRadius = refs.minRadius.current + increment;
+          var newMinMiddleRadius = refs.minMiddleRadius.current + increment;
+          point.targetMaxX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
+          point.targetMinX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
+          point.destX = point.targetMaxX;
+          point.x = point.destX;
+          point.targetMaxY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
+          point.targetMinY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
+          point.destY = point.targetMaxY;
+          point.y = point.destY;
+          point.startAnim = now;
+        }
+      }
+
       refs.circlesMasked.current.endFill(); // draw transition out rect
 
       if (refs.startTransitionOut.current > 0) {
@@ -96976,7 +97066,7 @@ function useRAF(refs, props) {
     } // get points all around the circle to set up cubic bezier curves
 
 
-    function getPointsAroundCircle(now, points, position) {
+    function getPointsAroundCircle(now, points, position, mouthIsMoving) {
       var x = position.x,
           y = position.y; // For each points of the player (organic shape)
       // Create organic shape / Tween all points
@@ -96988,8 +97078,17 @@ function useRAF(refs, props) {
         // then I use easing functions to modify the value curve through time.
 
         var percent = (now - point.startAnim) / point.duration;
-        var relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
-        var relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+        var relativeX = void 0;
+        var relativeY = void 0;
+
+        if (mouthIsMoving) {
+          // stop delay animation
+          relativeX = point.destX;
+          relativeY = point.destY;
+        } else {
+          relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+          relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+        }
 
         if (percent >= 1) {
           // end of animation,
@@ -97120,7 +97219,8 @@ var PixiScene = function PixiScene(props) {
   var initWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var initHeight = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var containerMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
+  var containerFront = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var containerMouth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // circles
 
   var circlesMasked = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   var circlesBorder = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
@@ -97131,7 +97231,9 @@ var PixiScene = function PixiScene(props) {
   var minRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var maxRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var minMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
-  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
+  var maxMiddleRadius = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0); // mouths
+
+  var mouths = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])([[], []]);
   var timeFrozen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   var startTransitionOut = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(0);
   var circleAlpha = type === 'tutorial' ? 0 : 1; // set up scene
@@ -97141,6 +97243,7 @@ var PixiScene = function PixiScene(props) {
     app: app,
     containerMasked: containerMasked,
     containerFront: containerFront,
+    containerMouth: containerMouth,
     circlesMasked: circlesMasked,
     circlesBorder: circlesBorder,
     circlesPoints: circlesPoints,
@@ -97149,7 +97252,8 @@ var PixiScene = function PixiScene(props) {
     minRadius: minRadius,
     maxRadius: maxRadius,
     minMiddleRadius: minMiddleRadius,
-    maxMiddleRadius: maxMiddleRadius
+    maxMiddleRadius: maxMiddleRadius,
+    mouths: mouths
   }, {
     type: type,
     videoBack: videoBack,
@@ -97185,15 +97289,20 @@ var PixiScene = function PixiScene(props) {
   }); // on RAF
 
   Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useRAF"])({
-    circlesMasked: circlesMasked,
     circlesBorder: circlesBorder,
     circlesLastPositions: circlesLastPositions,
+    circlesMasked: circlesMasked,
     circlesPoints: circlesPoints,
-    timeFrozen: timeFrozen,
     initHeight: initHeight,
     initWidth: initWidth,
+    maxMiddleRadius: maxMiddleRadius,
+    maxRadius: maxRadius,
+    minMiddleRadius: minMiddleRadius,
+    minRadius: minRadius,
+    mouths: mouths,
+    startTransitionOut: startTransitionOut,
     stroke: stroke,
-    startTransitionOut: startTransitionOut
+    timeFrozen: timeFrozen
   }, {
     circleAlpha: circleAlpha,
     positions: positions,
@@ -97561,6 +97670,10 @@ var GameZone = function GameZone(props) {
 
     var handleClick = function handleClick(playerIndex) {
       var itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow');
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[playerIndex].closeMouth = true;
+      setTimeout(function () {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[playerIndex].closeMouth = false;
+      }, 100);
       var targetCount = 0;
       var badCount = 0;
       itemsCaught.forEach(function (item) {
@@ -99914,8 +100027,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~assets/images/round_1/r1-pattern-bw.mp4 */ "./src/assets/images/round_1/r1-pattern-bw.mp4");
 /* harmony import */ var _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~assets/images/round_1/s1-item.png */ "./src/assets/images/round_1/s1-item.png");
-/* harmony import */ var _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~assets/images/snack-1.png */ "./src/assets/images/snack-1.png");
+/* harmony import */ var _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~assets/images/round_1/s1-intro.mp4 */ "./src/assets/images/round_1/s1-intro.mp4");
 /* harmony import */ var _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _assets_images_round_2_r2_pattern_mp4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~assets/images/round_2/r2-pattern.mp4 */ "./src/assets/images/round_2/r2-pattern.mp4");
@@ -99996,7 +100109,7 @@ var CHARACTERS = [{
 }];
 var TUTORIAL_ROUND = {
   badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-  itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  itemImage: _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   numBadItems: 2,
   numBigItems: 5,
   numItems: 10,
@@ -100007,7 +100120,7 @@ var TUTORIAL_ROUND = {
 };
 var GAME_ROUNDS = [{
   badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-  itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  itemImage: _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   key: 'game-round-1',
   numBadItems: 2,
   numBigItems: 5,
@@ -100018,7 +100131,7 @@ var GAME_ROUNDS = [{
   videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
   videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a
 }, {
-  badItemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  badItemImage: _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   itemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
   key: 'game-round-2',
   numBadItems: 2,

@@ -1,6 +1,6 @@
 import round1VideoBack from '~assets/images/round_1/r1-pattern.mp4'
 import round1VideoFront from '~assets/images/round_1/r1-pattern-bw.mp4'
-import round1Item from '~assets/images/round_1/s1-item.png'
+import round1Item from '~assets/images/snack-1.png'
 import round1IntroVideo from '~assets/images/round_1/s1-intro.mp4'
 import round2VideoBack from '~assets/images/round_2/r2-pattern.mp4'
 import round2VideoFront from '~assets/images/round_2/r2-pattern-bw.mp4'

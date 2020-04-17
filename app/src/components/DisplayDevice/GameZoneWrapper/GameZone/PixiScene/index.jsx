@@ -16,6 +16,7 @@ const PixiScene = props => {
   const initHeight = useRef(0)
   const containerMasked = useRef(null)
   const containerFront = useRef(null)
+  const containerMouth = useRef(null)
   // circles
   const circlesMasked = useRef(null)
   const circlesBorder = useRef(null)
@@ -27,6 +28,8 @@ const PixiScene = props => {
   const maxRadius = useRef(0)
   const minMiddleRadius = useRef(0)
   const maxMiddleRadius = useRef(0)
+  // mouths
+  const mouths = useRef([[], []])
 
   const timeFrozen = useRef(null)
   const startTransitionOut = useRef(0)
@@ -40,6 +43,7 @@ const PixiScene = props => {
       app,
       containerMasked,
       containerFront,
+      containerMouth,
       circlesMasked,
       circlesBorder,
       circlesPoints,
@@ -49,6 +53,7 @@ const PixiScene = props => {
       maxRadius,
       minMiddleRadius,
       maxMiddleRadius,
+      mouths,
     },
     { type, videoBack, videoFront },
   )
@@ -93,15 +98,20 @@ const PixiScene = props => {
   // on RAF
   useRAF(
     {
-      circlesMasked,
       circlesBorder,
       circlesLastPositions,
+      circlesMasked,
       circlesPoints,
-      timeFrozen,
       initHeight,
       initWidth,
-      stroke,
+      maxMiddleRadius,
+      maxRadius,
+      minMiddleRadius,
+      minRadius,
+      mouths,
       startTransitionOut,
+      stroke,
+      timeFrozen,
     },
     {
       circleAlpha,
