@@ -48632,7 +48632,7 @@ module.exports = function parseURI (str, opts) {
 /*!*********************************************!*\
   !*** ./node_modules/pixi.js/lib/pixi.es.js ***!
   \*********************************************/
-/*! exports provided: accessibility, interaction, utils, VERSION, filters, useDeprecated, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings */
+/*! exports provided: accessibility, interaction, utils, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings, VERSION, filters, useDeprecated */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -96810,7 +96810,7 @@ function useUpdateItems(refs, props) {
       sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current;
       sprite.position.x = item.x * refs.initWidth.current;
       sprite.position.y = item.y * refs.initHeight.current;
-      sprite.anchor.set(0.5, 0.5);
+      sprite.anchor.set(0, 0);
       container.addChild(sprite);
       return sprite;
     } // init
@@ -97667,23 +97667,50 @@ var GameZone = function GameZone(props) {
   }, [gameState, items]); // Grid setup
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var createItem = function createItem(grid, item) {
-      var gridCols = round.gridCols,
-          gridLines = round.gridLines;
+    var grid = [];
+    var gridBigItemsAvailable = [];
+
+    var createItem = function createItem(item) {
       var _item$color = item.color,
           color = _item$color === void 0 ? null : _item$color,
           image = item.image,
           _item$size = item.size,
           size = _item$size === void 0 ? 1 : _item$size,
           _item$type = item.type,
-          itemType = _item$type === void 0 ? 'target' : _item$type; // randomize
+          itemType = _item$type === void 0 ? 'target' : _item$type;
+      var usedGrid = grid;
 
-      var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, grid.length - 1);
-      var x = grid[rd].x / gridCols + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200; // 200?
+      if (size === 2) {
+        usedGrid = gridBigItemsAvailable;
+      } // randomized
 
-      var y = grid[rd].y / gridLines + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
-      grid.splice(rd, 1);
+
+      var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, usedGrid.length - 1);
+      var cellX = usedGrid[rd].x;
+      var cellY = usedGrid[rd].y;
+      var x = cellX / _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"] + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200; // 200?
+
+      var y = cellY / _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"] + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
+
+      if (size === 1) {
+        usedGrid.splice(rd, 1); // here I have to splice the correct index
+      } else if (size === 2) {
+        // here we remove 8 available cells around this cell
+        // That way no other 2x2 will be placed in these cells
+        gridBigItemsAvailable = usedGrid.filter(function (cell) {
+          var isAvailable = true;
+
+          if (cell.x === cellX && cell.y === cellY || cell.x === cellX + 1 && cell.y === cellY || cell.x === cellX && cell.y === cellY + 1 || cell.x === cellX + 1 && cell.y === cellY + 1 || cell.x === cellX - 1 && cell.y === cellY || cell.x === cellX && cell.y === cellY - 1 || cell.x === cellX - 1 && cell.y === cellY - 1 || cell.x === cellX + 1 && cell.y === cellY - 1 || cell.x === cellX - 1 && cell.y === cellY + 1) {
+            isAvailable = false; // This cell can't be used by a 2x2 item
+          }
+
+          return isAvailable;
+        });
+      }
+
       return {
+        cellX: cellX,
+        cellY: cellY,
         x: x,
         y: y,
         size: size * _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"],
@@ -97695,18 +97722,15 @@ var GameZone = function GameZone(props) {
 
     var setupGrid = function setupGrid() {
       // REVIEW: this is really inefficient
-      var grid = [];
       var badItemImage = round.badItemImage,
-          gridCols = round.gridCols,
-          gridLines = round.gridLines,
           itemImage = round.itemImage,
           numBadItems = round.numBadItems,
           numBigItems = round.numBigItems,
           numItems = round.numItems,
           powers = round.powers;
 
-      for (var i = 0; i < gridCols; i++) {
-        for (var j = 0; j < gridLines; j++) {
+      for (var i = 0; i < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"]; i++) {
+        for (var j = 0; j < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"]; j++) {
           var obj = {
             x: i,
             y: j
@@ -97748,33 +97772,63 @@ var GameZone = function GameZone(props) {
             break;
         }
 
-        var powerItem = createItem(grid, power);
+        var powerItem = createItem(power);
         newItems.push(powerItem);
       } // add bad items
 
 
       for (var _i3 = 0; _i3 < numBadItems; _i3++) {
-        var item = createItem(grid, {
+        var item = createItem({
           image: badItemImage,
           type: 'bad'
         });
         newItems.push(item);
-      } // add big items
-
-
-      for (var _i4 = 0; _i4 < numBigItems; _i4++) {
-        var _item = createItem(grid, {
-          image: itemImage,
-          size: 2
-        });
-
-        newItems.push(_item);
       } // add items
 
 
-      for (var _i5 = 0; _i5 < numItems; _i5++) {
-        var _item2 = createItem(grid, {
+      for (var _i4 = 0; _i4 < numItems; _i4++) {
+        var _item = createItem({
           image: itemImage
+        });
+
+        newItems.push(_item);
+      } // Check what are the cells available for 2x2 items
+      // Push them in an array
+
+
+      var _loop = function _loop(_i5) {
+        var _loop2 = function _loop2(_j) {
+          var isAvailable = true;
+          newItems.forEach(function (item) {
+            if (item.cellX === _i5 && item.cellY === _j || item.cellX - 1 === _i5 && item.cellY === _j || item.cellX === _i5 && item.cellY - 1 === _j || item.cellX - 1 === _i5 && item.cellY - 1 === _j) {
+              isAvailable = false; // This cell can't be used by a 2x2 item because a 1x1 is blocking
+            }
+          });
+
+          if (isAvailable) {
+            var _obj = {
+              x: _i5,
+              y: _j
+            };
+            gridBigItemsAvailable.push(_obj);
+          }
+        };
+
+        for (var _j = 0; _j < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"]; _j++) {
+          _loop2(_j);
+        }
+      };
+
+      for (var _i5 = 0; _i5 < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"]; _i5++) {
+        _loop(_i5);
+      }
+
+      console.log(grid, gridBigItemsAvailable); // add big items
+
+      for (var _i6 = 0; _i6 < numBigItems; _i6++) {
+        var _item2 = createItem({
+          image: itemImage,
+          size: 2
         });
 
         newItems.push(_item2);
@@ -99786,7 +99840,7 @@ module.exports = {"marqueeAlternate":"MarqueeText-marqueeAlternate---84_Y","marq
 /*!**************************!*\
   !*** ./src/constants.js ***!
   \**************************/
-/*! exports provided: DEBUG, BREAKPOINT, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS, CHARACTERS, TUTORIAL_ROUND, GAME_ROUNDS */
+/*! exports provided: DEBUG, BREAKPOINT, VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, GRID_COLS, GRID_LINES, COLORS, CHARACTERS, TUTORIAL_ROUND, GAME_ROUNDS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99798,6 +99852,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GRID_UNIT", function() { return GRID_UNIT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GRID_UNIT_VW", function() { return GRID_UNIT_VW; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GRID_UNIT_VH", function() { return GRID_UNIT_VH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GRID_COLS", function() { return GRID_COLS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GRID_LINES", function() { return GRID_LINES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORS", function() { return COLORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHARACTERS", function() { return CHARACTERS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TUTORIAL_ROUND", function() { return TUTORIAL_ROUND; });
@@ -99863,6 +99919,8 @@ var VB_HEIGHT = 840;
 var GRID_UNIT = 60;
 var GRID_UNIT_VW = 60 / 1920 * 100;
 var GRID_UNIT_VH = 60 / 840 * 100;
+var GRID_COLS = 32;
+var GRID_LINES = 14;
 var COLORS = {
   purple: '#6d12e3',
   red: '#ff4047',
@@ -99885,13 +99943,11 @@ var CHARACTERS = [{
   name: 'Player 2'
 }];
 var TUTORIAL_ROUND = {
-  gridCols: 32,
-  gridLines: 14,
   badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
   itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   numBadItems: 2,
-  numBigItems: 3,
-  numItems: 10,
+  numBigItems: 50,
+  numItems: 100,
   powers: ['grow', 'freeze'],
   videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
   videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
@@ -99899,8 +99955,6 @@ var TUTORIAL_ROUND = {
 };
 var GAME_ROUNDS = [{
   badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-  gridCols: 32,
-  gridLines: 14,
   itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   key: 'game-round-1',
   numBadItems: 5,
@@ -99919,8 +99973,6 @@ var GAME_ROUNDS = [{
   videoIntro: _assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7___default.a,
   roundNameText: 'Round\xa002',
   numItems: DEBUG ? 2 : 10,
-  gridCols: 32,
-  gridLines: 14,
   powers: ['freeze']
 }, {
   key: 'game-round-3',
@@ -99930,8 +99982,6 @@ var GAME_ROUNDS = [{
   videoIntro: _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
   roundNameText: 'Last\xa0round',
   numItems: DEBUG ? 2 : 10,
-  gridCols: 32,
-  gridLines: 14,
   powers: ['grow']
 }];
 

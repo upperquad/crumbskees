@@ -4,7 +4,7 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
-import { VB_WIDTH, VB_HEIGHT, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import { VB_WIDTH, VB_HEIGHT, GRID_COLS, GRID_LINES, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
 import PixiScene from './PixiScene'
@@ -67,7 +67,11 @@ const GameZone = props => {
     }
 
     const handleClick = playerIndex => {
-      const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow')
+      const itemsCaught = getItemsInCursor(
+        items,
+        positionArray[playerIndex],
+        powerArray[playerIndex] && powerArray[playerIndex].type === 'grow',
+      )
 
       let targetCount = 0
       let badCount = 0
@@ -198,17 +202,50 @@ const GameZone = props => {
 
   // Grid setup
   useEffect(() => {
-    const createItem = (grid, item) => {
-      const { gridCols, gridLines } = round
+    const grid = []
+    let gridBigItemsAvailable = []
+
+    const createItem = item => {
       const { color = null, image, size = 1, type: itemType = 'target' } = item
 
-      // randomize
-      const rd = randomInt(0, grid.length - 1)
-      const x = grid[rd].x / gridCols + GRID_UNIT_VW / 200 // 200?
-      const y = grid[rd].y / gridLines + GRID_UNIT_VH / 200
-      grid.splice(rd, 1)
+      let usedGrid = grid
+      if (size === 2) {
+        usedGrid = gridBigItemsAvailable
+      }
+      // randomized
+      const rd = randomInt(0, usedGrid.length - 1)
+      const cellX = usedGrid[rd].x
+      const cellY = usedGrid[rd].y
+      const x = cellX / GRID_COLS + GRID_UNIT_VW / 200 // 200?
+      const y = cellY / GRID_LINES + GRID_UNIT_VH / 200
+      if (size === 1) {
+        usedGrid.splice(rd, 1) // here I have to splice the correct index
+      } else if (size === 2) {
+        // here we remove 8 available cells around this cell
+        // That way no other 2x2 will be placed in these cells
+        gridBigItemsAvailable = usedGrid.filter(cell => {
+          let isAvailable = true
+          if (
+            (cell.x === cellX && cell.y === cellY) ||
+            (cell.x === cellX + 1 && cell.y === cellY) ||
+            (cell.x === cellX && cell.y === cellY + 1) ||
+            (cell.x === cellX + 1 && cell.y === cellY + 1) ||
+            (cell.x === cellX - 1 && cell.y === cellY) ||
+            (cell.x === cellX && cell.y === cellY - 1) ||
+            (cell.x === cellX - 1 && cell.y === cellY - 1) ||
+            (cell.x === cellX + 1 && cell.y === cellY - 1) ||
+            (cell.x === cellX - 1 && cell.y === cellY + 1)
+          ) {
+            isAvailable = false
+            // This cell can't be used by a 2x2 item
+          }
+          return isAvailable
+        })
+      }
 
       return {
+        cellX,
+        cellY,
         x,
         y,
         size: size * GRID_UNIT,
@@ -220,10 +257,9 @@ const GameZone = props => {
 
     const setupGrid = () => {
       // REVIEW: this is really inefficient
-      const grid = []
-      const { badItemImage, gridCols, gridLines, itemImage, numBadItems, numBigItems, numItems, powers } = round
-      for (let i = 0; i < gridCols; i++) {
-        for (let j = 0; j < gridLines; j++) {
+      const { badItemImage, itemImage, numBadItems, numBigItems, numItems, powers } = round
+      for (let i = 0; i < GRID_COLS; i++) {
+        for (let j = 0; j < GRID_LINES; j++) {
           const obj = { x: i, y: j }
           grid.push(obj)
         }
@@ -256,25 +292,50 @@ const GameZone = props => {
             power.color = COLORS.purple
             break
         }
-        const powerItem = createItem(grid, power)
+        const powerItem = createItem(power)
         newItems.push(powerItem)
       }
 
       // add bad items
       for (let i = 0; i < numBadItems; i++) {
-        const item = createItem(grid, { image: badItemImage, type: 'bad' })
-        newItems.push(item)
-      }
-
-      // add big items
-      for (let i = 0; i < numBigItems; i++) {
-        const item = createItem(grid, { image: itemImage, size: 2 })
+        const item = createItem({ image: badItemImage, type: 'bad' })
         newItems.push(item)
       }
 
       // add items
       for (let i = 0; i < numItems; i++) {
-        const item = createItem(grid, { image: itemImage })
+        const item = createItem({ image: itemImage })
+        newItems.push(item)
+      }
+
+      // Check what are the cells available for 2x2 items
+      // Push them in an array
+      for (let i = 0; i < GRID_COLS; i++) {
+        for (let j = 0; j < GRID_LINES; j++) {
+          let isAvailable = true
+          newItems.forEach(item => {
+            if (
+              (item.cellX === i && item.cellY === j) ||
+              (item.cellX - 1 === i && item.cellY === j) ||
+              (item.cellX === i && item.cellY - 1 === j) ||
+              (item.cellX - 1 === i && item.cellY - 1 === j)
+            ) {
+              isAvailable = false
+              // This cell can't be used by a 2x2 item because a 1x1 is blocking
+            }
+          })
+
+          if (isAvailable) {
+            const obj = { x: i, y: j }
+            gridBigItemsAvailable.push(obj)
+          }
+        }
+      }
+      console.log(grid, gridBigItemsAvailable)
+
+      // add big items
+      for (let i = 0; i < numBigItems; i++) {
+        const item = createItem({ image: itemImage, size: 2 })
         newItems.push(item)
       }
 
@@ -294,7 +355,11 @@ const GameZone = props => {
         const newTapInstructionArray = []
         PlayersManager.players.forEach((player, index) => {
           if (player.score() === 0) {
-            const itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] && powerArray[index].type === 'grow')
+            const itemsInCursor = getItemsInCursor(
+              items,
+              positionArray[index],
+              powerArray[index] && powerArray[index].type === 'grow',
+            )
             const targetsInCursor = itemsInCursor.filter(item => item.type === 'target')
             newTapInstructionArray.push(targetsInCursor.length > 0)
           } else {

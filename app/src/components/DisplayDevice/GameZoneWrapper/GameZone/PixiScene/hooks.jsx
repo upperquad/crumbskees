@@ -188,7 +188,7 @@ export function useUpdateItems(refs, props) {
       sprite.position.x = item.x * refs.initWidth.current
       sprite.position.y = item.y * refs.initHeight.current
 
-      sprite.anchor.set(0.5, 0.5)
+      sprite.anchor.set(0, 0)
 
       container.addChild(sprite)
 

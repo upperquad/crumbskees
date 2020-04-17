@@ -32,6 +32,10 @@ export const GRID_UNIT_VW = (60 / 1920) * 100
 
 export const GRID_UNIT_VH = (60 / 840) * 100
 
+export const GRID_COLS = 32
+
+export const GRID_LINES = 14
+
 export const COLORS = {
   purple: '#6d12e3',
   red: '#ff4047',
@@ -59,13 +63,11 @@ export const CHARACTERS = [
 ]
 
 export const TUTORIAL_ROUND = {
-  gridCols: 32,
-  gridLines: 14,
   badItemImage: round2Item,
   itemImage: round1Item,
   numBadItems: 2,
-  numBigItems: 3,
-  numItems: 10,
+  numBigItems: 50,
+  numItems: 100,
   powers: ['grow', 'freeze'],
   videoBack: round1VideoBack,
   videoFront: round1VideoFront,
@@ -75,8 +77,6 @@ export const TUTORIAL_ROUND = {
 export const GAME_ROUNDS = [
   {
     badItemImage: round2Item,
-    gridCols: 32,
-    gridLines: 14,
     itemImage: round1Item,
     key: 'game-round-1',
     numBadItems: 5,
@@ -95,8 +95,6 @@ export const GAME_ROUNDS = [
     videoIntro: round2IntroVideo,
     roundNameText: 'Round\xa002',
     numItems: DEBUG ? 2 : 10,
-    gridCols: 32,
-    gridLines: 14,
     powers: ['freeze'],
   }, {
     key: 'game-round-3',
@@ -106,8 +104,6 @@ export const GAME_ROUNDS = [
     videoIntro: round3IntroVideo,
     roundNameText: 'Last\xa0round',
     numItems: DEBUG ? 2 : 10,
-    gridCols: 32,
-    gridLines: 14,
     powers: ['grow'],
   },
 ]
