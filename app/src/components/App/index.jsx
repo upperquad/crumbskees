@@ -12,6 +12,8 @@ const App = () => {
   useEffect(() => {
     if (isDesktop) {
       document.documentElement.classList.add('is-desktop')
+      // clear shared url
+      window.history.replaceState({}, document.title, '/')
     } else {
       document.documentElement.classList.remove('is-desktop')
     }
