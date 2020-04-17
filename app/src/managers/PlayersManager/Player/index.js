@@ -51,5 +51,11 @@ export default class Player {
     this.playerPeer.send('score', { score: this._score })
   }
 
+  removeScore = nbItemsCaught => {
+    this._score -= nbItemsCaught
+    this._score = Math.max(this._score, 0)
+    this.playerPeer.send('score', { score: this._score })
+  }
+
   score = () => this._score
 }

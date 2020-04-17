@@ -15,6 +15,7 @@ const ControlDevice = () => {
   const [activeTutorial, setActiveTutorial] = useState(false)
   const [score, setScore] = useState(0)
   const [winner, setWinner] = useState(null)
+  const [mode, setMode] = useState(null)
 
   useEffect(() => {
     const messageHandler = detail => {
@@ -22,8 +23,9 @@ const ControlDevice = () => {
 
       switch (type) {
         case 'accepted': {
-          const { playerIndex } = data
+          const { mode: activatedMode, playerIndex } = data
           setCharacterIndex(playerIndex)
+          setMode(activatedMode)
           if (CHARACTERS[playerIndex]) {
             setCharacter(CHARACTERS[playerIndex])
           }
@@ -92,6 +94,7 @@ const ControlDevice = () => {
           winner={winner}
           characterIndex={characterIndex}
           score={score}
+          mode={mode}
           resetGame={() => {
             setScore(0)
             setWinner(null)

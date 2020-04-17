@@ -1,34 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 // import { TransitionGroup, Transition } from 'react-transition-group'
-import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
-import { TUTORIAL_ROUND } from '~constants'
 
-import IndicatorLight from '~components/IndicatorLight'
-import GameZone from '~components/DisplayDevice/GameZone'
+import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 
 import imageHelper from '~assets/images/tutorial/helper.png'
 
 const TutorialStage = props => {
   const { extraClassName, onFinish } = props
-  const [message, setMessage] = useState({ messageCount: 0 })
-  const [gameState, setGameState] = useState('before-game')
-  const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
-
-  const addMessage = messageObj => {
-    setMessage(prevMessage => ({
-      ...messageObj,
-      messageCount: prevMessage.messageCount + 1,
-    }))
-  }
-
-  const addRoundScoreArray = (score, index) => {
-    setRoundScoreArray(prevScoreArray => {
-      prevScoreArray[index] += score
-      return [...prevScoreArray]
-    })
-  }
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
@@ -41,26 +21,7 @@ const TutorialStage = props => {
           </div>
           <img className={styles.image} src={imageHelper} alt="" />
         </div>
-        <div className={styles.gameContent}>
-          <GameZone
-            type="tutorial"
-            round={TUTORIAL_ROUND}
-            onFinish={onFinish}
-            roundScoreArray={roundScoreArray}
-            addRoundScoreArray={addRoundScoreArray}
-            gameState={gameState}
-            setGameState={setGameState}
-            message={message}
-            addMessage={addMessage}
-          />
-          <div className={styles.buttons}>
-            {PlayersManager.players.map((player, index) => {
-              const text = `P${index + 1} ready`
-
-              return <IndicatorLight text={text} ready={player.ready} />
-            })}
-          </div>
-        </div>
+        <GameZoneWrapper onFinish={onFinish} type="tutorial" />
       </div>
     </div>
   )

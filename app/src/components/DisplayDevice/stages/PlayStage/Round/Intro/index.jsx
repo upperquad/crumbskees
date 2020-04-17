@@ -44,6 +44,7 @@ const Intro = props => {
     // timeout.current = setTimeout(() => {
     //   onFinish()
     //   setFinished(true)
+    //   console.log(setStep)
     // }, 1500)
     const currentStep = stepsArray[step]
     timeout.current = setTimeout(() => {

@@ -10,8 +10,6 @@ import round3VideoBack from '~assets/images/round_3/r3-pattern.mp4'
 import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
 import round3Item from '~assets/images/round_3/s3-item.png'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
-import growItem from '~assets/images/grow.png'
-import freezeItem from '~assets/images/freeze.png'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import characterVideo1 from '~assets/images/character1.mp4'
@@ -33,6 +31,10 @@ export const GRID_UNIT = 60
 export const GRID_UNIT_VW = (60 / 1920) * 100
 
 export const GRID_UNIT_VH = (60 / 840) * 100
+
+export const GRID_COLS = 32
+
+export const GRID_LINES = 14
 
 export const COLORS = {
   purple: '#6d12e3',
@@ -61,65 +63,53 @@ export const CHARACTERS = [
 ]
 
 export const TUTORIAL_ROUND = {
+  badItemImage: round2Item,
+  itemImage: round1Item,
+  numBadItems: 2,
+  numBigItems: 5,
+  numItems: 10,
+  powers: ['grow', 'freeze'],
   videoBack: round1VideoBack,
   videoFront: round1VideoFront,
-  itemImage: round1Item,
   videoIntro: round1IntroVideo,
-  numItems: 10,
-  gridCols: 32,
-  gridLines: 14,
-  power: {
-    type: 'grow',
-    image: growItem,
-    color: COLORS.orange,
-  },
 }
 
 export const GAME_ROUNDS = [
   {
+    badItemImage: round2Item,
+    itemImage: round1Item,
     key: 'game-round-1',
+    numBadItems: 2,
+    numBigItems: 5,
+    numItems: DEBUG ? 2 : 10,
+    powers: ['grow'],
+    roundNameText: 'Round\xa001',
     videoBack: round1VideoBack,
     videoFront: round1VideoFront,
-    itemImage: round1Item,
     videoIntro: round1IntroVideo,
-    roundNameText: 'Round\xa001',
-    numItems: DEBUG ? 2 : 10,
-    gridCols: 32,
-    gridLines: 14,
-    power: {
-      type: 'grow',
-      image: growItem,
-      color: COLORS.orange,
-    },
   }, {
+    badItemImage: round1Item,
+    itemImage: round2Item,
     key: 'game-round-2',
+    numBadItems: 2,
+    numBigItems: 5,
+    numItems: DEBUG ? 2 : 10,
+    powers: ['freeze'],
+    roundNameText: 'Round\xa002',
     videoBack: round2VideoBack,
     videoFront: round2VideoFront,
-    itemImage: round2Item,
     videoIntro: round2IntroVideo,
-    roundNameText: 'Round\xa002',
-    numItems: DEBUG ? 2 : 10,
-    gridCols: 32,
-    gridLines: 14,
-    power: {
-      type: 'freeze',
-      image: freezeItem,
-      color: COLORS.blue,
-    },
   }, {
+    badItemImage: round2Item,
+    itemImage: round3Item,
     key: 'game-round-3',
+    numBadItems: 2,
+    numBigItems: 5,
+    numItems: DEBUG ? 2 : 10,
+    powers: ['grow'],
+    roundNameText: 'Last\xa0round',
     videoBack: round3VideoBack,
     videoFront: round3VideoFront,
-    itemImage: round3Item,
     videoIntro: round3IntroVideo,
-    roundNameText: 'Last\xa0round',
-    numItems: DEBUG ? 2 : 10,
-    gridCols: 32,
-    gridLines: 14,
-    power: {
-      type: 'grow',
-      image: growItem,
-      color: COLORS.orange,
-    },
   },
 ]
