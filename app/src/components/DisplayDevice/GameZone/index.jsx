@@ -43,6 +43,11 @@ const GameZone = props => {
     const handleClick = playerIndex => {
       const itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] === 'grow')
 
+      PlayersManager.players[playerIndex].closeMouth = true
+      setTimeout(() => {
+        PlayersManager.players[playerIndex].closeMouth = false
+      }, 100)
+
       let targetCount = 0
       let growFound
       let freezeFound

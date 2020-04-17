@@ -7,6 +7,8 @@ import { random } from '~utils/math'
 import getNow from '~utils/time'
 import { inOutSine, inOutQuad } from '~utils/ease'
 
+import lipImage from '~assets/images/mouth.png'
+
 import styles from './style.module.scss'
 
 const minDuration = 700
@@ -14,6 +16,8 @@ const maxDuration = 900
 const pointsCount = 6
 const decelerationCircleCoef = 0.15
 const transitionOutDuration = 1000
+const lipsOffset = 0.07
+const lipsOffsetClosed = 0.03
 
 export function useSetScene(refs, props) {
   useEffect(() => {
@@ -22,7 +26,7 @@ export function useSetScene(refs, props) {
       const texture = Texture.from(source)
       const videoSprite = new Sprite(texture)
 
-      // Stetch the fullscreen
+      // Set fullscreen
       videoSprite.width = refs.app.current.screen.width
       videoSprite.height = refs.app.current.screen.height
 
@@ -40,6 +44,28 @@ export function useSetScene(refs, props) {
       return video
     }
 
+    function setMouths() {
+      PlayersManager.players.forEach((player, index) => {
+        for (let i = 0; i < 2; i++) {
+          const sprite = Sprite.from(lipImage)
+          sprite.width = ((GRID_UNIT * 3.1) / VB_WIDTH) * refs.el.current.offsetWidth
+          sprite.height = sprite.width / 3
+
+          sprite.position.x = 0.5 * refs.el.current.offsetWidth
+          sprite.position.y = 0.5 * refs.el.current.offsetHeight
+
+          sprite.anchor.set(0.5, 0.5)
+
+          if (i === 1) {
+            sprite.angle = 180
+          }
+
+          refs.containerMouth.current.addChild(sprite)
+          refs.mouths.current[index].push(sprite)
+        }
+      })
+    }
+
     function setCircles() {
       refs.circlesMasked.current = new Graphics()
       // Circle
@@ -54,9 +80,10 @@ export function useSetScene(refs, props) {
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       refs.stroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * refs.el.current.offsetWidth
+      console.log(refs.stroke.current)
       // set min and max radius for the circle
       refs.minRadius.current = ((GRID_UNIT * 1.2) / VB_WIDTH) * refs.el.current.offsetWidth
-      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.35
+      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.15
       refs.minMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.35
       refs.maxMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.45
 
@@ -73,7 +100,7 @@ export function useSetScene(refs, props) {
       const startAngle = random(0, Math.PI * 2)
 
       for (let i = 0; i < pointsCount; i++) {
-        const margeAngle = random(0, 0.28) // i / 1.2
+        const margeAngle = random(0, 0.35) // i / 1.2
         // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
         const startAnim = getNow() + i * random(0, minDuration)
         const angle = startAngle + i * slice + margeAngle
@@ -118,8 +145,10 @@ export function useSetScene(refs, props) {
     refs.app.current.view.classList.add(styles.canvas)
     refs.el.current.appendChild(refs.app.current.view)
 
+    // set layers
     refs.containerFront.current = new Container()
     refs.containerMasked.current = new Container()
+    refs.containerMouth.current = new Container()
     if (props.type === 'game') {
       refs.app.current.stage.addChild(refs.containerFront.current)
     }
@@ -127,11 +156,13 @@ export function useSetScene(refs, props) {
     if (props.type === 'tutorial') {
       refs.app.current.stage.addChild(refs.containerFront.current)
     }
+    refs.app.current.stage.addChild(refs.containerMouth.current)
 
     // set elements into scene
     const videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current)
     const videoPixiFront = setVideo(props.videoFront, refs.containerFront.current)
     setCircles()
+    setMouths()
 
     // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
@@ -299,7 +330,7 @@ export function useRAF(refs, props) {
           points = getPointsAroundCircle(
             refs.timeFrozen.current,
             refs.circlesPoints.current[index],
-            refs.circlesLastPositions.current[index],
+            newPosition,
           )
         } else {
           newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index])
@@ -307,6 +338,18 @@ export function useRAF(refs, props) {
         }
         refs.circlesLastPositions.current[index] = newPosition
         drawCubicBezier(points, newPosition, color)
+
+        // draw lips
+        refs.mouths.current[index].forEach((lip, lipIndex) => {
+          const { x, y } = newPosition
+          const offset = player.closeMouth ? lipsOffsetClosed : lipsOffset
+          lip.position.x = (x + 0.5) * refs.initWidth.current
+          if (lipIndex === 0) {
+            lip.position.y = (y + 0.5 - offset) * refs.initHeight.current
+          } else {
+            lip.position.y = (y + 0.5 + offset) * refs.initHeight.current
+          }
+        })
       })
 
       refs.circlesMasked.current.endFill()
