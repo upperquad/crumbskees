@@ -96808,8 +96808,8 @@ function useUpdateItems(refs, props) {
       var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(item.image);
       sprite.height = item.size / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current;
       sprite.width = item.size / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current;
-      sprite.position.x = item.x * refs.initWidth.current;
-      sprite.position.y = item.y * refs.initHeight.current;
+      sprite.position.x = item.x * refs.initWidth.current - _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current / 2;
+      sprite.position.y = item.y * refs.initHeight.current - _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.initWidth.current / 2;
       sprite.anchor.set(0, 0);
       container.addChild(sprite);
       return sprite;
@@ -97701,7 +97701,7 @@ var GameZone = function GameZone(props) {
           var isAvailable = true;
 
           if (cell.x === cellX && cell.y === cellY || cell.x === cellX + 1 && cell.y === cellY || cell.x === cellX && cell.y === cellY + 1 || cell.x === cellX + 1 && cell.y === cellY + 1 || cell.x === cellX - 1 && cell.y === cellY || cell.x === cellX && cell.y === cellY - 1 || cell.x === cellX - 1 && cell.y === cellY - 1 || cell.x === cellX + 1 && cell.y === cellY - 1 || cell.x === cellX - 1 && cell.y === cellY + 1) {
-            isAvailable = false; // This cell can't be used by a 2x2 item
+            isAvailable = false;
           }
 
           return isAvailable;
@@ -97801,7 +97801,7 @@ var GameZone = function GameZone(props) {
           var isAvailable = true;
           newItems.forEach(function (item) {
             if (item.cellX === _i5 && item.cellY === _j || item.cellX - 1 === _i5 && item.cellY === _j || item.cellX === _i5 && item.cellY - 1 === _j || item.cellX - 1 === _i5 && item.cellY - 1 === _j) {
-              isAvailable = false; // This cell can't be used by a 2x2 item because a 1x1 is blocking
+              isAvailable = false; // This cell can't be used by a 2x2 item because a 1x1 item is blocking
             }
           });
 
@@ -97814,16 +97814,15 @@ var GameZone = function GameZone(props) {
           }
         };
 
-        for (var _j = 0; _j < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"]; _j++) {
+        for (var _j = 0; _j < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"] - 1; _j++) {
           _loop2(_j);
         }
       };
 
-      for (var _i5 = 0; _i5 < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"]; _i5++) {
+      for (var _i5 = 0; _i5 < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"] - 1; _i5++) {
         _loop(_i5);
-      }
+      } // add big items
 
-      console.log(grid, gridBigItemsAvailable); // add big items
 
       for (var _i6 = 0; _i6 < numBigItems; _i6++) {
         var _item2 = createItem({
@@ -97913,13 +97912,22 @@ var GameZone = function GameZone(props) {
 };
 
 function getItemsInCursor(items, position, isGrown) {
-  var xPx = position.x + 0.5;
-  var yPx = position.y + 0.5;
-  var minDistanceSquare = isGrown ? Math.pow(215, 2) : Math.pow(95, 2);
+  var cursorX = position.x + 0.5;
+  var cursorY = position.y + 0.5;
   return items.filter(function (item) {
-    var itemXPx = item.x;
-    var itemYPx = item.y;
-    var distanceSquare = Math.pow((xPx - itemXPx) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_WIDTH"], 2) + Math.pow((yPx - itemYPx) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_HEIGHT"], 2);
+    var itemX = item.x;
+    var itemY = item.y;
+    var minDistanceSquare = isGrown ? Math.pow(215, 2) : Math.pow(95, 2);
+
+    if (item.size === _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"] * 2) {
+      // offset catch area for big item
+      // Also increase the radius of the catch area
+      itemX += _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200;
+      itemY += _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
+      minDistanceSquare += Math.pow(70, 2);
+    }
+
+    var distanceSquare = Math.pow((cursorX - itemX) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_WIDTH"], 2) + Math.pow((cursorY - itemY) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_HEIGHT"], 2);
     return distanceSquare <= minDistanceSquare;
   });
 }
@@ -99946,7 +99954,7 @@ var TUTORIAL_ROUND = {
   badItemImage: _assets_images_round_2_s2_item_png__WEBPACK_IMPORTED_MODULE_6___default.a,
   itemImage: _assets_images_round_1_s1_item_png__WEBPACK_IMPORTED_MODULE_2___default.a,
   numBadItems: 2,
-  numBigItems: 50,
+  numBigItems: 25,
   numItems: 100,
   powers: ['grow', 'freeze'],
   videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,

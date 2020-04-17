@@ -237,7 +237,6 @@ const GameZone = props => {
             (cell.x === cellX - 1 && cell.y === cellY + 1)
           ) {
             isAvailable = false
-            // This cell can't be used by a 2x2 item
           }
           return isAvailable
         })
@@ -310,8 +309,8 @@ const GameZone = props => {
 
       // Check what are the cells available for 2x2 items
       // Push them in an array
-      for (let i = 0; i < GRID_COLS; i++) {
-        for (let j = 0; j < GRID_LINES; j++) {
+      for (let i = 0; i < GRID_COLS - 1; i++) {
+        for (let j = 0; j < GRID_LINES - 1; j++) {
           let isAvailable = true
           newItems.forEach(item => {
             if (
@@ -321,7 +320,7 @@ const GameZone = props => {
               (item.cellX - 1 === i && item.cellY - 1 === j)
             ) {
               isAvailable = false
-              // This cell can't be used by a 2x2 item because a 1x1 is blocking
+              // This cell can't be used by a 2x2 item because a 1x1 item is blocking
             }
           })
 
@@ -331,7 +330,6 @@ const GameZone = props => {
           }
         }
       }
-      console.log(grid, gridBigItemsAvailable)
 
       // add big items
       for (let i = 0; i < numBigItems; i++) {
@@ -422,15 +420,22 @@ const GameZone = props => {
 }
 
 function getItemsInCursor(items, position, isGrown) {
-  const xPx = position.x + 0.5
-  const yPx = position.y + 0.5
-
-  const minDistanceSquare = isGrown ? 215 ** 2 : 95 ** 2
+  const cursorX = position.x + 0.5
+  const cursorY = position.y + 0.5
 
   return items.filter(item => {
-    const itemXPx = item.x
-    const itemYPx = item.y
-    const distanceSquare = ((xPx - itemXPx) * VB_WIDTH) ** 2 + ((yPx - itemYPx) * VB_HEIGHT) ** 2
+    let itemX = item.x
+    let itemY = item.y
+    let minDistanceSquare = isGrown ? 215 ** 2 : 95 ** 2
+
+    if (item.size === GRID_UNIT * 2) {
+      // offset catch area for big item
+      // Also increase the radius of the catch area
+      itemX += GRID_UNIT_VW / 200
+      itemY += GRID_UNIT_VH / 200
+      minDistanceSquare += 70 ** 2
+    }
+    const distanceSquare = ((cursorX - itemX) * VB_WIDTH) ** 2 + ((cursorY - itemY) * VB_HEIGHT) ** 2
 
     return distanceSquare <= minDistanceSquare
   })

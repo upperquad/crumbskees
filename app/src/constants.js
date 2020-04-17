@@ -66,7 +66,7 @@ export const TUTORIAL_ROUND = {
   badItemImage: round2Item,
   itemImage: round1Item,
   numBadItems: 2,
-  numBigItems: 50,
+  numBigItems: 25,
   numItems: 100,
   powers: ['grow', 'freeze'],
   videoBack: round1VideoBack,

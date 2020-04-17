@@ -185,8 +185,8 @@ export function useUpdateItems(refs, props) {
       sprite.height = (item.size / VB_WIDTH) * refs.initWidth.current
       sprite.width = (item.size / VB_WIDTH) * refs.initWidth.current
 
-      sprite.position.x = item.x * refs.initWidth.current
-      sprite.position.y = item.y * refs.initHeight.current
+      sprite.position.x = item.x * refs.initWidth.current - ((GRID_UNIT / VB_WIDTH) * refs.initWidth.current) / 2
+      sprite.position.y = item.y * refs.initHeight.current - ((GRID_UNIT / VB_WIDTH) * refs.initWidth.current) / 2
 
       sprite.anchor.set(0, 0)
 
