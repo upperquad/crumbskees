@@ -63,7 +63,7 @@ const Round = props => {
     }
 
     if (gameState === 'after-game') {
-      const timeout = setTimeout(onRoundEnd, 5000)
+      const timeout = setTimeout(onRoundEnd, 3000)
 
       return () => {
         clearTimeout(timeout)

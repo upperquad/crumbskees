@@ -74,7 +74,7 @@ class PlayersManager extends Observable {
     Player1Peer.addSubscriber('CONNECTED', () => {
       if (this.players[0].setConnected) {
         this.players[0].setConnected(true)
-        Player1Peer.send('accepted', { playerIndex: 0 })
+        Player1Peer.send('accepted', { playerIndex: 0, mode: this.mode })
       }
       this._callObservers('player_change')
     })
@@ -83,7 +83,7 @@ class PlayersManager extends Observable {
       Player2Peer.addSubscriber('CONNECTED', () => {
         if (this.players[1].setConnected) {
           this.players[1].setConnected(true)
-          Player2Peer.send('accepted', { playerIndex: 1 })
+          Player2Peer.send('accepted', { playerIndex: 1, mode: this.mode })
         }
         this._callObservers('player_change')
       })
