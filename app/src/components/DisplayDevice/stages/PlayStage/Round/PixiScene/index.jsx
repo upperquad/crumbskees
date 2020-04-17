@@ -97,16 +97,20 @@ const PixiScene = props => {
   // on RAF
   useRAF(
     {
-      circlesMasked,
       circlesBorder,
       circlesLastPositions,
+      circlesMasked,
       circlesPoints,
-      timeFrozen,
       initHeight,
       initWidth,
+      maxMiddleRadius,
+      maxRadius,
+      minMiddleRadius,
+      minRadius,
       mouths,
-      stroke,
       startTransitionOut,
+      stroke,
+      timeFrozen,
     },
     {
       circleAlpha,

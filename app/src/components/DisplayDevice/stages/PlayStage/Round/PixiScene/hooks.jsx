@@ -80,7 +80,6 @@ export function useSetScene(refs, props) {
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       refs.stroke.current = ((GRID_UNIT * 0.11) / VB_WIDTH) * refs.el.current.offsetWidth
-      console.log(refs.stroke.current)
       // set min and max radius for the circle
       refs.minRadius.current = ((GRID_UNIT * 1.2) / VB_WIDTH) * refs.el.current.offsetWidth
       refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.15
@@ -320,6 +319,17 @@ export function useRAF(refs, props) {
       PlayersManager.players.forEach((player, index) => {
         let color = hexStToNb(COLORS[player.color])
 
+        if (player.closeMouth) {
+          if (!player.mouthIsMoving) {
+            const increment = -refs.maxRadius.current * 0.3
+            updateRadiusInstantly(refs.circlesPoints.current[index], increment)
+            player.mouthIsMoving = true
+          }
+        } else if (player.mouthIsMoving === true) {
+          updateRadiusInstantly(refs.circlesPoints.current[index])
+          player.mouthIsMoving = false
+        }
+
         // draw circles
         let points
         let newPosition
@@ -334,7 +344,7 @@ export function useRAF(refs, props) {
           )
         } else {
           newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index])
-          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition)
+          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition, player.mouthIsMoving)
         }
         refs.circlesLastPositions.current[index] = newPosition
         drawCubicBezier(points, newPosition, color)
@@ -351,6 +361,32 @@ export function useRAF(refs, props) {
           }
         })
       })
+
+      function updateRadiusInstantly(points, increment = 0) {
+        for (let i = 0; i < points.length; i++) {
+          const point = points[i]
+          // Increase each points
+          // if player has grown power, increase player radius
+          const newMaxRadius = refs.maxRadius.current + increment
+          const newMaxMiddleRadius = refs.maxMiddleRadius.current + increment
+          const newMinRadius = refs.minRadius.current + increment
+          const newMinMiddleRadius = refs.minMiddleRadius.current + increment
+
+          point.targetMaxX = Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+          point.targetMinX = Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+          point.destX = point.targetMaxX
+          point.x = point.destX
+
+          point.targetMaxY = Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
+          point.targetMinY = Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
+
+          point.destY = point.targetMaxY
+          point.y = point.destY
+
+          point.startAnim = now
+        }
+      }
 
       refs.circlesMasked.current.endFill()
 
@@ -372,7 +408,7 @@ export function useRAF(refs, props) {
     }
 
     // get points all around the circle to set up cubic bezier curves
-    function getPointsAroundCircle(now, points, position) {
+    function getPointsAroundCircle(now, points, position, mouthIsMoving) {
       const { x, y } = position
 
       // For each points of the player (organic shape)
@@ -386,8 +422,17 @@ export function useRAF(refs, props) {
         // then I use easing functions to modify the value curve through time.
         const percent = (now - point.startAnim) / point.duration
 
-        const relativeX = point.startX + (point.destX - point.startX) * inOutSine(percent)
-        const relativeY = point.startY + (point.destY - point.startY) * inOutSine(percent)
+        let relativeX
+        let relativeY
+
+        if (mouthIsMoving) {
+          // stop delay animation
+          relativeX = point.destX
+          relativeY = point.destY
+        } else {
+          relativeX = point.startX + (point.destX - point.startX) * inOutSine(percent)
+          relativeY = point.startY + (point.destY - point.startY) * inOutSine(percent)
+        }
 
         if (percent >= 1) {
           // end of animation,

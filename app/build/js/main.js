@@ -97829,8 +97829,7 @@ function useSetScene(refs, props) {
       refs.circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
       refs.containerFront.current.addChild(refs.circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
-      refs.stroke.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
-      console.log(refs.stroke.current); // set min and max radius for the circle
+      refs.stroke.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 0.11 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth; // set min and max radius for the circle
 
       refs.minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * 1.2 / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
       refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * 0.15;
@@ -98044,7 +98043,19 @@ function useRAF(refs, props) {
       refs.circlesMasked.current.clear();
       refs.circlesBorder.current.clear();
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
-        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]); // draw circles
+        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]);
+
+        if (player.closeMouth) {
+          if (!player.mouthIsMoving) {
+            var increment = -refs.maxRadius.current * 0.3;
+            updateRadiusInstantly(refs.circlesPoints.current[index], increment);
+            player.mouthIsMoving = true;
+          }
+        } else if (player.mouthIsMoving === true) {
+          updateRadiusInstantly(refs.circlesPoints.current[index]);
+          player.mouthIsMoving = false;
+        } // draw circles
+
 
         var points;
         var newPosition;
@@ -98056,7 +98067,7 @@ function useRAF(refs, props) {
           points = getPointsAroundCircle(refs.timeFrozen.current, refs.circlesPoints.current[index], newPosition);
         } else {
           newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index]);
-          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition);
+          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition, player.mouthIsMoving);
         }
 
         refs.circlesLastPositions.current[index] = newPosition;
@@ -98076,6 +98087,30 @@ function useRAF(refs, props) {
           }
         });
       });
+
+      function updateRadiusInstantly(points) {
+        var increment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        for (var i = 0; i < points.length; i++) {
+          var point = points[i]; // Increase each points
+          // if player has grown power, increase player radius
+
+          var newMaxRadius = refs.maxRadius.current + increment;
+          var newMaxMiddleRadius = refs.maxMiddleRadius.current + increment;
+          var newMinRadius = refs.minRadius.current + increment;
+          var newMinMiddleRadius = refs.minMiddleRadius.current + increment;
+          point.targetMaxX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
+          point.targetMinX = Math.cos(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
+          point.destX = point.targetMaxX;
+          point.x = point.destX;
+          point.targetMaxY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMaxMiddleRadius, newMaxRadius);
+          point.targetMinY = Math.sin(point.angle) * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(newMinRadius, newMinMiddleRadius);
+          point.destY = point.targetMaxY;
+          point.y = point.destY;
+          point.startAnim = now;
+        }
+      }
+
       refs.circlesMasked.current.endFill(); // draw transition out rect
 
       if (refs.startTransitionOut.current > 0) {
@@ -98099,7 +98134,7 @@ function useRAF(refs, props) {
     } // get points all around the circle to set up cubic bezier curves
 
 
-    function getPointsAroundCircle(now, points, position) {
+    function getPointsAroundCircle(now, points, position, mouthIsMoving) {
       var x = position.x,
           y = position.y; // For each points of the player (organic shape)
       // Create organic shape / Tween all points
@@ -98111,8 +98146,17 @@ function useRAF(refs, props) {
         // then I use easing functions to modify the value curve through time.
 
         var percent = (now - point.startAnim) / point.duration;
-        var relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
-        var relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+        var relativeX = void 0;
+        var relativeY = void 0;
+
+        if (mouthIsMoving) {
+          // stop delay animation
+          relativeX = point.destX;
+          relativeY = point.destY;
+        } else {
+          relativeX = point.startX + (point.destX - point.startX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+          relativeY = point.startY + (point.destY - point.startY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+        }
 
         if (percent >= 1) {
           // end of animation,
@@ -98311,16 +98355,20 @@ var PixiScene = function PixiScene(props) {
   }); // on RAF
 
   Object(_hooks__WEBPACK_IMPORTED_MODULE_1__["useRAF"])({
-    circlesMasked: circlesMasked,
     circlesBorder: circlesBorder,
     circlesLastPositions: circlesLastPositions,
+    circlesMasked: circlesMasked,
     circlesPoints: circlesPoints,
-    timeFrozen: timeFrozen,
     initHeight: initHeight,
     initWidth: initWidth,
+    maxMiddleRadius: maxMiddleRadius,
+    maxRadius: maxRadius,
+    minMiddleRadius: minMiddleRadius,
+    minRadius: minRadius,
     mouths: mouths,
+    startTransitionOut: startTransitionOut,
     stroke: stroke,
-    startTransitionOut: startTransitionOut
+    timeFrozen: timeFrozen
   }, {
     circleAlpha: circleAlpha,
     positions: positions,
