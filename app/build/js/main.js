@@ -97644,21 +97644,26 @@ var Intro = function Intro(props) {
   var timeout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // steps
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    timeout.current = setTimeout(function () {
-      onFinish();
-      setFinished(true);
-    }, 1500); // const currentStep = stepsArray[step]
     // timeout.current = setTimeout(() => {
-    //   if (currentStep.startGame) {
-    //     onFinish()
-    //     timeout.current = setTimeout(() => setFinished(true), 1000)
-    //   }
-    //   if (step < stepsArray.length - 1) {
-    //     setStep(step + 1)
-    //   }
-    // }, currentStep.tillNextStep)
-    // return () => clearTimeout(timeout.current)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //   onFinish()
+    //   setFinished(true)
+    // }, 1500)
+    var currentStep = stepsArray[step];
+    timeout.current = setTimeout(function () {
+      if (currentStep.startGame) {
+        onFinish();
+        timeout.current = setTimeout(function () {
+          return setFinished(true);
+        }, 1000);
+      }
+
+      if (step < stepsArray.length - 1) {
+        setStep(step + 1);
+      }
+    }, currentStep.tillNextStep);
+    return function () {
+      return clearTimeout(timeout.current);
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
   var readyDropState;
 
