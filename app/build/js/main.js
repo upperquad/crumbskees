@@ -96696,28 +96696,28 @@ __webpack_require__.r(__webpack_exports__);
 
  // circles
 
-var strokeSizeCoef = 0.11;
-var minRadiusCoef = 1.2;
-var maxRadiusCoef = 0.15;
-var maxMarginAngle = 0.35;
-var grownRadiusCoef = 1.45;
-var minDuration = 700;
-var maxDuration = 900;
-var pointsCount = 6;
-var decelerationCircleCoef = 0.15;
-var transitionOutDuration = 1000; // mouths/lips
+var STROKE_SIZE_COEF = 0.11;
+var MIN_RADIUS_COEF = 1.2;
+var MAX_RADIUS_COEF = 0.15;
+var MAX_MARGIN_ANGLE = 0.35;
+var GROWN_RADIUS_COEF = 1.45;
+var MIN_DURATION = 700;
+var MAX_DURATION = 900;
+var POINTS_COUNT = 6;
+var DECELERATION_CIRCLE_COEF = 0.15;
+var TRANSITION_OUT_DURATION = 1000; // mouths/lips
 
-var lipsOffset = 0.07;
-var lipsOffsetClosed = 0.03;
-var lipsOffsetGrown = 0.17;
-var lipScaleGrown = 0.3;
-var lipImageRatio = 206 / 613;
-var lipSizeCoef = 3.1; // powers
+var LIPS_OFFSET = 0.07;
+var LIPS_OFFSET_CLOSED = 0.03;
+var LIPS_OFFSET_GROWN = 0.17;
+var LIPS_SCALE_GROWN = 0.3;
+var LIPS_IMAGE_RATIO = 206 / 613;
+var LIPS_SIZE_COEF = 3.1; // powers
 
-var growAnimationDuration = 2000;
-var cancelGrowDuration = 6000;
-var cancelFreezeDuration = 4000;
-var addSeconds = 20;
+var GROW_ANIMATION_DURATION = 2000;
+var CANCEL_GROW_DURATION = 6000;
+var CANCEL_FREEZE_DURATION = 4000;
+var ADD_SECONDS = 20;
 function useSetScene(refs, props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // funcs
@@ -96743,8 +96743,8 @@ function useSetScene(refs, props) {
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
         for (var i = 0; i < 2; i++) {
           var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(_assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8___default.a);
-          sprite.width = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * lipSizeCoef / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
-          sprite.height = sprite.width * lipImageRatio;
+          sprite.width = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * LIPS_SIZE_COEF / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
+          sprite.height = sprite.width * LIPS_IMAGE_RATIO;
           sprite.position.x = 0.5 * refs.el.current.offsetWidth;
           sprite.position.y = 0.5 * refs.el.current.offsetHeight;
           sprite.anchor.set(0.5, 0.5);
@@ -96771,10 +96771,10 @@ function useSetScene(refs, props) {
       refs.circlesBorder.current = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Graphics"]();
       refs.containerFront.current.addChild(refs.circlesBorder.current); // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
 
-      refs.stroke.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * strokeSizeCoef / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth; // set min and max radius for the circle
+      refs.stroke.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * STROKE_SIZE_COEF / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth; // set min and max radius for the circle
 
-      refs.minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * minRadiusCoef / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
-      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * maxRadiusCoef;
+      refs.minRadius.current = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * MIN_RADIUS_COEF / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
+      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * MAX_RADIUS_COEF;
       refs.minMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.35;
       refs.maxMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.45;
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function () {
@@ -96789,16 +96789,16 @@ function useSetScene(refs, props) {
 
     function setCirclePoints() {
       var points = [];
-      var slice = Math.PI * 2 / pointsCount;
+      var slice = Math.PI * 2 / POINTS_COUNT;
       var startAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, Math.PI * 2);
 
-      for (var i = 0; i < pointsCount; i++) {
-        var marginAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, maxMarginAngle); // i / 1.2
+      for (var i = 0; i < POINTS_COUNT; i++) {
+        var marginAngle = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, MAX_MARGIN_ANGLE); // i / 1.2
         // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
 
-        var startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])() + i * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, minDuration);
+        var startAnim = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])() + i * Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(0, MIN_DURATION);
         var angle = startAngle + i * slice + marginAngle;
-        var duration = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(minDuration, maxDuration);
+        var duration = Object(_utils_math__WEBPACK_IMPORTED_MODULE_5__["random"])(MIN_DURATION, MAX_DURATION);
         var point = {
           angle: angle,
           duration: duration,
@@ -96951,7 +96951,7 @@ function useUpdatePowers(refs, props) {
         for (var _i = 0; _i < points.length; _i++) {
           points[_i].duration -= 250;
         }
-      }, growAnimationDuration);
+      }, GROW_ANIMATION_DURATION);
     }
 
     function scaleMouth(player, lips) {
@@ -96959,15 +96959,15 @@ function useUpdatePowers(refs, props) {
       lips.forEach(function (lip) {
         lip.originScaleX = lip.scale.x;
         lip.originScaleY = lip.scale.y;
-        lip.originOffset = lipsOffset;
-        lip.targetScaleX = lipScaleGrown;
-        lip.targetScaleY = lipScaleGrown;
-        lip.targetOffset = lipsOffsetGrown;
+        lip.originOffset = LIPS_OFFSET;
+        lip.targetScaleX = LIPS_SCALE_GROWN;
+        lip.targetScaleY = LIPS_SCALE_GROWN;
+        lip.targetOffset = LIPS_OFFSET_GROWN;
       });
       player.startGrowMouthAnimation = now;
       setTimeout(function () {
         player.startGrowMouthAnimation = false;
-      }, growAnimationDuration);
+      }, GROW_ANIMATION_DURATION);
     } // init
 
 
@@ -96976,20 +96976,20 @@ function useUpdatePowers(refs, props) {
         updateRadius(refs.circlesPoints.current[index], 0);
       } else {
         if (props.powers[index].type === 'grow') {
-          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * grownRadiusCoef);
+          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * GROWN_RADIUS_COEF);
           scaleMouth(player, refs.mouths.current[index]);
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
           props.setTime(function (time) {
-            return time + addSeconds;
+            return time + ADD_SECONDS;
           });
         }
 
         if (props.powers[index].type) {
           var timeout = setTimeout(function () {
             props.cancelPower(index);
-          }, props.powers[index].type === 'grow' ? cancelGrowDuration : cancelFreezeDuration);
+          }, props.powers[index].type === 'grow' ? CANCEL_GROW_DURATION : CANCEL_FREEZE_DURATION);
           return function () {
             return clearTimeout(timeout);
           };
@@ -97076,9 +97076,8 @@ function useRAF(refs, props) {
           targetY = targetPosition.y;
       var x = lastPosition.x,
           y = lastPosition.y;
-      x += (targetX - x) * decelerationCircleCoef; // decelerationCircleCoef
-
-      y += (targetY - y) * decelerationCircleCoef;
+      x += (targetX - x) * DECELERATION_CIRCLE_COEF;
+      y += (targetY - y) * DECELERATION_CIRCLE_COEF;
       return {
         x: x,
         y: y
@@ -97173,10 +97172,10 @@ function useRAF(refs, props) {
       refs.mouths.current[index].forEach(function (lip, lipIndex) {
         var x = position.x,
             y = position.y;
-        var offset = player.closeMouth ? lipsOffsetClosed : lipsOffset;
+        var offset = player.closeMouth ? LIPS_OFFSET_CLOSED : LIPS_OFFSET;
 
         if (player.startGrowMouthAnimation) {
-          var percent = (now - player.startGrowMouthAnimation) / minDuration;
+          var percent = (now - player.startGrowMouthAnimation) / MIN_DURATION;
 
           if (percent < 1) {
             lip.scale.x = lip.originScaleX + (lip.targetScaleX - lip.originScaleX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
@@ -97197,7 +97196,7 @@ function useRAF(refs, props) {
 
 
     function drawTransitionOut(now) {
-      var percent = (now - refs.startTransitionOut.current) / transitionOutDuration;
+      var percent = (now - refs.startTransitionOut.current) / TRANSITION_OUT_DURATION;
       var positionX = refs.initWidth.current - refs.initWidth.current * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutQuad"])(percent);
       refs.circlesMasked.current.beginFill(0xffffff);
 

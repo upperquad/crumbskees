@@ -12,30 +12,30 @@ import lipImage from '~assets/images/mouth.png'
 import styles from './style.module.scss'
 
 // circles
-const strokeSizeCoef = 0.11
-const minRadiusCoef = 1.2
-const maxRadiusCoef = 0.15
-const maxMarginAngle = 0.35
-const grownRadiusCoef = 1.45
-const minDuration = 700
-const maxDuration = 900
-const pointsCount = 6
-const decelerationCircleCoef = 0.15
-const transitionOutDuration = 1000
+const STROKE_SIZE_COEF = 0.11
+const MIN_RADIUS_COEF = 1.2
+const MAX_RADIUS_COEF = 0.15
+const MAX_MARGIN_ANGLE = 0.35
+const GROWN_RADIUS_COEF = 1.45
+const MIN_DURATION = 700
+const MAX_DURATION = 900
+const POINTS_COUNT = 6
+const DECELERATION_CIRCLE_COEF = 0.15
+const TRANSITION_OUT_DURATION = 1000
 
 // mouths/lips
-const lipsOffset = 0.07
-const lipsOffsetClosed = 0.03
-const lipsOffsetGrown = 0.17
-const lipScaleGrown = 0.3
-const lipImageRatio = 206 / 613
-const lipSizeCoef = 3.1
+const LIPS_OFFSET = 0.07
+const LIPS_OFFSET_CLOSED = 0.03
+const LIPS_OFFSET_GROWN = 0.17
+const LIPS_SCALE_GROWN = 0.3
+const LIPS_IMAGE_RATIO = 206 / 613
+const LIPS_SIZE_COEF = 3.1
 
 // powers
-const growAnimationDuration = 2000
-const cancelGrowDuration = 6000
-const cancelFreezeDuration = 4000
-const addSeconds = 20
+const GROW_ANIMATION_DURATION = 2000
+const CANCEL_GROW_DURATION = 6000
+const CANCEL_FREEZE_DURATION = 4000
+const ADD_SECONDS = 20
 
 export function useSetScene(refs, props) {
   useEffect(() => {
@@ -66,8 +66,8 @@ export function useSetScene(refs, props) {
       PlayersManager.players.forEach((player, index) => {
         for (let i = 0; i < 2; i++) {
           const sprite = Sprite.from(lipImage)
-          sprite.width = ((GRID_UNIT * lipSizeCoef) / VB_WIDTH) * refs.el.current.offsetWidth
-          sprite.height = sprite.width * lipImageRatio
+          sprite.width = ((GRID_UNIT * LIPS_SIZE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
+          sprite.height = sprite.width * LIPS_IMAGE_RATIO
 
           sprite.position.x = 0.5 * refs.el.current.offsetWidth
           sprite.position.y = 0.5 * refs.el.current.offsetHeight
@@ -97,10 +97,10 @@ export function useSetScene(refs, props) {
       refs.containerFront.current.addChild(refs.circlesBorder.current)
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
-      refs.stroke.current = ((GRID_UNIT * strokeSizeCoef) / VB_WIDTH) * refs.el.current.offsetWidth
+      refs.stroke.current = ((GRID_UNIT * STROKE_SIZE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
       // set min and max radius for the circle
-      refs.minRadius.current = ((GRID_UNIT * minRadiusCoef) / VB_WIDTH) * refs.el.current.offsetWidth
-      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * maxRadiusCoef
+      refs.minRadius.current = ((GRID_UNIT * MIN_RADIUS_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
+      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * MAX_RADIUS_COEF
       refs.minMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.35
       refs.maxMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.45
 
@@ -113,15 +113,15 @@ export function useSetScene(refs, props) {
 
     function setCirclePoints() {
       const points = []
-      const slice = (Math.PI * 2) / pointsCount
+      const slice = (Math.PI * 2) / POINTS_COUNT
       const startAngle = random(0, Math.PI * 2)
 
-      for (let i = 0; i < pointsCount; i++) {
-        const marginAngle = random(0, maxMarginAngle) // i / 1.2
+      for (let i = 0; i < POINTS_COUNT; i++) {
+        const marginAngle = random(0, MAX_MARGIN_ANGLE) // i / 1.2
         // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
-        const startAnim = getNow() + i * random(0, minDuration)
+        const startAnim = getNow() + i * random(0, MIN_DURATION)
         const angle = startAngle + i * slice + marginAngle
-        const duration = random(minDuration, maxDuration)
+        const duration = random(MIN_DURATION, MAX_DURATION)
 
         const point = {
           angle,
@@ -294,7 +294,7 @@ export function useUpdatePowers(refs, props) {
         for (let i = 0; i < points.length; i++) {
           points[i].duration -= 250
         }
-      }, growAnimationDuration)
+      }, GROW_ANIMATION_DURATION)
     }
 
     function scaleMouth(player, lips) {
@@ -302,17 +302,17 @@ export function useUpdatePowers(refs, props) {
       lips.forEach(lip => {
         lip.originScaleX = lip.scale.x
         lip.originScaleY = lip.scale.y
-        lip.originOffset = lipsOffset
+        lip.originOffset = LIPS_OFFSET
 
-        lip.targetScaleX = lipScaleGrown
-        lip.targetScaleY = lipScaleGrown
-        lip.targetOffset = lipsOffsetGrown
+        lip.targetScaleX = LIPS_SCALE_GROWN
+        lip.targetScaleY = LIPS_SCALE_GROWN
+        lip.targetOffset = LIPS_OFFSET_GROWN
       })
 
       player.startGrowMouthAnimation = now
       setTimeout(() => {
         player.startGrowMouthAnimation = false
-      }, growAnimationDuration)
+      }, GROW_ANIMATION_DURATION)
     }
 
     // init
@@ -321,12 +321,12 @@ export function useUpdatePowers(refs, props) {
         updateRadius(refs.circlesPoints.current[index], 0)
       } else {
         if (props.powers[index].type === 'grow') {
-          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * grownRadiusCoef)
+          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * GROWN_RADIUS_COEF)
           scaleMouth(player, refs.mouths.current[index])
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = getNow()
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
-          props.setTime(time => time + addSeconds)
+          props.setTime(time => time + ADD_SECONDS)
         }
 
         if (props.powers[index].type) {
@@ -334,7 +334,7 @@ export function useUpdatePowers(refs, props) {
             () => {
               props.cancelPower(index)
             },
-            props.powers[index].type === 'grow' ? cancelGrowDuration : cancelFreezeDuration,
+            props.powers[index].type === 'grow' ? CANCEL_GROW_DURATION : CANCEL_FREEZE_DURATION,
           )
 
           return () => clearTimeout(timeout)
@@ -431,8 +431,8 @@ export function useRAF(refs, props) {
       const { x: targetX, y: targetY } = targetPosition
       let { x, y } = lastPosition
 
-      x += (targetX - x) * decelerationCircleCoef // decelerationCircleCoef
-      y += (targetY - y) * decelerationCircleCoef
+      x += (targetX - x) * DECELERATION_CIRCLE_COEF
+      y += (targetY - y) * DECELERATION_CIRCLE_COEF
 
       return { x, y }
     }
@@ -528,10 +528,10 @@ export function useRAF(refs, props) {
       // draw lips
       refs.mouths.current[index].forEach((lip, lipIndex) => {
         const { x, y } = position
-        let offset = player.closeMouth ? lipsOffsetClosed : lipsOffset
+        let offset = player.closeMouth ? LIPS_OFFSET_CLOSED : LIPS_OFFSET
 
         if (player.startGrowMouthAnimation) {
-          const percent = (now - player.startGrowMouthAnimation) / minDuration
+          const percent = (now - player.startGrowMouthAnimation) / MIN_DURATION
 
           if (percent < 1) {
             lip.scale.x = lip.originScaleX + (lip.targetScaleX - lip.originScaleX) * inOutSine(percent)
@@ -552,7 +552,7 @@ export function useRAF(refs, props) {
 
     // draw transition out
     function drawTransitionOut(now) {
-      const percent = (now - refs.startTransitionOut.current) / transitionOutDuration
+      const percent = (now - refs.startTransitionOut.current) / TRANSITION_OUT_DURATION
       const positionX = refs.initWidth.current - refs.initWidth.current * inOutQuad(percent)
 
       refs.circlesMasked.current.beginFill(0xffffff)
