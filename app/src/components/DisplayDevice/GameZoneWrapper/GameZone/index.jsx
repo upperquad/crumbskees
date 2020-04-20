@@ -17,14 +17,14 @@ import freezeItem from '~assets/images/freeze.png'
 const GameZone = props => {
   const {
     addMessage,
-    addRoundScoreArray,
+    addScoresLevel,
     gameState,
     message,
     onFinish,
     onUpdate,
-    removeRoundScoreArray,
+    removeScoresLevel,
     round,
-    roundScoreArray,
+    scoresLevel,
     setGameState,
     setTime,
     type,
@@ -47,7 +47,7 @@ const GameZone = props => {
     }
 
     const addScore = (targetsCaught, index) => {
-      addRoundScoreArray(targetsCaught, index)
+      addScoresLevel(targetsCaught, index)
 
       if (type === 'game') {
         PlayersManager.addScore(targetsCaught.length, PlayersManager.players[index].id)
@@ -57,7 +57,7 @@ const GameZone = props => {
     }
 
     const removeScore = (score, index) => {
-      removeRoundScoreArray(score, index)
+      removeScoresLevel(score, index)
 
       if (type === 'game') {
         PlayersManager.removeScore(score, PlayersManager.players[index].id)
@@ -413,7 +413,7 @@ const GameZone = props => {
           power={powerArray[index]}
           position={positionArray[index]}
           color={player.color}
-          roundScore={roundScoreArray[index].length}
+          roundScore={scoresLevel[index].length}
           tapInstruction={tapInstructionArray[index]}
         />
       ))}

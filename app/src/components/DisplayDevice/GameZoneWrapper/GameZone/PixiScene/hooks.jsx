@@ -12,7 +12,7 @@ import lipImage from '~assets/images/mouth.png'
 import styles from './style.module.scss'
 
 // circles
-const CIRCLE_STROKE_COEF = 0.11
+const CIRCLE_STROKE_COEF = 0.2
 const CIRCLE_MIN_RADIUS = 1.2
 const CIRCLE_MAX_RADIUS_COEF = 0.15
 const CIRCLE_MAX_ANGLE = 0.35
@@ -23,7 +23,7 @@ const CIRCLE_POINTS = 6
 const CIRCLE_DECELERATION_COEF = 0.15
 
 // mouths/lips
-const LIP_OFFSET = 0.07
+const LIP_OFFSET = 0.075
 const LIP_OFFSET_CLOSED = 0.03
 const LIP_OFFSET_GROWN_TUTORIAL = 0.17
 const LIP_OFFSET_GROWN = 0.19

@@ -17,7 +17,7 @@ const GameZoneWrapper = props => {
   const { itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [message, setMessage] = useState({ messageCount: 0 })
-  const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => []))
+  const [scoresLevel, setScoresLevel] = useState(() => PlayersManager.players.map(() => []))
   const forceUpdate = useForceUpdate()
 
   const addMessage = messageObj => {
@@ -27,15 +27,15 @@ const GameZoneWrapper = props => {
     }))
   }
 
-  const addRoundScoreArray = (targetsCaught, index) => {
-    setRoundScoreArray(prevScoreArray => {
+  const addScoresLevel = (targetsCaught, index) => {
+    setScoresLevel(prevScoreArray => {
       prevScoreArray[index] = [...prevScoreArray[index], ...targetsCaught]
       return [...prevScoreArray]
     })
   }
 
-  const removeRoundScoreArray = (badPoints, index) => {
-    setRoundScoreArray(prevScoreArray => {
+  const removeScoresLevel = (badPoints, index) => {
+    setScoresLevel(prevScoreArray => {
       for (let i = 0; i < badPoints; i++) {
         prevScoreArray[index].pop()
       }
@@ -92,14 +92,14 @@ const GameZoneWrapper = props => {
         <div className={styles.gameContentTutorial}>
           <GameZone
             addMessage={addMessage}
-            addRoundScoreArray={addRoundScoreArray}
+            addScoresLevel={addScoresLevel}
             gameState={gameState}
             message={message}
             onFinish={onFinish}
             onUpdate={onUpdate}
-            removeRoundScoreArray={removeRoundScoreArray}
+            removeScoresLevel={removeScoresLevel}
             round={TUTORIAL_ROUND}
-            roundScoreArray={roundScoreArray}
+            scoresLevel={scoresLevel}
             setGameState={setGameState}
             type={type}
           />
@@ -120,13 +120,13 @@ const GameZoneWrapper = props => {
                 <div className={styles.gameContent}>
                   <GameZone
                     addMessage={addMessage}
-                    addRoundScoreArray={addRoundScoreArray}
+                    addScoresLevel={addScoresLevel}
                     gameState={gameState}
                     message={message}
                     onUpdate={onUpdate}
-                    removeRoundScoreArray={removeRoundScoreArray}
+                    removeScoresLevel={removeScoresLevel}
                     round={GAME_ROUNDS[roundIndex]}
-                    roundScoreArray={roundScoreArray}
+                    scoresLevel={scoresLevel}
                     setGameState={setGameState}
                     setTime={setTime}
                     type={type}
@@ -136,7 +136,7 @@ const GameZoneWrapper = props => {
             )}
           </TransitionGroup>
 
-          <Board time={time} itemImage={itemImage} scores={roundScoreArray} transitionStatus={transitionStatus} />
+          <Board time={time} itemImage={itemImage} scores={scoresLevel} transitionStatus={transitionStatus} />
         </React.Fragment>
       )}
     </React.Fragment>
