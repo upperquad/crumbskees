@@ -25,8 +25,10 @@ const CIRCLE_DECELERATION_COEF = 0.15
 // mouths/lips
 const LIP_OFFSET = 0.07
 const LIP_OFFSET_CLOSED = 0.03
-const LIP_OFFSET_GROWN = 0.17
-const LIP_SCALE_GROWN = 0.3
+const LIP_OFFSET_GROWN_TUTORIAL = 0.17
+const LIP_OFFSET_GROWN = 0.19
+const LIP_SCALE_GROWN_TUTORIAL = 0.27
+const LIP_SCALE_GROWN = 0.33
 const LIP_SIZE_COEF = 3.1
 
 // powers
@@ -87,6 +89,8 @@ export function useSetScene(refs, props) {
           sprite.initScaleY = sprite.scale.y
           sprite.offset = LIP_OFFSET
         }
+
+        player.allowCloseMouth = true
       })
     }
 
@@ -317,9 +321,12 @@ export function useUpdatePowers(refs, props) {
         lip.originScaleY = lip.scale.y
         lip.originOffset = lip.offset
 
-        lip.targetScaleX = close ? lip.initScaleX : LIP_SCALE_GROWN
-        lip.targetScaleY = close ? lip.initScaleY : LIP_SCALE_GROWN
-        lip.targetOffset = close ? LIP_OFFSET : LIP_OFFSET_GROWN
+        const scaleGrown = props.type === 'tutorial' ? LIP_SCALE_GROWN_TUTORIAL : LIP_SCALE_GROWN
+        lip.targetScaleX = close ? lip.initScaleX : scaleGrown
+        lip.targetScaleY = close ? lip.initScaleY : scaleGrown
+
+        const offsetGrown = props.type === 'tutorial' ? LIP_OFFSET_GROWN_TUTORIAL : LIP_OFFSET_GROWN
+        lip.targetOffset = close ? LIP_OFFSET : offsetGrown
         needsUpdate = true
       })
 

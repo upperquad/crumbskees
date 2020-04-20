@@ -93,6 +93,7 @@ const PixiScene = props => {
       cancelPower,
       powers,
       setTime,
+      type,
     },
   )
 

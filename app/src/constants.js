@@ -1,15 +1,17 @@
 import round1VideoBack from '~assets/images/round_1/r1-pattern.mp4'
 import round1VideoFront from '~assets/images/round_1/r1-pattern-bw.mp4'
-import round1Item from '~assets/images/snack-1.png'
+import snack1 from '~assets/images/snack-1.png'
 import round1IntroVideo from '~assets/images/round_1/s1-intro.mp4'
 import round2VideoBack from '~assets/images/round_2/r2-pattern.mp4'
 import round2VideoFront from '~assets/images/round_2/r2-pattern-bw.mp4'
-import round2Item from '~assets/images/round_2/s2-item.png'
+import snack2 from '~assets/images/snack-2.png'
 import round2IntroVideo from '~assets/images/round_2/s2-intro.mp4'
 import round3VideoBack from '~assets/images/round_3/r3-pattern.mp4'
 import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
-import round3Item from '~assets/images/round_3/s3-item.png'
+import snack3 from '~assets/images/snack-3.png'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
+
+import badSnack1 from '~assets/images/bad-snack.png'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import characterVideo1 from '~assets/images/character1.mp4'
@@ -63,12 +65,12 @@ export const CHARACTERS = [
 ]
 
 export const TUTORIAL_ROUND = {
-  badItemImage: round2Item,
-  itemImage: round1Item,
+  badItemImage: badSnack1,
+  itemImage: snack1,
   numBadItems: 2,
   numBigItems: 5,
   numItems: 10,
-  powers: ['grow', 'grow', 'grow', 'grow', 'grow'],
+  powers: ['grow', 'freeze'],
   videoBack: round1VideoBack,
   videoFront: round1VideoFront,
   videoIntro: round1IntroVideo,
@@ -76,8 +78,8 @@ export const TUTORIAL_ROUND = {
 
 export const GAME_ROUNDS = [
   {
-    badItemImage: round2Item,
-    itemImage: round1Item,
+    badItemImage: badSnack1,
+    itemImage: snack1,
     key: 'game-round-1',
     numBadItems: 2,
     numBigItems: 5,
@@ -88,8 +90,8 @@ export const GAME_ROUNDS = [
     videoFront: round1VideoFront,
     videoIntro: round1IntroVideo,
   }, {
-    badItemImage: round1Item,
-    itemImage: round2Item,
+    badItemImage: badSnack1,
+    itemImage: snack2,
     key: 'game-round-2',
     numBadItems: 2,
     numBigItems: 5,
@@ -100,8 +102,8 @@ export const GAME_ROUNDS = [
     videoFront: round2VideoFront,
     videoIntro: round2IntroVideo,
   }, {
-    badItemImage: round2Item,
-    itemImage: round3Item,
+    badItemImage: badSnack1,
+    itemImage: snack3,
     key: 'game-round-3',
     numBadItems: 2,
     numBigItems: 5,
