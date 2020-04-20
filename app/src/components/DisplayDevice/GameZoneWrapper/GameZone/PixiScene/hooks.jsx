@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Application, Sprite, Container, Texture, Graphics } from 'pixi.js'
+import { Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
 import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
@@ -27,7 +27,6 @@ const LIP_OFFSET = 0.07
 const LIP_OFFSET_CLOSED = 0.03
 const LIP_OFFSET_GROWN = 0.17
 const LIP_SCALE_GROWN = 0.3
-const LIP_IMAGE_RATIO = 206 / 613
 const LIP_SIZE_COEF = 3.1
 
 // powers
@@ -64,12 +63,13 @@ export function useSetScene(refs, props) {
       return video
     }
 
-    function setMouths() {
+    function setMouths(texture) {
       PlayersManager.players.forEach((player, index) => {
         for (let i = 0; i < 2; i++) {
-          const sprite = Sprite.from(lipImage)
+          const sprite = new Sprite(texture)
+          const ratio = sprite.height / sprite.width
           sprite.width = ((GRID_UNIT * LIP_SIZE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
-          sprite.height = sprite.width * LIP_IMAGE_RATIO
+          sprite.height = sprite.width * ratio
 
           sprite.position.x = 0.5 * refs.el.current.offsetWidth
           sprite.position.y = 0.5 * refs.el.current.offsetHeight
@@ -82,6 +82,10 @@ export function useSetScene(refs, props) {
 
           refs.containerMouth.current.addChild(sprite)
           refs.mouths.current[index].push(sprite)
+
+          sprite.initScaleX = sprite.scale.x
+          sprite.initScaleY = sprite.scale.y
+          sprite.offset = LIP_OFFSET
         }
       })
     }
@@ -181,7 +185,12 @@ export function useSetScene(refs, props) {
     const videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current)
     const videoPixiFront = setVideo(props.videoFront, refs.containerFront.current)
     setCircles()
-    setMouths()
+    // preload lips
+    const loader = new Loader()
+    loader.add('lip', lipImage)
+    loader.load((currentLoader, resources) => {
+      setMouths(resources.lip.texture)
+    })
 
     // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
@@ -266,7 +275,7 @@ export function useUpdatePowers(refs, props) {
   // update powers
   useEffect(() => {
     // func
-    function updateRadius(points, increment) {
+    function growCircle(points, increment) {
       const now = getNow()
       for (let i = 0; i < points.length; i++) {
         const point = points[i]
@@ -299,32 +308,46 @@ export function useUpdatePowers(refs, props) {
       }, GROW_ANIMATION_DURATION)
     }
 
-    function scaleMouth(player, lips) {
+    function growMouth(player, lips, close = false) {
       const now = getNow()
+      let needsUpdate = false
       lips.forEach(lip => {
+        if (!lip.initScaleX) return
         lip.originScaleX = lip.scale.x
         lip.originScaleY = lip.scale.y
-        lip.originOffset = LIP_OFFSET
+        lip.originOffset = lip.offset
 
-        lip.targetScaleX = LIP_SCALE_GROWN
-        lip.targetScaleY = LIP_SCALE_GROWN
-        lip.targetOffset = LIP_OFFSET_GROWN
+        lip.targetScaleX = close ? lip.initScaleX : LIP_SCALE_GROWN
+        lip.targetScaleY = close ? lip.initScaleY : LIP_SCALE_GROWN
+        lip.targetOffset = close ? LIP_OFFSET : LIP_OFFSET_GROWN
+        needsUpdate = true
       })
 
-      player.startGrowMouthAnimation = now
-      setTimeout(() => {
-        player.startGrowMouthAnimation = false
-      }, GROW_ANIMATION_DURATION)
+      if (needsUpdate) {
+        player.startGrowMouthAnimation = now
+        setTimeout(() => {
+          player.startGrowMouthAnimation = false
+        }, GROW_ANIMATION_DURATION)
+
+        if (close) {
+          setTimeout(() => {
+            player.allowCloseMouth = true
+          }, GROW_ANIMATION_DURATION)
+        } else {
+          player.allowCloseMouth = false
+        }
+      }
     }
 
     // init
     PlayersManager.players.forEach((player, index) => {
       if (!props.powers[index]) {
-        updateRadius(refs.circlesPoints.current[index], 0)
+        growCircle(refs.circlesPoints.current[index], 0)
+        growMouth(player, refs.mouths.current[index], true)
       } else {
         if (props.powers[index].type === 'grow') {
-          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * CIRCLE_GROWN_RADIUS)
-          scaleMouth(player, refs.mouths.current[index])
+          growCircle(refs.circlesPoints.current[index], refs.maxRadius.current * CIRCLE_GROWN_RADIUS)
+          growMouth(player, refs.mouths.current[index])
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = getNow()
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
@@ -362,15 +385,9 @@ export function useRAF(refs, props) {
       PlayersManager.players.forEach((player, index) => {
         let color = hexStToNb(COLORS[player.color])
 
-        if (player.closeMouth) {
-          if (!player.mouthIsMoving) {
-            const increment = -refs.maxRadius.current * 0.3
-            updateRadiusInstantly(refs.circlesPoints.current[index], increment)
-            player.mouthIsMoving = true
-          }
-        } else if (player.mouthIsMoving === true) {
-          updateRadiusInstantly(refs.circlesPoints.current[index])
-          player.mouthIsMoving = false
+        // close circle quickly when mouth closes
+        if (player.allowCloseMouth) {
+          closeCircle(player, index)
         }
 
         // draw circles
@@ -393,6 +410,19 @@ export function useRAF(refs, props) {
         drawCubicBezier(points, newPosition, color)
         drawMouths(now, index, newPosition)
       })
+
+      function closeCircle(player, index) {
+        if (player.closeMouth) {
+          if (!player.mouthIsMoving) {
+            const increment = -refs.maxRadius.current * 0.3
+            updateRadiusInstantly(refs.circlesPoints.current[index], increment)
+            player.mouthIsMoving = true
+          }
+        } else if (player.mouthIsMoving === true) {
+          updateRadiusInstantly(refs.circlesPoints.current[index])
+          player.mouthIsMoving = false
+        }
+      }
 
       function updateRadiusInstantly(points, increment = 0) {
         for (let i = 0; i < points.length; i++) {
@@ -530,24 +560,25 @@ export function useRAF(refs, props) {
       // draw lips
       refs.mouths.current[index].forEach((lip, lipIndex) => {
         const { x, y } = position
-        let offset = player.closeMouth ? LIP_OFFSET_CLOSED : LIP_OFFSET
 
         if (player.startGrowMouthAnimation) {
-          const percent = (now - player.startGrowMouthAnimation) / CIRCLE_MAX_DURATION
+          const percent = (now - player.startGrowMouthAnimation) / (CIRCLE_MAX_DURATION + 100)
 
           if (percent < 1) {
             lip.scale.x = lip.originScaleX + (lip.targetScaleX - lip.originScaleX) * inOutSine(percent)
             lip.scale.y = lip.originScaleY + (lip.targetScaleY - lip.originScaleY) * inOutSine(percent)
 
-            offset = lip.originOffset + (lip.targetOffset - lip.originOffset) * inOutSine(percent)
+            lip.offset = lip.originOffset + (lip.targetOffset - lip.originOffset) * inOutSine(percent)
           }
+        } else if (player.allowCloseMouth) {
+          lip.offset = player.closeMouth ? LIP_OFFSET_CLOSED : LIP_OFFSET
         }
 
         lip.position.x = (x + 0.5) * refs.initWidth.current
         if (lipIndex === 0) {
-          lip.position.y = (y + 0.5 - offset) * refs.initHeight.current
+          lip.position.y = (y + 0.5 - lip.offset) * refs.initHeight.current
         } else {
-          lip.position.y = (y + 0.5 + offset) * refs.initHeight.current
+          lip.position.y = (y + 0.5 + lip.offset) * refs.initHeight.current
         }
       })
     }

@@ -96710,7 +96710,6 @@ var LIP_OFFSET = 0.07;
 var LIP_OFFSET_CLOSED = 0.03;
 var LIP_OFFSET_GROWN = 0.17;
 var LIP_SCALE_GROWN = 0.3;
-var LIP_IMAGE_RATIO = 206 / 613;
 var LIP_SIZE_COEF = 3.1; // powers
 
 var GROW_ANIMATION_DURATION = 2000;
@@ -96740,12 +96739,13 @@ function useSetScene(refs, props) {
       return video;
     }
 
-    function setMouths() {
+    function setMouths(texture) {
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
         for (var i = 0; i < 2; i++) {
-          var sprite = pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"].from(_assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8___default.a);
+          var sprite = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Sprite"](texture);
+          var ratio = sprite.height / sprite.width;
           sprite.width = _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_UNIT"] * LIP_SIZE_COEF / _constants__WEBPACK_IMPORTED_MODULE_2__["VB_WIDTH"] * refs.el.current.offsetWidth;
-          sprite.height = sprite.width * LIP_IMAGE_RATIO;
+          sprite.height = sprite.width * ratio;
           sprite.position.x = 0.5 * refs.el.current.offsetWidth;
           sprite.position.y = 0.5 * refs.el.current.offsetHeight;
           sprite.anchor.set(0.5, 0.5);
@@ -96756,6 +96756,9 @@ function useSetScene(refs, props) {
 
           refs.containerMouth.current.addChild(sprite);
           refs.mouths.current[index].push(sprite);
+          sprite.initScaleX = sprite.scale.x;
+          sprite.initScaleY = sprite.scale.y;
+          sprite.offset = LIP_OFFSET;
         }
       });
     }
@@ -96853,8 +96856,13 @@ function useSetScene(refs, props) {
 
     var videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current);
     var videoPixiFront = setVideo(props.videoFront, refs.containerFront.current);
-    setCircles();
-    setMouths(); // Videos looping:
+    setCircles(); // preload lips
+
+    var loader = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Loader"]();
+    loader.add('lip', _assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8___default.a);
+    loader.load(function (currentLoader, resources) {
+      setMouths(resources.lip.texture);
+    }); // Videos looping:
     // Force syncronize because RAF is creating an offset between the 2 videos
 
     videoPixiFront.addEventListener('ended', function () {
@@ -96926,7 +96934,7 @@ function useUpdatePowers(refs, props) {
   // update powers
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // func
-    function updateRadius(points, increment) {
+    function growCircle(points, increment) {
       var now = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
       for (var i = 0; i < points.length; i++) {
@@ -96955,30 +96963,46 @@ function useUpdatePowers(refs, props) {
       }, GROW_ANIMATION_DURATION);
     }
 
-    function scaleMouth(player, lips) {
+    function growMouth(player, lips) {
+      var close = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var now = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
+      var needsUpdate = false;
       lips.forEach(function (lip) {
+        if (!lip.initScaleX) return;
         lip.originScaleX = lip.scale.x;
         lip.originScaleY = lip.scale.y;
-        lip.originOffset = LIP_OFFSET;
-        lip.targetScaleX = LIP_SCALE_GROWN;
-        lip.targetScaleY = LIP_SCALE_GROWN;
-        lip.targetOffset = LIP_OFFSET_GROWN;
+        lip.originOffset = lip.offset;
+        lip.targetScaleX = close ? lip.initScaleX : LIP_SCALE_GROWN;
+        lip.targetScaleY = close ? lip.initScaleY : LIP_SCALE_GROWN;
+        lip.targetOffset = close ? LIP_OFFSET : LIP_OFFSET_GROWN;
+        needsUpdate = true;
       });
-      player.startGrowMouthAnimation = now;
-      setTimeout(function () {
-        player.startGrowMouthAnimation = false;
-      }, GROW_ANIMATION_DURATION);
+
+      if (needsUpdate) {
+        player.startGrowMouthAnimation = now;
+        setTimeout(function () {
+          player.startGrowMouthAnimation = false;
+        }, GROW_ANIMATION_DURATION);
+
+        if (close) {
+          setTimeout(function () {
+            player.allowCloseMouth = true;
+          }, GROW_ANIMATION_DURATION);
+        } else {
+          player.allowCloseMouth = false;
+        }
+      }
     } // init
 
 
     _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
       if (!props.powers[index]) {
-        updateRadius(refs.circlesPoints.current[index], 0);
+        growCircle(refs.circlesPoints.current[index], 0);
+        growMouth(player, refs.mouths.current[index], true);
       } else {
         if (props.powers[index].type === 'grow') {
-          updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * CIRCLE_GROWN_RADIUS);
-          scaleMouth(player, refs.mouths.current[index]);
+          growCircle(refs.circlesPoints.current[index], refs.maxRadius.current * CIRCLE_GROWN_RADIUS);
+          growMouth(player, refs.mouths.current[index]);
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = Object(_utils_time__WEBPACK_IMPORTED_MODULE_6__["default"])();
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
@@ -97009,17 +97033,10 @@ function useRAF(refs, props) {
       refs.circlesMasked.current.clear();
       refs.circlesBorder.current.clear();
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.forEach(function (player, index) {
-        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]);
+        var color = hexStToNb(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][player.color]); // close circle quickly when mouth closes
 
-        if (player.closeMouth) {
-          if (!player.mouthIsMoving) {
-            var increment = -refs.maxRadius.current * 0.3;
-            updateRadiusInstantly(refs.circlesPoints.current[index], increment);
-            player.mouthIsMoving = true;
-          }
-        } else if (player.mouthIsMoving === true) {
-          updateRadiusInstantly(refs.circlesPoints.current[index]);
-          player.mouthIsMoving = false;
+        if (player.allowCloseMouth) {
+          closeCircle(player, index);
         } // draw circles
 
 
@@ -97040,6 +97057,19 @@ function useRAF(refs, props) {
         drawCubicBezier(points, newPosition, color);
         drawMouths(now, index, newPosition);
       });
+
+      function closeCircle(player, index) {
+        if (player.closeMouth) {
+          if (!player.mouthIsMoving) {
+            var increment = -refs.maxRadius.current * 0.3;
+            updateRadiusInstantly(refs.circlesPoints.current[index], increment);
+            player.mouthIsMoving = true;
+          }
+        } else if (player.mouthIsMoving === true) {
+          updateRadiusInstantly(refs.circlesPoints.current[index]);
+          player.mouthIsMoving = false;
+        }
+      }
 
       function updateRadiusInstantly(points) {
         var increment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -97173,24 +97203,25 @@ function useRAF(refs, props) {
       refs.mouths.current[index].forEach(function (lip, lipIndex) {
         var x = position.x,
             y = position.y;
-        var offset = player.closeMouth ? LIP_OFFSET_CLOSED : LIP_OFFSET;
 
         if (player.startGrowMouthAnimation) {
-          var percent = (now - player.startGrowMouthAnimation) / CIRCLE_MAX_DURATION;
+          var percent = (now - player.startGrowMouthAnimation) / (CIRCLE_MAX_DURATION + 100);
 
           if (percent < 1) {
             lip.scale.x = lip.originScaleX + (lip.targetScaleX - lip.originScaleX) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
             lip.scale.y = lip.originScaleY + (lip.targetScaleY - lip.originScaleY) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
-            offset = lip.originOffset + (lip.targetOffset - lip.originOffset) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
+            lip.offset = lip.originOffset + (lip.targetOffset - lip.originOffset) * Object(_utils_ease__WEBPACK_IMPORTED_MODULE_7__["inOutSine"])(percent);
           }
+        } else if (player.allowCloseMouth) {
+          lip.offset = player.closeMouth ? LIP_OFFSET_CLOSED : LIP_OFFSET;
         }
 
         lip.position.x = (x + 0.5) * refs.initWidth.current;
 
         if (lipIndex === 0) {
-          lip.position.y = (y + 0.5 - offset) * refs.initHeight.current;
+          lip.position.y = (y + 0.5 - lip.offset) * refs.initHeight.current;
         } else {
-          lip.position.y = (y + 0.5 + offset) * refs.initHeight.current;
+          lip.position.y = (y + 0.5 + lip.offset) * refs.initHeight.current;
         }
       });
     } // draw transition out
