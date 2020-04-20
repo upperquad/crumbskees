@@ -86,6 +86,7 @@ const PixiScene = props => {
       maxRadius,
       minMiddleRadius,
       maxMiddleRadius,
+      mouths,
       timeFrozen,
     },
     {

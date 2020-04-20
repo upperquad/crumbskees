@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 // import { TransitionGroup, Transition } from 'react-transition-group'
 import styles from './style.module.scss'
@@ -19,6 +19,12 @@ const ModeStage = props => {
 
     onFinish()
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      handleClick('SINGLE_PLAYER')
+    }, 100)
+  }, [])
 
   return (
     <div className={classNames(styles.mode, extraClassName)}>

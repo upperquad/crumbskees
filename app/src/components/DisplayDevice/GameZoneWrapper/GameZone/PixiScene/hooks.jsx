@@ -16,8 +16,9 @@ const maxDuration = 900
 const pointsCount = 6
 const decelerationCircleCoef = 0.15
 const transitionOutDuration = 1000
-const lipsOffset = 0.07
+const lipsOffset = 0.07 // 0.07
 const lipsOffsetClosed = 0.03
+const lipsOffsetGrown = 0.17
 
 export function useSetScene(refs, props) {
   useEffect(() => {
@@ -279,6 +280,21 @@ export function useUpdatePowers(refs, props) {
       }, 2000)
     }
 
+    function scaleMouth(player, lips) {
+      const now = getNow()
+      lips.forEach(lip => {
+        lip.originScaleX = lip.scale.x
+        lip.originScaleY = lip.scale.y
+        lip.targetScaleX = 0.3
+        lip.targetScaleY = 0.3
+      })
+
+      player.startGrowMouthAnimation = now
+      setTimeout(() => {
+        player.startGrowMouthAnimation = false
+      }, 2000)
+    }
+
     // init
     PlayersManager.players.forEach((player, index) => {
       if (!props.powers[index]) {
@@ -286,6 +302,7 @@ export function useUpdatePowers(refs, props) {
       } else {
         if (props.powers[index].type === 'grow') {
           updateRadius(refs.circlesPoints.current[index], refs.maxRadius.current * 1.45)
+          scaleMouth(player, refs.mouths.current[index])
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = getNow()
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
@@ -362,6 +379,17 @@ export function useRAF(refs, props) {
             lip.position.y = (y + 0.5 - offset) * refs.initHeight.current
           } else {
             lip.position.y = (y + 0.5 + offset) * refs.initHeight.current
+          }
+
+
+          if (player.startGrowMouthAnimation) {
+            const percent = (now - player.startGrowMouthAnimation) / 800
+
+            if (percent < 1) {
+              lip.scale.x = lip.originScaleX + (0.3 - lip.originScaleX) * inOutSine(percent)
+              lip.scale.y = lip.originScaleY + (0.3 - lip.originScaleY) * inOutSine(percent)
+              console.log(lip.scale.x)
+            }
           }
         })
       })
