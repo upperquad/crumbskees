@@ -97747,11 +97747,11 @@ var GameZone = function GameZone(props) {
       });
     };
 
-    var addScore = function addScore(score, index) {
-      addRoundScoreArray(score, index);
+    var addScore = function addScore(targetsCaught, index) {
+      addRoundScoreArray(targetsCaught, index);
 
       if (type === 'game') {
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].addScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].addScore(targetsCaught.length, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
       }
 
       _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play();
@@ -97769,7 +97769,7 @@ var GameZone = function GameZone(props) {
 
     var handleClick = function handleClick(playerIndex) {
       var itemsCaught = getItemsInCursor(items, positionArray[playerIndex], powerArray[playerIndex] && powerArray[playerIndex].type === 'grow');
-      var targetCount = 0;
+      var targetsCaught = [];
       var badCount = 0;
       var growPowerFound = false;
       itemsCaught.forEach(function (item) {
@@ -97805,7 +97805,7 @@ var GameZone = function GameZone(props) {
 
           default:
           case 'target':
-            targetCount += 1;
+            targetsCaught.push(item.image);
             break;
 
           case 'bad':
@@ -97821,8 +97821,8 @@ var GameZone = function GameZone(props) {
         }, 100);
       }
 
-      if (targetCount > 0) {
-        addScore(targetCount, playerIndex);
+      if (targetsCaught.length > 0) {
+        addScore(targetsCaught, playerIndex);
       }
 
       if (badCount > 0) {
@@ -97979,7 +97979,7 @@ var GameZone = function GameZone(props) {
     var setupGrid = function setupGrid() {
       // REVIEW: this is really inefficient
       var badItemImage = round.badItemImage,
-          itemImage = round.itemImage,
+          itemImages = round.itemImages,
           numBadItems = round.numBadItems,
           numBigItems = round.numBigItems,
           numItems = round.numItems,
@@ -98043,8 +98043,10 @@ var GameZone = function GameZone(props) {
 
 
       for (var _i4 = 0; _i4 < numItems; _i4++) {
+        var randomImage = itemImages[Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, itemImages.length - 1)];
+
         var _item = createItem({
-          image: itemImage
+          image: randomImage
         });
 
         newItems.push(_item);
@@ -98081,8 +98083,10 @@ var GameZone = function GameZone(props) {
 
 
       for (var _i6 = 0; _i6 < numBigItems; _i6++) {
+        var _randomImage = itemImages[Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, itemImages.length - 1)];
+
         var _item2 = createItem({
-          image: itemImage,
+          image: _randomImage,
           size: 2
         });
 
@@ -98153,7 +98157,7 @@ var GameZone = function GameZone(props) {
       power: powerArray[index],
       position: positionArray[index],
       color: player.color,
-      roundScore: roundScoreArray[index],
+      roundScore: roundScoreArray[index].length,
       tapInstruction: tapInstructionArray[index]
     });
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PopupMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
@@ -98291,7 +98295,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
-      return 0;
+      return [];
     });
   }),
       _useState6 = _slicedToArray(_useState5, 2),
@@ -98308,17 +98312,19 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     });
   };
 
-  var addRoundScoreArray = function addRoundScoreArray(score, index) {
+  var addRoundScoreArray = function addRoundScoreArray(targetsCaught, index) {
     setRoundScoreArray(function (prevScoreArray) {
-      prevScoreArray[index] += score;
+      prevScoreArray[index] = [].concat(_toConsumableArray(prevScoreArray[index]), _toConsumableArray(targetsCaught));
       return _toConsumableArray(prevScoreArray);
     });
   };
 
-  var removeRoundScoreArray = function removeRoundScoreArray(score, index) {
+  var removeRoundScoreArray = function removeRoundScoreArray(badPoints, index) {
     setRoundScoreArray(function (prevScoreArray) {
-      prevScoreArray[index] -= score;
-      prevScoreArray[index] = Math.max(prevScoreArray[index], 0);
+      for (var i = 0; i < badPoints; i++) {
+        prevScoreArray[index].pop();
+      }
+
       return _toConsumableArray(prevScoreArray);
     });
   };
@@ -98831,14 +98837,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 
 
 
@@ -98847,8 +98845,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 var Board = function Board(props) {
-  var itemImage = props.itemImage,
-      scores = props.scores,
+  var scores = props.scores,
       time = props.time,
       transitionStatus = props.transitionStatus;
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
@@ -98860,7 +98857,6 @@ var Board = function Board(props) {
   }, [forceUpdate]);
 
   var renderPlayerBlock = function renderPlayerBlock(player, scoreForThisRound) {
-    var items = scoreForThisRound >= 0 ? _toConsumableArray(new Array(scoreForThisRound)) : [];
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.player
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -98875,10 +98871,10 @@ var Board = function Board(props) {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.name
     }, player.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.items
-    }, items.map(function () {
+    }, scoreForThisRound.map(function (imageItem) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.item,
-        src: itemImage,
+        src: imageItem,
         alt: ""
       });
     })));
@@ -99017,7 +99013,7 @@ var Intro = function Intro(props) {
   var onFinish = props.onFinish,
       roundIndex = props.roundIndex;
   var _GAME_ROUNDS$roundInd = _constants__WEBPACK_IMPORTED_MODULE_3__["GAME_ROUNDS"][roundIndex],
-      itemImage = _GAME_ROUNDS$roundInd.itemImage,
+      itemImages = _GAME_ROUNDS$roundInd.itemImages,
       roundNameText = _GAME_ROUNDS$roundInd.roundNameText,
       videoIntro = _GAME_ROUNDS$roundInd.videoIntro;
 
@@ -99034,27 +99030,22 @@ var Intro = function Intro(props) {
   var timeout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); // steps
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // timeout.current = setTimeout(() => {
-    //   onFinish()
-    //   setFinished(true)
-    //   console.log(setStep)
-    // }, 1500)
-    var currentStep = stepsArray[step];
     timeout.current = setTimeout(function () {
-      if (currentStep.startGame) {
-        onFinish();
-        timeout.current = setTimeout(function () {
-          return setFinished(true);
-        }, 1000);
-      }
-
-      if (step < stepsArray.length - 1) {
-        setStep(step + 1);
-      }
-    }, currentStep.tillNextStep);
-    return function () {
-      return clearTimeout(timeout.current);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+      onFinish();
+      setFinished(true);
+      console.log(setStep);
+    }, 1500); // const currentStep = stepsArray[step]
+    // timeout.current = setTimeout(() => {
+    //   if (currentStep.startGame) {
+    //     onFinish()
+    //     timeout.current = setTimeout(() => setFinished(true), 1000)
+    //   }
+    //   if (step < stepsArray.length - 1) {
+    //     setStep(step + 1)
+    //   }
+    // }, currentStep.tillNextStep)
+    // return () => clearTimeout(timeout.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
   var readyDropState;
 
@@ -99093,7 +99084,7 @@ var Intro = function Intro(props) {
   })), !finished && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.itemToFindText, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.itemToFindTextIn, step >= stepsDict.itemText && step < stepsDict.itemTextOut))
   }, "Item", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "to find"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: itemImage,
+    src: itemImages[0],
     alt: "",
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.itemToFindImage, (_classNames6 = {}, _defineProperty(_classNames6, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.itemToFindImageIn, step >= stepsDict.itemImage), _defineProperty(_classNames6, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.itemToFindImageDown, step >= stepsDict.itemImageDown), _classNames6))
   }), !finished && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -100221,7 +100212,7 @@ var CHARACTERS = [{
 }];
 var TUTORIAL_ROUND = {
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-  itemImage: _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  itemImages: [_assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a, _assets_images_snack_2_png__WEBPACK_IMPORTED_MODULE_6___default.a],
   numBadItems: 2,
   numBigItems: 5,
   numItems: 10,
@@ -100232,7 +100223,7 @@ var TUTORIAL_ROUND = {
 };
 var GAME_ROUNDS = [{
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-  itemImage: _assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a,
+  itemImages: [_assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a, _assets_images_snack_2_png__WEBPACK_IMPORTED_MODULE_6___default.a],
   key: 'game-round-1',
   numBadItems: 2,
   numBigItems: 5,
@@ -100244,7 +100235,7 @@ var GAME_ROUNDS = [{
   videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a
 }, {
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-  itemImage: _assets_images_snack_2_png__WEBPACK_IMPORTED_MODULE_6___default.a,
+  itemImages: [_assets_images_snack_2_png__WEBPACK_IMPORTED_MODULE_6___default.a, _assets_images_snack_3_png__WEBPACK_IMPORTED_MODULE_10___default.a],
   key: 'game-round-2',
   numBadItems: 2,
   numBigItems: 5,
@@ -100256,7 +100247,7 @@ var GAME_ROUNDS = [{
   videoIntro: _assets_images_round_2_s2_intro_mp4__WEBPACK_IMPORTED_MODULE_7___default.a
 }, {
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,
-  itemImage: _assets_images_snack_3_png__WEBPACK_IMPORTED_MODULE_10___default.a,
+  itemImages: [_assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a, _assets_images_snack_2_png__WEBPACK_IMPORTED_MODULE_6___default.a, _assets_images_snack_3_png__WEBPACK_IMPORTED_MODULE_10___default.a],
   key: 'game-round-3',
   numBadItems: 2,
   numBigItems: 5,

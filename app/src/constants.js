@@ -66,7 +66,7 @@ export const CHARACTERS = [
 
 export const TUTORIAL_ROUND = {
   badItemImage: badSnack1,
-  itemImage: snack1,
+  itemImages: [snack1, snack2],
   numBadItems: 2,
   numBigItems: 5,
   numItems: 10,
@@ -79,7 +79,7 @@ export const TUTORIAL_ROUND = {
 export const GAME_ROUNDS = [
   {
     badItemImage: badSnack1,
-    itemImage: snack1,
+    itemImages: [snack1, snack2],
     key: 'game-round-1',
     numBadItems: 2,
     numBigItems: 5,
@@ -91,7 +91,7 @@ export const GAME_ROUNDS = [
     videoIntro: round1IntroVideo,
   }, {
     badItemImage: badSnack1,
-    itemImage: snack2,
+    itemImages: [snack2, snack3],
     key: 'game-round-2',
     numBadItems: 2,
     numBigItems: 5,
@@ -103,7 +103,7 @@ export const GAME_ROUNDS = [
     videoIntro: round2IntroVideo,
   }, {
     badItemImage: badSnack1,
-    itemImage: snack3,
+    itemImages: [snack1, snack2, snack3],
     key: 'game-round-3',
     numBadItems: 2,
     numBigItems: 5,

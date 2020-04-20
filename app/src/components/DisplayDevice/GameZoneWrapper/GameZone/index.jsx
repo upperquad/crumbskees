@@ -46,11 +46,11 @@ const GameZone = props => {
       })
     }
 
-    const addScore = (score, index) => {
-      addRoundScoreArray(score, index)
+    const addScore = (targetsCaught, index) => {
+      addRoundScoreArray(targetsCaught, index)
 
       if (type === 'game') {
-        PlayersManager.addScore(score, PlayersManager.players[index].id)
+        PlayersManager.addScore(targetsCaught.length, PlayersManager.players[index].id)
       }
 
       SoundManager.score.play()
@@ -73,7 +73,7 @@ const GameZone = props => {
         powerArray[playerIndex] && powerArray[playerIndex].type === 'grow',
       )
 
-      let targetCount = 0
+      const targetsCaught = []
       let badCount = 0
       let growPowerFound = false
 
@@ -106,7 +106,7 @@ const GameZone = props => {
             break
           default:
           case 'target':
-            targetCount += 1
+            targetsCaught.push(item.image)
             break
           case 'bad':
             badCount += 1
@@ -121,8 +121,8 @@ const GameZone = props => {
         }, 100)
       }
 
-      if (targetCount > 0) {
-        addScore(targetCount, playerIndex)
+      if (targetsCaught.length > 0) {
+        addScore(targetsCaught, playerIndex)
       }
 
       if (badCount > 0) {
@@ -265,7 +265,7 @@ const GameZone = props => {
 
     const setupGrid = () => {
       // REVIEW: this is really inefficient
-      const { badItemImage, itemImage, numBadItems, numBigItems, numItems, powers } = round
+      const { badItemImage, itemImages, numBadItems, numBigItems, numItems, powers } = round
       for (let i = 0; i < GRID_COLS; i++) {
         for (let j = 0; j < GRID_LINES; j++) {
           const obj = { x: i, y: j }
@@ -312,7 +312,8 @@ const GameZone = props => {
 
       // add items
       for (let i = 0; i < numItems; i++) {
-        const item = createItem({ image: itemImage })
+        const randomImage = itemImages[randomInt(0, itemImages.length - 1)]
+        const item = createItem({ image: randomImage })
         newItems.push(item)
       }
 
@@ -342,7 +343,8 @@ const GameZone = props => {
 
       // add big items
       for (let i = 0; i < numBigItems; i++) {
-        const item = createItem({ image: itemImage, size: 2 })
+        const randomImage = itemImages[randomInt(0, itemImages.length - 1)]
+        const item = createItem({ image: randomImage, size: 2 })
         newItems.push(item)
       }
 
@@ -411,7 +413,7 @@ const GameZone = props => {
           power={powerArray[index]}
           position={positionArray[index]}
           color={player.color}
-          roundScore={roundScoreArray[index]}
+          roundScore={roundScoreArray[index].length}
           tapInstruction={tapInstructionArray[index]}
         />
       ))}

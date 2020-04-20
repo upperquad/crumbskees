@@ -34,31 +34,31 @@ stepsArray.forEach((step, index) => {
 
 const Intro = props => {
   const { onFinish, roundIndex } = props
-  const { itemImage, roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
+  const { itemImages, roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
   const [step, setStep] = useState(0)
   const [finished, setFinished] = useState(false)
   const timeout = useRef()
 
   // steps
   useEffect(() => {
-    // timeout.current = setTimeout(() => {
-    //   onFinish()
-    //   setFinished(true)
-    //   console.log(setStep)
-    // }, 1500)
-    const currentStep = stepsArray[step]
     timeout.current = setTimeout(() => {
-      if (currentStep.startGame) {
-        onFinish()
-        timeout.current = setTimeout(() => setFinished(true), 1000)
-      }
+      onFinish()
+      setFinished(true)
+      console.log(setStep)
+    }, 1500)
+    // const currentStep = stepsArray[step]
+    // timeout.current = setTimeout(() => {
+    //   if (currentStep.startGame) {
+    //     onFinish()
+    //     timeout.current = setTimeout(() => setFinished(true), 1000)
+    //   }
 
-      if (step < stepsArray.length - 1) {
-        setStep(step + 1)
-      }
-    }, currentStep.tillNextStep)
+    //   if (step < stepsArray.length - 1) {
+    //     setStep(step + 1)
+    //   }
+    // }, currentStep.tillNextStep)
 
-    return () => clearTimeout(timeout.current)
+    // return () => clearTimeout(timeout.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
 
@@ -123,7 +123,7 @@ const Intro = props => {
         </div>
       )}
       <img
-        src={itemImage}
+        src={itemImages[0]}
         alt=""
         className={classNames(styles.itemToFindImage, {
           [styles.itemToFindImageIn]: step >= stepsDict.itemImage,

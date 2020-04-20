@@ -8,7 +8,7 @@ import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
-  const { itemImage, scores, time, transitionStatus } = props
+  const { scores, time, transitionStatus } = props
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -19,24 +19,20 @@ const Board = props => {
     }
   }, [forceUpdate])
 
-  const renderPlayerBlock = (player, scoreForThisRound) => {
-    const items = scoreForThisRound >= 0 ? [...new Array(scoreForThisRound)] : []
-
-    return (
-      <div className={styles.player}>
-        <div className={classNames(styles.character, { [styles.characterLost]: player.lost })}>
-          <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} poster={player.image} />
-        </div>
-        <div className={styles.score}>{zeroUnit(player.score())}</div>
-        <div className={styles.name}>{player.name}</div>
-        <div className={styles.items}>
-          {items.map(() => (
-            <img className={styles.item} src={itemImage} alt="" />
-          ))}
-        </div>
+  const renderPlayerBlock = (player, scoreForThisRound) => (
+    <div className={styles.player}>
+      <div className={classNames(styles.character, { [styles.characterLost]: player.lost })}>
+        <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} poster={player.image} />
       </div>
-    )
-  }
+      <div className={styles.score}>{zeroUnit(player.score())}</div>
+      <div className={styles.name}>{player.name}</div>
+      <div className={styles.items}>
+        {scoreForThisRound.map(imageItem => (
+          <img className={styles.item} src={imageItem} alt="" />
+        ))}
+      </div>
+    </div>
+  )
 
   return (
     <div className={classNames(styles.board, { [styles.boardEntering]: transitionStatus === 'entering' })}>

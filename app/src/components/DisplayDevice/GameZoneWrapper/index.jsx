@@ -17,7 +17,7 @@ const GameZoneWrapper = props => {
   const { itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [message, setMessage] = useState({ messageCount: 0 })
-  const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => 0))
+  const [roundScoreArray, setRoundScoreArray] = useState(() => PlayersManager.players.map(() => []))
   const forceUpdate = useForceUpdate()
 
   const addMessage = messageObj => {
@@ -27,17 +27,18 @@ const GameZoneWrapper = props => {
     }))
   }
 
-  const addRoundScoreArray = (score, index) => {
+  const addRoundScoreArray = (targetsCaught, index) => {
     setRoundScoreArray(prevScoreArray => {
-      prevScoreArray[index] += score
+      prevScoreArray[index] = [...prevScoreArray[index], ...targetsCaught]
       return [...prevScoreArray]
     })
   }
 
-  const removeRoundScoreArray = (score, index) => {
+  const removeRoundScoreArray = (badPoints, index) => {
     setRoundScoreArray(prevScoreArray => {
-      prevScoreArray[index] -= score
-      prevScoreArray[index] = Math.max(prevScoreArray[index], 0)
+      for (let i = 0; i < badPoints; i++) {
+        prevScoreArray[index].pop()
+      }
       return [...prevScoreArray]
     })
   }
