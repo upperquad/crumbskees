@@ -82,6 +82,8 @@ const PixiScene = props => {
   useUpdatePowers(
     {
       circlesPoints,
+      initHeight,
+      initWidth,
       minRadius,
       maxRadius,
       minMiddleRadius,

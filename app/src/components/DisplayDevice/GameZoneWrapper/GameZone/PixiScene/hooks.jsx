@@ -25,10 +25,8 @@ const CIRCLE_DECELERATION_COEF = 0.15
 // mouths/lips
 const LIP_OFFSET = 0.075
 const LIP_OFFSET_CLOSED = 0.03
-const LIP_OFFSET_GROWN_TUTORIAL = 0.17
-const LIP_OFFSET_GROWN = 0.19
-const LIP_SCALE_GROWN_TUTORIAL = 0.27
-const LIP_SCALE_GROWN = 0.33
+const LIP_OFFSET_GROWN = 0.17
+const LIP_SCALE_GROWN = 0.27 / 770
 const LIP_SIZE_COEF = 3.1
 
 // powers
@@ -321,12 +319,10 @@ export function useUpdatePowers(refs, props) {
         lip.originScaleY = lip.scale.y
         lip.originOffset = lip.offset
 
-        const scaleGrown = props.type === 'tutorial' ? LIP_SCALE_GROWN_TUTORIAL : LIP_SCALE_GROWN
-        lip.targetScaleX = close ? lip.initScaleX : scaleGrown
-        lip.targetScaleY = close ? lip.initScaleY : scaleGrown
+        lip.targetScaleX = close ? lip.initScaleX : LIP_SCALE_GROWN * refs.initWidth.current
+        lip.targetScaleY = close ? lip.initScaleY : LIP_SCALE_GROWN * refs.initWidth.current
 
-        const offsetGrown = props.type === 'tutorial' ? LIP_OFFSET_GROWN_TUTORIAL : LIP_OFFSET_GROWN
-        lip.targetOffset = close ? LIP_OFFSET : offsetGrown
+        lip.targetOffset = close ? LIP_OFFSET : LIP_OFFSET_GROWN
         needsUpdate = true
       })
 
