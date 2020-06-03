@@ -46,7 +46,8 @@ const DisplayDevice = () => {
   useEffect(() => {
     const connectHandler = () => {
       // PlayersManager.reset()
-      setStage('mode')
+      PlayersManager.init('TWO_PLAYERS')
+      setStage('setup')
     }
 
     TokenSocketManager.init('display')
@@ -73,7 +74,7 @@ const DisplayDevice = () => {
     }
   }, [setBothConnected, forceUpdate])
 
-  //   listener for error states
+  //   TODO: listener for error states
   //   useEffect(() => {
   //     const errorListener = reason => {
   //       setStage('error')
@@ -122,7 +123,7 @@ const DisplayDevice = () => {
   return (
     <div className={styles.displayDevice} style={{ transform: `translate(-50%, -50%) scale(${zoom})` }}>
       <TransitionGroup>
-        {stage === 'mode' && (
+        {/*stage === 'mode' && (
           <Transition key="stage-mode" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
@@ -130,7 +131,7 @@ const DisplayDevice = () => {
               </StageWrapper>
             )}
           </Transition>
-        )}
+        )*/}
         {stage === 'setup' && (
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (
