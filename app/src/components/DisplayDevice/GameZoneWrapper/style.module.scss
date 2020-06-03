@@ -1,0 +1,76 @@
+@import "~styles/imports/index";
+
+@keyframes playstage-bar-change-color {
+  0% {
+    background-color: $color-green;
+    width: 100%;
+  }
+
+  70% {
+    background-color: $color-green;
+    width: 30%;
+  }
+
+  73% {
+    background-color: $color-orange;
+    width: 27%;
+  }
+
+  75% {
+    background-color: $color-red;
+    width: 25%;
+  }
+
+  100% {
+    background-color: $color-red;
+    width: 0%;
+  }
+}
+
+@keyframes playstage-blink-bar-color {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.gameContentTutorial {
+  height: grid(8);
+  position: relative;
+  width: grid(8 * 32 / 14);
+}
+
+.gameContent {
+  height: grid(14);
+  position: relative;
+  width: 100%;
+  z-index: 10;
+
+  &::after {
+    animation: playstage-bar-change-color 40s linear 1 forwards, playstage-blink-bar-color .5s linear infinite forwards 30s;
+    background-color: $color-green;
+    bottom: -1px;
+    content: '';
+    height: grid(.3);
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10;
+  }
+}
+
+.buttons {
+  display: flex;
+  margin-top: grid(.5);
+  position: absolute;
+  right: 0;
+  top: 100%;
+}

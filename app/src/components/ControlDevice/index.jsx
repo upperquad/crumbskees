@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { CHARACTERS } from '~constants'
-import WebSocketManager from '~managers/WebSocketManager'
+import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
@@ -15,6 +15,7 @@ const ControlDevice = () => {
   const [activeTutorial, setActiveTutorial] = useState(false)
   const [score, setScore] = useState(0)
   const [winner, setWinner] = useState(null)
+  const [mode, setMode] = useState(null)
 
   useEffect(() => {
     const messageHandler = detail => {
@@ -22,8 +23,9 @@ const ControlDevice = () => {
 
       switch (type) {
         case 'accepted': {
-          const { playerIndex } = data
+          const { mode: activatedMode, playerIndex } = data
           setCharacterIndex(playerIndex)
+          setMode(activatedMode)
           if (CHARACTERS[playerIndex]) {
             setCharacter(CHARACTERS[playerIndex])
           }
@@ -50,10 +52,10 @@ const ControlDevice = () => {
           break
       }
     }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
+    ServerPeer.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
+      ServerPeer.removeSubscriber('MESSAGE', messageHandler)
     }
   }, [])
 
@@ -91,6 +93,8 @@ const ControlDevice = () => {
         <ResultStage
           winner={winner}
           characterIndex={characterIndex}
+          score={score}
+          mode={mode}
           resetGame={() => {
             setScore(0)
             setWinner(null)
@@ -98,7 +102,7 @@ const ControlDevice = () => {
             setCharacter(CHARACTERS[0])
             setCharacterIndex(null)
             setActiveTutorial(false)
-            WebSocketManager.disconnect()
+            ServerPeer.disconnect()
           }}
         />
       )}

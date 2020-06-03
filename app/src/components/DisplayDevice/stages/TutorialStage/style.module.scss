@@ -1,96 +1,40 @@
 @import "~styles/imports/index";
 
 .tutorial {
-  color: $color-black;
+  background-color: $color-purple;
+  color: $color-white;
 }
 
-.video {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -1;
+.container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  margin-left: grid(2);
+  margin-right: grid(1);
 }
 
-.welcome {
-  font-size: responsive-font(56);
-  padding-top: 48/$base-width*100vw;
-}
+.heading {
+  width: grid(8);
 
-.tutorialCard {
-  background-color: #fffaf2;
-  border-color: $color-black;
-  border-style: solid;
-  border-width: grid(.05);
-  height: grid(9);
-  left: 50%;
-  position: absolute;
-  text-align: center;
-  top: grid(4);
-  transform: translateX(-50%);
-  width: grid(17.5);
-}
+  .title {
+    @extend %Bold;
 
-.tutorialHeader {
-  @extend %Bold;
-
-  border-bottom: grid(.05) solid $color-black;
-  font-size: responsive-font(56);
-  height: grid(1.5);
-  padding-top: grid(.35);
-}
-
-// add transition
-.tutorialContent {
-  left: 0;
-  padding: grid(.6) grid(1.6);
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: grid(1.5);
-  transition: opacity .3s;
-
-  .tutorialImage {
-    height: grid(1);
+    font-size: responsive-font(56);
     margin-bottom: grid(.5);
   }
 
-  .tutorialText {
-    font-size: responsive-font(48);
-    line-height: 1.4;
+  .description {
+    @extend %Regular;
+
+    font-size: responsive-font(20);
+    line-height: 1.4em;
+    margin-bottom: grid(1);
+  }
+
+  .image {
+    height: grid(4);
+    width: grid(4);
   }
 }
 
-.tutorialContentTransitioning {
-  opacity: 0;
-}
-
-.timebar {
-  border: grid(.05) solid $color-black;
-  bottom: grid(1);
-  left: 50%;
-  padding: grid(.2) 0 grid(.16);
-  position: absolute;
-  text-align: center;
-  transform: translateX(-50%);
-  width: grid(5);
-}
-
-.timebarColor {
-  background: $color-green;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .1s;
-  width: 100%;
-  z-index: -1;
-}
-
-.timebarText {
-  @extend %Bold;
-
-  font-size: responsive-font(40);
-}

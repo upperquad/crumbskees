@@ -1,5 +1,7 @@
 import Player from './Player'
-import WebSocketManager from '~managers/WebSocketManager'
+import Player1Peer from '~managers/PeerManager/Player1Peer'
+import Player2Peer from '~managers/PeerManager/Player2Peer'
+import TokenSocketManager from '~managers/TokenSocketManager'
 import Observable from '~managers/abstracts/Observable'
 import { CHARACTERS, DEBUG } from '~constants'
 
@@ -16,23 +18,86 @@ class PlayersManager extends Observable {
 
   _gameStarted = false
 
-  _players = [{ token: getNewToken(0) }, { token: getNewToken(1) }]
+  _onMessage = detail => {
+    const { data, type } = detail
 
-  players = new Proxy(this._players, {
-    get: (obj, prop) => obj[prop],
-    set: (obj, prop, value) => {
-      obj[prop] = value
+    switch (type) {
+      case 'new_token_accepted': {
+        const { id, token } = data
+        const targetPlayerIndex = this.players.findIndex(player => player.token === token)
+        let playerPeer
+        if (targetPlayerIndex === 0) {
+          playerPeer = Player1Peer
+        } else {
+          playerPeer = Player2Peer
+        }
+        this.players[targetPlayerIndex] = new Player({
+          id,
+          character: CHARACTERS[targetPlayerIndex],
+          playerPeer,
+          token,
+        })
+        break
+      }
+      case 'token_exists': {
+        const { token } = data
+        const targetPlayerIndex = this.players.findIndex(player => player.token === token)
+        if (!this.players[targetPlayerIndex].id) {
+          this.players[targetPlayerIndex] = { token: getNewToken(targetPlayerIndex) }
+        }
+        break
+      }
+      default:
+        break
+    }
+  }
+
+  init = mode => {
+    this.mode = mode
+
+    if (this.mode === 'SINGLE_PLAYER') {
+      this._players = [{}]
+    } else {
+      this._players = [{}, {}]
+    }
+
+    this.players = new Proxy(this._players, {
+      get: (obj, prop) => obj[prop],
+      set: (obj, prop, value) => {
+        obj[prop] = value
+        this._callObservers('player_change')
+        return obj[prop]
+      },
+    })
+
+    TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
+    Player1Peer.addSubscriber('CONNECTED', () => {
+      if (this.players[0].setConnected) {
+        this.players[0].setConnected(true)
+        Player1Peer.send('accepted', { playerIndex: 0, mode: this.mode })
+      }
       this._callObservers('player_change')
-      return obj[prop]
-    },
-  })
+    })
+
+    if (this.mode !== 'SINGLE_PLAYER') {
+      Player2Peer.addSubscriber('CONNECTED', () => {
+        if (this.players[1].setConnected) {
+          this.players[1].setConnected(true)
+          Player2Peer.send('accepted', { playerIndex: 1, mode: this.mode })
+        }
+        this._callObservers('player_change')
+      })
+    }
+
+    this.reset()
+  }
 
   reset = () => {
-    this._players.forEach((player, index) => {
+    this.players.forEach((player, index) => {
       if (typeof player.destroy === 'function') {
         player.destroy()
       }
-      this._players[index] = { token: getNewToken(index) }
+      this.players[index] = { token: getNewToken(index) }
     })
     this._gameStarted = false
   }
@@ -41,29 +106,29 @@ class PlayersManager extends Observable {
 
   playerIndex = id => this.players.findIndex(player => player.id === id)
 
-  newConnect = (submittedToken, userId) => {
-    if (submittedToken) {
-      const matchIndex = this.players.findIndex(playerObj => {
-        const { token } = playerObj
-        return token === submittedToken
-      })
-      if (matchIndex !== -1) {
-        this.players[matchIndex] = new Player({ id: userId, character: CHARACTERS[matchIndex] })
-        WebSocketManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
-      } else {
-        WebSocketManager.send('auth_result', { id: userId, result: 0 })
-      }
-    } else if (userId) {
-      const player = this.players.find(ply => ply.id === userId)
-      if (player) {
-        WebSocketManager.send('reconnect_result', { id: userId, result: 1 })
-        player.setLostStatus(false)
-        this._callObservers('player_connection_change')
-      } else {
-        WebSocketManager.send('reconnect_result', { id: userId, result: 0 })
-      }
-    }
-  }
+  // newConnect = (submittedToken, userId) => {
+  //   if (submittedToken) {
+  //     const matchIndex = this.players.findIndex(playerObj => {
+  //       const { token } = playerObj
+  //       return token === submittedToken
+  //     })
+  //     if (matchIndex !== -1) {
+  //       this.players[matchIndex] = new Player({ id: userId, character: CHARACTERS[matchIndex] })
+  //       PeerManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
+  //     } else {
+  //       PeerManager.send('auth_result', { id: userId, result: 0 })
+  //     }
+  //   } else if (userId) {
+  //     const player = this.players.find(ply => ply.id === userId)
+  //     if (player) {
+  //       PeerManager.send('reconnect_result', { id: userId, result: 1 })
+  //       player.setLostStatus(false)
+  //       this._callObservers('player_connection_change')
+  //     } else {
+  //       PeerManager.send('reconnect_result', { id: userId, result: 0 })
+  //     }
+  //   }
+  // }
 
   startGame = () => {
     this._gameStarted = true
@@ -88,7 +153,9 @@ class PlayersManager extends Observable {
     }
   }
 
-  bothConnected = () => this.players.every(item => item.id)
+  bothConnected = () => this.players.every(item => item.connected)
+
+  bothReady = () => this.players.every(item => item.ready)
 
   addScore = (score, id) => {
     const player = this.player(id)
@@ -98,13 +165,27 @@ class PlayersManager extends Observable {
       this._callObservers('player_score')
     }
   }
+
+  removeScore = (score, id) => {
+    const player = this.player(id)
+
+    if (player) {
+      player.removeScore(score)
+      this._callObservers('player_score')
+    }
+  }
 }
 
 function getNewToken(index) {
+  let token
   if (DEBUG) {
-    return index === 0 ? '000' : '999'
+    token = index === 0 ? '000' : '999'
+  } else {
+    token = Math.random().toString(10).substr(2, 3)
   }
-  return Math.random().toString(10).substr(2, 3)
+
+  TokenSocketManager.send('new_token', { token })
+  return token
 }
 
 export default new PlayersManager()

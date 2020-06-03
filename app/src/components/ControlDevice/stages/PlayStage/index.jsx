@@ -4,11 +4,14 @@ import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
 import MarqueeText from '~components/MarqueeText'
-import WebSocketManager from '~managers/WebSocketManager'
+import IndicatorLight from '~components/IndicatorLight'
+import ServerPeer from '~managers/PeerManager/ServerPeer'
+
 
 const PlayStage = props => {
-  const { activeTutorial, color, image, score, secondaryColor, setActiveTutorial } = props
+  const { color, image, score, secondaryColor } = props
   const [isTouching, setIsTouching] = useState(false)
+  const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
 
   const coordX = useRef(0)
@@ -17,7 +20,7 @@ const PlayStage = props => {
   const updatePosition = (clientX, clientY) => {
     const x = (clientX - coordX.current) / window.innerWidth
     const y = (clientY - coordY.current) / window.innerHeight
-    WebSocketManager.send('cursor_move', { x, y })
+    ServerPeer.send('cursor_move', { x, y })
     coordX.current = clientX
     coordY.current = clientY
   }
@@ -45,13 +48,12 @@ const PlayStage = props => {
 
   const tapHandler = event => {
     event.stopPropagation()
-    WebSocketManager.send('click')
+    ServerPeer.send('click')
   }
 
-  const skipTutorial = event => {
-    event.stopPropagation()
-    WebSocketManager.send('skip_tutorial')
-    setActiveTutorial(false)
+  const onTouchStartIndicatorLight = () => {
+    ServerPeer.send('player_ready')
+    setReady(true)
   }
 
   return (
@@ -71,6 +73,9 @@ const PlayStage = props => {
       >
         The Upperquadrant
       </h2>
+      <div onTouchStart={onTouchStartIndicatorLight}>
+        <IndicatorLight type="mobile" text="ready" ready={ready} />
+      </div>
       <div
         className={classNames(styles.block, {
           [styles.blockRed]: color === 'red',
@@ -85,14 +90,6 @@ const PlayStage = props => {
         style={{ top: coordY.current, left: coordX.current }}
         className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
       />
-      {activeTutorial && (
-        <div
-          className={styles.skipTutorialBtn}
-          onClick={skipTutorial}
-        >
-          Skip tutorial
-        </div>
-      )}
     </section>
   )
 }

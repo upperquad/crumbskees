@@ -34,13 +34,18 @@ stepsArray.forEach((step, index) => {
 
 const Intro = props => {
   const { onFinish, roundIndex } = props
-  const { itemImage, roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
+  const { itemImages, roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
   const [step, setStep] = useState(0)
   const [finished, setFinished] = useState(false)
   const timeout = useRef()
 
   // steps
   useEffect(() => {
+    // timeout.current = setTimeout(() => {
+    //   onFinish()
+    //   setFinished(true)
+    //   console.log(setStep)
+    // }, 1500)
     const currentStep = stepsArray[step]
     timeout.current = setTimeout(() => {
       if (currentStep.startGame) {
@@ -117,14 +122,20 @@ const Intro = props => {
           to find
         </div>
       )}
-      <img
-        src={itemImage}
-        alt=""
+      <div
         className={classNames(styles.itemToFindImage, {
           [styles.itemToFindImageIn]: step >= stepsDict.itemImage,
           [styles.itemToFindImageDown]: step >= stepsDict.itemImageDown,
         })}
-      />
+      >
+        {itemImages.map(item => (
+          <img
+            src={item}
+            alt=""
+            className={styles.itemToFindImageItem}
+          />
+        ))}
+      </div>
       {!finished && (
         <div className={styles.countdown}>
           <DropText

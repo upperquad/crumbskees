@@ -7,17 +7,18 @@ import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
-import ErrorStage from './stages/ErrorStage'
+import ModeStage from './stages/ModeStage'
+// import ErrorStage from './stages/ErrorStage'
 import StageWrapper from './StageWrapper'
 
-import WebSocketManager from '~managers/WebSocketManager'
+import TokenSocketManager from '~managers/TokenSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 
 const TRANSITION_TIMEOUTS = { enter: 800, exit: 1300 }
 
 const DisplayDevice = () => {
-  const [stage, setStage] = useState('setup')
-  const [errorReason, setErrorReason] = useState()
+  const [stage, setStage] = useState('mode')
+  // const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
   const [gameCount, setGameCount] = useState(0)
@@ -43,73 +44,93 @@ const DisplayDevice = () => {
   }, [])
 
   useEffect(() => {
-    setStage('setup')
-    PlayersManager.reset()
-    WebSocketManager.init('display')
-    WebSocketManager.connect()
+    const connectHandler = () => {
+      // PlayersManager.reset()
+      setStage('mode')
+    }
 
-    return () => WebSocketManager.disconnect()
+    TokenSocketManager.init('display')
+    TokenSocketManager.addSubscriber('CONNECTED', connectHandler)
+    TokenSocketManager.connect()
+
+    return () => {
+      TokenSocketManager.removeSubscriber('CONNECTED', connectHandler)
+      TokenSocketManager.disconnect()
+    }
   }, [gameCount])
 
   // subscribe to PlayersManager
   useEffect(() => {
     // This should trigger on all children components so don't have to do this anywhere else
-    PlayersManager.addSubscriber('player_change', forceUpdate)
+    const onPlayerUpdate = () => {
+      setBothConnected(PlayersManager.bothConnected())
+      forceUpdate()
+    }
+    PlayersManager.addSubscriber('player_change', onPlayerUpdate)
 
     return () => {
-      PlayersManager.removeSubscriber('player_change', forceUpdate)
+      PlayersManager.removeSubscriber('player_change', onPlayerUpdate)
     }
-  }, [forceUpdate])
+  }, [setBothConnected, forceUpdate])
 
-  // listener for error states
-  useEffect(() => {
-    const errorListener = reason => {
-      setStage('error')
-      setErrorReason(reason)
-    }
-    WebSocketManager.addSubscriber('WS_CLOSE', errorListener)
-
-    return () => {
-      WebSocketManager.removeSubscriber('WS_CLOSE', errorListener)
-    }
-  }, [setStage])
-
-  useEffect(() => {
-    const messageHandler = detail => {
-      const { data, type } = detail
-
-      switch (type) {
-        case 'token_submit': {
-          const { id, token } = data
-          PlayersManager.newConnect(token, id)
-          setBothConnected(PlayersManager.bothConnected())
-          break
-        }
-        case 'reconnect_phone': {
-          const { id } = data
-          PlayersManager.newConnect(null, id)
-          break
-        }
-        case 'phone_left': {
-          const { id } = data
-          PlayersManager.closeConnection(id)
-          setBothConnected(PlayersManager.bothConnected())
-          break
-        }
-        default:
-          break
-      }
-    }
-    WebSocketManager.addSubscriber('MESSAGE', messageHandler)
-
-    return () => {
-      WebSocketManager.removeSubscriber('MESSAGE', messageHandler)
-    }
-  }, [])
+  //   listener for error states
+  //   useEffect(() => {
+  //     const errorListener = reason => {
+  //       setStage('error')
+  //       setErrorReason(reason)
+  //     }
+  //     PeerManager.addSubscriber('WS_CLOSE', errorListener)
+  //
+  //     return () => {
+  //       PeerManager.removeSubscriber('WS_CLOSE', errorListener)
+  //     }
+  //   }, [setStage])
+  //
+  //   useEffect(() => {
+  //     const messageHandler = detail => {
+  //       const { data, type } = detail
+  //
+  //       switch (type) {
+  //         case 'token_submit': {
+  //           const { id, token } = data
+  //           PlayersManager.newConnect(token, id)
+  //           setBothConnected(PlayersManager.bothConnected())
+  //           break
+  //         }
+  //         case 'reconnect_phone': {
+  //           const { id } = data
+  //           PlayersManager.newConnect(null, id)
+  //           break
+  //         }
+  //         case 'phone_left': {
+  //           const { id } = data
+  //           PlayersManager.closeConnection(id)
+  //           setBothConnected(PlayersManager.bothConnected())
+  //           break
+  //         }
+  //         default:
+  //           break
+  //       }
+  //     }
+  //     TokenSocketManager.addSubscriber('MESSAGE', messageHandler)
+  //
+  //     return () => {
+  //       TokenSocketManager.removeSubscriber('MESSAGE', messageHandler)
+  //     }
+  //   }, [])
 
   return (
     <div className={styles.displayDevice} style={{ transform: `translate(-50%, -50%) scale(${zoom})` }}>
       <TransitionGroup>
+        {stage === 'mode' && (
+          <Transition key="stage-mode" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <ModeStage onFinish={() => setStage('setup')} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
         {stage === 'setup' && (
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (
@@ -124,7 +145,6 @@ const DisplayDevice = () => {
             {status => (
               <StageWrapper status={status}>
                 <TutorialStage
-                  bothConnected={bothConnected}
                   rollback={() => setStage('setup')}
                   onFinish={() => setStage('play')}
                 />
@@ -150,7 +170,7 @@ const DisplayDevice = () => {
             )}
           </Transition>
         )}
-        {stage === 'error' && (
+        {/* stage === 'error' && (
           <Transition key={`stage-error-${errorReason}`} timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
@@ -161,7 +181,7 @@ const DisplayDevice = () => {
               </StageWrapper>
             )}
           </Transition>
-        )}
+        ) */}
       </TransitionGroup>
     </div>
   )

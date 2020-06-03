@@ -1,0 +1,13 @@
+*.csv
+*.dat
+*.floo*
+*.gz
+*.log
+*.out
+*.pid
+*.seed
+build/
+data/
+lib-cov
+logs
+node_modules

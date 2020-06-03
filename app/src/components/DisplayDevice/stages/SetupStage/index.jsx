@@ -4,7 +4,8 @@ import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
-import WebSocketManager from '~managers/WebSocketManager'
+import Player1Peer from '~managers/PeerManager/Player1Peer'
+import Player2Peer from '~managers/PeerManager/Player2Peer'
 
 import MarqueeText from '~components/MarqueeText'
 import JumpUpText from '~components/JumpUpText'
@@ -45,7 +46,8 @@ const SetupStage = props => {
   useEffect(() => {
     if (bothConnected) {
       const nextStageTimeout = setTimeout(() => {
-        WebSocketManager.send('tutorial_start')
+        Player1Peer.send('tutorial_start')
+        Player2Peer.send('tutorial_start')
         onFinish()
       }, 2000)
       return () => clearTimeout(nextStageTimeout)
@@ -58,57 +60,62 @@ const SetupStage = props => {
       <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
       <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
       <div className={styles.players}>
-        {PlayersManager.players.map((player, index) => (
-          <div key={`${player.id}-${player.token}`} className={styles.player}>
-            <div className={styles.qrWrapper}>
-              <TransitionGroup>
-                {player.token && qrCode[index] && (
-                  <Transition
-                    key={player.token}
-                    timeout={{ enter: 100, exit: 300 }}
-                  >
-                    {status => (
-                      <div
-                        className={classNames(styles.qr, {
-                          [styles.qrTransitioning]:
-                            status === 'exiting' || status === 'exited' || status === 'entering',
-                        })}
+        {PlayersManager.players.map((player, index) => {
+          if (player.id || player.token) {
+            return (
+              <div key={`${player.id}-${player.token}`} className={styles.player}>
+                <div className={styles.qrWrapper}>
+                  <TransitionGroup>
+                    {!player.connected && player.token && qrCode[index] && (
+                      <Transition
+                        key={player.token}
+                        timeout={{ enter: 100, exit: 300 }}
                       >
-                        <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
-                        <div className={styles.qrUrl}>
-                          Think QR codes are stupid?
-                          <br />
-                          {`Go to ${BASE_URL}`}
-                          <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
-                        </div>
-                      </div>
+                        {status => (
+                          <div
+                            className={classNames(styles.qr, {
+                              [styles.qrTransitioning]:
+                                status === 'exiting' || status === 'exited' || status === 'entering',
+                            })}
+                          >
+                            <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
+                            <div className={styles.qrUrl}>
+                              Think QR codes are stupid?
+                              <br />
+                              {`Go to ${BASE_URL}`}
+                              <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
+                            </div>
+                          </div>
+                        )}
+                      </Transition>
                     )}
-                  </Transition>
-                )}
-                {player.id && (
-                  <Transition
-                    key={player.id}
-                    timeout={{ enter: 100, exit: 300 }}
-                  >
-                    {status => (
-                      <div
-                        className={classNames(styles.playerConnected, {
-                          [styles.playerConnectedTransitioning]:
-                            status === 'exiting' || status === 'exited' || status === 'entering',
-                        })}
+                    {player.connected && (
+                      <Transition
+                        key={player.id}
+                        timeout={{ enter: 100, exit: 300 }}
                       >
-                        <span className={styles.playerConnectedText}>Connected!</span>
-                      </div>
+                        {status => (
+                          <div
+                            className={classNames(styles.playerConnected, {
+                              [styles.playerConnectedTransitioning]:
+                                status === 'exiting' || status === 'exited' || status === 'entering',
+                            })}
+                          >
+                            <span className={styles.playerConnectedText}>Connected!</span>
+                          </div>
+                        )}
+                      </Transition>
                     )}
-                  </Transition>
-                )}
-              </TransitionGroup>
-            </div>
-            <div className={styles.playerName}>
-              {CHARACTERS[index].name}
-            </div>
-          </div>
-        ))}
+                  </TransitionGroup>
+                </div>
+                <div className={styles.playerName}>
+                  {CHARACTERS[index].name}
+                </div>
+              </div>
+            )
+          }
+          return null
+        })}
       </div>
       {bothConnected && (
         <div className={styles.instruction}>
