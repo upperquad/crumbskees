@@ -7,6 +7,7 @@ const LandingStage = props => {
 
   return (
     <div className={classNames(styles.landing, extraClassName)}>
+      <div>MADE WITH <3 BY UPPERQUAD ~~~~(~@        @~)~~~~</div>
       <button
         type="button"
         className={styles.modeOption}
