@@ -18,14 +18,14 @@
   width: grid(8);
 
   .title {
-    @extend %Bold;
+
 
     font-size: responsive-font(56);
     margin-bottom: grid(.5);
   }
 
   .description {
-    @extend %Regular;
+
 
     font-size: responsive-font(20);
     line-height: 1.4em;

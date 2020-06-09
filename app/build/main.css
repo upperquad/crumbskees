@@ -50,22 +50,26 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block; }
 
 @font-face {
-  font-family: 'Fakt Medium';
+  font-family: 'Fakt';
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   src: url(/4d9c7bceca8a40ffa84c627bea1224e9.otf) format("opentype"); }
 
 @font-face {
-  font-family: 'Ginto Nord Black';
+  font-family: 'Fakt';
   font-style: normal;
-  font-weight: normal;
+  font-weight: 700;
+  src: url(/2c08d49df8cdd97068c907e004f47905.otf) format("opentype"); }
+
+@font-face {
+  font-family: 'Ginto Nord';
+  font-style: normal;
+  font-weight: 900;
   src: url(/b62a047eb8cf19415fd1bfb30d509cc9.otf) format("opentype"); }
 
 html {
   box-sizing: border-box;
   overflow-x: hidden; }
-  html.is-desktop body {
-    background: #fffaf2; }
   html:not(.is-desktop) {
     overscroll-behavior-x: none; }
     html:not(.is-desktop) body {
@@ -106,13 +110,16 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.SetupStage-playerConnected--3s2oQ, .SetupStage-playerName--3DwHW {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
 
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
 .SetupStage-setup--2ohF8 {
   color: #000; }
 
@@ -144,13 +151,13 @@ a {
   position: relative; }
 
 .SetupStage-playerConnected--3s2oQ {
-  color: #00f384;
+  color: #69e5ab;
   font-size: 2.5vw;
   pointer-events: none;
   position: relative;
   text-transform: uppercase; }
   .SetupStage-playerConnected--3s2oQ::before {
-    background: #ff4047;
+    background: #ec504f;
     border: 2px solid #000;
     border-radius: 50%;
     content: '';
@@ -204,7 +211,7 @@ a {
   line-height: 1.4; }
 
 .SetupStage-qrUrlToken--1Jgor {
-  color: #ff4047;
+  color: #ec504f;
   font-weight: bold;
   text-transform: none; }
 
@@ -217,13 +224,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.MarqueeText-marqueeAlternate---84_Y {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .MarqueeText-marquee--2Cv7V {
   white-space: nowrap; }
 
@@ -258,13 +258,6 @@ a {
 /* Easings*/
 /* Timings */
 .JumpUpText-jumpUpText--2IcxF {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
-.JumpUpText-jumpUpText--2IcxF {
   color: #fff;
   font-size: 6.25vw;
   line-height: .8em;
@@ -282,13 +275,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.DisplayFooter-version--3kxOX {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .DisplayFooter-footer--hl4X5 {
   align-items: center;
   background: #fff;
@@ -321,7 +307,7 @@ a {
   position: relative;
   width: 14.58333vw; }
   .DisplayFooter-whatup--1Nvv5::after {
-    background: #00f384;
+    background: #69e5ab;
     content: '';
     height: 1.77083vw;
     position: absolute;
@@ -347,18 +333,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.TutorialStage-heading--3Rx-V .TutorialStage-description--2XJsx {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
-
-.TutorialStage-heading--3Rx-V .TutorialStage-title--JVgZx {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .TutorialStage-tutorial--3Ybyr {
   background-color: #3f1bd0;
   color: #fff; }
@@ -390,19 +364,19 @@ a {
 /* Timings */
 @keyframes GameZoneWrapper-playstage-bar-change-color--1gM_1 {
   0% {
-    background-color: #00f384;
+    background-color: #69e5ab;
     width: 100%; }
   70% {
-    background-color: #00f384;
+    background-color: #69e5ab;
     width: 30%; }
   73% {
     background-color: #ff9d21;
     width: 27%; }
   75% {
-    background-color: #ff4047;
+    background-color: #ec504f;
     width: 25%; }
   100% {
-    background-color: #ff4047;
+    background-color: #ec504f;
     width: 0%; } }
 
 @keyframes GameZoneWrapper-playstage-blink-bar-color--3P60k {
@@ -425,7 +399,7 @@ a {
   z-index: 10; }
   .GameZoneWrapper-gameContent--3OLh9::after {
     animation: GameZoneWrapper-playstage-bar-change-color--1gM_1 40s linear 1 forwards, GameZoneWrapper-playstage-blink-bar-color--3P60k .5s linear infinite forwards 30s;
-    background-color: #00f384;
+    background-color: #69e5ab;
     bottom: -1px;
     content: '';
     height: 0.9375vw;
@@ -446,13 +420,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.IndicatorLight-button--2XxhC .IndicatorLight-inner--3v37Y {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .IndicatorLight-button--2XxhC {
   display: inline-block;
   overflow: hidden;
@@ -544,13 +511,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.PopupMessage-message--2ZO9X {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .PopupMessage-messageContainer---DqVT {
   height: 100%;
   left: 0;
@@ -591,13 +551,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.Board-score--3Jfkn, .Board-name--2MohW, .Board-timer--1FYhF {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .Board-board--2FSpi {
   background: #fff;
   border-bottom: 2px solid #000;
@@ -622,7 +575,7 @@ a {
   .Board-player--2wZ9w:last-child {
     flex-direction: row-reverse; }
     .Board-player--2wZ9w:last-child .Board-character--1Sl7a {
-      background-color: #ff4047;
+      background-color: #ec504f;
       border-left: 2px solid #000;
       border-right: none;
       border-width: 2px;
@@ -729,7 +682,7 @@ a {
   z-index: 10; }
   .Round-gameContent--16S_I::after {
     animation: Round-playstage-bar-change-color--1HoBY 40s linear 1 forwards, Round-playstage-blink-bar-color--2pndY .5s linear infinite forwards 30s;
-    background-color: #00f384;
+    background-color: #69e5ab;
     bottom: 0;
     content: '';
     height: 0.9375vw;
@@ -747,18 +700,11 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.Intro-itemToFindText--ug7LH, .Intro-go--2_fBn {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 @keyframes Intro-intro-blink-color--3Ys4X {
   0% {
     color: #fff; }
   50% {
-    color: #ff4047; }
+    color: #ec504f; }
   100% {
     color: #fff; } }
 
@@ -829,7 +775,7 @@ a {
   width: 100%; }
 
 .Intro-introRound--2A6Nt {
-  color: #ff4047;
+  color: #ec504f;
   font-size: 10.41667vw;
   -webkit-text-stroke-color: transparent; }
 
@@ -906,7 +852,7 @@ a {
   width: 100%; }
 
 .Intro-go--2_fBn {
-  color: #ff4047;
+  color: #ec504f;
   font-size: 41.66667vw;
   left: 50%;
   opacity: 0;
@@ -925,14 +871,7 @@ a {
 /* Easings*/
 /* Timings */
 .DropText-dropText--2Vr_0 {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
-.DropText-dropText--2Vr_0 {
-  color: #ff4047;
+  color: #ec504f;
   font-size: 10.41667vw;
   text-align: center; }
 
@@ -940,13 +879,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.ResultStage-title--3pUhh, .ResultStage-player--XpmPw, .ResultStage-score--2trdh {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .ResultStage-background--10JOz {
   height: 100%;
   object-fit: cover;
@@ -974,7 +906,7 @@ a {
 
 .ResultStage-timebar--3CWQW {
   animation: ResultStage-result-timebar--2C5bG 13s linear 1 both;
-  background-color: #00f384;
+  background-color: #69e5ab;
   bottom: 0;
   height: 0.9375vw;
   left: 0;
@@ -1032,62 +964,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.ModeStage-modeHeader--3Nh71, .ModeStage-modeContent--2tSc4 {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
-.ModeStage-mode--19l2S {
-  color: #000; }
-
-.ModeStage-video--2-VQp {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -1; }
-
-.ModeStage-welcome--3xMvc {
-  font-size: 2.91667vw;
-  padding-top: 2.5vw; }
-
-.ModeStage-modeCard--1Jkg8 {
-  background-color: #fffaf2;
-  border-color: #000;
-  border-style: solid;
-  border-width: 0.15625vw;
-  height: 28.125vw;
-  left: 50%;
-  position: absolute;
-  text-align: center;
-  top: 12.5vw;
-  transform: translateX(-50%);
-  width: 54.6875vw; }
-
-.ModeStage-modeHeader--3Nh71 {
-  border-bottom: 0.15625vw solid #000;
-  font-size: 2.91667vw;
-  height: 4.6875vw;
-  padding-top: 1.09375vw; }
-
-.ModeStage-modeContent--2tSc4 {
-  align-items: center;
-  display: flex;
-  font-size: 2.5vw;
-  height: calc(100% - 4.6875vw);
-  justify-content: space-around; }
-
-.ModeStage-modeOption--2eAOQ {
-  cursor: pointer;
-  text-align: center;
-  width: 42%; }
-
-/* Colors */
-/* Breakpoints */
-/* Easings*/
-/* Timings */
 .StageWrapper-stageWrapper--3Z3WO {
   height: 0;
   left: 0;
@@ -1122,18 +998,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.PreConnectStage-label--1mMJf, .PreConnectStage-tokenInputKey--3if_1 {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
-
-.PreConnectStage-instruction--R3YLX, .PreConnectStage-tokenDisplay--1CluL {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .PreConnectStage-preConnect--1Inqw {
   bottom: 0;
   display: flex;
@@ -1186,7 +1050,7 @@ a {
 
 .PreConnectStage-tokenInputKey--3if_1 {
   align-items: center;
-  background: #ff4047;
+  background: #ec504f;
   border: 1px solid #000;
   color: #fff;
   display: flex;
@@ -1232,10 +1096,10 @@ a {
       transform: translate(-50%, -40%); } }
 
 .Circle-circleYellow--17Dj4 {
-  background: #ffe947; }
+  background: #ffe945; }
 
 .Circle-circleRed--1kUOe {
-  background: #ff4047; }
+  background: #ec504f; }
 
 .Circle-circlePurple--H8ifp {
   background: #3f1bd0; }
@@ -1244,18 +1108,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.MeetCharacterStage-text--1g4Ck .MeetCharacterStage-subtitle--e0EbS {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
-
-.MeetCharacterStage-text--1g4Ck .MeetCharacterStage-title--2rIjd, .MeetCharacterStage-button--1lihH {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .MeetCharacterStage-meetCharacter--1g4kN {
   align-items: center;
   bottom: 0;
@@ -1321,18 +1173,6 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.common-token--1BRNW .common-label--2ji6Z, .common-token--1BRNW .common-token-input--3RYoO .common-token-input-key--kjyfT, .common-character-choice--38URy .common-text--q-itt p, .common-character-confirm--2kUjD .common-text--q-itt p, .common-result--EyIK3 .common-small-text--uHSh4 {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
-
-.common-token--1BRNW h2, .common-token--1BRNW .common-display--1541F, .common-character-choice--38URy .common-text--q-itt h2, .common-character-choice--38URy .common-button--VMYN_, .common-character-confirm--2kUjD .common-text--q-itt h2, .common-character-confirm--2kUjD .common-button--VMYN_, .common-result--EyIK3 .common-marquee--3fmpD, .common-result--EyIK3 .common-button--VMYN_, .common-skip-tutorial--36xUR {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 html,
 body {
   box-sizing: border-box;
@@ -1392,7 +1232,7 @@ body {
     width: 234px; }
     .common-token--1BRNW .common-token-input--3RYoO .common-token-input-key--kjyfT {
       align-items: center;
-      background: #ff4047;
+      background: #ec504f;
       border: 1px solid #000;
       color: #fff;
       display: flex;
@@ -1604,7 +1444,7 @@ body {
     font-size: 16px;
     margin: 27px 0; }
   .common-result--EyIK3 .common-button--VMYN_ {
-    background: #ffe947;
+    background: #ffe945;
     border: 1px solid #000;
     flex-grow: 0;
     flex-shrink: 0;
@@ -1616,7 +1456,7 @@ body {
     width: 100%; }
 
 .common-skip-tutorial--36xUR {
-  background: #ffe947;
+  background: #ffe945;
   border: 1px solid #000;
   flex-grow: 0;
   flex-shrink: 0;
@@ -1650,11 +1490,11 @@ body {
   width: 139.375vw;
   z-index: -1; }
   .common-circle--yellow--16GTH {
-    background: #ffe947; }
+    background: #ffe945; }
   .common-circle--purple--1KeYi {
     background: #3f1bd0; }
   .common-circle--red--1UTiQ {
-    background: #ff4047; }
+    background: #ec504f; }
   @media only screen and (max-height: 630px) {
     .common-circle--28whz {
       transform: translate(-50%, -40%); } }
@@ -1693,18 +1533,6 @@ body {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.PlayStage-marquee--1-06O {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
-
-.PlayStage-title--2eNlD, .PlayStage-score--3bDgs, .PlayStage-skipTutorialBtn--1Ujsg {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .PlayStage-play--IhBy- {
   bottom: 0;
   display: flex;
@@ -1717,13 +1545,13 @@ body {
   top: 0; }
 
 .PlayStage-title--2eNlD {
-  color: #ff4047;
+  color: #ec504f;
   font-size: 5.98vw;
   letter-spacing: .007em; }
   .PlayStage-title--2eNlD.PlayStage-titlePurple--1hNH7 {
     color: #3f1bd0; }
   .PlayStage-title--2eNlD.PlayStage-titleRed--1SMZZ {
-    color: #ff4047; }
+    color: #ec504f; }
 
 .PlayStage-marquee--1-06O {
   font-size: 13px;
@@ -1755,7 +1583,7 @@ body {
   .PlayStage-block--3zdrK.PlayStage-blockPurple--14Epy {
     background: #3f1bd0; }
   .PlayStage-block--3zdrK.PlayStage-blockRed--23YCB {
-    background: #ff4047; }
+    background: #ec504f; }
 
 .PlayStage-image--30zz4 {
   bottom: 4px;
@@ -1775,7 +1603,7 @@ body {
   transform: translate(-50%, -50%); }
 
 .PlayStage-skipTutorialBtn--1Ujsg {
-  background: #ffe947;
+  background: #ffe945;
   border: 1px solid #000;
   flex-grow: 0;
   flex-shrink: 0;
@@ -1796,18 +1624,6 @@ body {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.ResultStage-smallText--3ZhnY {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
-
-.ResultStage-winner--iEK1F .ResultStage-marquee--3Q5KI, .ResultStage-button--eAnpH {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase; }
-
 .ResultStage-result--38Rtn {
   align-items: center;
   bottom: 0;
@@ -1859,7 +1675,7 @@ body {
   margin: 27px 0; }
 
 .ResultStage-button--eAnpH {
-  background: #ffe947;
+  background: #ffe945;
   border: 1px solid #000;
   flex-grow: 0;
   flex-shrink: 0;

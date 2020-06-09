@@ -1,7 +1,7 @@
 @import "~styles/imports/index";
 
 .jumpUpText {
-  @extend %Bold;
+
 
   color: $color-white;
   font-size: responsive-font(120);

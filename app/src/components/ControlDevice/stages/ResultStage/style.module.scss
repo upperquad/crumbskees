@@ -27,7 +27,7 @@
   }
 
   .marquee {
-    @extend %Bold;
+
 
     background: $color-black;
     color: $color-white;
@@ -54,7 +54,7 @@
 }
 
 .smallText {
-  @extend %Regular;
+
 
   flex-grow: 0;
   flex-shrink: 0;
@@ -63,7 +63,7 @@
 }
 
 .button {
-  @extend %Bold;
+
 
   background: $color-yellow;
   border: 1px solid $color-black;

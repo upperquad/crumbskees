@@ -34,7 +34,7 @@
 }
 
 .title {
-  @extend %Bold;
+
 
   font-size: responsive-font(80);
 }
@@ -68,7 +68,7 @@
 }
 
 .button {
-  @extend %Bold;
+
 
   color: $color-black;
   font-size: responsive-font(36);

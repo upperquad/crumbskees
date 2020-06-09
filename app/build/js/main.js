@@ -96174,7 +96174,7 @@ var MeetCharacterStage = function MeetCharacterStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"text":"MeetCharacterStage-text--1g4Ck","subtitle":"MeetCharacterStage-subtitle--e0EbS","title":"MeetCharacterStage-title--2rIjd","button":"MeetCharacterStage-button--1lihH","meetCharacter":"MeetCharacterStage-meetCharacter--1g4kN","block":"MeetCharacterStage-block--2DELd","video":"MeetCharacterStage-video--AERtj","placeholder":"MeetCharacterStage-placeholder--2FGX0"};
+module.exports = {"meetCharacter":"MeetCharacterStage-meetCharacter--1g4kN","text":"MeetCharacterStage-text--1g4Ck","title":"MeetCharacterStage-title--2rIjd","subtitle":"MeetCharacterStage-subtitle--e0EbS","block":"MeetCharacterStage-block--2DELd","video":"MeetCharacterStage-video--AERtj","placeholder":"MeetCharacterStage-placeholder--2FGX0","button":"MeetCharacterStage-button--1lihH"};
 
 /***/ }),
 
@@ -96336,7 +96336,7 @@ var PlayStage = function PlayStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"marquee":"PlayStage-marquee--1-06O","title":"PlayStage-title--2eNlD","score":"PlayStage-score--3bDgs","skipTutorialBtn":"PlayStage-skipTutorialBtn--1Ujsg","play":"PlayStage-play--IhBy-","titlePurple":"PlayStage-titlePurple--1hNH7","titleRed":"PlayStage-titleRed--1SMZZ","touchBubble":"PlayStage-touchBubble--3amvr","touchBubbleVisible":"PlayStage-touchBubbleVisible--Ks4rI","block":"PlayStage-block--3zdrK","blockPurple":"PlayStage-blockPurple--14Epy","blockRed":"PlayStage-blockRed--23YCB","image":"PlayStage-image--30zz4"};
+module.exports = {"play":"PlayStage-play--IhBy-","title":"PlayStage-title--2eNlD","titlePurple":"PlayStage-titlePurple--1hNH7","titleRed":"PlayStage-titleRed--1SMZZ","marquee":"PlayStage-marquee--1-06O","touchBubble":"PlayStage-touchBubble--3amvr","touchBubbleVisible":"PlayStage-touchBubbleVisible--Ks4rI","score":"PlayStage-score--3bDgs","block":"PlayStage-block--3zdrK","blockPurple":"PlayStage-blockPurple--14Epy","blockRed":"PlayStage-blockRed--23YCB","image":"PlayStage-image--30zz4","skipTutorialBtn":"PlayStage-skipTutorialBtn--1Ujsg"};
 
 /***/ }),
 
@@ -96533,7 +96533,7 @@ var PreConnectStage = function PreConnectStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"label":"PreConnectStage-label--1mMJf","tokenInputKey":"PreConnectStage-tokenInputKey--3if_1","instruction":"PreConnectStage-instruction--R3YLX","tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","preConnect":"PreConnectStage-preConnect--1Inqw","tokenInput":"PreConnectStage-tokenInput--HjjO4","placeholder":"PreConnectStage-placeholder--12EJv","bottomPattern":"PreConnectStage-bottomPattern--xS5TC"};
+module.exports = {"preConnect":"PreConnectStage-preConnect--1Inqw","instruction":"PreConnectStage-instruction--R3YLX","tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","label":"PreConnectStage-label--1mMJf","tokenInput":"PreConnectStage-tokenInput--HjjO4","tokenInputKey":"PreConnectStage-tokenInputKey--3if_1","placeholder":"PreConnectStage-placeholder--12EJv","bottomPattern":"PreConnectStage-bottomPattern--xS5TC"};
 
 /***/ }),
 
@@ -96664,7 +96664,7 @@ var ResultStage = function ResultStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"smallText":"ResultStage-smallText--3ZhnY","winner":"ResultStage-winner--iEK1F","marquee":"ResultStage-marquee--3Q5KI","button":"ResultStage-button--eAnpH","result":"ResultStage-result--38Rtn","imageWrapper":"ResultStage-imageWrapper--12vpJ","video":"ResultStage-video--3XIgQ"};
+module.exports = {"result":"ResultStage-result--38Rtn","winner":"ResultStage-winner--iEK1F","marquee":"ResultStage-marquee--3Q5KI","imageWrapper":"ResultStage-imageWrapper--12vpJ","video":"ResultStage-video--3XIgQ","smallText":"ResultStage-smallText--3ZhnY","button":"ResultStage-button--eAnpH"};
 
 /***/ }),
 
@@ -97622,7 +97622,7 @@ var PopupMessage = function PopupMessage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"message":"PopupMessage-message--2ZO9X","messageContainer":"PopupMessage-messageContainer---DqVT","message-fade-in":"PopupMessage-message-fade-in--qtlQv","messageFadeIn":"PopupMessage-message-fade-in--qtlQv","message-fade-out":"PopupMessage-message-fade-out--1w0F3","messageFadeOut":"PopupMessage-message-fade-out--1w0F3","messagePersistent":"PopupMessage-messagePersistent--xckiR"};
+module.exports = {"messageContainer":"PopupMessage-messageContainer---DqVT","message":"PopupMessage-message--2ZO9X","message-fade-in":"PopupMessage-message-fade-in--qtlQv","messageFadeIn":"PopupMessage-message-fade-in--qtlQv","message-fade-out":"PopupMessage-message-fade-out--1w0F3","messageFadeOut":"PopupMessage-message-fade-out--1w0F3","messagePersistent":"PopupMessage-messagePersistent--xckiR"};
 
 /***/ }),
 
@@ -98502,14 +98502,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _stages_SetupStage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stages/SetupStage */ "./src/components/DisplayDevice/stages/SetupStage/index.jsx");
-/* harmony import */ var _stages_TutorialStage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stages/TutorialStage */ "./src/components/DisplayDevice/stages/TutorialStage/index.jsx");
-/* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/DisplayDevice/stages/PlayStage/index.jsx");
-/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/DisplayDevice/stages/ResultStage/index.jsx");
-/* harmony import */ var _stages_ModeStage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./stages/ModeStage */ "./src/components/DisplayDevice/stages/ModeStage/index.jsx");
-/* harmony import */ var _StageWrapper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./StageWrapper */ "./src/components/DisplayDevice/StageWrapper/index.jsx");
-/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _stages_LandingStage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stages/LandingStage */ "./src/components/DisplayDevice/stages/LandingStage/index.jsx");
+/* harmony import */ var _stages_IntroIlloStage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stages/IntroIlloStage */ "./src/components/DisplayDevice/stages/IntroIlloStage/index.jsx");
+/* harmony import */ var _stages_SetupStage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stages/SetupStage */ "./src/components/DisplayDevice/stages/SetupStage/index.jsx");
+/* harmony import */ var _stages_TutorialStage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stages/TutorialStage */ "./src/components/DisplayDevice/stages/TutorialStage/index.jsx");
+/* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/DisplayDevice/stages/PlayStage/index.jsx");
+/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/DisplayDevice/stages/ResultStage/index.jsx");
+/* harmony import */ var _StageWrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./StageWrapper */ "./src/components/DisplayDevice/StageWrapper/index.jsx");
+/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -98522,6 +98523,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+ // import ModeStage from './stages/ModeStage'
 
 
 
@@ -98537,7 +98540,7 @@ var TRANSITION_TIMEOUTS = {
 };
 
 var DisplayDevice = function DisplayDevice() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('mode'),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('landing'),
       _useState2 = _slicedToArray(_useState, 2),
       stage = _useState2[0],
       setStage = _useState2[1]; // const [errorReason, setErrorReason] = useState()
@@ -98587,29 +98590,29 @@ var DisplayDevice = function DisplayDevice() {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var connectHandler = function connectHandler() {
       // PlayersManager.reset()
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].init('TWO_PLAYERS');
-      setStage('setup');
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('TWO_PLAYERS');
+      setStage('landing');
     };
 
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_10__["default"].init('display');
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_10__["default"].addSubscriber('CONNECTED', connectHandler);
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_10__["default"].connect();
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].init('display');
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('CONNECTED', connectHandler);
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].connect();
     return function () {
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_10__["default"].removeSubscriber('CONNECTED', connectHandler);
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_10__["default"].disconnect();
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('CONNECTED', connectHandler);
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].disconnect();
     };
   }, [gameCount]); // subscribe to PlayersManager
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // This should trigger on all children components so don't have to do this anywhere else
     var onPlayerUpdate = function onPlayerUpdate() {
-      setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].bothConnected());
+      setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].bothConnected());
       forceUpdate();
     };
 
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('player_change', onPlayerUpdate);
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].addSubscriber('player_change', onPlayerUpdate);
     return function () {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('player_change', onPlayerUpdate);
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].removeSubscriber('player_change', onPlayerUpdate);
     };
   }, [setBothConnected, forceUpdate]); //   TODO: listener for error states
   //   useEffect(() => {
@@ -98662,13 +98665,35 @@ var DisplayDevice = function DisplayDevice() {
     style: {
       transform: "translate(-50%, -50%) scale(".concat(zoom, ")")
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, stage === 'setup' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, stage === 'landing' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
+    key: "stage-landing",
+    timeout: TRANSITION_TIMEOUTS
+  }, function (status) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      status: status
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_LandingStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      onFinish: function onFinish() {
+        return setStage('intro-illo');
+      }
+    }));
+  }), stage === 'intro-illo' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
+    key: "stage-intro-illo",
+    timeout: TRANSITION_TIMEOUTS
+  }, function (status) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      status: status
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_IntroIlloStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      onFinish: function onFinish() {
+        return setStage('setup');
+      }
+    }));
+  }), stage === 'setup' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
     key: "stage-setup",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
       status: status
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_SetupStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_SetupStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       onFinish: function onFinish() {
         return setStage('tutorial');
       },
@@ -98678,9 +98703,9 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-tutorial",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
       status: status
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_TutorialStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_TutorialStage__WEBPACK_IMPORTED_MODULE_7__["default"], {
       rollback: function rollback() {
         return setStage('setup');
       },
@@ -98692,9 +98717,9 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-play",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
       status: status
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_8__["default"], {
       onFinish: function onFinish() {
         return setStage('result');
       }
@@ -98703,9 +98728,9 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-result",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
       status: status
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_9__["default"], {
       onFinish: resetGame
     }));
   })));
@@ -98715,10 +98740,10 @@ var DisplayDevice = function DisplayDevice() {
 
 /***/ }),
 
-/***/ "./src/components/DisplayDevice/stages/ModeStage/index.jsx":
-/*!*****************************************************************!*\
-  !*** ./src/components/DisplayDevice/stages/ModeStage/index.jsx ***!
-  \*****************************************************************/
+/***/ "./src/components/DisplayDevice/stages/IntroIlloStage/index.jsx":
+/*!**********************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/IntroIlloStage/index.jsx ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -98728,73 +98753,81 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/ModeStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/IntroIlloStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _components_DisplayFooter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/DisplayFooter */ "./src/components/DisplayFooter/index.jsx");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~assets/images/home-bg.mp4 */ "./src/assets/images/home-bg.mp4");
-/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
 
-
-
-
-
-
-var ModeStage = function ModeStage(props) {
+var IntroIlloStage = function IntroIlloStage(props) {
   var extraClassName = props.extraClassName,
       onFinish = props.onFinish;
-
-  function handleClick(mode) {
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].init(mode);
-    onFinish();
-  }
-
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setTimeout(onFinish, 3000);
+  }, [onFinish]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.mode, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.video,
-    src: _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_7___default.a
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.welcome,
-    text: "Welcome to The Upperquadrant -",
-    duration: "12s"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.modeCard
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.modeHeader
-  }, "Select mode"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.modeContent
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.modeOption,
-    onClick: function onClick() {
-      handleClick('SINGLE_PLAYER');
-    }
-  }, "Single player"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.modeOption,
-    onClick: function onClick() {
-      handleClick('TWO_PLAYERS');
-    }
-  }, "Two players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayFooter__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.introIllo, extraClassName)
+  }, "123");
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (ModeStage);
+/* harmony default export */ __webpack_exports__["default"] = (IntroIlloStage);
 
 /***/ }),
 
-/***/ "./src/components/DisplayDevice/stages/ModeStage/style.module.scss":
-/*!*************************************************************************!*\
-  !*** ./src/components/DisplayDevice/stages/ModeStage/style.module.scss ***!
-  \*************************************************************************/
+/***/ "./src/components/DisplayDevice/stages/IntroIlloStage/style.module.scss":
+/*!******************************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/IntroIlloStage/style.module.scss ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"modeHeader":"ModeStage-modeHeader--3Nh71","modeContent":"ModeStage-modeContent--2tSc4","mode":"ModeStage-mode--19l2S","video":"ModeStage-video--2-VQp","welcome":"ModeStage-welcome--3xMvc","modeCard":"ModeStage-modeCard--1Jkg8","modeOption":"ModeStage-modeOption--2eAOQ"};
+
+/***/ }),
+
+/***/ "./src/components/DisplayDevice/stages/LandingStage/index.jsx":
+/*!********************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/LandingStage/index.jsx ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/LandingStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+var LandingStage = function LandingStage(props) {
+  var extraClassName = props.extraClassName,
+      onFinish = props.onFinish;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.landing, extraClassName)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.modeOption,
+    onClick: onFinish
+  }, "Start"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (LandingStage);
+
+/***/ }),
+
+/***/ "./src/components/DisplayDevice/stages/LandingStage/style.module.scss":
+/*!****************************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/LandingStage/style.module.scss ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -98891,7 +98924,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"score":"Board-score--3Jfkn","name":"Board-name--2MohW","timer":"Board-timer--1FYhF","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","player":"Board-player--2wZ9w","character":"Board-character--1Sl7a","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","center":"Board-center--3S1zg"};
+module.exports = {"board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","player":"Board-player--2wZ9w","character":"Board-character--1Sl7a","score":"Board-score--3Jfkn","name":"Board-name--2MohW","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","center":"Board-center--3S1zg","timer":"Board-timer--1FYhF"};
 
 /***/ }),
 
@@ -99105,7 +99138,7 @@ var Intro = function Intro(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"itemToFindText":"Intro-itemToFindText--ug7LH","go":"Intro-go--2_fBn","intro":"Intro-intro--2I5Jm","introBgContainer":"Intro-introBgContainer--ufXWd","introBgContainerVisible":"Intro-introBgContainerVisible--3Vl_W","video":"Intro-video--3X9XS","circle":"Intro-circle--pdBzm","circleIn":"Intro-circleIn--2P7Iz","introRoundWrapper":"Intro-introRoundWrapper--3Tmmr","introRound":"Intro-introRound--2A6Nt","introRoundBlink":"Intro-introRoundBlink--1BCmY","intro-blink-color":"Intro-intro-blink-color--3Ys4X","introBlinkColor":"Intro-intro-blink-color--3Ys4X","introRoundWrapperDown":"Intro-introRoundWrapperDown--2I3ny","itemToFindTextIn":"Intro-itemToFindTextIn--3Nw0n","itemToFindImage":"Intro-itemToFindImage--1BJyj","itemToFindImageItem":"Intro-itemToFindImageItem--3dZaO","itemToFindImageIn":"Intro-itemToFindImageIn--1R-kS","itemToFindImageDown":"Intro-itemToFindImageDown--1M-EO","introReadyWrapper":"Intro-introReadyWrapper--1Tr8S","countdown":"Intro-countdown--21Eah","set":"Intro-set--g8TI9","goStart":"Intro-goStart--1ikFw","intro-go":"Intro-intro-go--fPRD7","introGo":"Intro-intro-go--fPRD7"};
+module.exports = {"intro":"Intro-intro--2I5Jm","introBgContainer":"Intro-introBgContainer--ufXWd","introBgContainerVisible":"Intro-introBgContainerVisible--3Vl_W","video":"Intro-video--3X9XS","circle":"Intro-circle--pdBzm","circleIn":"Intro-circleIn--2P7Iz","introRoundWrapper":"Intro-introRoundWrapper--3Tmmr","introRound":"Intro-introRound--2A6Nt","introRoundBlink":"Intro-introRoundBlink--1BCmY","intro-blink-color":"Intro-intro-blink-color--3Ys4X","introBlinkColor":"Intro-intro-blink-color--3Ys4X","introRoundWrapperDown":"Intro-introRoundWrapperDown--2I3ny","itemToFindText":"Intro-itemToFindText--ug7LH","itemToFindTextIn":"Intro-itemToFindTextIn--3Nw0n","itemToFindImage":"Intro-itemToFindImage--1BJyj","itemToFindImageItem":"Intro-itemToFindImageItem--3dZaO","itemToFindImageIn":"Intro-itemToFindImageIn--1R-kS","itemToFindImageDown":"Intro-itemToFindImageDown--1M-EO","introReadyWrapper":"Intro-introReadyWrapper--1Tr8S","countdown":"Intro-countdown--21Eah","set":"Intro-set--g8TI9","go":"Intro-go--2_fBn","goStart":"Intro-goStart--1ikFw","intro-go":"Intro-intro-go--fPRD7","introGo":"Intro-intro-go--fPRD7"};
 
 /***/ }),
 
@@ -99450,7 +99483,7 @@ var ResultStage = function ResultStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"ResultStage-title--3pUhh","player":"ResultStage-player--XpmPw","score":"ResultStage-score--2trdh","background":"ResultStage-background--10JOz","card":"ResultStage-card--32Q31","titleWrapper":"ResultStage-titleWrapper--1wmRO","timebar":"ResultStage-timebar--3CWQW","result-timebar":"ResultStage-result-timebar--2C5bG","resultTimebar":"ResultStage-result-timebar--2C5bG","playersImages":"ResultStage-playersImages--1SnuY","playersImagesTied":"ResultStage-playersImagesTied--2msjC","playerAvatar":"ResultStage-playerAvatar--17MxV","circle":"ResultStage-circle--3T6bQ"};
+module.exports = {"background":"ResultStage-background--10JOz","card":"ResultStage-card--32Q31","titleWrapper":"ResultStage-titleWrapper--1wmRO","title":"ResultStage-title--3pUhh","timebar":"ResultStage-timebar--3CWQW","result-timebar":"ResultStage-result-timebar--2C5bG","resultTimebar":"ResultStage-result-timebar--2C5bG","player":"ResultStage-player--XpmPw","playersImages":"ResultStage-playersImages--1SnuY","playersImagesTied":"ResultStage-playersImagesTied--2msjC","playerAvatar":"ResultStage-playerAvatar--17MxV","score":"ResultStage-score--2trdh","circle":"ResultStage-circle--3T6bQ"};
 
 /***/ }),
 
@@ -99633,7 +99666,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"playerConnected":"SetupStage-playerConnected--3s2oQ","playerName":"SetupStage-playerName--3DwHW","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","pullOutPhone":"SetupStage-pullOutPhone--_fSJL","players":"SetupStage-players--1djmu","player":"SetupStage-player--2JGID","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnectedText":"SetupStage-playerConnectedText--1SEG8","qr":"SetupStage-qr--14fFl","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrl":"SetupStage-qrUrl--21ulS","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","instruction":"SetupStage-instruction--2Kes6"};
+module.exports = {"setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","pullOutPhone":"SetupStage-pullOutPhone--_fSJL","players":"SetupStage-players--1djmu","player":"SetupStage-player--2JGID","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","playerConnectedText":"SetupStage-playerConnectedText--1SEG8","qr":"SetupStage-qr--14fFl","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","playerName":"SetupStage-playerName--3DwHW","qrQr":"SetupStage-qrQr--3tWIR","qrUrl":"SetupStage-qrUrl--21ulS","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","instruction":"SetupStage-instruction--2Kes6"};
 
 /***/ }),
 
@@ -99697,7 +99730,7 @@ var TutorialStage = function TutorialStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"heading":"TutorialStage-heading--3Rx-V","description":"TutorialStage-description--2XJsx","title":"TutorialStage-title--JVgZx","tutorial":"TutorialStage-tutorial--3Ybyr","container":"TutorialStage-container--13i5g","image":"TutorialStage-image--hrld7"};
+module.exports = {"tutorial":"TutorialStage-tutorial--3Ybyr","container":"TutorialStage-container--13i5g","heading":"TutorialStage-heading--3Rx-V","title":"TutorialStage-title--JVgZx","description":"TutorialStage-description--2XJsx","image":"TutorialStage-image--hrld7"};
 
 /***/ }),
 
@@ -99760,7 +99793,7 @@ var DisplayFooter = function DisplayFooter() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"version":"DisplayFooter-version--3kxOX","footer":"DisplayFooter-footer--hl4X5","blackBar":"DisplayFooter-blackBar--34IeX","whatup":"DisplayFooter-whatup--1Nvv5","love":"DisplayFooter-love--1Vx_4"};
+module.exports = {"footer":"DisplayFooter-footer--hl4X5","blackBar":"DisplayFooter-blackBar--34IeX","whatup":"DisplayFooter-whatup--1Nvv5","version":"DisplayFooter-version--3kxOX","love":"DisplayFooter-love--1Vx_4"};
 
 /***/ }),
 
@@ -100088,7 +100121,7 @@ var MarqueeText = function MarqueeText(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"marqueeAlternate":"MarqueeText-marqueeAlternate---84_Y","marquee":"MarqueeText-marquee--2Cv7V","marqueeInnerText":"MarqueeText-marqueeInnerText--2xcAP","marquee-text-inner":"MarqueeText-marquee-text-inner--BHhJ5","marqueeTextInner":"MarqueeText-marquee-text-inner--BHhJ5","marqueeWhite":"MarqueeText-marqueeWhite--1DeAn"};
+module.exports = {"marquee":"MarqueeText-marquee--2Cv7V","marqueeInnerText":"MarqueeText-marqueeInnerText--2xcAP","marquee-text-inner":"MarqueeText-marquee-text-inner--BHhJ5","marqueeTextInner":"MarqueeText-marquee-text-inner--BHhJ5","marqueeAlternate":"MarqueeText-marqueeAlternate---84_Y","marqueeWhite":"MarqueeText-marqueeWhite--1DeAn"};
 
 /***/ }),
 
@@ -101384,7 +101417,7 @@ var Observable = function Observable() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"token":"common-token--1BRNW","label":"common-label--2ji6Z","token-input":"common-token-input--3RYoO","tokenInput":"common-token-input--3RYoO","token-input-key":"common-token-input-key--kjyfT","tokenInputKey":"common-token-input-key--kjyfT","character-choice":"common-character-choice--38URy","characterChoice":"common-character-choice--38URy","text":"common-text--q-itt","character-confirm":"common-character-confirm--2kUjD","characterConfirm":"common-character-confirm--2kUjD","result":"common-result--EyIK3","small-text":"common-small-text--uHSh4","smallText":"common-small-text--uHSh4","display":"common-display--1541F","button":"common-button--VMYN_","marquee":"common-marquee--3fmpD","skip-tutorial":"common-skip-tutorial--36xUR","skipTutorial":"common-skip-tutorial--36xUR","bottom":"common-bottom--1Vowz","grid":"common-grid--25cGg","block":"common-block--3ODNY","winner":"common-winner--x2T2p","image-wrapper":"common-image-wrapper--tLccO","imageWrapper":"common-image-wrapper--tLccO","winner--tied":"common-winner--tied--lpWV0","winnerTied":"common-winner--tied--lpWV0","infinite-text-16":"common-infinite-text-16--1Bgr5","infiniteText16":"common-infinite-text-16--1Bgr5","infinite-text-21":"common-infinite-text-21--2qcOm","infiniteText21":"common-infinite-text-21--2qcOm","winner--won":"common-winner--won--2Di5D","winnerWon":"common-winner--won--2Di5D","infinite-text-15":"common-infinite-text-15--3Ulfd","infiniteText15":"common-infinite-text-15--3Ulfd","infinite-text-14":"common-infinite-text-14--146Ko","infiniteText14":"common-infinite-text-14--146Ko","winner--lost":"common-winner--lost--2oY1M","winnerLost":"common-winner--lost--2oY1M","infinite-text-18":"common-infinite-text-18--3MiMZ","infiniteText18":"common-infinite-text-18--3MiMZ","is-shown":"common-is-shown--1t67m","isShown":"common-is-shown--1t67m","placeholder":"common-placeholder--fvvJd","circle":"common-circle--28whz","circle--yellow":"common-circle--yellow--16GTH","circleYellow":"common-circle--yellow--16GTH","circle--purple":"common-circle--purple--1KeYi","circlePurple":"common-circle--purple--1KeYi","circle--red":"common-circle--red--1UTiQ","circleRed":"common-circle--red--1UTiQ","state":"common-state--P2hv5","infinite-text":"common-infinite-text--27Nf-","infiniteText":"common-infinite-text--27Nf-","alternate":"common-alternate--2t4K9","invert":"common-invert--1W8ue"};
+module.exports = {"token":"common-token--1BRNW","display":"common-display--1541F","label":"common-label--2ji6Z","token-input":"common-token-input--3RYoO","tokenInput":"common-token-input--3RYoO","token-input-key":"common-token-input-key--kjyfT","tokenInputKey":"common-token-input-key--kjyfT","bottom":"common-bottom--1Vowz","character-choice":"common-character-choice--38URy","characterChoice":"common-character-choice--38URy","text":"common-text--q-itt","grid":"common-grid--25cGg","block":"common-block--3ODNY","button":"common-button--VMYN_","character-confirm":"common-character-confirm--2kUjD","characterConfirm":"common-character-confirm--2kUjD","result":"common-result--EyIK3","winner":"common-winner--x2T2p","image-wrapper":"common-image-wrapper--tLccO","imageWrapper":"common-image-wrapper--tLccO","marquee":"common-marquee--3fmpD","winner--tied":"common-winner--tied--lpWV0","winnerTied":"common-winner--tied--lpWV0","infinite-text-16":"common-infinite-text-16--1Bgr5","infiniteText16":"common-infinite-text-16--1Bgr5","infinite-text-21":"common-infinite-text-21--2qcOm","infiniteText21":"common-infinite-text-21--2qcOm","winner--won":"common-winner--won--2Di5D","winnerWon":"common-winner--won--2Di5D","infinite-text-15":"common-infinite-text-15--3Ulfd","infiniteText15":"common-infinite-text-15--3Ulfd","infinite-text-14":"common-infinite-text-14--146Ko","infiniteText14":"common-infinite-text-14--146Ko","winner--lost":"common-winner--lost--2oY1M","winnerLost":"common-winner--lost--2oY1M","infinite-text-18":"common-infinite-text-18--3MiMZ","infiniteText18":"common-infinite-text-18--3MiMZ","small-text":"common-small-text--uHSh4","smallText":"common-small-text--uHSh4","skip-tutorial":"common-skip-tutorial--36xUR","skipTutorial":"common-skip-tutorial--36xUR","is-shown":"common-is-shown--1t67m","isShown":"common-is-shown--1t67m","placeholder":"common-placeholder--fvvJd","circle":"common-circle--28whz","circle--yellow":"common-circle--yellow--16GTH","circleYellow":"common-circle--yellow--16GTH","circle--purple":"common-circle--purple--1KeYi","circlePurple":"common-circle--purple--1KeYi","circle--red":"common-circle--red--1UTiQ","circleRed":"common-circle--red--1UTiQ","state":"common-state--P2hv5","infinite-text":"common-infinite-text--27Nf-","infiniteText":"common-infinite-text--27Nf-","alternate":"common-alternate--2t4K9","invert":"common-invert--1W8ue"};
 
 /***/ }),
 

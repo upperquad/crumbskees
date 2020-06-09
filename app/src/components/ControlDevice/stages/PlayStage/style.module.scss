@@ -13,7 +13,7 @@
 }
 
 .title {
-  @extend %Bold;
+
 
   color: $color-red;
   font-size: 5.98vw;
@@ -29,7 +29,7 @@
 }
 
 .marquee {
-  @extend %Regular;
+
 
   font-size: 13px;
   letter-spacing: .008em;
@@ -81,7 +81,7 @@
 }
 
 .score {
-  @extend %Bold;
+
 
   font-size: 40vw;
   left: 50%;
@@ -96,7 +96,7 @@
 
 
 .skipTutorialBtn {
-  @extend %Bold;
+
 
   background: $color-yellow;
   border: 1px solid $color-black;

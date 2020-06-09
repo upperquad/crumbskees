@@ -24,7 +24,7 @@ body {
   text-align: center;
 
   h2 {
-    @extend %Bold;
+
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 19px;
@@ -35,7 +35,7 @@ body {
   }
 
   .display {
-    @extend %Bold;
+
 
     flex-grow: 0;
     flex-shrink: 0;
@@ -52,7 +52,7 @@ body {
   }
 
   .label {
-    @extend %Regular;
+
 
     flex-grow: 0;
     flex-shrink: 0;
@@ -72,7 +72,7 @@ body {
     width: 234px;
 
     .token-input-key {
-      @extend %Regular;
+
 
       align-items: center;
       background: $color-red;
@@ -117,14 +117,14 @@ body {
     flex-shrink: 0;
 
     h2 {
-      @extend %Bold;
+
 
       font-size: 40px;
       letter-spacing: .024em;
       text-transform: uppercase;
     }
     p {
-      @extend %Regular;
+
 
       font-size: 16px;
       margin: 20px 0;
@@ -165,7 +165,7 @@ body {
   }
 
   .button {
-    @extend %Bold;
+
 
     background: $color-mint;
     border: 1px solid $color-black;
@@ -193,14 +193,14 @@ body {
     flex-shrink: 0;
 
     h2 {
-      @extend %Bold;
+
 
       font-size: 40px;
       letter-spacing: .024em;
       text-transform: uppercase;
     }
     p {
-      @extend %Regular;
+
 
       font-size: 16px;
       margin-top: 40px;
@@ -231,7 +231,7 @@ body {
   }
 
   .button {
-    @extend %Bold;
+
 
     background: $color-mint;
     border: 1px solid $color-black;
@@ -282,7 +282,7 @@ body {
   }
 
   .marquee {
-    @extend %Bold;
+
 
     background: $color-black;
     color: $color-white;
@@ -398,7 +398,7 @@ body {
   }
 
   .small-text {
-    @extend %Regular;
+
 
     flex-grow: 0;
     flex-shrink: 0;
@@ -407,7 +407,7 @@ body {
   }
 
   .button {
-    @extend %Bold;
+
 
     background: $color-yellow;
     border: 1px solid $color-black;
@@ -423,7 +423,7 @@ body {
 }
 
 .skip-tutorial {
-  @extend %Bold;
+
 
   background: $color-yellow;
   border: 1px solid $color-black;

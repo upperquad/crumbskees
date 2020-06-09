@@ -29,7 +29,7 @@
 }
 
 .title {
-  @extend %Bold;
+
 
   font-size: responsive-font(80);
 }
@@ -54,7 +54,7 @@
 }
 
 .player {
-  @extend %Bold;
+
 
   font-size: responsive-font(40);
   margin-top: grid(.5);
@@ -85,7 +85,7 @@
 }
 
 .score {
-  @extend %Bold;
+
 
   bottom: grid(.3);
   font-size: responsive-font(120);

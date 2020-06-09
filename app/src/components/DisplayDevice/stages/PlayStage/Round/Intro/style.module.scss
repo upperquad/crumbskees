@@ -110,7 +110,7 @@
 }
 
 .itemToFindText {
-  @extend %Bold;
+
 
   font-size: responsive-font(48);
   left: 50%;
@@ -182,7 +182,7 @@
 }
 
 .go {
-  @extend %Bold;
+
 
   color: $color-red;
   font-size: responsive-font(800);

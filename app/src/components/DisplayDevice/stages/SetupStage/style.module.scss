@@ -37,7 +37,7 @@
 }
 
 .playerConnected {
-  @extend %Bold;
+
 
   color: $color-green;
   font-size: responsive-font(48);
@@ -80,7 +80,7 @@
 }
 
 .playerName {
-  @extend %Bold;
+
 
   align-items: center;
   border-top: 2px solid $color-black;

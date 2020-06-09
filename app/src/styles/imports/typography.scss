@@ -1,20 +1,65 @@
-%Regular {
-  font-family: 'Fakt Medium', serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+%t--h1 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 100px;
+  font-weight: 900;
+  line-height: 120px;
 }
 
-%Light {
-  font-family: 'Roboto Slab', serif;
-  font-weight: 300;
+%t--h2 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 65px;
 }
 
-%Bold {
-  font-family: 'Ginto Nord Black';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  text-transform: uppercase;
+%t--h3 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 34px;
+}
+
+%t--body {
+  font-family: 'Fakt', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+%t--small {
+  font-family: 'Fakt', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+%t--countdown-timer {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 80px;
+  font-weight: 900;
+}
+
+%t--number-pad {
+  font-family: 'Fakt', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 31px;
+}
+
+%--style-lg-shadow {
+  color: $color-white;
+  text-shadow: 10px 10px 0px $color-black;
+  text-stroke: 4px $color-black;
+}
+
+%--style-sm-shadow {
+  color: $color-white;
+  text-shadow: 6px 6px 0px $color-black;
+  text-stroke: 4px $color-black;
 }
 
 @function responsive-font($unit) {

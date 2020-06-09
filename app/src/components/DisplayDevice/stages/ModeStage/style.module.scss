@@ -32,7 +32,7 @@
 }
 
 .modeHeader {
-  @extend %Bold;
+
 
   border-bottom: grid(.05) solid $color-black;
   font-size: responsive-font(56);
@@ -41,7 +41,7 @@
 }
 
 .modeContent {
-  @extend %Bold;
+
 
   align-items: center;
   display: flex;

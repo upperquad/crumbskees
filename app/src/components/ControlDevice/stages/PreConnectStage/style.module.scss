@@ -14,7 +14,7 @@
 }
 
 .instruction {
-  @extend %Bold;
+
 
   flex-grow: 0;
   flex-shrink: 0;
@@ -25,7 +25,7 @@
 }
 
 .tokenDisplay {
-  @extend %Bold;
+
 
   flex-grow: 0;
   flex-shrink: 0;
@@ -41,7 +41,7 @@
 }
 
 .label {
-  @extend %Regular;
+
 
   flex-grow: 0;
   flex-shrink: 0;
@@ -62,7 +62,7 @@
 }
 
 .tokenInputKey {
-  @extend %Regular;
+
 
   align-items: center;
   background: $color-red;
