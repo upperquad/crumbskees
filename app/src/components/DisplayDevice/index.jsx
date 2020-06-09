@@ -3,11 +3,13 @@ import { TransitionGroup, Transition } from 'react-transition-group'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
 
+import LandingStage from './stages/LandingStage'
+import IntroIlloStage from './stages/IntroIlloStage'
+// import ModeStage from './stages/ModeStage'
 import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
-import ModeStage from './stages/ModeStage'
 // import ErrorStage from './stages/ErrorStage'
 import StageWrapper from './StageWrapper'
 
@@ -17,7 +19,7 @@ import PlayersManager from '~managers/PlayersManager'
 const TRANSITION_TIMEOUTS = { enter: 800, exit: 1300 }
 
 const DisplayDevice = () => {
-  const [stage, setStage] = useState('mode')
+  const [stage, setStage] = useState('landing')
   // const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
@@ -47,7 +49,7 @@ const DisplayDevice = () => {
     const connectHandler = () => {
       // PlayersManager.reset()
       PlayersManager.init('TWO_PLAYERS')
-      setStage('setup')
+      setStage('landing')
     }
 
     TokenSocketManager.init('display')
@@ -123,7 +125,25 @@ const DisplayDevice = () => {
   return (
     <div className={styles.displayDevice} style={{ transform: `translate(-50%, -50%) scale(${zoom})` }}>
       <TransitionGroup>
-        {/*stage === 'mode' && (
+        {stage === 'landing' && (
+          <Transition key="stage-landing" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <LandingStage onFinish={() => setStage('intro-illo')} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+        {stage === 'intro-illo' && (
+          <Transition key="stage-intro-illo" timeout={TRANSITION_TIMEOUTS}>
+            {status => (
+              <StageWrapper status={status}>
+                <IntroIlloStage onFinish={() => setStage('setup')} />
+              </StageWrapper>
+            )}
+          </Transition>
+        )}
+        {/* stage === 'mode' && (
           <Transition key="stage-mode" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
@@ -131,7 +151,7 @@ const DisplayDevice = () => {
               </StageWrapper>
             )}
           </Transition>
-        )*/}
+        ) */}
         {stage === 'setup' && (
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (

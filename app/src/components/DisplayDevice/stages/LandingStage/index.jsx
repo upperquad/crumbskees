@@ -2,14 +2,20 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
-const ModeStage = props => {
+const LandingStage = props => {
   const { extraClassName, onFinish } = props
 
   return (
     <div className={classNames(styles.landing, extraClassName)}>
-      <div className={styles.modeOption} onClick={onFinish}>Start</div>
+      <button
+        type="button"
+        className={styles.modeOption}
+        onClick={onFinish}
+      >
+        Start
+      </button>
     </div>
   )
 }
 
-export default ModeStage
+export default LandingStage
