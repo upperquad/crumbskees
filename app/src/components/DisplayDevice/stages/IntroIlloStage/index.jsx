@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
+import backgroundImg from '~assets/images/intro-illo/background.png'
+
 const IntroIlloStage = props => {
   const { extraClassName, onFinish } = props
 
@@ -11,7 +13,7 @@ const IntroIlloStage = props => {
 
   return (
     <div className={classNames(styles.introIllo, extraClassName)}>
-      123
+      <img className={styles.image} src={backgroundImg} alt="" />
     </div>
   )
 }

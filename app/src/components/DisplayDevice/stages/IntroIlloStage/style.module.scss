@@ -1,4 +1,9 @@
 @import "~styles/imports/index";
 
-.landing {
+.introIllo {
+  .image {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
 }
