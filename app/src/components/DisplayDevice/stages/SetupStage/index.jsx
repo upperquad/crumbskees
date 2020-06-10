@@ -7,9 +7,7 @@ import styles from './style.module.scss'
 import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
 
-import MarqueeText from '~components/MarqueeText'
 import JumpUpText from '~components/JumpUpText'
-import DisplayFooter from '~components/DisplayFooter'
 import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
@@ -58,7 +56,8 @@ const SetupStage = props => {
   return (
     <div className={classNames(styles.setup, extraClassName)}>
       <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
-      <MarqueeText extraClassName={styles.pullOutPhone} text="Pull out yo smartphone camera! -" duration="12s" />
+      <h2 className={styles.title}>Get ready!</h2>
+      <h3 className={styles.subtitle}>Open your phone camera and scan the code!</h3>
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => {
           if (player.id || player.token) {
@@ -80,10 +79,11 @@ const SetupStage = props => {
                           >
                             <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
                             <div className={styles.qrUrl}>
-                              Think QR codes are stupid?
+                              Think QR codes are lame?
                               <br />
-                              {`Go to ${BASE_URL}`}
+                              {`Open ${BASE_URL}`}
                               <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
+                              {' on your phone'}
                             </div>
                           </div>
                         )}
@@ -122,7 +122,6 @@ const SetupStage = props => {
           <JumpUpText text="Lets Play" />
         </div>
       )}
-      <DisplayFooter />
     </div>
   )
 }

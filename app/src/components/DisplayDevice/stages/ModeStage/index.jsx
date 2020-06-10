@@ -5,7 +5,6 @@ import styles from './style.module.scss'
 import PlayersManager from '~managers/PlayersManager'
 
 import MarqueeText from '~components/MarqueeText'
-import DisplayFooter from '~components/DisplayFooter'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 import homeBgVideo from '~assets/images/home-bg.mp4'
@@ -30,7 +29,6 @@ const ModeStage = props => {
           <div className={styles.modeOption} onClick={() => { handleClick('TWO_PLAYERS') }}>Two players</div>
         </div>
       </div>
-      <DisplayFooter />
     </div>
   )
 }

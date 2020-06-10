@@ -52,7 +52,7 @@ export const CHARACTERS = [
     video: characterVideo1,
     videoWhite: characterVideoWhite1,
     image: characterImage1,
-    name: 'Player 1',
+    name: 'P1',
   },
   {
     color: 'red',
@@ -60,7 +60,7 @@ export const CHARACTERS = [
     video: characterVideo2,
     videoWhite: characterVideoWhite2,
     image: characterImage2,
-    name: 'Player 2',
+    name: 'P2',
   },
 ]
 

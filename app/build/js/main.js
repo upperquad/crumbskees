@@ -48632,7 +48632,7 @@ module.exports = function parseURI (str, opts) {
 /*!*********************************************!*\
   !*** ./node_modules/pixi.js/lib/pixi.es.js ***!
   \*********************************************/
-/*! exports provided: accessibility, interaction, utils, VERSION, filters, useDeprecated, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings */
+/*! exports provided: accessibility, interaction, utils, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings, VERSION, filters, useDeprecated */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98684,7 +98684,7 @@ var DisplayDevice = function DisplayDevice() {
     var connectHandler = function connectHandler() {
       // PlayersManager.reset()
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('TWO_PLAYERS');
-      setStage('landing');
+      setStage('setup');
     };
 
     _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].init('display');
@@ -99645,13 +99645,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PeerManager/Player1Peer */ "./src/managers/PeerManager/Player1Peer.js");
 /* harmony import */ var _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PeerManager/Player2Peer */ "./src/managers/PeerManager/Player2Peer.js");
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _components_JumpUpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/JumpUpText */ "./src/components/JumpUpText/index.jsx");
-/* harmony import */ var _components_DisplayFooter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/DisplayFooter */ "./src/components/DisplayFooter/index.jsx");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/home-bg.mp4 */ "./src/assets/images/home-bg.mp4");
-/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _components_JumpUpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~components/JumpUpText */ "./src/components/JumpUpText/index.jsx");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/home-bg.mp4 */ "./src/assets/images/home-bg.mp4");
+/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -99661,8 +99659,6 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
 
 
 
@@ -99688,13 +99684,13 @@ var SetupStage = function SetupStage(props) {
       qrCode = _useState2[0],
       setQrCode = _useState2[1];
 
-  var _PlayersManager$playe = _slicedToArray(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].players, 2),
+  var _PlayersManager$playe = _slicedToArray(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players, 2),
       player1 = _PlayersManager$playe[0],
       player2 = _PlayersManager$playe[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var didCancel = false;
-    Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].players.map(function (player) {
+    Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players.map(function (player) {
       var token = player.token;
 
       if (token) {
@@ -99731,16 +99727,16 @@ var SetupStage = function SetupStage(props) {
   }, [bothConnected, onFinish]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.setup, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_12__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_10__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.video,
-    src: _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_13___default.a
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_8__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.pullOutPhone,
-    text: "Pull out yo smartphone camera! -",
-    duration: "12s"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    src: _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11___default.a
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.title
+  }, "Get ready!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.subtitle
+  }, "Open your phone camera and scan the code!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.players
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].players.map(function (player, index) {
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players.map(function (player, index) {
     if (player.id || player.token) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         key: "".concat(player.id, "-").concat(player.token),
@@ -99763,9 +99759,9 @@ var SetupStage = function SetupStage(props) {
           }
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.qrUrl
-        }, "Think QR codes are stupid?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Go to ".concat(BASE_URL), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, "Think QR codes are lame?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Open ".concat(BASE_URL), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.qrUrlToken
-        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].players[index].token)));
+        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players[index].token), ' on your phone'));
       }), player.connected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
         key: player.id,
         timeout: {
@@ -99786,9 +99782,9 @@ var SetupStage = function SetupStage(props) {
     return null;
   })), bothConnected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.instruction
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_JumpUpText__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_JumpUpText__WEBPACK_IMPORTED_MODULE_8__["default"], {
     text: "Lets Play"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayFooter__WEBPACK_IMPORTED_MODULE_10__["default"], null));
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SetupStage);
@@ -99880,57 +99876,6 @@ module.exports = {"tutorial":"TutorialStage-tutorial--3Ybyr","container":"Tutori
 
 // extracted by mini-css-extract-plugin
 module.exports = {"displayDevice":"DisplayDevice-displayDevice--3hevF"};
-
-/***/ }),
-
-/***/ "./src/components/DisplayFooter/index.jsx":
-/*!************************************************!*\
-  !*** ./src/components/DisplayFooter/index.jsx ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayFooter/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
- // import classNames from 'classnames'
-
-
-
-
-var DisplayFooter = function DisplayFooter() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.footer
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.love
-  }, "Made with \uD83D\uDDA4 by Upperquad"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.blackBar
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.whatup,
-    text: "What up tiny type that is scrolling -",
-    duration: "6s"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.version
-  }, "\xA9 2019 Upperquad LLC. Ver. 6.35")));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (DisplayFooter);
-
-/***/ }),
-
-/***/ "./src/components/DisplayFooter/style.module.scss":
-/*!********************************************************!*\
-  !*** ./src/components/DisplayFooter/style.module.scss ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-module.exports = {"footer":"DisplayFooter-footer--hl4X5","blackBar":"DisplayFooter-blackBar--34IeX","whatup":"DisplayFooter-whatup--1Nvv5","version":"DisplayFooter-version--3kxOX","love":"DisplayFooter-love--1Vx_4"};
 
 /***/ }),
 
@@ -100284,14 +100229,14 @@ var CHARACTERS = [{
   video: _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_14___default.a,
   videoWhite: _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_13___default.a,
   image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_15___default.a,
-  name: 'Player 1'
+  name: 'P1'
 }, {
   color: 'red',
   secondaryColor: 'purple',
   video: _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_17___default.a,
   videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_16___default.a,
   image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_18___default.a,
-  name: 'Player 2'
+  name: 'P2'
 }];
 var TUTORIAL_ROUND = {
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,
