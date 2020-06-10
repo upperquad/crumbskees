@@ -99799,7 +99799,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","pullOutPhone":"SetupStage-pullOutPhone--_fSJL","players":"SetupStage-players--1djmu","player":"SetupStage-player--2JGID","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","playerConnectedText":"SetupStage-playerConnectedText--1SEG8","qr":"SetupStage-qr--14fFl","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","playerName":"SetupStage-playerName--3DwHW","qrQr":"SetupStage-qrQr--3tWIR","qrUrl":"SetupStage-qrUrl--21ulS","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","instruction":"SetupStage-instruction--2Kes6"};
+module.exports = {"title":"SetupStage-title--5BCVB","subtitle":"SetupStage-subtitle--1AeLK","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","player":"SetupStage-player--2JGID","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","playerConnectedText":"SetupStage-playerConnectedText--1SEG8","qr":"SetupStage-qr--14fFl","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","playerName":"SetupStage-playerName--3DwHW","qrQr":"SetupStage-qrQr--3tWIR","qrUrl":"SetupStage-qrUrl--21ulS","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","instruction":"SetupStage-instruction--2Kes6"};
 
 /***/ }),
 

@@ -313,6 +313,26 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.SetupStage-title--5BCVB {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 5.20833vw;
+  font-weight: 900;
+  line-height: 6.25vw; }
+
+.SetupStage-subtitle--1AeLK {
+  font-family: 'Fakt', sans-serif;
+  font-size: 0.83333vw;
+  font-weight: 700;
+  line-height: 0.98958vw; }
+
+.SetupStage-title--5BCVB {
+  color: #fff;
+  text-shadow: 0.52083vw 0.52083vw 0 #000;
+  -webkit-text-stroke: 0.20833vw #000;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; }
+
 .SetupStage-setup--2ohF8 {
   color: #000; }
 
@@ -322,9 +342,14 @@ a {
   top: 0;
   width: 100%; }
 
-.SetupStage-pullOutPhone--_fSJL {
-  font-size: responsive-font(56);
-  padding-top: 2.5vw; }
+.SetupStage-title--5BCVB {
+  position: relative;
+  text-align: center; }
+
+.SetupStage-subtitle--1AeLK {
+  color: #fff;
+  position: relative;
+  text-align: center; }
 
 .SetupStage-players--1djmu {
   display: flex;

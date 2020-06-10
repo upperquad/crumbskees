@@ -11,9 +11,20 @@
   width: 100%;
 }
 
-.pullOutPhone {
-  font-size: responsive-font(56);
-  padding-top: grid(.8);
+.title {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  position: relative;
+  text-align: center;
+}
+
+.subtitle {
+  @extend %t--body-small;
+
+  color: $color-white;
+  position: relative;
+  text-align: center;
 }
 
 .players {
@@ -37,8 +48,6 @@
 }
 
 .playerConnected {
-
-
   color: $color-green;
   font-size: responsive-font(48);
   pointer-events: none;
@@ -80,8 +89,6 @@
 }
 
 .playerName {
-
-
   align-items: center;
   border-top: 2px solid $color-black;
   display: flex;

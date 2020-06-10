@@ -29,7 +29,7 @@
   line-height: scaleVw(24);
 }
 
-%t--small {
+%t--body-small {
   font-family: 'Fakt', sans-serif;
   font-size: scaleVw(16);
   font-weight: 700;
@@ -50,14 +50,18 @@
   line-height: 31px;
 }
 
-%--style-lg-shadow {
+%t--style-lg-shadow {
   color: $color-white;
   text-shadow: scaleVw(10) scaleVw(10) 0 $color-black;
-  text-stroke: scaleVw(4) $color-black;
+  -webkit-text-stroke: scaleVw(4) $color-black;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
-%--style-sm-shadow {
+%t--style-sm-shadow {
   color: $color-white;
   text-shadow: scaleVw(6) scaleVw(6) 0 $color-black;
-  text-stroke: scaleVw(4) $color-black;
+  -webkit-text-stroke: scaleVw(4) $color-black;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
