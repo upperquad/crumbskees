@@ -1,9 +1,12 @@
 import React from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
+import AutoplayVideo from '~components/AutoplayVideo'
 import Button from '~components/Button'
 import MarqueeText from '~components/MarqueeText'
 
+import backgroundVideo from '~assets/images/landing/background.mp4'
+import backgroundImage from '~assets/images/landing/background.jpg'
 import titleImg from '~assets/images/landing/title.png'
 
 const LandingStage = props => {
@@ -11,6 +14,11 @@ const LandingStage = props => {
 
   return (
     <div className={classNames(styles.landing, extraClassName)}>
+      <AutoplayVideo
+        src={backgroundVideo}
+        extraClassName={styles.video}
+        poster={backgroundImage}
+      />
       <div className={styles.marqueeTop}>
         <MarqueeText
           extraClassName={styles.marqueeTopText}

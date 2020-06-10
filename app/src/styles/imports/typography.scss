@@ -52,16 +52,16 @@
 
 %t--style-lg-shadow {
   color: $color-white;
-  text-shadow: scaleVw(10) scaleVw(10) 0 $color-black;
-  -webkit-text-stroke: scaleVw(4) $color-black;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  text-shadow: scaleVw(10) scaleVw(10) 0 $color-black;
+  -webkit-text-stroke: scaleVw(4) $color-black;
 }
 
 %t--style-sm-shadow {
   color: $color-white;
-  text-shadow: scaleVw(6) scaleVw(6) 0 $color-black;
-  -webkit-text-stroke: scaleVw(4) $color-black;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  text-shadow: scaleVw(6) scaleVw(6) 0 $color-black;
+  -webkit-text-stroke: scaleVw(4) $color-black;
 }

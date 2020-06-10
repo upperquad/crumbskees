@@ -11,7 +11,8 @@ import JumpUpText from '~components/JumpUpText'
 import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
-import homeBgVideo from '~assets/images/home-bg.mp4'
+import backgroundVideo from '~assets/images/setup/background.mp4'
+import backgroundImage from '~assets/images/setup/background.jpg'
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
@@ -55,7 +56,7 @@ const SetupStage = props => {
 
   return (
     <div className={classNames(styles.setup, extraClassName)}>
-      <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
+      <AutoplayVideo extraClassName={styles.video} src={backgroundVideo} poster={backgroundImage} />
       <h2 className={styles.title}>Get ready!</h2>
       <h3 className={styles.subtitle}>Open your phone camera and scan the code!</h3>
       <div className={styles.players}>

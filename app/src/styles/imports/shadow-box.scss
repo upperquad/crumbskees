@@ -1,0 +1,28 @@
+%shadow-box {
+  border: scaleVw(4) solid $color-black;
+  position: relative;
+
+  &::before,
+  &::after {
+    background: $color-black;
+    content: '';
+    position: absolute;
+    transform-origin: top left;
+  }
+
+  &::before {
+    height: scaleVw(16);
+    left: scaleVw(-4);
+    right: scaleVw(-4);
+    top: calc(100% + #{scaleVw(4)});
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    bottom: scaleVw(-4);
+    left: calc(100% + #{scaleVw(4)});
+    top: scaleVw(-4);
+    transform: skewY(45deg);
+    width: scaleVw(16);
+  }
+}

@@ -95581,17 +95581,6 @@ module.exports = __webpack_require__.p + "26d45cf63b071e8715e27d589123aac7.png";
 
 /***/ }),
 
-/***/ "./src/assets/images/home-bg.mp4":
-/*!***************************************!*\
-  !*** ./src/assets/images/home-bg.mp4 ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "3a9234ee7d6060c7e4912aadbedb4876.mp4";
-
-/***/ }),
-
 /***/ "./src/assets/images/intro-illo/background.png":
 /*!*****************************************************!*\
   !*** ./src/assets/images/intro-illo/background.png ***!
@@ -95600,6 +95589,28 @@ module.exports = __webpack_require__.p + "3a9234ee7d6060c7e4912aadbedb4876.mp4";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "3cd7998a346627f0d88ac490c514b941.png";
+
+/***/ }),
+
+/***/ "./src/assets/images/landing/background.jpg":
+/*!**************************************************!*\
+  !*** ./src/assets/images/landing/background.jpg ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "4a8495bb4567f26ac16abefa99bda34e.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/landing/background.mp4":
+/*!**************************************************!*\
+  !*** ./src/assets/images/landing/background.mp4 ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "70ee31773d6ec8e2c67993e074900600.mp4";
 
 /***/ }),
 
@@ -95721,6 +95732,28 @@ module.exports = __webpack_require__.p + "75878a54e39b179b40cea116d580b1b7.mp4";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "70e128890680209e5b4177aaa0566f63.mp4";
+
+/***/ }),
+
+/***/ "./src/assets/images/setup/background.jpg":
+/*!************************************************!*\
+  !*** ./src/assets/images/setup/background.jpg ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "f4f7a23e40e6c00d233e684dbe29a6a8.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/setup/background.mp4":
+/*!************************************************!*\
+  !*** ./src/assets/images/setup/background.mp4 ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "7f6caab6ce3601724d9a1b18257175de.mp4";
 
 /***/ }),
 
@@ -98901,10 +98934,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/LandingStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/landing/title.png */ "./src/assets/images/landing/title.png");
-/* harmony import */ var _assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
+/* harmony import */ var _assets_images_landing_background_mp4__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~assets/images/landing/background.mp4 */ "./src/assets/images/landing/background.mp4");
+/* harmony import */ var _assets_images_landing_background_mp4__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_images_landing_background_mp4__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _assets_images_landing_background_jpg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~assets/images/landing/background.jpg */ "./src/assets/images/landing/background.jpg");
+/* harmony import */ var _assets_images_landing_background_jpg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_images_landing_background_jpg__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~assets/images/landing/title.png */ "./src/assets/images/landing/title.png");
+/* harmony import */ var _assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_8__);
+
+
+
 
 
 
@@ -98917,21 +98958,25 @@ var LandingStage = function LandingStage(props) {
       onFinish = props.onFinish;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.landing, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    src: _assets_images_landing_background_mp4__WEBPACK_IMPORTED_MODULE_6___default.a,
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.video,
+    poster: _assets_images_landing_background_jpg__WEBPACK_IMPORTED_MODULE_7___default.a
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeTop
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeTopText,
     text: "Made with <3 by Upperquad ~~~~(~@\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0@~)~~~~",
     duration: "12s"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeLeft
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeSideText,
     text: "It\u2019s a munchy lunchy waste of time\xA0\xA0\xA0\xA0\xA0\xA0",
     duration: "12s"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeRight
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeSideText,
     text: "It\u2019s a munchy lunchy waste of time\xA0\xA0\xA0\xA0\xA0\xA0",
     duration: "12s"
@@ -98943,9 +98988,9 @@ var LandingStage = function LandingStage(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.titlePrefix
   }, "It\u2019s", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "the"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.titleMain,
-    src: _assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_5___default.a,
+    src: _assets_images_landing_title_png__WEBPACK_IMPORTED_MODULE_8___default.a,
     alt: "Crumbskees"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
     text: "Play now",
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button,
     clickHandler: onFinish
@@ -98964,7 +99009,7 @@ var LandingStage = function LandingStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"banner":"LandingStage-banner--1YRTw","title":"LandingStage-title--25MQu","marqueeLeft":"LandingStage-marqueeLeft--1wXUy","marqueeSideText":"LandingStage-marqueeSideText--3t3oi","marqueeRight":"LandingStage-marqueeRight--2_FCy","marqueeTop":"LandingStage-marqueeTop--2c-M7","marqueeTopText":"LandingStage-marqueeTopText--2gXf7","titleMain":"LandingStage-titleMain--odBI0","button":"LandingStage-button--3YvCO"};
+module.exports = {"banner":"LandingStage-banner--1YRTw","title":"LandingStage-title--25MQu","marqueeLeft":"LandingStage-marqueeLeft--1wXUy","marqueeSideText":"LandingStage-marqueeSideText--3t3oi","marqueeRight":"LandingStage-marqueeRight--2_FCy","marqueeTop":"LandingStage-marqueeTop--2c-M7","marqueeTopText":"LandingStage-marqueeTopText--2gXf7","video":"LandingStage-video--1OiNh","titleMain":"LandingStage-titleMain--odBI0","button":"LandingStage-button--3YvCO"};
 
 /***/ }),
 
@@ -99648,8 +99693,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_JumpUpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~components/JumpUpText */ "./src/components/JumpUpText/index.jsx");
 /* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
 /* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/home-bg.mp4 */ "./src/assets/images/home-bg.mp4");
-/* harmony import */ var _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -99659,6 +99706,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -99729,7 +99777,8 @@ var SetupStage = function SetupStage(props) {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.setup, extraClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_10__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.video,
-    src: _assets_images_home_bg_mp4__WEBPACK_IMPORTED_MODULE_11___default.a
+    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
+    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12___default.a
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.title
   }, "Get ready!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
@@ -99799,7 +99848,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"SetupStage-title--5BCVB","subtitle":"SetupStage-subtitle--1AeLK","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","player":"SetupStage-player--2JGID","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","playerConnectedText":"SetupStage-playerConnectedText--1SEG8","qr":"SetupStage-qr--14fFl","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","playerName":"SetupStage-playerName--3DwHW","qrQr":"SetupStage-qrQr--3tWIR","qrUrl":"SetupStage-qrUrl--21ulS","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","instruction":"SetupStage-instruction--2Kes6"};
+module.exports = {"title":"SetupStage-title--5BCVB","playerName":"SetupStage-playerName--3DwHW","qrUrl":"SetupStage-qrUrl--21ulS","subtitle":"SetupStage-subtitle--1AeLK","player":"SetupStage-player--2JGID","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","playerConnectedText":"SetupStage-playerConnectedText--1SEG8","qr":"SetupStage-qr--14fFl","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","instruction":"SetupStage-instruction--2Kes6"};
 
 /***/ }),
 

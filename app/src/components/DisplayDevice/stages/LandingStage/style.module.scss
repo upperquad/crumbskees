@@ -1,5 +1,14 @@
 @import "~styles/imports/index";
 
+.video {
+  bottom: scaleVw(140);
+  height: calc(100% - #{scaleVw(140)});
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
 .marqueeTop {
   background: $color-purple;
   left: 0;

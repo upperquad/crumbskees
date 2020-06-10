@@ -131,6 +131,14 @@ a {
   font-weight: 500;
   line-height: 1.25vw; }
 
+.LandingStage-video--1OiNh {
+  bottom: 7.29167vw;
+  height: calc(100% - 7.29167vw);
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%; }
+
 .LandingStage-marqueeTop--2c-M7 {
   background: #3f1bd0;
   left: 0;
@@ -189,6 +197,7 @@ a {
       margin-left: 1.04167vw; }
   .LandingStage-banner--1YRTw .LandingStage-button--3YvCO {
     margin-left: 1.5625vw; }
+
 
 /* Colors */
 /* Breakpoints */
@@ -320,6 +329,19 @@ a {
   font-weight: 900;
   line-height: 6.25vw; }
 
+.SetupStage-playerName--3DwHW {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 2.8125vw;
+  font-weight: 900;
+  line-height: 3.38542vw; }
+
+.SetupStage-qrUrl--21ulS {
+  font-family: 'Fakt', sans-serif;
+  font-size: 1.04167vw;
+  font-weight: 500;
+  line-height: 1.25vw; }
+
 .SetupStage-subtitle--1AeLK {
   font-family: 'Fakt', sans-serif;
   font-size: 0.83333vw;
@@ -328,55 +350,82 @@ a {
 
 .SetupStage-title--5BCVB {
   color: #fff;
-  text-shadow: 0.52083vw 0.52083vw 0 #000;
-  -webkit-text-stroke: 0.20833vw #000;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0.52083vw 0.52083vw 0 #000;
+  -webkit-text-stroke: 0.20833vw #000; }
+
+.SetupStage-player--2JGID {
+  border: 0.20833vw solid #000;
+  position: relative; }
+  .SetupStage-player--2JGID::before, .SetupStage-player--2JGID::after {
+    background: #000;
+    content: '';
+    position: absolute;
+    transform-origin: top left; }
+  .SetupStage-player--2JGID::before {
+    height: 0.83333vw;
+    left: -0.20833vw;
+    right: -0.20833vw;
+    top: calc(100% + 0.20833vw);
+    transform: skewX(45deg); }
+  .SetupStage-player--2JGID::after {
+    bottom: -0.20833vw;
+    left: calc(100% + 0.20833vw);
+    top: -0.20833vw;
+    transform: skewY(45deg);
+    width: 0.83333vw; }
 
 .SetupStage-setup--2ohF8 {
-  color: #000; }
+  color: #000;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center; }
 
 .SetupStage-video--26_7G {
+  height: 100%;
   left: 0;
+  object-fit: cover;
   position: absolute;
   top: 0;
   width: 100%; }
 
 .SetupStage-title--5BCVB {
+  margin-bottom: 0.26042vw;
   position: relative;
   text-align: center; }
 
 .SetupStage-subtitle--1AeLK {
   color: #fff;
+  margin-bottom: 2.34375vw;
   position: relative;
   text-align: center; }
 
 .SetupStage-players--1djmu {
   display: flex;
   justify-content: center;
-  padding-top: 3.64583vw;
+  margin-bottom: 6.77083vw;
   position: relative; }
 
 .SetupStage-player--2JGID {
   background: #fff;
-  border: 2px solid #000;
-  margin: 0 3.125vw;
+  margin: 0 7.8125vw;
   text-align: center;
-  width: 37.5vw; }
+  width: 23.95833vw; }
 
 .SetupStage-qrWrapper--3-nvG {
-  height: 15.26042vw;
+  height: 18.22917vw;
   position: relative; }
 
 .SetupStage-playerConnected--3s2oQ {
   color: #69e5ab;
-  font-size: responsive-font(48);
+  font-size: 2.5vw;
   pointer-events: none;
   position: relative;
   text-transform: uppercase; }
   .SetupStage-playerConnected--3s2oQ::before {
     background: #ec504f;
-    border: 2px solid #000;
+    border: 0.20833vw solid #000;
     border-radius: 50%;
     content: '';
     height: 8.64583vw;
@@ -405,10 +454,9 @@ a {
 
 .SetupStage-playerName--3DwHW {
   align-items: center;
-  border-top: 2px solid #000;
+  border-top: 0.20833vw solid #000;
   display: flex;
-  font-size: responsive-font(48);
-  height: 6.77083vw;
+  height: 5.83333vw;
   justify-content: center;
   text-transform: uppercase; }
 
@@ -425,8 +473,8 @@ a {
     padding-top: 100%; }
 
 .SetupStage-qrUrl--21ulS {
-  font-size: responsive-font(18);
-  line-height: 1.4; }
+  font-weight: bold;
+  margin: 0 1.04167vw; }
 
 .SetupStage-qrUrlToken--1Jgor {
   color: #ec504f;
@@ -436,7 +484,7 @@ a {
 .SetupStage-instruction--2Kes6 {
   overflow: hidden;
   padding-top: 10.41667vw;
-  position: relative; }
+  position: absolute; }
 
 /* Colors */
 /* Breakpoints */
@@ -455,7 +503,6 @@ a {
 
 .JumpUpText-letter--vijM0 {
   display: inline-block; }
-
 
 /* Colors */
 /* Breakpoints */
