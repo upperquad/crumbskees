@@ -6,7 +6,7 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS } from '~constants'
 
-import IndicatorLight from '~components/IndicatorLight'
+import Button from '~components/Button'
 import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 
@@ -107,7 +107,7 @@ const GameZoneWrapper = props => {
             {PlayersManager.players.map((player, index) => {
               const text = `P${index + 1} ready`
 
-              return <IndicatorLight text={text} ready={player.ready} />
+              return <Button text={text} isLit={player.ready} />
             })}
           </div>
         </div>

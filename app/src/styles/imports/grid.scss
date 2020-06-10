@@ -1,3 +1,7 @@
 @function grid($cols) {
   @return $cols * $grid-unit;
 }
+
+@function scaleVw($unit) {
+  @return $unit / $base-width * 100vw;
+}

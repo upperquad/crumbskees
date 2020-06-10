@@ -1,0 +1,95 @@
+@import "~styles/imports/index";
+
+.buttonWrap {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 scaleVw(22) scaleVw(13) 0;
+  position: relative;
+  transition:
+    padding .4s $easing-quad-out,
+    transform .4s $easing-quad-out;
+
+  @include respond-to(smartphone) {
+    padding: 0 22px 13px 0;
+  }
+
+  &:hover {
+    transform:  translate(#{scaleVw(22)}, #{scaleVw(13)});
+
+    @include respond-to(smartphone) {
+      transform: translate(22px, 13px);
+    }
+  }
+
+  &.isLit {
+    .buttonInner {
+      background-color: $color-mint;
+    }
+  }
+
+  .buttonInner {
+    @extend %t--h3;
+
+    box-shadow: scaleVw(22) scaleVw(22) 0px $color-black;
+    position: relative;
+    text-transform: uppercase;
+    transition: background .2s ease;
+
+    &::before {
+      background: $color-black;
+      content: '';
+      height: scaleVw(30);
+      left: 0;
+      position: absolute;
+      top: 100%;
+      transform: rotate(-45deg);
+      transform-origin: top left;
+      width: scaleVw(30);
+    }
+
+    &::after {
+      background: $color-black;
+      content: '';
+      height: scaleVw(50);
+      left: 100%;
+      position: absolute;
+      top: 0;
+      transform: rotate(45deg);
+      transform-origin: top left;
+      width: scaleVw(50);
+    }
+
+    @include respond-to(smartphone) {
+      box-shadow: 22px 22px 0px $color-black;
+
+      &::before {
+        height: 30px;
+        width: 30px;
+      }
+
+      &::after {
+        height: 50px;
+        width: 50px;
+      }
+    }
+  }
+
+  .buttonCard {
+    background: $color-white;
+    border: scaleVw(4) solid $color-black;
+    color: $color-black;
+    padding: scaleVw(22) scaleVw(20);
+    position: relative;
+    z-index: 1;
+
+    @include respond-to(smartphone) {
+      border-width: 4px;
+      padding: 12px;
+    }
+  }
+}

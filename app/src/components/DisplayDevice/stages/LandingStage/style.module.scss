@@ -1,4 +1,80 @@
 @import "~styles/imports/index";
 
-.landing {
+.marqueeTop {
+  background: $color-purple;
+  left: 0;
+  padding: scaleVw(10) 0 scaleVw(8);
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  .marqueeTopText {
+    @extend %t--body;
+
+    color: $color-red;
+    font-weight: bold;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+}
+
+.marqueeLeft,
+.marqueeRight {
+  background: $color-black;
+  padding: 0 scaleVw(7);
+  position: absolute;
+  transform-origin: top left;
+  width: 150vh;
+
+  .marqueeSideText {
+    @extend %t--h3;
+
+    color: $color-white;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+}
+
+.marqueeLeft {
+  left: 0;
+  top: 100%;
+  transform: rotate(-90deg);
+}
+
+.marqueeRight {
+  left: 100%;
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.banner {
+  align-items: center;
+  background: $color-yellow;
+  bottom: 0;
+  display: flex;
+  height: scaleVw(140);
+  justify-content: center;
+  left: 0;
+  padding: 0 scaleVw(24);
+  position: absolute;
+  right: 0;
+
+  .title {
+    @extend %t--h1;
+
+    align-items: center;
+    display: flex;
+    font-size: scaleVw(52);
+    line-height: scaleVw(41);
+
+    .titleMain {
+      height: scaleVw(102);
+      margin-left: scaleVw(20);
+    }
+  }
+
+  .button {
+    margin-left: scaleVw(30);
+  }
 }

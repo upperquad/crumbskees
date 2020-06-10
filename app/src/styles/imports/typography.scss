@@ -1,45 +1,45 @@
 %t--h1 {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
-  font-size: 100px;
+  font-size: scaleVw(100);
   font-weight: 900;
-  line-height: 120px;
+  line-height: scaleVw(120);
 }
 
 %t--h2 {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
-  font-size: 54px;
+  font-size: scaleVw(54);
   font-weight: 900;
-  line-height: 65px;
+  line-height: scaleVw(65);
 }
 
 %t--h3 {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
-  font-size: 28px;
+  font-size: scaleVw(28);
   font-weight: 900;
-  line-height: 34px;
+  line-height: scaleVw(34);
 }
 
 %t--body {
   font-family: 'Fakt', sans-serif;
-  font-size: 20px;
+  font-size: scaleVw(20);
   font-weight: 500;
-  line-height: 24px;
+  line-height: scaleVw(24);
 }
 
 %t--small {
   font-family: 'Fakt', sans-serif;
-  font-size: 16px;
+  font-size: scaleVw(16);
   font-weight: 700;
-  line-height: 19px;
+  line-height: scaleVw(19);
 }
 
 %t--countdown-timer {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
-  font-size: 80px;
+  font-size: scaleVw(80);
   font-weight: 900;
 }
 
@@ -52,16 +52,12 @@
 
 %--style-lg-shadow {
   color: $color-white;
-  text-shadow: 10px 10px 0px $color-black;
-  text-stroke: 4px $color-black;
+  text-shadow: scaleVw(10) scaleVw(10) 0 $color-black;
+  text-stroke: scaleVw(4) $color-black;
 }
 
 %--style-sm-shadow {
   color: $color-white;
-  text-shadow: 6px 6px 0px $color-black;
-  text-stroke: 4px $color-black;
-}
-
-@function responsive-font($unit) {
-  @return $unit / $base-width * 100vw;
+  text-shadow: scaleVw(6) scaleVw(6) 0 $color-black;
+  text-stroke: scaleVw(4) $color-black;
 }
