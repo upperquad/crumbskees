@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import classNames from 'classnames'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
@@ -396,7 +397,11 @@ const GameZone = props => {
   }
 
   return (
-    <div className={styles.gameZone}>
+    <div
+      className={classNames(styles.gameZone, {
+        [styles.gameZoneTutorial]: type === 'tutorial',
+      })}
+    >
       <PixiScene
         cancelPower={cancelPower}
         gameState={gameState}

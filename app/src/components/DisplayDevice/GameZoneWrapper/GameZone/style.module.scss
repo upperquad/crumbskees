@@ -1,8 +1,16 @@
+@import "~styles/imports/index";
+
 .gameZone {
+  @extend %shadow-box;
+
   cursor: none;
   height: 100%;
   position: absolute;
   text-align: center;
   width: 100%; // keep game ratio
   z-index: 10;
+}
+
+.gameZoneTutorial {
+  background: $color-yellow url('../../../../assets/images/tutorial/background.png') center / contain no-repeat;
 }

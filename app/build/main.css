@@ -610,10 +610,32 @@ a {
 
 .GameZoneWrapper-buttons--IuZa2 {
   display: flex;
-  margin-top: 1.5625vw;
-  position: absolute;
-  right: 0;
-  top: 100%; }
+  margin-top: 1.5625vw; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.GameZone-gameZone--2IEsp {
+  border: 0.20833vw solid #000;
+  position: relative; }
+  .GameZone-gameZone--2IEsp::before, .GameZone-gameZone--2IEsp::after {
+    background: #000;
+    content: '';
+    position: absolute;
+    transform-origin: top left; }
+  .GameZone-gameZone--2IEsp::before {
+    height: 0.83333vw;
+    left: -0.20833vw;
+    right: -0.20833vw;
+    top: calc(100% + 0.20833vw);
+    transform: skewX(45deg); }
+  .GameZone-gameZone--2IEsp::after {
+    bottom: -0.20833vw;
+    left: calc(100% + 0.20833vw);
+    top: -0.20833vw;
+    transform: skewY(45deg);
+    width: 0.83333vw; }
 
 .GameZone-gameZone--2IEsp {
   cursor: none;
@@ -622,6 +644,9 @@ a {
   text-align: center;
   width: 100%;
   z-index: 10; }
+
+.GameZone-gameZoneTutorial--3mQcP {
+  background: #ffe945 url(/50e324c5e2a28f6412bf685d54662fd0.png) center/contain no-repeat; }
 
 .PixiScene-pixiScene--3xIt9 {
   height: 100%;

@@ -67,10 +67,10 @@ export const CHARACTERS = [
 export const TUTORIAL_ROUND = {
   badItemImage: badSnack1,
   itemImages: [snack1, snack2],
-  numBadItems: 2,
-  numBigItems: 5,
-  numItems: 10,
-  powers: ['grow', 'freeze'],
+  numBadItems: 0,
+  numBigItems: 10,
+  numItems: 0,
+  powers: [],
 }
 
 export const GAME_ROUNDS = [

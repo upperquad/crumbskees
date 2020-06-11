@@ -111581,7 +111581,7 @@ function useSetScene(refs, props) {
       resolution: window.devicePixelRatio,
       antialias: true,
       autoDensity: true,
-      backgroundColor: 0xffffff
+      transparent: true
     });
     refs.app.current.stage.interactive = true; // Add the canvas that Pixi automatically created for you to the HTML document
 
@@ -112384,21 +112384,25 @@ module.exports = {"messageContainer":"PopupMessage-messageContainer---DqVT","mes
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
-/* harmony import */ var _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PeerManager/Player1Peer */ "./src/managers/PeerManager/Player1Peer.js");
-/* harmony import */ var _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/PeerManager/Player2Peer */ "./src/managers/PeerManager/Player2Peer.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
-/* harmony import */ var _PixiScene__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PixiScene */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PixiScene/index.jsx");
-/* harmony import */ var _PlayerMessage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PlayerMessage */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PlayerMessage/index.jsx");
-/* harmony import */ var _PopupMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./PopupMessage */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PopupMessage/index.jsx");
-/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/grow.png */ "./src/assets/images/grow.png");
-/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/freeze.png */ "./src/assets/images/freeze.png");
-/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
+/* harmony import */ var _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/PeerManager/Player1Peer */ "./src/managers/PeerManager/Player1Peer.js");
+/* harmony import */ var _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PeerManager/Player2Peer */ "./src/managers/PeerManager/Player2Peer.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
+/* harmony import */ var _PixiScene__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PixiScene */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PixiScene/index.jsx");
+/* harmony import */ var _PlayerMessage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./PlayerMessage */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PlayerMessage/index.jsx");
+/* harmony import */ var _PopupMessage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PopupMessage */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/PopupMessage/index.jsx");
+/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/grow.png */ "./src/assets/images/grow.png");
+/* harmony import */ var _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/freeze.png */ "./src/assets/images/freeze.png");
+/* harmony import */ var _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -112414,6 +112418,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -112451,7 +112456,7 @@ var GameZone = function GameZone(props) {
       setItems = _useState2[1];
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return null;
     });
   }),
@@ -112460,7 +112465,7 @@ var GameZone = function GameZone(props) {
       setPowerArray = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return {
         x: 0,
         y: 0
@@ -112472,7 +112477,7 @@ var GameZone = function GameZone(props) {
       setPositionArray = _useState6[1];
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return false;
     });
   }),
@@ -112496,20 +112501,20 @@ var GameZone = function GameZone(props) {
       addScoresLevel(targetsCaught, index);
 
       if (type === 'game') {
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].addScore(targetsCaught.length, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].addScore(targetsCaught.length, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[index].id);
       }
 
-      _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play();
+      _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].score.play();
     };
 
     var removeScore = function removeScore(score, index) {
       removeScoresLevel(score, index);
 
       if (type === 'game') {
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].removeScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[index].id);
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].removeScore(score, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[index].id);
       }
 
-      _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].score.play(); // need a different sound for losing point
+      _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].score.play(); // need a different sound for losing point
     };
 
     var handleClick = function handleClick(playerIndex) {
@@ -112521,7 +112526,7 @@ var GameZone = function GameZone(props) {
         switch (item.type) {
           case 'grow':
             growPowerFound = true;
-            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].grow.play();
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].grow.play();
             setPowerArray(function (prevArray) {
               item.text = 'GROW';
               prevArray[playerIndex] = item;
@@ -112530,7 +112535,7 @@ var GameZone = function GameZone(props) {
             break;
 
           case 'freeze':
-            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].freeze.play();
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].freeze.play();
             setPowerArray(function (prevArray) {
               item.text = 'FREEZE';
               prevArray[1 - playerIndex] = item;
@@ -112539,7 +112544,7 @@ var GameZone = function GameZone(props) {
             break;
 
           case 'time':
-            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_3__["default"].grow.play(); // need a new sound here?
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].grow.play(); // need a new sound here?
 
             setPowerArray(function (prevArray) {
               item.text = 'ADD TIME';
@@ -112560,9 +112565,9 @@ var GameZone = function GameZone(props) {
       });
 
       if (!growPowerFound) {
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[playerIndex].closeMouth = true;
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[playerIndex].closeMouth = true;
         setTimeout(function () {
-          _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[playerIndex].closeMouth = false;
+          _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[playerIndex].closeMouth = false;
         }, 100);
       }
 
@@ -112592,8 +112597,8 @@ var GameZone = function GameZone(props) {
                 y = data.y;
             setPositionArray(function (prevPositionArray) {
               var positionObj = prevPositionArray[playerIndex];
-              positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["clamp"])(positionObj.x + parseFloat(x, 10), -0.5, 0.5);
-              positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["clamp"])(positionObj.y + parseFloat(y, 10), -0.5, 0.5);
+              positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["clamp"])(positionObj.x + parseFloat(x, 10), -0.5, 0.5);
+              positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["clamp"])(positionObj.y + parseFloat(y, 10), -0.5, 0.5);
               return prevPositionArray;
             });
             break;
@@ -112613,8 +112618,8 @@ var GameZone = function GameZone(props) {
         case 'player_ready':
           {
             if (type === 'tutorial') {
-              _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players[playerIndex].setReady(true);
-              var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].bothReady();
+              _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[playerIndex].setReady(true);
+              var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].bothReady();
               onUpdate();
 
               if (arePlayersReady) {
@@ -112640,8 +112645,8 @@ var GameZone = function GameZone(props) {
       return messageHandler(detail, 1);
     };
 
-    _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_4__["default"].addSubscriber('MESSAGE', player1MessageHandler);
-    _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber('MESSAGE', player2MessageHandler); // check if no item left
+    _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber('MESSAGE', player1MessageHandler);
+    _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].addSubscriber('MESSAGE', player2MessageHandler); // check if no item left
 
     var targets = items.filter(function (item) {
       return item.type === 'target';
@@ -112651,7 +112656,7 @@ var GameZone = function GameZone(props) {
       var persistent = type === 'game';
       addMessage({
         text: getEndMessage(),
-        color: _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].red,
+        color: _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].red,
         persistent: persistent,
         onEnd: function onEnd() {
           if (type === 'game') {
@@ -112662,8 +112667,8 @@ var GameZone = function GameZone(props) {
     }
 
     return function () {
-      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_4__["default"].removeSubscriber('MESSAGE', player1MessageHandler);
-      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber('MESSAGE', player2MessageHandler);
+      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber('MESSAGE', player1MessageHandler);
+      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber('MESSAGE', player2MessageHandler);
     }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, items]); // Grid setup
 
@@ -112686,12 +112691,12 @@ var GameZone = function GameZone(props) {
       } // randomized
 
 
-      var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, usedGrid.length - 1);
+      var rd = Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["randomInt"])(0, usedGrid.length - 1);
       var cellX = usedGrid[rd].x;
       var cellY = usedGrid[rd].y;
-      var x = cellX / _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"] + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200; // 200?
+      var x = cellX / _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_COLS"] + _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT_VW"] / 200; // 200?
 
-      var y = cellY / _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"] + _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
+      var y = cellY / _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_LINES"] + _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT_VH"] / 200;
 
       if (size === 1) {
         usedGrid.splice(rd, 1); // here I have to splice the correct index
@@ -112714,7 +112719,7 @@ var GameZone = function GameZone(props) {
         cellY: cellY,
         x: x,
         y: y,
-        size: size * _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"],
+        size: size * _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"],
         image: image,
         type: itemType,
         color: color
@@ -112730,8 +112735,8 @@ var GameZone = function GameZone(props) {
           numItems = round.numItems,
           powers = round.powers;
 
-      for (var i = 0; i < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"]; i++) {
-        for (var j = 0; j < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"]; j++) {
+      for (var i = 0; i < _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_COLS"]; i++) {
+        for (var j = 0; j < _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_LINES"]; j++) {
           var obj = {
             x: i,
             y: j
@@ -112750,18 +112755,18 @@ var GameZone = function GameZone(props) {
         switch (powers[_i2]) {
           default:
           case 'grow':
-            power.image = _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_11___default.a;
-            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].orange;
+            power.image = _assets_images_grow_png__WEBPACK_IMPORTED_MODULE_12___default.a;
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].orange;
             break;
 
           case 'freeze':
-            power.image = _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_12___default.a;
-            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].blue;
+            power.image = _assets_images_freeze_png__WEBPACK_IMPORTED_MODULE_13___default.a;
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].blue;
 
-            if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'SINGLE_PLAYER') {
+            if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].mode === 'SINGLE_PLAYER') {
               // replace freeze power with time power
               // power.image = freezeItem // need a image for time power
-              power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
+              power.color = _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].purple;
               power.type = 'time';
             }
 
@@ -112769,7 +112774,7 @@ var GameZone = function GameZone(props) {
 
           case 'time':
             // power.image = freezeItem // need a image for time power
-            power.color = _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].purple;
+            power.color = _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].purple;
             break;
         }
 
@@ -112788,7 +112793,7 @@ var GameZone = function GameZone(props) {
 
 
       for (var _i4 = 0; _i4 < numItems; _i4++) {
-        var randomImage = itemImages[Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, itemImages.length - 1)];
+        var randomImage = itemImages[Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["randomInt"])(0, itemImages.length - 1)];
 
         var _item = createItem({
           image: randomImage
@@ -112817,18 +112822,18 @@ var GameZone = function GameZone(props) {
           }
         };
 
-        for (var _j = 0; _j < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_LINES"] - 1; _j++) {
+        for (var _j = 0; _j < _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_LINES"] - 1; _j++) {
           _loop2(_j);
         }
       };
 
-      for (var _i5 = 0; _i5 < _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_COLS"] - 1; _i5++) {
+      for (var _i5 = 0; _i5 < _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_COLS"] - 1; _i5++) {
         _loop(_i5);
       } // add big items
 
 
       for (var _i6 = 0; _i6 < numBigItems; _i6++) {
-        var _randomImage = itemImages[Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["randomInt"])(0, itemImages.length - 1)];
+        var _randomImage = itemImages[Object(_utils_math__WEBPACK_IMPORTED_MODULE_8__["randomInt"])(0, itemImages.length - 1)];
 
         var _item2 = createItem({
           image: _randomImage,
@@ -112845,14 +112850,14 @@ var GameZone = function GameZone(props) {
     setupGrid();
   }, [round]); // tap instruction
 
-  var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.filter(function (player) {
+  var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.filter(function (player) {
     return player.score && player.score() === 0;
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (zeroScorePlayers.length) {
       var tapInstructionInterval = setInterval(function () {
         var newTapInstructionArray = [];
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.forEach(function (player, index) {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.forEach(function (player, index) {
           if (player.score() === 0) {
             var itemsInCursor = getItemsInCursor(items, positionArray[index], powerArray[index] && powerArray[index].type === 'grow');
             var targetsInCursor = itemsInCursor.filter(function (item) {
@@ -112886,8 +112891,8 @@ var GameZone = function GameZone(props) {
   }
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.gameZone
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PixiScene__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameZone, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.gameZoneTutorial, type === 'tutorial'))
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PixiScene__WEBPACK_IMPORTED_MODULE_9__["default"], {
     cancelPower: cancelPower,
     gameState: gameState,
     items: items,
@@ -112897,15 +112902,15 @@ var GameZone = function GameZone(props) {
     type: type,
     videoBack: videoBack,
     videoFront: videoFront
-  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_1__["default"].players.map(function (player, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerMessage__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function (player, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlayerMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
       power: powerArray[index],
       position: positionArray[index],
       color: player.color,
       roundScore: scoresLevel[index].length,
       tapInstruction: tapInstructionArray[index]
     });
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PopupMessage__WEBPACK_IMPORTED_MODULE_10__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PopupMessage__WEBPACK_IMPORTED_MODULE_11__["default"], {
     color: message.color,
     x: message.x,
     y: message.y,
@@ -112924,15 +112929,15 @@ function getItemsInCursor(items, position, isGrown) {
     var itemY = item.y;
     var minDistanceSquare = isGrown ? Math.pow(215, 2) : Math.pow(95, 2);
 
-    if (item.size === _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT"] * 2) {
+    if (item.size === _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT"] * 2) {
       // offset catch area for big item
       // Also increase the radius of the catch area
-      itemX += _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VW"] / 200;
-      itemY += _constants__WEBPACK_IMPORTED_MODULE_6__["GRID_UNIT_VH"] / 200;
+      itemX += _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT_VW"] / 200;
+      itemY += _constants__WEBPACK_IMPORTED_MODULE_7__["GRID_UNIT_VH"] / 200;
       minDistanceSquare += Math.pow(70, 2);
     }
 
-    var distanceSquare = Math.pow((cursorX - itemX) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_WIDTH"], 2) + Math.pow((cursorY - itemY) * _constants__WEBPACK_IMPORTED_MODULE_6__["VB_HEIGHT"], 2);
+    var distanceSquare = Math.pow((cursorX - itemX) * _constants__WEBPACK_IMPORTED_MODULE_7__["VB_WIDTH"], 2) + Math.pow((cursorY - itemY) * _constants__WEBPACK_IMPORTED_MODULE_7__["VB_HEIGHT"], 2);
     return distanceSquare <= minDistanceSquare;
   });
 }
@@ -112955,7 +112960,7 @@ function getEndMessage() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"gameZone":"GameZone-gameZone--2IEsp"};
+module.exports = {"gameZone":"GameZone-gameZone--2IEsp","gameZoneTutorial":"GameZone-gameZoneTutorial--3mQcP"};
 
 /***/ }),
 
@@ -113115,7 +113120,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
 
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, type === 'tutorial' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, type === 'tutorial' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.gameContentTutorial
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_8__["default"], {
     addMessage: addMessage,
@@ -113129,7 +113134,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     scoresLevel: scoresLevel,
     setGameState: setGameState,
     type: type
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.buttons
   }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function (player, index) {
     var text = "P".concat(index + 1, " ready");
@@ -114981,10 +114986,10 @@ var CHARACTERS = [{
 var TUTORIAL_ROUND = {
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,
   itemImages: [_assets_images_snack_1_png__WEBPACK_IMPORTED_MODULE_2___default.a, _assets_images_snack_2_png__WEBPACK_IMPORTED_MODULE_6___default.a],
-  numBadItems: 2,
-  numBigItems: 5,
-  numItems: 10,
-  powers: ['grow', 'freeze']
+  numBadItems: 0,
+  numBigItems: 10,
+  numItems: 0,
+  powers: []
 };
 var GAME_ROUNDS = [{
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,

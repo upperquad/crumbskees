@@ -161,7 +161,7 @@ export function useSetScene(refs, props) {
       resolution: window.devicePixelRatio,
       antialias: true,
       autoDensity: true,
-      backgroundColor: 0xffffff,
+      transparent: true,
     })
 
     refs.app.current.stage.interactive = true

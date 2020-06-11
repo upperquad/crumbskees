@@ -89,20 +89,22 @@ const GameZoneWrapper = props => {
   return (
     <React.Fragment>
       {type === 'tutorial' && (
-        <div className={styles.gameContentTutorial}>
-          <GameZone
-            addMessage={addMessage}
-            addScoresLevel={addScoresLevel}
-            gameState={gameState}
-            message={message}
-            onFinish={onFinish}
-            onUpdate={onUpdate}
-            removeScoresLevel={removeScoresLevel}
-            round={TUTORIAL_ROUND}
-            scoresLevel={scoresLevel}
-            setGameState={setGameState}
-            type={type}
-          />
+        <div>
+          <div className={styles.gameContentTutorial}>
+            <GameZone
+              addMessage={addMessage}
+              addScoresLevel={addScoresLevel}
+              gameState={gameState}
+              message={message}
+              onFinish={onFinish}
+              onUpdate={onUpdate}
+              removeScoresLevel={removeScoresLevel}
+              round={TUTORIAL_ROUND}
+              scoresLevel={scoresLevel}
+              setGameState={setGameState}
+              type={type}
+            />
+          </div>
           <div className={styles.buttons}>
             {PlayersManager.players.map((player, index) => {
               const text = `P${index + 1} ready`
