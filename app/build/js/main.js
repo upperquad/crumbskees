@@ -110200,14 +110200,25 @@ module.exports = __webpack_require__.p + "26d45cf63b071e8715e27d589123aac7.png";
 
 /***/ }),
 
-/***/ "./src/assets/images/intro-illo/background.png":
+/***/ "./src/assets/images/intro-illo/background.jpg":
 /*!*****************************************************!*\
-  !*** ./src/assets/images/intro-illo/background.png ***!
+  !*** ./src/assets/images/intro-illo/background.jpg ***!
   \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "3cd7998a346627f0d88ac490c514b941.png";
+module.exports = __webpack_require__.p + "e4cffdaa9a8499520296694db8b3a56b.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/intro-illo/background.mp4":
+/*!*****************************************************!*\
+  !*** ./src/assets/images/intro-illo/background.mp4 ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "48819bc5b6958bad0496b6f453fa8d70.mp4";
 
 /***/ }),
 
@@ -110406,17 +110417,6 @@ module.exports = __webpack_require__.p + "1b79a0b1f426b5879bbd191fc5805e7b.png";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "2b5a410f50c64173b6eb2af4a3e4c3ac.png";
-
-/***/ }),
-
-/***/ "./src/assets/images/tutorial/helper.png":
-/*!***********************************************!*\
-  !*** ./src/assets/images/tutorial/helper.png ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "0e39e0d6d6d2b19685d57949fce55ab9.png";
 
 /***/ }),
 
@@ -110831,7 +110831,6 @@ var ControlDevice = function ControlDevice() {
     setActiveTutorial: setActiveTutorial,
     characterIndex: characterIndex,
     color: character.color,
-    secondaryColor: character.secondaryColor,
     score: score,
     image: character.image
   }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -110943,9 +110942,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/PlayStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
-/* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -110964,14 +110962,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var PlayStage = function PlayStage(props) {
-  var _classNames, _classNames2;
+  var _classNames;
 
   var color = props.color,
       image = props.image,
-      score = props.score,
-      secondaryColor = props.secondaryColor;
+      score = props.score;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -110990,7 +110986,7 @@ var PlayStage = function PlayStage(props) {
   var updatePosition = function updatePosition(clientX, clientY) {
     var x = (clientX - coordX.current) / window.innerWidth;
     var y = (clientY - coordY.current) / window.innerHeight;
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('cursor_move', {
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].send('cursor_move', {
       x: x,
       y: y
     });
@@ -111026,46 +111022,42 @@ var PlayStage = function PlayStage(props) {
 
   var tapHandler = function tapHandler(event) {
     event.stopPropagation();
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('click');
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].send('click');
   };
 
   var onReadyTouch = function onReadyTouch() {
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_7__["default"].send('player_ready');
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].send('player_ready');
     setReady(true);
   };
 
   return (// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.play,
-      onTouchStart: touchStartHandler,
-      onTouchMove: touchMoveHandlerThrottle,
-      onTouchEnd: touchEndHandler,
-      onClick: tapHandler
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.title, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titleRed, secondaryColor === 'red'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.titlePurple, secondaryColor === 'purple'), _classNames))
-    }, "The Upperquadrant"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.play
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
       clickHandler: onReadyTouch,
       text: "Ready",
       isLit: ready
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block, (_classNames2 = {}, _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockRed, color === 'red'), _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockPurple, color === 'purple'), _classNames2))
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.touchZone,
+      onTouchStart: touchStartHandler,
+      onTouchMove: touchMoveHandlerThrottle,
+      onTouchEnd: touchEndHandler,
+      onClick: tapHandler
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockRed, color === 'red'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockPurple, color === 'purple'), _classNames))
     }, !!score && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.score
     }, score), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.image,
       src: image,
       alt: ""
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.marquee,
-      text: "What up tiny type that is distracting \u2014",
-      duration: "12s"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       style: {
         top: coordY.current,
         left: coordX.current
       },
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.touchBubble, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.touchBubbleVisible, isTouching))
-    }))
+    })))
   );
 };
 
@@ -111081,7 +111073,7 @@ var PlayStage = function PlayStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"play":"PlayStage-play--IhBy-","title":"PlayStage-title--2eNlD","titlePurple":"PlayStage-titlePurple--1hNH7","titleRed":"PlayStage-titleRed--1SMZZ","marquee":"PlayStage-marquee--1-06O","touchBubble":"PlayStage-touchBubble--3amvr","touchBubbleVisible":"PlayStage-touchBubbleVisible--Ks4rI","score":"PlayStage-score--3bDgs","block":"PlayStage-block--3zdrK","blockPurple":"PlayStage-blockPurple--14Epy","blockRed":"PlayStage-blockRed--23YCB","image":"PlayStage-image--30zz4","skipTutorialBtn":"PlayStage-skipTutorialBtn--1Ujsg"};
+module.exports = {"play":"PlayStage-play--IhBy-","touchBubble":"PlayStage-touchBubble--3amvr","touchBubbleVisible":"PlayStage-touchBubbleVisible--Ks4rI","score":"PlayStage-score--3bDgs","touchZone":"PlayStage-touchZone--3gX7k","block":"PlayStage-block--3zdrK","blockPurple":"PlayStage-blockPurple--14Epy","blockRed":"PlayStage-blockRed--23YCB","image":"PlayStage-image--30zz4","skipTutorialBtn":"PlayStage-skipTutorialBtn--1Ujsg"};
 
 /***/ }),
 
@@ -111610,25 +111602,35 @@ function useSetScene(refs, props) {
       refs.app.current.stage.addChild(refs.containerFront.current);
     }
 
-    refs.app.current.stage.addChild(refs.containerMouth.current); // set elements into scene
+    refs.app.current.stage.addChild(refs.containerMouth.current);
+    var videoPixiBack;
+    var videoPixiFront;
 
-    var videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current);
-    var videoPixiFront = setVideo(props.videoFront, refs.containerFront.current);
+    if (props.type === 'game') {
+      // set elements into scene
+      videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current);
+      videoPixiFront = setVideo(props.videoFront, refs.containerFront.current);
+    }
+
     setCircles(); // preload lips
 
     var loader = new pixi_js__WEBPACK_IMPORTED_MODULE_1__["Loader"]();
     loader.add('lip', _assets_images_mouth_png__WEBPACK_IMPORTED_MODULE_8___default.a);
     loader.load(function (currentLoader, resources) {
       setMouths(resources.lip.texture);
-    }); // Videos looping:
-    // Force syncronize because RAF is creating an offset between the 2 videos
-
-    videoPixiFront.addEventListener('ended', function () {
-      videoPixiBack.currentTime = 0;
-      videoPixiBack.play();
-      videoPixiFront.currentTime = 0;
-      videoPixiFront.play();
     });
+
+    if (props.type === 'game') {
+      // Videos looping:
+      // Force syncronize because RAF is creating an offset between the 2 videos
+      videoPixiFront.addEventListener('ended', function () {
+        videoPixiBack.currentTime = 0;
+        videoPixiBack.play();
+        videoPixiFront.currentTime = 0;
+        videoPixiFront.play();
+      });
+    }
+
     return function () {
       // destroy app
       refs.app.current.destroy(true, true);
@@ -112004,7 +112006,7 @@ function useRAF(refs, props) {
     return function () {
       _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_3__["default"].removeSubscriber(updateFrame);
     };
-  }, [props.positions, props.powers, props.circleAlpha]);
+  }, [props.positions, props.powers]);
 }
 function useUpdateGameState(refs, props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -113501,8 +113503,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/IntroIlloStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _assets_images_intro_illo_background_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~assets/images/intro-illo/background.png */ "./src/assets/images/intro-illo/background.png");
-/* harmony import */ var _assets_images_intro_illo_background_png__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_images_intro_illo_background_png__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _assets_images_intro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/intro-illo/background.mp4 */ "./src/assets/images/intro-illo/background.mp4");
+/* harmony import */ var _assets_images_intro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_intro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _assets_images_intro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~assets/images/intro-illo/background.jpg */ "./src/assets/images/intro-illo/background.jpg");
+/* harmony import */ var _assets_images_intro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_images_intro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6__);
+
+
 
 
 
@@ -113513,14 +113520,14 @@ var IntroIlloStage = function IntroIlloStage(props) {
   var extraClassName = props.extraClassName,
       onFinish = props.onFinish;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    setTimeout(onFinish, _constants__WEBPACK_IMPORTED_MODULE_3__["DEBUG"] ? 1000 : 3000);
+    setTimeout(onFinish, _constants__WEBPACK_IMPORTED_MODULE_3__["DEBUG"] ? 1000 : 5000);
   }, [onFinish]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.introIllo, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.image,
-    src: _assets_images_intro_illo_background_png__WEBPACK_IMPORTED_MODULE_4___default.a,
-    alt: ""
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    src: _assets_images_intro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5___default.a,
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.video,
+    poster: _assets_images_intro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6___default.a
   }));
 };
 
@@ -113536,7 +113543,7 @@ var IntroIlloStage = function IntroIlloStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"introIllo":"IntroIlloStage-introIllo--3foCW","image":"IntroIlloStage-image--2GVm5"};
+module.exports = {"introIllo":"IntroIlloStage-introIllo--3foCW","video":"IntroIlloStage-video--3oC_I"};
 
 /***/ }),
 
@@ -114490,11 +114497,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/TutorialStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_DisplayDevice_GameZoneWrapper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/DisplayDevice/GameZoneWrapper */ "./src/components/DisplayDevice/GameZoneWrapper/index.jsx");
-/* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~assets/images/tutorial/helper.png */ "./src/assets/images/tutorial/helper.png");
-/* harmony import */ var _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_4__);
 
  // import { TransitionGroup, Transition } from 'react-transition-group'
-
 
 
 
@@ -114504,19 +114508,21 @@ var TutorialStage = function TutorialStage(props) {
       onFinish = props.onFinish;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.tutorial, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.title
+  }, "Here\u2019s the deal:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.container
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.heading
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.content
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.title
-  }, "warm up!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.heading
+  }, "Find the snacks & munch \u2018em up."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.description
-  }, "Practice using your phone or your mouse to catch the objects before the time runs out by clicking or tapping them! Hit play when you\u2019re ready. Find powerups to help!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.image,
-    src: _assets_images_tutorial_helper_png__WEBPACK_IMPORTED_MODULE_4___default.a,
-    alt: ""
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZoneWrapper__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, "Use your phone screen to find food and tap the screen to eat it. If you\u2019re on your computer, search and click with your mouse instead."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.heading
+  }, "Go as fast as you can!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.description
+  }, "It\u2019s a race. There are a few hidden power-ups that will help you get ahead. And some rotten stinkers that\u2019ll make you fall behind.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZoneWrapper__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onFinish: onFinish,
     type: "tutorial"
   })));
@@ -114534,7 +114540,7 @@ var TutorialStage = function TutorialStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"tutorial":"TutorialStage-tutorial--3Ybyr","container":"TutorialStage-container--13i5g","heading":"TutorialStage-heading--3Rx-V","title":"TutorialStage-title--JVgZx","description":"TutorialStage-description--2XJsx","image":"TutorialStage-image--hrld7"};
+module.exports = {"title":"TutorialStage-title--JVgZx","content":"TutorialStage-content--1pd2A","heading":"TutorialStage-heading--3Rx-V","description":"TutorialStage-description--2XJsx","tutorial":"TutorialStage-tutorial--3Ybyr","container":"TutorialStage-container--13i5g"};
 
 /***/ }),
 
@@ -114744,8 +114750,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Lottie = function Lottie(props) {
-  var extraClassName = props.extraClassName,
-      data = props.data;
+  var data = props.data,
+      extraClassName = props.extraClassName;
   var lottieDom = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   var lottiePlayer = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -114942,7 +114948,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var DEBUG = typeof DEBUG_VALUE !== 'undefined';
+var DEBUG = "boolean" !== 'undefined';
 var BREAKPOINT = 768;
 var VB_WIDTH = 1920;
 var VB_HEIGHT = 840;
@@ -114978,10 +114984,7 @@ var TUTORIAL_ROUND = {
   numBadItems: 2,
   numBigItems: 5,
   numItems: 10,
-  powers: ['grow', 'freeze'],
-  videoBack: _assets_images_round_1_r1_pattern_mp4__WEBPACK_IMPORTED_MODULE_0___default.a,
-  videoFront: _assets_images_round_1_r1_pattern_bw_mp4__WEBPACK_IMPORTED_MODULE_1___default.a,
-  videoIntro: _assets_images_round_1_s1_intro_mp4__WEBPACK_IMPORTED_MODULE_3___default.a
+  powers: ['grow', 'freeze']
 };
 var GAME_ROUNDS = [{
   badItemImage: _assets_images_bad_snack_png__WEBPACK_IMPORTED_MODULE_12___default.a,

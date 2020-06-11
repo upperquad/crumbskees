@@ -71,9 +71,6 @@ export const TUTORIAL_ROUND = {
   numBigItems: 5,
   numItems: 10,
   powers: ['grow', 'freeze'],
-  videoBack: round1VideoBack,
-  videoFront: round1VideoFront,
-  videoIntro: round1IntroVideo,
 }
 
 export const GAME_ROUNDS = [

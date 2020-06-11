@@ -3,13 +3,12 @@ import { throttle } from 'throttle-debounce'
 import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
-import MarqueeText from '~components/MarqueeText'
 import Button from '~components/Button'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 
 const PlayStage = props => {
-  const { color, image, score, secondaryColor } = props
+  const { color, image, score } = props
   const [isTouching, setIsTouching] = useState(false)
   const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
@@ -58,36 +57,29 @@ const PlayStage = props => {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <section
-      className={styles.play}
-      onTouchStart={touchStartHandler}
-      onTouchMove={touchMoveHandlerThrottle}
-      onTouchEnd={touchEndHandler}
-      onClick={tapHandler}
-    >
-      <h2
-        className={classNames(styles.title, {
-          [styles.titleRed]: secondaryColor === 'red',
-          [styles.titlePurple]: secondaryColor === 'purple',
-        })}
-      >
-        The Upperquadrant
-      </h2>
+    <section className={styles.play}>
       <Button clickHandler={onReadyTouch} text="Ready" isLit={ready} />
       <div
-        className={classNames(styles.block, {
-          [styles.blockRed]: color === 'red',
-          [styles.blockPurple]: color === 'purple',
-        })}
+        className={styles.touchZone}
+        onTouchStart={touchStartHandler}
+        onTouchMove={touchMoveHandlerThrottle}
+        onTouchEnd={touchEndHandler}
+        onClick={tapHandler}
       >
-        {!!score && <div className={styles.score}>{score}</div>}
-        <img className={styles.image} src={image} alt="" />
+        <div
+          className={classNames(styles.block, {
+            [styles.blockRed]: color === 'red',
+            [styles.blockPurple]: color === 'purple',
+          })}
+        >
+          {!!score && <div className={styles.score}>{score}</div>}
+          <img className={styles.image} src={image} alt="" />
+        </div>
+        <div
+          style={{ top: coordY.current, left: coordX.current }}
+          className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
+        />
       </div>
-      <MarqueeText extraClassName={styles.marquee} text="What up tiny type that is distracting —" duration="12s" />
-      <div
-        style={{ top: coordY.current, left: coordX.current }}
-        className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
-      />
     </section>
   )
 }

@@ -183,9 +183,13 @@ export function useSetScene(refs, props) {
     }
     refs.app.current.stage.addChild(refs.containerMouth.current)
 
-    // set elements into scene
-    const videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current)
-    const videoPixiFront = setVideo(props.videoFront, refs.containerFront.current)
+    let videoPixiBack
+    let videoPixiFront
+    if (props.type === 'game') {
+      // set elements into scene
+      videoPixiBack = setVideo(props.videoBack, refs.containerMasked.current)
+      videoPixiFront = setVideo(props.videoFront, refs.containerFront.current)
+    }
     setCircles()
     // preload lips
     const loader = new Loader()
@@ -194,14 +198,16 @@ export function useSetScene(refs, props) {
       setMouths(resources.lip.texture)
     })
 
-    // Videos looping:
-    // Force syncronize because RAF is creating an offset between the 2 videos
-    videoPixiFront.addEventListener('ended', () => {
-      videoPixiBack.currentTime = 0
-      videoPixiBack.play()
-      videoPixiFront.currentTime = 0
-      videoPixiFront.play()
-    })
+    if (props.type === 'game') {
+      // Videos looping:
+      // Force syncronize because RAF is creating an offset between the 2 videos
+      videoPixiFront.addEventListener('ended', () => {
+        videoPixiBack.currentTime = 0
+        videoPixiBack.play()
+        videoPixiFront.currentTime = 0
+        videoPixiFront.play()
+      })
+    }
 
     return () => {
       // destroy app
@@ -607,7 +613,7 @@ export function useRAF(refs, props) {
     return () => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
-  }, [props.positions, props.powers, props.circleAlpha])
+  }, [props.positions, props.powers])
 }
 
 export function useUpdateGameState(refs, props) {

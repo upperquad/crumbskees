@@ -1,40 +1,39 @@
 @import "~styles/imports/index";
 
 .tutorial {
-  background-color: $color-purple;
-  color: $color-white;
+  background-color: $color-green;
+  padding: grid(1) grid(1) grid(1) grid(2);
+}
+
+.title {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  color: $color-pink;
+  margin-bottom: scaleVw(92);
 }
 
 .container {
-  align-items: center;
+  align-items: top;
   display: flex;
-  height: 100%;
   justify-content: space-between;
-  margin-left: grid(2);
-  margin-right: grid(1);
 }
 
-.heading {
+.content {
+  margin-top: scaleVw(-26);
   width: grid(8);
 
-  .title {
+  .heading {
+    @extend %t--h3;
 
-
-    font-size: responsive-font(56);
-    margin-bottom: grid(.5);
+    margin-bottom: scaleVw(8);
   }
 
   .description {
+    @extend %t--body;
 
-
-    font-size: responsive-font(20);
-    line-height: 1.4em;
-    margin-bottom: grid(1);
-  }
-
-  .image {
-    height: grid(4);
-    width: grid(4);
+    margin-bottom: scaleVw(52);
+    opacity: .5;
   }
 }
 

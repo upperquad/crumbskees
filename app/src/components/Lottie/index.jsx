@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 
 const Lottie = props => {
-  const { extraClassName, data } = props
+  const { data, extraClassName } = props
   const lottieDom = useRef(null)
   const lottiePlayer = useRef(null)
   useEffect(() => {

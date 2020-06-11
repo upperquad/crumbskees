@@ -221,13 +221,12 @@ a {
     @media only screen and (max-width: 920px) {
       .Button-button--2dnz7:hover {
         transform: translate(22px, 13px); } }
-  .Button-button--2dnz7.Button-isLit--3Yte_ .Button-buttonInner--29N8j {
+  .Button-button--2dnz7.Button-isLit--3Yte_ .Button-buttonCard--230LD {
     background-color: #69e5ab; }
   .Button-button--2dnz7 .Button-buttonInner--29N8j {
     box-shadow: 1.14583vw 1.14583vw 0px #000;
     position: relative;
-    text-transform: uppercase;
-    transition: background .2s ease; }
+    text-transform: uppercase; }
     .Button-button--2dnz7 .Button-buttonInner--29N8j::before {
       background: #000;
       content: '';
@@ -263,6 +262,7 @@ a {
     color: #000;
     padding: 1.14583vw 1.04167vw;
     position: relative;
+    transition: background .2s ease;
     z-index: 1; }
     @media only screen and (max-width: 920px) {
       .Button-button--2dnz7 .Button-buttonCard--230LD {
@@ -315,7 +315,7 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.IntroIlloStage-introIllo--3foCW .IntroIlloStage-image--2GVm5 {
+.IntroIlloStage-introIllo--3foCW .IntroIlloStage-video--3oC_I {
   height: 100%;
   object-fit: cover;
   width: 100%; }
@@ -508,30 +508,54 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.TutorialStage-title--JVgZx {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 5.20833vw;
+  font-weight: 900;
+  line-height: 6.25vw; }
+
+.TutorialStage-content--1pd2A .TutorialStage-heading--3Rx-V {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 1.45833vw;
+  font-weight: 900;
+  line-height: 1.77083vw; }
+
+.TutorialStage-content--1pd2A .TutorialStage-description--2XJsx {
+  font-family: 'Fakt', sans-serif;
+  font-size: 1.04167vw;
+  font-weight: 700;
+  line-height: 1.25vw; }
+
+.TutorialStage-title--JVgZx {
+  color: #fff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0.52083vw 0.52083vw 0 #000;
+  -webkit-text-stroke: 0.20833vw #000; }
+
 .TutorialStage-tutorial--3Ybyr {
-  background-color: #3f1bd0;
-  color: #fff; }
+  background-color: #69e5ab;
+  padding: 3.125vw 3.125vw 3.125vw 6.25vw; }
+
+.TutorialStage-title--JVgZx {
+  color: #f4b7ed;
+  margin-bottom: 4.79167vw; }
 
 .TutorialStage-container--13i5g {
-  align-items: center;
+  align-items: top;
   display: flex;
-  height: 100%;
-  justify-content: space-between;
-  margin-left: 6.25vw;
-  margin-right: 3.125vw; }
+  justify-content: space-between; }
 
-.TutorialStage-heading--3Rx-V {
+.TutorialStage-content--1pd2A {
+  margin-top: -1.35417vw;
   width: 25vw; }
-  .TutorialStage-heading--3Rx-V .TutorialStage-title--JVgZx {
-    font-size: responsive-font(56);
-    margin-bottom: 1.5625vw; }
-  .TutorialStage-heading--3Rx-V .TutorialStage-description--2XJsx {
-    font-size: responsive-font(20);
-    line-height: 1.4em;
-    margin-bottom: 3.125vw; }
-  .TutorialStage-heading--3Rx-V .TutorialStage-image--hrld7 {
-    height: 12.5vw;
-    width: 12.5vw; }
+  .TutorialStage-content--1pd2A .TutorialStage-heading--3Rx-V {
+    margin-bottom: 0.41667vw; }
+  .TutorialStage-content--1pd2A .TutorialStage-description--2XJsx {
+    margin-bottom: 2.70833vw;
+    opacity: .5; }
 
 /* Colors */
 /* Breakpoints */
@@ -1650,20 +1674,6 @@ body {
   text-align: center;
   top: 0; }
 
-.PlayStage-title--2eNlD {
-  color: #ec504f;
-  font-size: 5.98vw;
-  letter-spacing: .007em; }
-  .PlayStage-title--2eNlD.PlayStage-titlePurple--1hNH7 {
-    color: #3f1bd0; }
-  .PlayStage-title--2eNlD.PlayStage-titleRed--1SMZZ {
-    color: #ec504f; }
-
-.PlayStage-marquee--1-06O {
-  font-size: 13px;
-  letter-spacing: .008em;
-  text-transform: uppercase; }
-
 .PlayStage-touchBubble--3amvr {
   border: 2px #fff solid;
   border-radius: 50%;
@@ -1681,11 +1691,16 @@ body {
 .PlayStage-score--3bDgs {
   pointer-events: none; }
 
+.PlayStage-touchZone--3gX7k {
+  flex-grow: 1;
+  padding: 20px 5vw 24px;
+  position: relative; }
+
 .PlayStage-block--3zdrK {
   border: 1px solid #000;
-  flex-grow: 1;
-  margin: 20px 5vw 24px;
-  position: relative; }
+  height: 100%;
+  position: relative;
+  width: 100%; }
   .PlayStage-block--3zdrK.PlayStage-blockPurple--14Epy {
     background: #3f1bd0; }
   .PlayStage-block--3zdrK.PlayStage-blockRed--23YCB {

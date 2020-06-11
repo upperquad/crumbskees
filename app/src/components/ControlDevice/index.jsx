@@ -84,7 +84,6 @@ const ControlDevice = () => {
           setActiveTutorial={setActiveTutorial}
           characterIndex={characterIndex}
           color={character.color}
-          secondaryColor={character.secondaryColor}
           score={score}
           image={character.image}
         />

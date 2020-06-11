@@ -12,30 +12,6 @@
   top: 0;
 }
 
-.title {
-
-
-  color: $color-red;
-  font-size: 5.98vw;
-  letter-spacing: .007em;
-
-  &.titlePurple {
-    color: $color-purple;
-  }
-
-  &.titleRed {
-    color: $color-red;
-  }
-}
-
-.marquee {
-
-
-  font-size: 13px;
-  letter-spacing: .008em;
-  text-transform: uppercase;
-}
-
 .touchBubble {
   border: 2px $color-white solid;
   border-radius: 50%;
@@ -58,11 +34,17 @@
   pointer-events: none;
 }
 
+.touchZone {
+  flex-grow: 1;
+  padding: 20px 5vw 24px;
+  position: relative;
+}
+
 .block {
   border: 1px solid $color-black;
-  flex-grow: 1;
-  margin: 20px 5vw 24px;
+  height: 100%;
   position: relative;
+  width: 100%;
 
   &.blockPurple {
     background: $color-purple;

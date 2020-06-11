@@ -27,8 +27,8 @@
   }
 
   &.isLit {
-    .buttonInner {
-      background-color: $color-mint;
+    .buttonCard {
+      background-color: $color-green;
     }
   }
 
@@ -38,7 +38,6 @@
     box-shadow: scaleVw(22) scaleVw(22) 0px $color-black;
     position: relative;
     text-transform: uppercase;
-    transition: background .2s ease;
 
     &::before {
       background: $color-black;
@@ -85,6 +84,7 @@
     color: $color-black;
     padding: scaleVw(22) scaleVw(20);
     position: relative;
+    transition: background .2s ease;
     z-index: 1;
 
     @include respond-to(smartphone) {
