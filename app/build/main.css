@@ -92,14 +92,12 @@ a {
 /* Easings*/
 /* Timings */
 .DisplayDevice-displayDevice--3hevF {
-  background: #fff;
-  height: 56.25vw;
-  left: 50%;
+  bottom: 0;
+  left: 0;
   overflow: hidden;
   position: fixed;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%; }
+  right: 0;
+  top: 0; }
 
 /* Colors */
 /* Breakpoints */
@@ -152,7 +150,7 @@ a {
   padding: 0 0.36458vw;
   position: absolute;
   transform-origin: top left;
-  width: 150vh; }
+  width: 100vh; }
   .LandingStage-marqueeLeft--1wXUy .LandingStage-marqueeSideText--3t3oi,
   .LandingStage-marqueeRight--2_FCy .LandingStage-marqueeSideText--3t3oi {
     color: #fff;
@@ -561,6 +559,41 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorsTitle--cHn_l {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 2.8125vw;
+  font-weight: 900;
+  line-height: 3.38542vw; }
+
+.GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorsTitle--cHn_l {
+  color: #fff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0.52083vw 0.52083vw 0 #000;
+  -webkit-text-stroke: 0.20833vw #000; }
+
+.GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy {
+  border: 0.20833vw solid #000;
+  position: relative; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy::before, .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy::after {
+    background: #000;
+    content: '';
+    position: absolute;
+    transform-origin: top left; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy::before {
+    height: 0.83333vw;
+    left: -0.20833vw;
+    right: -0.20833vw;
+    top: calc(100% + 0.20833vw);
+    transform: skewX(45deg); }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy::after {
+    bottom: -0.20833vw;
+    left: calc(100% + 0.20833vw);
+    top: -0.20833vw;
+    transform: skewY(45deg);
+    width: 0.83333vw; }
+
 @keyframes GameZoneWrapper-playstage-bar-change-color--1gM_1 {
   0% {
     background-color: #69e5ab;
@@ -608,29 +641,45 @@ a {
     width: 100%;
     z-index: 10; }
 
-.GameZoneWrapper-buttons--IuZa2 {
+.GameZoneWrapper-readyIndicators--1lgOI {
+  align-items: center;
   display: flex;
+  justify-content: space-between;
   margin-top: 1.5625vw; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorsTitle--cHn_l {
+    color: #fff;
+    order: 2; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy {
+    height: 9.01042vw;
+    opacity: .7;
+    transition: opacity .3s;
+    width: 12.29167vw; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy.GameZoneWrapper-isReady--3CDNi {
+      opacity: 1; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1--253OQ {
+      order: 1; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--2--3-IeY {
+      order: 3; }
 
 /* Colors */
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.GameZone-gameZone--2IEsp {
+.GameZone-gameZoneTutorial--3mQcP {
   border: 0.20833vw solid #000;
   position: relative; }
-  .GameZone-gameZone--2IEsp::before, .GameZone-gameZone--2IEsp::after {
+  .GameZone-gameZoneTutorial--3mQcP::before, .GameZone-gameZoneTutorial--3mQcP::after {
     background: #000;
     content: '';
     position: absolute;
     transform-origin: top left; }
-  .GameZone-gameZone--2IEsp::before {
+  .GameZone-gameZoneTutorial--3mQcP::before {
     height: 0.83333vw;
     left: -0.20833vw;
     right: -0.20833vw;
     top: calc(100% + 0.20833vw);
     transform: skewX(45deg); }
-  .GameZone-gameZone--2IEsp::after {
+  .GameZone-gameZoneTutorial--3mQcP::after {
     bottom: -0.20833vw;
     left: calc(100% + 0.20833vw);
     top: -0.20833vw;
@@ -820,32 +869,37 @@ a {
 /* Easings*/
 /* Timings */
 .Round-round--3UuRv {
-  height: 100%;
-  left: 0;
+  border: 0.20833vw solid #000;
+  position: relative; }
+  .Round-round--3UuRv::before, .Round-round--3UuRv::after {
+    background: #000;
+    content: '';
+    position: absolute;
+    transform-origin: top left; }
+  .Round-round--3UuRv::before {
+    height: 0.83333vw;
+    left: -0.20833vw;
+    right: -0.20833vw;
+    top: calc(100% + 0.20833vw);
+    transform: skewX(45deg); }
+  .Round-round--3UuRv::after {
+    bottom: -0.20833vw;
+    left: calc(100% + 0.20833vw);
+    top: -0.20833vw;
+    transform: skewY(45deg);
+    width: 0.83333vw; }
+
+.Round-round--3UuRv {
+  height: 56.25vw;
+  left: 50%;
   position: absolute;
-  top: 0;
-  width: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 100vw;
   z-index: 1; }
 
 .Round-roundExiting--2e9P1 {
   z-index: 0; }
-
-.Round-gameContent--16S_I {
-  height: 43.75vw;
-  position: relative;
-  width: 100%;
-  z-index: 10; }
-  .Round-gameContent--16S_I::after {
-    animation: Round-playstage-bar-change-color--1HoBY 40s linear 1 forwards, Round-playstage-blink-bar-color--2pndY .5s linear infinite forwards 30s;
-    background-color: #69e5ab;
-    bottom: 0;
-    content: '';
-    height: 0.9375vw;
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
-    width: 100%;
-    z-index: 10; }
 
 .Round-wrapper--2wout {
   height: 100%;
@@ -1120,14 +1174,13 @@ a {
 /* Easings*/
 /* Timings */
 .StageWrapper-stageWrapper--3Z3WO {
-  height: 0;
+  bottom: 0;
   left: 0;
   overflow: hidden;
-  padding-bottom: 56.25%;
   position: absolute;
+  right: 0;
   top: 0;
-  transition: transform 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  width: 100%; }
+  transition: transform 1.3s cubic-bezier(0.075, 0.82, 0.165, 1); }
 
 .StageWrapper-stageWrapperEntering--26ash {
   transform: translateX(100%); }

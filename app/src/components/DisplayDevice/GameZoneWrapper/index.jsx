@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
@@ -6,7 +7,6 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS } from '~constants'
 
-import Button from '~components/Button'
 import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 
@@ -105,12 +105,17 @@ const GameZoneWrapper = props => {
               type={type}
             />
           </div>
-          <div className={styles.buttons}>
-            {PlayersManager.players.map((player, index) => {
-              const text = `P${index + 1} ready`
-
-              return <Button text={text} isLit={player.ready} />
-            })}
+          <div className={styles.readyIndicators}>
+            <div className={styles.readyIndicatorsTitle}>Ready?</div>
+            {PlayersManager.players.map((player, index) => (
+              <div
+                className={classNames(
+                  styles.readyIndicator,
+                  styles[`readyIndicator--${index + 1}`],
+                  { [styles.isReady]: player.ready },
+                )}
+              />
+            ))}
           </div>
         </div>
       )}

@@ -1,14 +1,13 @@
 @import "~styles/imports/index";
 
 .stageWrapper {
-  height: 0;
+  bottom: 0;
   left: 0;
   overflow: hidden;
-  padding-bottom: 1080 / 1920 * 100%;
   position: absolute;
+  right: 0;
   top: 0;
   transition: transform 1.3s $easing-circle-out;
-  width: 100%;
 }
 
 .stageWrapperEntering {

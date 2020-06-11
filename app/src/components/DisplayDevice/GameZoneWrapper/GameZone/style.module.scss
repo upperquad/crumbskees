@@ -1,8 +1,6 @@
 @import "~styles/imports/index";
 
 .gameZone {
-  @extend %shadow-box;
-
   cursor: none;
   height: 100%;
   position: absolute;
@@ -12,5 +10,6 @@
 }
 
 .gameZoneTutorial {
+  @extend %shadow-box;
   background: $color-yellow url('../../../../assets/images/tutorial/background.png') center / contain no-repeat;
 }

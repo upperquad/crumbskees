@@ -112960,7 +112960,7 @@ function getEndMessage() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"gameZone":"GameZone-gameZone--2IEsp","gameZoneTutorial":"GameZone-gameZoneTutorial--3mQcP"};
+module.exports = {"gameZoneTutorial":"GameZone-gameZoneTutorial--3mQcP","gameZone":"GameZone-gameZone--2IEsp"};
 
 /***/ }),
 
@@ -112975,15 +112975,16 @@ module.exports = {"gameZone":"GameZone-gameZone--2IEsp","gameZoneTutorial":"Game
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! use-force-update */ "./node_modules/use-force-update/use-force-update.js");
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-force-update */ "./node_modules/use-force-update/use-force-update.js");
+/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
 /* harmony import */ var _GameZone__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./GameZone */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/index.jsx");
 /* harmony import */ var _components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/DisplayDevice/stages/PlayStage/Round/Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -113029,7 +113030,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
       setGameState = props.setGameState,
       transitionStatus = props.transitionStatus,
       type = props.type;
-  var itemImage = _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex].itemImage;
+  var itemImage = _constants__WEBPACK_IMPORTED_MODULE_7__["GAME_ROUNDS"][roundIndex].itemImage;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(TIME),
       _useState2 = _slicedToArray(_useState, 2),
@@ -113044,7 +113045,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
       setMessage = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
-    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.map(function () {
       return [];
     });
   }),
@@ -113052,7 +113053,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
       scoresLevel = _useState6[0],
       setScoresLevel = _useState6[1];
 
-  var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_1___default()();
+  var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
 
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
@@ -113093,14 +113094,14 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
           if (newTime === 0) {
             addMessage({
               text: 'Time\'s up!',
-              color: _constants__WEBPACK_IMPORTED_MODULE_6__["COLORS"].red,
+              color: _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].red,
               persistent: true,
               onEnd: function onEnd() {
                 return setGameState('after-game');
               }
             });
           } else if (newTime === 10) {
-            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_5__["default"].countdown.play();
+            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_6__["default"].countdown.play();
           }
 
           return newTime >= 0 ? newTime : 0;
@@ -113121,7 +113122,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, type === 'tutorial' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.gameContentTutorial
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.gameContentTutorial
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_8__["default"], {
     addMessage: addMessage,
     addScoresLevel: addScoresLevel,
@@ -113130,26 +113131,26 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     onFinish: onFinish,
     onUpdate: onUpdate,
     removeScoresLevel: removeScoresLevel,
-    round: _constants__WEBPACK_IMPORTED_MODULE_6__["TUTORIAL_ROUND"],
+    round: _constants__WEBPACK_IMPORTED_MODULE_7__["TUTORIAL_ROUND"],
     scoresLevel: scoresLevel,
     setGameState: setGameState,
     type: type
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.buttons
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function (player, index) {
-    var text = "P".concat(index + 1, " ready");
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
-      text: text,
-      isLit: player.ready
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.readyIndicators
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.readyIndicatorsTitle
+  }, "Ready?"), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.map(function (player, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.readyIndicator, _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a["readyIndicator--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.isReady, player.ready))
     });
-  }))), type === 'game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_2__["TransitionGroup"], null, gameState !== 'before-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_2__["Transition"], {
+  }))), type === 'game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["TransitionGroup"], null, gameState !== 'before-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
     key: "play-stage-in-game",
     timeout: {
       enter: 0,
       exit: 1300
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.gameContent
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.gameContent
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_8__["default"], {
     addMessage: addMessage,
     addScoresLevel: addScoresLevel,
@@ -113157,7 +113158,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     message: message,
     onUpdate: onUpdate,
     removeScoresLevel: removeScoresLevel,
-    round: _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex],
+    round: _constants__WEBPACK_IMPORTED_MODULE_7__["GAME_ROUNDS"][roundIndex],
     scoresLevel: scoresLevel,
     setGameState: setGameState,
     setTime: setTime,
@@ -113182,7 +113183,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"gameContentTutorial":"GameZoneWrapper-gameContentTutorial--1KOIM","gameContent":"GameZoneWrapper-gameContent--3OLh9","playstage-bar-change-color":"GameZoneWrapper-playstage-bar-change-color--1gM_1","playstageBarChangeColor":"GameZoneWrapper-playstage-bar-change-color--1gM_1","playstage-blink-bar-color":"GameZoneWrapper-playstage-blink-bar-color--3P60k","playstageBlinkBarColor":"GameZoneWrapper-playstage-blink-bar-color--3P60k","buttons":"GameZoneWrapper-buttons--IuZa2"};
+module.exports = {"readyIndicators":"GameZoneWrapper-readyIndicators--1lgOI","readyIndicatorsTitle":"GameZoneWrapper-readyIndicatorsTitle--cHn_l","readyIndicator":"GameZoneWrapper-readyIndicator--1vbfy","gameContentTutorial":"GameZoneWrapper-gameContentTutorial--1KOIM","gameContent":"GameZoneWrapper-gameContent--3OLh9","playstage-bar-change-color":"GameZoneWrapper-playstage-bar-change-color--1gM_1","playstageBarChangeColor":"GameZoneWrapper-playstage-bar-change-color--1gM_1","playstage-blink-bar-color":"GameZoneWrapper-playstage-blink-bar-color--3P60k","playstageBlinkBarColor":"GameZoneWrapper-playstage-blink-bar-color--3P60k","isReady":"GameZoneWrapper-isReady--3CDNi","readyIndicator--1":"GameZoneWrapper-readyIndicator--1--253OQ","readyIndicator1":"GameZoneWrapper-readyIndicator--1--253OQ","readyIndicator--2":"GameZoneWrapper-readyIndicator--2--3-IeY","readyIndicator2":"GameZoneWrapper-readyIndicator--2--3-IeY"};
 
 /***/ }),
 
@@ -113310,35 +113311,12 @@ var DisplayDevice = function DisplayDevice() {
       gameCount = _useState6[0],
       setGameCount = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
-      _useState8 = _slicedToArray(_useState7, 2),
-      zoom = _useState8[0],
-      setZoom = _useState8[1];
-
   var resetGame = function resetGame() {
     return setGameCount(function (prevCount) {
       return prevCount + 1;
     });
   };
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var resizeHandler = function resizeHandler() {
-      var displayRatio = window.innerHeight / window.innerWidth;
-      var threshold = 9 / 16;
-
-      if (displayRatio < threshold) {
-        setZoom(displayRatio / threshold);
-      } else {
-        setZoom(1);
-      }
-    };
-
-    resizeHandler();
-    window.addEventListener('resize', resizeHandler);
-    return function () {
-      return window.removeEventListener('resize', resizeHandler);
-    };
-  }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var connectHandler = function connectHandler() {
       // PlayersManager.reset()
@@ -113413,10 +113391,7 @@ var DisplayDevice = function DisplayDevice() {
   //   }, [])
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.displayDevice,
-    style: {
-      transform: "translate(-50%, -50%) scale(".concat(zoom, ")")
-    }
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.displayDevice
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, stage === 'landing' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
     key: "stage-landing",
     timeout: TRANSITION_TIMEOUTS
@@ -114001,8 +113976,34 @@ var Round = function Round(props) {
       gameState = _useState2[0],
       setGameState = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+      _useState4 = _slicedToArray(_useState3, 2),
+      zoom = _useState4[0],
+      setZoom = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var resizeHandler = function resizeHandler() {
+      var displayRatio = window.innerHeight / window.innerWidth;
+      var threshold = 9 / 16;
+
+      if (displayRatio < threshold) {
+        setZoom(displayRatio / threshold * 0.9);
+      } else {
+        setZoom(0.9);
+      }
+    };
+
+    resizeHandler();
+    window.addEventListener('resize', resizeHandler);
+    return function () {
+      return window.removeEventListener('resize', resizeHandler);
+    };
+  }, []);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.roundExiting, transitionStatus === 'exiting'))
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.round, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.roundExiting, transitionStatus === 'exiting')),
+    style: {
+      transform: "translate(-50%, -50%) scale(".concat(zoom, ")")
+    }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_GameZoneWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
     gameState: gameState,
     onRoundEnd: onRoundEnd,
@@ -114030,7 +114031,7 @@ var Round = function Round(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"round":"Round-round--3UuRv","roundExiting":"Round-roundExiting--2e9P1","gameContent":"Round-gameContent--16S_I","playstage-bar-change-color":"Round-playstage-bar-change-color--1HoBY","playstageBarChangeColor":"Round-playstage-bar-change-color--1HoBY","playstage-blink-bar-color":"Round-playstage-blink-bar-color--2pndY","playstageBlinkBarColor":"Round-playstage-blink-bar-color--2pndY","wrapper":"Round-wrapper--2wout"};
+module.exports = {"round":"Round-round--3UuRv","roundExiting":"Round-roundExiting--2e9P1","wrapper":"Round-wrapper--2wout"};
 
 /***/ }),
 

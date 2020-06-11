@@ -1,12 +1,10 @@
 @import "~styles/imports/index";
 
 .displayDevice {
-  background: $color-white;
-  height: grid(18);
-  left: 50%;
+  bottom: 0;
+  left: 0;
   overflow: hidden;
   position: fixed;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
+  right: 0;
+  top: 0;
 }

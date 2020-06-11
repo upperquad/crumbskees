@@ -67,7 +67,38 @@
   }
 }
 
-.buttons {
+.readyIndicators {
+  align-items: center;
   display: flex;
+  justify-content: space-between;
   margin-top: grid(.5);
+
+  .readyIndicatorsTitle {
+    @extend %t--h2;
+    @extend %t--style-lg-shadow;
+
+    color: $color-white;
+    order: 2;
+  }
+
+  .readyIndicator {
+    @extend %shadow-box;
+
+    height: scaleVw(173);
+    opacity: .7;
+    transition: opacity .3s;
+    width: scaleVw(236);
+
+    &.isReady {
+      opacity: 1;
+    }
+
+    &--1 {
+      order: 1;
+    }
+
+    &--2 {
+      order: 3;
+    }
+  }
 }

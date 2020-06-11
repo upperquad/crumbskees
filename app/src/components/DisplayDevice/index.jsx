@@ -24,26 +24,8 @@ const DisplayDevice = () => {
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
   const [gameCount, setGameCount] = useState(0)
-  const [zoom, setZoom] = useState(1)
 
   const resetGame = () => setGameCount(prevCount => prevCount + 1)
-
-  useEffect(() => {
-    const resizeHandler = () => {
-      const displayRatio = window.innerHeight / window.innerWidth
-      const threshold = 9 / 16
-      if (displayRatio < threshold) {
-        setZoom(displayRatio / threshold)
-      } else {
-        setZoom(1)
-      }
-    }
-
-    resizeHandler()
-    window.addEventListener('resize', resizeHandler)
-
-    return () => window.removeEventListener('resize', resizeHandler)
-  }, [])
 
   useEffect(() => {
     const connectHandler = () => {
@@ -123,7 +105,7 @@ const DisplayDevice = () => {
   //   }, [])
 
   return (
-    <div className={styles.displayDevice} style={{ transform: `translate(-50%, -50%) scale(${zoom})` }}>
+    <div className={styles.displayDevice}>
       <TransitionGroup>
         {stage === 'landing' && (
           <Transition key="stage-landing" timeout={TRANSITION_TIMEOUTS}>

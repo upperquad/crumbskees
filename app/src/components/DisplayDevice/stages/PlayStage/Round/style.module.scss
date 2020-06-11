@@ -1,36 +1,19 @@
 @import "~styles/imports/index";
 
 .round {
-  height: 100%;
-  left: 0;
+  @extend %shadow-box;
+
+  height: 9 / 16 * 100vw;
+  left: 50%;
   position: absolute;
-  top: 0;
-  width: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(.9);
+  width: 100vw;
   z-index: 1;
 }
 
 .roundExiting {
   z-index: 0;
-}
-
-.gameContent {
-  height: grid(14);
-  position: relative;
-  width: 100%;
-  z-index: 10;
-
-  &::after {
-    animation: playstage-bar-change-color 40s linear 1 forwards, playstage-blink-bar-color .5s linear infinite forwards 30s;
-    background-color: $color-green;
-    bottom: 0;
-    content: '';
-    height: grid(.3);
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
-    width: 100%;
-    z-index: 10;
-  }
 }
 
 .wrapper {
