@@ -3,11 +3,12 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Button from '~components/Button'
+import Lottie from '~components/Lottie'
 import MarqueeText from '~components/MarqueeText'
 
 import backgroundVideo from '~assets/images/landing/background.mp4'
 import backgroundImage from '~assets/images/landing/background.jpg'
-import titleImg from '~assets/images/landing/title.png'
+import titleJson from '~assets/images/landing/title.json'
 
 const LandingStage = props => {
   const { extraClassName, onFinish } = props
@@ -47,7 +48,7 @@ const LandingStage = props => {
             <br />
             the
           </div>
-          <img className={styles.titleMain} src={titleImg} alt="Crumbskees" />
+          <Lottie extraClassName={styles.titleMain} data={titleJson} />
         </h1>
         <Button
           text="Play now"
