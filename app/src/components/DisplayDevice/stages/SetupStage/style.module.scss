@@ -125,13 +125,11 @@
 .qrUrl {
   @extend %t--body;
 
-  font-weight: bold;
   margin: 0 scaleVw(20);
 }
 
 .qrUrlToken {
   color: $color-red;
-  font-weight: bold;
   text-transform: none;
 }
 

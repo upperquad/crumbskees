@@ -2,6 +2,12 @@
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+body {
+  font-family: 'Fakt', sans-serif;
+  font-size: 1.04167vw;
+  font-weight: 700;
+  line-height: 1.25vw; }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -52,20 +58,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 @font-face {
   font-family: 'Fakt';
   font-style: normal;
-  font-weight: 500;
-  src: url(/4d9c7bceca8a40ffa84c627bea1224e9.otf) format("opentype"); }
-
-@font-face {
-  font-family: 'Fakt';
-  font-style: normal;
   font-weight: 700;
-  src: url(/2c08d49df8cdd97068c907e004f47905.otf) format("opentype"); }
+  src: url(/8185010f1ba878aeea6bc76a04289be9.woff2) format("woff2"), url(/8185010f1ba878aeea6bc76a04289be9.woff2) format("woff"); }
 
 @font-face {
   font-family: 'Ginto Nord';
   font-style: normal;
   font-weight: 900;
-  src: url(/b62a047eb8cf19415fd1bfb30d509cc9.otf) format("opentype"); }
+  src: url(/11504485aea99f4664eab766e37821bb.woff2) format("woff2"), url(/69eabac816a364ee87cc4d083cef32cb.woff) format("woff"); }
 
 html {
   box-sizing: border-box;
@@ -77,11 +77,6 @@ html {
 
 body {
   color: #000;
-  font-family: Calibre;
-  font-size: 18px;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  line-height: 26px;
   overflow-x: hidden; }
 
 a {
@@ -128,7 +123,7 @@ a {
 .LandingStage-marqueeTop--2c-M7 .LandingStage-marqueeTopText--2gXf7 {
   font-family: 'Fakt', sans-serif;
   font-size: 1.04167vw;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.25vw; }
 
 .LandingStage-video--1OiNh {
@@ -148,7 +143,6 @@ a {
   top: 0; }
   .LandingStage-marqueeTop--2c-M7 .LandingStage-marqueeTopText--2gXf7 {
     color: #ec504f;
-    font-weight: bold;
     letter-spacing: .1em;
     text-transform: uppercase; }
 
@@ -162,7 +156,6 @@ a {
   .LandingStage-marqueeLeft--1wXUy .LandingStage-marqueeSideText--3t3oi,
   .LandingStage-marqueeRight--2_FCy .LandingStage-marqueeSideText--3t3oi {
     color: #fff;
-    font-weight: bold;
     letter-spacing: .08em;
     text-transform: uppercase; }
 
@@ -339,7 +332,7 @@ a {
 .SetupStage-qrUrl--21ulS {
   font-family: 'Fakt', sans-serif;
   font-size: 1.04167vw;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.25vw; }
 
 .SetupStage-subtitle--1AeLK {
@@ -473,12 +466,10 @@ a {
     padding-top: 100%; }
 
 .SetupStage-qrUrl--21ulS {
-  font-weight: bold;
   margin: 0 1.04167vw; }
 
 .SetupStage-qrUrlToken--1Jgor {
   color: #ec504f;
-  font-weight: bold;
   text-transform: none; }
 
 .SetupStage-instruction--2Kes6 {

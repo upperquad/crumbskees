@@ -49,7 +49,7 @@ const DisplayDevice = () => {
     const connectHandler = () => {
       // PlayersManager.reset()
       PlayersManager.init('TWO_PLAYERS')
-      setStage('setup')
+      setStage('landing')
     }
 
     TokenSocketManager.init('display')

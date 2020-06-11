@@ -98717,7 +98717,7 @@ var DisplayDevice = function DisplayDevice() {
     var connectHandler = function connectHandler() {
       // PlayersManager.reset()
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('TWO_PLAYERS');
-      setStage('setup');
+      setStage('landing');
     };
 
     _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].init('display');
@@ -100257,7 +100257,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var DEBUG = typeof DEBUG_VALUE !== 'undefined';
+var DEBUG = "boolean" !== 'undefined';
 var BREAKPOINT = 768;
 var VB_WIDTH = 1920;
 var VB_HEIGHT = 840;

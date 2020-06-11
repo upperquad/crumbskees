@@ -1,21 +1,17 @@
-// Exemple
-@font-face {
-  font-family: 'Fakt';
-  font-style: normal;
-  font-weight: 500;
-  src: url('../assets/fonts/Fakt-Medium.otf') format('opentype');
-}
-
 @font-face {
   font-family: 'Fakt';
   font-style: normal;
   font-weight: 700;
-  src: url('../assets/fonts/Fakt-Bold.otf') format('opentype');
+  src:
+  url('../assets/fonts/Fakt-Bold.woff2') format('woff2'),
+  url('../assets/fonts/Fakt-Bold.woff2') format('woff');
 }
 
 @font-face {
   font-family: 'Ginto Nord';
   font-style: normal;
   font-weight: 900;
-  src: url('../assets/fonts/Ginto-Nord-Black.otf') format('opentype');
+  src:
+  url('../assets/fonts/GintoNormal-Black.woff2') format('woff2'),
+  url('../assets/fonts/GintoNormal-Black.woff') format('woff');
 }

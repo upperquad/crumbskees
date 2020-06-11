@@ -17,12 +17,9 @@ html {
 }
 
 body {
+  @extend %t--body;
+
   color: $color-black;
-  font-family: Calibre;
-  font-size: 18px;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  line-height: 26px;
   overflow-x: hidden;
 }
 
