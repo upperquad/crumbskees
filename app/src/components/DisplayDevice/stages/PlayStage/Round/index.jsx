@@ -21,6 +21,7 @@ const Round = props => {
       } else {
         setZoom(0.9)
       }
+      setZoom(1)
     }
 
     resizeHandler()

@@ -73,9 +73,9 @@ const ResultStage = props => {
       </a>
       <Circle color={circleColor} />
       <div className={styles.winner}>
-        <MarqueeText text={resultTop} duration="6s" isAlternate isWhite />
+        <MarqueeText text={resultTop} duration="6s" isWhite />
         <div className={styles.imageWrapper}>{video}</div>
-        <MarqueeText text={resultBottom} duration="6s" isAlternate isWhite />
+        <MarqueeText text={resultBottom} duration="6s" isWhite />
       </div>
       <div className={styles.smallText}>{winner === 'tied' ? 'Tie!' : 'Winner!'}</div>
       <div className={styles.smallText}>

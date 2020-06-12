@@ -57,7 +57,6 @@ const ResultStage = props => {
             <MarqueeText
               extraClassName={styles.title}
               text={isTie ? 'Nobody wins!' : 'Winner!'}
-              isAlternate
               isWhite
               duration="5s"
             />

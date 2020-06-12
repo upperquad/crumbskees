@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 
 const MarqueeText = props => {
-  const { duration, extraClassName, isAlternate, isWhite, text } = props
+  const { duration, extraClassName, isWhite, text } = props
   const animationDuration = duration || '12s'
 
   return (
@@ -11,7 +11,6 @@ const MarqueeText = props => {
       className={classNames(
         styles.marquee,
         extraClassName,
-        { [styles.marqueeAlternate]: isAlternate },
         { [styles.marqueeWhite]: isWhite },
       )}
     >

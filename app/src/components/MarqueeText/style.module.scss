@@ -19,23 +19,6 @@
   }
 }
 
-.marqueeAlternate {
-
-
-  color: $color-white;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 50px;
-  padding: 12px 0 9px;
-  text-transform: uppercase;
-
-  .marqueeInnerText:nth-child(even) {
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke-color: $color-white;
-    -webkit-text-stroke-width: 1px;
-  }
-}
-
 .marqueeWhite {
   background: $color-black;
   color: $color-white;

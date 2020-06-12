@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
-const PlayStage = props => {
+const Circle = props => {
   const { color } = props
   const circleClass = classNames(styles.circle, {
     [styles.circleYellow]: color === 'yellow',
@@ -12,4 +12,4 @@ const PlayStage = props => {
   return <div className={circleClass} />
 }
 
-export default PlayStage
+export default Circle

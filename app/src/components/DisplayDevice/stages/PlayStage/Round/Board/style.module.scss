@@ -1,12 +1,11 @@
 @import "~styles/imports/index";
 
 .board {
-  background: $color-white;
-  border-bottom: $border;
-  border-top: $border;
+  background: $color-green;
+  border-top: scaleVw(4) solid $color-black;
   bottom: 0;
   display: flex;
-  height: grid(4);
+  height: calc(#{grid(4)} - #{scaleVw(4)});
   left: 0;
   position: absolute;
   transition: opacity .3s;
@@ -23,43 +22,10 @@
   display: flex;
   position: relative;
   width: grid(14);
-
-  &:last-child {
-    flex-direction: row-reverse;
-
-    .character {
-      background-color: $color-red;
-      border-left: $border;
-      border-right: none;
-      border-width: $border-width;
-      display: flex;
-    }
-
-    .score {
-      border-left: $border;
-      border-right: none;
-    }
-
-    .name {
-      text-align: right;
-    }
-
-    .items {
-      justify-content: flex-start;
-      left: 0;
-      right: auto;
-    }
-
-    .item {
-      margin-left: grid(.3);
-      margin-right: 0;
-    }
-  }
 }
 
 .character {
   background-color: $color-purple;
-  border-right: $border;
   height: 100%;
   width: grid(4);
 
@@ -74,33 +40,14 @@
 }
 
 .score {
-
-
-  border-right: $border;
-  border-top: $border;
   color: transparent !important;
   display: inline-block;
   font-size: responsive-font(80);
   height: grid(3);
   line-height: grid(3);
   text-align: center;
-  -webkit-text-stroke-color: $color-black;
-  -webkit-text-stroke-width: 2px;
   vertical-align: middle;
   width: grid(3);
-}
-
-.name {
-
-
-  align-items: center;
-  border-top: $border;
-  display: flex;
-  font-size: responsive-font(48);
-  height: grid(3);
-  padding: grid(1);
-  vertical-align: top;
-  width: grid(7);
 }
 
 .items {
@@ -120,6 +67,29 @@
   width: grid(.5);
 }
 
+.player--2 {
+  flex-direction: row-reverse;
+
+  .character {
+    background-color: $color-red;
+    display: flex;
+  }
+
+  .score {
+  }
+
+  .items {
+    justify-content: flex-start;
+    left: 0;
+    right: auto;
+  }
+
+  .item {
+    margin-left: grid(.3);
+    margin-right: 0;
+  }
+}
+
 .center {
   align-items: flex-end;
   background-color: $color-black;
@@ -131,7 +101,5 @@
 }
 
 .timer {
-
-
   font-size: responsive-font(112);
 }

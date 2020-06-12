@@ -99,8 +99,6 @@
 .introRoundBlink {
   animation: intro-blink-color .1s linear 6;
   color: $color-white;
-  -webkit-text-stroke-color: $color-black;
-  -webkit-text-stroke-width: $border-width;
 }
 
 .introRoundWrapperDown {

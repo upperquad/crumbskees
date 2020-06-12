@@ -1,3 +1,4 @@
+// TODO: this file needs to be optimized
 import { useEffect } from 'react'
 import { Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
 import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'

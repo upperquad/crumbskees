@@ -51,7 +51,7 @@ const ErrorStage = props => {
       <AutoplayVideo extraClassName={styles.background} src={resultBg} />
       <div className={styles.card}>
         <div className={styles.titleWrapper}>
-          <MarqueeText extraClassName={styles.title} text="Whoops!" isAlternate isWhite duration="5s" />
+          <MarqueeText extraClassName={styles.title} text="Whoops!" isWhite duration="5s" />
         </div>
         <div className={styles.text}>
           <div className={styles.message}>{reasonObj.message}</div>
@@ -68,7 +68,7 @@ const ErrorStage = props => {
         </div>
         {reasonObj.hasTimebar && <div className={classNames(styles.timebar, styles.resultTimebar)} />}
         <div className={styles.titleWrapper}>
-          <MarqueeText extraClassName={styles.title} text="Whoops!" isAlternate isWhite duration="5s" />
+          <MarqueeText extraClassName={styles.title} text="Whoops!" isWhite duration="5s" />
         </div>
       </div>
     </div>

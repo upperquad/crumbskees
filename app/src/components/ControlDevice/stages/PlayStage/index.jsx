@@ -8,7 +8,7 @@ import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 
 const PlayStage = props => {
-  const { color, image, score } = props
+  const { image, score } = props
   const [isTouching, setIsTouching] = useState(false)
   const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
@@ -68,8 +68,8 @@ const PlayStage = props => {
       >
         <div
           className={classNames(styles.block, {
-            [styles.blockRed]: color === 'red',
-            [styles.blockPurple]: color === 'purple',
+            // [styles.blockRed]: color === 'red',
+            // [styles.blockPurple]: color === 'purple',
           })}
         >
           {!!score && <div className={styles.score}>{score}</div>}

@@ -19,13 +19,12 @@ const Board = props => {
     }
   }, [forceUpdate])
 
-  const renderPlayerBlock = (player, scoreForThisRound) => (
-    <div className={styles.player}>
+  const renderPlayerBlock = (player, scoreForThisRound, index) => (
+    <div className={classNames(styles.player, styles[`player--${index + 1}`])}>
       <div className={classNames(styles.character, { [styles.characterLost]: player.lost })}>
         <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} poster={player.image} />
       </div>
       <div className={styles.score}>{zeroUnit(player.score())}</div>
-      <div className={styles.name}>{player.name}</div>
       <div className={styles.items}>
         {scoreForThisRound.map(imageItem => (
           <img className={styles.item} src={imageItem} alt="" />
@@ -36,11 +35,11 @@ const Board = props => {
 
   return (
     <div className={classNames(styles.board, { [styles.boardEntering]: transitionStatus === 'entering' })}>
-      {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0], scores[0])}
-      <div className={styles.center}>
-        <div className={styles.timer}>{zeroUnit(time)}</div>
+      {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0], scores[0], 0)}
+      <div className={styles.timer}>
+        {zeroUnit(time)}
       </div>
-      {PlayersManager.players[1] && renderPlayerBlock(PlayersManager.players[1], scores[1])}
+      {PlayersManager.players[1] && renderPlayerBlock(PlayersManager.players[1], scores[1], 1)}
     </div>
   )
 }

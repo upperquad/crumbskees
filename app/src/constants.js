@@ -43,20 +43,22 @@ export const COLORS = {
   red: '#ff4047',
   orange: '#ff9d21',
   blue: '#00c1ff',
+  pink: '#f4b7ed',
+  yellow: '#ffe945',
 }
 
 export const CHARACTERS = [
   {
-    color: 'purple',
-    secondaryColor: 'red',
+    color: 'pink',
+    secondaryColor: 'purple',
     video: characterVideo1,
     videoWhite: characterVideoWhite1,
     image: characterImage1,
     name: 'P1',
   },
   {
-    color: 'red',
-    secondaryColor: 'purple',
+    color: 'yellow',
+    secondaryColor: 'red',
     video: characterVideo2,
     videoWhite: characterVideoWhite2,
     image: characterImage2,
