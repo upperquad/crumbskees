@@ -3,7 +3,7 @@
 
 // constants
 global.SHARING_MESSAGES = {
-  title: 'Upperquad game',
+  title: 'CRUMBSKEES',
   description: {
     default: 'Come play this amazing game!',
     win: 'I won and scored __SCORE__pts at this game!',

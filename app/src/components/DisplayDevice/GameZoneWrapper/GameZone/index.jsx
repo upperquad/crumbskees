@@ -266,7 +266,7 @@ const GameZone = props => {
 
     const setupGrid = () => {
       // REVIEW: this is really inefficient
-      const { badItemImage, itemImages, numBadItems, numBigItems, numItems, powers } = round
+      const { badItemImage, itemImages, numBadItems, numBigItems, numRegularItems, powers } = round
       for (let i = 0; i < GRID_COLS; i++) {
         for (let j = 0; j < GRID_LINES; j++) {
           const obj = { x: i, y: j }
@@ -312,7 +312,7 @@ const GameZone = props => {
       }
 
       // add items
-      for (let i = 0; i < numItems; i++) {
+      for (let i = 0; i < numRegularItems; i++) {
         const randomImage = itemImages[randomInt(0, itemImages.length - 1)]
         const item = createItem({ image: randomImage })
         newItems.push(item)

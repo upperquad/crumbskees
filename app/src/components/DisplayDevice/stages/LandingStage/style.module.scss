@@ -76,8 +76,8 @@
     line-height: scaleVw(41);
 
     .titleMain {
-      height: scaleVw(150);
-      width: scaleVw(1024);
+      height: scaleVw(150 * .95);
+      width: scaleVw(1024 * .95);
     }
   }
 

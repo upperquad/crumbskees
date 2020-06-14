@@ -19,12 +19,24 @@ const Board = props => {
     }
   }, [forceUpdate])
 
-  const renderPlayerBlock = (player, scoreForThisRound, index) => (
-    <div className={classNames(styles.player, styles[`player--${index + 1}`])}>
-      <div className={classNames(styles.character, { [styles.characterLost]: player.lost })}>
-        <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} poster={player.image} />
-      </div>
-      <div className={styles.score}>{zeroUnit(player.score())}</div>
+  const renderCharacter = (player, index) => (
+    <div
+      className={
+        classNames(
+          styles.character,
+          styles[`character--${index + 1}`],
+          { [styles.characterLost]: player.lost },
+        )
+      }
+    >
+      <AutoplayVideo src={player.video} extraClassName={styles.characterVideo} poster={player.image} />
+    </div>
+  )
+
+  const renderPlayerMeta = (player, scoreForThisRound, index) => (
+    <div className={classNames(styles.playerMeta, styles[`playerMeta--${index + 1}`])}>
+      <div className={styles.score}><span>{zeroUnit(player.score())}</span></div>
+      <div className={styles.power}>power</div>
       <div className={styles.items}>
         {scoreForThisRound.map(imageItem => (
           <img className={styles.item} src={imageItem} alt="" />
@@ -35,11 +47,13 @@ const Board = props => {
 
   return (
     <div className={classNames(styles.board, { [styles.boardEntering]: transitionStatus === 'entering' })}>
-      {PlayersManager.players[0] && renderPlayerBlock(PlayersManager.players[0], scores[0], 0)}
+      {PlayersManager.players[0] && renderCharacter(PlayersManager.players[0], 0)}
+      {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], scores[0], 0)}
       <div className={styles.timer}>
         {zeroUnit(time)}
       </div>
-      {PlayersManager.players[1] && renderPlayerBlock(PlayersManager.players[1], scores[1], 1)}
+      {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], scores[1], 1)}
+      {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], 1)}
     </div>
   )
 }

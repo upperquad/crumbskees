@@ -48,6 +48,9 @@
 }
 
 .gameContent {
+  box-sizing: border-box;
+  flex-grow: 0;
+  flex-shrink: 0;
   height: grid(14);
   position: relative;
   width: 100%;

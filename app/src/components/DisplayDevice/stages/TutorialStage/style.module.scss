@@ -2,7 +2,7 @@
 
 .tutorial {
   background-color: $color-green;
-  padding: grid(1) grid(1) grid(1) grid(2);
+  padding: scaleVw(20) scaleVw(48);
 }
 
 .title {
@@ -10,7 +10,7 @@
   @extend %t--style-lg-shadow;
 
   color: $color-pink;
-  margin-bottom: scaleVw(92);
+  margin-bottom: scaleVw(66);
 }
 
 .container {
@@ -20,7 +20,6 @@
 }
 
 .content {
-  margin-top: scaleVw(-26);
   width: grid(8);
 
   .heading {

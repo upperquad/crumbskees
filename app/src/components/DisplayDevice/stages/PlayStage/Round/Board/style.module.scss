@@ -1,36 +1,51 @@
 @import "~styles/imports/index";
 
 .board {
-  background: $color-green;
   border-top: scaleVw(4) solid $color-black;
   bottom: 0;
+  box-sizing: border-box;
   display: flex;
-  height: calc(#{grid(4)} - #{scaleVw(4)});
+  height: grid(4);
   left: 0;
   position: absolute;
   transition: opacity .3s;
   width: 100%;
-  z-index: 1;
+  z-index: 15;
 }
 
 .boardEntering {
   opacity: 0;
 }
 
-.player {
-  align-items: flex-end;
+.playerMeta {
+  align-items: center;
+  background: $color-green;
+  border-left: scaleVw(4) solid $color-black;
+  border-right: scaleVw(4) solid $color-black;
   display: flex;
+  flex: grid(9) 1 1;
+  justify-content: space-around;
   position: relative;
-  width: grid(14);
+}
+
+.timer {
+  @extend %t--h1;
+
+  color: $color-white;
+  flex: grid(6) 0 0;
+  font-size: scaleVw(80 / .9);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  line-height: scaleVw(64 / .9);
+  -webkit-text-stroke: scaleVw(4) $color-black;
 }
 
 .character {
-  background-color: $color-purple;
-  height: 100%;
-  width: grid(4);
+  flex: grid(4) 0 0;
 
-  img,
   .characterVideo {
+    height: 100%;
+    object-fit: cover;
     width: 100%;
   }
 
@@ -40,25 +55,29 @@
 }
 
 .score {
-  color: transparent !important;
-  display: inline-block;
-  font-size: responsive-font(80);
-  height: grid(3);
-  line-height: grid(3);
+  @extend %t--h2;
+  @extend %t--style-sm-shadow;
+
+  background: $color-white;
+  border-radius: 50%;
+  flex: scaleVw(100 / .9) 0 0;
+  font-size: scaleVw(54 / .8);
+  height: scaleVw(100 / .9);
+  line-height: scaleVw(65 / .8);
+  padding-top: scaleVw(8);
   text-align: center;
-  vertical-align: middle;
-  width: grid(3);
+}
+
+.power {
+  border: 1px solid red;
+  flex: scaleVw(80 / .9) 0 0;
+  height: scaleVw(80 / .9);
 }
 
 .items {
-  align-items: center;
-  display: flex;
-  height: grid(1);
-  justify-content: flex-end;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: grid(10);
+  border: 1px solid red;
+  flex: scaleVw(80 / .9) 0 0;
+  height: 100%;
 }
 
 .item {
@@ -67,39 +86,6 @@
   width: grid(.5);
 }
 
-.player--2 {
+.playerMeta--2 {
   flex-direction: row-reverse;
-
-  .character {
-    background-color: $color-red;
-    display: flex;
-  }
-
-  .score {
-  }
-
-  .items {
-    justify-content: flex-start;
-    left: 0;
-    right: auto;
-  }
-
-  .item {
-    margin-left: grid(.3);
-    margin-right: 0;
-  }
-}
-
-.center {
-  align-items: flex-end;
-  background-color: $color-black;
-  color: $color-white;
-  display: flex;
-  justify-content: center;
-  padding-bottom: 2vw;
-  width: grid(4);
-}
-
-.timer {
-  font-size: responsive-font(112);
 }

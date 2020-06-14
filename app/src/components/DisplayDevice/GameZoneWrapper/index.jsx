@@ -10,7 +10,7 @@ import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS } from '~constants'
 import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 
-const TIME = 40
+const TIME = 40000
 
 const GameZoneWrapper = props => {
   const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props

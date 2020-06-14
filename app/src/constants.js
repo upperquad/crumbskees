@@ -11,14 +11,33 @@ import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
 import snack3 from '~assets/images/snack-3.png'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
 
-import badSnack1 from '~assets/images/bad-snack.png'
-
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import characterVideo1 from '~assets/images/character1.mp4'
 import characterImage1 from '~assets/images/character1.png'
 import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import characterVideo2 from '~assets/images/character2.mp4'
 import characterImage2 from '~assets/images/character2.png'
+
+import goodSnack1 from '~assets/images/snacks/good/1.svg'
+import goodSnack2 from '~assets/images/snacks/good/2.svg'
+import goodSnack3 from '~assets/images/snacks/good/3.svg'
+import goodSnack4 from '~assets/images/snacks/good/4.svg'
+import goodSnack5 from '~assets/images/snacks/good/5.svg'
+import goodSnack6 from '~assets/images/snacks/good/6.svg'
+import goodSnack7 from '~assets/images/snacks/good/7.svg'
+import goodSnack8 from '~assets/images/snacks/good/8.svg'
+import goodSnack9 from '~assets/images/snacks/good/9.svg'
+import goodSnack10 from '~assets/images/snacks/good/10.svg'
+import goodSnack11 from '~assets/images/snacks/good/11.svg'
+import goodSnack12 from '~assets/images/snacks/good/12.svg'
+import goodSnack13 from '~assets/images/snacks/good/13.svg'
+
+import badSnack1 from '~assets/images/snacks/bad/1.svg'
+import badSnack2 from '~assets/images/snacks/bad/2.svg'
+import badSnack3 from '~assets/images/snacks/bad/3.svg'
+import badSnack4 from '~assets/images/snacks/bad/4.svg'
+import badSnack5 from '~assets/images/snacks/bad/5.svg'
+import badSnack6 from '~assets/images/snacks/bad/6.svg'
 
 export const DEBUG = typeof DEBUG_VALUE !== 'undefined'
 
@@ -71,7 +90,7 @@ export const TUTORIAL_ROUND = {
   itemImages: [snack1, snack2],
   numBadItems: 0,
   numBigItems: 10,
-  numItems: 0,
+  numRegularItems: 0,
   powers: [],
 }
 
@@ -82,7 +101,7 @@ export const GAME_ROUNDS = [
     key: 'game-round-1',
     numBadItems: 2,
     numBigItems: 5,
-    numItems: 3,
+    numRegularItems: 3,
     powers: ['grow'],
     roundNameText: 'Round\xa001',
     videoBack: round1VideoBack,
@@ -94,7 +113,7 @@ export const GAME_ROUNDS = [
     key: 'game-round-2',
     numBadItems: 2,
     numBigItems: 5,
-    numItems: 3,
+    numRegularItems: 3,
     powers: ['freeze'],
     roundNameText: 'Round\xa002',
     videoBack: round2VideoBack,
@@ -106,7 +125,7 @@ export const GAME_ROUNDS = [
     key: 'game-round-3',
     numBadItems: 2,
     numBigItems: 5,
-    numItems: 3,
+    numRegularItems: 3,
     powers: ['grow'],
     roundNameText: 'Last\xa0round',
     videoBack: round3VideoBack,

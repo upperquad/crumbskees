@@ -13,12 +13,6 @@ const stepsArray = [
   { name: 'roundPopup', tillNextStep: 1300 },
   { name: 'roundBlink', tillNextStep: 1100 },
   { name: 'roundDown', tillNextStep: 200 },
-  { name: 'circleIn', tillNextStep: 600 },
-  { name: 'itemText', tillNextStep: 200 },
-  { name: 'itemImage', tillNextStep: 2000 },
-  { name: 'circleOut', tillNextStep: 0 },
-  { name: 'itemTextOut', tillNextStep: 0 },
-  { name: 'itemImageDown', tillNextStep: 1000 },
   { name: 'readyIn', tillNextStep: 800 },
   { name: 'readyOut', tillNextStep: 0 },
   { name: 'setIn', tillNextStep: 800 },
@@ -34,7 +28,7 @@ stepsArray.forEach((step, index) => {
 
 const Intro = props => {
   const { onFinish, roundIndex } = props
-  const { itemImages, roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
+  const { roundNameText, videoIntro } = GAME_ROUNDS[roundIndex]
   const [step, setStep] = useState(0)
   const [finished, setFinished] = useState(false)
   const timeout = useRef()
@@ -89,11 +83,6 @@ const Intro = props => {
           })}
         >
           <AutoplayVideo extraClassName={styles.video} src={videoIntro} />
-          <div
-            className={classNames(styles.circle, {
-              [styles.circleIn]: step >= stepsDict.circleIn && step < stepsDict.circleOut,
-            })}
-          />
         </div>
       )}
       {step >= stepsDict.roundPopup && (
@@ -111,31 +100,6 @@ const Intro = props => {
           />
         </div>
       )}
-      {!finished && (
-        <div
-          className={classNames(styles.itemToFindText, {
-            [styles.itemToFindTextIn]: step >= stepsDict.itemText && step < stepsDict.itemTextOut,
-          })}
-        >
-          Item
-          <br />
-          to find
-        </div>
-      )}
-      <div
-        className={classNames(styles.itemToFindImage, {
-          [styles.itemToFindImageIn]: step >= stepsDict.itemImage,
-          [styles.itemToFindImageDown]: step >= stepsDict.itemImageDown,
-        })}
-      >
-        {itemImages.map(item => (
-          <img
-            src={item}
-            alt=""
-            className={styles.itemToFindImageItem}
-          />
-        ))}
-      </div>
       {!finished && (
         <div className={styles.countdown}>
           <DropText

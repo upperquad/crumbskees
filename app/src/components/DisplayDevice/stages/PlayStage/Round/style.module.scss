@@ -3,6 +3,7 @@
 .round {
   @extend %shadow-box;
 
+  box-sizing: content-box;
   height: 9 / 16 * 100vw;
   left: 50%;
   position: absolute;
