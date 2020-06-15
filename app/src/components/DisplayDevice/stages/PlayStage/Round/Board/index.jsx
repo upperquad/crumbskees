@@ -64,12 +64,17 @@ const Board = props => {
       {PlayersManager.players[0] && renderCharacter(PlayersManager.players[0], 0)}
       {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], items[0], 0)}
       <div className={styles.timer}>
-        {zeroUnit(time)}
+        <span className={styles.timerInt}>{zeroUnit(parseInt(time, 10))}</span>
+        <span className={styles.timerFrac}>{getFractionPart(time)}</span>
       </div>
       {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], items[1], 1)}
       {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], 1)}
     </div>
   )
+}
+
+function getFractionPart(number) {
+  return (number - parseInt(number, 10)).toFixed(2).slice(1)
 }
 
 function zeroUnit(number) {

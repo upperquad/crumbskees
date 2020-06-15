@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
-import styles from './style.module.scss'
+import AnimationFrameManager from '~managers/AnimationFrameManager'
 import SoundManager from '~managers/SoundManager'
 import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS } from '~constants'
+
+import styles from './style.module.scss'
 
 import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 
-const TIME = 40000
+const TIME = 40
 
 const GameZoneWrapper = props => {
   const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
@@ -19,6 +21,9 @@ const GameZoneWrapper = props => {
   const [message, setMessage] = useState({ messageCount: 0 })
   const [itemsLevel, setScoresLevel] = useState(() => PlayersManager.players.map(() => []))
   const forceUpdate = useForceUpdate()
+  const countDownStarted = useRef(false)
+  const gameEnded = useRef(false)
+  const startTime = useRef(null)
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -41,27 +46,39 @@ const GameZoneWrapper = props => {
   // Timer
   useEffect(() => {
     if (gameState === 'in-game') {
-      const timerInterval = setInterval(() => {
-        setTime(prevTime => {
-          const newTime = prevTime - 1
+      const updateTimer = now => {
+        if (startTime.current == null) {
+          startTime.current = now
+        }
 
-          if (newTime === 0) {
+        const deltaTime = (now - startTime.current) / 1000
+        const newTime = Math.max((TIME - deltaTime), 0)
+
+        if (newTime <= 10 && !countDownStarted.current) {
+          SoundManager.countdown.play()
+          countDownStarted.current = true
+        }
+
+        if (newTime <= 0) {
+          if (!gameEnded.current) {
             addMessage({
               text: 'Time\'s up!',
               color: COLORS.red,
               persistent: true,
               onEnd: () => setGameState('after-game'),
             })
-          } else if (newTime === 10) {
-            SoundManager.countdown.play()
+            gameEnded.current = true
           }
+        }
 
-          return newTime >= 0 ? newTime : 0
-        })
-      }, 1000)
+        setTime(newTime)
+      }
+
+      startTime.current = null
+      AnimationFrameManager.addSubscriber(updateTimer)
 
       return () => {
-        clearInterval(timerInterval)
+        AnimationFrameManager.removeSubscriber(updateTimer)
       }
     }
 

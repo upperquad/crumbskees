@@ -735,7 +735,7 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.Board-timer--1FYhF {
+.Board-timer--1FYhF .Board-timerInt--3yT-c {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
   font-size: 6.94444vw;
@@ -748,6 +748,12 @@ a {
   font-size: 3.75vw;
   font-weight: 900;
   line-height: 4.51389vw; }
+
+.Board-timer--1FYhF .Board-timerFrac--1lYwb {
+  font-family: 'Fakt', sans-serif;
+  font-size: 1.38889vw;
+  font-weight: 700;
+  line-height: 1.66667vw; }
 
 .Board-score--3Jfkn {
   color: #fff;
@@ -782,13 +788,25 @@ a {
   position: relative; }
 
 .Board-timer--1FYhF {
-  color: #fff;
   flex: 18.75vw 0 0;
-  font-size: 6.17284vw;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  line-height: 4.93827vw;
-  -webkit-text-stroke: 0.27778vw #000; }
+  text-align: center; }
+  .Board-timer--1FYhF .Board-timerInt--3yT-c {
+    color: #fff;
+    display: inline-block;
+    font-size: 6.17284vw;
+    margin-right: 0.69444vw;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    line-height: 4.93827vw;
+    text-align: right;
+    -webkit-text-stroke: 0.27778vw #000;
+    width: scalevw(140); }
+  .Board-timer--1FYhF .Board-timerFrac--1lYwb {
+    display: inline-block;
+    font-size: 1.54321vw;
+    line-height: 1.85185vw;
+    text-align: left;
+    width: scalevw(40); }
 
 .Board-character--1Sl7a {
   flex: 12.5vw 0 0; }
@@ -818,8 +836,8 @@ a {
   align-items: center;
   display: flex;
   flex-flow: row wrap;
-  flex: 6.17284vw 0 0;
-  height: 100%;
+  flex: 6.25vw 0 0;
+  height: 9.02778vw;
   justify-content: space-between; }
 
 @keyframes Board-item-appear--3d5br {
@@ -986,8 +1004,14 @@ a {
 
 .Intro-introRoundWrapperDown--2I3ny {
   bottom: 1.25vw;
-  transform: translateX(-50%) scale(0.12);
+  transform: translateX(-50%) scale(0.17);
   transition: bottom 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86), transform 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86); }
+  .Intro-introRoundWrapperDown--2I3ny .Intro-introRound--2A6Nt {
+    color: #000;
+    letter-spacing: .1em;
+    text-shadow: 0.69444vw 0.69444vw 0 transparent;
+    -webkit-text-stroke: 0.27778vw transparent;
+    transition: color .3s .9s, letter-spacing .3s .9s, text-shadow .3s .9s, -webkit-text-stroke .3s .9s; }
 
 .Intro-countdown--21Eah {
   left: 50%;

@@ -112600,11 +112600,11 @@ var GameZone = function GameZone(props) {
   var addItemsLevel = props.addItemsLevel,
       addMessage = props.addMessage,
       gameState = props.gameState,
+      itemsLevel = props.itemsLevel,
       message = props.message,
       onFinish = props.onFinish,
       onUpdate = props.onUpdate,
       round = props.round,
-      itemsLevel = props.itemsLevel,
       setGameState = props.setGameState,
       setTime = props.setTime,
       type = props.type;
@@ -113142,12 +113142,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
 /* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/AnimationFrameManager */ "./src/managers/AnimationFrameManager/index.js");
 /* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _GameZone__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./GameZone */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/index.jsx");
-/* harmony import */ var _components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/DisplayDevice/stages/PlayStage/Round/Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/GameZoneWrapper/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _GameZone__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./GameZone */ "./src/components/DisplayDevice/GameZoneWrapper/GameZone/index.jsx");
+/* harmony import */ var _components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/DisplayDevice/stages/PlayStage/Round/Board */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -113180,7 +113181,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var TIME = 40000;
+
+var TIME = 40;
 
 var GameZoneWrapper = function GameZoneWrapper(props) {
   var gameState = props.gameState,
@@ -113215,6 +113217,9 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
       setScoresLevel = _useState6[1];
 
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
+  var countDownStarted = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false);
+  var gameEnded = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false);
+  var startTime = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
 
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
@@ -113238,11 +113243,21 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (gameState === 'in-game') {
-      var timerInterval = setInterval(function () {
-        setTime(function (prevTime) {
-          var newTime = prevTime - 1;
+      var updateTimer = function updateTimer(now) {
+        if (startTime.current == null) {
+          startTime.current = now;
+        }
 
-          if (newTime === 0) {
+        var deltaTime = (now - startTime.current) / 1000;
+        var newTime = Math.max(TIME - deltaTime, 0);
+
+        if (newTime <= 10 && !countDownStarted.current) {
+          _managers_SoundManager__WEBPACK_IMPORTED_MODULE_6__["default"].countdown.play();
+          countDownStarted.current = true;
+        }
+
+        if (newTime <= 0) {
+          if (!gameEnded.current) {
             addMessage({
               text: 'Time\'s up!',
               color: _constants__WEBPACK_IMPORTED_MODULE_7__["COLORS"].red,
@@ -113251,15 +113266,17 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
                 return setGameState('after-game');
               }
             });
-          } else if (newTime === 10) {
-            _managers_SoundManager__WEBPACK_IMPORTED_MODULE_6__["default"].countdown.play();
+            gameEnded.current = true;
           }
+        }
 
-          return newTime >= 0 ? newTime : 0;
-        });
-      }, 1000);
+        setTime(newTime);
+      };
+
+      startTime.current = null;
+      _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber(updateTimer);
       return function () {
-        clearInterval(timerInterval);
+        _managers_AnimationFrameManager__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber(updateTimer);
       };
     }
 
@@ -113273,8 +113290,8 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, type === 'tutorial' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.gameContentTutorial
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.gameContentTutorial
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_9__["default"], {
     addMessage: addMessage,
     addItemsLevel: addItemsLevel,
     gameState: gameState,
@@ -113286,12 +113303,12 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     setGameState: setGameState,
     type: type
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.readyIndicators
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.readyIndicators
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.readyIndicatorsTitle
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.readyIndicatorsTitle
   }, "Ready?"), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.readyIndicator, _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a["readyIndicator--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.isReady, player.ready))
+      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.readyIndicator, _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a["readyIndicator--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.isReady, player.ready))
     });
   }))), type === 'game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["TransitionGroup"], null, gameState !== 'before-game' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
     key: "play-stage-in-game",
@@ -113300,8 +113317,8 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
       exit: 1300
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.gameContent
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.gameContent
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_9__["default"], {
     addMessage: addMessage,
     addItemsLevel: addItemsLevel,
     gameState: gameState,
@@ -113312,7 +113329,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     setGameState: setGameState,
     setTime: setTime,
     type: type
-  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_10__["default"], {
     time: time,
     itemImage: itemImage,
     items: itemsLevel,
@@ -113859,8 +113876,16 @@ var Board = function Board(props) {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.board, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.boardEntering, transitionStatus === 'entering'))
   }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], items[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timer
-  }, zeroUnit(time)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], 1));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerInt
+  }, zeroUnit(parseInt(time, 10))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerFrac
+  }, getFractionPart(time))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], 1));
 };
+
+function getFractionPart(number) {
+  return (number - parseInt(number, 10)).toFixed(2).slice(1);
+}
 
 function zeroUnit(number) {
   if (number < 0) {
@@ -113882,7 +113907,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","score":"Board-score--3Jfkn","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 

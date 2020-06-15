@@ -87,8 +87,22 @@
 
 .introRoundWrapperDown {
   bottom: grid(.4);
-  transform: translateX(-50%) scale(.12);
-  transition: bottom 1.2s $easing-circle-in-out, transform 1.2s $easing-circle-in-out;
+  transform: translateX(-50%) scale(.17);
+  transition:
+    bottom 1.2s $easing-circle-in-out,
+    transform 1.2s $easing-circle-in-out;
+
+  .introRound {
+    color: $color-black;
+    letter-spacing: .1em;
+    text-shadow: scaleVw(10) scaleVw(10) 0 transparent;
+    -webkit-text-stroke: scaleVw(4) transparent;
+    transition:
+      color .3s .9s,
+      letter-spacing .3s .9s,
+      text-shadow .3s .9s,
+      -webkit-text-stroke .3s .9s;
+  }
 }
 
 .countdown {
