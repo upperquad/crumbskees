@@ -1,7 +1,6 @@
 @import "~styles/imports/index";
 
 .board {
-  background: $color-black;
   border-top: scaleVw(4) solid $color-black;
   bottom: 0;
   box-sizing: border-box;
@@ -30,6 +29,7 @@
 }
 
 .timer {
+  background: $color-black;
   flex: grid(6) 0 0;
   padding-top: scaleVw(35);
   position: relative;
@@ -80,7 +80,7 @@
   .timerRoundName {
     @extend %t--h1;
 
-    animation: round-name-appear .6s 4.4s ease-out both;
+    animation: round-name-appear .6s 4.2s ease-out both;
     bottom: grid(.4);
     color: $color-white;
     font-size: scaleVw(14 / .9);
