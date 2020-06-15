@@ -864,9 +864,17 @@ a {
   text-align: center; }
 
 .Board-power--1Fjli {
-  border: 1px solid red;
   flex: 6.17284vw 0 0;
-  height: 6.17284vw; }
+  height: 6.17284vw;
+  position: relative; }
+  .Board-power--1Fjli .Board-powerImage--3UNl-,
+  .Board-power--1Fjli .Board-powerCircle--afidW {
+    left: 0;
+    height: 100%;
+    object-fot: contain;
+    position: absolute;
+    top: 0;
+    width: 100%; }
 
 .Board-items--1l1Q1 {
   align-items: center;

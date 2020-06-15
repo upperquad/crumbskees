@@ -112605,6 +112605,7 @@ var GameZone = function GameZone(props) {
       onUpdate = props.onUpdate,
       round = props.round,
       setGameState = props.setGameState,
+      setParentPowerArray = props.setParentPowerArray,
       setTime = props.setTime,
       type = props.type;
   var videoBack = round.videoBack,
@@ -112613,7 +112614,8 @@ var GameZone = function GameZone(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState2 = _slicedToArray(_useState, 2),
       items = _useState2[0],
-      setItems = _useState2[1];
+      setItems = _useState2[1]; // TODO: power should be in player? Maybe not though
+
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
@@ -113041,6 +113043,9 @@ var GameZone = function GameZone(props) {
 
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setParentPowerArray(powerArray);
+  }, [powerArray]);
 
   function cancelPower(index) {
     setPowerArray(function (prevArray) {
@@ -113220,6 +113225,15 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
   var gameEnded = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false);
   var startTime = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
 
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+    return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players.map(function () {
+      return null;
+    });
+  }),
+      _useState8 = _slicedToArray(_useState7, 2),
+      powerArray = _useState8[0],
+      setPowerArray = _useState8[1];
+
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
       return _objectSpread({}, messageObj, {
@@ -113300,6 +113314,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     round: _constants__WEBPACK_IMPORTED_MODULE_7__["TUTORIAL_ROUND"],
     itemsLevel: itemsLevel,
     setGameState: setGameState,
+    setParentPowerArray: setPowerArray,
     type: type
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.readyIndicators
@@ -113326,6 +113341,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     round: _constants__WEBPACK_IMPORTED_MODULE_7__["GAME_ROUNDS"][roundIndex],
     itemsLevel: itemsLevel,
     setGameState: setGameState,
+    setParentPowerArray: setPowerArray,
     setTime: setTime,
     type: type
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_10__["default"], {
@@ -113334,7 +113350,8 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     itemImage: itemImage,
     items: itemsLevel,
     transitionStatus: transitionStatus,
-    roundName: _constants__WEBPACK_IMPORTED_MODULE_7__["GAME_ROUNDS"][roundIndex].roundNameText
+    roundName: _constants__WEBPACK_IMPORTED_MODULE_7__["GAME_ROUNDS"][roundIndex].roundNameText,
+    powerArray: powerArray
   })));
 };
 
@@ -113827,6 +113844,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var Board = function Board(props) {
   var items = props.items,
+      powerArray = props.powerArray,
       roundName = props.roundName,
       time = props.time,
       totalTime = props.totalTime,
@@ -113849,14 +113867,27 @@ var Board = function Board(props) {
     }));
   };
 
-  var renderPlayerMeta = function renderPlayerMeta(player, itemsForThisRound, index) {
+  var renderPlayerMeta = function renderPlayerMeta(player, itemsForThisRound, power, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.playerMeta, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a["playerMeta--".concat(index + 1)])
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.score
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, zeroUnit(player.score()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.power
-    }, "power"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, power && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.powerCircle,
+      viewBox: "0 0 59 59",
+      fill: "none",
+      stroke: "black",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.powerCircleStroke,
+      d: "M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z"
+    })), power && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: power.image,
+      alt: "",
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.powerImage
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.items
     }, itemsForThisRound.map(function (imageItem, itemIndex) {
       var key = "".concat(imageItem, "-").concat(itemIndex);
@@ -113877,7 +113908,7 @@ var Board = function Board(props) {
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.board, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.boardEntering, transitionStatus === 'entering'))
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], items[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], items[0], powerArray[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timer
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerMaskLeft,
@@ -113895,7 +113926,7 @@ var Board = function Board(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerFrac
   }, getFractionPart(time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerRoundName
-  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], 1));
+  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], powerArray[1], 1));
 };
 
 function getFractionPart(number) {
@@ -113922,7 +113953,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","powerImage":"Board-powerImage--3UNl-","powerCircle":"Board-powerCircle--afidW","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 

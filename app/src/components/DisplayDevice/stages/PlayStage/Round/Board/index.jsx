@@ -8,7 +8,7 @@ import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
-  const { items, roundName, time, totalTime, transitionStatus } = props
+  const { items, powerArray, roundName, time, totalTime, transitionStatus } = props
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -33,10 +33,19 @@ const Board = props => {
     </div>
   )
 
-  const renderPlayerMeta = (player, itemsForThisRound, index) => (
+  const renderPlayerMeta = (player, itemsForThisRound, power, index) => (
     <div className={classNames(styles.playerMeta, styles[`playerMeta--${index + 1}`])}>
       <div className={styles.score}><span>{zeroUnit(player.score())}</span></div>
-      <div className={styles.power}>power</div>
+      <div className={styles.power}>
+        {power && (
+          <svg className={styles.powerCircle} viewBox="0 0 59 59" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
+            <path className={styles.powerCircleStroke} d="M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z"/>
+          </svg>
+        )}
+        {power && (
+          <img src={power.image} alt="" className={styles.powerImage} />
+        )}
+      </div>
       <div className={styles.items}>
         {itemsForThisRound.map((imageItem, itemIndex) => {
           const key = `${imageItem}-${itemIndex}`
@@ -59,10 +68,11 @@ const Board = props => {
     </div>
   )
 
+
   return (
     <div className={classNames(styles.board, { [styles.boardEntering]: transitionStatus === 'entering' })}>
       {PlayersManager.players[0] && renderCharacter(PlayersManager.players[0], 0)}
-      {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], items[0], 0)}
+      {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], items[0], powerArray[0], 0)}
       <div className={styles.timer}>
         <div className={styles.timerMaskLeft} style={{ width: `${(time / totalTime) * 100}%` }} />
         <div className={styles.timerMaskRight} style={{ width: `${(1 - time / totalTime) * 100}%` }} />
@@ -71,7 +81,7 @@ const Board = props => {
         <div className={styles.timerRoundName}>{roundName}</div>
       </div>
       {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], items[1], 1)}
-      {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], 1)}
+      {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], powerArray[1], 1)}
     </div>
   )
 }

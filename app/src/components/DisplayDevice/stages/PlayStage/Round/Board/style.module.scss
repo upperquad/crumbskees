@@ -137,9 +137,19 @@
 }
 
 .power {
-  border: 1px solid red;
   flex: scaleVw(80 / .9) 0 0;
   height: scaleVw(80 / .9);
+  position: relative;
+
+  .powerImage,
+  .powerCircle {
+    left: 0;
+    height: 100%;
+    object-fot: contain;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 }
 
 .items {

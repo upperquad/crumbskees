@@ -24,6 +24,7 @@ const GameZoneWrapper = props => {
   const countDownStarted = useRef(false)
   const gameEnded = useRef(false)
   const startTime = useRef(null)
+  const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -109,6 +110,7 @@ const GameZoneWrapper = props => {
               round={TUTORIAL_ROUND}
               itemsLevel={itemsLevel}
               setGameState={setGameState}
+              setParentPowerArray={setPowerArray}
               type={type}
             />
           </div>
@@ -141,6 +143,7 @@ const GameZoneWrapper = props => {
                     round={GAME_ROUNDS[roundIndex]}
                     itemsLevel={itemsLevel}
                     setGameState={setGameState}
+                    setParentPowerArray={setPowerArray}
                     setTime={setTime}
                     type={type}
                   />
@@ -156,6 +159,7 @@ const GameZoneWrapper = props => {
             items={itemsLevel}
             transitionStatus={transitionStatus}
             roundName={GAME_ROUNDS[roundIndex].roundNameText}
+            powerArray={powerArray}
           />
         </React.Fragment>
       )}

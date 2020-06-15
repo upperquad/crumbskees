@@ -36,11 +36,13 @@ const GameZone = props => {
     onUpdate,
     round,
     setGameState,
+    setParentPowerArray,
     setTime,
     type,
   } = props
   const { videoBack, videoFront } = round
   const [items, setItems] = useState([])
+  // TODO: power should be in player? Maybe not though
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
@@ -398,6 +400,10 @@ const GameZone = props => {
     return undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, zeroScorePlayers.length])
+
+  useEffect(() => {
+    setParentPowerArray(powerArray)
+  }, [powerArray])
 
   function cancelPower(index) {
     setPowerArray(prevArray => {
