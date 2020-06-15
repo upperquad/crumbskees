@@ -149,7 +149,7 @@ const GameZoneWrapper = props => {
             )}
           </TransitionGroup>
 
-          <Board time={time} itemImage={itemImage} items={itemsLevel} transitionStatus={transitionStatus} />
+          <Board time={time} totalTime={TIME} itemImage={itemImage} items={itemsLevel} transitionStatus={transitionStatus} />
         </React.Fragment>
       )}
     </React.Fragment>

@@ -763,6 +763,7 @@ a {
   -webkit-text-stroke: 0.27778vw #000; }
 
 .Board-board--2FSpi {
+  background: #000;
   border-top: 0.27778vw solid #000;
   bottom: 0;
   box-sizing: border-box;
@@ -772,7 +773,7 @@ a {
   position: absolute;
   transition: opacity .3s;
   width: 100%;
-  z-index: 15; }
+  z-index: 1; }
 
 .Board-boardEntering--1868x {
   opacity: 0; }
@@ -789,24 +790,42 @@ a {
 
 .Board-timer--1FYhF {
   flex: 18.75vw 0 0;
+  padding-top: 2.43056vw;
+  position: relative;
   text-align: center; }
   .Board-timer--1FYhF .Board-timerInt--3yT-c {
-    color: #fff;
+    color: #000;
     display: inline-block;
     font-size: 6.17284vw;
-    margin-right: 0.69444vw;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     line-height: 4.93827vw;
+    margin-right: 0.69444vw;
+    mix-blend-mode: exclusion;
+    position: relative;
     text-align: right;
-    -webkit-text-stroke: 0.27778vw #000;
-    width: scalevw(140); }
+    -webkit-text-stroke: 0.27778vw #fff;
+    width: 9.72222vw; }
   .Board-timer--1FYhF .Board-timerFrac--1lYwb {
+    color: #fff;
     display: inline-block;
     font-size: 1.54321vw;
     line-height: 1.85185vw;
+    mix-blend-mode: exclusion;
+    position: relative;
     text-align: left;
-    width: scalevw(40); }
+    width: 2.77778vw; }
+  .Board-timer--1FYhF .Board-timerMaskLeft--2ruSl,
+  .Board-timer--1FYhF .Board-timerMaskRight--2oGKR {
+    bottom: 0;
+    position: absolute;
+    top: 0; }
+  .Board-timer--1FYhF .Board-timerMaskLeft--2ruSl {
+    background: #3f1bd0;
+    left: 0; }
+  .Board-timer--1FYhF .Board-timerMaskRight--2oGKR {
+    background: #fff;
+    right: 0; }
 
 .Board-character--1Sl7a {
   flex: 12.5vw 0 0; }
@@ -835,8 +854,8 @@ a {
 .Board-items--1l1Q1 {
   align-items: center;
   display: flex;
-  flex-flow: row wrap;
   flex: 6.25vw 0 0;
+  flex-flow: row wrap;
   height: 9.02778vw;
   justify-content: space-between; }
 
@@ -1007,11 +1026,12 @@ a {
   transform: translateX(-50%) scale(0.17);
   transition: bottom 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86), transform 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86); }
   .Intro-introRoundWrapperDown--2I3ny .Intro-introRound--2A6Nt {
-    color: #000;
+    color: #fff;
     letter-spacing: .1em;
+    mix-blend-mode: exclusion;
     text-shadow: 0.69444vw 0.69444vw 0 transparent;
     -webkit-text-stroke: 0.27778vw transparent;
-    transition: color .3s .9s, letter-spacing .3s .9s, text-shadow .3s .9s, -webkit-text-stroke .3s .9s; }
+    transition: color .3s .9s, letter-spacing .3s .9s, mix-blend-mode 1ms 1.2s, text-shadow .3s .9s, -webkit-text-stroke .3s .9s; }
 
 .Intro-countdown--21Eah {
   left: 50%;

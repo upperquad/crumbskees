@@ -8,7 +8,7 @@ import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
-  const { items, time, transitionStatus } = props
+  const { items, time, totalTime, transitionStatus } = props
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -64,6 +64,8 @@ const Board = props => {
       {PlayersManager.players[0] && renderCharacter(PlayersManager.players[0], 0)}
       {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], items[0], 0)}
       <div className={styles.timer}>
+        <div className={styles.timerMaskLeft} style={{ width: `${(time / totalTime) * 100}%` }} />
+        <div className={styles.timerMaskRight} style={{ width: `${(1 - time / totalTime) * 100}%` }} />
         <span className={styles.timerInt}>{zeroUnit(parseInt(time, 10))}</span>
         <span className={styles.timerFrac}>{getFractionPart(time)}</span>
       </div>

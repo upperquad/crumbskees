@@ -112600,7 +112600,6 @@ var GameZone = function GameZone(props) {
   var addItemsLevel = props.addItemsLevel,
       addMessage = props.addMessage,
       gameState = props.gameState,
-      itemsLevel = props.itemsLevel,
       message = props.message,
       onFinish = props.onFinish,
       onUpdate = props.onUpdate,
@@ -113331,6 +113330,7 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     type: type
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_10__["default"], {
     time: time,
+    totalTime: TIME,
     itemImage: itemImage,
     items: itemsLevel,
     transitionStatus: transitionStatus
@@ -113827,6 +113827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var Board = function Board(props) {
   var items = props.items,
       time = props.time,
+      totalTime = props.totalTime,
       transitionStatus = props.transitionStatus;
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -113876,7 +113877,17 @@ var Board = function Board(props) {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.board, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.boardEntering, transitionStatus === 'entering'))
   }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], items[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timer
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerMaskLeft,
+    style: {
+      width: "".concat(time / totalTime * 100, "%")
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerMaskRight,
+    style: {
+      width: "".concat((1 - time / totalTime) * 100, "%")
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerInt
   }, zeroUnit(parseInt(time, 10))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerFrac
@@ -113907,7 +113918,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 

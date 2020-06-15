@@ -31,7 +31,6 @@ const GameZone = props => {
     addItemsLevel,
     addMessage,
     gameState,
-    itemsLevel,
     message,
     onFinish,
     onUpdate,

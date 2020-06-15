@@ -1,6 +1,7 @@
 @import "~styles/imports/index";
 
 .board {
+  background: $color-black;
   border-top: scaleVw(4) solid $color-black;
   bottom: 0;
   box-sizing: border-box;
@@ -10,7 +11,7 @@
   position: absolute;
   transition: opacity .3s;
   width: 100%;
-  z-index: 15;
+  z-index: 1;
 }
 
 .boardEntering {
@@ -30,31 +31,55 @@
 
 .timer {
   flex: grid(6) 0 0;
+  padding-top: scaleVw(35);
+  position: relative;
   text-align: center;
 
   .timerInt {
     @extend %t--h1;
 
-    color: $color-white;
+    color: $color-black;
     display: inline-block;
     font-size: scaleVw(80 / .9);
-    margin-right: scaleVw(10);
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     line-height: scaleVw(64 / .9);
+    margin-right: scaleVw(10);
+    mix-blend-mode: exclusion;
+    position: relative;
     text-align: right;
-    -webkit-text-stroke: scaleVw(4) $color-black;
-    width: scalevw(140);
+    -webkit-text-stroke: scaleVw(4) $color-white;
+    width: scaleVw(140);
   }
 
   .timerFrac {
     @extend %t--body;
 
+    color: $color-white;
     display: inline-block;
     font-size: scaleVw(20 / .9);
     line-height: scaleVw(24 / .9);
+    mix-blend-mode: exclusion;
+    position: relative;
     text-align: left;
-    width: scalevw(40);
+    width: scaleVw(40);
+  }
+
+  .timerMaskLeft,
+  .timerMaskRight {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .timerMaskLeft {
+    background: $color-purple;
+    left: 0;
+  }
+
+  .timerMaskRight {
+    background: $color-white;
+    right: 0;
   }
 }
 
@@ -95,8 +120,8 @@
 .items {
   align-items: center;
   display: flex;
-  flex-flow: row wrap;
   flex: scaleVw(90) 0 0;
+  flex-flow: row wrap;
   height: scaleVw(130);
   justify-content: space-between;
 }
