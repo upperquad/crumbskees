@@ -28,7 +28,7 @@ const PlayerMessage = props => {
         scoreAdded = `+${scoreAdded}`
         finalColor = hexToRgb(COLORS[color])
       } else if (scoreAdded < 0) {
-        finalColor = hexToRgb('#ff0000')
+        finalColor = hexToRgb(COLORS.red)
       }
 
       addMessage({
@@ -47,7 +47,7 @@ const PlayerMessage = props => {
         text: power.text,
         color: power.color,
       })
-      prevScore.current = roundScore
+      // prevScore.current = roundScore
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

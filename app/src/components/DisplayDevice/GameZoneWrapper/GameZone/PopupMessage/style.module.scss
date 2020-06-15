@@ -32,12 +32,12 @@
 }
 
 .message {
-
+  @extend %t--h2;
 
   animation: message-fade-in 1s $easing-expo-out forwards, message-fade-out 1s $easing-expo-out forwards .7s;
   display: inline-block;
-  font-size: responsive-font(120);
   left: 50%;
+  padding-bottom: .2em;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);

@@ -29,9 +29,6 @@
 }
 
 .title {
-
-
-  font-size: responsive-font(80);
 }
 
 .timebar {
@@ -54,9 +51,6 @@
 }
 
 .player {
-
-
-  font-size: responsive-font(40);
   margin-top: grid(.5);
   text-align: center;
 }
@@ -88,7 +82,6 @@
 
 
   bottom: grid(.3);
-  font-size: responsive-font(120);
   left: 50%;
   position: absolute;
   transform: translateX(-50%);

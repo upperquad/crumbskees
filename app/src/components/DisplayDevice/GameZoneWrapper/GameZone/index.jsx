@@ -28,15 +28,14 @@ import freezeItem from '~assets/images/powers/frozen.svg'
 
 const GameZone = props => {
   const {
+    addItemsLevel,
     addMessage,
-    addScoresLevel,
     gameState,
     message,
     onFinish,
     onUpdate,
-    removeScoresLevel,
     round,
-    scoresLevel,
+    itemsLevel,
     setGameState,
     setTime,
     type,
@@ -59,7 +58,7 @@ const GameZone = props => {
     }
 
     const addScore = (targetsCaught, index) => {
-      addScoresLevel(targetsCaught, index)
+      addItemsLevel(targetsCaught, index)
 
       if (type === 'game') {
         PlayersManager.addScore(targetsCaught.length, PlayersManager.players[index].id)
@@ -68,11 +67,11 @@ const GameZone = props => {
       SoundManager.score.play()
     }
 
-    const removeScore = (score, index) => {
-      removeScoresLevel(score, index)
+    const removeScore = (badItemsCaught, index) => {
+      addItemsLevel(badItemsCaught, index)
 
       if (type === 'game') {
-        PlayersManager.removeScore(score, PlayersManager.players[index].id)
+        PlayersManager.removeScore(badItemsCaught.length, PlayersManager.players[index].id)
       }
 
       SoundManager.score.play() // need a different sound for losing point
@@ -86,7 +85,7 @@ const GameZone = props => {
       )
 
       const targetsCaught = []
-      let badCount = 0
+      const badItemsCaught = []
       let growPowerFound = false
 
       itemsCaught.forEach(item => {
@@ -121,7 +120,7 @@ const GameZone = props => {
             targetsCaught.push(item.image)
             break
           case 'bad':
-            badCount += 1
+            badItemsCaught.push(item.image)
             break
         }
       })
@@ -137,8 +136,8 @@ const GameZone = props => {
         addScore(targetsCaught, playerIndex)
       }
 
-      if (badCount > 0) {
-        removeScore(badCount, playerIndex)
+      if (badItemsCaught.length > 0) {
+        removeScore(badItemsCaught, playerIndex)
       }
 
       if (itemsCaught.length > 0) {
@@ -427,10 +426,11 @@ const GameZone = props => {
       />
       {PlayersManager.players.map((player, index) => (
         <PlayerMessage
+          player={player}
           power={powerArray[index]}
           position={positionArray[index]}
           color={player.color}
-          roundScore={scoresLevel[index].length}
+          roundScore={player.score()}
           tapInstruction={tapInstructionArray[index]}
         />
       ))}

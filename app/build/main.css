@@ -688,6 +688,13 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.PopupMessage-message--2ZO9X {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 3.75vw;
+  font-weight: 900;
+  line-height: 4.51389vw; }
+
 .PopupMessage-messageContainer---DqVT {
   height: 100%;
   left: 0;
@@ -715,8 +722,8 @@ a {
 .PopupMessage-message--2ZO9X {
   animation: PopupMessage-message-fade-in--qtlQv 1s cubic-bezier(0.19, 1, 0.22, 1) forwards, PopupMessage-message-fade-out--1w0F3 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
   display: inline-block;
-  font-size: responsive-font(120);
   left: 50%;
+  padding-bottom: .2em;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%); }
@@ -1033,9 +1040,6 @@ a {
   background-color: #000;
   height: 6.25vw; }
 
-.ResultStage-title--3pUhh {
-  font-size: responsive-font(80); }
-
 .ResultStage-timebar--3CWQW {
   animation: ResultStage-result-timebar--2C5bG 13s linear 1 both;
   background-color: #69e5ab;
@@ -1052,7 +1056,6 @@ a {
     transform: scaleX(0); } }
 
 .ResultStage-player--XpmPw {
-  font-size: responsive-font(40);
   margin-top: 1.5625vw;
   text-align: center; }
 
@@ -1075,7 +1078,6 @@ a {
 
 .ResultStage-score--2trdh {
   bottom: 0.9375vw;
-  font-size: responsive-font(120);
   left: 50%;
   position: absolute;
   transform: translateX(-50%); }

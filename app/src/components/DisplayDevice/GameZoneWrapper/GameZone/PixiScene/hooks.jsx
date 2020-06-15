@@ -1,7 +1,7 @@
 // TODO: this file needs to be optimized
 import { useEffect } from 'react'
 import { Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
-import { COLORS, GRID_UNIT, VB_WIDTH } from '~constants'
+import { COLORS, DEBUG, GRID_UNIT, VB_WIDTH } from '~constants'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
 import { random } from '~utils/math'
@@ -98,7 +98,7 @@ export function useSetScene(refs, props) {
       // Circle
       refs.containerFront.current.addChild(refs.circlesMasked.current)
       // mask container into circle(s)
-      if (props.type === 'game') {
+      if (props.type === 'game' && !DEBUG) {
         refs.containerMasked.current.mask = refs.circlesMasked.current
       }
 

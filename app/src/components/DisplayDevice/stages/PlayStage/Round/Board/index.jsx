@@ -8,7 +8,7 @@ import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 
 const Board = props => {
-  const { scores, time, transitionStatus } = props
+  const { items, time, transitionStatus } = props
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -33,12 +33,12 @@ const Board = props => {
     </div>
   )
 
-  const renderPlayerMeta = (player, scoreForThisRound, index) => (
+  const renderPlayerMeta = (player, itemsForThisRound, index) => (
     <div className={classNames(styles.playerMeta, styles[`playerMeta--${index + 1}`])}>
       <div className={styles.score}><span>{zeroUnit(player.score())}</span></div>
       <div className={styles.power}>power</div>
       <div className={styles.items}>
-        {scoreForThisRound.map(imageItem => (
+        {itemsForThisRound.map(imageItem => (
           <img className={styles.item} src={imageItem} alt="" />
         ))}
       </div>
@@ -48,11 +48,11 @@ const Board = props => {
   return (
     <div className={classNames(styles.board, { [styles.boardEntering]: transitionStatus === 'entering' })}>
       {PlayersManager.players[0] && renderCharacter(PlayersManager.players[0], 0)}
-      {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], scores[0], 0)}
+      {PlayersManager.players[0] && renderPlayerMeta(PlayersManager.players[0], items[0], 0)}
       <div className={styles.timer}>
         {zeroUnit(time)}
       </div>
-      {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], scores[1], 1)}
+      {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], items[1], 1)}
       {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], 1)}
     </div>
   )
