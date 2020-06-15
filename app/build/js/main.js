@@ -113817,14 +113817,15 @@ module.exports = {"banner":"LandingStage-banner--1YRTw","title":"LandingStage-ti
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-force-update */ "./node_modules/use-force-update/use-force-update.js");
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! use-force-update */ "./node_modules/use-force-update/use-force-update.js");
+/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -113842,6 +113843,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var Board = function Board(props) {
   var items = props.items,
       powerArray = props.powerArray,
@@ -113849,50 +113851,63 @@ var Board = function Board(props) {
       time = props.time,
       totalTime = props.totalTime,
       transitionStatus = props.transitionStatus;
-  var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
+  var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_3___default()();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].addSubscriber('player_connection_change', forceUpdate);
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].addSubscriber('player_connection_change', forceUpdate);
     return function () {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].removeSubscriber('player_connection_change', forceUpdate);
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].removeSubscriber('player_connection_change', forceUpdate);
     };
   }, [forceUpdate]);
 
   var renderCharacter = function renderCharacter(player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.character, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a["character--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.characterLost, player.lost))
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.character, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a["character--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.characterLost, player.lost))
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__["default"], {
       src: player.video,
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.characterVideo,
+      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.characterVideo,
       poster: player.image
     }));
   };
 
   var renderPlayerMeta = function renderPlayerMeta(player, itemsForThisRound, power, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.playerMeta, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a["playerMeta--".concat(index + 1)])
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.playerMeta, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a["playerMeta--".concat(index + 1)])
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.score
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.score
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, zeroUnit(player.score()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.power
-    }, power && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.powerCircle,
-      viewBox: "0 0 59 59",
-      fill: "none",
-      stroke: "black",
-      xmlns: "http://www.w3.org/2000/svg"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.powerCircleStroke,
-      d: "M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z"
-    })), power && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: power.image,
-      alt: "",
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.powerImage
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.items
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.power
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["TransitionGroup"], null, power && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
+      key: "board-power",
+      timeout: {
+        enter: 5,
+        exit: 300
+      }
+    }, function (status) {
+      var _classNames2;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInner, (_classNames2 = {}, _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInnerEntering, status === 'entering'), _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInnerExiting, status === 'exiting' || status === 'exited'), _classNames2))
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerCircle, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a["powerCircle--".concat(power.type)]),
+        viewBox: "0 0 59 59",
+        fill: "none",
+        stroke: "black",
+        strokeWidth: "2",
+        xmlns: "http://www.w3.org/2000/svg"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerCircleStroke,
+        d: "M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: power.image,
+        alt: "",
+        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerImage
+      }));
+    }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.items
     }, itemsForThisRound.map(function (imageItem, itemIndex) {
       var key = "".concat(imageItem, "-").concat(itemIndex);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.item, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.itemSnack),
+        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.item, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.itemSnack),
         src: imageItem,
         key: key,
         alt: ""
@@ -113900,33 +113915,33 @@ var Board = function Board(props) {
     }), _toConsumableArray(Array(12 - itemsForThisRound.length)).map(function (e, i) {
       var key = "placeholder-".concat(i);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.item, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.itemPlaceholder),
+        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.item, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.itemPlaceholder),
         key: key
       });
     })));
   };
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.board, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.boardEntering, transitionStatus === 'entering'))
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[0], items[0], powerArray[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timer
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.board, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.boardEntering, transitionStatus === 'entering'))
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0], items[0], powerArray[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timer
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerMaskLeft,
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerMaskLeft,
     style: {
       width: "".concat(time / totalTime * 100, "%")
     }
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerMaskRight,
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerMaskRight,
     style: {
       width: "".concat((1 - time / totalTime) * 100, "%")
     }
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerInt
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerInt
   }, zeroUnit(parseInt(time, 10))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerFrac
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerFrac
   }, getFractionPart(time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerRoundName
-  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], powerArray[1], 1));
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerRoundName
+  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1], items[1], powerArray[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1], 1));
 };
 
 function getFractionPart(number) {
@@ -113953,7 +113968,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","powerImage":"Board-powerImage--3UNl-","powerCircle":"Board-powerCircle--afidW","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","powerInner":"Board-powerInner--1ds2c","powerInnerEntering":"Board-powerInnerEntering--2RBCZ","powerInnerExiting":"Board-powerInnerExiting--1-kTC","powerImage":"Board-powerImage--3UNl-","powerCircle":"Board-powerCircle--afidW","power-ring":"Board-power-ring--2EXwA","powerRing":"Board-power-ring--2EXwA","powerCircle--freeze":"Board-powerCircle--freeze--37sWl","powerCircleFreeze":"Board-powerCircle--freeze--37sWl","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 

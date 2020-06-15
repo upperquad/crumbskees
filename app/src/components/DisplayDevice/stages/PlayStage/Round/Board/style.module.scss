@@ -136,19 +136,64 @@
   text-align: center;
 }
 
+@keyframes power-ring {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 58 * 3.1416;
+  }
+}
+
 .power {
   flex: scaleVw(80 / .9) 0 0;
   height: scaleVw(80 / .9);
   position: relative;
 
-  .powerImage,
-  .powerCircle {
+  .powerInner {
     height: 100%;
     left: 0;
-    object-fot: contain;
     position: absolute;
     top: 0;
+    transition: opacity .2s, transform .2s ease-out;
     width: 100%;
+
+    &.powerInnerEntering,
+    &.powerInnerExiting {
+      opacity: 0;
+      transform: scale(.1);
+    }
+
+    &.powerInnerExiting {
+      transition: opacity .3s, transform .3s ease-in;
+    }
+  }
+
+  .powerImage {
+    height: 80%;
+    left: 10%;
+    object-fit: contain;
+    position: absolute;
+    top: 10%;
+    width: 80%;
+  }
+
+  .powerCircle {
+    animation: power-ring 6s both linear;
+    height: 100%;
+    left: 0;
+    object-fit: contain;
+    position: absolute;
+    stroke-dasharray: 58 * 3.1416;
+    stroke-dashoffset: 58 * 3.1416;
+    transform: scaleX(-1);
+    top: 0;
+    width: 100%;
+
+    &.powerCircle--freeze {
+      animation-duration: 4s;
+    }
   }
 }
 

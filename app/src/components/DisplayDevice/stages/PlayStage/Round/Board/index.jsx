@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { TransitionGroup, Transition } from 'react-transition-group'
 import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 
@@ -37,14 +38,38 @@ const Board = props => {
     <div className={classNames(styles.playerMeta, styles[`playerMeta--${index + 1}`])}>
       <div className={styles.score}><span>{zeroUnit(player.score())}</span></div>
       <div className={styles.power}>
-        {power && (
-          <svg className={styles.powerCircle} viewBox="0 0 59 59" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
-            <path className={styles.powerCircleStroke} d="M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z" />
-          </svg>
-        )}
-        {power && (
-          <img src={power.image} alt="" className={styles.powerImage} />
-        )}
+        <TransitionGroup>
+          {power && (
+            <Transition
+              key="board-power"
+              timeout={{
+                enter: 5,
+                exit: 300,
+              }}
+            >
+              {status => (
+                <div
+                  className={classNames(styles.powerInner, {
+                    [styles.powerInnerEntering]: status === 'entering',
+                    [styles.powerInnerExiting]: status === 'exiting' || status === 'exited',
+                  })}
+                >
+                  <svg
+                    className={classNames(styles.powerCircle, styles[`powerCircle--${power.type}`])}
+                    viewBox="0 0 59 59"
+                    fill="none"
+                    stroke="black"
+                    strokeWidth="2"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path className={styles.powerCircleStroke} d="M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z" />
+                  </svg>
+                  <img src={power.image} alt="" className={styles.powerImage} />
+                </div>
+              )}
+            </Transition>
+          )}
+        </TransitionGroup>
       </div>
       <div className={styles.items}>
         {itemsForThisRound.map((imageItem, itemIndex) => {
@@ -80,8 +105,8 @@ const Board = props => {
         <span className={styles.timerFrac}>{getFractionPart(time)}</span>
         <div className={styles.timerRoundName}>{roundName}</div>
       </div>
-      {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], items[1], 1)}
-      {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], powerArray[1], 1)}
+      {PlayersManager.players[1] && renderPlayerMeta(PlayersManager.players[1], items[1], powerArray[1], 1)}
+      {PlayersManager.players[1] && renderCharacter(PlayersManager.players[1], 1)}
     </div>
   )
 }

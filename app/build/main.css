@@ -863,18 +863,48 @@ a {
   padding-top: 0.55556vw;
   text-align: center; }
 
+@keyframes Board-power-ring--2EXwA {
+  0% {
+    stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 182.2128; } }
+
 .Board-power--1Fjli {
   flex: 6.17284vw 0 0;
   height: 6.17284vw;
   position: relative; }
-  .Board-power--1Fjli .Board-powerImage--3UNl-,
-  .Board-power--1Fjli .Board-powerCircle--afidW {
+  .Board-power--1Fjli .Board-powerInner--1ds2c {
     height: 100%;
     left: 0;
-    object-fot: contain;
     position: absolute;
     top: 0;
+    transition: opacity .2s, transform .2s ease-out;
     width: 100%; }
+    .Board-power--1Fjli .Board-powerInner--1ds2c.Board-powerInnerEntering--2RBCZ, .Board-power--1Fjli .Board-powerInner--1ds2c.Board-powerInnerExiting--1-kTC {
+      opacity: 0;
+      transform: scale(0.1); }
+    .Board-power--1Fjli .Board-powerInner--1ds2c.Board-powerInnerExiting--1-kTC {
+      transition: opacity .3s, transform .3s ease-in; }
+  .Board-power--1Fjli .Board-powerImage--3UNl- {
+    height: 80%;
+    left: 10%;
+    object-fit: contain;
+    position: absolute;
+    top: 10%;
+    width: 80%; }
+  .Board-power--1Fjli .Board-powerCircle--afidW {
+    animation: Board-power-ring--2EXwA 6s both linear;
+    height: 100%;
+    left: 0;
+    object-fit: contain;
+    position: absolute;
+    stroke-dasharray: 182.2128;
+    stroke-dashoffset: 182.2128;
+    transform: scaleX(-1);
+    top: 0;
+    width: 100%; }
+    .Board-power--1Fjli .Board-powerCircle--afidW.Board-powerCircle--freeze--37sWl {
+      animation-duration: 4s; }
 
 .Board-items--1l1Q1 {
   align-items: center;
