@@ -113333,7 +113333,8 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     totalTime: TIME,
     itemImage: itemImage,
     items: itemsLevel,
-    transitionStatus: transitionStatus
+    transitionStatus: transitionStatus,
+    roundName: _constants__WEBPACK_IMPORTED_MODULE_7__["GAME_ROUNDS"][roundIndex].roundNameText
   })));
 };
 
@@ -113826,6 +113827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var Board = function Board(props) {
   var items = props.items,
+      roundName = props.roundName,
       time = props.time,
       totalTime = props.totalTime,
       transitionStatus = props.transitionStatus;
@@ -113891,7 +113893,9 @@ var Board = function Board(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerInt
   }, zeroUnit(parseInt(time, 10))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerFrac
-  }, getFractionPart(time))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], 1));
+  }, getFractionPart(time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timerRoundName
+  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], items[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].players[1], 1));
 };
 
 function getFractionPart(number) {
@@ -113918,7 +113922,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 

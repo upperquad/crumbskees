@@ -735,7 +735,7 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
-.Board-timer--1FYhF .Board-timerInt--3yT-c {
+.Board-timer--1FYhF .Board-timerInt--3yT-c, .Board-timer--1FYhF .Board-timerRoundName--31GLp {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
   font-size: 6.94444vw;
@@ -815,6 +815,23 @@ a {
     position: relative;
     text-align: left;
     width: 2.77778vw; }
+
+@keyframes Board-round-name-appear--2JJjA {
+  from {
+    opacity: 0;
+    transform: translateY(-500%) scale(1.5); }
+  to {
+    opacity: 1;
+    transform: none; } }
+  .Board-timer--1FYhF .Board-timerRoundName--31GLp {
+    animation: Board-round-name-appear--2JJjA .6s 4.4s ease-out both;
+    bottom: 1.25vw;
+    color: #fff;
+    font-size: 1.08025vw;
+    letter-spacing: .1em;
+    line-height: 1.31173vw;
+    margin-top: 1.77469vw;
+    mix-blend-mode: exclusion; }
   .Board-timer--1FYhF .Board-timerMaskLeft--2ruSl,
   .Board-timer--1FYhF .Board-timerMaskRight--2oGKR {
     bottom: 0;
@@ -1028,10 +1045,10 @@ a {
   .Intro-introRoundWrapperDown--2I3ny .Intro-introRound--2A6Nt {
     color: #fff;
     letter-spacing: .1em;
-    mix-blend-mode: exclusion;
+    opacity: 0;
     text-shadow: 0.69444vw 0.69444vw 0 transparent;
     -webkit-text-stroke: 0.27778vw transparent;
-    transition: color .3s .9s, letter-spacing .3s .9s, mix-blend-mode 1ms 1.2s, text-shadow .3s .9s, -webkit-text-stroke .3s .9s; }
+    transition: color .3s .6s, letter-spacing .3s .6s, opacity .3s .6s, text-shadow .3s .6s, -webkit-text-stroke .3s .6s; }
 
 .Intro-countdown--21Eah {
   left: 50%;
