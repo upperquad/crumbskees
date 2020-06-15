@@ -1,14 +1,11 @@
 import round1VideoBack from '~assets/images/round_1/r1-pattern.mp4'
 import round1VideoFront from '~assets/images/round_1/r1-pattern-bw.mp4'
-import snack1 from '~assets/images/snack-1.png'
 import round1IntroVideo from '~assets/images/round_1/s1-intro.mp4'
 import round2VideoBack from '~assets/images/round_2/r2-pattern.mp4'
 import round2VideoFront from '~assets/images/round_2/r2-pattern-bw.mp4'
-import snack2 from '~assets/images/snack-2.png'
 import round2IntroVideo from '~assets/images/round_2/s2-intro.mp4'
 import round3VideoBack from '~assets/images/round_3/r3-pattern.mp4'
 import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
-import snack3 from '~assets/images/snack-3.png'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
@@ -85,9 +82,32 @@ export const CHARACTERS = [
   },
 ]
 
+export const GOOD_SNACKS = [
+  goodSnack1,
+  goodSnack2,
+  goodSnack3,
+  goodSnack4,
+  goodSnack5,
+  goodSnack6,
+  goodSnack7,
+  goodSnack8,
+  goodSnack9,
+  goodSnack10,
+  goodSnack11,
+  goodSnack12,
+  goodSnack13,
+]
+
+export const BAD_SNACKS = [
+  badSnack1,
+  badSnack2,
+  badSnack3,
+  badSnack4,
+  badSnack5,
+  badSnack6,
+]
+
 export const TUTORIAL_ROUND = {
-  badItemImage: badSnack1,
-  itemImages: [snack1, snack2],
   numBadItems: 0,
   numBigItems: 10,
   numRegularItems: 0,
@@ -96,36 +116,30 @@ export const TUTORIAL_ROUND = {
 
 export const GAME_ROUNDS = [
   {
-    badItemImage: badSnack1,
-    itemImages: [snack1, snack2],
     key: 'game-round-1',
     numBadItems: 2,
     numBigItems: 5,
-    numRegularItems: 3,
+    numRegularItems: 5,
     powers: ['grow'],
     roundNameText: 'Round\xa001',
     videoBack: round1VideoBack,
     videoFront: round1VideoFront,
     videoIntro: round1IntroVideo,
   }, {
-    badItemImage: badSnack1,
-    itemImages: [snack2, snack3],
     key: 'game-round-2',
     numBadItems: 2,
-    numBigItems: 5,
-    numRegularItems: 3,
+    numBigItems: 4,
+    numRegularItems: 6,
     powers: ['freeze'],
     roundNameText: 'Round\xa002',
     videoBack: round2VideoBack,
     videoFront: round2VideoFront,
     videoIntro: round2IntroVideo,
   }, {
-    badItemImage: badSnack1,
-    itemImages: [snack1, snack2, snack3],
     key: 'game-round-3',
     numBadItems: 2,
-    numBigItems: 5,
-    numRegularItems: 3,
+    numBigItems: 3,
+    numRegularItems: 7,
     powers: ['grow'],
     roundNameText: 'Last\xa0round',
     videoBack: round3VideoBack,

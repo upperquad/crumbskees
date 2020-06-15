@@ -5,15 +5,26 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 import Player1Peer from '~managers/PeerManager/Player1Peer'
 import Player2Peer from '~managers/PeerManager/Player2Peer'
-import { VB_WIDTH, VB_HEIGHT, GRID_COLS, GRID_LINES, GRID_UNIT, GRID_UNIT_VW, GRID_UNIT_VH, COLORS } from '~constants'
+import {
+  VB_WIDTH,
+  VB_HEIGHT,
+  GRID_COLS,
+  GRID_LINES,
+  GRID_UNIT,
+  GRID_UNIT_VW,
+  GRID_UNIT_VH,
+  COLORS,
+  GOOD_SNACKS,
+  BAD_SNACKS,
+} from '~constants'
 import { clamp, randomInt } from '~utils/math'
 
 import PixiScene from './PixiScene'
 import PlayerMessage from './PlayerMessage'
 import PopupMessage from './PopupMessage'
 
-import growItem from '~assets/images/grow.png'
-import freezeItem from '~assets/images/freeze.png'
+import growItem from '~assets/images/powers/grow.svg'
+import freezeItem from '~assets/images/powers/frozen.svg'
 
 const GameZone = props => {
   const {
@@ -266,7 +277,7 @@ const GameZone = props => {
 
     const setupGrid = () => {
       // REVIEW: this is really inefficient
-      const { badItemImage, itemImages, numBadItems, numBigItems, numRegularItems, powers } = round
+      const { numBadItems, numBigItems, numRegularItems, powers } = round
       for (let i = 0; i < GRID_COLS; i++) {
         for (let j = 0; j < GRID_LINES; j++) {
           const obj = { x: i, y: j }
@@ -307,13 +318,14 @@ const GameZone = props => {
 
       // add bad items
       for (let i = 0; i < numBadItems; i++) {
-        const item = createItem({ image: badItemImage, type: 'bad' })
+        const randomImage = BAD_SNACKS[randomInt(0, BAD_SNACKS.length - 1)]
+        const item = createItem({ image: randomImage, type: 'bad' })
         newItems.push(item)
       }
 
       // add items
       for (let i = 0; i < numRegularItems; i++) {
-        const randomImage = itemImages[randomInt(0, itemImages.length - 1)]
+        const randomImage = GOOD_SNACKS[randomInt(0, GOOD_SNACKS.length - 1)]
         const item = createItem({ image: randomImage })
         newItems.push(item)
       }
@@ -344,7 +356,7 @@ const GameZone = props => {
 
       // add big items
       for (let i = 0; i < numBigItems; i++) {
-        const randomImage = itemImages[randomInt(0, itemImages.length - 1)]
+        const randomImage = GOOD_SNACKS[randomInt(0, GOOD_SNACKS.length - 1)]
         const item = createItem({ image: randomImage, size: 2 })
         newItems.push(item)
       }

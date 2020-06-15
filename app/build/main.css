@@ -593,23 +593,6 @@ a {
     transform: skewY(45deg);
     width: 1.11111vw; }
 
-@keyframes GameZoneWrapper-playstage-bar-change-color--1gM_1 {
-  0% {
-    background-color: #69e5ab;
-    width: 100%; }
-  70% {
-    background-color: #69e5ab;
-    width: 30%; }
-  73% {
-    background-color: #ff9d21;
-    width: 27%; }
-  75% {
-    background-color: #ec504f;
-    width: 25%; }
-  100% {
-    background-color: #ec504f;
-    width: 0%; } }
-
 @keyframes GameZoneWrapper-playstage-blink-bar-color--3P60k {
   0% {
     opacity: 0; }
@@ -631,17 +614,6 @@ a {
   position: relative;
   width: 100%;
   z-index: 10; }
-  .GameZoneWrapper-gameContent--3OLh9::after {
-    animation: GameZoneWrapper-playstage-bar-change-color--1gM_1 40s linear 1 forwards, GameZoneWrapper-playstage-blink-bar-color--3P60k .5s linear infinite forwards 30s;
-    background-color: #69e5ab;
-    bottom: -1px;
-    content: '';
-    height: 0.9375vw;
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
-    width: 100%;
-    z-index: 10; }
 
 .GameZoneWrapper-readyIndicators--1lgOI {
   align-items: center;
@@ -689,7 +661,6 @@ a {
     width: 1.11111vw; }
 
 .GameZone-gameZone--2IEsp {
-  cursor: none;
   height: 100%;
   position: absolute;
   text-align: center;
@@ -985,13 +956,7 @@ a {
   transform: translateX(-50%) scale(0.12);
   transition: bottom 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86), transform 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86); }
 
-.Intro-introReadyWrapper--1Tr8S {
-  line-height: 1;
-  overflow: hidden;
-  position: relative; }
-
 .Intro-countdown--21Eah {
-  color: #ec504f;
   left: 50%;
   overflow: hidden;
   position: absolute;
@@ -1024,8 +989,22 @@ a {
 /* Easings*/
 /* Timings */
 .DropText-dropText--2Vr_0 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 6.94444vw;
+  font-weight: 900;
+  line-height: 8.33333vw; }
+
+.DropText-dropText--2Vr_0 {
+  color: #fff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0.69444vw 0.69444vw 0 #000;
+  -webkit-text-stroke: 0.27778vw #000; }
+
+.DropText-dropText--2Vr_0 {
   color: #ec504f;
-  font-size: responsive-font(200);
+  padding: 1em;
   text-align: center; }
 
 /* Colors */

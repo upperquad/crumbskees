@@ -91,14 +91,7 @@
   transition: bottom 1.2s $easing-circle-in-out, transform 1.2s $easing-circle-in-out;
 }
 
-.introReadyWrapper {
-  line-height: 1;
-  overflow: hidden;
-  position: relative;
-}
-
 .countdown {
-  color: $color-red;
   left: 50%;
   overflow: hidden;
   position: absolute;

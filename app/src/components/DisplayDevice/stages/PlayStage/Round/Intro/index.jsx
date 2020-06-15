@@ -12,7 +12,7 @@ const stepsArray = [
   { name: 'slideIn', tillNextStep: 1000 },
   { name: 'roundPopup', tillNextStep: 1300 },
   { name: 'roundBlink', tillNextStep: 1100 },
-  { name: 'roundDown', tillNextStep: 200 },
+  { name: 'roundDown', tillNextStep: 1000 },
   { name: 'readyIn', tillNextStep: 800 },
   { name: 'readyOut', tillNextStep: 0 },
   { name: 'setIn', tillNextStep: 800 },
