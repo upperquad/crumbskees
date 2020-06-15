@@ -113790,6 +113790,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
 /* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -113830,11 +113838,19 @@ var Board = function Board(props) {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.power
     }, "power"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.items
-    }, itemsForThisRound.map(function (imageItem) {
+    }, itemsForThisRound.map(function (imageItem, itemIndex) {
+      var key = "".concat(imageItem, "-").concat(itemIndex);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.item,
+        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.item, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.itemSnack),
         src: imageItem,
+        key: key,
         alt: ""
+      });
+    }), _toConsumableArray(Array(12 - itemsForThisRound.length)).map(function (e, i) {
+      var key = "placeholder-".concat(i);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.item, _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.itemPlaceholder),
+        key: key
       });
     })));
   };
@@ -113866,7 +113882,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","score":"Board-score--3Jfkn","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","score":"Board-score--3Jfkn","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 
@@ -114831,9 +114847,11 @@ var JumpUpText = function JumpUpText(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.jumpUpText, extraClassName)
   }, trail.map(function (animationProps, index) {
+    var key = "".concat(letterArray[index], "-").concat(index);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_2__["animated"].span, {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.letter,
-      style: animationProps
+      style: animationProps,
+      key: key
     }, letterArray[index]);
   }));
 };

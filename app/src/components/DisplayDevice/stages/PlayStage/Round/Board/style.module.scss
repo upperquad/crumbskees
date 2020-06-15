@@ -75,15 +75,51 @@
 }
 
 .items {
-  border: 1px solid red;
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
   flex: scaleVw(80 / .9) 0 0;
   height: 100%;
+  justify-content: space-between;
+}
+
+@keyframes item-appear {
+  0% {
+    opacity: 0;
+    transform: scale(.1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .item {
-  height: grid(.5);
-  margin-right: grid(.3);
-  width: grid(.5);
+  height: scaleVw(23);
+  width: scaleVw(23);
+
+  &.itemSnack {
+    animation: item-appear .15s 1 both;
+    object-fit: contain;
+  }
+
+  &.itemPlaceholder {
+    position: relative;
+
+    &::before {
+      background: $color-black;
+      border-radius: 50%;
+      content: '';
+      height: scaleVw(5);
+      left: 50%;
+      opacity: .5;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: scaleVw(5);
+    }
+  }
 }
 
 .playerMeta--2 {

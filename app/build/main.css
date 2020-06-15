@@ -815,14 +815,40 @@ a {
   height: 6.17284vw; }
 
 .Board-items--1l1Q1 {
-  border: 1px solid red;
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
   flex: 6.17284vw 0 0;
-  height: 100%; }
+  height: 100%;
+  justify-content: space-between; }
+
+@keyframes Board-item-appear--3d5br {
+  0% {
+    opacity: 0;
+    transform: scale(0.1); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }
 
 .Board-item--2QmwZ {
-  height: 1.5625vw;
-  margin-right: 0.9375vw;
-  width: 1.5625vw; }
+  height: 1.59722vw;
+  width: 1.59722vw; }
+  .Board-item--2QmwZ.Board-itemSnack--3F-81 {
+    animation: Board-item-appear--3d5br .15s 1 both;
+    object-fit: contain; }
+  .Board-item--2QmwZ.Board-itemPlaceholder--2IiX_ {
+    position: relative; }
+    .Board-item--2QmwZ.Board-itemPlaceholder--2IiX_::before {
+      background: #000;
+      border-radius: 50%;
+      content: '';
+      height: 0.34722vw;
+      left: 50%;
+      opacity: .5;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 0.34722vw; }
 
 .Board-playerMeta--2--1Mx8k {
   flex-direction: row-reverse; }

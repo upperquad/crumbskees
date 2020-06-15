@@ -38,9 +38,23 @@ const Board = props => {
       <div className={styles.score}><span>{zeroUnit(player.score())}</span></div>
       <div className={styles.power}>power</div>
       <div className={styles.items}>
-        {itemsForThisRound.map(imageItem => (
-          <img className={styles.item} src={imageItem} alt="" />
-        ))}
+        {itemsForThisRound.map((imageItem, itemIndex) => {
+          const key = `${imageItem}-${itemIndex}`
+          return (
+            <img
+              className={classNames(styles.item, styles.itemSnack)}
+              src={imageItem}
+              key={key}
+              alt=""
+            />
+          )
+        })}
+        {[...Array(12 - itemsForThisRound.length)].map((e, i) => {
+          const key = `placeholder-${i}`
+          return (
+            <div className={classNames(styles.item, styles.itemPlaceholder)} key={key} />
+          )
+        })}
       </div>
     </div>
   )
