@@ -1086,7 +1086,7 @@ a {
     opacity: 0;
     text-shadow: 0.69444vw 0.69444vw 0 transparent;
     -webkit-text-stroke: 0.27778vw transparent;
-    transition: color .3s .6s, letter-spacing .3s .6s, opacity .3s .6s, text-shadow .3s .6s, -webkit-text-stroke .3s .6s; }
+    transition: opacity .2s .5s, color .3s .6s, letter-spacing .3s .6s, text-shadow .3s .6s, -webkit-text-stroke .3s .6s; }
 
 .Intro-countdown--21Eah {
   left: 50%;
@@ -1113,7 +1113,7 @@ a {
 
 .Intro-goStart--1ikFw {
   animation: Intro-intro-go--fPRD7 1s linear 1 both;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(2);
   transition: transform 1.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); }
 
 /* Colors */

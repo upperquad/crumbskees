@@ -99,9 +99,9 @@
     text-shadow: scaleVw(10) scaleVw(10) 0 transparent;
     -webkit-text-stroke: scaleVw(4) transparent;
     transition:
+      opacity .2s .5s,
       color .3s .6s,
       letter-spacing .3s .6s,
-      opacity .3s .6s,
       text-shadow .3s .6s,
       -webkit-text-stroke .3s .6s;
   }
@@ -135,6 +135,6 @@
 
 .goStart {
   animation: intro-go 1s linear 1 both;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(2);
   transition: transform 1.5s $easing-circle-in-out;
 }

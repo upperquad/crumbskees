@@ -9,6 +9,7 @@ const PlayerMessage = props => {
   const { color, position, power, roundScore, tapInstruction } = props
   const prevScore = useRef(0)
   const [message, setMessage] = useState({ messageCount: 0 })
+  const initScoreUpdated = useRef(false)
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -31,12 +32,16 @@ const PlayerMessage = props => {
         finalColor = hexToRgb(COLORS.red)
       }
 
-      addMessage({
-        text: scoreAdded,
-        color: `rgba(${finalColor}, .8)`,
-      })
+      if (initScoreUpdated.current) {
+        addMessage({
+          text: scoreAdded,
+          color: `rgba(${finalColor}, .8)`,
+        })
+      }
       prevScore.current = roundScore
     }
+
+    initScoreUpdated.current = true
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roundScore])

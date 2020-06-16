@@ -112391,6 +112391,8 @@ var PlayerMessage = function PlayerMessage(props) {
       message = _useState2[0],
       setMessage = _useState2[1];
 
+  var initScoreUpdated = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false);
+
   var addMessage = function addMessage(messageObj) {
     setMessage(function (prevMessage) {
       return _objectSpread({}, messageObj, {
@@ -112413,13 +112415,17 @@ var PlayerMessage = function PlayerMessage(props) {
         finalColor = Object(_utils_colors__WEBPACK_IMPORTED_MODULE_3__["hexToRgb"])(_constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"].red);
       }
 
-      addMessage({
-        text: scoreAdded,
-        color: "rgba(".concat(finalColor, ", .8)")
-      });
-      prevScore.current = roundScore;
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (initScoreUpdated.current) {
+        addMessage({
+          text: scoreAdded,
+          color: "rgba(".concat(finalColor, ", .8)")
+        });
+      }
 
+      prevScore.current = roundScore;
+    }
+
+    initScoreUpdated.current = true; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roundScore]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (power) {
