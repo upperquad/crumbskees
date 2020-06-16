@@ -110233,6 +110233,28 @@ module.exports = __webpack_require__.p + "73f295f87b906761e31f590c20d943db.png";
 
 /***/ }),
 
+/***/ "./src/assets/images/outro-illo/background.jpg":
+/*!*****************************************************!*\
+  !*** ./src/assets/images/outro-illo/background.jpg ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "e4cffdaa9a8499520296694db8b3a56b.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/outro-illo/background.mp4":
+/*!*****************************************************!*\
+  !*** ./src/assets/images/outro-illo/background.mp4 ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "48819bc5b6958bad0496b6f453fa8d70.mp4";
+
+/***/ }),
+
 /***/ "./src/assets/images/powers/frozen.svg":
 /*!*********************************************!*\
   !*** ./src/assets/images/powers/frozen.svg ***!
@@ -113521,10 +113543,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stages_SetupStage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stages/SetupStage */ "./src/components/DisplayDevice/stages/SetupStage/index.jsx");
 /* harmony import */ var _stages_TutorialStage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stages/TutorialStage */ "./src/components/DisplayDevice/stages/TutorialStage/index.jsx");
 /* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/DisplayDevice/stages/PlayStage/index.jsx");
-/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/DisplayDevice/stages/ResultStage/index.jsx");
-/* harmony import */ var _StageWrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./StageWrapper */ "./src/components/DisplayDevice/StageWrapper/index.jsx");
-/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _stages_OutroIlloStage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./stages/OutroIlloStage */ "./src/components/DisplayDevice/stages/OutroIlloStage/index.jsx");
+/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/DisplayDevice/stages/ResultStage/index.jsx");
+/* harmony import */ var _StageWrapper__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./StageWrapper */ "./src/components/DisplayDevice/StageWrapper/index.jsx");
+/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -113539,6 +113562,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // import ModeStage from './stages/ModeStage'
+
 
 
 
@@ -113581,29 +113605,29 @@ var DisplayDevice = function DisplayDevice() {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var connectHandler = function connectHandler() {
       // PlayersManager.reset()
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('TWO_PLAYERS');
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].init('TWO_PLAYERS');
       setStage('landing');
     };
 
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].init('display');
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('CONNECTED', connectHandler);
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].connect();
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('display');
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_12__["default"].addSubscriber('CONNECTED', connectHandler);
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_12__["default"].connect();
     return function () {
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('CONNECTED', connectHandler);
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].disconnect();
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_12__["default"].removeSubscriber('CONNECTED', connectHandler);
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_12__["default"].disconnect();
     };
   }, [gameCount]); // subscribe to PlayersManager
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // This should trigger on all children components so don't have to do this anywhere else
     var onPlayerUpdate = function onPlayerUpdate() {
-      setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].bothConnected());
+      setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].bothConnected());
       forceUpdate();
     };
 
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].addSubscriber('player_change', onPlayerUpdate);
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].addSubscriber('player_change', onPlayerUpdate);
     return function () {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].removeSubscriber('player_change', onPlayerUpdate);
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_13__["default"].removeSubscriber('player_change', onPlayerUpdate);
     };
   }, [setBothConnected, forceUpdate]); //   TODO: listener for error states
   //   useEffect(() => {
@@ -113657,7 +113681,7 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-landing",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_LandingStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
       onFinish: function onFinish() {
@@ -113668,7 +113692,7 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-intro-illo",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_IntroIlloStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
       onFinish: function onFinish() {
@@ -113679,7 +113703,7 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-setup",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_SetupStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       onFinish: function onFinish() {
@@ -113691,7 +113715,7 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-tutorial",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_TutorialStage__WEBPACK_IMPORTED_MODULE_7__["default"], {
       rollback: function rollback() {
@@ -113705,9 +113729,20 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-play",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      onFinish: function onFinish() {
+        return setStage('outro-illo');
+      }
+    }));
+  }), stage === 'outro-illo' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_1__["Transition"], {
+    key: "stage-outro-illo",
+    timeout: TRANSITION_TIMEOUTS
+  }, function (status) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      status: status
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_OutroIlloStage__WEBPACK_IMPORTED_MODULE_9__["default"], {
       onFinish: function onFinish() {
         return setStage('result');
       }
@@ -113716,9 +113751,9 @@ var DisplayDevice = function DisplayDevice() {
     key: "stage-result",
     timeout: TRANSITION_TIMEOUTS
   }, function (status) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_11__["default"], {
       status: status
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_10__["default"], {
       onFinish: resetGame
     }));
   })));
@@ -113880,6 +113915,66 @@ var LandingStage = function LandingStage(props) {
 
 // extracted by mini-css-extract-plugin
 module.exports = {"banner":"LandingStage-banner--1YRTw","title":"LandingStage-title--25MQu","marqueeLeft":"LandingStage-marqueeLeft--1wXUy","marqueeSideText":"LandingStage-marqueeSideText--3t3oi","marqueeRight":"LandingStage-marqueeRight--2_FCy","marqueeTop":"LandingStage-marqueeTop--2c-M7","marqueeTopText":"LandingStage-marqueeTopText--2gXf7","video":"LandingStage-video--1OiNh","titleMain":"LandingStage-titleMain--odBI0","button":"LandingStage-button--3YvCO"};
+
+/***/ }),
+
+/***/ "./src/components/DisplayDevice/stages/OutroIlloStage/index.jsx":
+/*!**********************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/OutroIlloStage/index.jsx ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/OutroIlloStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _assets_images_outro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/outro-illo/background.mp4 */ "./src/assets/images/outro-illo/background.mp4");
+/* harmony import */ var _assets_images_outro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_outro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _assets_images_outro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~assets/images/outro-illo/background.jpg */ "./src/assets/images/outro-illo/background.jpg");
+/* harmony import */ var _assets_images_outro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_images_outro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+
+var OutroIlloStage = function OutroIlloStage(props) {
+  var extraClassName = props.extraClassName,
+      onFinish = props.onFinish;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setTimeout(onFinish, _constants__WEBPACK_IMPORTED_MODULE_3__["DEBUG"] ? 1000 : 5000);
+  }, [onFinish]);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.introIllo, extraClassName)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    src: _assets_images_outro_illo_background_mp4__WEBPACK_IMPORTED_MODULE_5___default.a,
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.video,
+    poster: _assets_images_outro_illo_background_jpg__WEBPACK_IMPORTED_MODULE_6___default.a
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OutroIlloStage);
+
+/***/ }),
+
+/***/ "./src/components/DisplayDevice/stages/OutroIlloStage/style.module.scss":
+/*!******************************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/OutroIlloStage/style.module.scss ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+module.exports = {"outroIllo":"OutroIlloStage-outroIllo--3NUw4","video":"OutroIlloStage-video--2RldO"};
 
 /***/ }),
 
