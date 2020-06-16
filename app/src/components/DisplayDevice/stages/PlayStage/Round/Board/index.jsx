@@ -49,7 +49,12 @@ const Board = props => {
                     strokeWidth="2"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path className={styles.powerCircleStroke} d="M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9 44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1 37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z" />
+                    <path
+                      className={styles.powerCircleStroke}
+                      d="M29.6 1C37.2 1 44.4 4 49.7 9.3C55 14.7 58.1 22 58 29.6C58 37.2 54.9
+                      44.4 49.6 49.7C44.2 55 37 58 29.4 58C21.8 58 14.6 55 9.3 49.6C4 44.2 1
+                      37 1 29.4C1 21.8 4 14.6 9.4 9.3C14.8 4 22.1 1 29.6 1V1Z"
+                    />
                   </svg>
                   <img src={power.image} alt="" className={styles.powerImage} />
                 </div>

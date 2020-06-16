@@ -7,13 +7,13 @@
     background: $color-black;
     content: '';
     position: absolute;
-    transform-origin: top left;
   }
 
   &::before {
     left: scaleVw(-4);
     right: scaleVw(-4);
     top: calc(100% + #{scaleVw(4)});
+    transform-origin: top left;
   }
 
   &::after {
@@ -33,6 +33,7 @@
   &::after {
     left: calc(100% + #{scaleVw(4)});
     transform: skewY(45deg);
+    transform-origin: top left;
     width: scaleVw(16);
   }
 }
@@ -48,6 +49,7 @@
   &::after {
     left: calc(100% + #{scaleVw(4)});
     transform: skewY(45deg);
+    transform-origin: top left;
     width: scaleVw(12);
   }
 }
@@ -63,6 +65,7 @@
   &::after {
     left: calc(100% + #{scaleVw(4)});
     transform: skewY(45deg);
+    transform-origin: top left;
     width: scaleVw(27);
   }
 }
@@ -78,6 +81,7 @@
   &::after {
     right: calc(100% + #{scaleVw(4)});
     transform: skewY(-45deg);
+    transform-origin: top right;
     width: scaleVw(16);
   }
 }

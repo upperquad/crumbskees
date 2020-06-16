@@ -78,6 +78,7 @@
       left: calc(100% - #{scaleVw(4)});
       position: absolute;
       top: calc(100% - #{scaleVw(4)});
+      z-index: 1;
     }
   }
 
@@ -91,6 +92,7 @@
       position: absolute;
       right: calc(100% - #{scaleVw(4)});
       top: calc(100% - #{scaleVw(4)});
+      z-index: 1;
     }
 
     .score--p2 {

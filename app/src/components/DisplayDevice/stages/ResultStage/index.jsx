@@ -32,7 +32,7 @@ const ResultStage = props => {
       }
       return null
     })
-    const newMaxScore = Math.max(newPlayersCache.map(player => player.score))
+    const newMaxScore = Math.max(...newPlayersCache.map(player => player.score))
     if (typeof newMaxScore === 'number') {
       const newWinners = newPlayersCache.filter(player => player.score === newMaxScore)
       const newWinnerSlug = newWinners.length === 1 ? newWinners[0].slug : 'tie'
@@ -81,7 +81,10 @@ const ResultStage = props => {
           </div>
           <div className={classNames(styles.scores, styles[`scores--${winnerSlug}`])}>
             {playersCache.map(player => (
-              <div className={classNames(styles.score, styles[`score--${player.slug}`])}>
+              <div
+                key={player.slug}
+                className={classNames(styles.score, styles[`score--${player.slug}`])}
+              >
                 {player.score}
               </div>
             ))}

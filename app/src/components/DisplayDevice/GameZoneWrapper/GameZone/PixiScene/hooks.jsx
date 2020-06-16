@@ -214,6 +214,8 @@ export function useSetScene(refs, props) {
       // destroy app
       refs.app.current.destroy(true, true)
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.videoBack, props.videoFront])
 }
 
@@ -241,6 +243,8 @@ export function useResizeScene(refs) {
     return () => {
       window.removeEventListener('resize', resizeHandler)
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
 
@@ -277,6 +281,8 @@ export function useUpdateItems(refs, props) {
         container.removeChild(sprite)
       })
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.items])
 }
 
@@ -379,7 +385,7 @@ export function useUpdatePowers(refs, props) {
       return undefined
     })
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.powers, props.setTime])
 }
 
@@ -614,6 +620,8 @@ export function useRAF(refs, props) {
     return () => {
       AnimationFrameManager.removeSubscriber(updateFrame)
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.positions, props.powers])
 }
 
@@ -622,6 +630,8 @@ export function useUpdateGameState(refs, props) {
     if (props.gameState === 'after-game') {
       refs.startTransitionOut.current = getNow()
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.gameState])
 }
 

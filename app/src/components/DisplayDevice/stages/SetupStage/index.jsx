@@ -98,10 +98,14 @@ const SetupStage = props => {
                       >
                         {status => (
                           <div
-                            className={classNames(styles.playerConnected, styles[`playerConnected--${CHARACTERS[index].color}`], {
-                              [styles.playerConnectedTransitioning]:
-                                status === 'exiting' || status === 'exited' || status === 'entering',
-                            })}
+                            className={classNames(
+                              styles.playerConnected,
+                              styles[`playerConnected--${CHARACTERS[index].color}`],
+                              {
+                                [styles.playerConnectedTransitioning]:
+                                  status === 'exiting' || status === 'exited' || status === 'entering',
+                              },
+                            )}
                           >
                             <Character
                               extraClassName={styles.playerConnectedCharacter}

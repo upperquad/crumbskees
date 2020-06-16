@@ -403,7 +403,7 @@ const GameZone = props => {
 
   useEffect(() => {
     setParentPowerArray(powerArray)
-  }, [powerArray])
+  }, [powerArray, setParentPowerArray])
 
   function cancelPower(index) {
     setPowerArray(prevArray => {
