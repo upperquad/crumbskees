@@ -85,7 +85,7 @@ const ResultStage = props => {
                 key={player.slug}
                 className={classNames(styles.score, styles[`score--${player.slug}`])}
               >
-                {player.score}
+                {zeroUnit(player.score)}
               </div>
             ))}
           </div>
@@ -103,6 +103,13 @@ const ResultStage = props => {
       )}
     </div>
   )
+}
+
+function zeroUnit(number) {
+  if (number < 0) {
+    return '00'
+  }
+  return number < 10 ? `0${number}` : number
 }
 
 export default ResultStage
