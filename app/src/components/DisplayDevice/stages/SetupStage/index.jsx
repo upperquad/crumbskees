@@ -10,6 +10,7 @@ import Player2Peer from '~managers/PeerManager/Player2Peer'
 import JumpUpText from '~components/JumpUpText'
 import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
+import Character from '~components/Character'
 
 import backgroundVideo from '~assets/images/setup/background.mp4'
 import backgroundImage from '~assets/images/setup/background.jpg'
@@ -97,11 +98,16 @@ const SetupStage = props => {
                       >
                         {status => (
                           <div
-                            className={classNames(styles.playerConnected, {
+                            className={classNames(styles.playerConnected, styles[`playerConnected--${CHARACTERS[index].color}`], {
                               [styles.playerConnectedTransitioning]:
                                 status === 'exiting' || status === 'exited' || status === 'entering',
                             })}
                           >
+                            <Character
+                              extraClassName={styles.playerConnectedCharacter}
+                              character={CHARACTERS[index]}
+                              mood="excited"
+                            />
                             <span className={styles.playerConnectedText}>Connected!</span>
                           </div>
                         )}
@@ -118,6 +124,21 @@ const SetupStage = props => {
           return null
         })}
       </div>
+      {PlayersManager.players.map((player, index) => (
+        <div
+          className={classNames(styles.cornerCharacter, styles[`cornerCharacter--${index + 1}`], {
+            [styles.cornerCharacterOut]: player.connected,
+          })}
+          key={CHARACTERS[index].body}
+        >
+          <img className={styles.cornerCharacterBody} src={CHARACTERS[index].body} alt="" />
+          <Character
+            extraClassName={styles.cornerCharacterHead}
+            character={CHARACTERS[index]}
+            mood="excited"
+          />
+        </div>
+      ))}
       {bothConnected && (
         <div className={styles.instruction}>
           <JumpUpText text="Lets Play" />

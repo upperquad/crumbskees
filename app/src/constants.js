@@ -14,6 +14,8 @@ import characterImage1 from '~assets/images/character1.png'
 import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import characterVideo2 from '~assets/images/character2.mp4'
 import characterImage2 from '~assets/images/character2.png'
+import characterBody1 from '~assets/images/characters/body-1.svg'
+import characterBody2 from '~assets/images/characters/body-2.svg'
 
 import goodSnack1 from '~assets/images/snacks/good/1.svg'
 import goodSnack2 from '~assets/images/snacks/good/2.svg'
@@ -65,20 +67,38 @@ export const COLORS = {
 
 export const CHARACTERS = [
   {
-    color: 'pink',
-    secondaryColor: 'purple',
-    video: characterVideo1,
-    videoWhite: characterVideoWhite1,
-    image: characterImage1,
-    name: 'P1',
-  },
-  {
     color: 'yellow',
     secondaryColor: 'red',
     video: characterVideo2,
     videoWhite: characterVideoWhite2,
     image: characterImage2,
     name: 'P2',
+    lottie: {
+      angry: '/static/character1/angry.json',
+      excited: '/static/character1/excited.json',
+      freeze: '/static/character1/freeze.json',
+      happy: '/static/character1/happy.json',
+      lsd: '/static/character1/lsd.json',
+      sad: '/static/character1/sad.json',
+    },
+    body: characterBody1,
+  },
+  {
+    color: 'pink',
+    secondaryColor: 'purple',
+    video: characterVideo1,
+    videoWhite: characterVideoWhite1,
+    image: characterImage1,
+    name: 'P1',
+    lottie: {
+      angry: '/static/character2/angry.json',
+      excited: '/static/character2/excited.json',
+      freeze: '/static/character2/freeze.json',
+      happy: '/static/character2/happy.json',
+      lsd: '/static/character2/lsd.json',
+      sad: '/static/character2/sad.json',
+    },
+    body: characterBody2,
   },
 ]
 

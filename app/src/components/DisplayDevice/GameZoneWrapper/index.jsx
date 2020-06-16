@@ -11,6 +11,7 @@ import styles from './style.module.scss'
 
 import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
+import Character from '~components/Character'
 
 const TIME = 40
 
@@ -118,12 +119,22 @@ const GameZoneWrapper = props => {
             <div className={styles.readyIndicatorsTitle}>Ready?</div>
             {PlayersManager.players.map((player, index) => (
               <div
+                key={player.name}
                 className={classNames(
                   styles.readyIndicator,
                   styles[`readyIndicator--${index + 1}`],
+                  styles[`readyIndicator--${player.secondaryColor}`],
                   { [styles.isReady]: player.ready },
                 )}
-              />
+              >
+                <div className={styles.readyIndicatorInner}>
+                  <Character
+                    extraClassName={styles.readyIndicatorCharacter}
+                    character={player}
+                    mood={player.ready ? 'excited' : 'happy'}
+                  />
+                </div>
+              </div>
             ))}
           </div>
         </div>

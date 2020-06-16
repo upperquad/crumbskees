@@ -405,24 +405,6 @@ a {
   height: 24.30556vw;
   position: relative; }
 
-.SetupStage-playerConnected--3s2oQ {
-  color: #69e5ab;
-  font-size: 3.33333vw;
-  pointer-events: none;
-  position: relative;
-  text-transform: uppercase; }
-  .SetupStage-playerConnected--3s2oQ::before {
-    background: #ec504f;
-    border: 0.27778vw solid #000;
-    border-radius: 50%;
-    content: '';
-    height: 8.64583vw;
-    position: absolute;
-    width: 8.64583vw; }
-
-.SetupStage-playerConnectedText--1SEG8 {
-  position: relative; }
-
 .SetupStage-playerConnected--3s2oQ,
 .SetupStage-qr--14fFl {
   align-items: center;
@@ -433,10 +415,36 @@ a {
   left: 0;
   position: absolute;
   top: 0;
-  transition: opacity .3s;
   width: 100%; }
 
-.SetupStage-playerConnectedTransitioning--aww32,
+.SetupStage-qr--14fFl {
+  transition: opacity .3s; }
+
+.SetupStage-playerConnected--3s2oQ {
+  pointer-events: none;
+  transition: opacity .3s .3s, transform .3s .3s ease-out; }
+  .SetupStage-playerConnected--3s2oQ::before {
+    border-radius: 50%;
+    content: '';
+    height: 18.75vw;
+    position: absolute;
+    width: 18.75vw; }
+  .SetupStage-playerConnected--3s2oQ .SetupStage-playerConnectedCharacter--mHNTp {
+    height: 15.625vw;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 15.625vw; }
+  .SetupStage-playerConnected--pink--3crM9::before {
+    background: #f4b7ed; }
+  .SetupStage-playerConnected--yellow--1i33H::before {
+    background: #ffe945; }
+
+.SetupStage-playerConnectedTransitioning--aww32 {
+  opacity: 0;
+  transform: scale(0.4); }
+
 .SetupStage-qrTransitioning--1eI0K {
   opacity: 0; }
 
@@ -466,6 +474,37 @@ a {
 .SetupStage-qrUrlToken--1Jgor {
   color: #ec504f;
   text-transform: none; }
+
+.SetupStage-cornerCharacter--2frHB {
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: transform 1s ease-out; }
+  .SetupStage-cornerCharacter--1--1pqVe {
+    left: 0; }
+    .SetupStage-cornerCharacter--1--1pqVe .SetupStage-cornerCharacterHead--2RrB7 {
+      height: 22.91667vw;
+      right: 2.08333vw;
+      top: 2.08333vw;
+      transform: rotate(25deg);
+      width: 22.91667vw; }
+    .SetupStage-cornerCharacter--1--1pqVe.SetupStage-cornerCharacterOut--2IZMS {
+      transform: translate(-100%, 100%); }
+  .SetupStage-cornerCharacter--2--1Dhf_ {
+    right: 0; }
+    .SetupStage-cornerCharacter--2--1Dhf_ .SetupStage-cornerCharacterHead--2RrB7 {
+      height: 24.30556vw;
+      left: 1.38889vw;
+      top: 1.38889vw;
+      transform: rotate(-20deg);
+      width: 24.30556vw; }
+    .SetupStage-cornerCharacter--2--1Dhf_.SetupStage-cornerCharacterOut--2IZMS {
+      transform: translate(100%, 100%); }
+  .SetupStage-cornerCharacter--2frHB .SetupStage-cornerCharacterBody--1pm_- {
+    display: block;
+    width: 20.83333vw; }
+  .SetupStage-cornerCharacter--2frHB .SetupStage-cornerCharacterHead--2RrB7 {
+    position: absolute; }
 
 .SetupStage-instruction--2Kes6 {
   left: 0;
@@ -504,6 +543,20 @@ a {
 
 .JumpUpText-letter--vijM0 {
   display: inline-block; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.Character-character---ZZlr {
+  position: relative; }
+
+.Character-lottie--1kHlg {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
 
 /* Colors */
 /* Breakpoints */
@@ -629,14 +682,39 @@ a {
   .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy {
     height: 12.01389vw;
     opacity: .7;
+    pointer-events: none;
+    position: relative;
     transition: opacity .3s;
     width: 16.38889vw; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy.GameZoneWrapper-isReady--3CDNi {
       opacity: 1; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1--253OQ {
       order: 1; }
+      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1--253OQ .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+        left: -25%;
+        top: -20%;
+        transform: rotate(25deg); }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--2--3-IeY {
       order: 3; }
+      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--2--3-IeY .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+        right: -28%;
+        top: -34%;
+        transform: rotate(-140deg); }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--red--1UA4F {
+      background: #ec504f; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--purple--1jvJ2 {
+      background: #3f1bd0; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorInner--21zil {
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+    height: 17.36111vw;
+    position: absolute;
+    width: 17.36111vw; }
 
 /* Colors */
 /* Breakpoints */
@@ -903,8 +981,8 @@ a {
     position: absolute;
     stroke-dasharray: 182.2128;
     stroke-dashoffset: 182.2128;
-    transform: scaleX(-1);
     top: 0;
+    transform: scaleX(-1);
     width: 100%; }
     .Board-power--1Fjli .Board-powerCircle--afidW.Board-powerCircle--freeze--37sWl {
       animation-duration: 4s; }

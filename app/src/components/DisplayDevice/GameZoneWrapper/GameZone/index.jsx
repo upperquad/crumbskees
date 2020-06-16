@@ -431,6 +431,7 @@ const GameZone = props => {
       />
       {PlayersManager.players.map((player, index) => (
         <PlayerMessage
+          key={player.name}
           player={player}
           power={powerArray[index]}
           position={positionArray[index]}

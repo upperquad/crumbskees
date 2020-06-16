@@ -5,6 +5,7 @@ export default class Player {
     const {
       color,
       image,
+      lottie,
       name,
       secondaryColor,
       video,
@@ -17,6 +18,7 @@ export default class Player {
 
     // REVIEW: check if this is aligned with the control device
     this.color = color
+    this.lottie = lottie
     this.secondaryColor = secondaryColor
     this.video = video
     this.videoWhite = videoWhite

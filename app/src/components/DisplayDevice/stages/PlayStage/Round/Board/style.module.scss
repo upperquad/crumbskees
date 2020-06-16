@@ -187,8 +187,8 @@
     position: absolute;
     stroke-dasharray: 58 * 3.1416;
     stroke-dashoffset: 58 * 3.1416;
-    transform: scaleX(-1);
     top: 0;
+    transform: scaleX(-1);
     width: 100%;
 
     &.powerCircle--freeze {

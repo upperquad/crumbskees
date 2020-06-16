@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-// import { TransitionGroup, Transition } from 'react-transition-group'
 import styles from './style.module.scss'
 
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'

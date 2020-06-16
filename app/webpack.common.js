@@ -1,6 +1,7 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const styleLintPlugin = require('stylelint-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   module: {
@@ -28,7 +29,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
+      template: './public/index.html',
     }),
     new styleLintPlugin({
       configFile: '.stylelintrc.json',
@@ -36,7 +37,12 @@ module.exports = {
       files: '**/*.scss',
       failOnError: false,
       quiet: false,
-    })
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'static', to: 'static' },
+      ],
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
