@@ -134,7 +134,10 @@
 }
 
 .instruction {
+  left: 0;
   overflow: hidden;
-  padding-top: grid(10 / 3);
   position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -110863,9 +110863,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
 /* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
 /* harmony import */ var _stages_PreConnectStage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stages/PreConnectStage */ "./src/components/ControlDevice/stages/PreConnectStage/index.jsx");
-/* harmony import */ var _stages_MeetCharacterStage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stages/MeetCharacterStage */ "./src/components/ControlDevice/stages/MeetCharacterStage/index.jsx");
-/* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/ControlDevice/stages/PlayStage/index.jsx");
-/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/ControlDevice/stages/ResultStage/index.jsx");
+/* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/ControlDevice/stages/PlayStage/index.jsx");
+/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/ControlDevice/stages/ResultStage/index.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -110873,7 +110872,6 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -110982,23 +110980,16 @@ var ControlDevice = function ControlDevice() {
     hasPlayed: hasPlayed,
     onFinish: function onFinish() {
       setHasPlayed(true);
-      setStage('meet_character');
+      setStage('play');
     }
-  }), stage === 'meet_character' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_MeetCharacterStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    color: character.color,
-    video: character.videoWhite,
-    image: character.image,
-    onFinish: function onFinish() {
-      return setStage('play');
-    }
-  }), stage === 'play' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), stage === 'play' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
     activeTutorial: activeTutorial,
     setActiveTutorial: setActiveTutorial,
     characterIndex: characterIndex,
     color: character.color,
     score: score,
     image: character.image
-  }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
     winner: winner,
     characterIndex: characterIndex,
     score: score,
@@ -111016,76 +111007,6 @@ var ControlDevice = function ControlDevice() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ControlDevice);
-
-/***/ }),
-
-/***/ "./src/components/ControlDevice/stages/MeetCharacterStage/index.jsx":
-/*!**************************************************************************!*\
-  !*** ./src/components/ControlDevice/stages/MeetCharacterStage/index.jsx ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/MeetCharacterStage/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _styles_common_control_device_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~styles/common/control-device.scss */ "./src/styles/common/control-device.scss");
-/* harmony import */ var _styles_common_control_device_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_common_control_device_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_ControlDevice_Circle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/ControlDevice/Circle */ "./src/components/ControlDevice/Circle/index.jsx");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-
-
-
-
-
-
-var MeetCharacterStage = function MeetCharacterStage(props) {
-  var color = props.color,
-      image = props.image,
-      onFinish = props.onFinish,
-      video = props.video;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.meetCharacter
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_ControlDevice_Circle__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    color: color
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.text
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.title
-  }, "You're in!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.subtitle
-  }, "Say hello to your avatar.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.block
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    src: video,
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.video,
-    poster: image
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.placeholder
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.button,
-    onClick: function onClick() {
-      return onFinish();
-    }
-  }, "Ready"));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (MeetCharacterStage);
-
-/***/ }),
-
-/***/ "./src/components/ControlDevice/stages/MeetCharacterStage/style.module.scss":
-/*!**********************************************************************************!*\
-  !*** ./src/components/ControlDevice/stages/MeetCharacterStage/style.module.scss ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-module.exports = {"meetCharacter":"MeetCharacterStage-meetCharacter--1g4kN","text":"MeetCharacterStage-text--1g4Ck","title":"MeetCharacterStage-title--2rIjd","subtitle":"MeetCharacterStage-subtitle--e0EbS","block":"MeetCharacterStage-block--2DELd","video":"MeetCharacterStage-video--AERtj","placeholder":"MeetCharacterStage-placeholder--2FGX0","button":"MeetCharacterStage-button--1lihH"};
 
 /***/ }),
 
@@ -116426,18 +116347,6 @@ var Observable = function Observable() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "./src/styles/common/control-device.scss":
-/*!***********************************************!*\
-  !*** ./src/styles/common/control-device.scss ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-module.exports = {"token":"common-token--1BRNW","display":"common-display--1541F","label":"common-label--2ji6Z","token-input":"common-token-input--3RYoO","tokenInput":"common-token-input--3RYoO","token-input-key":"common-token-input-key--kjyfT","tokenInputKey":"common-token-input-key--kjyfT","bottom":"common-bottom--1Vowz","character-choice":"common-character-choice--38URy","characterChoice":"common-character-choice--38URy","text":"common-text--q-itt","grid":"common-grid--25cGg","block":"common-block--3ODNY","button":"common-button--VMYN_","character-confirm":"common-character-confirm--2kUjD","characterConfirm":"common-character-confirm--2kUjD","result":"common-result--EyIK3","winner":"common-winner--x2T2p","image-wrapper":"common-image-wrapper--tLccO","imageWrapper":"common-image-wrapper--tLccO","marquee":"common-marquee--3fmpD","winner--tied":"common-winner--tied--lpWV0","winnerTied":"common-winner--tied--lpWV0","infinite-text-16":"common-infinite-text-16--1Bgr5","infiniteText16":"common-infinite-text-16--1Bgr5","infinite-text-21":"common-infinite-text-21--2qcOm","infiniteText21":"common-infinite-text-21--2qcOm","winner--won":"common-winner--won--2Di5D","winnerWon":"common-winner--won--2Di5D","infinite-text-15":"common-infinite-text-15--3Ulfd","infiniteText15":"common-infinite-text-15--3Ulfd","infinite-text-14":"common-infinite-text-14--146Ko","infiniteText14":"common-infinite-text-14--146Ko","winner--lost":"common-winner--lost--2oY1M","winnerLost":"common-winner--lost--2oY1M","infinite-text-18":"common-infinite-text-18--3MiMZ","infiniteText18":"common-infinite-text-18--3MiMZ","small-text":"common-small-text--uHSh4","smallText":"common-small-text--uHSh4","skip-tutorial":"common-skip-tutorial--36xUR","skipTutorial":"common-skip-tutorial--36xUR","is-shown":"common-is-shown--1t67m","isShown":"common-is-shown--1t67m","placeholder":"common-placeholder--fvvJd","circle":"common-circle--28whz","circle--yellow":"common-circle--yellow--16GTH","circleYellow":"common-circle--yellow--16GTH","circle--purple":"common-circle--purple--1KeYi","circlePurple":"common-circle--purple--1KeYi","circle--red":"common-circle--red--1UTiQ","circleRed":"common-circle--red--1UTiQ","state":"common-state--P2hv5","infinite-text":"common-infinite-text--27Nf-","infiniteText":"common-infinite-text--27Nf-","alternate":"common-alternate--2t4K9","invert":"common-invert--1W8ue"};
 
 /***/ }),
 
