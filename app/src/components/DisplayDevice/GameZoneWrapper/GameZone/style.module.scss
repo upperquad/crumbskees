@@ -1,6 +1,7 @@
 @import "~styles/imports/index";
 
 .gameZone {
+  background: $color-white;
   height: 100%;
   position: absolute;
   text-align: center;
@@ -10,5 +11,6 @@
 
 .gameZoneTutorial {
   @extend %shadow-box;
+
   background: $color-yellow url('../../../../assets/images/tutorial/background.png') center / contain no-repeat;
 }

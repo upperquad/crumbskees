@@ -15,7 +15,7 @@ const OutroIlloStage = props => {
   }, [onFinish])
 
   return (
-    <div className={classNames(styles.introIllo, extraClassName)}>
+    <div className={classNames(styles.outroIllo, extraClassName)}>
       <AutoplayVideo
         src={backgroundVideo}
         extraClassName={styles.video}

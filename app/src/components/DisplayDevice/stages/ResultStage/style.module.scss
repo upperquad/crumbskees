@@ -101,14 +101,14 @@
   }
 
   &--tie {
-    @extend %shadow-box;
-
     .score {
+      @extend %shadow-box;
+
       font-size: scaleVw(70);
     }
 
     .score--p1 {
-      border-right: scaleVw(4) solid $color-black;
+      border-right: 0;
     }
   }
 }
