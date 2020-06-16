@@ -1,12 +1,18 @@
-import round1VideoBack from '~assets/images/round_1/r1-pattern.mp4'
-import round1VideoFront from '~assets/images/round_1/r1-pattern-bw.mp4'
-import round1IntroVideo from '~assets/images/round_1/s1-intro.mp4'
-import round2VideoBack from '~assets/images/round_2/r2-pattern.mp4'
-import round2VideoFront from '~assets/images/round_2/r2-pattern-bw.mp4'
-import round2IntroVideo from '~assets/images/round_2/s2-intro.mp4'
-import round3VideoBack from '~assets/images/round_3/r3-pattern.mp4'
-import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
-import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
+import round1VideoBack from '~assets/images/round-1/r1-pattern.mp4'
+import round1VideoFront from '~assets/images/round-1/r1-pattern-bw.mp4'
+import round1IntroVideo from '~assets/images/round-1/s1-intro.mp4'
+import round1Background from '~assets/images/round-1/s1-bg.mp4'
+import round1BackgroundImage from '~assets/images/round-1/s1-bg.jpg'
+import round2VideoBack from '~assets/images/round-2/r2-pattern.mp4'
+import round2VideoFront from '~assets/images/round-2/r2-pattern-bw.mp4'
+import round2IntroVideo from '~assets/images/round-2/s2-intro.mp4'
+import round2Background from '~assets/images/round-2/s2-bg.mp4'
+import round2BackgroundImage from '~assets/images/round-2/s2-bg.jpg'
+import round3VideoBack from '~assets/images/round-3/r3-pattern.mp4'
+import round3VideoFront from '~assets/images/round-3/r3-pattern-bw.mp4'
+import round3IntroVideo from '~assets/images/round-3/s3-intro.mp4'
+import round3Background from '~assets/images/round-3/s3-bg.mp4'
+import round3BackgroundImage from '~assets/images/round-3/s3-bg.jpg'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
 import characterImage1 from '~assets/images/character1.png'
@@ -142,6 +148,8 @@ export const GAME_ROUNDS = [
     videoBack: round1VideoBack,
     videoFront: round1VideoFront,
     videoIntro: round1IntroVideo,
+    background: round1Background,
+    backgroundImage: round1BackgroundImage,
   }, {
     key: 'game-round-2',
     numBadItems: 2,
@@ -152,6 +160,8 @@ export const GAME_ROUNDS = [
     videoBack: round2VideoBack,
     videoFront: round2VideoFront,
     videoIntro: round2IntroVideo,
+    background: round2Background,
+    backgroundImage: round2BackgroundImage,
   }, {
     key: 'game-round-3',
     numBadItems: 2,
@@ -162,5 +172,7 @@ export const GAME_ROUNDS = [
     videoBack: round3VideoBack,
     videoFront: round3VideoFront,
     videoIntro: round3IntroVideo,
+    background: round3Background,
+    backgroundImage: round3BackgroundImage,
   },
 ]
