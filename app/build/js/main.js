@@ -110837,9 +110837,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/Character/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
 /* harmony import */ var _components_Lottie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/Lottie */ "./src/components/Lottie/index.jsx");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/Character/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -110850,11 +110854,21 @@ var Character = function Character(props) {
       extraClassName = props.extraClassName,
       mood = props.mood;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.character, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Lottie__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    path: character.lottie[mood],
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.lottie
-  }));
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.character, extraClassName)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_2__["TransitionGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_2__["Transition"], {
+    key: mood,
+    timeout: {
+      enter: 100,
+      exit: 400
+    }
+  }, function (status) {
+    var _classNames;
+
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Lottie__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      path: character.lottie[mood],
+      extraClassName: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.lottie, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.lottieOut, status === 'exiting' || status === 'exited'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.lottieIn, status === 'entering'), _classNames))
+    });
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Character);
@@ -110869,7 +110883,7 @@ var Character = function Character(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"character":"Character-character---ZZlr","lottie":"Character-lottie--1kHlg"};
+module.exports = {"character":"Character-character---ZZlr","lottie":"Character-lottie--1kHlg","lottieIn":"Character-lottieIn--2XP1M","lottieOut":"Character-lottieOut--13kCW"};
 
 /***/ }),
 

@@ -556,7 +556,15 @@ a {
   left: 0;
   position: absolute;
   top: 0;
+  transition: opacity .3s;
   width: 100%; }
+
+.Character-lottieIn--2XP1M {
+  opacity: 0; }
+
+.Character-lottieOut--13kCW {
+  opacity: 0;
+  transition: opacity .2s .2s; }
 
 /* Colors */
 /* Breakpoints */
