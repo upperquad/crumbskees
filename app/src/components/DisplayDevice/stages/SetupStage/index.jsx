@@ -58,7 +58,7 @@ const SetupStage = props => {
   return (
     <div className={classNames(styles.setup, extraClassName)}>
       <AutoplayVideo extraClassName={styles.video} src={backgroundVideo} poster={backgroundImage} />
-      <h2 className={styles.title}>Get ready!</h2>
+      <h2 className={styles.title}>Grab a friend and your phones</h2>
       <h3 className={styles.subtitle}>Open your phone camera and scan the code!</h3>
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => {
