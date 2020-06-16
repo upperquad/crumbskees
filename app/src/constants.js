@@ -61,6 +61,7 @@ export const COLORS = {
   blue: '#00c1ff',
   pink: '#f4b7ed',
   yellow: '#ffe945',
+  white: '#fff',
 }
 
 export const CHARACTERS = [

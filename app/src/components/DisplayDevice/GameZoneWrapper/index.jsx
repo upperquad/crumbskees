@@ -65,7 +65,7 @@ const GameZoneWrapper = props => {
           if (!gameEnded.current) {
             addMessage({
               text: 'Time\'s up!',
-              color: COLORS.red,
+              color: COLORS.white,
               persistent: true,
               onEnd: () => setGameState('after-game'),
             })

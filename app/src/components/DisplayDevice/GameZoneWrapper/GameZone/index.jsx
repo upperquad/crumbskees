@@ -203,7 +203,7 @@ const GameZone = props => {
       const persistent = type === 'game'
       addMessage({
         text: getEndMessage(),
-        color: COLORS.red,
+        color: COLORS.white,
         persistent,
         onEnd: () => {
           if (type === 'game') {

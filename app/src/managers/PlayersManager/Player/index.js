@@ -8,7 +8,6 @@ export default class Player {
       lottie,
       name,
       secondaryColor,
-      video,
       videoWhite,
     } = character
     this.id = id
