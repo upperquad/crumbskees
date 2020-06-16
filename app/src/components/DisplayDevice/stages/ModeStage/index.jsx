@@ -7,8 +7,6 @@ import PlayersManager from '~managers/PlayersManager'
 import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 
-import homeBgVideo from '~assets/images/home-bg.mp4'
-
 const ModeStage = props => {
   const { extraClassName, onFinish } = props
 
@@ -20,7 +18,6 @@ const ModeStage = props => {
 
   return (
     <div className={classNames(styles.mode, extraClassName)}>
-      <AutoplayVideo extraClassName={styles.video} src={homeBgVideo} />
       <MarqueeText extraClassName={styles.welcome} text="Welcome to The Upperquadrant -" duration="12s" />
       <div className={styles.modeCard}>
         <div className={styles.modeHeader}>Select mode</div>
