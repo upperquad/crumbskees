@@ -139,7 +139,7 @@ const DisplayDevice = () => {
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
-                <SetupStage onFinish={() => setStage('result')} bothConnected={bothConnected} />
+                <SetupStage onFinish={() => setStage('tutorial')} bothConnected={bothConnected} />
               </StageWrapper>
             )}
           </Transition>

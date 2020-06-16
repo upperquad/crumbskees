@@ -8,6 +8,7 @@ export default class Player {
       lottie,
       name,
       secondaryColor,
+      slug,
       videoWhite,
     } = character
     this.id = id
@@ -22,6 +23,7 @@ export default class Player {
     this.videoWhite = videoWhite
     this.image = image
     this.name = name
+    this.slug = slug
 
     this.connected = false
 

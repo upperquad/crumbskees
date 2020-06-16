@@ -1,4 +1,4 @@
-%shadow-box {
+@mixin shadow-box {
   border: scaleVw(4) solid $color-black;
   position: relative;
 
@@ -11,18 +11,73 @@
   }
 
   &::before {
-    height: scaleVw(16);
     left: scaleVw(-4);
     right: scaleVw(-4);
     top: calc(100% + #{scaleVw(4)});
-    transform: skewX(45deg);
   }
 
   &::after {
     bottom: scaleVw(-4);
-    left: calc(100% + #{scaleVw(4)});
     top: scaleVw(-4);
+  }
+}
+
+%shadow-box {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(16);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
     transform: skewY(45deg);
+    width: scaleVw(16);
+  }
+}
+
+%shadow-box-small {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(12);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
+    transform: skewY(45deg);
+    width: scaleVw(12);
+  }
+}
+
+%shadow-box-large {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(27);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
+    transform: skewY(45deg);
+    width: scaleVw(27);
+  }
+}
+
+%shadow-box-large-left {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(16);
+    transform: skewX(-45deg);
+  }
+
+  &::after {
+    right: calc(100% + #{scaleVw(4)});
+    transform: skewY(-45deg);
     width: scaleVw(16);
   }
 }

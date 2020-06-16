@@ -20,34 +20,30 @@ import titleJson from '~assets/images/landing/title.json'
 
 const ResultStage = props => {
   const { extraClassName, onFinish } = props
-  const [winnerId, setWinnerId] = useState(null)
+  const [winnerSlug, setWinnerSlug] = useState(null)
+  const [playersCache, setPlayersCache] = useState([])
 
   useEffect(() => {
     // special handling for the short amount of time after
     // the game is restarted but before this is unmounted
-    const scores = PlayersManager.players.map(player => {
+    const newPlayersCache = PlayersManager.players.map(player => {
       if (typeof player.score === 'function') {
-        return player.score()
+        return { score: player.score(), slug: player.slug }
       }
       return null
     })
-    const newMaxScore = Math.max(...scores)
+    const newMaxScore = Math.max(newPlayersCache.map(player => player.score))
     if (typeof newMaxScore === 'number') {
-      const newWinners = PlayersManager.players.filter(player => (
-        typeof player.score === 'function' && player.score() === newMaxScore
-      ))
-      let newWinnerId = 'tie'
-      if (newWinners.length === 1) {
-        newWinnerId = newWinners[0].id
-      }
-      setWinnerId(newWinnerId)
-      setWinnerId('p1')
+      const newWinners = newPlayersCache.filter(player => player.score === newMaxScore)
+      const newWinnerSlug = newWinners.length === 1 ? newWinners[0].slug : 'tie'
+      setPlayersCache(newPlayersCache)
+      setWinnerSlug(newWinnerSlug)
     }
   }, [])
 
   let bg
   let bgImage
-  switch (winnerId) {
+  switch (winnerSlug) {
     case 'p1':
       bg = p1WinBg
       bgImage = p1WinBgImage
@@ -66,7 +62,7 @@ const ResultStage = props => {
 
   return (
     <div className={classNames(styles.result, extraClassName)}>
-      {winnerId && (
+      {winnerSlug && (
         <React.Fragment>
           <AutoplayVideo extraClassName={styles.background} src={bg} poster={bgImage} />
           <div className={styles.marqueeLeft}>
@@ -83,7 +79,14 @@ const ResultStage = props => {
               duration="12s"
             />
           </div>
-          <div className={classNames(styles.banner, styles[`banner--${winnerId}`])}>
+          <div className={classNames(styles.scores, styles[`scores--${winnerSlug}`])}>
+            {playersCache.map(player => (
+              <div className={classNames(styles.score, styles[`score--${player.slug}`])}>
+                {player.score}
+              </div>
+            ))}
+          </div>
+          <div className={classNames(styles.banner, styles[`banner--${winnerSlug}`])}>
             <h1>
               <Lottie extraClassName={styles.titleMain} data={titleJson} />
             </h1>

@@ -76,7 +76,7 @@ export const CHARACTERS = [
     secondaryColor: 'red',
     videoWhite: characterVideoWhite2,
     image: characterImage2,
-    id: 'p1',
+    slug: 'p1',
     name: 'P1',
     lottie: {
       angry: '/static/character1/angry.json',
@@ -93,7 +93,7 @@ export const CHARACTERS = [
     secondaryColor: 'purple',
     videoWhite: characterVideoWhite1,
     image: characterImage1,
-    id: 'p2',
+    slug: 'p2',
     name: 'P2',
     lottie: {
       angry: '/static/character2/angry.json',

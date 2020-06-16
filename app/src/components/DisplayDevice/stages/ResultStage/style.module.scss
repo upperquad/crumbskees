@@ -38,6 +38,81 @@
   transform: rotate(90deg);
 }
 
+.score {
+  @extend %t--h1;
+
+  display: inline-block;
+  line-height: 1;
+  padding: .1em .1em .2em;
+  text-align: center;
+  width: 2.2em;
+
+  &--p1 {
+    background: $color-yellow;
+  }
+
+  &--p2 {
+    background: $color-pink;
+  }
+}
+
+.scores {
+  left: 50%;
+  position: absolute;
+  top: scaleVw(75);
+  transform: translateX(-50%);
+
+  &--p1 {
+    left: 60%;
+
+    .score--p1 {
+      @extend %shadow-box-large;
+
+      font-size: scaleVw(130);
+    }
+
+    .score--p2 {
+      @extend %shadow-box-small;
+
+      font-size: scaleVw(50);
+      left: calc(100% - #{scaleVw(4)});
+      position: absolute;
+      top: calc(100% - #{scaleVw(4)});
+    }
+  }
+
+  &--p2 {
+    left: 40%;
+
+    .score--p1 {
+      @extend %shadow-box-small;
+
+      font-size: scaleVw(50);
+      position: absolute;
+      right: calc(100% - #{scaleVw(4)});
+      top: calc(100% - #{scaleVw(4)});
+    }
+
+    .score--p2 {
+      @extend %shadow-box-large-left;
+
+      font-size: scaleVw(130);
+    }
+  }
+
+  &--tie {
+    @extend %shadow-box;
+
+    .score {
+      font-size: scaleVw(70);
+    }
+
+    .score--p1 {
+      border-right: scaleVw(4) solid $color-black;
+    }
+  }
+}
+
 .banner {
   align-items: center;
   background: $color-yellow;
