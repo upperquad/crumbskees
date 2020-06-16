@@ -76,7 +76,8 @@ export const CHARACTERS = [
     secondaryColor: 'red',
     videoWhite: characterVideoWhite2,
     image: characterImage2,
-    name: 'P2',
+    id: 'p1',
+    name: 'P1',
     lottie: {
       angry: '/static/character1/angry.json',
       excited: '/static/character1/excited.json',
@@ -92,7 +93,8 @@ export const CHARACTERS = [
     secondaryColor: 'purple',
     videoWhite: characterVideoWhite1,
     image: characterImage1,
-    name: 'P1',
+    id: 'p2',
+    name: 'P2',
     lottie: {
       angry: '/static/character2/angry.json',
       excited: '/static/character2/excited.json',

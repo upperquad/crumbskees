@@ -1282,81 +1282,61 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.ResultStage-marqueeLeft--d3eCo .ResultStage-marqueeSideText--1PQgE,
+.ResultStage-marqueeRight--_9P4J .ResultStage-marqueeSideText--1PQgE {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 1.94444vw;
+  font-weight: 900;
+  line-height: 2.36111vw; }
+
 .ResultStage-background--10JOz {
   height: 100%;
   object-fit: cover;
   width: 100%; }
 
-.ResultStage-card--32Q31 {
-  background-color: #fff;
-  border-color: #000;
-  border-style: solid;
-  border-width: 0.15625vw;
-  height: 37.5vw;
-  left: 50%;
-  overflow: hidden;
+.ResultStage-marqueeLeft--d3eCo,
+.ResultStage-marqueeRight--_9P4J {
+  background: #000;
+  padding: 0 0.48611vw;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 37.5vw; }
+  transform-origin: top left;
+  width: 100vh; }
+  .ResultStage-marqueeLeft--d3eCo .ResultStage-marqueeSideText--1PQgE,
+  .ResultStage-marqueeRight--_9P4J .ResultStage-marqueeSideText--1PQgE {
+    color: #fff;
+    letter-spacing: .08em;
+    text-transform: uppercase; }
 
-.ResultStage-titleWrapper--1wmRO {
-  background-color: #000;
-  height: 6.25vw; }
+.ResultStage-marqueeLeft--d3eCo {
+  left: 0;
+  top: 100%;
+  transform: rotate(-90deg); }
 
-.ResultStage-timebar--3CWQW {
-  animation: ResultStage-result-timebar--2C5bG 13s linear 1 both;
-  background-color: #69e5ab;
+.ResultStage-marqueeRight--_9P4J {
+  left: 100%;
+  top: 0;
+  transform: rotate(90deg); }
+
+.ResultStage-banner--13246 {
+  align-items: center;
+  background: #ffe945;
   bottom: 0;
-  height: 0.9375vw;
+  display: flex;
+  height: 9.72222vw;
+  justify-content: space-around;
   left: 0;
   position: absolute;
-  width: 100%; }
-
-@keyframes ResultStage-result-timebar--2C5bG {
-  0% {
-    transform: scaleX(1); }
-  100% {
-    transform: scaleX(0); } }
-
-.ResultStage-player--XpmPw {
-  margin-top: 1.5625vw;
-  text-align: center; }
-
-.ResultStage-playersImages--1SnuY:not(.ResultStage-playersImagesTied--2msjC) .ResultStage-playerAvatar--17MxV {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 12.5vw; }
-
-.ResultStage-playersImages--1SnuY.ResultStage-playersImagesTied--2msjC {
-  display: flex;
-  height: 12.5vw;
-  justify-content: space-around;
-  margin-top: 3.125vw;
-  position: relative;
-  width: 100%; }
-  .ResultStage-playersImages--1SnuY.ResultStage-playersImagesTied--2msjC .ResultStage-playerAvatar--17MxV {
-    height: 100%; }
-
-.ResultStage-score--2trdh {
-  bottom: 0.9375vw;
-  left: 50%;
-  position: absolute;
-  transform: translateX(-50%); }
-
-.ResultStage-circle--3T6bQ {
-  border-color: #000;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 0.15625vw;
-  bottom: 0;
-  height: 18.75vw;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, 50%);
-  width: 18.75vw; }
+  right: 0; }
+  .ResultStage-banner--13246 .ResultStage-titleMain--1QqMq {
+    height: 9.89583vw;
+    width: 67.55556vw; }
+  .ResultStage-banner--13246 .ResultStage-button--1TnLe {
+    margin-left: 2.08333vw; }
+  .ResultStage-banner--p1--30LXE {
+    background: #ec504f; }
+  .ResultStage-banner--p2--OB-eg {
+    background: #69e5ab; }
 
 /* Colors */
 /* Breakpoints */

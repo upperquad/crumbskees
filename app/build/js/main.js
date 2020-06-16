@@ -110277,6 +110277,72 @@ module.exports = __webpack_require__.p + "ff170be3395f6d35283714605fcffbfc.svg";
 
 /***/ }),
 
+/***/ "./src/assets/images/result/p1-win.jpg":
+/*!*********************************************!*\
+  !*** ./src/assets/images/result/p1-win.jpg ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "3773e1d13a4820dda211bdb04cd9417c.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/result/p1-win.mp4":
+/*!*********************************************!*\
+  !*** ./src/assets/images/result/p1-win.mp4 ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "3eb1fe2ac17c193d7f8d92afe36293f1.mp4";
+
+/***/ }),
+
+/***/ "./src/assets/images/result/p2-win.jpg":
+/*!*********************************************!*\
+  !*** ./src/assets/images/result/p2-win.jpg ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "2f816c0b2d3b81f441de1ab79c395ca0.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/result/p2-win.mp4":
+/*!*********************************************!*\
+  !*** ./src/assets/images/result/p2-win.mp4 ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "ec620231347285a433dcfac60ef4dce0.mp4";
+
+/***/ }),
+
+/***/ "./src/assets/images/result/tie.jpg":
+/*!******************************************!*\
+  !*** ./src/assets/images/result/tie.jpg ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "b560026ea172ccee45e365413c87d8f6.jpg";
+
+/***/ }),
+
+/***/ "./src/assets/images/result/tie.mp4":
+/*!******************************************!*\
+  !*** ./src/assets/images/result/tie.mp4 ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "24330c5adc6498c38b0b01373cf93ca5.mp4";
+
+/***/ }),
+
 /***/ "./src/assets/images/round-1/r1-pattern-bw.mp4":
 /*!*****************************************************!*\
   !*** ./src/assets/images/round-1/r1-pattern-bw.mp4 ***!
@@ -110434,17 +110500,6 @@ module.exports = __webpack_require__.p + "4a9eda27c209b3a940f69faf5c4a8b8b.mp4";
 /***/ "./src/assets/images/round-3/s3-intro.mp4":
 /*!************************************************!*\
   !*** ./src/assets/images/round-3/s3-intro.mp4 ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "70e128890680209e5b4177aaa0566f63.mp4";
-
-/***/ }),
-
-/***/ "./src/assets/images/round_3/s3-intro.mp4":
-/*!************************************************!*\
-  !*** ./src/assets/images/round_3/s3-intro.mp4 ***!
   \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -113707,7 +113762,7 @@ var DisplayDevice = function DisplayDevice() {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_SetupStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       onFinish: function onFinish() {
-        return setStage('tutorial');
+        return setStage('result');
       },
       bothConnected: bothConnected
     }));
@@ -114703,13 +114758,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/ResultStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/round_3/s3-intro.mp4 */ "./src/assets/images/round_3/s3-intro.mp4");
-/* harmony import */ var _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _components_Lottie__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~components/Lottie */ "./src/components/Lottie/index.jsx");
+/* harmony import */ var _assets_images_result_p1_win_mp4__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~assets/images/result/p1-win.mp4 */ "./src/assets/images/result/p1-win.mp4");
+/* harmony import */ var _assets_images_result_p1_win_mp4__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_p1_win_mp4__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _assets_images_result_p1_win_jpg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~assets/images/result/p1-win.jpg */ "./src/assets/images/result/p1-win.jpg");
+/* harmony import */ var _assets_images_result_p1_win_jpg__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_p1_win_jpg__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _assets_images_result_p2_win_mp4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~assets/images/result/p2-win.mp4 */ "./src/assets/images/result/p2-win.mp4");
+/* harmony import */ var _assets_images_result_p2_win_mp4__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_p2_win_mp4__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _assets_images_result_p2_win_jpg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/result/p2-win.jpg */ "./src/assets/images/result/p2-win.jpg");
+/* harmony import */ var _assets_images_result_p2_win_jpg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_p2_win_jpg__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _assets_images_result_tie_mp4__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/result/tie.mp4 */ "./src/assets/images/result/tie.mp4");
+/* harmony import */ var _assets_images_result_tie_mp4__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_tie_mp4__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _assets_images_result_tie_jpg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/result/tie.jpg */ "./src/assets/images/result/tie.jpg");
+/* harmony import */ var _assets_images_result_tie_jpg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_tie_jpg__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _assets_images_landing_title_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/landing/title.json */ "./src/assets/images/landing/title.json");
+var _assets_images_landing_title_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! ~assets/images/landing/title.json */ "./src/assets/images/landing/title.json", 1);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -114734,92 +114801,100 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
+
+
+
+
+
 var ResultStage = function ResultStage(props) {
   var extraClassName = props.extraClassName,
       onFinish = props.onFinish;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState2 = _slicedToArray(_useState, 2),
-      maxScore = _useState2[0],
-      setMaxScore = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      winners = _useState4[0],
-      setWinners = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState6 = _slicedToArray(_useState5, 2),
-      isTie = _useState6[0],
-      setIsTie = _useState6[1];
+      winnerId = _useState2[0],
+      setWinnerId = _useState2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // special handling for the short amount of time after
     // the game is restarted but before this is unmounted
-    var updateWinners = function updateWinners() {
-      var scores = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__["default"].players.map(function (player) {
-        if (typeof player.score === 'function') {
-          return player.score();
-        }
-
-        return null;
-      });
-      var newMaxScore = Math.max.apply(Math, _toConsumableArray(scores));
-
-      if (typeof newMaxScore === 'number') {
-        var newWinners = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__["default"].players.filter(function (player) {
-          return player.score() === newMaxScore;
-        });
-        var newIsTie = newWinners.length !== 1;
-        setMaxScore(newMaxScore);
-        setWinners(newWinners);
-        setIsTie(newIsTie);
+    var scores = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.map(function (player) {
+      if (typeof player.score === 'function') {
+        return player.score();
       }
-    };
 
-    updateWinners();
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__["default"].addSubscriber('player_change', updateWinners);
-    return function () {
-      return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber('player_change', updateWinners);
-    };
+      return null;
+    });
+    var newMaxScore = Math.max.apply(Math, _toConsumableArray(scores));
+
+    if (typeof newMaxScore === 'number') {
+      var newWinners = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_3__["default"].players.filter(function (player) {
+        return typeof player.score === 'function' && player.score() === newMaxScore;
+      });
+      var newWinnerId = 'tie';
+
+      if (newWinners.length === 1) {
+        newWinnerId = newWinners[0].id;
+      }
+
+      setWinnerId(newWinnerId);
+      setWinnerId('p1');
+    }
   }, []);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var restartTimeout = setTimeout(onFinish, 13000);
-    return function () {
-      return clearTimeout(restartTimeout);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  var bg;
+  var bgImage;
+
+  switch (winnerId) {
+    case 'p1':
+      bg = _assets_images_result_p1_win_mp4__WEBPACK_IMPORTED_MODULE_8___default.a;
+      bgImage = _assets_images_result_p1_win_jpg__WEBPACK_IMPORTED_MODULE_9___default.a;
+      break;
+
+    case 'p2':
+      bg = _assets_images_result_p2_win_mp4__WEBPACK_IMPORTED_MODULE_10___default.a;
+      bgImage = _assets_images_result_p2_win_jpg__WEBPACK_IMPORTED_MODULE_11___default.a;
+      break;
+
+    case 'tie':
+      bg = _assets_images_result_tie_mp4__WEBPACK_IMPORTED_MODULE_12___default.a;
+      bgImage = _assets_images_result_tie_jpg__WEBPACK_IMPORTED_MODULE_13___default.a;
+      break;
+
+    default:
+      break;
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.result, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, winnerId && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.background,
-    src: _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_5___default.a
-  }), winners.length && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.card
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.titleWrapper
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.title,
-    text: isTie ? 'Nobody wins!' : 'Winner!',
-    isWhite: true,
-    duration: "5s"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.player
-  }, isTie ? 'Tied!' : winners[0].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.playersImages, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.playersImagesTied, isTie))
-  }, winners.map(function (winner) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      src: winner.videoWhite,
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.playerAvatar,
-      poster: winner.image
-    });
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.score
-  }, maxScore), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.circle
+    src: bg,
+    poster: bgImage
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.timebar, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.resultTimebar)
-  })));
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeLeft
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeSideText,
+    text: "Winner winner chicken dinner! ",
+    duration: "12s"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeRight
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeSideText,
+    text: "Winner winner chicken dinner! ",
+    duration: "12s"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.banner, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a["banner--".concat(winnerId)])
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Lottie__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.titleMain,
+    data: _assets_images_landing_title_json__WEBPACK_IMPORTED_MODULE_14__
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    text: "Play again",
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button,
+    clickHandler: onFinish
+  }))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ResultStage);
@@ -114834,7 +114909,7 @@ var ResultStage = function ResultStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"background":"ResultStage-background--10JOz","card":"ResultStage-card--32Q31","titleWrapper":"ResultStage-titleWrapper--1wmRO","timebar":"ResultStage-timebar--3CWQW","result-timebar":"ResultStage-result-timebar--2C5bG","resultTimebar":"ResultStage-result-timebar--2C5bG","player":"ResultStage-player--XpmPw","playersImages":"ResultStage-playersImages--1SnuY","playersImagesTied":"ResultStage-playersImagesTied--2msjC","playerAvatar":"ResultStage-playerAvatar--17MxV","score":"ResultStage-score--2trdh","circle":"ResultStage-circle--3T6bQ"};
+module.exports = {"marqueeLeft":"ResultStage-marqueeLeft--d3eCo","marqueeSideText":"ResultStage-marqueeSideText--1PQgE","marqueeRight":"ResultStage-marqueeRight--_9P4J","background":"ResultStage-background--10JOz","banner":"ResultStage-banner--13246","titleMain":"ResultStage-titleMain--1QqMq","button":"ResultStage-button--1TnLe","banner--p1":"ResultStage-banner--p1--30LXE","bannerP1":"ResultStage-banner--p1--30LXE","banner--p2":"ResultStage-banner--p2--OB-eg","bannerP2":"ResultStage-banner--p2--OB-eg"};
 
 /***/ }),
 
@@ -115603,7 +115678,8 @@ var CHARACTERS = [{
   secondaryColor: 'red',
   videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17___default.a,
   image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_18___default.a,
-  name: 'P2',
+  id: 'p1',
+  name: 'P1',
   lottie: {
     angry: '/static/character1/angry.json',
     excited: '/static/character1/excited.json',
@@ -115618,7 +115694,8 @@ var CHARACTERS = [{
   secondaryColor: 'purple',
   videoWhite: _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_15___default.a,
   image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16___default.a,
-  name: 'P1',
+  id: 'p2',
+  name: 'P2',
   lottie: {
     angry: '/static/character2/angry.json',
     excited: '/static/character2/excited.json',

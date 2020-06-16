@@ -9,93 +9,60 @@
   width: 100%;
 }
 
-.card {
-  background-color: $color-white;
-  border-color: $color-black;
-  border-style: solid;
-  border-width: grid(.05);
-  height: grid(12);
-  left: 50%;
-  overflow: hidden;
+.marqueeLeft,
+.marqueeRight {
+  background: $color-black;
+  padding: 0 scaleVw(7);
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: grid(12);
+  transform-origin: top left;
+  width: 100vh;
+
+  .marqueeSideText {
+    @extend %t--h3;
+
+    color: $color-white;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
 }
 
-.titleWrapper {
-  background-color: $color-black;
-  height: grid(2);
+.marqueeLeft {
+  left: 0;
+  top: 100%;
+  transform: rotate(-90deg);
 }
 
-.title {
+.marqueeRight {
+  left: 100%;
+  top: 0;
+  transform: rotate(90deg);
 }
 
-.timebar {
-  animation: result-timebar 13s linear 1 both;
-  background-color: $color-green;
+.banner {
+  align-items: center;
+  background: $color-yellow;
   bottom: 0;
-  height: grid(.3);
+  display: flex;
+  height: scaleVw(140);
+  justify-content: space-around;
   left: 0;
   position: absolute;
-  width: 100%;
+  right: 0;
 
-  @keyframes result-timebar {
-    0% {
-      transform: scaleX(1);
-    }
-    100% {
-      transform: scaleX(0);
-    }
+  .titleMain {
+    height: scaleVw(150 * .95);
+    width: scaleVw(1024 * .95);
   }
-}
 
-.player {
-  margin-top: grid(.5);
-  text-align: center;
-}
-
-.playersImages:not(.playersImagesTied) {
-  .playerAvatar {
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: grid(4);
+  .button {
+    margin-left: scaleVw(30);
   }
-}
 
-.playersImages.playersImagesTied {
-  display: flex;
-  height: grid(4);
-  justify-content: space-around;
-  margin-top: grid(1);
-  position: relative;
-  width: 100%;
-
-  .playerAvatar {
-    height: 100%;
+  &--p1 {
+    background: $color-red;
   }
-}
 
-.score {
-
-
-  bottom: grid(.3);
-  left: 50%;
-  position: absolute;
-  transform: translateX(-50%);
-}
-
-.circle {
-  border-color: $color-black;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: grid(.05);
-  bottom: 0;
-  height: grid(6);
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, 50%);
-  width: grid(6);
+  &--p2 {
+    background: $color-green;
+  }
 }
