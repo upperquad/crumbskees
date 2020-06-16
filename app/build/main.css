@@ -933,15 +933,6 @@ a {
     background: #fff;
     right: 0; }
 
-.Board-character--1Sl7a {
-  flex: 12.5vw 0 0; }
-  .Board-character--1Sl7a .Board-characterVideo--1D3sj {
-    height: 100%;
-    object-fit: cover;
-    width: 100%; }
-  .Board-character--1Sl7a.Board-characterLost--V3GZT {
-    filter: grayscale(100%); }
-
 .Board-score--3Jfkn {
   background: #fff;
   border-radius: 50%;
@@ -1033,6 +1024,28 @@ a {
 
 .Board-playerMeta--2--1Mx8k {
   flex-direction: row-reverse; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.BoardCharacter-character--jxc0O {
+  flex: 12.5vw 0 0;
+  overflow: hidden;
+  position: relative; }
+  .BoardCharacter-character--jxc0O .BoardCharacter-characterLottie--Azpbb {
+    height: 120%;
+    top: 2%;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 120%; }
+  .BoardCharacter-character--jxc0O.BoardCharacter-characterLost--1yZos {
+    filter: grayscale(100%); }
+  .BoardCharacter-character--yellow--2jycC {
+    background: #ffe945; }
+  .BoardCharacter-character--pink--1bQRF {
+    background: #f4b7ed; }
 
 /* Colors */
 /* Breakpoints */

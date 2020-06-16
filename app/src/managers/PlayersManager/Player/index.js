@@ -20,7 +20,6 @@ export default class Player {
     this.color = color
     this.lottie = lottie
     this.secondaryColor = secondaryColor
-    this.video = video
     this.videoWhite = videoWhite
     this.image = image
     this.name = name

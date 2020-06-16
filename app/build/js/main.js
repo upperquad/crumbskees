@@ -110123,17 +110123,6 @@ module.exports = __webpack_require__.p + "731b790d08390de33f1b1af980f88735.mp4";
 
 /***/ }),
 
-/***/ "./src/assets/images/character1.mp4":
-/*!******************************************!*\
-  !*** ./src/assets/images/character1.mp4 ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "106854edcfd4e86692aa797b16152d28.mp4";
-
-/***/ }),
-
 /***/ "./src/assets/images/character1.png":
 /*!******************************************!*\
   !*** ./src/assets/images/character1.png ***!
@@ -110142,17 +110131,6 @@ module.exports = __webpack_require__.p + "106854edcfd4e86692aa797b16152d28.mp4";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "b6c20bd3b2b39c84c935c091dee19fbd.png";
-
-/***/ }),
-
-/***/ "./src/assets/images/character2.mp4":
-/*!******************************************!*\
-  !*** ./src/assets/images/character2.mp4 ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "7bb4a96c5c7dc8e65301b9f39a550d89.mp4";
 
 /***/ }),
 
@@ -113828,6 +113806,128 @@ module.exports = {"banner":"LandingStage-banner--1YRTw","title":"LandingStage-ti
 
 /***/ }),
 
+/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/BoardCharacter/index.jsx":
+/*!********************************************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/Board/BoardCharacter/index.jsx ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/BoardCharacter/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var BoardCharacter = function BoardCharacter(props) {
+  var player = props.player,
+      power = props.power,
+      result = props.result,
+      score = props.score;
+  var lastScore = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var scoreMoodTimeout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      scoreMood = _useState2[0],
+      setScoreMood = _useState2[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (lastScore.current !== null) {
+      clearTimeout(scoreMoodTimeout.current);
+
+      if (score - lastScore.current > 0) {
+        setScoreMood('excited');
+      } else if (score - lastScore.current < 0) {
+        setScoreMood('angry');
+      }
+
+      scoreMoodTimeout.current = setTimeout(function () {
+        return setScoreMood(null);
+      }, 2000);
+    }
+
+    lastScore.current = score;
+  }, [score]);
+  var mood = 'happy';
+
+  if (scoreMood) {
+    mood = scoreMood;
+  }
+
+  if (power) {
+    switch (power.type) {
+      case 'grow':
+        mood = 'lsd';
+        break;
+
+      case 'freeze':
+        mood = 'freeze';
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (result) {
+    switch (result) {
+      case 'won':
+        mood = 'excited';
+        break;
+
+      case 'lost':
+        mood = 'sad';
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.character, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a["character--".concat(player.color)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.characterLost, player.lost))
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    character: player,
+    mood: mood,
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.characterLottie
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (BoardCharacter);
+
+/***/ }),
+
+/***/ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/BoardCharacter/style.module.scss":
+/*!****************************************************************************************************!*\
+  !*** ./src/components/DisplayDevice/stages/PlayStage/Round/Board/BoardCharacter/style.module.scss ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+module.exports = {"character":"BoardCharacter-character--jxc0O","characterLottie":"BoardCharacter-characterLottie--Azpbb","characterLost":"BoardCharacter-characterLost--1yZos","character--yellow":"BoardCharacter-character--yellow--2jycC","characterYellow":"BoardCharacter-character--yellow--2jycC","character--pink":"BoardCharacter-character--pink--1bQRF","characterPink":"BoardCharacter-character--pink--1bQRF"};
+
+/***/ }),
+
 /***/ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx":
 /*!*****************************************************************************!*\
   !*** ./src/components/DisplayDevice/stages/PlayStage/Round/Board/index.jsx ***!
@@ -113847,7 +113947,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _BoardCharacter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BoardCharacter */ "./src/components/DisplayDevice/stages/PlayStage/Round/Board/BoardCharacter/index.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -113881,16 +113981,6 @@ var Board = function Board(props) {
     };
   }, [forceUpdate]);
 
-  var renderCharacter = function renderCharacter(player, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.character, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a["character--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.characterLost, player.lost))
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_6__["default"], {
-      src: player.video,
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.characterVideo,
-      poster: player.image
-    }));
-  };
-
   var renderPlayerMeta = function renderPlayerMeta(player, itemsForThisRound, power, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.playerMeta, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a["playerMeta--".concat(index + 1)])
@@ -113905,10 +113995,10 @@ var Board = function Board(props) {
         exit: 300
       }
     }, function (status) {
-      var _classNames2;
+      var _classNames;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInner, (_classNames2 = {}, _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInnerEntering, status === 'entering'), _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInnerExiting, status === 'exiting' || status === 'exited'), _classNames2))
+        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInner, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInnerEntering, status === 'entering'), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerInnerExiting, status === 'exiting' || status === 'exited'), _classNames))
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.powerCircle, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a["powerCircle--".concat(power.type)]),
         viewBox: "0 0 59 59",
@@ -113943,9 +114033,23 @@ var Board = function Board(props) {
     })));
   };
 
+  var ended = time === 0;
+  var player1Result = null;
+  var player2Result = null;
+
+  if (ended) {
+    player1Result = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0].score() < _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1].score() ? 'lost' : 'won';
+    player2Result = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1].score() < _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0].score() ? 'lost' : 'won';
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.board, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.boardEntering, transitionStatus === 'entering'))
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0], 0), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0], items[0], powerArray[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BoardCharacter__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    player: _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0],
+    score: _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0].score(),
+    power: powerArray[0],
+    result: player1Result
+  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[0], items[0], powerArray[0], 0), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timer
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerMaskLeft,
@@ -113963,7 +114067,12 @@ var Board = function Board(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerFrac
   }, getFractionPart(time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.timerRoundName
-  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1], items[1], powerArray[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1] && renderCharacter(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1], 1));
+  }, roundName)), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1] && renderPlayerMeta(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1], items[1], powerArray[1], 1), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BoardCharacter__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    player: _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1],
+    score: _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_5__["default"].players[1].score(),
+    power: powerArray[1],
+    result: player2Result
+  }));
 };
 
 function getFractionPart(number) {
@@ -113990,7 +114099,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","character":"Board-character--1Sl7a","characterVideo":"Board-characterVideo--1D3sj","characterLost":"Board-characterLost--V3GZT","power":"Board-power--1Fjli","powerInner":"Board-powerInner--1ds2c","powerInnerEntering":"Board-powerInnerEntering--2RBCZ","powerInnerExiting":"Board-powerInnerExiting--1-kTC","powerImage":"Board-powerImage--3UNl-","powerCircle":"Board-powerCircle--afidW","power-ring":"Board-power-ring--2EXwA","powerRing":"Board-power-ring--2EXwA","powerCircle--freeze":"Board-powerCircle--freeze--37sWl","powerCircleFreeze":"Board-powerCircle--freeze--37sWl","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
+module.exports = {"timer":"Board-timer--1FYhF","timerInt":"Board-timerInt--3yT-c","timerRoundName":"Board-timerRoundName--31GLp","score":"Board-score--3Jfkn","timerFrac":"Board-timerFrac--1lYwb","board":"Board-board--2FSpi","boardEntering":"Board-boardEntering--1868x","playerMeta":"Board-playerMeta--1FTxA","round-name-appear":"Board-round-name-appear--2JJjA","roundNameAppear":"Board-round-name-appear--2JJjA","timerMaskLeft":"Board-timerMaskLeft--2ruSl","timerMaskRight":"Board-timerMaskRight--2oGKR","power":"Board-power--1Fjli","powerInner":"Board-powerInner--1ds2c","powerInnerEntering":"Board-powerInnerEntering--2RBCZ","powerInnerExiting":"Board-powerInnerExiting--1-kTC","powerImage":"Board-powerImage--3UNl-","powerCircle":"Board-powerCircle--afidW","power-ring":"Board-power-ring--2EXwA","powerRing":"Board-power-ring--2EXwA","powerCircle--freeze":"Board-powerCircle--freeze--37sWl","powerCircleFreeze":"Board-powerCircle--freeze--37sWl","items":"Board-items--1l1Q1","item":"Board-item--2QmwZ","itemSnack":"Board-itemSnack--3F-81","item-appear":"Board-item-appear--3d5br","itemAppear":"Board-item-appear--3d5br","itemPlaceholder":"Board-itemPlaceholder--2IiX_","playerMeta--2":"Board-playerMeta--2--1Mx8k","playerMeta2":"Board-playerMeta--2--1Mx8k"};
 
 /***/ }),
 
@@ -114235,8 +114344,6 @@ var Round = function Round(props) {
       } else {
         setZoom(0.9);
       }
-
-      setZoom(1);
     };
 
     resizeHandler();
@@ -115191,60 +115298,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_intro_mp4__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~assets/images/character-white-1.mp4 */ "./src/assets/images/character-white-1.mp4");
 /* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~assets/images/character1.mp4 */ "./src/assets/images/character1.mp4");
-/* harmony import */ var _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/character1.png */ "./src/assets/images/character1.png");
-/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_png__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/character-white-2.mp4 */ "./src/assets/images/character-white-2.mp4");
-/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/character2.mp4 */ "./src/assets/images/character2.mp4");
-/* harmony import */ var _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/character2.png */ "./src/assets/images/character2.png");
-/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_png__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/characters/body-1.svg */ "./src/assets/images/characters/body-1.svg");
-/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ~assets/images/characters/body-2.svg */ "./src/assets/images/characters/body-2.svg");
-/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ~assets/images/snacks/good/1.svg */ "./src/assets/images/snacks/good/1.svg");
-/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ~assets/images/snacks/good/2.svg */ "./src/assets/images/snacks/good/2.svg");
-/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ~assets/images/snacks/good/3.svg */ "./src/assets/images/snacks/good/3.svg");
-/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ~assets/images/snacks/good/4.svg */ "./src/assets/images/snacks/good/4.svg");
-/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ~assets/images/snacks/good/5.svg */ "./src/assets/images/snacks/good/5.svg");
-/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ~assets/images/snacks/good/6.svg */ "./src/assets/images/snacks/good/6.svg");
-/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ~assets/images/snacks/good/7.svg */ "./src/assets/images/snacks/good/7.svg");
-/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ~assets/images/snacks/good/8.svg */ "./src/assets/images/snacks/good/8.svg");
-/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ~assets/images/snacks/good/9.svg */ "./src/assets/images/snacks/good/9.svg");
-/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ~assets/images/snacks/good/10.svg */ "./src/assets/images/snacks/good/10.svg");
-/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ~assets/images/snacks/good/11.svg */ "./src/assets/images/snacks/good/11.svg");
-/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ~assets/images/snacks/good/12.svg */ "./src/assets/images/snacks/good/12.svg");
-/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ~assets/images/snacks/good/13.svg */ "./src/assets/images/snacks/good/13.svg");
-/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ~assets/images/snacks/bad/1.svg */ "./src/assets/images/snacks/bad/1.svg");
-/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ~assets/images/snacks/bad/2.svg */ "./src/assets/images/snacks/bad/2.svg");
-/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ~assets/images/snacks/bad/3.svg */ "./src/assets/images/snacks/bad/3.svg");
-/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ~assets/images/snacks/bad/4.svg */ "./src/assets/images/snacks/bad/4.svg");
-/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ~assets/images/snacks/bad/5.svg */ "./src/assets/images/snacks/bad/5.svg");
-/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ~assets/images/snacks/bad/6.svg */ "./src/assets/images/snacks/bad/6.svg");
-/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_35__);
-
-
+/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~assets/images/character1.png */ "./src/assets/images/character1.png");
+/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_png__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/character-white-2.mp4 */ "./src/assets/images/character-white-2.mp4");
+/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/character2.png */ "./src/assets/images/character2.png");
+/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_png__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/characters/body-1.svg */ "./src/assets/images/characters/body-1.svg");
+/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/characters/body-2.svg */ "./src/assets/images/characters/body-2.svg");
+/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/snacks/good/1.svg */ "./src/assets/images/snacks/good/1.svg");
+/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ~assets/images/snacks/good/2.svg */ "./src/assets/images/snacks/good/2.svg");
+/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ~assets/images/snacks/good/3.svg */ "./src/assets/images/snacks/good/3.svg");
+/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ~assets/images/snacks/good/4.svg */ "./src/assets/images/snacks/good/4.svg");
+/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ~assets/images/snacks/good/5.svg */ "./src/assets/images/snacks/good/5.svg");
+/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ~assets/images/snacks/good/6.svg */ "./src/assets/images/snacks/good/6.svg");
+/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ~assets/images/snacks/good/7.svg */ "./src/assets/images/snacks/good/7.svg");
+/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ~assets/images/snacks/good/8.svg */ "./src/assets/images/snacks/good/8.svg");
+/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ~assets/images/snacks/good/9.svg */ "./src/assets/images/snacks/good/9.svg");
+/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ~assets/images/snacks/good/10.svg */ "./src/assets/images/snacks/good/10.svg");
+/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ~assets/images/snacks/good/11.svg */ "./src/assets/images/snacks/good/11.svg");
+/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ~assets/images/snacks/good/12.svg */ "./src/assets/images/snacks/good/12.svg");
+/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ~assets/images/snacks/good/13.svg */ "./src/assets/images/snacks/good/13.svg");
+/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ~assets/images/snacks/bad/1.svg */ "./src/assets/images/snacks/bad/1.svg");
+/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ~assets/images/snacks/bad/2.svg */ "./src/assets/images/snacks/bad/2.svg");
+/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_29__);
+/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ~assets/images/snacks/bad/3.svg */ "./src/assets/images/snacks/bad/3.svg");
+/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ~assets/images/snacks/bad/4.svg */ "./src/assets/images/snacks/bad/4.svg");
+/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ~assets/images/snacks/bad/5.svg */ "./src/assets/images/snacks/bad/5.svg");
+/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ~assets/images/snacks/bad/6.svg */ "./src/assets/images/snacks/bad/6.svg");
+/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_33__);
 
 
 
@@ -115299,9 +115400,8 @@ var COLORS = {
 var CHARACTERS = [{
   color: 'yellow',
   secondaryColor: 'red',
-  video: _assets_images_character2_mp4__WEBPACK_IMPORTED_MODULE_13___default.a,
-  videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_12___default.a,
-  image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_14___default.a,
+  videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
+  image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_12___default.a,
   name: 'P2',
   lottie: {
     angry: '/static/character1/angry.json',
@@ -115311,13 +115411,12 @@ var CHARACTERS = [{
     lsd: '/static/character1/lsd.json',
     sad: '/static/character1/sad.json'
   },
-  body: _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15___default.a
+  body: _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_13___default.a
 }, {
   color: 'pink',
   secondaryColor: 'purple',
-  video: _assets_images_character1_mp4__WEBPACK_IMPORTED_MODULE_10___default.a,
   videoWhite: _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_9___default.a,
-  image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_11___default.a,
+  image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_10___default.a,
   name: 'P1',
   lottie: {
     angry: '/static/character2/angry.json',
@@ -115327,10 +115426,10 @@ var CHARACTERS = [{
     lsd: '/static/character2/lsd.json',
     sad: '/static/character2/sad.json'
   },
-  body: _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16___default.a
+  body: _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_14___default.a
 }];
-var GOOD_SNACKS = [_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_17___default.a, _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_18___default.a, _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_19___default.a, _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_20___default.a, _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_21___default.a, _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_22___default.a, _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_23___default.a, _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_24___default.a, _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_25___default.a, _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_26___default.a, _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_27___default.a, _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_28___default.a, _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_29___default.a];
-var BAD_SNACKS = [_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_30___default.a, _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_31___default.a, _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_32___default.a, _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_33___default.a, _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_34___default.a, _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_35___default.a];
+var GOOD_SNACKS = [_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_15___default.a, _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_16___default.a, _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_17___default.a, _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_18___default.a, _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_19___default.a, _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_20___default.a, _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_21___default.a, _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_22___default.a, _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_23___default.a, _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_24___default.a, _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_25___default.a, _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_26___default.a, _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_27___default.a];
+var BAD_SNACKS = [_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_28___default.a, _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_29___default.a, _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_30___default.a, _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_31___default.a, _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_32___default.a, _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_33___default.a];
 var TUTORIAL_ROUND = {
   numBadItems: 0,
   numBigItems: 10,
@@ -115904,7 +116003,6 @@ var Player = function Player(_ref) {
   this.color = color;
   this.lottie = lottie;
   this.secondaryColor = secondaryColor;
-  this.video = video;
   this.videoWhite = videoWhite;
   this.image = image;
   this.name = name;

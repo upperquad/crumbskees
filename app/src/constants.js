@@ -9,10 +9,8 @@ import round3VideoFront from '~assets/images/round_3/r3-pattern-bw.mp4'
 import round3IntroVideo from '~assets/images/round_3/s3-intro.mp4'
 
 import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
-import characterVideo1 from '~assets/images/character1.mp4'
 import characterImage1 from '~assets/images/character1.png'
 import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
-import characterVideo2 from '~assets/images/character2.mp4'
 import characterImage2 from '~assets/images/character2.png'
 import characterBody1 from '~assets/images/characters/body-1.svg'
 import characterBody2 from '~assets/images/characters/body-2.svg'
@@ -69,7 +67,6 @@ export const CHARACTERS = [
   {
     color: 'yellow',
     secondaryColor: 'red',
-    video: characterVideo2,
     videoWhite: characterVideoWhite2,
     image: characterImage2,
     name: 'P2',
@@ -86,7 +83,6 @@ export const CHARACTERS = [
   {
     color: 'pink',
     secondaryColor: 'purple',
-    video: characterVideo1,
     videoWhite: characterVideoWhite1,
     image: characterImage1,
     name: 'P1',
