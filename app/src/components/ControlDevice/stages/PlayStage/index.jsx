@@ -58,7 +58,7 @@ const PlayStage = props => {
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <section className={styles.play}>
-      <Button clickHandler={onReadyTouch} text="Ready" isLit={ready} />
+      {!ready && <Button clickHandler={onReadyTouch} text="Ready" />}
       <div
         className={styles.touchZone}
         onTouchStart={touchStartHandler}

@@ -14,21 +14,9 @@
     padding .4s $easing-quad-out,
     transform .4s $easing-quad-out;
 
-  @include respond-to(smartphone) {
-    padding: 0 22px 13px 0;
-  }
-
-  &:hover {
-    transform:  translate(#{scaleVw(22)}, #{scaleVw(13)});
-
-    @include respond-to(smartphone) {
-      transform: translate(22px, 13px);
-    }
-  }
-
-  &.isLit {
-    .buttonCard {
-      background-color: $color-green;
+  @include respond-to(above-smartphone) {
+    &:hover {
+      transform:  translate(#{scaleVw(22)}, #{scaleVw(13)});
     }
   }
 
@@ -90,6 +78,48 @@
     @include respond-to(smartphone) {
       border-width: 4px;
       padding: 12px;
+    }
+  }
+
+  @include respond-to(smartphone) {
+    padding: 0 22px 13px 0;
+
+    &:focus,
+    &:active {
+      transform: translate(22px, 13px);
+    }
+  }
+
+  &.isKeyPad {
+    .buttonInner {
+      @extend %t--number-pad;
+    }
+
+    @include respond-to(smartphone) {
+      padding: 0 8px 8px 0;
+
+      &:focus,
+      &:active {
+        transform: translate(8px, 8px);
+
+        .buttonCard {
+          background: $color-green;
+        }
+      }
+
+      .buttonCard {
+        align-items: center;
+        display: flex;
+        height: 72px;
+        justify-content: center;
+        width: 72px;
+      }
+
+      &.isFullWidth {
+        .buttonCard {
+          width: 244px;
+        }
+      }
     }
   }
 }
