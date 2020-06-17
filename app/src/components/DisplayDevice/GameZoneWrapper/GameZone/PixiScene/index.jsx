@@ -20,14 +20,10 @@ const PixiScene = props => {
   // circles
   const circlesMasked = useRef(null)
   const circlesBorder = useRef(null)
-  const circlesPoints = useRef([])
   const circlesLastPositions = useRef([])
   // circles size
   const stroke = useRef(0)
-  const minRadius = useRef(0)
-  const maxRadius = useRef(0)
-  const minMiddleRadius = useRef(0)
-  const maxMiddleRadius = useRef(0)
+  const radius = useRef(0)
   // mouths
   const mouths = useRef([[], []])
 
@@ -46,13 +42,9 @@ const PixiScene = props => {
       containerMouth,
       circlesMasked,
       circlesBorder,
-      circlesPoints,
       circlesLastPositions,
       stroke,
-      minRadius,
-      maxRadius,
-      minMiddleRadius,
-      maxMiddleRadius,
+      radius,
       mouths,
     },
     { type, videoBack, videoFront },
@@ -81,13 +73,9 @@ const PixiScene = props => {
   // update powers
   useUpdatePowers(
     {
-      circlesPoints,
       initHeight,
       initWidth,
-      minRadius,
-      maxRadius,
-      minMiddleRadius,
-      maxMiddleRadius,
+      radius,
       mouths,
       timeFrozen,
     },
@@ -105,13 +93,9 @@ const PixiScene = props => {
       circlesBorder,
       circlesLastPositions,
       circlesMasked,
-      circlesPoints,
       initHeight,
       initWidth,
-      maxMiddleRadius,
-      maxRadius,
-      minMiddleRadius,
-      minRadius,
+      radius,
       mouths,
       startTransitionOut,
       stroke,
@@ -121,6 +105,7 @@ const PixiScene = props => {
       circleAlpha,
       positions,
       powers,
+      type,
     },
   )
 

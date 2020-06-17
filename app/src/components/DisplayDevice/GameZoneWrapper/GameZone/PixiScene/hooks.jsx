@@ -4,7 +4,6 @@ import { Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.
 import { COLORS, DEBUG, GRID_UNIT, VB_WIDTH } from '~constants'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
-import { random } from '~utils/math'
 import getNow from '~utils/time'
 import { inOutSine, inOutQuad } from '~utils/ease'
 
@@ -16,11 +15,8 @@ import styles from './style.module.scss'
 const CIRCLE_STROKE_COEF = 0.2
 const CIRCLE_MIN_RADIUS = 1.2
 const CIRCLE_MAX_RADIUS_COEF = 0.15
-const CIRCLE_MAX_ANGLE = 0.35
 const CIRCLE_GROWN_RADIUS = 1.45
-const CIRCLE_MIN_DURATION = 700
 const CIRCLE_MAX_DURATION = 900
-const CIRCLE_POINTS = 6
 const CIRCLE_DECELERATION_COEF = 0.15
 
 // mouths/lips
@@ -98,7 +94,7 @@ export function useSetScene(refs, props) {
       // Circle
       refs.containerFront.current.addChild(refs.circlesMasked.current)
       // mask container into circle(s)
-      if (props.type === 'game' && !DEBUG) {
+      if (props.type === 'game') {
         refs.containerMasked.current.mask = refs.circlesMasked.current
       }
 
@@ -107,52 +103,12 @@ export function useSetScene(refs, props) {
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       refs.stroke.current = ((GRID_UNIT * CIRCLE_STROKE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
-      // set min and max radius for the circle
-      refs.minRadius.current = ((GRID_UNIT * CIRCLE_MIN_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth
-      refs.maxRadius.current = refs.minRadius.current + refs.minRadius.current * CIRCLE_MAX_RADIUS_COEF
-      refs.minMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.35
-      refs.maxMiddleRadius.current = refs.minRadius.current + (refs.maxRadius.current - refs.minRadius.current) * 0.45
+      // TODO: clean this up
+      refs.radius.current = ((GRID_UNIT * CIRCLE_MIN_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth * (1 + CIRCLE_MAX_RADIUS_COEF / 2)
 
       PlayersManager.players.forEach(() => {
-        const circlePoints = setCirclePoints()
-        refs.circlesPoints.current.push(circlePoints)
         refs.circlesLastPositions.current.push({ x: 0, y: 0 })
       })
-    }
-
-    function setCirclePoints() {
-      const points = []
-      const slice = (Math.PI * 2) / CIRCLE_POINTS
-      const startAngle = random(0, Math.PI * 2)
-
-      for (let i = 0; i < CIRCLE_POINTS; i++) {
-        const marginAngle = random(0, CIRCLE_MAX_ANGLE) // i / 1.2
-        // randomize the start time of animation (we don't want the tween to go from 0 to 1, it can start directly from 0.6 for example)
-        const startAnim = getNow() + i * random(0, CIRCLE_MIN_DURATION)
-        const angle = startAngle + i * slice + marginAngle
-        const duration = random(CIRCLE_MIN_DURATION, CIRCLE_MAX_DURATION)
-
-        const point = {
-          angle,
-          duration,
-          startAnim,
-          x: Math.cos(angle) * random(refs.minRadius.current, refs.maxRadius.current),
-          y: Math.sin(angle) * random(refs.minRadius.current, refs.maxRadius.current),
-          targetMinX: Math.cos(angle) * random(refs.minRadius.current, refs.minMiddleRadius.current),
-          targetMinY: Math.sin(angle) * random(refs.minRadius.current, refs.minMiddleRadius.current),
-          targetMaxX: Math.cos(angle) * random(refs.maxMiddleRadius.current, refs.maxRadius.current),
-          targetMaxY: Math.sin(angle) * random(refs.maxMiddleRadius.current, refs.maxRadius.current),
-        }
-
-        point.startX = point.x
-        point.startY = point.y
-        point.destX = point.targetMaxX
-        point.destY = point.targetMaxY
-
-        points.push(point)
-      }
-
-      return points
     }
 
     // init
@@ -290,36 +246,13 @@ export function useUpdatePowers(refs, props) {
   // update powers
   useEffect(() => {
     // func
-    function growCircle(points, increment) {
+    function growCircle(increment) {
       const now = getNow()
-      for (let i = 0; i < points.length; i++) {
-        const point = points[i]
-        // Increase each points
-        // if player has grown power, increase player radius
-        const newMaxRadius = refs.maxRadius.current + increment
-        const newMaxMiddleRadius = refs.maxMiddleRadius.current + increment
-        const newMinRadius = refs.minRadius.current + increment
-        const newMinMiddleRadius = refs.minMiddleRadius.current + increment
-
-        point.duration += 250
-
-        point.targetMaxX = Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-        point.targetMinX = Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
-
-        point.destX = point.targetMaxX
-
-        point.targetMaxY = Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-        point.targetMinY = Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
-
-        point.destY = point.targetMaxY
-        point.startAnim = now
-      }
+      // TODO: grow radius
+      const newRadius = refs.radius.current + increment
 
       setTimeout(() => {
         // when growing animation finish
-        for (let i = 0; i < points.length; i++) {
-          points[i].duration -= 250
-        }
       }, GROW_ANIMATION_DURATION)
     }
 
@@ -358,11 +291,11 @@ export function useUpdatePowers(refs, props) {
     // init
     PlayersManager.players.forEach((player, index) => {
       if (!props.powers[index]) {
-        growCircle(refs.circlesPoints.current[index], 0)
+        growCircle(0)
         growMouth(player, refs.mouths.current[index], true)
       } else {
         if (props.powers[index].type === 'grow') {
-          growCircle(refs.circlesPoints.current[index], refs.maxRadius.current * CIRCLE_GROWN_RADIUS)
+          growCircle(refs.radius.current * CIRCLE_GROWN_RADIUS)
           growMouth(player, refs.mouths.current[index])
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = getNow()
@@ -391,9 +324,7 @@ export function useUpdatePowers(refs, props) {
 
 
 export function useRAF(refs, props) {
-  // RAF
   useEffect(() => {
-    // funcs
     function updateFrame(now) {
       refs.circlesMasked.current.clear()
       refs.circlesBorder.current.clear()
@@ -407,66 +338,36 @@ export function useRAF(refs, props) {
         }
 
         // draw circles
-        let points
         let newPosition
         if (props.powers[index] && props.powers[index].type === 'freeze') {
           // position has to stay and color is gray
           color = hexStToNb(COLORS.blue)
           newPosition = refs.circlesLastPositions.current[index]
-          points = getPointsAroundCircle(
-            refs.timeFrozen.current,
-            refs.circlesPoints.current[index],
-            newPosition,
-          )
         } else {
           newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index])
-          points = getPointsAroundCircle(now, refs.circlesPoints.current[index], newPosition, player.mouthIsMoving)
         }
         refs.circlesLastPositions.current[index] = newPosition
-        drawCubicBezier(points, newPosition, color)
+        drawCircles(newPosition, color)
+
         drawMouths(now, index, newPosition)
       })
 
       function closeCircle(player, index) {
         if (player.closeMouth) {
           if (!player.mouthIsMoving) {
-            const increment = -refs.maxRadius.current * 0.3
-            updateRadiusInstantly(refs.circlesPoints.current[index], increment)
+            const increment = -refs.radius.current * 0.3
+            updateRadiusInstantly(increment)
             player.mouthIsMoving = true
           }
         } else if (player.mouthIsMoving === true) {
-          updateRadiusInstantly(refs.circlesPoints.current[index])
+          updateRadiusInstantly()
           player.mouthIsMoving = false
         }
       }
 
-      function updateRadiusInstantly(points, increment = 0) {
-        for (let i = 0; i < points.length; i++) {
-          const point = points[i]
-          // Increase each points
-          // if player has grown power, increase player radius
-          const newMaxRadius = refs.maxRadius.current + increment
-          const newMaxMiddleRadius = refs.maxMiddleRadius.current + increment
-          const newMinRadius = refs.minRadius.current + increment
-          const newMinMiddleRadius = refs.minMiddleRadius.current + increment
-
-          point.targetMaxX = Math.cos(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-          point.targetMinX = Math.cos(point.angle) * random(newMinRadius, newMinMiddleRadius)
-
-          point.destX = point.targetMaxX
-          point.x = point.destX
-
-          point.targetMaxY = Math.sin(point.angle) * random(newMaxMiddleRadius, newMaxRadius)
-          point.targetMinY = Math.sin(point.angle) * random(newMinRadius, newMinMiddleRadius)
-
-          point.destY = point.targetMaxY
-          point.y = point.destY
-
-          point.startAnim = now
-        }
+      function updateRadiusInstantly(increment = 0) {
+        const newRadius = refs.radius.current + increment
       }
-
-      refs.circlesMasked.current.endFill()
 
       // draw transition out rect
       if (refs.startTransitionOut.current > 0) {
@@ -485,89 +386,17 @@ export function useRAF(refs, props) {
       return { x, y }
     }
 
-    // get points all around the circle to set up cubic bezier curves
-    function getPointsAroundCircle(now, points, position, mouthIsMoving) {
-      const { x, y } = position
-
-      // For each points of the player (organic shape)
-      // Create organic shape / Tween all points
-      for (let i = 0; i < points.length; i++) {
-        const point = points[i]
-
-        // From scratch tween:
-        // percent is going from 0 to 1 in X seconds where X is the "duration variable".
-        // Each points starting value is going to his destination value in X seconds
-        // then I use easing functions to modify the value curve through time.
-        const percent = (now - point.startAnim) / point.duration
-
-        let relativeX
-        let relativeY
-
-        if (mouthIsMoving) {
-          // stop delay animation
-          relativeX = point.destX
-          relativeY = point.destY
-        } else {
-          relativeX = point.startX + (point.destX - point.startX) * inOutSine(percent)
-          relativeY = point.startY + (point.destY - point.startY) * inOutSine(percent)
-        }
-
-        if (percent >= 1) {
-          // end of animation,
-          // restart animation by going back
-          point.startX = relativeX
-          point.startY = relativeY
-          point.reverseAnim = !point.reverseAnim
-          point.startAnim = now
-
-          if (point.reverseAnim) {
-            point.destX = point.targetMaxX
-            point.destY = point.targetMaxY
-          } else {
-            point.destX = point.targetMinX
-            point.destY = point.targetMinY
-          }
-        }
-
-        // move circle based on mouse
-        point.x = relativeX + (x + 0.5) * refs.initWidth.current
-        point.y = relativeY + (y + 0.5) * refs.initHeight.current
-      }
-
-      return points
-    }
-
-    // Create circle distorsion based on the given coordinates points
-    // Cardinal spline - a uniform Catmull-Rom spline with a tension option
-    function drawCubicBezier(points, position, color, tension = 1.2) {
-      if (!points) {
-        return
-      }
-
-      const nbPoints = points.length
+    function drawCircles(position, color) {
+      const x = (position.x + 0.5) * refs.initWidth.current
+      const y = (position.y + 0.5) * refs.initHeight.current
       // draw masked circles
-      refs.circlesMasked.current.moveTo(points[0].x, points[0].y)
       refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
+      refs.circlesMasked.current.drawEllipse(x, y, refs.radius.current, refs.radius.current)
+      refs.circlesMasked.current.endFill()
 
       // draw border circles
-      refs.circlesBorder.current.moveTo(points[0].x, points[0].y)
       refs.circlesBorder.current.lineStyle(refs.stroke.current, color, 1)
-
-      for (let i = 0; i < nbPoints; i++) {
-        const p0 = points[(i - 1 + nbPoints) % nbPoints]
-        const p1 = points[i]
-        const p2 = points[(i + 1) % nbPoints]
-        const p3 = points[(i + 2) % nbPoints]
-
-        const x1 = p1.x + ((p2.x - p0.x) / 6) * tension
-        const y1 = p1.y + ((p2.y - p0.y) / 6) * tension
-
-        const x2 = p2.x - ((p3.x - p1.x) / 6) * tension
-        const y2 = p2.y - ((p3.y - p1.y) / 6) * tension
-
-        refs.circlesMasked.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
-        refs.circlesBorder.current.bezierCurveTo(x1, y1, x2, y2, p2.x, p2.y)
-      }
+      refs.circlesBorder.current.drawEllipse(x, y, refs.radius.current, refs.radius.current)
     }
 
     // draw mouths
