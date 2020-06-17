@@ -20,6 +20,8 @@ import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
 import characterImage2 from '~assets/images/character2.png'
 import characterBody1 from '~assets/images/characters/body-1.svg'
 import characterBody2 from '~assets/images/characters/body-2.svg'
+import characterMouth1 from '~assets/images/characters/mouth-1.svg'
+import characterMouth2 from '~assets/images/characters/mouth-2.svg'
 
 import goodSnack1 from '~assets/images/snacks/good/1.svg'
 import goodSnack2 from '~assets/images/snacks/good/2.svg'
@@ -87,6 +89,7 @@ export const CHARACTERS = [
       sad: '/static/character1/sad.json',
     },
     body: characterBody1,
+    mouth: characterMouth1,
   },
   {
     color: 'pink',
@@ -104,6 +107,7 @@ export const CHARACTERS = [
       sad: '/static/character2/sad.json',
     },
     body: characterBody2,
+    mouth: characterMouth2,
   },
 ]
 

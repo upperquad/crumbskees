@@ -10,12 +10,15 @@ import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PlayStage = props => {
   const { character, gameStarted, score } = props
+  const [showInstruction, setShowInstruction] = useState(true)
   const [isTouching, setIsTouching] = useState(false)
   const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
 
   const coordX = useRef(0)
   const coordY = useRef(0)
+
+  const hideInstruction = () => setShowInstruction(false)
 
   const updatePosition = (clientX, clientY) => {
     const x = (clientX - coordX.current) / window.innerWidth
@@ -58,12 +61,12 @@ const PlayStage = props => {
     <section
       className={classNames(styles.play, {
         [styles.isReady]: ready,
-        [styles.gameStarted]: gameStarted,
+        [styles.isGameStarted]: gameStarted,
       })}
-      onTouchStart={touchStartHandler}
-      onTouchMove={touchMoveHandlerThrottle}
-      onTouchEnd={touchEndHandler}
-      onClick={tapHandler}
+      onTouchStart={showInstruction ? hideInstruction : touchStartHandler}
+      onTouchMove={showInstruction ? null : touchMoveHandlerThrottle}
+      onTouchEnd={showInstruction ? null : touchEndHandler}
+      onClick={showInstruction ? null : tapHandler}
     >
       <div className={styles.top}>
         {!ready && <Button extraClassName={styles.button} clickHandler={onReadyTouch} text="I’m ready!" />}
@@ -95,6 +98,13 @@ const PlayStage = props => {
           { [styles.touchBubbleVisible]: isTouching },
         )}
       />
+      {showInstruction && (
+        <div className={styles.instruction}>
+          <img className={styles.instructionMouth} src={character.mouth} alt="" />
+          <h2 className={styles.instructionTitle}>Use your finger to move your mouth.</h2>
+          <p className={styles.instructionSubtitle}>When you’re ready to chomp on a snack, tap the screen!</p>
+        </div>
+      )}
     </section>
   )
 }

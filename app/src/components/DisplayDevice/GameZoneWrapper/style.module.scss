@@ -38,7 +38,7 @@
 
   .readyIndicatorsTitle {
     @extend %t--h2;
-    @extend %t--style-lg-shadow;
+    @extend %t--style-sm-shadow;
 
     color: $color-white;
     order: 2;

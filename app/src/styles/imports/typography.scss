@@ -100,3 +100,11 @@
     -webkit-text-stroke: 4px $color-black;
   }
 }
+
+%t--style-tiny-shadow {
+  color: $color-white;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 4px 4px 0 $color-black;
+  -webkit-text-stroke: 2px $color-black;
+}

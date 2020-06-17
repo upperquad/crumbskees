@@ -10,8 +10,8 @@
   position: fixed;
   right: 0;
   text-align: center;
-  transition: background .2s;
   top: 0;
+  transition: background .2s;
 
   &.isReady {
     .top {
@@ -48,8 +48,8 @@
   border-radius: 50%;
   height: 74px;
   opacity: 0;
-  position: absolute;
   pointer-events: none;
+  position: absolute;
   transform: translate(-50%, -50%) scale(.2);
   transition: opacity .3s, transform ease-in-out .1s;
   width: 74px;
@@ -109,9 +109,44 @@
 }
 
 .block {
-  background: $color-white;
+  background: $color-white url('../../../../assets/images/mobile/touch-background.png') center / 100% auto no-repeat;
   border: 4px solid $color-black;
   height: 100%;
   position: relative;
   width: 100%;
+}
+
+.instruction {
+  align-items: center;
+  background: rgba($color-purple, .5);
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  left: 0;
+  padding: 30px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 2;
+}
+
+.instructionMouth {
+  display: block;
+  height: 107px;
+  margin-bottom: 20px;
+}
+
+.instructionTitle {
+  @extend %t--h3;
+  @extend %t--style-tiny-shadow;
+
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.instructionSubtitle {
+  @extend %t--body-small;
 }
