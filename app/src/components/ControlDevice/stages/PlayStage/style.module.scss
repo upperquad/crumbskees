@@ -12,6 +12,17 @@
   top: 0;
 }
 
+.top {
+  align-items: center;
+  display: flex;
+  height: 135px;
+  justify-content: center;
+
+  .button {
+    text-transform: none;
+  }
+}
+
 .touchBubble {
   border: 2px $color-white solid;
   border-radius: 50%;
@@ -45,14 +56,6 @@
   height: 100%;
   position: relative;
   width: 100%;
-
-  // &.blockPurple {
-  //   background: $color-purple;
-  // }
-
-  // &.blockRed {
-  //   background: $color-red;
-  // }
 }
 
 .image {
@@ -63,37 +66,9 @@
 }
 
 .score {
-
-
-  font-size: 40vw;
   left: 50%;
   opacity: .2;
   position: absolute;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-color: $color-white;
-  -webkit-text-stroke-width: 2px;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-
-.skipTutorialBtn {
-
-
-  background: $color-yellow;
-  border: 1px solid $color-black;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 18px;
-  left: 0;
-  letter-spacing: .024em;
-  margin: auto;
-  padding: 20px;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  text-transform: uppercase;
-  top: 40%;
-  width: 80%;
-  z-index: 20;
 }

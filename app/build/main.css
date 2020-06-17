@@ -285,7 +285,7 @@ a {
     @media only screen and (max-width: 920px) {
       .Button-button--2dnz7 .Button-buttonCard--230LD {
         border-width: 4px;
-        padding: 12px; } }
+        padding: 22px 20px; } }
   @media only screen and (max-width: 920px) {
     .Button-button--2dnz7 {
       padding: 0 22px 13px 0; }
@@ -303,6 +303,7 @@ a {
         display: flex;
         height: 72px;
         justify-content: center;
+        padding: 12px;
         width: 72px; }
       .Button-button--2dnz7.Button-isKeyPad--2_F4C.Button-isFullWidth--1DMoW .Button-buttonCard--230LD {
         width: 244px; } }
@@ -1927,6 +1928,51 @@ a {
 /* Breakpoints */
 /* Easings*/
 /* Timings */
+.MeetCharacterStage-title--2rIjd {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 3.75vw;
+  font-weight: 900;
+  line-height: 4.51389vw; }
+  @media only screen and (max-width: 920px) {
+    .MeetCharacterStage-title--2rIjd {
+      font-size: 54px;
+      line-height: 65px; } }
+
+.MeetCharacterStage-title--2rIjd {
+  color: #fff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0.41667vw 0.41667vw 0 #000;
+  -webkit-text-stroke: 0.27778vw #000; }
+  @media only screen and (max-width: 920px) {
+    .MeetCharacterStage-title--2rIjd {
+      text-shadow: 6px 6px 0 #000;
+      -webkit-text-stroke: 4px #000; } }
+
+.MeetCharacterStage-meetCharacter--1g4kN {
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  left: 0;
+  overflow: hidden;
+  padding: 57px 20px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0; }
+  .MeetCharacterStage-meetCharacter--pink--1F25G {
+    background: #f4b7ed; }
+  .MeetCharacterStage-meetCharacter--yellow--1cdwW {
+    background: #ffe945; }
+
+.MeetCharacterStage-character--33svn {
+  flex: 100% 1 1; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
 .PlayStage-play--IhBy- {
   bottom: 0;
   display: flex;
@@ -1937,6 +1983,14 @@ a {
   right: 0;
   text-align: center;
   top: 0; }
+
+.PlayStage-top--1U9dN {
+  align-items: center;
+  display: flex;
+  height: 135px;
+  justify-content: center; }
+  .PlayStage-top--1U9dN .PlayStage-button--2jeSO {
+    text-transform: none; }
 
 .PlayStage-touchBubble--3amvr {
   border: 2px #fff solid;
@@ -1973,33 +2027,11 @@ a {
   right: 0; }
 
 .PlayStage-score--3bDgs {
-  font-size: 40vw;
   left: 50%;
   opacity: .2;
   position: absolute;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-color: #fff;
-  -webkit-text-stroke-width: 2px;
   top: 50%;
   transform: translate(-50%, -50%); }
-
-.PlayStage-skipTutorialBtn--1Ujsg {
-  background: #ffe945;
-  border: 1px solid #000;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 18px;
-  left: 0;
-  letter-spacing: .024em;
-  margin: auto;
-  padding: 20px;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  text-transform: uppercase;
-  top: 40%;
-  width: 80%;
-  z-index: 20; }
 
 /* Colors */
 /* Breakpoints */

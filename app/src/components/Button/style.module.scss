@@ -77,7 +77,7 @@
 
     @include respond-to(smartphone) {
       border-width: 4px;
-      padding: 12px;
+      padding: 22px 20px;
     }
   }
 
@@ -112,6 +112,7 @@
         display: flex;
         height: 72px;
         justify-content: center;
+        padding: 12px;
         width: 72px;
       }
 

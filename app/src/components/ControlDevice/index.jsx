@@ -3,6 +3,7 @@ import { CHARACTERS } from '~constants'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 import PreConnectStage from './stages/PreConnectStage'
+import MeetCharacterStage from './stages/MeetCharacterStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
 
@@ -65,8 +66,13 @@ const ControlDevice = () => {
           hasPlayed={hasPlayed}
           onFinish={() => {
             setHasPlayed(true)
-            setStage('play')
+            setStage('meet_character')
           }}
+        />
+      )}
+      {stage === 'meet_character' && (
+        <MeetCharacterStage
+          character={character}
         />
       )}
       {stage === 'play' && (

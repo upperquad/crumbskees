@@ -58,7 +58,9 @@ const PlayStage = props => {
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <section className={styles.play}>
-      {!ready && <Button clickHandler={onReadyTouch} text="Ready" />}
+      <div className={styles.top}>
+        {!ready && <Button extraClassName={styles.button} clickHandler={onReadyTouch} text="I’m ready!" />}
+      </div>
       <div
         className={styles.touchZone}
         onTouchStart={touchStartHandler}
@@ -67,10 +69,7 @@ const PlayStage = props => {
         onClick={tapHandler}
       >
         <div
-          className={classNames(styles.block, {
-            // [styles.blockRed]: color === 'red',
-            // [styles.blockPurple]: color === 'purple',
-          })}
+          className={classNames(styles.block)}
         >
           {!!score && <div className={styles.score}>{score}</div>}
           <img className={styles.image} src={image} alt="" />

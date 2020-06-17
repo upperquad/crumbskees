@@ -63251,7 +63251,7 @@ module.exports = function parseURI (str, opts) {
 /*!*********************************************!*\
   !*** ./node_modules/pixi.js/lib/pixi.es.js ***!
   \*********************************************/
-/*! exports provided: accessibility, interaction, utils, VERSION, filters, useDeprecated, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings */
+/*! exports provided: accessibility, interaction, utils, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings, VERSION, filters, useDeprecated */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -111041,8 +111041,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
 /* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
 /* harmony import */ var _stages_PreConnectStage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stages/PreConnectStage */ "./src/components/ControlDevice/stages/PreConnectStage/index.jsx");
-/* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/ControlDevice/stages/PlayStage/index.jsx");
-/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/ControlDevice/stages/ResultStage/index.jsx");
+/* harmony import */ var _stages_MeetCharacterStage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stages/MeetCharacterStage */ "./src/components/ControlDevice/stages/MeetCharacterStage/index.jsx");
+/* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/ControlDevice/stages/PlayStage/index.jsx");
+/* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/ControlDevice/stages/ResultStage/index.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -111050,6 +111051,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -111158,16 +111160,18 @@ var ControlDevice = function ControlDevice() {
     hasPlayed: hasPlayed,
     onFinish: function onFinish() {
       setHasPlayed(true);
-      setStage('play');
+      setStage('meet_character');
     }
-  }), stage === 'play' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), stage === 'meet_character' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_MeetCharacterStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    character: character
+  }), stage === 'play' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PlayStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
     activeTutorial: activeTutorial,
     setActiveTutorial: setActiveTutorial,
     characterIndex: characterIndex,
     color: character.color,
     score: score,
     image: character.image
-  }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
     winner: winner,
     characterIndex: characterIndex,
     score: score,
@@ -111185,6 +111189,56 @@ var ControlDevice = function ControlDevice() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ControlDevice);
+
+/***/ }),
+
+/***/ "./src/components/ControlDevice/stages/MeetCharacterStage/index.jsx":
+/*!**************************************************************************!*\
+  !*** ./src/components/ControlDevice/stages/MeetCharacterStage/index.jsx ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/MeetCharacterStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
+
+
+
+
+
+var MeetCharacterStage = function MeetCharacterStage(props) {
+  var character = props.character;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.meetCharacter, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a["meetCharacter--".concat(character.color)])
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.title
+  }, "UR IN!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.character,
+    character: character,
+    mood: "happy"
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (MeetCharacterStage);
+
+/***/ }),
+
+/***/ "./src/components/ControlDevice/stages/MeetCharacterStage/style.module.scss":
+/*!**********************************************************************************!*\
+  !*** ./src/components/ControlDevice/stages/MeetCharacterStage/style.module.scss ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+module.exports = {"title":"MeetCharacterStage-title--2rIjd","meetCharacter":"MeetCharacterStage-meetCharacter--1g4kN","meetCharacter--pink":"MeetCharacterStage-meetCharacter--pink--1F25G","meetCharacterPink":"MeetCharacterStage-meetCharacter--pink--1F25G","meetCharacter--yellow":"MeetCharacterStage-meetCharacter--yellow--1cdwW","meetCharacterYellow":"MeetCharacterStage-meetCharacter--yellow--1cdwW","character":"MeetCharacterStage-character--33svn"};
 
 /***/ }),
 
@@ -111294,19 +111348,20 @@ var PlayStage = function PlayStage(props) {
   return (// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.play
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.top
     }, !ready && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.button,
       clickHandler: onReadyTouch,
-      text: "Ready"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      text: "I\u2019m ready!"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.touchZone,
       onTouchStart: touchStartHandler,
       onTouchMove: touchMoveHandlerThrottle,
       onTouchEnd: touchEndHandler,
       onClick: tapHandler
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block, {// [styles.blockRed]: color === 'red',
-        // [styles.blockPurple]: color === 'purple',
-      })
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block)
     }, !!score && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.score
     }, score), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -111335,7 +111390,7 @@ var PlayStage = function PlayStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"play":"PlayStage-play--IhBy-","touchBubble":"PlayStage-touchBubble--3amvr","touchBubbleVisible":"PlayStage-touchBubbleVisible--Ks4rI","score":"PlayStage-score--3bDgs","touchZone":"PlayStage-touchZone--3gX7k","block":"PlayStage-block--3zdrK","image":"PlayStage-image--30zz4","skipTutorialBtn":"PlayStage-skipTutorialBtn--1Ujsg"};
+module.exports = {"play":"PlayStage-play--IhBy-","top":"PlayStage-top--1U9dN","button":"PlayStage-button--2jeSO","touchBubble":"PlayStage-touchBubble--3amvr","touchBubbleVisible":"PlayStage-touchBubbleVisible--Ks4rI","score":"PlayStage-score--3bDgs","touchZone":"PlayStage-touchZone--3gX7k","block":"PlayStage-block--3zdrK","image":"PlayStage-image--30zz4"};
 
 /***/ }),
 
