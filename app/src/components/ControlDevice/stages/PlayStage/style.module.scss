@@ -1,15 +1,27 @@
 @import "~styles/imports/index";
 
 .play {
+  background: $color-purple;
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
   left: 0;
-  padding: 20px 0 24px;
+  overflow: hidden;
   position: fixed;
   right: 0;
   text-align: center;
+  transition: background .2s;
   top: 0;
+
+  &.isReady {
+    .top {
+      pointer-events: none;
+    }
+  }
+
+  &.isGameStarted {
+    background: $color-green;
+  }
 }
 
 .top {
@@ -17,18 +29,27 @@
   display: flex;
   height: 135px;
   justify-content: center;
+  padding: 0 30px;
+  text-align: center;
 
   .button {
     text-transform: none;
   }
+
+  .hurryUp {
+    @extend %t--body-small;
+
+    color: $color-white;
+  }
 }
 
 .touchBubble {
-  border: 2px $color-white solid;
+  border: 4px $color-white solid;
   border-radius: 50%;
   height: 74px;
   opacity: 0;
   position: absolute;
+  pointer-events: none;
   transform: translate(-50%, -50%) scale(.2);
   transition: opacity .3s, transform ease-in-out .1s;
   width: 74px;
@@ -39,36 +60,58 @@
     // transition: opacity .3s, transform ease-in-out .3s, left .1s, top .1s;
     transition: opacity .3s;
   }
+
+  &--red {
+    border-color: $color-red;
+  }
+
+  &--purple {
+    border-color: $color-purple;
+  }
+}
+
+.scoreTitle {
+  @extend %t--body-small;
+
+  line-height: .1em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .score {
-  pointer-events: none;
+  @extend %t--h2;
+  @extend %t--style-sm-shadow;
 }
 
-.touchZone {
+.blockWrapper {
   flex-grow: 1;
-  padding: 20px 5vw 24px;
+  overflow: hidden;
+  padding: 0 30px 30px;
+  pointer-events: none;
   position: relative;
+}
+
+.character {
+  height: 250px;
+  position: absolute;
+  width: 250px;
+
+  &--p1 {
+    bottom: -50px;
+    left: -60px;
+    transform: rotate(15deg);
+  }
+
+  &--p2 {
+    bottom: -85px;
+    left: -60px;
+  }
 }
 
 .block {
-  border: 1px solid $color-black;
+  background: $color-white;
+  border: 4px solid $color-black;
   height: 100%;
   position: relative;
   width: 100%;
-}
-
-.image {
-  bottom: 4px;
-  height: 100px;
-  position: absolute;
-  right: 0;
-}
-
-.score {
-  left: 50%;
-  opacity: .2;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }

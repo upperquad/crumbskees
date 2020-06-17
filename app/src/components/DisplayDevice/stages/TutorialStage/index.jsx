@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
+
+import Player1Peer from '~managers/PeerManager/Player1Peer'
+import Player2Peer from '~managers/PeerManager/Player2Peer'
 
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 
 const TutorialStage = props => {
   const { extraClassName, onFinish } = props
+
+  useEffect(() => {
+    Player1Peer.send('tutorial_start')
+    Player2Peer.send('tutorial_start')
+  }, [])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>

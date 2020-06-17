@@ -9,10 +9,9 @@ import ResultStage from './stages/ResultStage'
 
 const ControlDevice = () => {
   const [hasPlayed, setHasPlayed] = useState(false)
+  const [gameStarted, setGameStarted] = useState(false)
   const [stage, setStage] = useState('pre_connect')
-  const [character, setCharacter] = useState(CHARACTERS[0])
-  const [characterIndex, setCharacterIndex] = useState(null)
-  const [activeTutorial, setActiveTutorial] = useState(false)
+  const [character, setCharacter] = useState(null)
   const [score, setScore] = useState(0)
   const [winner, setWinner] = useState(null)
   const [mode, setMode] = useState(null)
@@ -24,19 +23,20 @@ const ControlDevice = () => {
       switch (type) {
         case 'accepted': {
           const { mode: activatedMode, playerIndex } = data
-          setCharacterIndex(playerIndex)
           setMode(activatedMode)
           if (CHARACTERS[playerIndex]) {
             setCharacter(CHARACTERS[playerIndex])
           }
+          setHasPlayed(true)
+          setStage('meet_character')
           break
         }
         case 'tutorial_start': {
-          setActiveTutorial(true)
+          setStage('play')
           break
         }
         case 'game_start': {
-          setActiveTutorial(false)
+          setGameStarted(true)
           break
         }
         case 'score': {
@@ -62,13 +62,7 @@ const ControlDevice = () => {
   return (
     <Fragment>
       {stage === 'pre_connect' && (
-        <PreConnectStage
-          hasPlayed={hasPlayed}
-          onFinish={() => {
-            setHasPlayed(true)
-            setStage('meet_character')
-          }}
-        />
+        <PreConnectStage hasPlayed={hasPlayed} />
       )}
       {stage === 'meet_character' && (
         <MeetCharacterStage
@@ -77,27 +71,22 @@ const ControlDevice = () => {
       )}
       {stage === 'play' && (
         <PlayStage
-          activeTutorial={activeTutorial}
-          setActiveTutorial={setActiveTutorial}
-          characterIndex={characterIndex}
-          color={character.color}
+          gameStarted={gameStarted}
+          character={character}
           score={score}
-          image={character.image}
         />
       )}
       {stage === 'result' && (
         <ResultStage
           winner={winner}
-          characterIndex={characterIndex}
           score={score}
           mode={mode}
           resetGame={() => {
             setScore(0)
             setWinner(null)
+            setGameStarted(false)
             setStage('pre_connect')
-            setCharacter(CHARACTERS[0])
-            setCharacterIndex(null)
-            setActiveTutorial(false)
+            setCharacter(null)
             ServerPeer.disconnect()
           }}
         />

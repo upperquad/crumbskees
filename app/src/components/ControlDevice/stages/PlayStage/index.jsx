@@ -3,12 +3,13 @@ import { throttle } from 'throttle-debounce'
 import classNames from 'classnames'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
+
 import Button from '~components/Button'
+import Character from '~components/Character'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
-
 const PlayStage = props => {
-  const { image, score } = props
+  const { character, gameStarted, score } = props
   const [isTouching, setIsTouching] = useState(false)
   const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
@@ -33,20 +34,17 @@ const PlayStage = props => {
 
   const touchMoveHandler = event => {
     event.preventDefault()
-    event.stopPropagation()
     const { clientX, clientY } = event.touches[0]
     updatePosition(clientX, clientY)
     forceUpdate()
   }
   const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
 
-  const touchEndHandler = event => {
-    event.stopPropagation()
+  const touchEndHandler = () => {
     setIsTouching(false)
   }
 
-  const tapHandler = event => {
-    event.stopPropagation()
+  const tapHandler = () => {
     ServerPeer.send('click')
   }
 
@@ -57,28 +55,46 @@ const PlayStage = props => {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <section className={styles.play}>
+    <section
+      className={classNames(styles.play, {
+        [styles.isReady]: ready,
+        [styles.gameStarted]: gameStarted,
+      })}
+      onTouchStart={touchStartHandler}
+      onTouchMove={touchMoveHandlerThrottle}
+      onTouchEnd={touchEndHandler}
+      onClick={tapHandler}
+    >
       <div className={styles.top}>
         {!ready && <Button extraClassName={styles.button} clickHandler={onReadyTouch} text="I’m ready!" />}
+        {ready && !gameStarted && (
+          <span className={styles.hurryUp}>
+            Looks like your friend isn’t ready yet, tell em to hurry up!
+          </span>
+        )}
+        {ready && gameStarted && (
+          <div>
+            <div className={styles.scoreTitle}>Score</div>
+            <div className={styles.score}>{score}</div>
+          </div>
+        )}
       </div>
-      <div
-        className={styles.touchZone}
-        onTouchStart={touchStartHandler}
-        onTouchMove={touchMoveHandlerThrottle}
-        onTouchEnd={touchEndHandler}
-        onClick={tapHandler}
-      >
-        <div
-          className={classNames(styles.block)}
-        >
-          {!!score && <div className={styles.score}>{score}</div>}
-          <img className={styles.image} src={image} alt="" />
-        </div>
-        <div
-          style={{ top: coordY.current, left: coordX.current }}
-          className={classNames(styles.touchBubble, { [styles.touchBubbleVisible]: isTouching })}
+      <div className={styles.blockWrapper}>
+        <div className={styles.block} />
+        <Character
+          extraClassName={classNames(styles.character, styles[`character--${character.slug}`])}
+          character={character}
+          mood="happy"
         />
       </div>
+      <div
+        style={{ top: coordY.current, left: coordX.current }}
+        className={classNames(
+          styles.touchBubble,
+          styles[`touchBubble--${character.secondaryColor}`],
+          { [styles.touchBubbleVisible]: isTouching },
+        )}
+      />
     </section>
   )
 }

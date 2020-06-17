@@ -9,7 +9,7 @@ import TokenSocketManager from '~managers/TokenSocketManager'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PreConnectStage = props => {
-  const { hasPlayed, onFinish } = props
+  const { hasPlayed } = props
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
@@ -89,14 +89,6 @@ const PreConnectStage = props => {
       ServerPeer.removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
     }
   }, [])
-
-  useEffect(() => {
-    ServerPeer.addSubscriber('CONNECTED', onFinish)
-
-    return () => {
-      ServerPeer.removeSubscriber('CONNECTED', onFinish)
-    }
-  }, [onFinish])
 
   useEffect(() => {
     if (!hasPlayed) {
