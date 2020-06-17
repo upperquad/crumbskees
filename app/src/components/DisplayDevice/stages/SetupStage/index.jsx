@@ -63,7 +63,6 @@ const SetupStage = props => {
         <br />
         your phones
       </h2>
-      <h3 className={styles.subtitle}>Open your phone camera and scan the code!</h3>
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => {
           if (player.id || player.token) {

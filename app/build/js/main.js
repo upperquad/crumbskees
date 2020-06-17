@@ -63251,7 +63251,7 @@ module.exports = function parseURI (str, opts) {
 /*!*********************************************!*\
   !*** ./node_modules/pixi.js/lib/pixi.es.js ***!
   \*********************************************/
-/*! exports provided: accessibility, interaction, utils, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings, VERSION, filters, useDeprecated */
+/*! exports provided: accessibility, interaction, utils, VERSION, filters, useDeprecated, Application, AbstractBatchRenderer, AbstractRenderer, Attribute, BaseRenderTexture, BaseTexture, BatchDrawCall, BatchGeometry, BatchPluginFactory, BatchRenderer, BatchShaderGenerator, BatchTextureArray, Buffer, CubeTexture, Filter, Framebuffer, GLProgram, GLTexture, Geometry, MaskData, ObjectRenderer, Program, Quad, QuadUv, RenderTexture, RenderTexturePool, Renderer, Shader, SpriteMaskFilter, State, System, Texture, TextureMatrix, TextureUvs, UniformGroup, ViewableBuffer, autoDetectRenderer, checkMaxIfStatementsInShader, defaultFilterVertex, defaultVertex, resources, systems, Extract, AppLoaderPlugin, Loader, LoaderResource, TextureLoader, ParticleContainer, ParticleRenderer, BasePrepare, CountLimiter, Prepare, TimeLimiter, Spritesheet, SpritesheetLoader, TilingSprite, TilingSpriteRenderer, BitmapFontLoader, BitmapText, Ticker, TickerPlugin, UPDATE_PRIORITY, ALPHA_MODES, BLEND_MODES, DRAW_MODES, ENV, FORMATS, GC_MODES, MASK_TYPES, MIPMAP_MODES, PRECISION, RENDERER_TYPE, SCALE_MODES, TARGETS, TYPES, WRAP_MODES, Bounds, Container, DisplayObject, FillStyle, GRAPHICS_CURVES, Graphics, GraphicsData, GraphicsGeometry, LineStyle, graphicsUtils, Circle, DEG_TO_RAD, Ellipse, Matrix, ObservablePoint, PI_2, Point, Polygon, RAD_TO_DEG, Rectangle, RoundedRectangle, SHAPES, Transform, groupD8, Mesh, MeshBatchUvs, MeshGeometry, MeshMaterial, NineSlicePlane, PlaneGeometry, RopeGeometry, SimpleMesh, SimplePlane, SimpleRope, Runner, Sprite, AnimatedSprite, TEXT_GRADIENT, Text, TextMetrics, TextStyle, isMobile, settings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -111407,7 +111407,7 @@ var PreConnectStage = function PreConnectStage(props) {
     setToken(function (prevToken) {
       var newToken = prevToken + key;
 
-      if (newToken.length >= 3) {
+      if (newToken.length >= 4) {
         connect(newToken);
       }
 
@@ -111483,7 +111483,7 @@ var PreConnectStage = function PreConnectStage(props) {
       _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_5__["default"].init('control');
       var path = window.location.pathname;
 
-      if (/^\/\d{3}$/.test(path)) {
+      if (/^\/\d{4}$/.test(path)) {
         var urlToken = path.slice(1);
         setToken(urlToken);
         connect(urlToken);
@@ -115021,9 +115021,7 @@ var SetupStage = function SetupStage(props) {
     poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_13___default.a
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.title
-  }, "Grab a friend and", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "your phones"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.subtitle
-  }, "Open your phone camera and scan the code!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Grab a friend and", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "your phones"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.players
   }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players.map(function (player, index) {
     if (player.id || player.token) {
@@ -115105,7 +115103,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"SetupStage-title--5BCVB","playerName":"SetupStage-playerName--3DwHW","qrUrl":"SetupStage-qrUrl--21ulS","subtitle":"SetupStage-subtitle--1AeLK","player":"SetupStage-player--2JGID","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","instruction":"SetupStage-instruction--2Kes6"};
+module.exports = {"title":"SetupStage-title--5BCVB","playerName":"SetupStage-playerName--3DwHW","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","instruction":"SetupStage-instruction--2Kes6"};
 
 /***/ }),
 
@@ -116307,6 +116305,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
 /* harmony import */ var _managers_abstracts_Observable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~managers/abstracts/Observable */ "./src/managers/abstracts/Observable/index.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~utils/math */ "./src/utils/math.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -116322,6 +116321,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -116549,9 +116549,9 @@ function getNewToken(index) {
   var token;
 
   if (_constants__WEBPACK_IMPORTED_MODULE_5__["DEBUG"]) {
-    token = index === 0 ? '000' : '999';
+    token = index === 0 ? '0000' : '9999';
   } else {
-    token = Math.random().toString(10).substr(2, 3);
+    token = "".concat(Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["randomInt"])(1, 9)).concat(Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["randomInt"])(1, 9)).concat(Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["randomInt"])(1, 9)).concat(Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["randomInt"])(1, 9));
   }
 
   _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_3__["default"].send('new_token', {

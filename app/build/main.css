@@ -378,16 +378,6 @@ a {
       font-size: 20px;
       line-height: 24px; } }
 
-.SetupStage-subtitle--1AeLK {
-  font-family: 'Fakt', sans-serif;
-  font-size: 1.11111vw;
-  font-weight: 700;
-  line-height: 1.31944vw; }
-  @media only screen and (max-width: 920px) {
-    .SetupStage-subtitle--1AeLK {
-      font-size: 16px;
-      line-height: 19px; } }
-
 .SetupStage-title--5BCVB {
   color: #fff;
   -moz-osx-font-smoothing: grayscale;
@@ -448,12 +438,6 @@ a {
   width: 100%; }
 
 .SetupStage-title--5BCVB {
-  margin-bottom: 0.34722vw;
-  position: relative;
-  text-align: center; }
-
-.SetupStage-subtitle--1AeLK {
-  color: #fff;
   margin-bottom: 3.125vw;
   position: relative;
   text-align: center; }

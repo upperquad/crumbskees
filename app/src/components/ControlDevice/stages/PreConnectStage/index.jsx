@@ -25,7 +25,7 @@ const PreConnectStage = props => {
     setToken(prevToken => {
       const newToken = prevToken + key
 
-      if (newToken.length >= 3) {
+      if (newToken.length >= 4) {
         connect(newToken)
       }
 
@@ -103,7 +103,7 @@ const PreConnectStage = props => {
       TokenSocketManager.init('control')
 
       const path = window.location.pathname
-      if (/^\/\d{3}$/.test(path)) {
+      if (/^\/\d{4}$/.test(path)) {
         const urlToken = path.slice(1)
         setToken(urlToken)
         connect(urlToken)
