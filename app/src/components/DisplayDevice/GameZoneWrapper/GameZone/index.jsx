@@ -116,12 +116,13 @@ const GameZone = props => {
               return [...prevArray]
             })
             break
-          default:
           case 'target':
             targetsCaught.push(item.image)
             break
           case 'bad':
             badItemsCaught.push(item.image)
+            break
+          default:
             break
         }
       })
