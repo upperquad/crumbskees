@@ -17,7 +17,7 @@ import StageWrapper from './StageWrapper'
 import TokenSocketManager from '~managers/TokenSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 
-const TRANSITION_TIMEOUTS = { enter: 800, exit: 1300 }
+const TRANSITION_TIMEOUTS = 1600
 
 const DisplayDevice = () => {
   const [stage, setStage] = useState('landing')
