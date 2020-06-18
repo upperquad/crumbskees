@@ -66,7 +66,7 @@ const PlayStage = props => {
       onTouchStart={showInstruction ? hideInstruction : touchStartHandler}
       onTouchMove={showInstruction ? null : touchMoveHandlerThrottle}
       onTouchEnd={showInstruction ? null : touchEndHandler}
-      onClick={showInstruction ? null : tapHandler}
+      onClick={showInstruction ? hideInstruction : tapHandler}
     >
       <div className={styles.top}>
         {!ready && <Button extraClassName={styles.button} clickHandler={onReadyTouch} text="I’m ready!" />}
