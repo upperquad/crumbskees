@@ -13,7 +13,7 @@ import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 import Character from '~components/Character'
 
-const TIME = DEBUG ? 10 : 40
+const TIME = DEBUG ? 100 : 40
 
 const GameZoneWrapper = props => {
   const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props

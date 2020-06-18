@@ -41,7 +41,7 @@ const PlayStage = props => {
     updatePosition(clientX, clientY)
     forceUpdate()
   }
-  const touchMoveHandlerThrottle = throttle(50, touchMoveHandler)
+  const touchMoveHandlerThrottle = throttle(200, touchMoveHandler)
 
   const touchEndHandler = () => {
     setIsTouching(false)
