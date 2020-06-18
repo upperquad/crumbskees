@@ -1,0 +1,97 @@
+@import "~styles/imports/index";
+
+.preConnect {
+  background: $color-pink;
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  left: 0;
+  overflow: hidden;
+  padding-bottom: 10px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+
+.marquee {
+  @extend %t--body-small;
+
+  background: $color-purple;
+  color: $color-red;
+  letter-spacing: .1em;
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.tokenDisplay {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  justify-content: center;
+  padding: 0 20px 10px;
+  position: relative;
+  text-align: center;
+}
+
+.label {
+  @extend %t--body;
+
+  color: $color-red;
+  flex-grow: 0;
+  flex-shrink: 0;
+  letter-spacing: .1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tokenInput {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: space-between;
+  margin: 10px auto;
+  transition: opacity .15s;
+  width: 254px;
+
+  &.isConnecting {
+    opacity: .5;
+    pointer-events: none;
+  }
+}
+
+.tokenInputKey {
+  margin-bottom: 12px;
+}
+
+.instruction {
+  @extend %t--body-small;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 0 20px;
+}
+
+.placeholder1 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  height: 12px;
+}
+
+.placeholder2 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  height: 17px;
+}
+
+.placeholder3 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  height: 33px;
+}

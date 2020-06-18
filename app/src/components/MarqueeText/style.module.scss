@@ -1,0 +1,20 @@
+@import "~styles/imports/index";
+
+.marquee {
+  white-space: nowrap;
+}
+
+.marqueeInnerText {
+  animation: marquee-text-inner 12s infinite linear;
+  display: inline-block;
+}
+
+@keyframes marquee-text-inner {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-200%);
+  }
+}

@@ -1,0 +1,104 @@
+@import "~styles/imports/index";
+
+@keyframes playstage-blink-bar-color {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.gameContentTutorial {
+  height: grid(8);
+  position: relative;
+  width: grid(8 * 32 / 14);
+}
+
+.gameContent {
+  box-sizing: border-box;
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: grid(14);
+  position: relative;
+  width: 100%;
+  z-index: 10;
+}
+
+.readyIndicators {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: grid(.5);
+
+  .readyIndicatorsTitle {
+    @extend %t--h2;
+    @extend %t--style-sm-shadow;
+
+    color: $color-white;
+    order: 2;
+  }
+
+  .readyIndicator {
+    @extend %shadow-box;
+
+    height: scaleVw(173);
+    opacity: .7;
+    pointer-events: none;
+    position: relative;
+    transition: opacity .3s;
+    width: scaleVw(236);
+
+    &.isReady {
+      opacity: 1;
+    }
+
+    &--1 {
+      order: 1;
+
+      .readyIndicatorCharacter {
+        left: -25%;
+        top: -20%;
+        transform: rotate(25deg);
+      }
+    }
+
+    &--2 {
+      order: 3;
+
+      .readyIndicatorCharacter {
+        right: -28%;
+        top: -34%;
+        transform: rotate(-140deg);
+      }
+    }
+
+    &--red {
+      background: $color-red;
+    }
+
+    &--purple {
+      background: $color-purple;
+    }
+  }
+
+  .readyIndicatorInner {
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .readyIndicatorCharacter {
+    height: scaleVw(250);
+    position: absolute;
+    width: scaleVw(250);
+  }
+}

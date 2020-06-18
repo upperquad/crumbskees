@@ -1,0 +1,140 @@
+@import "~styles/imports/index";
+
+@keyframes intro-blink-color {
+  0% {
+    color: $color-pink;
+  }
+  50% {
+    color: $color-white;
+  }
+  100% {
+    color: $color-pink;
+  }
+}
+
+@keyframes intro-go {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.intro {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  box-sizing: border-box;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.introBgContainer {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  height: grid(14);
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: clip-path 1.3s $easing-circle-in-out;
+  width: 100%;
+  z-index: -1;
+}
+
+.introBgContainerVisible {
+  clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
+}
+
+.video {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.introRoundWrapper {
+  bottom: grid(14 / 2 + 4 + 5 / 3);
+  left: 50%;
+  overflow: hidden;
+  padding-top: grid(10 / 3);
+  pointer-events: none;
+  position: absolute;
+  transform: translate(-50%, 50%);
+  transform-origin: bottom;
+  width: 100%;
+}
+
+.introRound {
+  color: $color-pink;
+}
+
+.introRoundBlink {
+  animation: intro-blink-color .1s linear 6;
+  color: $color-white;
+}
+
+.introRoundWrapperDown {
+  bottom: grid(.4);
+  transform: translateX(-50%) scale(.17);
+  transition:
+    bottom 1.2s $easing-circle-in-out,
+    transform 1.2s $easing-circle-in-out;
+
+  .introRound {
+    color: $color-white;
+    letter-spacing: .1em;
+    opacity: 0;
+    text-shadow: scaleVw(10) scaleVw(10) 0 transparent;
+    -webkit-text-stroke: scaleVw(4) transparent;
+    transition:
+      opacity .2s .5s,
+      color .3s .6s,
+      letter-spacing .3s .6s,
+      text-shadow .3s .6s,
+      -webkit-text-stroke .3s .6s;
+  }
+}
+
+.countdown {
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: grid(7);
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.set {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.go {
+  color: $color-red;
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: grid(7);
+  transform: translate(-50%, -50%) scale(.2);
+}
+
+.goStart {
+  animation: intro-go 1s linear 1 both;
+  transform: translate(-50%, -50%) scale(2);
+  transition: transform 1.5s $easing-circle-in-out;
+}

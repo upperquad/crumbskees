@@ -1,0 +1,197 @@
+@import "~styles/imports/index";
+
+.setup {
+  color: $color-black;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.video {
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.title {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  margin-bottom: scaleVw(45);
+  position: relative;
+  text-align: center;
+}
+
+.players {
+  display: flex;
+  justify-content: center;
+  margin-bottom: scaleVw(130);
+  position: relative;
+}
+
+.player {
+  @extend %shadow-box;
+
+  background: $color-white;
+  margin: 0 scaleVw(60);
+  text-align: center;
+  width: scaleVw(460);
+}
+
+.qrWrapper {
+  height: scaleVw(350);
+  position: relative;
+}
+
+.playerConnected,
+.qr {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.qr {
+  transition: opacity .3s;
+}
+
+.playerConnected {
+  pointer-events: none;
+  transition: opacity .3s .3s, transform .3s .3s ease-out;
+
+  &::before {
+    border-radius: 50%;
+    content: '';
+    height: grid(6);
+    position: absolute;
+    width: grid(6);
+  }
+
+  .playerConnectedCharacter {
+    height: grid(5);
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: grid(5);
+  }
+
+  &--pink::before {
+    background: $color-pink;
+  }
+
+  &--yellow::before {
+    background: $color-yellow;
+  }
+}
+
+.playerConnectedTransitioning {
+  opacity: 0;
+  transform: scale(.4);
+}
+
+.qrTransitioning {
+  opacity: 0;
+}
+
+.playerName {
+  @extend %t--h2;
+
+  align-items: center;
+  border-top: scaleVw(4) solid $color-black;
+  display: flex;
+  height: scaleVw(112);
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.qrQr {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-bottom: grid(.2);
+  position: relative;
+  width: grid(3);
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+}
+
+.qrUrl {
+  @extend %t--body;
+
+  margin: 0 scaleVw(20);
+}
+
+.qrUrlToken {
+  color: $color-red;
+  text-transform: none;
+}
+
+.cornerCharacter {
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: transform 1s ease-out;
+
+  &--1 {
+    left: 0;
+
+    .cornerCharacterHead {
+      height: scaleVw(330);
+      right: scaleVw(30);
+      top: scaleVw(30);
+      transform: rotate(25deg);
+      width: scaleVw(330);
+    }
+
+    &.cornerCharacterOut {
+      transform: translate(-100%, 100%);
+    }
+  }
+
+  &--2 {
+    right: 0;
+
+    .cornerCharacterHead {
+      height: scaleVw(350);
+      left: scaleVw(20);
+      top: scaleVw(20);
+      transform: rotate(-20deg);
+      width: scaleVw(350);
+    }
+
+    &.cornerCharacterOut {
+      transform: translate(100%, 100%);
+    }
+  }
+
+  .cornerCharacterBody {
+    display: block;
+    width: scaleVw(300);
+  }
+
+  .cornerCharacterHead {
+    position: absolute;
+  }
+}
+
+.instruction {
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

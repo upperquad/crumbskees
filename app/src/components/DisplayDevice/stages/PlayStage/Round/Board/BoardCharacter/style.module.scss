@@ -1,0 +1,28 @@
+@import "~styles/imports/index";
+
+.character {
+  flex: grid(4) 0 0;
+  overflow: hidden;
+  position: relative;
+
+  .characterLottie {
+    height: 120%;
+    left: 50%;
+    position: absolute;
+    top: 2%;
+    transform: translateX(-50%);
+    width: 120%;
+  }
+
+  &.characterLost {
+    filter: grayscale(100%);
+  }
+
+  &--yellow {
+    background: $color-yellow;
+  }
+
+  &--pink {
+    background: $color-pink;
+  }
+}

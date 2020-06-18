@@ -1,0 +1,113 @@
+@mixin shadow-box {
+  border: scaleVw(4) solid $color-black;
+  position: relative;
+
+  &::before,
+  &::after {
+    background: $color-black;
+    content: '';
+    position: absolute;
+  }
+
+  &::before {
+    left: scaleVw(-4);
+    right: scaleVw(-4);
+    top: calc(100% + #{scaleVw(4)});
+    transform-origin: top left;
+  }
+
+  &::after {
+    bottom: scaleVw(-4);
+    top: scaleVw(-4);
+  }
+
+  @include respond-to(smartphone) {
+    border-width: 4px;
+
+    &::before {
+      left: -4px;
+      right: -4px;
+      top: calc(100% + 4px);
+    }
+
+    &::after {
+      bottom: -4px;
+      top: -4px;
+    }
+  }
+}
+
+%shadow-box {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(16);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
+    transform: skewY(45deg);
+    transform-origin: top left;
+    width: scaleVw(16);
+  }
+}
+
+%shadow-box-small {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(12);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
+    transform: skewY(45deg);
+    transform-origin: top left;
+    width: scaleVw(12);
+  }
+
+  @include respond-to(smartphone) {
+    &::before {
+      height: 8px;
+    }
+
+    &::after {
+      left: calc(100% + 4px);
+      width: 8px;
+    }
+  }
+}
+
+%shadow-box-large {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(27);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
+    transform: skewY(45deg);
+    transform-origin: top left;
+    width: scaleVw(27);
+  }
+}
+
+%shadow-box-large-left {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(16);
+    transform: skewX(-45deg);
+  }
+
+  &::after {
+    right: calc(100% + #{scaleVw(4)});
+    transform: skewY(-45deg);
+    transform-origin: top right;
+    width: scaleVw(16);
+  }
+}

@@ -1,0 +1,236 @@
+@import "~styles/imports/index";
+
+.board {
+  border-top: scaleVw(4) solid $color-black;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  height: grid(4);
+  left: 0;
+  position: absolute;
+  transition: opacity .3s;
+  width: 100%;
+  z-index: 1;
+}
+
+.boardEntering {
+  opacity: 0;
+}
+
+.playerMeta {
+  align-items: center;
+  background: $color-green;
+  border-left: scaleVw(4) solid $color-black;
+  border-right: scaleVw(4) solid $color-black;
+  display: flex;
+  flex: grid(9) 1 1;
+  justify-content: space-around;
+  position: relative;
+}
+
+.timer {
+  background: $color-black;
+  flex: grid(6) 0 0;
+  padding-top: scaleVw(35);
+  position: relative;
+  text-align: center;
+
+  .timerInt {
+    @extend %t--h1;
+
+    color: $color-black;
+    display: inline-block;
+    font-size: scaleVw(80 / .9);
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    line-height: scaleVw(64 / .9);
+    margin-right: scaleVw(10);
+    mix-blend-mode: exclusion;
+    position: relative;
+    text-align: right;
+    -webkit-text-stroke: scaleVw(4) $color-white;
+    width: scaleVw(140);
+  }
+
+  .timerFrac {
+    @extend %t--body;
+
+    color: $color-white;
+    display: inline-block;
+    font-size: scaleVw(20 / .9);
+    line-height: scaleVw(24 / .9);
+    mix-blend-mode: exclusion;
+    position: relative;
+    text-align: left;
+    width: scaleVw(40);
+  }
+
+  @keyframes round-name-appear {
+    from {
+      opacity: 0;
+      transform: translateY(-500%) scale(1.5);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .timerRoundName {
+    @extend %t--h1;
+
+    animation: round-name-appear .6s 4.2s ease-out both;
+    bottom: grid(.4);
+    color: $color-white;
+    font-size: scaleVw(14 / .9);
+    letter-spacing: .1em;
+    line-height: scaleVw(17 / .9);
+    margin-top: scaleVw(23 / .9);
+    mix-blend-mode: exclusion;
+  }
+
+  .timerMaskLeft,
+  .timerMaskRight {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .timerMaskLeft {
+    background: $color-purple;
+    left: 0;
+  }
+
+  .timerMaskRight {
+    background: $color-white;
+    right: 0;
+  }
+}
+
+.score {
+  @extend %t--h2;
+  @extend %t--style-sm-shadow;
+
+  background: $color-white;
+  border-radius: 50%;
+  flex: scaleVw(100 / .9) 0 0;
+  font-size: scaleVw(54 / .8);
+  height: scaleVw(100 / .9);
+  line-height: scaleVw(65 / .8);
+  padding-top: scaleVw(8);
+  text-align: center;
+}
+
+@keyframes power-ring {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 58 * 3.1416;
+  }
+}
+
+.power {
+  flex: scaleVw(80 / .9) 0 0;
+  height: scaleVw(80 / .9);
+  position: relative;
+
+  .powerInner {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity .2s, transform .2s ease-out;
+    width: 100%;
+
+    &.powerInnerEntering,
+    &.powerInnerExiting {
+      opacity: 0;
+      transform: scale(.1);
+    }
+
+    &.powerInnerExiting {
+      transition: opacity .3s, transform .3s ease-in;
+    }
+  }
+
+  .powerImage {
+    height: 80%;
+    left: 10%;
+    object-fit: contain;
+    position: absolute;
+    top: 10%;
+    width: 80%;
+  }
+
+  .powerCircle {
+    animation: power-ring 6s both linear;
+    height: 100%;
+    left: 0;
+    object-fit: contain;
+    position: absolute;
+    stroke-dasharray: 58 * 3.1416;
+    stroke-dashoffset: 58 * 3.1416;
+    top: 0;
+    transform: scaleX(-1);
+    width: 100%;
+
+    &.powerCircle--freeze {
+      animation-duration: 4s;
+    }
+  }
+}
+
+.items {
+  align-items: center;
+  display: flex;
+  flex: scaleVw(90) 0 0;
+  flex-flow: row wrap;
+  height: scaleVw(130);
+  justify-content: space-between;
+}
+
+@keyframes item-appear {
+  0% {
+    opacity: 0;
+    transform: scale(.1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.item {
+  height: scaleVw(23);
+  width: scaleVw(23);
+
+  &.itemSnack {
+    animation: item-appear .15s 1 both;
+    object-fit: contain;
+  }
+
+  &.itemPlaceholder {
+    position: relative;
+
+    &::before {
+      background: $color-black;
+      border-radius: 50%;
+      content: '';
+      height: scaleVw(5);
+      left: 50%;
+      opacity: .5;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: scaleVw(5);
+    }
+  }
+}
+
+.playerMeta--2 {
+  flex-direction: row-reverse;
+}

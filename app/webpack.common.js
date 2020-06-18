@@ -1,73 +1,59 @@
-const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const styleLintPlugin = require('stylelint-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: {
-    game: './js/game.js',
-    phone: './js/phone.js',
-    admin: './js/admin.js'
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }, {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      }, {
+        test: /\.(png|svg|jpg|gif|mp4|mp3)$/,
+        use: 'file-loader'
+      }, {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: 'file-loader'
+      }, {
+        test: /\.html$/,
+        use: 'html-loader'
+      }
+    ]
   },
   plugins: [
-    new CleanWebpackPlugin('dist'),
-    new HtmlWebpackPlugin({
-      title: 'Upperquad SFDW 2019',
-      template: 'templates/game.html',
-      chunks: ['game'],
-      filename: 'game/index.html'
+    new HtmlWebPackPlugin({
+      template: './public/index.html',
     }),
-    new HtmlWebpackPlugin({
-      title: 'Controller - Upperquad SFDW 2019',
-      template: 'templates/phone.html',
-      chunks: ['phone'],
-      filename: 'phone/index.html'
+    new styleLintPlugin({
+      configFile: '.stylelintrc.json',
+      context: 'src',
+      files: '**/*.scss',
+      failOnError: false,
+      quiet: false,
     }),
-    new HtmlWebpackPlugin({
-      title: 'Admin - Upperquad SFDW 2019',
-      template: 'templates/admin.html',
-      chunks: ['admin'],
-      filename: 'admin/index.html'
-    })
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'static', to: 'static' },
+      ],
+    }),
   ],
-  output: {
-    filename: 'js/[name].js',
-    publicPath: '/',
-    path: path.resolve(__dirname, 'dist/')
-  },
   resolve: {
-    modules: [__dirname, 'node_modules']
-  },
-  module: {
-    rules: [{
-      enforce: "pre",
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "eslint-loader"
-    }, {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "babel-loader"
-    }, {
-      test: /\.(png|svg|jpg|gif|mp4|mp3)$/,
-      use: [
-        'file-loader'
-      ]
-    }, {
-      test: /\.(woff|woff2|eot|ttf|otf)$/,
-      use: [
-        'file-loader'
-      ]
-    }, {
-      test: /\.(html)$/,
-      use: {
-        loader: 'html-loader',
-        options: {
-          attrs: [':src', ':xlink:href', ':poster']
-        }
-      }
-    }]
-  },
-  node: {
-    fs: 'empty'
+    extensions: ['.js', '.jsx', '.scss'],
+    alias: {
+      '~assets': path.resolve(__dirname, 'src/assets/'),
+      '~components': path.resolve(__dirname, 'src/components/'),
+      '~managers': path.resolve(__dirname, 'src/managers/'),
+      '~utils': path.resolve(__dirname, 'src/utils/'),
+      '~constants': path.resolve(__dirname, 'src/constants.js'),
+      '~styles': path.resolve(__dirname, 'src/styles/'),
+    }
   }
-}
+};
+

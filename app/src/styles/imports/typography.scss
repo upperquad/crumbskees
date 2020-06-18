@@ -1,0 +1,110 @@
+%t--h1 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: scaleVw(100);
+  font-weight: 900;
+  line-height: scaleVw(120);
+
+  @include respond-to(smartphone) {
+    font-size: 100px;
+    line-height: 120px;
+  }
+}
+
+%t--h2 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: scaleVw(54);
+  font-weight: 900;
+  line-height: scaleVw(65);
+
+  @include respond-to(smartphone) {
+    font-size: 54px;
+    line-height: 65px;
+  }
+}
+
+%t--h3 {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: scaleVw(28);
+  font-weight: 900;
+  line-height: scaleVw(34);
+
+  @include respond-to(smartphone) {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
+
+%t--body {
+  font-family: 'Fakt', sans-serif;
+  font-size: scaleVw(20);
+  font-weight: 700;
+  line-height: scaleVw(24);
+
+  @include respond-to(smartphone) {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+%t--body-small {
+  font-family: 'Fakt', sans-serif;
+  font-size: scaleVw(16);
+  font-weight: 700;
+  line-height: scaleVw(19);
+
+  @include respond-to(smartphone) {
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
+%t--countdown-timer {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: scaleVw(80);
+  font-weight: 900;
+}
+
+%t--number-pad {
+  font-family: 'Fakt', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 31px;
+}
+
+%t--style-lg-shadow {
+  color: $color-white;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: scaleVw(10) scaleVw(10) 0 $color-black;
+  -webkit-text-stroke: scaleVw(4) $color-black;
+
+  @include respond-to(smartphone) {
+    text-shadow: 10px 10px 0 $color-black;
+    -webkit-text-stroke: 4px $color-black;
+  }
+}
+
+%t--style-sm-shadow {
+  color: $color-white;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: scaleVw(6) scaleVw(6) 0 $color-black;
+  -webkit-text-stroke: scaleVw(4) $color-black;
+
+  @include respond-to(smartphone) {
+    text-shadow: 6px 6px 0 $color-black;
+    -webkit-text-stroke: 4px $color-black;
+  }
+}
+
+%t--style-tiny-shadow {
+  color: $color-white;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 4px 4px 0 $color-black;
+  -webkit-text-stroke: 2px $color-black;
+}

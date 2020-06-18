@@ -1,0 +1,38 @@
+@import "~styles/imports/index";
+
+.tutorial {
+  background-color: $color-green;
+  padding: scaleVw(20) scaleVw(48);
+}
+
+.title {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  color: $color-pink;
+  margin-bottom: scaleVw(66);
+}
+
+.container {
+  align-items: top;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  width: grid(8);
+
+  .heading {
+    @extend %t--h3;
+
+    margin-bottom: scaleVw(8);
+  }
+
+  .description {
+    @extend %t--body;
+
+    margin-bottom: scaleVw(52);
+    opacity: .5;
+  }
+}
+

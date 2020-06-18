@@ -1,0 +1,160 @@
+const uuid = require('uuid/v4')
+const encodeMessage = require('./inc/encodeMessage.js')
+const decodeMessage = require('./inc/decodeMessage.js')
+
+const initDisplay = (wssDisplay, existingTokenDict) => {
+  wssDisplay.on('connection', ws => {
+    ws.tokenList = []
+    // if (wssDisplay.clients.length > 1) {
+    //   ws.close(1000, 'active_game_exist')
+    //   return
+    // }
+
+    // cleanupGame()
+
+    ws.on('message', message => {
+      const { type, data } = decodeMessage(message)
+
+      switch(type) {
+        case 'new_token':
+          onNewToken(data, ws)
+          break
+        case 'remove_token':
+          onRemoveToken(data, ws)
+          break
+        default:
+          break
+      }
+
+      // switch(type) {
+      //   case 'auth_result':
+      //     onAuthResult(data)
+      //     break
+      //   case 'reconnect_result':
+      //     onReconnectResult(data)
+      //     break
+      //   case 'score':
+      //     onScoreUpdate(data)
+      //     break
+      //   case 'tutorial_start':
+      //     onTutorialStart()
+      //     break
+      //   case 'game_start':
+      //     onGameStart()
+      //     break
+      //   case 'disconnect_users':
+      //     onDisconnectAll()
+      //     break
+      //   case 'result':
+      //     onResult(data)
+      //     break
+      //   default:
+      //     break
+      // }
+    })
+
+    ws.on('close', message => {
+      for (const token of ws.tokenList) {
+        delete existingTokenDict[token]
+      }
+    })
+  })
+
+  function onNewToken(data, ws) {
+    const { token } = data
+    if (existingTokenDict.hasOwnProperty(token)) {
+      ws.send(encodeMessage('token_exists', { token }))
+    } else {
+      const newConnectionId = uuid()
+      existingTokenDict[token] = newConnectionId
+      ws.tokenList.push(token)
+      ws.send(encodeMessage('new_token_accepted', { token, id: newConnectionId }))
+    }
+    console.log('new token')
+    console.log(existingTokenDict)
+  }
+
+  function onRemoveToken(data, ws) {
+    const { token } = data
+    if (existingTokenDict.hasOwnProperty(token)) {
+      ws.tokenList = ws.tokenList.filter(item => item !== token)
+      delete existingTokenDict[token]
+    }
+    console.log('remove token')
+    console.log(existingTokenDict)
+  }
+
+//   function cleanupGame() {
+//     console.log(`new page`)
+//     wssControl.clients.forEach(client => {
+//       client.close(1000, 'new_game_started')
+//     })
+//   }
+//
+//   function onAuthResult(data) {
+//     const { id, result, playerIndex } = data
+//     const wsPhone = wssControl.clients.find(elem => elem.id === id)
+//     if (!wsPhone || id === undefined || result === undefined || (result === '1' && playerIndex === undefined) ) {
+//       return
+//     }
+//     if (result === '1') {
+//       wsPhone.accepted = true
+//       wsPhone.send(encodeMessage('accepted', { playerIndex, id: wsPhone.id }))
+//     } else {
+//       wsPhone.close(1000, 'invalid_token')
+//     }
+//   }
+//
+//   function onReconnectResult(data) {
+//     const { id, result } = data
+//     const wsPhone = wssControl.clients.find(elem => elem.id === id)
+//     if (!wsPhone || id === undefined || result === undefined ) {
+//       return
+//     }
+//     if (result === '1') {
+//       wsPhone.accepted = true
+//     } else {
+//       wsPhone.close(1000, 'invalid_id')
+//     }
+//   }
+//
+//   function onScoreUpdate(data) {
+//     const { id, score } = data
+//     const wsPhone = wssControl.clients.find(elem => elem.id === id)
+//     if (!wsPhone || id === undefined || score === undefined ) {
+//       return
+//     }
+//     wsPhone.send(encodeMessage('score', { score }))
+//   }
+//
+//   function onTutorialStart() {
+//     wssControl.clients.forEach(client => {
+//       client.send('tutorial_start')
+//     })
+//   }
+//
+//   function onResult(data) {
+//     const { winner } = data
+//     if (winner === undefined) {
+//       return
+//     }
+//     const message = encodeMessage('result', { winner })
+//     wssControl.clients.forEach(client => {
+//       client.send(message)
+//     })
+//   }
+//
+//   function onGameStart() {
+//     wssControl.clients.forEach(client => {
+//       client.send('game_start')
+//     })
+//   }
+//
+//   function onDisconnectAll() {
+//     wssControl.clients.forEach(client => {
+//       client.close(1000, 'game_over')
+//     })
+//   }
+}
+
+module.exports = initDisplay

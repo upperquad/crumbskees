@@ -1,0 +1,81 @@
+@import "~styles/imports/index";
+
+.error {
+  text-align: center;
+}
+
+.background {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.card {
+  background-color: $color-white;
+  border-color: $color-black;
+  border-style: solid;
+  border-width: grid(.05);
+  display: flex;
+  flex-flow: column nowrap;
+  height: grid(12);
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: grid(12);
+}
+
+.titleWrapper {
+  background-color: $color-black;
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: grid(2);
+}
+
+.title {
+
+
+  font-size: responsive-font(80);
+}
+
+.timebar {
+  animation: error-timebar 13s linear 1 both;
+  background-color: $color-green;
+  height: grid(.3);
+
+  @keyframes error-timebar {
+    0% {
+      transform: scaleX(1);
+    }
+    100% {
+      transform: scaleX(0);
+    }
+  }
+}
+
+.text {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+  justify-content: center;
+  padding: grid(1);
+}
+
+.message {
+  font-size: responsive-font(36);
+  margin-bottom: grid(1);
+}
+
+.button {
+
+
+  color: $color-black;
+  font-size: responsive-font(36);
+  line-height: 1.3;
+  transition: opacity .15s;
+
+  &:hover {
+    opacity: .5;
+  }
+}

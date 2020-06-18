@@ -1,0 +1,10 @@
+@import "~styles/imports/index";
+
+.dropText {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
+  color: $color-red;
+  padding: 1em;
+  text-align: center;
+}
