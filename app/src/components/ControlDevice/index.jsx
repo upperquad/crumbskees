@@ -79,8 +79,7 @@ const ControlDevice = () => {
       {stage === 'result' && (
         <ResultStage
           winner={winner}
-          score={score}
-          mode={mode}
+          character={character}
           resetGame={() => {
             setScore(0)
             setWinner(null)

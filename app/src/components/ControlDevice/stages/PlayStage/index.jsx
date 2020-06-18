@@ -78,7 +78,7 @@ const PlayStage = props => {
         {ready && gameStarted && (
           <div>
             <div className={styles.scoreTitle}>Score</div>
-            <div className={styles.score}>{score}</div>
+            <div className={styles.score}>{zeroUnit(score)}</div>
           </div>
         )}
       </div>
@@ -107,6 +107,13 @@ const PlayStage = props => {
       )}
     </section>
   )
+}
+
+function zeroUnit(number) {
+  if (number < 0) {
+    return '00'
+  }
+  return number < 10 ? `0${number}` : number
 }
 
 export default PlayStage

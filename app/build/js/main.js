@@ -110189,6 +110189,28 @@ module.exports = __webpack_require__.p + "60088167ef80fdae20bbd0b657977a75.svg";
 
 /***/ }),
 
+/***/ "./src/assets/images/icons/facebook.svg":
+/*!**********************************************!*\
+  !*** ./src/assets/images/icons/facebook.svg ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "30ebf490914e72dc52d369733cdf45ac.svg";
+
+/***/ }),
+
+/***/ "./src/assets/images/icons/twitter.svg":
+/*!*********************************************!*\
+  !*** ./src/assets/images/icons/twitter.svg ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "1058dd1bc062a62043a30fedd9fe5049.svg";
+
+/***/ }),
+
 /***/ "./src/assets/images/intro-illo/background.jpg":
 /*!*****************************************************!*\
   !*** ./src/assets/images/intro-illo/background.jpg ***!
@@ -110929,6 +110951,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var Button = function Button(props) {
   var clickHandler = props.clickHandler,
       extraClassName = props.extraClassName,
+      icon = props.icon,
       isFullWidth = props.isFullWidth,
       isKeyPad = props.isKeyPad,
       link = props.link,
@@ -110936,8 +110959,12 @@ var Button = function Button(props) {
   var cardElem = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonInner
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonCard
-  }, text));
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonCard, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isIcon, icon))
+  }, icon ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: icon,
+    alt: text,
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.icon
+  }) : text));
 
   var blurFocus = function blurFocus(event) {
     event.currentTarget.blur();
@@ -110949,13 +110976,15 @@ var Button = function Button(props) {
     buttonElem = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button,
       href: link,
+      rel: "noopener noreferrer",
+      target: "_blank",
       onClick: blurFocus
     }, cardElem);
   } else if (clickHandler) {
-    var _classNames;
+    var _classNames2;
 
     buttonElem = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, (_classNames = {}, _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isKeyPad, isKeyPad), _defineProperty(_classNames, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isFullWidth, isFullWidth), _classNames)),
+      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button, (_classNames2 = {}, _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isKeyPad, isKeyPad), _defineProperty(_classNames2, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isFullWidth, isFullWidth), _classNames2)),
       role: "button",
       tabIndex: "0",
       onClick: function onClick(event) {
@@ -110982,7 +111011,7 @@ var Button = function Button(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"button":"Button-button--2dnz7","buttonInner":"Button-buttonInner--29N8j","isKeyPad":"Button-isKeyPad--2_F4C","buttonWrap":"Button-buttonWrap--1zCSz","buttonCard":"Button-buttonCard--230LD","isFullWidth":"Button-isFullWidth--1DMoW"};
+module.exports = {"button":"Button-button--2dnz7","buttonInner":"Button-buttonInner--29N8j","isKeyPad":"Button-isKeyPad--2_F4C","buttonWrap":"Button-buttonWrap--1zCSz","buttonCard":"Button-buttonCard--230LD","isIcon":"Button-isIcon--R4yJ6","icon":"Button-icon--3YINi","isFullWidth":"Button-isFullWidth--1DMoW"};
 
 /***/ }),
 
@@ -111184,8 +111213,7 @@ var ControlDevice = function ControlDevice() {
     score: score
   }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_6__["default"], {
     winner: winner,
-    score: score,
-    mode: mode,
+    character: character,
     resetGame: function resetGame() {
       setScore(0);
       setWinner(null);
@@ -111384,7 +111412,7 @@ var PlayStage = function PlayStage(props) {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.scoreTitle
     }, "Score"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.score
-    }, score))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, zeroUnit(score)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.blockWrapper
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.block
@@ -111411,6 +111439,14 @@ var PlayStage = function PlayStage(props) {
     }, "When you\u2019re ready to chomp on a snack, tap the screen!")))
   );
 };
+
+function zeroUnit(number) {
+  if (number < 0) {
+    return '00';
+  }
+
+  return number < 10 ? "0".concat(number) : number;
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (PlayStage);
 
@@ -111638,13 +111674,22 @@ module.exports = {"tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","label":"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/ResultStage/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/ControlDevice/stages/ResultStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~assets/images/icons/facebook.svg */ "./src/assets/images/icons/facebook.svg");
+/* harmony import */ var _assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~assets/images/icons/twitter.svg */ "./src/assets/images/icons/twitter.svg");
+/* harmony import */ var _assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
+/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
+
+
+
 
 
 
@@ -111652,88 +111697,68 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ResultStage = function ResultStage(props) {
-  var characterIndex = props.characterIndex,
-      mode = props.mode,
+  // const { characterIndex, mode, resetGame, score, winner } = props
+  var character = props.character,
       resetGame = props.resetGame,
-      score = props.score,
       winner = props.winner;
-  var resultTop;
-  var resultBottom;
-  var video = [];
-  var hostURL = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
-  var shareURL = "".concat(hostURL, "share?player=").concat(characterIndex, "&score=").concat(score);
-  var shareDescription;
+  var hostURL = "".concat(window.location.protocol, "//").concat(window.location.hostname, "/"); // let shareURL = `${hostURL}share?player=${characterIndex}&score=${score}`
+  // let shareDescription
+  // if (winner === 'tied') {
+  //   shareURL += '&result=tied'
+  //   shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.tied, score)
+  // } else if (mode === 'SINGLE_PLAYER') {
+  //   shareURL += '&result=singleMode'
+  //   shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score)
+  // } else if (winner === characterIndex) {
+  //   shareURL += '&result=win'
+  //   shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.win, score)
+  // } else {
+  //   shareURL += '&result=lose'
+  //   shareDescription = global.SHARING_MESSAGES.description.lose
+  // }
+  // shareURL = encodeURIComponent(shareURL)
+
+  var shareURL = encodeURIComponent(hostURL);
+  var result;
 
   if (winner === 'tied') {
-    resultTop = 'Nobody wins! ';
-    resultBottom = resultTop;
-    _constants__WEBPACK_IMPORTED_MODULE_2__["CHARACTERS"].forEach(function (character) {
-      video.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        src: character.videoWhite,
-        extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.video,
-        poster: character.image
-      }));
-    });
-    shareURL += '&result=tied';
-    shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.tied, score);
+    result = 'tied';
+  } else if (_constants__WEBPACK_IMPORTED_MODULE_3__["CHARACTERS"][winner] === character) {
+    result = 'won';
   } else {
-    resultBottom = _constants__WEBPACK_IMPORTED_MODULE_2__["CHARACTERS"][winner].name;
-    video.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      src: _constants__WEBPACK_IMPORTED_MODULE_2__["CHARACTERS"][winner].videoWhite,
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.video,
-      poster: _constants__WEBPACK_IMPORTED_MODULE_2__["CHARACTERS"][winner].image
-    }));
-
-    if (mode === 'SINGLE_PLAYER') {
-      resultTop = 'Good job!';
-      shareURL += '&result=singleMode';
-      shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score);
-    } else if (winner === characterIndex) {
-      resultTop = 'You won!';
-      shareURL += '&result=win';
-      shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.win, score);
-    } else {
-      resultTop = 'You’re bad!';
-      shareURL += '&result=lose';
-      shareDescription = global.SHARING_MESSAGES.description.lose;
-    }
+    result = 'lost';
   }
 
-  shareURL = encodeURIComponent(shareURL);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.result
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "https://www.facebook.com/sharer/sharer.php?u=".concat(shareURL),
-    rel: "noopener noreferrer",
-    target: "_blank",
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.shareButton
-  }, "Share on Facebook"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "http://twitter.com/share?text=".concat(shareDescription, "&url=").concat(shareURL),
-    rel: "noopener noreferrer",
-    target: "_blank",
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.shareButton
-  }, "Share on Twitter"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.winner
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    text: resultTop,
-    duration: "6s"
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.result, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a["result--".concat(character.slug)])
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.title
+  }, result === 'tied' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "It\u2019s a tie!"), result === 'won' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Winner!"), result === 'lost' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Looser!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.character,
+    character: character,
+    mood: result === 'lost' ? 'lose' : 'win'
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.resetButton,
+    clickHandler: resetGame,
+    text: "Play again"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.imageWrapper
-  }, video), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    text: resultBottom,
-    duration: "6s"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.smallText
-  }, winner === 'tied' ? 'Tie!' : 'Winner!'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.smallText
-  }, "Score:", score), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_1___default.a.button,
-    onClick: resetGame
-  }, "Play again"));
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.shares
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.shareTitle
+  }, "Share:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.shareTwitter,
+    link: "http://twitter.com/share?url=".concat(shareURL),
+    icon: _assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_5___default.a,
+    text: "Share on Twitter"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.shareFacebook,
+    link: "https://www.facebook.com/sharer/sharer.php?u=".concat(shareURL),
+    icon: _assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_4___default.a,
+    text: "Share on Facebook"
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ResultStage);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -111745,7 +111770,7 @@ var ResultStage = function ResultStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"result":"ResultStage-result--38Rtn","winner":"ResultStage-winner--iEK1F","marquee":"ResultStage-marquee--3Q5KI","imageWrapper":"ResultStage-imageWrapper--12vpJ","video":"ResultStage-video--3XIgQ","smallText":"ResultStage-smallText--3ZhnY","button":"ResultStage-button--eAnpH"};
+module.exports = {"title":"ResultStage-title--2tunN","shareTitle":"ResultStage-shareTitle--1XMat","result":"ResultStage-result--38Rtn","result--p1":"ResultStage-result--p1--2X-Jr","resultP1":"ResultStage-result--p1--2X-Jr","shares":"ResultStage-shares--1qOWO","result--p2":"ResultStage-result--p2--3_oLt","resultP2":"ResultStage-result--p2--3_oLt","character":"ResultStage-character--Y1J-Q","resetButton":"ResultStage-resetButton--1jOBa","shareTwitter":"ResultStage-shareTwitter--2W5jS"};
 
 /***/ }),
 
@@ -113380,7 +113405,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var TIME = 40;
+var TIME = _constants__WEBPACK_IMPORTED_MODULE_7__["DEBUG"] ? 10 : 40;
 
 var GameZoneWrapper = function GameZoneWrapper(props) {
   var gameState = props.gameState,
@@ -115758,7 +115783,9 @@ var CHARACTERS = [{
     freeze: '/static/character1/freeze.json',
     happy: '/static/character1/happy.json',
     lsd: '/static/character1/lsd.json',
-    sad: '/static/character1/sad.json'
+    sad: '/static/character1/sad.json',
+    win: '/static/character1/win.json',
+    lose: '/static/character1/lose.json'
   },
   body: _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
   mouth: _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_21___default.a
@@ -115775,7 +115802,9 @@ var CHARACTERS = [{
     freeze: '/static/character2/freeze.json',
     happy: '/static/character2/happy.json',
     lsd: '/static/character2/lsd.json',
-    sad: '/static/character2/sad.json'
+    sad: '/static/character2/sad.json',
+    win: '/static/character2/win.json',
+    lose: '/static/character2/lose.json'
   },
   body: _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
   mouth: _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_22___default.a
