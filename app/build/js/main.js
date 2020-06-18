@@ -110101,50 +110101,6 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./src/assets/images/character-white-1.mp4":
-/*!*************************************************!*\
-  !*** ./src/assets/images/character-white-1.mp4 ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "bd22268b63d1d44a74bfaf95350d4ed5.mp4";
-
-/***/ }),
-
-/***/ "./src/assets/images/character-white-2.mp4":
-/*!*************************************************!*\
-  !*** ./src/assets/images/character-white-2.mp4 ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "731b790d08390de33f1b1af980f88735.mp4";
-
-/***/ }),
-
-/***/ "./src/assets/images/character1.png":
-/*!******************************************!*\
-  !*** ./src/assets/images/character1.png ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "b6c20bd3b2b39c84c935c091dee19fbd.png";
-
-/***/ }),
-
-/***/ "./src/assets/images/character2.png":
-/*!******************************************!*\
-  !*** ./src/assets/images/character2.png ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "db333e4c69e6cccf65173202e90d6595.png";
-
-/***/ }),
-
 /***/ "./src/assets/images/characters/body-1.svg":
 /*!*************************************************!*\
   !*** ./src/assets/images/characters/body-1.svg ***!
@@ -111140,12 +111096,8 @@ var ControlDevice = function ControlDevice() {
   var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState12 = _slicedToArray(_useState11, 2),
       winner = _useState12[0],
-      setWinner = _useState12[1];
+      setWinner = _useState12[1]; // const [mode, setMode] = useState(null)
 
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState14 = _slicedToArray(_useState13, 2),
-      mode = _useState14[0],
-      setMode = _useState14[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var messageHandler = function messageHandler(detail) {
@@ -111155,9 +111107,9 @@ var ControlDevice = function ControlDevice() {
       switch (type) {
         case 'accepted':
           {
-            var activatedMode = data.mode,
-                playerIndex = data.playerIndex;
-            setMode(activatedMode);
+            // const { mode: activatedMode, playerIndex } = data
+            // setMode(activatedMode)
+            var playerIndex = data.playerIndex;
 
             if (_constants__WEBPACK_IMPORTED_MODULE_1__["CHARACTERS"][playerIndex]) {
               setCharacter(_constants__WEBPACK_IMPORTED_MODULE_1__["CHARACTERS"][playerIndex]);
@@ -115656,64 +115608,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_images_round_3_s3_bg_mp4__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_bg_mp4__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _assets_images_round_3_s3_bg_jpg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/round-3/s3-bg.jpg */ "./src/assets/images/round-3/s3-bg.jpg");
 /* harmony import */ var _assets_images_round_3_s3_bg_jpg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_round_3_s3_bg_jpg__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/character-white-1.mp4 */ "./src/assets/images/character-white-1.mp4");
-/* harmony import */ var _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ~assets/images/character1.png */ "./src/assets/images/character1.png");
-/* harmony import */ var _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ~assets/images/character-white-2.mp4 */ "./src/assets/images/character-white-2.mp4");
-/* harmony import */ var _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ~assets/images/character2.png */ "./src/assets/images/character2.png");
-/* harmony import */ var _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_assets_images_character2_png__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ~assets/images/characters/body-1.svg */ "./src/assets/images/characters/body-1.svg");
-/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ~assets/images/characters/body-2.svg */ "./src/assets/images/characters/body-2.svg");
-/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ~assets/images/characters/mouth-1.svg */ "./src/assets/images/characters/mouth-1.svg");
-/* harmony import */ var _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ~assets/images/characters/mouth-2.svg */ "./src/assets/images/characters/mouth-2.svg");
-/* harmony import */ var _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ~assets/images/snacks/good/1.svg */ "./src/assets/images/snacks/good/1.svg");
-/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ~assets/images/snacks/good/2.svg */ "./src/assets/images/snacks/good/2.svg");
-/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ~assets/images/snacks/good/3.svg */ "./src/assets/images/snacks/good/3.svg");
-/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ~assets/images/snacks/good/4.svg */ "./src/assets/images/snacks/good/4.svg");
-/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ~assets/images/snacks/good/5.svg */ "./src/assets/images/snacks/good/5.svg");
-/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ~assets/images/snacks/good/6.svg */ "./src/assets/images/snacks/good/6.svg");
-/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ~assets/images/snacks/good/7.svg */ "./src/assets/images/snacks/good/7.svg");
-/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ~assets/images/snacks/good/8.svg */ "./src/assets/images/snacks/good/8.svg");
-/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ~assets/images/snacks/good/9.svg */ "./src/assets/images/snacks/good/9.svg");
-/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ~assets/images/snacks/good/10.svg */ "./src/assets/images/snacks/good/10.svg");
-/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ~assets/images/snacks/good/11.svg */ "./src/assets/images/snacks/good/11.svg");
-/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ~assets/images/snacks/good/12.svg */ "./src/assets/images/snacks/good/12.svg");
-/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ~assets/images/snacks/good/13.svg */ "./src/assets/images/snacks/good/13.svg");
-/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_35__);
-/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ~assets/images/snacks/bad/1.svg */ "./src/assets/images/snacks/bad/1.svg");
-/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ~assets/images/snacks/bad/2.svg */ "./src/assets/images/snacks/bad/2.svg");
-/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_37__);
-/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ~assets/images/snacks/bad/3.svg */ "./src/assets/images/snacks/bad/3.svg");
-/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ~assets/images/snacks/bad/4.svg */ "./src/assets/images/snacks/bad/4.svg");
-/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ~assets/images/snacks/bad/5.svg */ "./src/assets/images/snacks/bad/5.svg");
-/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ~assets/images/snacks/bad/6.svg */ "./src/assets/images/snacks/bad/6.svg");
-/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_41__);
-
-
-
-
+/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/characters/body-1.svg */ "./src/assets/images/characters/body-1.svg");
+/* harmony import */ var _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ~assets/images/characters/body-2.svg */ "./src/assets/images/characters/body-2.svg");
+/* harmony import */ var _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ~assets/images/characters/mouth-1.svg */ "./src/assets/images/characters/mouth-1.svg");
+/* harmony import */ var _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ~assets/images/characters/mouth-2.svg */ "./src/assets/images/characters/mouth-2.svg");
+/* harmony import */ var _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ~assets/images/snacks/good/1.svg */ "./src/assets/images/snacks/good/1.svg");
+/* harmony import */ var _assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ~assets/images/snacks/good/2.svg */ "./src/assets/images/snacks/good/2.svg");
+/* harmony import */ var _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ~assets/images/snacks/good/3.svg */ "./src/assets/images/snacks/good/3.svg");
+/* harmony import */ var _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ~assets/images/snacks/good/4.svg */ "./src/assets/images/snacks/good/4.svg");
+/* harmony import */ var _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ~assets/images/snacks/good/5.svg */ "./src/assets/images/snacks/good/5.svg");
+/* harmony import */ var _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ~assets/images/snacks/good/6.svg */ "./src/assets/images/snacks/good/6.svg");
+/* harmony import */ var _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ~assets/images/snacks/good/7.svg */ "./src/assets/images/snacks/good/7.svg");
+/* harmony import */ var _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ~assets/images/snacks/good/8.svg */ "./src/assets/images/snacks/good/8.svg");
+/* harmony import */ var _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ~assets/images/snacks/good/9.svg */ "./src/assets/images/snacks/good/9.svg");
+/* harmony import */ var _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ~assets/images/snacks/good/10.svg */ "./src/assets/images/snacks/good/10.svg");
+/* harmony import */ var _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ~assets/images/snacks/good/11.svg */ "./src/assets/images/snacks/good/11.svg");
+/* harmony import */ var _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_29__);
+/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ~assets/images/snacks/good/12.svg */ "./src/assets/images/snacks/good/12.svg");
+/* harmony import */ var _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ~assets/images/snacks/good/13.svg */ "./src/assets/images/snacks/good/13.svg");
+/* harmony import */ var _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ~assets/images/snacks/bad/1.svg */ "./src/assets/images/snacks/bad/1.svg");
+/* harmony import */ var _assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ~assets/images/snacks/bad/2.svg */ "./src/assets/images/snacks/bad/2.svg");
+/* harmony import */ var _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ~assets/images/snacks/bad/3.svg */ "./src/assets/images/snacks/bad/3.svg");
+/* harmony import */ var _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ~assets/images/snacks/bad/4.svg */ "./src/assets/images/snacks/bad/4.svg");
+/* harmony import */ var _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_35__);
+/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ~assets/images/snacks/bad/5.svg */ "./src/assets/images/snacks/bad/5.svg");
+/* harmony import */ var _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_36__);
+/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ~assets/images/snacks/bad/6.svg */ "./src/assets/images/snacks/bad/6.svg");
+/* harmony import */ var _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_37__);
 
 
 
@@ -115773,8 +115713,6 @@ var COLORS = {
 var CHARACTERS = [{
   color: 'yellow',
   secondaryColor: 'red',
-  videoWhite: _assets_images_character_white_2_mp4__WEBPACK_IMPORTED_MODULE_17___default.a,
-  image: _assets_images_character2_png__WEBPACK_IMPORTED_MODULE_18___default.a,
   slug: 'p1',
   name: 'P1',
   lottie: {
@@ -115787,13 +115725,11 @@ var CHARACTERS = [{
     win: '/static/character1/win.json',
     lose: '/static/character1/lose.json'
   },
-  body: _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
-  mouth: _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_21___default.a
+  body: _assets_images_characters_body_1_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
+  mouth: _assets_images_characters_mouth_1_svg__WEBPACK_IMPORTED_MODULE_17___default.a
 }, {
   color: 'pink',
   secondaryColor: 'purple',
-  videoWhite: _assets_images_character_white_1_mp4__WEBPACK_IMPORTED_MODULE_15___default.a,
-  image: _assets_images_character1_png__WEBPACK_IMPORTED_MODULE_16___default.a,
   slug: 'p2',
   name: 'P2',
   lottie: {
@@ -115806,11 +115742,11 @@ var CHARACTERS = [{
     win: '/static/character2/win.json',
     lose: '/static/character2/lose.json'
   },
-  body: _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
-  mouth: _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_22___default.a
+  body: _assets_images_characters_body_2_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
+  mouth: _assets_images_characters_mouth_2_svg__WEBPACK_IMPORTED_MODULE_18___default.a
 }];
-var GOOD_SNACKS = [_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_23___default.a, _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_24___default.a, _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_25___default.a, _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_26___default.a, _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_27___default.a, _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_28___default.a, _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_29___default.a, _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_30___default.a, _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_31___default.a, _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_32___default.a, _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_33___default.a, _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_34___default.a, _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_35___default.a];
-var BAD_SNACKS = [_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_36___default.a, _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_37___default.a, _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_38___default.a, _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_39___default.a, _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_40___default.a, _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_41___default.a];
+var GOOD_SNACKS = [_assets_images_snacks_good_1_svg__WEBPACK_IMPORTED_MODULE_19___default.a, _assets_images_snacks_good_2_svg__WEBPACK_IMPORTED_MODULE_20___default.a, _assets_images_snacks_good_3_svg__WEBPACK_IMPORTED_MODULE_21___default.a, _assets_images_snacks_good_4_svg__WEBPACK_IMPORTED_MODULE_22___default.a, _assets_images_snacks_good_5_svg__WEBPACK_IMPORTED_MODULE_23___default.a, _assets_images_snacks_good_6_svg__WEBPACK_IMPORTED_MODULE_24___default.a, _assets_images_snacks_good_7_svg__WEBPACK_IMPORTED_MODULE_25___default.a, _assets_images_snacks_good_8_svg__WEBPACK_IMPORTED_MODULE_26___default.a, _assets_images_snacks_good_9_svg__WEBPACK_IMPORTED_MODULE_27___default.a, _assets_images_snacks_good_10_svg__WEBPACK_IMPORTED_MODULE_28___default.a, _assets_images_snacks_good_11_svg__WEBPACK_IMPORTED_MODULE_29___default.a, _assets_images_snacks_good_12_svg__WEBPACK_IMPORTED_MODULE_30___default.a, _assets_images_snacks_good_13_svg__WEBPACK_IMPORTED_MODULE_31___default.a];
+var BAD_SNACKS = [_assets_images_snacks_bad_1_svg__WEBPACK_IMPORTED_MODULE_32___default.a, _assets_images_snacks_bad_2_svg__WEBPACK_IMPORTED_MODULE_33___default.a, _assets_images_snacks_bad_3_svg__WEBPACK_IMPORTED_MODULE_34___default.a, _assets_images_snacks_bad_4_svg__WEBPACK_IMPORTED_MODULE_35___default.a, _assets_images_snacks_bad_5_svg__WEBPACK_IMPORTED_MODULE_36___default.a, _assets_images_snacks_bad_6_svg__WEBPACK_IMPORTED_MODULE_37___default.a];
 var TUTORIAL_ROUND = {
   numBadItems: 0,
   numBigItems: 10,
@@ -116376,12 +116312,10 @@ var Player = function Player(_ref) {
   });
 
   var color = character.color,
-      image = character.image,
       lottie = character.lottie,
       name = character.name,
       secondaryColor = character.secondaryColor,
-      slug = character.slug,
-      videoWhite = character.videoWhite;
+      slug = character.slug;
   this.id = id;
   this.token = token;
   this.lost = false;
@@ -116390,8 +116324,6 @@ var Player = function Player(_ref) {
   this.color = color;
   this.lottie = lottie;
   this.secondaryColor = secondaryColor;
-  this.videoWhite = videoWhite;
-  this.image = image;
   this.name = name;
   this.slug = slug;
   this.connected = false;

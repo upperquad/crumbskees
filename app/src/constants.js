@@ -14,10 +14,6 @@ import round3IntroVideo from '~assets/images/round-3/s3-intro.mp4'
 import round3Background from '~assets/images/round-3/s3-bg.mp4'
 import round3BackgroundImage from '~assets/images/round-3/s3-bg.jpg'
 
-import characterVideoWhite1 from '~assets/images/character-white-1.mp4'
-import characterImage1 from '~assets/images/character1.png'
-import characterVideoWhite2 from '~assets/images/character-white-2.mp4'
-import characterImage2 from '~assets/images/character2.png'
 import characterBody1 from '~assets/images/characters/body-1.svg'
 import characterBody2 from '~assets/images/characters/body-2.svg'
 import characterMouth1 from '~assets/images/characters/mouth-1.svg'
@@ -76,8 +72,6 @@ export const CHARACTERS = [
   {
     color: 'yellow',
     secondaryColor: 'red',
-    videoWhite: characterVideoWhite2,
-    image: characterImage2,
     slug: 'p1',
     name: 'P1',
     lottie: {
@@ -96,8 +90,6 @@ export const CHARACTERS = [
   {
     color: 'pink',
     secondaryColor: 'purple',
-    videoWhite: characterVideoWhite1,
-    image: characterImage1,
     slug: 'p2',
     name: 'P2',
     lottie: {
