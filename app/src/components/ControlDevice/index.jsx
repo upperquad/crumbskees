@@ -29,7 +29,12 @@ const ControlDevice = () => {
             setCharacter(CHARACTERS[playerIndex])
           }
           setHasPlayed(true)
-          setStage('meet_character')
+          setStage(prevStage => {
+            if (prevStage === 'pre_connect') {
+              return 'meet_character'
+            }
+            return prevStage
+          })
           break
         }
         case 'tutorial_start': {
