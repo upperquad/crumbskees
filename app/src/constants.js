@@ -18,6 +18,8 @@ import characterBody1 from '~assets/images/characters/body-1.svg'
 import characterBody2 from '~assets/images/characters/body-2.svg'
 import characterMouth1 from '~assets/images/characters/mouth-1.svg'
 import characterMouth2 from '~assets/images/characters/mouth-2.svg'
+import characterMouthPng1 from '~assets/images/characters/mouth-1.png'
+import characterMouthPng2 from '~assets/images/characters/mouth-2.png'
 
 import goodSnack1 from '~assets/images/snacks/good/1.svg'
 import goodSnack2 from '~assets/images/snacks/good/2.svg'
@@ -86,6 +88,7 @@ export const CHARACTERS = [
     },
     body: characterBody1,
     mouth: characterMouth1,
+    mouthPng: characterMouthPng1,
   },
   {
     color: 'pink',
@@ -104,6 +107,7 @@ export const CHARACTERS = [
     },
     body: characterBody2,
     mouth: characterMouth2,
+    mouthPng: characterMouthPng2,
   },
 ]
 

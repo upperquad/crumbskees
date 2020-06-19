@@ -7,23 +7,16 @@ import PlayersManager from '~managers/PlayersManager'
 import getNow from '~utils/time'
 import { inOutSine, inOutQuad } from '~utils/ease'
 
-import lipImage from '~assets/images/mouth.png'
-
 import styles from './style.module.scss'
 
 // circles
 const CIRCLE_STROKE_COEF = 0.2
-const CIRCLE_MIN_RADIUS = 1.2
-const CIRCLE_MAX_RADIUS_COEF = 0.15
+const CIRCLE_BASE_RADIUS = 1.29
 const CIRCLE_GROWN_RADIUS = 1.45
 const CIRCLE_MAX_DURATION = 900
 const CIRCLE_DECELERATION_COEF = 0.15
 
 // mouths/lips
-const LIP_OFFSET = 0.075
-const LIP_OFFSET_CLOSED = 0.03
-const LIP_OFFSET_GROWN = 0.17
-const LIP_SCALE_GROWN = 0.27 / 770
 const LIP_SIZE_COEF = 3.1
 
 // powers
@@ -60,30 +53,23 @@ export function useSetScene(refs, props) {
       return video
     }
 
-    function setMouths(texture) {
+    function setMouths(resources) {
       PlayersManager.players.forEach((player, index) => {
-        for (let i = 0; i < 2; i++) {
-          const sprite = new Sprite(texture)
-          const ratio = sprite.height / sprite.width
-          sprite.width = ((GRID_UNIT * LIP_SIZE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
-          sprite.height = sprite.width * ratio
+        const sprite = new Sprite(resources[`mouth-${index}`].texture)
+        const ratio = sprite.height / sprite.width
+        sprite.width = ((GRID_UNIT * LIP_SIZE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
+        sprite.height = sprite.width * ratio
 
-          sprite.position.x = 0.5 * refs.el.current.offsetWidth
-          sprite.position.y = 0.5 * refs.el.current.offsetHeight
+        sprite.position.x = 0.5 * refs.el.current.offsetWidth
+        sprite.position.y = 0.5 * refs.el.current.offsetHeight
 
-          sprite.anchor.set(0.5, 0.5)
+        sprite.anchor.set(0.5, 0.5)
 
-          if (i === 1) {
-            sprite.angle = 180
-          }
+        refs.containerMouth.current.addChild(sprite)
+        refs.mouths.current[index].push(sprite)
 
-          refs.containerMouth.current.addChild(sprite)
-          refs.mouths.current[index].push(sprite)
-
-          sprite.initScaleX = sprite.scale.x
-          sprite.initScaleY = sprite.scale.y
-          sprite.offset = LIP_OFFSET
-        }
+        sprite.initScaleX = sprite.scale.x
+        sprite.initScaleY = sprite.scale.y
 
         player.allowCloseMouth = true
       })
@@ -104,7 +90,7 @@ export function useSetScene(refs, props) {
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       refs.stroke.current = ((GRID_UNIT * CIRCLE_STROKE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
       // TODO: clean this up
-      refs.radius.current = ((GRID_UNIT * CIRCLE_MIN_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth * (1 + CIRCLE_MAX_RADIUS_COEF / 2)
+      refs.radius.current = ((GRID_UNIT * CIRCLE_BASE_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth
 
       PlayersManager.players.forEach(() => {
         refs.circlesLastPositions.current.push({ x: 0, y: 0 })
@@ -150,9 +136,11 @@ export function useSetScene(refs, props) {
     setCircles()
     // preload lips
     const loader = new Loader()
-    loader.add('lip', lipImage)
+    PlayersManager.players.forEach((player, index) => {
+      loader.add(`mouth-${index}`, player.mouthPng)
+    })
     loader.load((currentLoader, resources) => {
-      setMouths(resources.lip.texture)
+      setMouths(resources)
     })
 
     if (props.type === 'game') {
@@ -256,47 +244,13 @@ export function useUpdatePowers(refs, props) {
       }, GROW_ANIMATION_DURATION)
     }
 
-    function growMouth(player, lips, close = false) {
-      const now = getNow()
-      let needsUpdate = false
-      lips.forEach(lip => {
-        if (!lip.initScaleX) return
-        lip.originScaleX = lip.scale.x
-        lip.originScaleY = lip.scale.y
-        lip.originOffset = lip.offset
-
-        lip.targetScaleX = close ? lip.initScaleX : LIP_SCALE_GROWN * refs.initWidth.current
-        lip.targetScaleY = close ? lip.initScaleY : LIP_SCALE_GROWN * refs.initWidth.current
-
-        lip.targetOffset = close ? LIP_OFFSET : LIP_OFFSET_GROWN
-        needsUpdate = true
-      })
-
-      if (needsUpdate) {
-        player.startGrowMouthAnimation = now
-        setTimeout(() => {
-          player.startGrowMouthAnimation = false
-        }, GROW_ANIMATION_DURATION)
-
-        if (close) {
-          setTimeout(() => {
-            player.allowCloseMouth = true
-          }, GROW_ANIMATION_DURATION)
-        } else {
-          player.allowCloseMouth = false
-        }
-      }
-    }
-
     // init
     PlayersManager.players.forEach((player, index) => {
       if (!props.powers[index]) {
         growCircle(0)
-        growMouth(player, refs.mouths.current[index], true)
       } else {
         if (props.powers[index].type === 'grow') {
           growCircle(refs.radius.current * CIRCLE_GROWN_RADIUS)
-          growMouth(player, refs.mouths.current[index])
         } else if (props.powers[index].type === 'freeze') {
           refs.timeFrozen.current = getNow()
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
@@ -348,7 +302,6 @@ export function useRAF(refs, props) {
         }
         refs.circlesLastPositions.current[index] = newPosition
         drawCircles(newPosition, color)
-
         drawMouths(now, index, newPosition)
       })
 
@@ -402,29 +355,23 @@ export function useRAF(refs, props) {
     // draw mouths
     function drawMouths(now, index, position) {
       const player = PlayersManager.players[index]
-      // draw lips
-      refs.mouths.current[index].forEach((lip, lipIndex) => {
+
+      refs.mouths.current[index].forEach(mouth => {
         const { x, y } = position
 
         if (player.startGrowMouthAnimation) {
           const percent = (now - player.startGrowMouthAnimation) / (CIRCLE_MAX_DURATION + 100)
 
           if (percent < 1) {
-            lip.scale.x = lip.originScaleX + (lip.targetScaleX - lip.originScaleX) * inOutSine(percent)
-            lip.scale.y = lip.originScaleY + (lip.targetScaleY - lip.originScaleY) * inOutSine(percent)
+            mouth.scale.x = mouth.originScaleX + (mouth.targetScaleX - mouth.originScaleX) * inOutSine(percent)
+            mouth.scale.y = mouth.originScaleY + (mouth.targetScaleY - mouth.originScaleY) * inOutSine(percent)
 
-            lip.offset = lip.originOffset + (lip.targetOffset - lip.originOffset) * inOutSine(percent)
+            mouth.offset = mouth.originOffset + (mouth.targetOffset - mouth.originOffset) * inOutSine(percent)
           }
-        } else if (player.allowCloseMouth) {
-          lip.offset = player.closeMouth ? LIP_OFFSET_CLOSED : LIP_OFFSET
         }
 
-        lip.position.x = (x + 0.5) * refs.initWidth.current
-        if (lipIndex === 0) {
-          lip.position.y = (y + 0.5 - lip.offset) * refs.initHeight.current
-        } else {
-          lip.position.y = (y + 0.5 + lip.offset) * refs.initHeight.current
-        }
+        mouth.position.x = (x + 0.5) * refs.initWidth.current
+        mouth.position.y = (y + 0.5) * refs.initHeight.current
       })
     }
 

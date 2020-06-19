@@ -111,12 +111,8 @@ const PixiScene = props => {
 
   // on update game state (for "game" type only)
   useUpdateGameState(
-    {
-      startTransitionOut,
-    },
-    {
-      gameState,
-    },
+    { startTransitionOut },
+    { gameState },
   )
 
   return <div className={styles.pixiScene} ref={el} />

@@ -5,6 +5,7 @@ export default class Player {
     const {
       color,
       lottie,
+      mouthPng,
       name,
       secondaryColor,
       slug,
@@ -20,6 +21,7 @@ export default class Player {
     this.secondaryColor = secondaryColor
     this.name = name
     this.slug = slug
+    this.mouthPng = mouthPng
 
     this.connected = false
 
