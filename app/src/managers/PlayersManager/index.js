@@ -4,6 +4,7 @@ import Player2Peer from '~managers/PeerManager/Player2Peer'
 import TokenSocketManager from '~managers/TokenSocketManager'
 import Observable from '~managers/abstracts/Observable'
 import { CHARACTERS, DEBUG } from '~constants'
+import { randomInt } from '~utils/math'
 
 class PlayersManager extends Observable {
   constructor() {
@@ -179,9 +180,9 @@ class PlayersManager extends Observable {
 function getNewToken(index) {
   let token
   if (DEBUG) {
-    token = index === 0 ? '000' : '999'
+    token = index === 0 ? '0000' : '9999'
   } else {
-    token = Math.random().toString(10).substr(2, 3)
+    token = `${randomInt(1, 9)}${randomInt(1, 9)}${randomInt(1, 9)}${randomInt(1, 9)}`
   }
 
   TokenSocketManager.send('new_token', { token })

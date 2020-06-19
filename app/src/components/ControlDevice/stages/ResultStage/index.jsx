@@ -1,90 +1,80 @@
 import React from 'react'
+import classNames from 'classnames'
 import styles from './style.module.scss'
 import { CHARACTERS } from '~constants'
 
-import Circle from '~components/ControlDevice/Circle'
-import MarqueeText from '~components/MarqueeText'
-import AutoplayVideo from '~components/AutoplayVideo'
+import facebook from '~assets/images/icons/facebook.svg'
+import twitter from '~assets/images/icons/twitter.svg'
+
+import Button from '~components/Button'
+import Character from '~components/Character'
 
 const ResultStage = props => {
-  const { characterIndex, mode, resetGame, score, winner } = props
-  let resultTop
-  let resultBottom
-  let circleColor
-  const video = []
-  const hostURL = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1)
-  let shareURL = `${hostURL}share?player=${characterIndex}&score=${score}`
-  let shareDescription
+  // const { characterIndex, mode, resetGame, score, winner } = props
+  const { character, resetGame, winner } = props
+  const hostURL = `${window.location.protocol}//${window.location.hostname}/`
+  // let shareURL = `${hostURL}share?player=${characterIndex}&score=${score}`
+  // let shareDescription
 
+  // if (winner === 'tied') {
+  //   shareURL += '&result=tied'
+  //   shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.tied, score)
+  // } else if (mode === 'SINGLE_PLAYER') {
+  //   shareURL += '&result=singleMode'
+  //   shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score)
+  // } else if (winner === characterIndex) {
+  //   shareURL += '&result=win'
+  //   shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.win, score)
+  // } else {
+  //   shareURL += '&result=lose'
+  //   shareDescription = global.SHARING_MESSAGES.description.lose
+  // }
+
+  // shareURL = encodeURIComponent(shareURL)
+  const shareURL = encodeURIComponent(hostURL)
+
+  let result
   if (winner === 'tied') {
-    circleColor = 'yellow'
-    resultTop = 'Nobody wins! '
-    resultBottom = resultTop
-    CHARACTERS.forEach(character => {
-      video.push(<AutoplayVideo src={character.videoWhite} extraClassName={styles.video} poster={character.image} />)
-    })
-    shareURL += '&result=tied'
-    shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.tied, score)
+    result = 'tied'
+  } else if (CHARACTERS[winner] === character) {
+    result = 'won'
   } else {
-    resultBottom = CHARACTERS[winner].name
-    circleColor = CHARACTERS[winner].color
-    video.push(
-      <AutoplayVideo
-        src={CHARACTERS[winner].videoWhite}
-        extraClassName={styles.video}
-        poster={CHARACTERS[winner].image}
-      />,
-    )
-
-    if (mode === 'SINGLE_PLAYER') {
-      resultTop = 'Good job!'
-      shareURL += '&result=singleMode'
-      shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.singleMode, score)
-    } else if (winner === characterIndex) {
-      resultTop = 'You won!'
-      shareURL += '&result=win'
-      shareDescription = global.parseMessage(global.SHARING_MESSAGES.description.win, score)
-    } else {
-      resultTop = 'You’re bad!'
-      shareURL += '&result=lose'
-      shareDescription = global.SHARING_MESSAGES.description.lose
-    }
+    result = 'lost'
   }
 
-  shareURL = encodeURIComponent(shareURL)
-
   return (
-    <section className={styles.result}>
-      <a
-        href={`https://www.facebook.com/sharer/sharer.php?u=${shareURL}`}
-        rel="noopener noreferrer"
-        target="_blank"
-        className={styles.shareButton}
-      >
-        Share on Facebook
-      </a>
-      <a
-        href={`http://twitter.com/share?text=${shareDescription}&url=${shareURL}`}
-        rel="noopener noreferrer"
-        target="_blank"
-        className={styles.shareButton}
-      >
-        Share on Twitter
-      </a>
-      <Circle color={circleColor} />
-      <div className={styles.winner}>
-        <MarqueeText text={resultTop} duration="6s" isWhite />
-        <div className={styles.imageWrapper}>{video}</div>
-        <MarqueeText text={resultBottom} duration="6s" isWhite />
+    <section className={classNames(styles.result, styles[`result--${character.slug}`])}>
+      <h2 className={styles.title}>
+        {result === 'tied' && <span>It’s a tie!</span>}
+        {result === 'won' && <span>Winner!</span>}
+        {result === 'lost' && <span>Looser!</span>}
+      </h2>
+      <Character
+        extraClassName={styles.character}
+        character={character}
+        mood={result === 'lost' ? 'lose' : 'win'}
+      />
+      <Button
+        extraClassName={styles.resetButton}
+        clickHandler={resetGame}
+        text="Play again"
+      />
+      <div className={styles.shares}>
+        <h3 className={styles.shareTitle}>Share:</h3>
+        <Button
+          extraClassName={styles.shareTwitter}
+          link={`http://twitter.com/share?url=${shareURL}`}
+          icon={twitter}
+          text="Share on Twitter"
+        />
+        <Button
+          extraClassName={styles.shareFacebook}
+          link={`https://www.facebook.com/sharer/sharer.php?u=${shareURL}`}
+          icon={facebook}
+          text="Share on Facebook"
+        />
       </div>
-      <div className={styles.smallText}>{winner === 'tied' ? 'Tie!' : 'Winner!'}</div>
-      <div className={styles.smallText}>
-        Score:
-        {score}
-      </div>
-      <div className={styles.button} onClick={resetGame}>
-        Play again
-      </div>
+
     </section>
   )
 }

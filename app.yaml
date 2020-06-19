@@ -11,4 +11,3 @@ manual_scaling:
 network:
   session_affinity: true
 # [END appengine_websockets_yaml]
-

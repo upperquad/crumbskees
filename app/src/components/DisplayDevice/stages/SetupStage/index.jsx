@@ -4,8 +4,6 @@ import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
-import Player1Peer from '~managers/PeerManager/Player1Peer'
-import Player2Peer from '~managers/PeerManager/Player2Peer'
 
 import JumpUpText from '~components/JumpUpText'
 import PlayersManager from '~managers/PlayersManager'
@@ -45,11 +43,7 @@ const SetupStage = props => {
 
   useEffect(() => {
     if (bothConnected) {
-      const nextStageTimeout = setTimeout(() => {
-        Player1Peer.send('tutorial_start')
-        Player2Peer.send('tutorial_start')
-        onFinish()
-      }, 2000)
+      const nextStageTimeout = setTimeout(onFinish, 2000)
       return () => clearTimeout(nextStageTimeout)
     }
     return undefined
@@ -63,7 +57,6 @@ const SetupStage = props => {
         <br />
         your phones
       </h2>
-      <h3 className={styles.subtitle}>Open your phone camera and scan the code!</h3>
       <div className={styles.players}>
         {PlayersManager.players.map((player, index) => {
           if (player.id || player.token) {
@@ -85,7 +78,7 @@ const SetupStage = props => {
                           >
                             <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
                             <div className={styles.qrUrl}>
-                              Think QR codes are lame?
+                              Think QR codes are stupid?
                               <br />
                               {`Open ${BASE_URL}`}
                               <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>

@@ -11,7 +11,7 @@ const IntroIlloStage = props => {
   const { extraClassName, onFinish } = props
 
   useEffect(() => {
-    setTimeout(onFinish, DEBUG ? 1000 : 5000)
+    setTimeout(onFinish, DEBUG ? 1000 : 3500)
   }, [onFinish])
 
   return (

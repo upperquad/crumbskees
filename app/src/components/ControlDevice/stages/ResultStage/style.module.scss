@@ -7,72 +7,66 @@
   flex-flow: column nowrap;
   justify-content: center;
   left: 0;
-  padding-top: 70px;
+  padding-top: 27px;
   position: fixed;
   right: 0;
-  top: 0;
-}
-
-.winner {
-  border: 1px solid $color-black;
-  display: flex;
-  flex-flow: column nowrap;
-  flex-grow: 1;
-  flex-shrink: 0;
-  overflow: hidden;
-  width: 85vw;
-
-  @media only screen and (max-height: 630px) {
-    width: 60vw;
-  }
-
-  .marquee {
-
-
-    background: $color-black;
-    color: $color-white;
-    flex-grow: 0;
-    flex-shrink: 0;
-    font-size: 50px;
-    padding: 12px 0 9px;
-    text-transform: uppercase;
-  }
-}
-
-.imageWrapper {
-  align-items: center;
-  background: $color-white;
-  display: flex;
-  flex-flow: row nowrap;
-  flex-grow: 1;
-  flex-shrink: 0;
-  justify-content: center;
-}
-
-.video {
-  width: 70%;
-}
-
-.smallText {
-
-
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 16px;
-  margin: 27px 0;
-}
-
-.button {
-
-
-  background: $color-yellow;
-  border: 1px solid $color-black;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 32px;
-  letter-spacing: .024em;
-  padding: 20px;
   text-align: center;
-  text-transform: uppercase;
+  top: 0;
+
+  &--p1 {
+    background: $color-yellow;
+
+    .shares {
+      background: $color-pink;
+    }
+  }
+
+  &--p2 {
+    background: $color-pink;
+
+    .shares {
+      background: $color-green;
+    }
+  }
+}
+
+.title {
+  @extend %t--h2;
+  @extend %t--style-sm-shadow;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.character {
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 100px;
+  margin: 0 auto;
+  width: 320px;
+}
+
+.resetButton {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-bottom: 31px;
+}
+
+.shares {
+  border-top: 4px solid $color-black;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 15px 0 30px;
   width: 100%;
+}
+
+.shareTitle {
+  @extend %t--h3;
+
+  color: $color-black;
+  margin-bottom: 20px;
+}
+
+.shareTwitter {
+  margin-right: 12px;
 }

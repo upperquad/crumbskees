@@ -19,6 +19,9 @@ const StageWrapper = props => {
       })}
     >
       {childrenWithClasses}
+      {[...Array(9)].map((e, index) => (
+        <div className={classNames(styles.stripe, styles[`stripe--${index + 1}`])} />
+      ))}
     </div>
   )
 }

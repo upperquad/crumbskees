@@ -1,22 +1,54 @@
 @import "~styles/imports/index";
 
 .play {
+  background: $color-purple;
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
   left: 0;
-  padding: 20px 0 24px;
+  overflow: hidden;
   position: fixed;
   right: 0;
   text-align: center;
   top: 0;
+  transition: background .2s;
+
+  &.isReady {
+    .top {
+      pointer-events: none;
+    }
+  }
+
+  &.isGameStarted {
+    background: $color-green;
+  }
+}
+
+.top {
+  align-items: center;
+  display: flex;
+  height: 135px;
+  justify-content: center;
+  padding: 0 30px;
+  text-align: center;
+
+  .button {
+    text-transform: none;
+  }
+
+  .hurryUp {
+    @extend %t--body-small;
+
+    color: $color-white;
+  }
 }
 
 .touchBubble {
-  border: 2px $color-white solid;
+  border: 4px $color-white solid;
   border-radius: 50%;
   height: 74px;
   opacity: 0;
+  pointer-events: none;
   position: absolute;
   transform: translate(-50%, -50%) scale(.2);
   transition: opacity .3s, transform ease-in-out .1s;
@@ -28,72 +60,94 @@
     // transition: opacity .3s, transform ease-in-out .3s, left .1s, top .1s;
     transition: opacity .3s;
   }
+
+  &--red {
+    border-color: $color-red;
+  }
+
+  &--purple {
+    border-color: $color-purple;
+  }
+}
+
+.scoreTitle {
+  @extend %t--body-small;
+
+  line-height: .1em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .score {
-  pointer-events: none;
+  @extend %t--h2;
+  @extend %t--style-sm-shadow;
 }
 
-.touchZone {
+.blockWrapper {
   flex-grow: 1;
-  padding: 20px 5vw 24px;
+  height: 0;
+  overflow: hidden;
+  padding: 0 30px 30px;
+  pointer-events: none;
   position: relative;
+}
+
+.character {
+  height: 250px;
+  position: absolute;
+  width: 250px;
+
+  &--p1 {
+    bottom: -50px;
+    left: -60px;
+    transform: rotate(15deg);
+  }
+
+  &--p2 {
+    bottom: -85px;
+    left: -60px;
+  }
 }
 
 .block {
-  border: 1px solid $color-black;
+  background: $color-white url('../../../../assets/images/mobile/touch-background.png') center / 100% auto no-repeat;
+  border: 4px solid $color-black;
   height: 100%;
   position: relative;
   width: 100%;
-
-  // &.blockPurple {
-  //   background: $color-purple;
-  // }
-
-  // &.blockRed {
-  //   background: $color-red;
-  // }
 }
 
-.image {
-  bottom: 4px;
-  height: 100px;
-  position: absolute;
-  right: 0;
-}
-
-.score {
-
-
-  font-size: 40vw;
-  left: 50%;
-  opacity: .2;
-  position: absolute;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-color: $color-white;
-  -webkit-text-stroke-width: 2px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-
-.skipTutorialBtn {
-
-
-  background: $color-yellow;
-  border: 1px solid $color-black;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 18px;
+.instruction {
+  align-items: center;
+  background: rgba($color-purple, .5);
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
   left: 0;
-  letter-spacing: .024em;
-  margin: auto;
-  padding: 20px;
-  position: fixed;
+  padding: 30px;
+  pointer-events: none;
+  position: absolute;
   right: 0;
   text-align: center;
-  text-transform: uppercase;
-  top: 40%;
-  width: 80%;
-  z-index: 20;
+  top: 0;
+  z-index: 2;
+}
+
+.instructionMouth {
+  display: block;
+  height: 107px;
+  margin-bottom: 20px;
+}
+
+.instructionTitle {
+  @extend %t--h3;
+  @extend %t--style-tiny-shadow;
+
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.instructionSubtitle {
+  @extend %t--body-small;
 }

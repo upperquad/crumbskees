@@ -20,6 +20,21 @@
     bottom: scaleVw(-4);
     top: scaleVw(-4);
   }
+
+  @include respond-to(smartphone) {
+    border-width: 4px;
+
+    &::before {
+      left: -4px;
+      right: -4px;
+      top: calc(100% + 4px);
+    }
+
+    &::after {
+      bottom: -4px;
+      top: -4px;
+    }
+  }
 }
 
 %shadow-box {
@@ -51,6 +66,17 @@
     transform: skewY(45deg);
     transform-origin: top left;
     width: scaleVw(12);
+  }
+
+  @include respond-to(smartphone) {
+    &::before {
+      height: 8px;
+    }
+
+    &::after {
+      left: calc(100% + 4px);
+      width: 8px;
+    }
   }
 }
 

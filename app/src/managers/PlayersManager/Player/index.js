@@ -4,12 +4,10 @@ export default class Player {
   constructor({ character, id, playerPeer, token }) {
     const {
       color,
-      image,
       lottie,
       name,
       secondaryColor,
       slug,
-      videoWhite,
     } = character
     this.id = id
     this.token = token
@@ -20,8 +18,6 @@ export default class Player {
     this.color = color
     this.lottie = lottie
     this.secondaryColor = secondaryColor
-    this.videoWhite = videoWhite
-    this.image = image
     this.name = name
     this.slug = slug
 

@@ -5,7 +5,7 @@ import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import SoundManager from '~managers/SoundManager'
-import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS } from '~constants'
+import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS, DEBUG } from '~constants'
 
 import styles from './style.module.scss'
 
@@ -13,7 +13,7 @@ import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 import Character from '~components/Character'
 
-const TIME = 40
+const TIME = DEBUG ? 100 : 40
 
 const GameZoneWrapper = props => {
   const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props

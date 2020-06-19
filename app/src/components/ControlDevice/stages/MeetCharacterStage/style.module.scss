@@ -1,0 +1,31 @@
+@import "~styles/imports/index";
+
+.meetCharacter {
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  left: 0;
+  overflow: hidden;
+  padding: 57px 20px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+
+  &--pink {
+    background: $color-pink;
+  }
+
+  &--yellow {
+    background: $color-yellow;
+  }
+}
+
+.title {
+  @extend %t--h2;
+  @extend %t--style-sm-shadow;
+}
+
+.character {
+  flex: 100% 1 1;
+}
