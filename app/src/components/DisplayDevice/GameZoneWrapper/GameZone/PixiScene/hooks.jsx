@@ -1,26 +1,25 @@
 // TODO: this file needs to be optimized
 import { useEffect } from 'react'
 import { Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
-import { COLORS, DEBUG, GRID_UNIT, VB_WIDTH } from '~constants'
+import { DEBUG, GRID_UNIT, VB_WIDTH } from '~constants'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
 import getNow from '~utils/time'
-import { inOutSine, inOutQuad } from '~utils/ease'
+import { inOutQuad } from '~utils/ease'
 
 import styles from './style.module.scss'
 
 // circles
 const CIRCLE_STROKE_COEF = 0.2
 const CIRCLE_BASE_RADIUS = 1.29
-const CIRCLE_GROWN_RADIUS = 1.45
-const CIRCLE_MAX_DURATION = 900
-const CIRCLE_DECELERATION_COEF = 0.15
+const CIRCLE_GROW_RATE = 2.263
+const CIRCLE_MOVE_DECELERATION_COEF = 0.15
+const CIRCLE_GROW_DECELERATION_COEF = 0.1
 
-// mouths/lips
-const LIP_SIZE_COEF = 3.1
+// mouths
+const MOUTH_SIZE = 3.1
 
 // powers
-const GROW_ANIMATION_DURATION = 2000
 const CANCEL_GROW_DURATION = 6000
 const CANCEL_FREEZE_DURATION = 4000
 const ADD_SECONDS = 20
@@ -54,10 +53,11 @@ export function useSetScene(refs, props) {
     }
 
     function setMouths(resources) {
+      const mouths = []
       PlayersManager.players.forEach((player, index) => {
         const sprite = new Sprite(resources[`mouth-${index}`].texture)
         const ratio = sprite.height / sprite.width
-        sprite.width = ((GRID_UNIT * LIP_SIZE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
+        sprite.width = ((GRID_UNIT * MOUTH_SIZE) / VB_WIDTH) * refs.el.current.offsetWidth
         sprite.height = sprite.width * ratio
 
         sprite.position.x = 0.5 * refs.el.current.offsetWidth
@@ -66,13 +66,15 @@ export function useSetScene(refs, props) {
         sprite.anchor.set(0.5, 0.5)
 
         refs.containerMouth.current.addChild(sprite)
-        refs.mouths.current[index].push(sprite)
+        mouths.push(sprite)
 
         sprite.initScaleX = sprite.scale.x
         sprite.initScaleY = sprite.scale.y
 
         player.allowCloseMouth = true
       })
+
+      refs.playersMouths.current = mouths
     }
 
     function setCircles() {
@@ -84,16 +86,19 @@ export function useSetScene(refs, props) {
         refs.containerMasked.current.mask = refs.circlesMasked.current
       }
 
+      // TODO: DEBUG only
       refs.circlesBorder.current = new Graphics()
       refs.containerFront.current.addChild(refs.circlesBorder.current)
 
       // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
       refs.stroke.current = ((GRID_UNIT * CIRCLE_STROKE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
       // TODO: clean this up
-      refs.radius.current = ((GRID_UNIT * CIRCLE_BASE_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth
+      refs.radiusBase.current = ((GRID_UNIT * CIRCLE_BASE_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth
 
       PlayersManager.players.forEach(() => {
-        refs.circlesLastPositions.current.push({ x: 0, y: 0 })
+        refs.playersPositions.current.push({ x: 0, y: 0 })
+        refs.playersRadii.current.push(refs.radiusBase.current)
+        refs.playersTargetRadii.current.push(refs.radiusBase.current)
       })
     }
 
@@ -160,7 +165,7 @@ export function useSetScene(refs, props) {
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.videoBack, props.videoFront])
+  }, [])
 }
 
 
@@ -233,35 +238,22 @@ export function useUpdateItems(refs, props) {
 export function useUpdatePowers(refs, props) {
   // update powers
   useEffect(() => {
-    // func
-    function growCircle(increment) {
-      const now = getNow()
-      // TODO: grow radius
-      const newRadius = refs.radius.current + increment
-
-      setTimeout(() => {
-        // when growing animation finish
-      }, GROW_ANIMATION_DURATION)
-    }
-
     // init
     PlayersManager.players.forEach((player, index) => {
       if (!props.powers[index]) {
-        growCircle(0)
+        refs.playersTargetRadii.current[index] = 1
       } else {
         if (props.powers[index].type === 'grow') {
-          growCircle(refs.radius.current * CIRCLE_GROWN_RADIUS)
+          refs.playersTargetRadii.current[index] = CIRCLE_GROW_RATE
         } else if (props.powers[index].type === 'freeze') {
-          refs.timeFrozen.current = getNow()
+          // TODO: nothing here
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
           props.setTime(time => time + ADD_SECONDS)
         }
 
         if (props.powers[index].type) {
           const timeout = setTimeout(
-            () => {
-              props.cancelPower(index)
-            },
+            () => props.cancelPower(index),
             props.powers[index].type === 'grow' ? CANCEL_GROW_DURATION : CANCEL_FREEZE_DURATION,
           )
 
@@ -280,99 +272,57 @@ export function useUpdatePowers(refs, props) {
 export function useRAF(refs, props) {
   useEffect(() => {
     function updateFrame(now) {
+      if (!refs.playersMouths.current) {
+        return
+      }
+
       refs.circlesMasked.current.clear()
       refs.circlesBorder.current.clear()
 
       PlayersManager.players.forEach((player, index) => {
-        let color = hexStToNb(COLORS[player.color])
+        const currentPosition = refs.playersPositions.current[index]
+        const targetPosition = props.targetPositions[index]
+        const currentRadius = refs.playersRadii.current[index]
+        const targetRadius = refs.playersTargetRadii.current[index]
+        let radius = currentRadius
 
         // close circle quickly when mouth closes
         if (player.allowCloseMouth) {
-          closeCircle(player, index)
+          // TODO close the mouth
         }
 
-        // draw circles
-        let newPosition
-        if (props.powers[index] && props.powers[index].type === 'freeze') {
-          // position has to stay and color is gray
-          color = hexStToNb(COLORS.blue)
-          newPosition = refs.circlesLastPositions.current[index]
-        } else {
-          newPosition = getDelayedPosition(refs.circlesLastPositions.current[index], props.positions[index])
+        if (!props.powers[index] || props.powers[index].type !== 'freeze') {
+          currentPosition.x = interpolate(currentPosition.x, targetPosition.x, CIRCLE_MOVE_DECELERATION_COEF)
+          currentPosition.y = interpolate(currentPosition.y, targetPosition.y, CIRCLE_MOVE_DECELERATION_COEF)
+          radius = interpolate(currentRadius, targetRadius, CIRCLE_GROW_DECELERATION_COEF)
+          refs.playersRadii.current[index] = radius
         }
-        refs.circlesLastPositions.current[index] = newPosition
-        drawCircles(newPosition, color)
-        drawMouths(now, index, newPosition)
+
+        const x = (currentPosition.x + 0.5) * refs.initWidth.current
+        const y = (currentPosition.y + 0.5) * refs.initHeight.current
+
+        // draw masked circle
+        refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
+        refs.circlesMasked.current.drawEllipse(x, y, radius * refs.radiusBase.current, radius * refs.radiusBase.current)
+        refs.circlesMasked.current.endFill()
+
+        // draw border circle
+        refs.circlesBorder.current.lineStyle(refs.stroke.current, 0xff0000, 1)
+        refs.circlesBorder.current.drawEllipse(x, y, radius * refs.radiusBase.current, radius * refs.radiusBase.current)
+
+        // update mouth position
+        const mouth = refs.playersMouths.current[index]
+        const mouthScale = mouth.initScaleX * radius
+        mouth.position.x = x
+        mouth.position.y = y
+        mouth.scale.x = mouthScale
+        mouth.scale.y = mouthScale
       })
-
-      function closeCircle(player, index) {
-        if (player.closeMouth) {
-          if (!player.mouthIsMoving) {
-            const increment = -refs.radius.current * 0.3
-            updateRadiusInstantly(increment)
-            player.mouthIsMoving = true
-          }
-        } else if (player.mouthIsMoving === true) {
-          updateRadiusInstantly()
-          player.mouthIsMoving = false
-        }
-      }
-
-      function updateRadiusInstantly(increment = 0) {
-        const newRadius = refs.radius.current + increment
-      }
 
       // draw transition out rect
       if (refs.startTransitionOut.current > 0) {
         drawTransitionOut(now)
       }
-    }
-
-    // get delayed position
-    function getDelayedPosition(lastPosition, targetPosition) {
-      const { x: targetX, y: targetY } = targetPosition
-      let { x, y } = lastPosition
-
-      x += (targetX - x) * CIRCLE_DECELERATION_COEF
-      y += (targetY - y) * CIRCLE_DECELERATION_COEF
-
-      return { x, y }
-    }
-
-    function drawCircles(position, color) {
-      const x = (position.x + 0.5) * refs.initWidth.current
-      const y = (position.y + 0.5) * refs.initHeight.current
-      // draw masked circles
-      refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
-      refs.circlesMasked.current.drawEllipse(x, y, refs.radius.current, refs.radius.current)
-      refs.circlesMasked.current.endFill()
-
-      // draw border circles
-      refs.circlesBorder.current.lineStyle(refs.stroke.current, color, 1)
-      refs.circlesBorder.current.drawEllipse(x, y, refs.radius.current, refs.radius.current)
-    }
-
-    // draw mouths
-    function drawMouths(now, index, position) {
-      const player = PlayersManager.players[index]
-
-      refs.mouths.current[index].forEach(mouth => {
-        const { x, y } = position
-
-        if (player.startGrowMouthAnimation) {
-          const percent = (now - player.startGrowMouthAnimation) / (CIRCLE_MAX_DURATION + 100)
-
-          if (percent < 1) {
-            mouth.scale.x = mouth.originScaleX + (mouth.targetScaleX - mouth.originScaleX) * inOutSine(percent)
-            mouth.scale.y = mouth.originScaleY + (mouth.targetScaleY - mouth.originScaleY) * inOutSine(percent)
-
-            mouth.offset = mouth.originOffset + (mouth.targetOffset - mouth.originOffset) * inOutSine(percent)
-          }
-        }
-
-        mouth.position.x = (x + 0.5) * refs.initWidth.current
-        mouth.position.y = (y + 0.5) * refs.initHeight.current
-      })
     }
 
     // draw transition out
@@ -398,7 +348,7 @@ export function useRAF(refs, props) {
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.positions, props.powers])
+  }, [props.targetPositions, props.powers])
 }
 
 export function useUpdateGameState(refs, props) {
@@ -411,6 +361,14 @@ export function useUpdateGameState(refs, props) {
   }, [props.gameState])
 }
 
-function hexStToNb(str) {
-  return parseInt(str.replace(/^#/, ''), 16)
+function interpolate(current, target, coef) {
+  if (current === target) {
+    return current
+  }
+
+  if (target - current >= 0.005 && target - current <= 0.005) {
+    return target
+  }
+
+  return current + (target - current) * coef
 }

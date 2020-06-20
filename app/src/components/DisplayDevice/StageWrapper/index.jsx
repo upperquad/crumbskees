@@ -2,6 +2,8 @@ import React, { Children, cloneElement } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
+const STRIPE_ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 const StageWrapper = props => {
   const { children, status } = props
 
@@ -19,8 +21,8 @@ const StageWrapper = props => {
       })}
     >
       {childrenWithClasses}
-      {[...Array(9)].map((e, index) => (
-        <div className={classNames(styles.stripe, styles[`stripe--${index + 1}`])} />
+      {STRIPE_ARRAY.map(num => (
+        <div key={num} className={classNames(styles.stripe, styles[`stripe--${num}`])} />
       ))}
     </div>
   )

@@ -423,7 +423,7 @@ const GameZone = props => {
         cancelPower={cancelPower}
         gameState={gameState}
         items={items}
-        positions={positionArray}
+        targetPositions={positionArray}
         powers={powerArray}
         setTime={setTime}
         type={type}
