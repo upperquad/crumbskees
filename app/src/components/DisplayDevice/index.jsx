@@ -9,7 +9,6 @@ import IntroIlloStage from './stages/IntroIlloStage'
 import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
 import PlayStage from './stages/PlayStage'
-import OutroIlloStage from './stages/OutroIlloStage'
 import ResultStage from './stages/ResultStage'
 // import ErrorStage from './stages/ErrorStage'
 import StageWrapper from './StageWrapper'
@@ -160,16 +159,7 @@ const DisplayDevice = () => {
           <Transition key="stage-play" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
-                <PlayStage onFinish={() => setStage('outro-illo')} />
-              </StageWrapper>
-            )}
-          </Transition>
-        )}
-        {stage === 'outro-illo' && (
-          <Transition key="stage-outro-illo" timeout={TRANSITION_TIMEOUTS}>
-            {status => (
-              <StageWrapper status={status}>
-                <OutroIlloStage onFinish={() => setStage('result')} />
+                <PlayStage onFinish={() => setStage('result')} />
               </StageWrapper>
             )}
           </Transition>
