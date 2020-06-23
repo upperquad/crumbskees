@@ -1,6 +1,6 @@
 {
-  "name": "Node.js WebSocket Example",
-  "description": "Part of the Using WebSockets on Heroku Tutorial",
-  "repository": "https://github.com/heroku-examples/node-websockets",
+  "name": "Crumbskees",
+  "description": "Game by Upperquad",
+  "repository": "https://github.com/upperquad/crumbskees",
   "keywords": ["node", "websocket"]
 }
