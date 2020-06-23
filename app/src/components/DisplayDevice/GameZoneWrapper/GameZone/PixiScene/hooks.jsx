@@ -1,7 +1,7 @@
 // TODO: this file needs to be optimized
 import { useEffect } from 'react'
-import { Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
-import { DEBUG, GRID_UNIT, VB_WIDTH } from '~constants'
+import { AnimatedSprite, Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
+import { GRID_UNIT, VB_WIDTH } from '~constants'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
 import getNow from '~utils/time'
@@ -10,7 +10,6 @@ import { inOutQuad } from '~utils/ease'
 import styles from './style.module.scss'
 
 // circles
-const CIRCLE_STROKE_COEF = 0.2
 const CIRCLE_BASE_RADIUS = 1.29
 const CIRCLE_GROW_RATE = 2.263
 const CIRCLE_MOVE_DECELERATION_COEF = 0.15
@@ -28,19 +27,19 @@ const ADD_SECONDS = 20
 const TRANSITION_OUT_DURATION = 1000
 
 const MOUTH_SEQUENCE = [
-  500 / 597,
-  458 / 597,
-  403 / 597,
-  347 / 597,
-  306 / 597,
-  236 / 597,
-  236 / 597,
-  236 / 597,
-  306 / 597,
-  347 / 597,
-  403 / 597,
-  458 / 597,
-  500 / 597,
+  { ratio: 500 / 597, frame: 0 },
+  { ratio: 458 / 597, frame: 1 },
+  { ratio: 403 / 597, frame: 2 },
+  { ratio: 347 / 597, frame: 3 },
+  { ratio: 306 / 597, frame: 4 },
+  { ratio: 236 / 597, frame: 5 },
+  { ratio: 236 / 597, frame: 5 },
+  { ratio: 236 / 597, frame: 5 },
+  { ratio: 306 / 597, frame: 4 },
+  { ratio: 347 / 597, frame: 3 },
+  { ratio: 403 / 597, frame: 2 },
+  { ratio: 458 / 597, frame: 1 },
+  { ratio: 500 / 597, frame: 0 },
 ]
 
 const MOUTH_SEQUENCE_LENGTH = MOUTH_SEQUENCE.length
@@ -70,10 +69,16 @@ export function useSetScene(refs, props) {
       return video
     }
 
-    function setMouths(resources) {
+    function setMouths(currentLoader, resources) {
       const mouths = []
+
       PlayersManager.players.forEach((player, index) => {
-        const sprite = new Sprite(resources[`mouth-${index}`].texture)
+        const textureArray = player.mouthSprite.map((img, imgIndex) => (
+          resources[`mouth-${index}-${imgIndex}`].texture
+        ))
+
+        const sprite = new AnimatedSprite(textureArray)
+
         const ratio = sprite.height / sprite.width
         sprite.width = ((GRID_UNIT * MOUTH_SIZE) / VB_WIDTH) * refs.el.current.offsetWidth
         sprite.height = sprite.width * ratio
@@ -102,12 +107,6 @@ export function useSetScene(refs, props) {
         refs.containerMasked.current.mask = refs.circlesMasked.current
       }
 
-      // TODO: DEBUG only
-      refs.circlesBorder.current = new Graphics()
-      refs.containerFront.current.addChild(refs.circlesBorder.current)
-
-      // calculate the size the first time, then it will adapt to the auto resize of the scene every time it's drawn
-      refs.stroke.current = ((GRID_UNIT * CIRCLE_STROKE_COEF) / VB_WIDTH) * refs.el.current.offsetWidth
       // TODO: clean this up
       refs.radiusBase.current = ((GRID_UNIT * CIRCLE_BASE_RADIUS) / VB_WIDTH) * refs.el.current.offsetWidth
 
@@ -158,11 +157,11 @@ export function useSetScene(refs, props) {
     // preload lips
     const loader = new Loader()
     PlayersManager.players.forEach((player, index) => {
-      loader.add(`mouth-${index}`, player.mouthPng)
+      player.mouthSprite.forEach((image, imgIndex) => {
+        loader.add(`mouth-${index}-${imgIndex}`, image)
+      })
     })
-    loader.load((currentLoader, resources) => {
-      setMouths(resources)
-    })
+    loader.load(setMouths)
 
     if (props.type === 'game') {
       // Videos looping:
@@ -293,7 +292,6 @@ export function useRAF(refs, props) {
       }
 
       refs.circlesMasked.current.clear()
-      refs.circlesBorder.current.clear()
 
       PlayersManager.players.forEach((player, index) => {
         const currentPosition = refs.playersPositions.current[index]
@@ -312,15 +310,18 @@ export function useRAF(refs, props) {
         const x = (currentPosition.x + 0.5) * refs.initWidth.current
         const y = (currentPosition.y + 0.5) * refs.initHeight.current
 
-        let mouthHeightRatio = MOUTH_SEQUENCE[0]
+        let mouthSequenceIndex = 0
         if (player.closeMouth) {
-          mouthHeightRatio = MOUTH_SEQUENCE[player.mouthSequence]
+          mouthSequenceIndex = player.mouthSequence
           player.mouthSequence += 1
           if (player.mouthSequence === MOUTH_SEQUENCE_LENGTH) {
             player.mouthSequence = 0
             player.closeMouth = false
           }
         }
+
+        const mouthHeightRatio = MOUTH_SEQUENCE[mouthSequenceIndex].ratio
+        const mouthFrame = MOUTH_SEQUENCE[mouthSequenceIndex].frame
 
         // draw masked circle
         refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
@@ -332,18 +333,10 @@ export function useRAF(refs, props) {
         )
         refs.circlesMasked.current.endFill()
 
-        // draw border circle
-        refs.circlesBorder.current.lineStyle(refs.stroke.current, 0xff0000, 1)
-        refs.circlesBorder.current.drawEllipse(
-          x,
-          y,
-          radius * refs.radiusBase.current,
-          radius * mouthHeightRatio * refs.radiusBase.current,
-        )
-
         // update mouth position
         const mouth = refs.playersMouths.current[index]
         const mouthScale = mouth.initScaleX * radius
+        mouth.gotoAndStop(mouthFrame)
         mouth.position.x = x
         mouth.position.y = y
         mouth.scale.x = mouthScale

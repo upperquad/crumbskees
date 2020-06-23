@@ -19,9 +19,7 @@ const PixiScene = props => {
   const containerMouth = useRef(null)
   // circles
   const circlesMasked = useRef(null)
-  const circlesBorder = useRef(null)
   // circles size
-  const stroke = useRef(0)
   const radiusBase = useRef(0)
   // players data
   const playersMouths = useRef(null)
@@ -40,11 +38,9 @@ const PixiScene = props => {
     containerFront,
     containerMouth,
     circlesMasked,
-    circlesBorder,
     initHeight,
     initWidth,
     startTransitionOut,
-    stroke,
     radiusBase,
     playersMouths,
     playersPositions,

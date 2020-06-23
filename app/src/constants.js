@@ -18,8 +18,18 @@ import characterBody1 from '~assets/images/characters/body-1.svg'
 import characterBody2 from '~assets/images/characters/body-2.svg'
 import characterMouth1 from '~assets/images/characters/mouth-1.svg'
 import characterMouth2 from '~assets/images/characters/mouth-2.svg'
-import characterMouthPng1 from '~assets/images/characters/mouth-1.png'
-import characterMouthPng2 from '~assets/images/characters/mouth-2.png'
+import characterMouth1Sequence1 from '~assets/images/characters/mouth-1/1.png'
+import characterMouth1Sequence2 from '~assets/images/characters/mouth-1/2.png'
+import characterMouth1Sequence3 from '~assets/images/characters/mouth-1/3.png'
+import characterMouth1Sequence4 from '~assets/images/characters/mouth-1/4.png'
+import characterMouth1Sequence5 from '~assets/images/characters/mouth-1/5.png'
+import characterMouth1Sequence6 from '~assets/images/characters/mouth-1/6.png'
+import characterMouth2Sequence1 from '~assets/images/characters/mouth-2/1.png'
+import characterMouth2Sequence2 from '~assets/images/characters/mouth-2/2.png'
+import characterMouth2Sequence3 from '~assets/images/characters/mouth-2/3.png'
+import characterMouth2Sequence4 from '~assets/images/characters/mouth-2/4.png'
+import characterMouth2Sequence5 from '~assets/images/characters/mouth-2/5.png'
+import characterMouth2Sequence6 from '~assets/images/characters/mouth-2/6.png'
 
 import goodSnack1 from '~assets/images/snacks/good/1.svg'
 import goodSnack2 from '~assets/images/snacks/good/2.svg'
@@ -88,7 +98,14 @@ export const CHARACTERS = [
     },
     body: characterBody1,
     mouth: characterMouth1,
-    mouthPng: characterMouthPng1,
+    mouthSprite: [
+      characterMouth1Sequence1,
+      characterMouth1Sequence2,
+      characterMouth1Sequence3,
+      characterMouth1Sequence4,
+      characterMouth1Sequence5,
+      characterMouth1Sequence6,
+    ],
   },
   {
     color: 'pink',
@@ -107,7 +124,14 @@ export const CHARACTERS = [
     },
     body: characterBody2,
     mouth: characterMouth2,
-    mouthPng: characterMouthPng2,
+    mouthSprite: [
+      characterMouth2Sequence1,
+      characterMouth2Sequence2,
+      characterMouth2Sequence3,
+      characterMouth2Sequence4,
+      characterMouth2Sequence5,
+      characterMouth2Sequence6,
+    ],
   },
 ]
 
