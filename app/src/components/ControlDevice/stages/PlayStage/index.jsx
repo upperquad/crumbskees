@@ -15,6 +15,9 @@ const PlayStage = props => {
   const [ready, setReady] = useState(false)
   const forceUpdate = useForceUpdate()
 
+  const isMovedSinceTouchStart = useRef(false)
+  const isClickSentSinceTouchStart = useRef(false)
+
   const coordX = useRef(0)
   const coordY = useRef(0)
 
@@ -33,6 +36,8 @@ const PlayStage = props => {
     coordX.current = clientX
     coordY.current = clientY
     setIsTouching(true)
+    isMovedSinceTouchStart.current = false
+    isClickSentSinceTouchStart.current = false
   }
 
   const touchMoveHandler = event => {
@@ -40,15 +45,25 @@ const PlayStage = props => {
     const { clientX, clientY } = event.touches[0]
     updatePosition(clientX, clientY)
     forceUpdate()
+    isMovedSinceTouchStart.current = true
   }
   const touchMoveHandlerThrottle = throttle(200, touchMoveHandler)
 
   const touchEndHandler = () => {
     setIsTouching(false)
+
+    if (!isMovedSinceTouchStart.current) {
+      ServerPeer.send('click')
+      isClickSentSinceTouchStart.current = true
+    }
   }
 
-  const tapHandler = () => {
-    ServerPeer.send('click')
+  const tapHandler = event => {
+    event.preventDefault()
+
+    if (!isClickSentSinceTouchStart.current) {
+      ServerPeer.send('click')
+    }
   }
 
   const onReadyTouch = () => {
