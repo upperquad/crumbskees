@@ -27,6 +27,9 @@ export default class Player {
 
     this.ready = false // boolean to know if player is ready after trying the tutorial
 
+    this.closeMouth = false
+    this.mouthSequence = 0
+
     this.playerPeer.connect(id)
   }
 

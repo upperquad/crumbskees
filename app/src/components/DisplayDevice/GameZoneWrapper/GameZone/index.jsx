@@ -87,12 +87,10 @@ const GameZone = props => {
 
       const targetsCaught = []
       const badItemsCaught = []
-      let growPowerFound = false
 
       itemsCaught.forEach(item => {
         switch (item.type) {
           case 'grow':
-            growPowerFound = true
             SoundManager.grow.play()
             setPowerArray(prevArray => {
               item.text = 'GROW'
@@ -127,12 +125,8 @@ const GameZone = props => {
         }
       })
 
-      if (!growPowerFound) {
-        PlayersManager.players[playerIndex].closeMouth = true
-        setTimeout(() => {
-          PlayersManager.players[playerIndex].closeMouth = false
-        }, 100)
-      }
+      PlayersManager.players[playerIndex].closeMouth = true
+      PlayersManager.players[playerIndex].mouthSequence = 0
 
       if (targetsCaught.length > 0) {
         addScore(targetsCaught, playerIndex)

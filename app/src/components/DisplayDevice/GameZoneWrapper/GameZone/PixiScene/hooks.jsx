@@ -27,6 +27,24 @@ const ADD_SECONDS = 20
 // transitions
 const TRANSITION_OUT_DURATION = 1000
 
+const MOUTH_SEQUENCE = [
+  500 / 597,
+  458 / 597,
+  403 / 597,
+  347 / 597,
+  306 / 597,
+  236 / 597,
+  236 / 597,
+  236 / 597,
+  306 / 597,
+  347 / 597,
+  403 / 597,
+  458 / 597,
+  500 / 597,
+]
+
+const MOUTH_SEQUENCE_LENGTH = MOUTH_SEQUENCE.length
+
 export function useSetScene(refs, props) {
   useEffect(() => {
     // funcs
@@ -70,8 +88,6 @@ export function useSetScene(refs, props) {
 
         sprite.initScaleX = sprite.scale.x
         sprite.initScaleY = sprite.scale.y
-
-        player.allowCloseMouth = true
       })
 
       refs.playersMouths.current = mouths
@@ -97,8 +113,8 @@ export function useSetScene(refs, props) {
 
       PlayersManager.players.forEach(() => {
         refs.playersPositions.current.push({ x: 0, y: 0 })
-        refs.playersRadii.current.push(refs.radiusBase.current)
-        refs.playersTargetRadii.current.push(refs.radiusBase.current)
+        refs.playersRadii.current.push(1)
+        refs.playersTargetRadii.current.push(1)
       })
     }
 
@@ -246,7 +262,7 @@ export function useUpdatePowers(refs, props) {
         if (props.powers[index].type === 'grow') {
           refs.playersTargetRadii.current[index] = CIRCLE_GROW_RATE
         } else if (props.powers[index].type === 'freeze') {
-          // TODO: nothing here
+          // TODO: Do nothing? remove this then
         } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
           props.setTime(time => time + ADD_SECONDS)
         }
@@ -286,11 +302,6 @@ export function useRAF(refs, props) {
         const targetRadius = refs.playersTargetRadii.current[index]
         let radius = currentRadius
 
-        // close circle quickly when mouth closes
-        if (player.allowCloseMouth) {
-          // TODO close the mouth
-        }
-
         if (!props.powers[index] || props.powers[index].type !== 'freeze') {
           currentPosition.x = interpolate(currentPosition.x, targetPosition.x, CIRCLE_MOVE_DECELERATION_COEF)
           currentPosition.y = interpolate(currentPosition.y, targetPosition.y, CIRCLE_MOVE_DECELERATION_COEF)
@@ -301,14 +312,34 @@ export function useRAF(refs, props) {
         const x = (currentPosition.x + 0.5) * refs.initWidth.current
         const y = (currentPosition.y + 0.5) * refs.initHeight.current
 
+        let mouthHeightRatio = MOUTH_SEQUENCE[0]
+        if (player.closeMouth) {
+          mouthHeightRatio = MOUTH_SEQUENCE[player.mouthSequence]
+          player.mouthSequence += 1
+          if (player.mouthSequence === MOUTH_SEQUENCE_LENGTH) {
+            player.mouthSequence = 0
+            player.closeMouth = false
+          }
+        }
+
         // draw masked circle
         refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
-        refs.circlesMasked.current.drawEllipse(x, y, radius * refs.radiusBase.current, radius * refs.radiusBase.current)
+        refs.circlesMasked.current.drawEllipse(
+          x,
+          y,
+          radius * refs.radiusBase.current,
+          radius * mouthHeightRatio * refs.radiusBase.current,
+        )
         refs.circlesMasked.current.endFill()
 
         // draw border circle
         refs.circlesBorder.current.lineStyle(refs.stroke.current, 0xff0000, 1)
-        refs.circlesBorder.current.drawEllipse(x, y, radius * refs.radiusBase.current, radius * refs.radiusBase.current)
+        refs.circlesBorder.current.drawEllipse(
+          x,
+          y,
+          radius * refs.radiusBase.current,
+          radius * mouthHeightRatio * refs.radiusBase.current,
+        )
 
         // update mouth position
         const mouth = refs.playersMouths.current[index]
