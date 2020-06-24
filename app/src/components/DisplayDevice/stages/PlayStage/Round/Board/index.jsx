@@ -23,7 +23,11 @@ const Board = props => {
 
   const renderPlayerMeta = (player, itemsForThisRound, power, index) => (
     <div className={classNames(styles.playerMeta, styles[`playerMeta--${index + 1}`])}>
-      <div className={styles.score}><span>{zeroUnit(player.score())}</span></div>
+      <div className={styles.score}>
+        <span className={styles.scoreInner} data-text={zeroUnit(player.score())}>
+          {zeroUnit(player.score())}
+        </span>
+      </div>
       <div className={styles.power}>
         <TransitionGroup>
           {power && (

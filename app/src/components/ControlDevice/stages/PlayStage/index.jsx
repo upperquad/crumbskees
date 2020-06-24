@@ -6,6 +6,7 @@ import styles from './style.module.scss'
 
 import Button from '~components/Button'
 import Character from '~components/Character'
+import Lottie from '~components/Lottie'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PlayStage = props => {
@@ -71,6 +72,8 @@ const PlayStage = props => {
     setReady(true)
   }
 
+  const zeroUnitScore = zeroUnit(score)
+
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <section
@@ -93,17 +96,19 @@ const PlayStage = props => {
         {ready && gameStarted && (
           <div>
             <div className={styles.scoreTitle}>Score</div>
-            <div className={styles.score}>{zeroUnit(score)}</div>
+            <div className={styles.score} data-text={zeroUnitScore}>{zeroUnitScore}</div>
           </div>
         )}
       </div>
       <div className={styles.blockWrapper}>
         <div className={styles.block} />
-        <Character
-          extraClassName={classNames(styles.character, styles[`character--${character.slug}`])}
-          character={character}
-          mood="happy"
-        />
+        {!showInstruction && (
+          <Character
+            extraClassName={classNames(styles.character, styles[`character--${character.slug}`])}
+            character={character}
+            mood="happy"
+          />
+        )}
       </div>
       <div
         style={{ top: coordY.current, left: coordX.current }}
@@ -116,8 +121,14 @@ const PlayStage = props => {
       {showInstruction && (
         <div className={styles.instruction}>
           <img className={styles.instructionMouth} src={character.mouth} alt="" />
-          <h2 className={styles.instructionTitle}>Use your finger to move your mouth.</h2>
+          <h2
+            className={styles.instructionTitle}
+            data-text="Use your finger to move your mouth."
+          >
+            Use your finger to move your mouth.
+          </h2>
           <p className={styles.instructionSubtitle}>When you’re ready to chomp on a snack, tap the screen!</p>
+          <Lottie extraClassName={styles.instructionFinger} data={character.finger} />
         </div>
       )}
     </section>

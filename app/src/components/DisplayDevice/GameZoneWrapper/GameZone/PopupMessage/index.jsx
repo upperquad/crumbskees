@@ -32,6 +32,7 @@ const PopupMessage = props => {
               left: `${x * 100}%`,
               top: `${y * 100}%`,
             }}
+            data-text={text}
           >
             {text}
           </div>

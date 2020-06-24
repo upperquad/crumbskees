@@ -29,7 +29,7 @@ const DropText = props => {
       className={classNames(styles.dropText, extraClassName)}
       style={animProps}
     >
-      {text}
+      <span className={styles.dropTextInner} data-text={text}>{text}</span>
     </animated.div>
   )
 }

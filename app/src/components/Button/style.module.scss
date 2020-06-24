@@ -8,15 +8,15 @@
 .button {
   cursor: pointer;
   display: inline-block;
-  padding: 0 scaleVw(22) scaleVw(13) 0;
+  padding: 0 scaleVw(22) scaleVw(22) 0;
   position: relative;
   transition:
     padding .4s $easing-quad-out,
     transform .4s $easing-quad-out;
 
   @include respond-to(above-smartphone) {
-    &:hover {
-      transform:  translate(#{scaleVw(22)}, #{scaleVw(13)});
+    &:active {
+      transform: translate(#{scaleVw(22)}, #{scaleVw(22)});
     }
   }
 
@@ -30,13 +30,13 @@
     &::before {
       background: $color-black;
       content: '';
-      height: scaleVw(30);
+      height: scaleVw(50);
       left: 0;
       position: absolute;
       top: 100%;
       transform: rotate(-45deg);
       transform-origin: top left;
-      width: scaleVw(30);
+      width: scaleVw(50);
     }
 
     &::after {
@@ -55,8 +55,8 @@
       box-shadow: 22px 22px 0px $color-black;
 
       &::before {
-        height: 30px;
-        width: 30px;
+        height: 50px;
+        width: 50px;
       }
 
       &::after {
@@ -90,11 +90,11 @@
   }
 
   @include respond-to(smartphone) {
-    padding: 0 22px 13px 0;
+    padding: 0 22px 22px 0;
 
     &:focus,
     &:active {
-      transform: translate(22px, 13px);
+      transform: translate(22px, 22px);
     }
   }
 

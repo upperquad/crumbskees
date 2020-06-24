@@ -151,3 +151,11 @@
 .instructionSubtitle {
   @extend %t--body-small;
 }
+
+.instructionFinger {
+  bottom: 0;
+  height: 200px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}

@@ -2,7 +2,6 @@
 
 .jumpUpText {
   @extend %t--h1;
-  @extend %t--style-lg-shadow;
 
   color: $color-white;
   line-height: 2em;
@@ -14,5 +13,7 @@
 }
 
 .letter {
+  @extend %t--style-lg-shadow;
+
   display: inline-block;
 }

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
+import { useZoom } from '~utils/hooks'
 
 import styles from './style.module.scss'
 
@@ -14,22 +15,7 @@ const Round = props => {
   const [gameState, setGameState] = useState('before-game')
   const [zoom, setZoom] = useState(1)
 
-  useEffect(() => {
-    const resizeHandler = () => {
-      const displayRatio = window.innerHeight / window.innerWidth
-      const threshold = 9 / 16
-      if (displayRatio < threshold) {
-        setZoom((displayRatio / threshold) * 0.9)
-      } else {
-        setZoom(0.9)
-      }
-    }
-
-    resizeHandler()
-    window.addEventListener('resize', resizeHandler)
-
-    return () => window.removeEventListener('resize', resizeHandler)
-  }, [])
+  useZoom(9 / 16, setZoom, 0.9)
 
   return (
     <div className={styles.roundWrapper}>

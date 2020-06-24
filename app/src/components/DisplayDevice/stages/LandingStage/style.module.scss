@@ -12,7 +12,7 @@
 .marqueeTop {
   background: $color-purple;
   left: 0;
-  padding: scaleVw(10) 0 scaleVw(8);
+  padding: scaleVw(10) 0;
   position: absolute;
   right: 0;
   top: 0;
@@ -29,7 +29,7 @@
 .marqueeLeft,
 .marqueeRight {
   background: $color-black;
-  padding: 0 scaleVw(7);
+  padding: scaleVw(6) 0 scaleVw(7);
   position: absolute;
   transform-origin: top left;
   width: 100vh;

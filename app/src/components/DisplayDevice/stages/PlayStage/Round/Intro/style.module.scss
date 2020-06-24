@@ -28,9 +28,6 @@
 }
 
 .intro {
-  @extend %t--h1;
-  @extend %t--style-lg-shadow;
-
   box-sizing: border-box;
   height: 100%;
   left: 0;
@@ -97,7 +94,7 @@
     letter-spacing: .1em;
     opacity: 0;
     text-shadow: scaleVw(10) scaleVw(10) 0 transparent;
-    -webkit-text-stroke: scaleVw(4) transparent;
+    -webkit-text-stroke: scaleVw(8) transparent;
     transition:
       opacity .2s .5s,
       color .3s .6s,
@@ -124,17 +121,20 @@
 }
 
 .go {
+  @extend %t--h1;
+  @extend %t--style-lg-shadow;
+
   color: $color-red;
   left: 50%;
   opacity: 0;
   position: absolute;
   text-align: center;
   top: grid(7);
-  transform: translate(-50%, -50%) scale(.2);
+  transform: translate3d(-50%, -50%, 0) scale(.2);
 }
 
 .goStart {
   animation: intro-go 1s linear 1 both;
-  transform: translate(-50%, -50%) scale(2);
+  transform: translate3d(-50%, -50%, 0) scale(2);
   transition: transform 1.5s $easing-circle-in-out;
 }

@@ -21,6 +21,7 @@ const JumpUpText = props => {
             className={styles.letter}
             style={animationProps}
             key={key}
+            data-text={letterArray[index]}
           >
             {letterArray[index]}
           </animated.span>

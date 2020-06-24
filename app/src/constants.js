@@ -18,6 +18,8 @@ import characterBody1 from '~assets/images/characters/body-1.svg'
 import characterBody2 from '~assets/images/characters/body-2.svg'
 import characterMouth1 from '~assets/images/characters/mouth-1.svg'
 import characterMouth2 from '~assets/images/characters/mouth-2.svg'
+import characterFinger1 from '~assets/images/characters/finger-1.json'
+import characterFinger2 from '~assets/images/characters/finger-2.json'
 import characterMouth1Sequence1 from '~assets/images/characters/mouth-1/1.png'
 import characterMouth1Sequence2 from '~assets/images/characters/mouth-1/2.png'
 import characterMouth1Sequence3 from '~assets/images/characters/mouth-1/3.png'
@@ -98,6 +100,7 @@ export const CHARACTERS = [
     },
     body: characterBody1,
     mouth: characterMouth1,
+    finger: characterFinger1,
     mouthSprite: [
       characterMouth1Sequence1,
       characterMouth1Sequence2,
@@ -124,6 +127,7 @@ export const CHARACTERS = [
     },
     body: characterBody2,
     mouth: characterMouth2,
+    finger: characterFinger2,
     mouthSprite: [
       characterMouth2Sequence1,
       characterMouth2Sequence2,

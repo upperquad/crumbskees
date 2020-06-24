@@ -110,7 +110,6 @@
 
 .score {
   @extend %t--h2;
-  @extend %t--style-sm-shadow;
 
   background: $color-white;
   border-radius: 50%;
@@ -120,6 +119,12 @@
   line-height: scaleVw(65 / .8);
   padding-top: scaleVw(8);
   text-align: center;
+}
+
+.scoreInner {
+  @extend %t--style-sm-shadow;
+
+  display: inline-block;
 }
 
 @keyframes power-ring {

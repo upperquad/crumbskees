@@ -116,7 +116,7 @@ const GameZoneWrapper = props => {
             />
           </div>
           <div className={styles.readyIndicators}>
-            <div className={styles.readyIndicatorsTitle}>Ready?</div>
+            <div className={styles.readyIndicatorsTitle} data-text="Ready?">Ready?</div>
             {PlayersManager.players.map((player, index) => (
               <div
                 key={player.name}

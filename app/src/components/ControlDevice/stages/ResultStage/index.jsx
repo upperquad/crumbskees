@@ -34,20 +34,22 @@ const ResultStage = props => {
   const shareURL = encodeURIComponent(hostURL)
 
   let result
+  let title
   if (winner === 'tied') {
     result = 'tied'
+    title = 'It’s a tie!'
   } else if (CHARACTERS[winner] === character) {
     result = 'won'
+    title = 'Winner!'
   } else {
     result = 'lost'
+    title = 'Looser!'
   }
 
   return (
     <section className={classNames(styles.result, styles[`result--${character.slug}`])}>
-      <h2 className={styles.title}>
-        {result === 'tied' && <span>It’s a tie!</span>}
-        {result === 'won' && <span>Winner!</span>}
-        {result === 'lost' && <span>Looser!</span>}
+      <h2 className={styles.title} data-text={title}>
+        {title}
       </h2>
       <Character
         extraClassName={styles.character}

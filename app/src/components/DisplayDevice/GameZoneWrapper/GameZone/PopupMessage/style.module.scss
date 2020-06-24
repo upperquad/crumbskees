@@ -47,5 +47,6 @@
     @extend %t--style-lg-shadow;
 
     animation: message-fade-in 1s $easing-expo-out forwards, message-fade-out 1s $easing-expo-out forwards 1.5s;
+    position: absolute;
   }
 }

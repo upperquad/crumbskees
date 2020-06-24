@@ -111,7 +111,11 @@ const PreConnectStage = props => {
         text="You’ll need to open the game on a desktop browser to play!"
         duration="10s"
       />
-      <div className={styles.tokenDisplay}><span>{token || '\xa0'}</span></div>
+      <div className={styles.tokenDisplay}>
+        <span className={styles.tokenDisplayInner} data-text={token}>
+          {token || '\xa0'}
+        </span>
+      </div>
       <div className={styles.label}>
         {errorReason && <span>{errorReason}</span>}
         {isConnecting && <span>Connecting...</span>}

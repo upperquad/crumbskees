@@ -4,6 +4,7 @@ export default class Player {
   constructor({ character, id, playerPeer, token }) {
     const {
       color,
+      finger,
       lottie,
       mouthSprite,
       name,
@@ -17,6 +18,7 @@ export default class Player {
 
     // REVIEW: check if this is aligned with the control device
     this.color = color
+    this.finger = finger
     this.lottie = lottie
     this.secondaryColor = secondaryColor
     this.name = name

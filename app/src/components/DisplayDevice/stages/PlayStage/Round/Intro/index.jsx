@@ -111,9 +111,10 @@ const Intro = props => {
       )}
       {!finished && (
         <div
-          className={classNames(styles.go, {
+          className={classNames(styles.go, styles.introText, {
             [styles.goStart]: step >= stepsDict.go,
           })}
+          data-text="Go"
         >
           Go
         </div>

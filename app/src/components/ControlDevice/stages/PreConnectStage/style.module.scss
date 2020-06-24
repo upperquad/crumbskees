@@ -25,9 +25,6 @@
 }
 
 .tokenDisplay {
-  @extend %t--h1;
-  @extend %t--style-lg-shadow;
-
   align-items: center;
   display: flex;
   flex-grow: 1;
@@ -36,6 +33,11 @@
   padding: 0 20px 10px;
   position: relative;
   text-align: center;
+
+  .tokenDisplayInner {
+    @extend %t--h1;
+    @extend %t--style-lg-shadow;
+  }
 }
 
 .label {

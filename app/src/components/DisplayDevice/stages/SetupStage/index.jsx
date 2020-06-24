@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
+import { useZoom } from '~utils/hooks'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
 
@@ -19,6 +20,9 @@ const SetupStage = props => {
   const { bothConnected, extraClassName, onFinish } = props
   const [qrCode, setQrCode] = useState([null, null])
   const [player1, player2] = PlayersManager.players
+  const [zoom, setZoom] = useState(1)
+
+  useZoom(0.633, setZoom)
 
   useEffect(() => {
     let didCancel = false
@@ -52,78 +56,81 @@ const SetupStage = props => {
   return (
     <div className={classNames(styles.setup, extraClassName)}>
       <AutoplayVideo extraClassName={styles.video} src={backgroundVideo} poster={backgroundImage} />
-      <h2 className={styles.title}>
-        Grab a friend and
-        <br />
-        your phones
-      </h2>
-      <div className={styles.players}>
-        {PlayersManager.players.map((player, index) => {
-          if (player.id || player.token) {
-            return (
-              <div key={`${player.id}-${player.token}`} className={styles.player}>
-                <div className={styles.qrWrapper}>
-                  <TransitionGroup>
-                    {!player.connected && player.token && qrCode[index] && (
-                      <Transition
-                        key={player.token}
-                        timeout={{ enter: 100, exit: 300 }}
-                      >
-                        {status => (
-                          <div
-                            className={classNames(styles.qr, {
-                              [styles.qrTransitioning]:
-                                status === 'exiting' || status === 'exited' || status === 'entering',
-                            })}
-                          >
-                            <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
-                            <div className={styles.qrUrl}>
-                              Think QR codes are stupid?
-                              <br />
-                              {`Open ${BASE_URL}`}
-                              <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
-                              {' on your phone'}
-                            </div>
-                          </div>
-                        )}
-                      </Transition>
-                    )}
-                    {player.connected && (
-                      <Transition
-                        key={player.id}
-                        timeout={{ enter: 100, exit: 300 }}
-                      >
-                        {status => (
-                          <div
-                            className={classNames(
-                              styles.playerConnected,
-                              styles[`playerConnected--${CHARACTERS[index].color}`],
-                              {
-                                [styles.playerConnectedTransitioning]:
+      <div
+        className={styles.setupInner}
+        style={{ transform: `scale(${zoom})` }}
+      >
+        <h2 className={styles.title} data-text="Grab a friend and your phones">
+          Grab a friend and your phones
+        </h2>
+        <div className={styles.players}>
+          {PlayersManager.players.map((player, index) => {
+            if (player.id || player.token) {
+              return (
+                <div key={`${player.id}-${player.token}`} className={styles.player}>
+                  <div className={styles.qrWrapper}>
+                    <TransitionGroup>
+                      {!player.connected && player.token && qrCode[index] && (
+                        <Transition
+                          key={player.token}
+                          timeout={{ enter: 100, exit: 300 }}
+                        >
+                          {status => (
+                            <div
+                              className={classNames(styles.qr, {
+                                [styles.qrTransitioning]:
                                   status === 'exiting' || status === 'exited' || status === 'entering',
-                              },
-                            )}
-                          >
-                            <Character
-                              extraClassName={styles.playerConnectedCharacter}
-                              character={CHARACTERS[index]}
-                              mood="excited"
-                            />
-                            <span className={styles.playerConnectedText}>Connected!</span>
-                          </div>
-                        )}
-                      </Transition>
-                    )}
-                  </TransitionGroup>
+                              })}
+                            >
+                              <div className={styles.qrQr} style={{ backgroundImage: `url(${qrCode[index]})` }} />
+                              <div className={styles.qrUrl}>
+                                Think QR codes are stupid?
+                                <br />
+                                {`Open ${BASE_URL}`}
+                                <span className={styles.qrUrlToken}>{PlayersManager.players[index].token}</span>
+                                {' on your phone'}
+                              </div>
+                            </div>
+                          )}
+                        </Transition>
+                      )}
+                      {player.connected && (
+                        <Transition
+                          key={player.id}
+                          timeout={{ enter: 100, exit: 300 }}
+                        >
+                          {status => (
+                            <div
+                              className={classNames(
+                                styles.playerConnected,
+                                styles[`playerConnected--${CHARACTERS[index].color}`],
+                                {
+                                  [styles.playerConnectedTransitioning]:
+                                    status === 'exiting' || status === 'exited' || status === 'entering',
+                                },
+                              )}
+                            >
+                              <Character
+                                extraClassName={styles.playerConnectedCharacter}
+                                character={CHARACTERS[index]}
+                                mood="excited"
+                              />
+                              <span className={styles.playerConnectedText}>Connected!</span>
+                            </div>
+                          )}
+                        </Transition>
+                      )}
+                    </TransitionGroup>
+                  </div>
+                  <div className={styles.playerName}>
+                    {CHARACTERS[index].name}
+                  </div>
                 </div>
-                <div className={styles.playerName}>
-                  {CHARACTERS[index].name}
-                </div>
-              </div>
-            )
-          }
-          return null
-        })}
+              )
+            }
+            return null
+          })}
+        </div>
       </div>
       {PlayersManager.players.map((player, index) => (
         <div
@@ -142,7 +149,7 @@ const SetupStage = props => {
       ))}
       {bothConnected && (
         <div className={styles.instruction}>
-          <JumpUpText text="Lets Play" />
+          <JumpUpText text="Lets&nbsp;Play" />
         </div>
       )}
     </div>
