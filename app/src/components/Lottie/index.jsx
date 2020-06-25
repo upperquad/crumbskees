@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import lottie from '~vendors/lottie_light'
+import lottie from 'lottie-web'
 import styles from './style.module.scss'
 
 const Lottie = props => {

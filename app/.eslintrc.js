@@ -80,7 +80,6 @@ module.exports = {
           ["~utils", path.resolve(__dirname, 'src/utils/')],
           ["~constants", path.resolve(__dirname, 'src/constants.js')],
           ["~styles", path.resolve(__dirname, 'src/styles/')],
-          ["~vendors", path.resolve(__dirname, 'src/vendors/')],
         ],
         "extensions": [".js", ".jsx"]
       }

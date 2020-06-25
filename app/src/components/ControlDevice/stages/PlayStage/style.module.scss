@@ -41,6 +41,10 @@
 
     color: $color-white;
   }
+
+  @media only screen and (max-width: 374px) {
+    padding: 0 20px;
+  }
 }
 
 .touchBubble {
@@ -90,6 +94,10 @@
   padding: 0 30px 30px;
   pointer-events: none;
   position: relative;
+
+  @media only screen and (max-width: 374px) {
+    padding: 0 20px 20px;
+  }
 }
 
 .character {
@@ -125,13 +133,17 @@
   flex-flow: column nowrap;
   justify-content: center;
   left: 0;
-  padding: 30px;
+  padding: 135px 30px 225px;
   pointer-events: none;
   position: absolute;
   right: 0;
   text-align: center;
   top: 0;
   z-index: 2;
+
+  @media only screen and (max-width: 374px) {
+    padding: 135px 20px 150px;
+  }
 }
 
 .instructionMouth {
@@ -150,12 +162,20 @@
 
 .instructionSubtitle {
   @extend %t--body-small;
+
+  color: $color-white;
 }
 
 .instructionFinger {
   bottom: 0;
-  height: 200px;
-  left: 0;
+  height: 225px;
+  left: 50%;
   position: absolute;
-  width: 100%;
+  transform: translateX(-50%);
+  width: 300px;
+
+  @media only screen and (max-width: 374px) {
+    height: 150px;
+    width: 200px;
+  }
 }

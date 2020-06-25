@@ -128,7 +128,7 @@ const PlayStage = props => {
             Use your finger to move your mouth.
           </h2>
           <p className={styles.instructionSubtitle}>When you’re ready to chomp on a snack, tap the screen!</p>
-          <Lottie extraClassName={styles.instructionFinger} data={character.finger} />
+          <Lottie extraClassName={styles.instructionFinger} path={character.finger} />
         </div>
       )}
     </section>
