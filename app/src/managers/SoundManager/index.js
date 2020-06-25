@@ -3,8 +3,16 @@ import score from '~assets/sounds/score.mp3'
 import freeze from '~assets/sounds/freeze.mp3'
 import grow from '~assets/sounds/grow.mp3'
 import countdown from '~assets/sounds/countdown.mp3'
+import background from '~assets/sounds/background.mp3'
+import winner from '~assets/sounds/winner.mp3'
 
 const SoundManager = {
+  background: new Howl({
+    src: [background],
+  }),
+  winner: new Howl({
+    src: [winner],
+  }),
   score: new Howl({
     src: [score],
   }),
@@ -17,7 +25,6 @@ const SoundManager = {
   countdown: new Howl({
     src: [countdown],
   }),
-  // missing winner and woosh sounds
 }
 
 export default SoundManager

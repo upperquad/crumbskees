@@ -15,6 +15,7 @@ import StageWrapper from './StageWrapper'
 
 import TokenSocketManager from '~managers/TokenSocketManager'
 import PlayersManager from '~managers/PlayersManager'
+import SoundManager from '~managers/SoundManager'
 
 const TRANSITION_TIMEOUTS = 1600
 
@@ -111,7 +112,12 @@ const DisplayDevice = () => {
           <Transition key="stage-landing" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
-                <LandingStage onFinish={() => setStage('intro-illo')} />
+                <LandingStage
+                  onFinish={() => {
+                    SoundManager.background.play()
+                    setStage('intro-illo')
+                  }}
+                />
               </StageWrapper>
             )}
           </Transition>

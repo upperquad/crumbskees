@@ -64,8 +64,6 @@ const GameZone = props => {
       if (type === 'game') {
         PlayersManager.addScore(targetsCaught.length, PlayersManager.players[index].id)
       }
-
-      SoundManager.score.play()
     }
 
     const removeScore = (badItemsCaught, index) => {
@@ -74,8 +72,6 @@ const GameZone = props => {
       if (type === 'game') {
         PlayersManager.removeScore(badItemsCaught.length, PlayersManager.players[index].id)
       }
-
-      SoundManager.score.play() // need a different sound for losing point
     }
 
     const handleClick = playerIndex => {
@@ -134,10 +130,12 @@ const GameZone = props => {
 
       if (badItemsCaught.length > 0) {
         removeScore(badItemsCaught, playerIndex)
-      }
-
-      if (itemsCaught.length > 0) {
+        SoundManager.score.play()
+      } else if (itemsCaught.length > 0) {
         removeItems(itemsCaught)
+        SoundManager.score.play() // TODO: need a different sound
+      } else {
+        SoundManager.score.play() // TODO: need a different sound
       }
 
       onUpdate()
