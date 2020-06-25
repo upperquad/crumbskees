@@ -14,16 +14,6 @@
   top: 0;
 }
 
-.marquee {
-  @extend %t--body-small;
-
-  background: $color-purple;
-  color: $color-red;
-  letter-spacing: .1em;
-  padding: 8px 0;
-  text-transform: uppercase;
-}
-
 .tokenDisplay {
   align-items: center;
   display: flex;
@@ -96,4 +86,86 @@
   flex-grow: 0;
   flex-shrink: 1;
   height: 33px;
+}
+
+.instructionOverlay {
+  background: url('../../../../assets/images/mobile/landing-overlay.svg') center / cover no-repeat;
+  bottom: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.marquee {
+  @extend %t--body-small;
+
+  background: $color-purple;
+  color: $color-red;
+  flex-grow: 0;
+  flex-shrink: 0;
+  letter-spacing: .1em;
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.overlayContent {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+  flex-shrink: 0;
+  height: 440px;
+  justify-content: center;
+  padding: 20px 10px;
+}
+
+.overlayTitle {
+  margin: 0 auto;
+  width: 283px;
+}
+
+.overlayTitleInner {
+  @extend %t--h3;
+  @extend %t--style-sm-shadow;
+
+  display: block;
+}
+
+.overlaySubtitle {
+  @extend %t--body-small;
+
+  color: $color-white;
+  margin: 30px 20px 40px;
+}
+
+.overlayCharacters {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 133px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  @media only screen and (max-width: 374px) {
+    display: none;
+  }
+}
+
+.character1 {
+  bottom: -35px;
+  height: 175px;
+  left: -45px;
+  position: absolute;
+  transform: rotate(10deg);
+  width: 175px;
+}
+
+.character2 {
+  bottom: -60px;
+  height: 175px;
+  position: absolute;
+  right: -54px;
+  width: 175px;
 }
