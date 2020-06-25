@@ -5,6 +5,20 @@
   overflow: hidden;
 }
 
+@keyframes button-hover {
+  from {
+    transform: none;
+  }
+
+  50% {
+    transform: translate(#{scaleVw(5)}, #{scaleVw(5)});
+  }
+
+  to {
+    transform: translate(#{scaleVw(5)}, #{scaleVw(5)});
+  }
+}
+
 .button {
   cursor: pointer;
   display: inline-block;
@@ -15,6 +29,10 @@
     transform .4s $easing-quad-out;
 
   @include respond-to(above-smartphone) {
+    &:hover {
+      animation: button-hover .6s 1 both ease-in-out;
+    }
+
     &:active {
       transform: translate(#{scaleVw(22)}, #{scaleVw(22)});
     }

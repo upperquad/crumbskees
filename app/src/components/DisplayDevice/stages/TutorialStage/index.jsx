@@ -12,7 +12,7 @@ const TutorialStage = props => {
   const { extraClassName, onFinish } = props
   const [zoom, setZoom] = useState(1)
 
-  useZoom(0.633, setZoom)
+  useZoom(0.553, setZoom)
 
   useEffect(() => {
     Player1Peer.send('tutorial_start')

@@ -2,7 +2,9 @@
 
 .tutorial {
   background-color: $color-green;
-
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 
 .tutorialInner {

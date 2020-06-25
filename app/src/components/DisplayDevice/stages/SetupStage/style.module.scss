@@ -2,12 +2,12 @@
 
 .setup {
   color: $color-black;
-}
-
-.setupInner {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+}
+
+.setupInner {
 }
 
 .video {
@@ -31,7 +31,7 @@
 .players {
   display: flex;
   justify-content: center;
-  margin-bottom: scaleVw(130);
+  margin-bottom: scaleVw(80);
   position: relative;
 }
 
