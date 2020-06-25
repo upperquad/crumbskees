@@ -82,6 +82,7 @@
   }
 
   .button {
+    flex-shrink: 0;
     margin-left: scaleVw(30);
   }
 }

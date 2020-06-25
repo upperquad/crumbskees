@@ -5,7 +5,7 @@
   font-weight: 900;
   line-height: scaleVw(120);
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     font-size: 100px;
     line-height: 120px;
   }
@@ -18,7 +18,7 @@
   font-weight: 900;
   line-height: scaleVw(65);
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     font-size: 54px;
     line-height: 65px;
   }
@@ -31,7 +31,7 @@
   font-weight: 900;
   line-height: scaleVw(34);
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     font-size: 28px;
     line-height: 34px;
   }
@@ -43,7 +43,7 @@
   font-weight: 700;
   line-height: scaleVw(24);
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     font-size: 20px;
     line-height: 24px;
   }
@@ -55,7 +55,7 @@
   font-weight: 700;
   line-height: scaleVw(19);
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     font-size: 16px;
     line-height: 19px;
   }
@@ -99,7 +99,7 @@
   text-shadow: scaleVw(10) scaleVw(10) 0 $color-black;
   -webkit-text-stroke: scaleVw(8) $color-black;
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     text-shadow: 10px 10px 0 $color-black;
     -webkit-text-stroke: 8px $color-black;
   }
@@ -111,7 +111,7 @@
   text-shadow: scaleVw(6) scaleVw(6) 0 $color-black;
   -webkit-text-stroke: scaleVw(8) $color-black;
 
-  @include respond-to(smartphone) {
+  :global(.controlDevice) & {
     text-shadow: 6px 6px 0 $color-black;
     -webkit-text-stroke: 8px $color-black;
   }

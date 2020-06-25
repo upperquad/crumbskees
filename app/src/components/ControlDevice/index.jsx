@@ -1,11 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CHARACTERS } from '~constants'
-import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
+import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const ControlDevice = () => {
   const [hasPlayed, setHasPlayed] = useState(false)
@@ -66,7 +66,7 @@ const ControlDevice = () => {
   }, [])
 
   return (
-    <Fragment>
+    <div className="controlDevice">
       {stage === 'pre_connect' && (
         <PreConnectStage hasPlayed={hasPlayed} />
       )}
@@ -96,7 +96,7 @@ const ControlDevice = () => {
           }}
         />
       )}
-    </Fragment>
+    </div>
   )
 }
 
