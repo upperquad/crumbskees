@@ -23,6 +23,15 @@
   @extend %t--h1;
   @extend %t--style-lg-shadow;
 
+  margin-bottom: scaleVw(25);
+  position: relative;
+  text-align: center;
+}
+
+.subtitle {
+  @extend %t--body;
+
+  color: $color-white;
   margin-bottom: scaleVw(45);
   position: relative;
   text-align: center;

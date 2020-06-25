@@ -20,13 +20,24 @@
   width: grid(8 * 32 / 14);
 }
 
-.gameContent {
+.gameContentGame,
+.gameContentBackground {
   box-sizing: border-box;
+  height: grid(14);
+  width: 100%;
+}
+
+.gameContentBackground {
+  background: $color-white;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.gameContentGame {
   flex-grow: 0;
   flex-shrink: 0;
-  height: grid(14);
   position: relative;
-  width: 100%;
   z-index: 10;
 }
 

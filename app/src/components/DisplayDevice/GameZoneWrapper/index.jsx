@@ -13,7 +13,7 @@ import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 import Character from '~components/Character'
 
-const TIME = DEBUG ? 100 : 40
+const TIME = DEBUG ? 10 : 40
 
 const GameZoneWrapper = props => {
   const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
@@ -141,10 +141,11 @@ const GameZoneWrapper = props => {
       )}
       {type === 'game' && (
         <React.Fragment>
+          <div className={styles.gameContentBackground} />
           <TransitionGroup>
             {gameState !== 'before-game' && (
               <Transition key="play-stage-in-game" timeout={{ enter: 0, exit: 1300 }}>
-                <div className={styles.gameContent}>
+                <div className={styles.gameContentGame}>
                   <GameZone
                     addMessage={addMessage}
                     addItemsLevel={addItemsLevel}

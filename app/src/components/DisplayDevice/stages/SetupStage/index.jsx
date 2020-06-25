@@ -22,7 +22,7 @@ const SetupStage = props => {
   const [player1, player2] = PlayersManager.players
   const [zoom, setZoom] = useState(1)
 
-  useZoom(0.633, setZoom)
+  useZoom(0.736, setZoom)
 
   useEffect(() => {
     let didCancel = false
@@ -63,6 +63,9 @@ const SetupStage = props => {
         <h2 className={styles.title} data-text="Grab a friend and your phones">
           Grab a friend and your phones
         </h2>
+        <p className={styles.subtitle}>
+          You can scan the QR code with your camera app
+        </p>
         <div className={styles.players}>
           {PlayersManager.players.map((player, index) => {
             if (player.id || player.token) {

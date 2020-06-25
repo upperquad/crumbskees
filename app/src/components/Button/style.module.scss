@@ -15,7 +15,7 @@
   }
 
   to {
-    transform: translate(#{scaleVw(5)}, #{scaleVw(5)});
+    transform: none;
   }
 }
 
@@ -30,7 +30,7 @@
 
   @include respond-to(above-smartphone) {
     &:hover {
-      animation: button-hover .6s 1 both ease-in-out;
+      animation: button-hover .3s 1 ease-in-out;
     }
 
     &:active {

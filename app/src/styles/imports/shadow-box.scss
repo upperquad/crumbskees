@@ -17,7 +17,7 @@
   }
 
   &::after {
-    bottom: scaleVw(-4);
+    bottom: calc(#{scaleVw(-4)} - 1px);
     top: scaleVw(-4);
   }
 
