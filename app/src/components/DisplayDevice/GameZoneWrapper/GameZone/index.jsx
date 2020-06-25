@@ -430,7 +430,7 @@ const GameZone = props => {
           player={player}
           power={powerArray[index]}
           position={positionArray[index]}
-          color={type === 'tutorial' ? COLORS.white : player.color}
+          color={type === 'tutorial' ? 'white' : player.color}
           roundScore={player.score()}
           tapInstruction={tapInstructionArray[index]}
         />
