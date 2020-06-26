@@ -582,60 +582,6 @@ a {
   .SetupStage-cornerCharacter--2frHB .SetupStage-cornerCharacterHead--2RrB7 {
     position: absolute; }
 
-.SetupStage-instruction--2Kes6 {
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%); }
-
-/* Colors */
-/* Breakpoints */
-/* Easings*/
-/* Timings */
-.JumpUpText-jumpUpText--2IcxF {
-  font-family: 'Ginto Nord', sans-serif;
-  font-feature-settings: 'tnum' on, 'lnum' on;
-  font-size: 6.94444vw;
-  font-weight: 900;
-  line-height: 8.33333vw; }
-  .controlDevice .JumpUpText-jumpUpText--2IcxF {
-    font-size: 100px;
-    line-height: 120px; }
-
-.JumpUpText-letter--vijM0 {
-  color: #fff;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  position: relative;
-  text-shadow: 0.69444vw 0.69444vw 0 #000;
-  -webkit-text-stroke: 0.55556vw #000; }
-  .JumpUpText-letter--vijM0:after {
-    color: #fff;
-    content: attr(data-text);
-    left: 0;
-    position: absolute;
-    right: 0;
-    text-shadow: none !important;
-    -webkit-text-stroke-width: 0 !important;
-    top: 0; }
-  .controlDevice .JumpUpText-letter--vijM0 {
-    text-shadow: 10px 10px 0 #000;
-    -webkit-text-stroke: 8px #000; }
-
-.JumpUpText-jumpUpText--2IcxF {
-  color: #fff;
-  line-height: 2em;
-  padding: 0 1em;
-  pointer-events: none;
-  position: relative;
-  text-align: center;
-  width: 100%; }
-
-.JumpUpText-letter--vijM0 {
-  display: inline-block; }
-
 /* Colors */
 /* Breakpoints */
 /* Easings*/
@@ -1532,6 +1478,52 @@ a {
   text-align: center; }
 
 .DropText-dropTextInner--1mJR7 {
+  display: inline-block; }
+
+/* Colors */
+/* Breakpoints */
+/* Easings*/
+/* Timings */
+.JumpUpText-jumpUpText--2IcxF {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 6.94444vw;
+  font-weight: 900;
+  line-height: 8.33333vw; }
+  .controlDevice .JumpUpText-jumpUpText--2IcxF {
+    font-size: 100px;
+    line-height: 120px; }
+
+.JumpUpText-letter--vijM0 {
+  color: #fff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  text-shadow: 0.69444vw 0.69444vw 0 #000;
+  -webkit-text-stroke: 0.55556vw #000; }
+  .JumpUpText-letter--vijM0:after {
+    color: #fff;
+    content: attr(data-text);
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-shadow: none !important;
+    -webkit-text-stroke-width: 0 !important;
+    top: 0; }
+  .controlDevice .JumpUpText-letter--vijM0 {
+    text-shadow: 10px 10px 0 #000;
+    -webkit-text-stroke: 8px #000; }
+
+.JumpUpText-jumpUpText--2IcxF {
+  color: #fff;
+  line-height: 2em;
+  padding: 0 1em;
+  pointer-events: none;
+  position: relative;
+  text-align: center;
+  width: 100%; }
+
+.JumpUpText-letter--vijM0 {
   display: inline-block; }
 
 /* Colors */

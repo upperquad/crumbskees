@@ -64,6 +64,8 @@ class PeerManager extends Observable {
     if (this._peer) {
       this._peer.close()
       this._peer = null
+      this._id = null
+      this.connected = false
     }
   }
 

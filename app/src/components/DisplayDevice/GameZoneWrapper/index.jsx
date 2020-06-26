@@ -96,6 +96,29 @@ const GameZoneWrapper = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState])
 
+  useEffect(() => {
+    if (type === 'tutorial') {
+      const handleBothReady = () => {
+        forceUpdate()
+
+        if (PlayersManager.bothReady()) {
+          setTimeout(() => {
+            onFinish()
+          }, 1000)
+        }
+      }
+
+      handleBothReady()
+      PlayersManager.addSubscriber('player_ready_change', handleBothReady)
+
+      return () => {
+        PlayersManager.removeSubscriber('player_ready_change', handleBothReady)
+      }
+    }
+
+    return undefined
+  }, [forceUpdate, onFinish, type])
+
   return (
     <React.Fragment>
       {type === 'tutorial' && (
@@ -106,7 +129,6 @@ const GameZoneWrapper = props => {
               addItemsLevel={addItemsLevel}
               gameState={gameState}
               message={message}
-              onFinish={onFinish}
               onUpdate={onUpdate}
               round={TUTORIAL_ROUND}
               itemsLevel={itemsLevel}

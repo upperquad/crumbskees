@@ -80,6 +80,19 @@ class PlayersManager extends Observable {
       this._callObservers('player_change')
     })
 
+    Player1Peer.addSubscriber('MESSAGE', detail => {
+      const { type } = detail
+
+      switch (type) {
+        case 'player_ready':
+          this.players[0].setReady(true)
+          this._callObservers('player_ready_change')
+          break
+        default:
+          break
+      }
+    })
+
     if (this.mode !== 'SINGLE_PLAYER') {
       Player2Peer.addSubscriber('CONNECTED', () => {
         if (this.players[1].setConnected) {
@@ -87,6 +100,19 @@ class PlayersManager extends Observable {
           Player2Peer.send('accepted', { playerIndex: 1, mode: this.mode })
         }
         this._callObservers('player_change')
+      })
+
+      Player2Peer.addSubscriber('MESSAGE', detail => {
+        const { type } = detail
+
+        switch (type) {
+          case 'player_ready':
+            this.players[1].setReady(true)
+            this._callObservers('player_ready_change')
+            break
+          default:
+            break
+        }
       })
     }
 

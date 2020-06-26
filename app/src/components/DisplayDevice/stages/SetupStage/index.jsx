@@ -6,7 +6,6 @@ import { useZoom } from '~utils/hooks'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
 
-import JumpUpText from '~components/JumpUpText'
 import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Character from '~components/Character'
@@ -47,7 +46,7 @@ const SetupStage = props => {
 
   useEffect(() => {
     if (bothConnected) {
-      const nextStageTimeout = setTimeout(onFinish, 2000)
+      const nextStageTimeout = setTimeout(onFinish, 1000)
       return () => clearTimeout(nextStageTimeout)
     }
     return undefined
@@ -150,11 +149,6 @@ const SetupStage = props => {
           />
         </div>
       ))}
-      {bothConnected && (
-        <div className={styles.instruction}>
-          <JumpUpText text="Lets&nbsp;Play" />
-        </div>
-      )}
     </div>
   )
 }

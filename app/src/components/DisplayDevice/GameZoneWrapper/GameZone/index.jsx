@@ -32,7 +32,6 @@ const GameZone = props => {
     addMessage,
     gameState,
     message,
-    onFinish,
     onUpdate,
     round,
     setGameState,
@@ -162,20 +161,6 @@ const GameZone = props => {
             handleClick(playerIndex)
           } else if (type === 'game' && gameState !== 'after-game') {
             handleClick(playerIndex)
-          }
-          break
-        }
-        case 'player_ready': {
-          if (type === 'tutorial') {
-            PlayersManager.players[playerIndex].setReady(true)
-            const arePlayersReady = PlayersManager.bothReady()
-            onUpdate()
-
-            if (arePlayersReady) {
-              setTimeout(() => {
-                onFinish()
-              }, 1000)
-            }
           }
           break
         }

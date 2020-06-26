@@ -112708,7 +112708,6 @@ var GameZone = function GameZone(props) {
       addMessage = props.addMessage,
       gameState = props.gameState,
       message = props.message,
-      onFinish = props.onFinish,
       onUpdate = props.onUpdate,
       round = props.round,
       setGameState = props.setGameState,
@@ -112872,23 +112871,6 @@ var GameZone = function GameZone(props) {
               handleClick(playerIndex);
             } else if (type === 'game' && gameState !== 'after-game') {
               handleClick(playerIndex);
-            }
-
-            break;
-          }
-
-        case 'player_ready':
-          {
-            if (type === 'tutorial') {
-              _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players[playerIndex].setReady(true);
-              var arePlayersReady = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].bothReady();
-              onUpdate();
-
-              if (arePlayersReady) {
-                setTimeout(function () {
-                  onFinish();
-                }, 1000);
-              }
             }
 
             break;
@@ -113405,6 +113387,27 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
 
     return undefined; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (type === 'tutorial') {
+      var handleBothReady = function handleBothReady() {
+        forceUpdate();
+
+        if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].bothReady()) {
+          setTimeout(function () {
+            onFinish();
+          }, 1000);
+        }
+      };
+
+      handleBothReady();
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].addSubscriber('player_ready_change', handleBothReady);
+      return function () {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].removeSubscriber('player_ready_change', handleBothReady);
+      };
+    }
+
+    return undefined;
+  }, [forceUpdate, onFinish, type]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, type === 'tutorial' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_8___default.a.gameContentTutorial
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GameZone__WEBPACK_IMPORTED_MODULE_9__["default"], {
@@ -113412,7 +113415,6 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
     addItemsLevel: addItemsLevel,
     gameState: gameState,
     message: message,
-    onFinish: onFinish,
     onUpdate: onUpdate,
     round: _constants__WEBPACK_IMPORTED_MODULE_7__["TUTORIAL_ROUND"],
     itemsLevel: itemsLevel,
@@ -114829,14 +114831,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/SetupStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _components_JumpUpText__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~components/JumpUpText */ "./src/components/JumpUpText/index.jsx");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
-/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
-/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
-/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -114846,7 +114847,6 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -114872,7 +114872,7 @@ var SetupStage = function SetupStage(props) {
       qrCode = _useState2[0],
       setQrCode = _useState2[1];
 
-  var _PlayersManager$playe = _slicedToArray(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players, 2),
+  var _PlayersManager$playe = _slicedToArray(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players, 2),
       player1 = _PlayersManager$playe[0],
       player2 = _PlayersManager$playe[1];
 
@@ -114884,7 +114884,7 @@ var SetupStage = function SetupStage(props) {
   Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_4__["useZoom"])(0.736, setZoom);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var didCancel = false;
-    Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player) {
+    Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function (player) {
       var token = player.token;
 
       if (token) {
@@ -114907,7 +114907,7 @@ var SetupStage = function SetupStage(props) {
   }, [player1, player2]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (bothConnected) {
-      var nextStageTimeout = setTimeout(onFinish, 2000);
+      var nextStageTimeout = setTimeout(onFinish, 1000);
       return function () {
         return clearTimeout(nextStageTimeout);
       };
@@ -114917,10 +114917,10 @@ var SetupStage = function SetupStage(props) {
   }, [bothConnected, onFinish]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setup, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_8__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.video,
-    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
-    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12___default.a
+    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10___default.a,
+    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11___default.a
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setupInner,
     style: {
@@ -114933,7 +114933,7 @@ var SetupStage = function SetupStage(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.subtitle
   }, "You can scan the QR code with your camera app"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.players
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player, index) {
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function (player, index) {
     if (player.id || player.token) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         key: "".concat(player.id, "-").concat(player.token),
@@ -114958,7 +114958,7 @@ var SetupStage = function SetupStage(props) {
           className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrUrl
         }, "Think QR codes are stupid?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Open ".concat(BASE_URL), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrUrlToken
-        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players[index].token), ' on your phone'));
+        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players[index].token), ' on your phone'));
       }), player.connected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
         key: player.id,
         timeout: {
@@ -114968,7 +114968,7 @@ var SetupStage = function SetupStage(props) {
       }, function (status) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnected, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a["playerConnected--".concat(_constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].color)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedTransitioning, status === 'exiting' || status === 'exited' || status === 'entering'))
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_9__["default"], {
           extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedCharacter,
           character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index],
           mood: "excited"
@@ -114981,7 +114981,7 @@ var SetupStage = function SetupStage(props) {
     }
 
     return null;
-  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player, index) {
+  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacter, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a["cornerCharacter--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterOut, player.connected)),
       key: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].body
@@ -114989,16 +114989,12 @@ var SetupStage = function SetupStage(props) {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterBody,
       src: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].body,
       alt: ""
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_9__["default"], {
       extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterHead,
       character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index],
       mood: "excited"
     }));
-  }), bothConnected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.instruction
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_JumpUpText__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    text: "Lets\xA0Play"
-  })));
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SetupStage);
@@ -115013,7 +115009,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"SetupStage-title--5BCVB","playerName":"SetupStage-playerName--3DwHW","subtitle":"SetupStage-subtitle--1AeLK","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","instruction":"SetupStage-instruction--2Kes6"};
+module.exports = {"title":"SetupStage-title--5BCVB","playerName":"SetupStage-playerName--3DwHW","subtitle":"SetupStage-subtitle--1AeLK","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-"};
 
 /***/ }),
 
@@ -116084,6 +116080,8 @@ function (_Observable) {
         _this._peer.close();
 
         _this._peer = null;
+        _this._id = null;
+        _this.connected = false;
       }
     });
 
@@ -116371,6 +116369,21 @@ function (_Observable) {
 
         _this._callObservers('player_change');
       });
+      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('MESSAGE', function (detail) {
+        var type = detail.type;
+
+        switch (type) {
+          case 'player_ready':
+            _this.players[0].setReady(true);
+
+            _this._callObservers('player_ready_change');
+
+            break;
+
+          default:
+            break;
+        }
+      });
 
       if (_this.mode !== 'SINGLE_PLAYER') {
         _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
@@ -116384,6 +116397,21 @@ function (_Observable) {
           }
 
           _this._callObservers('player_change');
+        });
+        _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('MESSAGE', function (detail) {
+          var type = detail.type;
+
+          switch (type) {
+            case 'player_ready':
+              _this.players[1].setReady(true);
+
+              _this._callObservers('player_ready_change');
+
+              break;
+
+            default:
+              break;
+          }
         });
       }
 
