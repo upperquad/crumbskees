@@ -111269,6 +111269,7 @@ var ControlDevice = function ControlDevice() {
           {
             setWinner(data.winner);
             setStage('result');
+            _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].destroy();
             break;
           }
 
@@ -111301,7 +111302,6 @@ var ControlDevice = function ControlDevice() {
       setGameStarted(false);
       setStage('pre_connect');
       setCharacter(null);
-      _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].disconnect();
     }
   }));
 };
@@ -113623,7 +113623,7 @@ var DisplayDevice = function DisplayDevice() {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var connectHandler = function connectHandler() {
-      // PlayersManager.reset()
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].reset();
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('TWO_PLAYERS');
       setStage('landing');
     };
@@ -114560,6 +114560,8 @@ var PlayStage = function PlayStage(props) {
       _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].send('result', {
         winner: result
       });
+      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_5__["default"].destroy();
+      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_6__["default"].destroy();
       onFinish();
     } else {
       setRoundIndex(roundIndex + 1);
@@ -116011,15 +116013,9 @@ function (_Observable) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PeerManager).call(this));
 
-    _defineProperty(_assertThisInitialized(_this), "init", function (deviceType) {
-      if (!_this._deviceType) {
-        _this._deviceType = deviceType;
-      }
-    });
-
     _defineProperty(_assertThisInitialized(_this), "connect", function (id) {
       if (_this._peer && _this._id !== id) {
-        _this._peer.close();
+        _this.destroy();
       }
 
       _this._peer = new socketpeer__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -116075,8 +116071,10 @@ function (_Observable) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "disconnect", function () {
+    _defineProperty(_assertThisInitialized(_this), "destroy", function () {
       if (_this._peer) {
+        _this._peer.destroy();
+
         _this._peer.close();
 
         _this._peer = null;
@@ -116419,17 +116417,19 @@ function (_Observable) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "reset", function () {
-      _this.players.forEach(function (player, index) {
-        if (typeof player.destroy === 'function') {
-          player.destroy();
-        }
+      if (_this.players) {
+        _this.players.forEach(function (player, index) {
+          if (typeof player.destroy === 'function') {
+            player.destroy();
+          }
 
-        _this.players[index] = {
-          token: getNewToken(index)
-        };
-      });
+          _this.players[index] = {
+            token: getNewToken(index)
+          };
+        });
 
-      _this._gameStarted = false;
+        _this._gameStarted = false;
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "player", function (id) {

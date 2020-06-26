@@ -12,15 +12,9 @@ class PeerManager extends Observable {
     this.connected = false
   }
 
-  init = deviceType => {
-    if (!this._deviceType) {
-      this._deviceType = deviceType
-    }
-  }
-
   connect = id => {
     if (this._peer && this._id !== id) {
-      this._peer.close()
+      this.destroy()
     }
 
     this._peer = new SocketPeer({
@@ -60,8 +54,9 @@ class PeerManager extends Observable {
     this._callObservers('MESSAGE', { type, data: messageAttributes })
   }
 
-  disconnect = () => {
+  destroy = () => {
     if (this._peer) {
+      this._peer.destroy()
       this._peer.close()
       this._peer = null
       this._id = null

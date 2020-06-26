@@ -18,6 +18,8 @@ const PlayStage = props => {
       const result = getResult()
       Player1Peer.send('result', { winner: result })
       Player2Peer.send('result', { winner: result })
+      Player1Peer.destroy()
+      Player2Peer.destroy()
       onFinish()
     } else {
       setRoundIndex(roundIndex + 1)

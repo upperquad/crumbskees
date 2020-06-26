@@ -30,7 +30,7 @@ const DisplayDevice = () => {
 
   useEffect(() => {
     const connectHandler = () => {
-      // PlayersManager.reset()
+      PlayersManager.reset()
       PlayersManager.init('TWO_PLAYERS')
       setStage('landing')
     }

@@ -52,6 +52,7 @@ const ControlDevice = () => {
         case 'result': {
           setWinner(data.winner)
           setStage('result')
+          ServerPeer.destroy()
           break
         }
         default:
@@ -92,7 +93,6 @@ const ControlDevice = () => {
             setGameStarted(false)
             setStage('pre_connect')
             setCharacter(null)
-            ServerPeer.disconnect()
           }}
         />
       )}

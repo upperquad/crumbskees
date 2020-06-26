@@ -120,13 +120,15 @@ class PlayersManager extends Observable {
   }
 
   reset = () => {
-    this.players.forEach((player, index) => {
-      if (typeof player.destroy === 'function') {
-        player.destroy()
-      }
-      this.players[index] = { token: getNewToken(index) }
-    })
-    this._gameStarted = false
+    if (this.players) {
+      this.players.forEach((player, index) => {
+        if (typeof player.destroy === 'function') {
+          player.destroy()
+        }
+        this.players[index] = { token: getNewToken(index) }
+      })
+      this._gameStarted = false
+    }
   }
 
   player = id => this.players.find(player => player.id === id)
