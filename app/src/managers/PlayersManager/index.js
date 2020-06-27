@@ -12,6 +12,60 @@ class PlayersManager extends Observable {
 
     if (!PlayersManager.instance) {
       PlayersManager.instance = this
+
+      this._players = [{}, {}]
+
+      this.players = new Proxy(this._players, {
+        get: (obj, prop) => obj[prop],
+        set: (obj, prop, value) => {
+          obj[prop] = value
+          this._callObservers('player_change')
+          return obj[prop]
+        },
+      })
+
+      TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
+      Player1Peer.addSubscriber('CONNECTED', () => {
+        if (this.players[0].setConnected) {
+          this.players[0].setConnected(true)
+          Player1Peer.send('accepted', { playerIndex: 0 })
+        }
+        this._callObservers('player_change')
+      })
+
+      Player1Peer.addSubscriber('MESSAGE', detail => {
+        const { type } = detail
+
+        switch (type) {
+          case 'player_ready':
+            this.players[0].setReady(true)
+            this._callObservers('player_ready_change')
+            break
+          default:
+            break
+        }
+      })
+
+      Player2Peer.addSubscriber('CONNECTED', () => {
+        if (this.players[1].setConnected) {
+          this.players[1].setConnected(true)
+          Player2Peer.send('accepted', { playerIndex: 1 })
+        }
+        this._callObservers('player_change')
+      })
+
+      Player2Peer.addSubscriber('MESSAGE', detail => {
+        const { type } = detail
+
+        switch (type) {
+          case 'player_ready':
+            this.players[1].setReady(true)
+            this._callObservers('player_ready_change')
+            break
+          default:
+            break
+        }
+      })
     }
 
     return PlayersManager.instance
@@ -51,72 +105,6 @@ class PlayersManager extends Observable {
       default:
         break
     }
-  }
-
-  init = mode => {
-    this.mode = mode
-
-    if (this.mode === 'SINGLE_PLAYER') {
-      this._players = [{}]
-    } else {
-      this._players = [{}, {}]
-    }
-
-    this.players = new Proxy(this._players, {
-      get: (obj, prop) => obj[prop],
-      set: (obj, prop, value) => {
-        obj[prop] = value
-        this._callObservers('player_change')
-        return obj[prop]
-      },
-    })
-
-    TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
-    Player1Peer.addSubscriber('CONNECTED', () => {
-      if (this.players[0].setConnected) {
-        this.players[0].setConnected(true)
-        Player1Peer.send('accepted', { playerIndex: 0, mode: this.mode })
-      }
-      this._callObservers('player_change')
-    })
-
-    Player1Peer.addSubscriber('MESSAGE', detail => {
-      const { type } = detail
-
-      switch (type) {
-        case 'player_ready':
-          this.players[0].setReady(true)
-          this._callObservers('player_ready_change')
-          break
-        default:
-          break
-      }
-    })
-
-    if (this.mode !== 'SINGLE_PLAYER') {
-      Player2Peer.addSubscriber('CONNECTED', () => {
-        if (this.players[1].setConnected) {
-          this.players[1].setConnected(true)
-          Player2Peer.send('accepted', { playerIndex: 1, mode: this.mode })
-        }
-        this._callObservers('player_change')
-      })
-
-      Player2Peer.addSubscriber('MESSAGE', detail => {
-        const { type } = detail
-
-        switch (type) {
-          case 'player_ready':
-            this.players[1].setReady(true)
-            this._callObservers('player_ready_change')
-            break
-          default:
-            break
-        }
-      })
-    }
-
-    this.reset()
   }
 
   reset = () => {

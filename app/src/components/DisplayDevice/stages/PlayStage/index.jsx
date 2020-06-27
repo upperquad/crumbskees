@@ -56,10 +56,7 @@ function getResult() {
   const { players } = PlayersManager
   let result
 
-  if (players.length === 1) {
-    // single player: add a specific ending here
-    result = '0'
-  } else if (players[0].score() > players[1].score()) {
+  if (players[0].score() > players[1].score()) {
     result = 0
   } else if (players[0].score() < players[1].score()) {
     result = 1

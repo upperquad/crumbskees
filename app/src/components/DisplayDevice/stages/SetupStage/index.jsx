@@ -6,6 +6,7 @@ import { useZoom } from '~utils/hooks'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
 
+import TokenSocketManager from '~managers/TokenSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Character from '~components/Character'
@@ -22,6 +23,21 @@ const SetupStage = props => {
   const [zoom, setZoom] = useState(1)
 
   useZoom(0.736, setZoom)
+
+  useEffect(() => {
+    const connectHandler = () => {
+      PlayersManager.reset()
+    }
+
+    TokenSocketManager.init('display')
+    TokenSocketManager.addSubscriber('CONNECTED', connectHandler)
+    TokenSocketManager.connect()
+
+    return () => {
+      TokenSocketManager.removeSubscriber('CONNECTED', connectHandler)
+      TokenSocketManager.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     let didCancel = false

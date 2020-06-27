@@ -111727,6 +111727,9 @@ var PreConnectStage = function PreConnectStage(props) {
       }
 
       setIsLoaded(true);
+    } else {
+      setShowInstructionOverlay(false);
+      setIsLoaded(true);
     } // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, []);
@@ -113567,9 +113570,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stages_PlayStage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./stages/PlayStage */ "./src/components/DisplayDevice/stages/PlayStage/index.jsx");
 /* harmony import */ var _stages_ResultStage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./stages/ResultStage */ "./src/components/DisplayDevice/stages/ResultStage/index.jsx");
 /* harmony import */ var _StageWrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./StageWrapper */ "./src/components/DisplayDevice/StageWrapper/index.jsx");
-/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -113593,7 +113595,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var TRANSITION_TIMEOUTS = 1600;
 
 var DisplayDevice = function DisplayDevice() {
@@ -113610,43 +113611,22 @@ var DisplayDevice = function DisplayDevice() {
 
   var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_2___default()();
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState6 = _slicedToArray(_useState5, 2),
-      gameCount = _useState6[0],
-      setGameCount = _useState6[1];
-
   var resetGame = function resetGame() {
-    return setGameCount(function (prevCount) {
-      return prevCount + 1;
-    });
-  };
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].reset();
+    setStage('setup');
+  }; // subscribe to PlayersManager
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var connectHandler = function connectHandler() {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].reset();
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].init('TWO_PLAYERS');
-      setStage('landing');
-    };
-
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].init('display');
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('CONNECTED', connectHandler);
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].connect();
-    return function () {
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('CONNECTED', connectHandler);
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_11__["default"].disconnect();
-    };
-  }, [gameCount]); // subscribe to PlayersManager
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // This should trigger on all children components so don't have to do this anywhere else
     var onPlayerUpdate = function onPlayerUpdate() {
-      setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].bothConnected());
+      setBothConnected(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].bothConnected());
       forceUpdate();
     };
 
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].addSubscriber('player_change', onPlayerUpdate);
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].addSubscriber('player_change', onPlayerUpdate);
     return function () {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_12__["default"].removeSubscriber('player_change', onPlayerUpdate);
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_11__["default"].removeSubscriber('player_change', onPlayerUpdate);
     };
   }, [setBothConnected, forceUpdate]); //   TODO: listener for error states
   //   useEffect(() => {
@@ -113704,7 +113684,7 @@ var DisplayDevice = function DisplayDevice() {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_LandingStage__WEBPACK_IMPORTED_MODULE_4__["default"], {
       onFinish: function onFinish() {
-        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_13__["default"].background.play();
+        _managers_SoundManager__WEBPACK_IMPORTED_MODULE_12__["default"].background.play();
         setStage('intro-illo');
       }
     }));
@@ -114594,10 +114574,7 @@ function getResult() {
   var players = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players;
   var result;
 
-  if (players.length === 1) {
-    // single player: add a specific ending here
-    result = '0';
-  } else if (players[0].score() > players[1].score()) {
+  if (players[0].score() > players[1].score()) {
     result = 0;
   } else if (players[0].score() < players[1].score()) {
     result = 1;
@@ -114833,13 +114810,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/SetupStage/style.module.scss");
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
-/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
-/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
-/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -114849,6 +114827,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -114874,7 +114853,7 @@ var SetupStage = function SetupStage(props) {
       qrCode = _useState2[0],
       setQrCode = _useState2[1];
 
-  var _PlayersManager$playe = _slicedToArray(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players, 2),
+  var _PlayersManager$playe = _slicedToArray(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players, 2),
       player1 = _PlayersManager$playe[0],
       player2 = _PlayersManager$playe[1];
 
@@ -114885,8 +114864,21 @@ var SetupStage = function SetupStage(props) {
 
   Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_4__["useZoom"])(0.736, setZoom);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var connectHandler = function connectHandler() {
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].reset();
+    };
+
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].init('display');
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].addSubscriber('CONNECTED', connectHandler);
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].connect();
+    return function () {
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].removeSubscriber('CONNECTED', connectHandler);
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].disconnect();
+    };
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var didCancel = false;
-    Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function (player) {
+    Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player) {
       var token = player.token;
 
       if (token) {
@@ -114919,10 +114911,10 @@ var SetupStage = function SetupStage(props) {
   }, [bothConnected, onFinish]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setup, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_9__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.video,
-    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_10___default.a,
-    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_11___default.a
+    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_11___default.a,
+    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_12___default.a
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setupInner,
     style: {
@@ -114935,7 +114927,7 @@ var SetupStage = function SetupStage(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.subtitle
   }, "You can scan the QR code with your camera app"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.players
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function (player, index) {
+  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player, index) {
     if (player.id || player.token) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         key: "".concat(player.id, "-").concat(player.token),
@@ -114960,7 +114952,7 @@ var SetupStage = function SetupStage(props) {
           className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrUrl
         }, "Think QR codes are stupid?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Open ".concat(BASE_URL), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrUrlToken
-        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players[index].token), ' on your phone'));
+        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players[index].token), ' on your phone'));
       }), player.connected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
         key: player.id,
         timeout: {
@@ -114970,7 +114962,7 @@ var SetupStage = function SetupStage(props) {
       }, function (status) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnected, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a["playerConnected--".concat(_constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].color)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedTransitioning, status === 'exiting' || status === 'exited' || status === 'entering'))
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_10__["default"], {
           extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedCharacter,
           character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index],
           mood: "excited"
@@ -114983,7 +114975,7 @@ var SetupStage = function SetupStage(props) {
     }
 
     return null;
-  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_7__["default"].players.map(function (player, index) {
+  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacter, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a["cornerCharacter--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterOut, player.connected)),
       key: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].body
@@ -114991,7 +114983,7 @@ var SetupStage = function SetupStage(props) {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterBody,
       src: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].body,
       alt: ""
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_10__["default"], {
       extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterHead,
       character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index],
       mood: "excited"
@@ -116333,89 +116325,6 @@ function (_Observable) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "init", function (mode) {
-      _this.mode = mode;
-
-      if (_this.mode === 'SINGLE_PLAYER') {
-        _this._players = [{}];
-      } else {
-        _this._players = [{}, {}];
-      }
-
-      _this.players = new Proxy(_this._players, {
-        get: function get(obj, prop) {
-          return obj[prop];
-        },
-        set: function set(obj, prop, value) {
-          obj[prop] = value;
-
-          _this._callObservers('player_change');
-
-          return obj[prop];
-        }
-      });
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_3__["default"].addSubscriber('MESSAGE', _this._onMessage);
-      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('CONNECTED', function () {
-        if (_this.players[0].setConnected) {
-          _this.players[0].setConnected(true);
-
-          _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].send('accepted', {
-            playerIndex: 0,
-            mode: _this.mode
-          });
-        }
-
-        _this._callObservers('player_change');
-      });
-      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('MESSAGE', function (detail) {
-        var type = detail.type;
-
-        switch (type) {
-          case 'player_ready':
-            _this.players[0].setReady(true);
-
-            _this._callObservers('player_ready_change');
-
-            break;
-
-          default:
-            break;
-        }
-      });
-
-      if (_this.mode !== 'SINGLE_PLAYER') {
-        _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
-          if (_this.players[1].setConnected) {
-            _this.players[1].setConnected(true);
-
-            _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].send('accepted', {
-              playerIndex: 1,
-              mode: _this.mode
-            });
-          }
-
-          _this._callObservers('player_change');
-        });
-        _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('MESSAGE', function (detail) {
-          var type = detail.type;
-
-          switch (type) {
-            case 'player_ready':
-              _this.players[1].setReady(true);
-
-              _this._callObservers('player_ready_change');
-
-              break;
-
-            default:
-              break;
-          }
-        });
-      }
-
-      _this.reset();
-    });
-
     _defineProperty(_assertThisInitialized(_this), "reset", function () {
       if (_this.players) {
         _this.players.forEach(function (player, index) {
@@ -116505,6 +116414,72 @@ function (_Observable) {
 
     if (!PlayersManager.instance) {
       PlayersManager.instance = _assertThisInitialized(_this);
+      _this._players = [{}, {}];
+      _this.players = new Proxy(_this._players, {
+        get: function get(obj, prop) {
+          return obj[prop];
+        },
+        set: function set(obj, prop, value) {
+          obj[prop] = value;
+
+          _this._callObservers('player_change');
+
+          return obj[prop];
+        }
+      });
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_3__["default"].addSubscriber('MESSAGE', _this._onMessage);
+      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('CONNECTED', function () {
+        if (_this.players[0].setConnected) {
+          _this.players[0].setConnected(true);
+
+          _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].send('accepted', {
+            playerIndex: 0
+          });
+        }
+
+        _this._callObservers('player_change');
+      });
+      _managers_PeerManager_Player1Peer__WEBPACK_IMPORTED_MODULE_1__["default"].addSubscriber('MESSAGE', function (detail) {
+        var type = detail.type;
+
+        switch (type) {
+          case 'player_ready':
+            _this.players[0].setReady(true);
+
+            _this._callObservers('player_ready_change');
+
+            break;
+
+          default:
+            break;
+        }
+      });
+      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('CONNECTED', function () {
+        if (_this.players[1].setConnected) {
+          _this.players[1].setConnected(true);
+
+          _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].send('accepted', {
+            playerIndex: 1
+          });
+        }
+
+        _this._callObservers('player_change');
+      });
+      _managers_PeerManager_Player2Peer__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber('MESSAGE', function (detail) {
+        var type = detail.type;
+
+        switch (type) {
+          case 'player_ready':
+            _this.players[1].setReady(true);
+
+            _this._callObservers('player_ready_change');
+
+            break;
+
+          default:
+            break;
+        }
+      });
     }
 
     return _possibleConstructorReturn(_this, PlayersManager.instance);

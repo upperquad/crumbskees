@@ -13,7 +13,6 @@ import ResultStage from './stages/ResultStage'
 // import ErrorStage from './stages/ErrorStage'
 import StageWrapper from './StageWrapper'
 
-import TokenSocketManager from '~managers/TokenSocketManager'
 import PlayersManager from '~managers/PlayersManager'
 import SoundManager from '~managers/SoundManager'
 
@@ -24,26 +23,11 @@ const DisplayDevice = () => {
   // const [errorReason, setErrorReason] = useState()
   const [bothConnected, setBothConnected] = useState(false)
   const forceUpdate = useForceUpdate()
-  const [gameCount, setGameCount] = useState(0)
 
-  const resetGame = () => setGameCount(prevCount => prevCount + 1)
-
-  useEffect(() => {
-    const connectHandler = () => {
-      PlayersManager.reset()
-      PlayersManager.init('TWO_PLAYERS')
-      setStage('landing')
-    }
-
-    TokenSocketManager.init('display')
-    TokenSocketManager.addSubscriber('CONNECTED', connectHandler)
-    TokenSocketManager.connect()
-
-    return () => {
-      TokenSocketManager.removeSubscriber('CONNECTED', connectHandler)
-      TokenSocketManager.disconnect()
-    }
-  }, [gameCount])
+  const resetGame = () => {
+    PlayersManager.reset()
+    setStage('setup')
+  }
 
   // subscribe to PlayersManager
   useEffect(() => {

@@ -108,6 +108,9 @@ const PreConnectStage = props => {
         connect(urlToken)
       }
       setIsLoaded(true)
+    } else {
+      setShowInstructionOverlay(false)
+      setIsLoaded(true)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
