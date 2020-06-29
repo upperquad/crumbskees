@@ -357,7 +357,7 @@ const GameZone = props => {
       const tapInstructionInterval = setInterval(() => {
         const newTapInstructionArray = []
         PlayersManager.players.forEach((player, index) => {
-          if (player.score() === 0) {
+          if (player.score && player.score() === 0) {
             const itemsInCursor = getItemsInCursor(
               items,
               positionArray[index],
@@ -410,17 +410,22 @@ const GameZone = props => {
         videoBack={videoBack}
         videoFront={videoFront}
       />
-      {PlayersManager.players.map((player, index) => (
-        <PlayerMessage
-          key={player.name}
-          player={player}
-          power={powerArray[index]}
-          position={positionArray[index]}
-          color={type === 'tutorial' ? 'white' : player.color}
-          roundScore={player.score()}
-          tapInstruction={tapInstructionArray[index]}
-        />
-      ))}
+      {PlayersManager.players.map((player, index) => {
+        if (player.initialized) {
+          return (
+            <PlayerMessage
+              key={player.name}
+              player={player}
+              power={powerArray[index]}
+              position={positionArray[index]}
+              color={type === 'tutorial' ? 'white' : player.color}
+              roundScore={player.score()}
+              tapInstruction={tapInstructionArray[index]}
+            />
+          )
+        }
+        return null
+      })}
       <PopupMessage
         color={message.color}
         x={message.x}

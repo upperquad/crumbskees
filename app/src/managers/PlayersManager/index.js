@@ -41,7 +41,7 @@ class PlayersManager extends Observable {
           id,
           targetPlayerIndex,
           token,
-          this._callObservers,
+          this.updatesFromPlayer,
         )
         break
       }
@@ -58,13 +58,29 @@ class PlayersManager extends Observable {
     }
   }
 
+  updatesFromPlayer = (type, id) => {
+    switch (type) {
+      case 'player_change':
+        this._callObservers('player_change')
+        break
+      case 'player_ready_change':
+        this._callObservers('player_ready_change')
+        break
+      case 'player_peer_closed':
+        this.closeConnection(id)
+        break
+      default:
+        break
+    }
+  }
+
   reset = () => {
     if (this.players) {
       this.players.forEach((player, index) => {
         if (typeof player.destroy === 'function') {
           player.destroy()
         }
-        this.players[index] = { token: getNewToken(index) }
+        this.players[index] = {}
       })
       this._gameStarted = false
     }
@@ -97,6 +113,14 @@ class PlayersManager extends Observable {
   //     }
   //   }
   // }
+
+  startSetup = () => {
+    if (this.players) {
+      this.players.forEach((player, index) => {
+        this.players[index] = { token: getNewToken(index) }
+      })
+    }
+  }
 
   startTutorial = () => {
     this.players.forEach(player => {
@@ -140,6 +164,7 @@ class PlayersManager extends Observable {
 
     if (matchIndex !== -1) {
       if (this._gameStarted) {
+        // TODO: restore connection state if reconnected
         this.players[matchIndex].setLostStatus(true)
         this._callObservers('player_connection_change')
       } else {

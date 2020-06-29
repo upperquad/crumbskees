@@ -139,25 +139,30 @@ const GameZoneWrapper = props => {
           </div>
           <div className={styles.readyIndicators}>
             <div className={styles.readyIndicatorsTitle} data-text="Ready?">Ready?</div>
-            {PlayersManager.players.map((player, index) => (
-              <div
-                key={player.name}
-                className={classNames(
-                  styles.readyIndicator,
-                  styles[`readyIndicator--${index + 1}`],
-                  styles[`readyIndicator--${player.secondaryColor}`],
-                  { [styles.isReady]: player.ready },
-                )}
-              >
-                <div className={styles.readyIndicatorInner}>
-                  <Character
-                    extraClassName={styles.readyIndicatorCharacter}
-                    character={player}
-                    mood={player.ready ? 'excited' : 'happy'}
-                  />
-                </div>
-              </div>
-            ))}
+            {PlayersManager.players.map((player, index) => {
+              if (player.initialized) {
+                return (
+                  <div
+                    key={player.name}
+                    className={classNames(
+                      styles.readyIndicator,
+                      styles[`readyIndicator--${index + 1}`],
+                      styles[`readyIndicator--${player.secondaryColor}`],
+                      { [styles.isReady]: player.ready },
+                    )}
+                  >
+                    <div className={styles.readyIndicatorInner}>
+                      <Character
+                        extraClassName={styles.readyIndicatorCharacter}
+                        character={player}
+                        mood={player.ready ? 'excited' : 'happy'}
+                      />
+                    </div>
+                  </div>
+                )
+              }
+              return null
+            })}
           </div>
         </div>
       )}

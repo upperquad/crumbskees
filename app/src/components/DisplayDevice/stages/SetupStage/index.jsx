@@ -26,7 +26,7 @@ const SetupStage = props => {
 
   useEffect(() => {
     const connectHandler = () => {
-      PlayersManager.reset()
+      PlayersManager.startSetup()
     }
 
     TokenSocketManager.init('display')

@@ -30,6 +30,7 @@ class PeerManager extends Observable {
     this.connected = true
     this._peer.on('close', this.onClose)
     this._peer.on('data', this.onMessage)
+    this._peer.on('peer_close', this.onPeerClose)
     this._callObservers('CONNECTED')
   }
 
@@ -38,6 +39,10 @@ class PeerManager extends Observable {
     this._id = null
     this.connected = false
     this._callObservers('CLOSED')
+  }
+
+  onPeerClose = () => {
+    this._callObservers('PEER_CLOSED')
   }
 
   onMessage = data => {

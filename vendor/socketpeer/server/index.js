@@ -164,6 +164,7 @@ function SocketPeerServer (opts) {
       }
 
       if (client.peer) {
+        client.peer.sendMessage('peer_close');
         peersWaiting[pairCode] = client.peer;
         closeConnection(pairCode);
       }

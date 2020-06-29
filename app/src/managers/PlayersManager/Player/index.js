@@ -1,10 +1,11 @@
 import PeerManager from '~managers/PeerManager'
+import TokenSocketManager from '~managers/TokenSocketManager'
 import { CHARACTERS } from '~constants'
 
 export default class Player {
   _score = 0
 
-  constructor(id, playerIndex, token, callParentObservers) {
+  constructor(id, playerIndex, token, updateParent) {
     const {
       color,
       finger,
@@ -18,8 +19,9 @@ export default class Player {
     this.id = id
     this.token = token
     this.lost = false
-    this.callParentObservers = callParentObservers
+    this.updateParent = updateParent
     this.playerPeer = new PeerManager()
+    this.initialized = true
 
     this.addPeerListeners()
 
@@ -75,7 +77,11 @@ export default class Player {
     this.playerPeer.addSubscriber('CONNECTED', () => {
       this.setConnected(true)
       this.playerPeer.send('accepted', { playerIndex: this.playerIndex })
-      this.callParentObservers('player_change')
+      this.updateParent('player_change')
+      if (this.token) {
+        TokenSocketManager.send('remove_token', { token: this.token })
+        this.token = null
+      }
     })
 
     this.playerPeer.addSubscriber('MESSAGE', detail => {
@@ -84,11 +90,15 @@ export default class Player {
       switch (type) {
         case 'player_ready':
           this.setReady(true)
-          this.callParentObservers('player_ready_change')
+          this.updateParent('player_ready_change')
           break
         default:
           break
       }
+    })
+
+    this.playerPeer.addSubscriber('PEER_CLOSED', () => {
+      this.updateParent('player_peer_closed', this.id)
     })
   }
 }
