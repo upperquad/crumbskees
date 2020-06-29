@@ -138,6 +138,7 @@ const DisplayDevice = () => {
             {status => (
               <StageWrapper status={status}>
                 <TutorialStage
+                  bothConnected={bothConnected}
                   rollback={() => setStage('setup')}
                   onFinish={() => setStage('play')}
                 />

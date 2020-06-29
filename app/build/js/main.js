@@ -111220,6 +111220,14 @@ var ControlDevice = function ControlDevice() {
       setWinner = _useState12[1]; // const [mode, setMode] = useState(null)
 
 
+  var reset = function reset() {
+    setScore(0);
+    setWinner(null);
+    setGameStarted(false);
+    setStage('pre_connect');
+    setCharacter(null);
+  };
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var messageHandler = function messageHandler(detail) {
       var data = detail.data,
@@ -111283,6 +111291,12 @@ var ControlDevice = function ControlDevice() {
       _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber('MESSAGE', messageHandler);
     };
   }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].addSubscriber('PEER_CLOSED', reset);
+    return function () {
+      _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_6__["default"].removeSubscriber('PEER_CLOSED', reset);
+    };
+  }, []);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "controlDevice"
   }, stage === 'pre_connect' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_PreConnectStage__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -111296,13 +111310,7 @@ var ControlDevice = function ControlDevice() {
   }), stage === 'result' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_ResultStage__WEBPACK_IMPORTED_MODULE_5__["default"], {
     winner: winner,
     character: character,
-    resetGame: function resetGame() {
-      setScore(0);
-      setWinner(null);
-      setGameStarted(false);
-      setStage('pre_connect');
-      setCharacter(null);
-    }
+    resetGame: reset
   }));
 };
 
@@ -113727,6 +113735,7 @@ var DisplayDevice = function DisplayDevice() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StageWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
       status: status
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stages_TutorialStage__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      bothConnected: bothConnected,
       rollback: function rollback() {
         return setStage('setup');
       },
@@ -115023,8 +115032,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var TutorialStage = function TutorialStage(props) {
-  var extraClassName = props.extraClassName,
-      onFinish = props.onFinish;
+  var bothConnected = props.bothConnected,
+      extraClassName = props.extraClassName,
+      onFinish = props.onFinish,
+      rollback = props.rollback;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
       _useState2 = _slicedToArray(_useState, 2),
@@ -115033,6 +115044,11 @@ var TutorialStage = function TutorialStage(props) {
 
   Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_2__["useZoom"])(0.553, setZoom);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].startTutorial, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (!bothConnected) {
+      rollback();
+    }
+  }, [bothConnected, rollback]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.tutorial, extraClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -16,6 +16,14 @@ const ControlDevice = () => {
   const [winner, setWinner] = useState(null)
   // const [mode, setMode] = useState(null)
 
+  const reset = () => {
+    setScore(0)
+    setWinner(null)
+    setGameStarted(false)
+    setStage('pre_connect')
+    setCharacter(null)
+  }
+
   useEffect(() => {
     const messageHandler = detail => {
       const { data, type } = detail
@@ -66,6 +74,14 @@ const ControlDevice = () => {
     }
   }, [])
 
+  useEffect(() => {
+    ServerPeer.addSubscriber('PEER_CLOSED', reset)
+
+    return () => {
+      ServerPeer.removeSubscriber('PEER_CLOSED', reset)
+    }
+  }, [])
+
   return (
     <div className="controlDevice">
       {stage === 'pre_connect' && (
@@ -87,13 +103,7 @@ const ControlDevice = () => {
         <ResultStage
           winner={winner}
           character={character}
-          resetGame={() => {
-            setScore(0)
-            setWinner(null)
-            setGameStarted(false)
-            setStage('pre_connect')
-            setCharacter(null)
-          }}
+          resetGame={reset}
         />
       )}
     </div>

@@ -8,12 +8,18 @@ import PlayersManager from '~managers/PlayersManager'
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 
 const TutorialStage = props => {
-  const { extraClassName, onFinish } = props
+  const { bothConnected, extraClassName, onFinish, rollback } = props
   const [zoom, setZoom] = useState(1)
 
   useZoom(0.553, setZoom)
 
   useEffect(PlayersManager.startTutorial, [])
+
+  useEffect(() => {
+    if (!bothConnected) {
+      rollback()
+    }
+  }, [bothConnected, rollback])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
