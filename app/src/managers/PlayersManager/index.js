@@ -1,9 +1,7 @@
 import Player from './Player'
-import Player1Peer from '~managers/PeerManager/Player1Peer'
-import Player2Peer from '~managers/PeerManager/Player2Peer'
 import TokenSocketManager from '~managers/TokenSocketManager'
 import Observable from '~managers/abstracts/Observable'
-import { CHARACTERS, DEBUG } from '~constants'
+import { DEBUG } from '~constants'
 import { randomInt } from '~utils/math'
 
 class PlayersManager extends Observable {
@@ -25,47 +23,6 @@ class PlayersManager extends Observable {
       })
 
       TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
-      Player1Peer.addSubscriber('CONNECTED', () => {
-        if (this.players[0].setConnected) {
-          this.players[0].setConnected(true)
-          Player1Peer.send('accepted', { playerIndex: 0 })
-        }
-        this._callObservers('player_change')
-      })
-
-      Player1Peer.addSubscriber('MESSAGE', detail => {
-        const { type } = detail
-
-        switch (type) {
-          case 'player_ready':
-            this.players[0].setReady(true)
-            this._callObservers('player_ready_change')
-            break
-          default:
-            break
-        }
-      })
-
-      Player2Peer.addSubscriber('CONNECTED', () => {
-        if (this.players[1].setConnected) {
-          this.players[1].setConnected(true)
-          Player2Peer.send('accepted', { playerIndex: 1 })
-        }
-        this._callObservers('player_change')
-      })
-
-      Player2Peer.addSubscriber('MESSAGE', detail => {
-        const { type } = detail
-
-        switch (type) {
-          case 'player_ready':
-            this.players[1].setReady(true)
-            this._callObservers('player_ready_change')
-            break
-          default:
-            break
-        }
-      })
     }
 
     return PlayersManager.instance
@@ -80,18 +37,12 @@ class PlayersManager extends Observable {
       case 'new_token_accepted': {
         const { id, token } = data
         const targetPlayerIndex = this.players.findIndex(player => player.token === token)
-        let playerPeer
-        if (targetPlayerIndex === 0) {
-          playerPeer = Player1Peer
-        } else {
-          playerPeer = Player2Peer
-        }
-        this.players[targetPlayerIndex] = new Player({
+        this.players[targetPlayerIndex] = new Player(
           id,
-          character: CHARACTERS[targetPlayerIndex],
-          playerPeer,
+          targetPlayerIndex,
           token,
-        })
+          this._callObservers,
+        )
         break
       }
       case 'token_exists': {
@@ -147,8 +98,38 @@ class PlayersManager extends Observable {
   //   }
   // }
 
+  startTutorial = () => {
+    this.players.forEach(player => {
+      player.playerPeer.send('tutorial_start')
+    })
+  }
+
   startGame = () => {
+    this.players.forEach(player => {
+      player.playerPeer.send('game_start')
+    })
     this._gameStarted = true
+  }
+
+  getResult = () => {
+    let result
+
+    if (this.players[0].score() > this.players[1].score()) {
+      result = 0
+    } else if (this.players[0].score() < this.players[1].score()) {
+      result = 1
+    } else {
+      result = 'tied'
+    }
+
+    return result
+  }
+
+  endGame = () => {
+    this.players.forEach(player => {
+      player.playerPeer.send('result', { winner: this.getResult() })
+    })
+    this.reset()
   }
 
   closeConnection = submittedId => {

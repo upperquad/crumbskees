@@ -3,8 +3,6 @@ import classNames from 'classnames'
 import PlayersManager from '~managers/PlayersManager'
 import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
-import Player1Peer from '~managers/PeerManager/Player1Peer'
-import Player2Peer from '~managers/PeerManager/Player2Peer'
 import {
   VB_WIDTH,
   VB_HEIGHT,
@@ -171,8 +169,8 @@ const GameZone = props => {
 
     const player1MessageHandler = detail => messageHandler(detail, 0)
     const player2MessageHandler = detail => messageHandler(detail, 1)
-    Player1Peer.addSubscriber('MESSAGE', player1MessageHandler)
-    Player2Peer.addSubscriber('MESSAGE', player2MessageHandler)
+    PlayersManager.players[0].playerPeer.addSubscriber('MESSAGE', player1MessageHandler)
+    PlayersManager.players[1].playerPeer.addSubscriber('MESSAGE', player2MessageHandler)
 
     // check if no item left
     const targets = items.filter(item => item.type === 'target')
@@ -192,8 +190,13 @@ const GameZone = props => {
     }
 
     return () => {
-      Player1Peer.removeSubscriber('MESSAGE', player1MessageHandler)
-      Player2Peer.removeSubscriber('MESSAGE', player2MessageHandler)
+      if (PlayersManager.players[0].playerPeer) {
+        PlayersManager.players[0].playerPeer.removeSubscriber('MESSAGE', player1MessageHandler)
+      }
+
+      if (PlayersManager.players[1].playerPeer) {
+        PlayersManager.players[1].playerPeer.removeSubscriber('MESSAGE', player2MessageHandler)
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

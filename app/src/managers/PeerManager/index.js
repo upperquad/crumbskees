@@ -62,6 +62,8 @@ class PeerManager extends Observable {
       this._id = null
       this.connected = false
     }
+
+    this._removeAllSubscribers()
   }
 
   send = (messageType, attributes = {}) => {

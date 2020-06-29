@@ -1,7 +1,10 @@
+import PeerManager from '~managers/PeerManager'
+import { CHARACTERS } from '~constants'
+
 export default class Player {
   _score = 0
 
-  constructor({ character, id, playerPeer, token }) {
+  constructor(id, playerIndex, token, callParentObservers) {
     const {
       color,
       finger,
@@ -10,11 +13,15 @@ export default class Player {
       name,
       secondaryColor,
       slug,
-    } = character
+    } = CHARACTERS[playerIndex]
+    this.playerIndex = playerIndex
     this.id = id
     this.token = token
     this.lost = false
-    this.playerPeer = playerPeer
+    this.callParentObservers = callParentObservers
+    this.playerPeer = new PeerManager()
+
+    this.addPeerListeners()
 
     // REVIEW: check if this is aligned with the control device
     this.color = color
@@ -36,7 +43,7 @@ export default class Player {
   }
 
   destroy = () => {
-    // Do all clean ups here
+    this.playerPeer.destroy()
   }
 
   setConnected = connected => {
@@ -63,4 +70,25 @@ export default class Player {
   }
 
   score = () => this._score
+
+  addPeerListeners = () => {
+    this.playerPeer.addSubscriber('CONNECTED', () => {
+      this.setConnected(true)
+      this.playerPeer.send('accepted', { playerIndex: this.playerIndex })
+      this.callParentObservers('player_change')
+    })
+
+    this.playerPeer.addSubscriber('MESSAGE', detail => {
+      const { type } = detail
+
+      switch (type) {
+        case 'player_ready':
+          this.setReady(true)
+          this.callParentObservers('player_ready_change')
+          break
+        default:
+          break
+      }
+    })
+  }
 }

@@ -14,6 +14,10 @@ export default class Observable {
     }
   }
 
+  _removeAllSubscribers = () => {
+    this._observers = {}
+  }
+
   _callObservers = (type, detail) => {
     if (this._observers[type]) {
       this._observers[type].forEach(observer => observer(detail))

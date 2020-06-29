@@ -3,8 +3,7 @@ import classNames from 'classnames'
 import { useZoom } from '~utils/hooks'
 import styles from './style.module.scss'
 
-import Player1Peer from '~managers/PeerManager/Player1Peer'
-import Player2Peer from '~managers/PeerManager/Player2Peer'
+import PlayersManager from '~managers/PlayersManager'
 
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 
@@ -14,10 +13,7 @@ const TutorialStage = props => {
 
   useZoom(0.553, setZoom)
 
-  useEffect(() => {
-    Player1Peer.send('tutorial_start')
-    Player2Peer.send('tutorial_start')
-  }, [])
+  useEffect(PlayersManager.startTutorial, [])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
