@@ -75,12 +75,17 @@ const ControlDevice = () => {
   }, [])
 
   useEffect(() => {
-    ServerPeer.addSubscriber('PEER_CLOSED', reset)
+    const peerClosedHandler = () => {
+      if (stage !== 'result') {
+        reset()
+      }
+    }
+    ServerPeer.addSubscriber('PEER_CLOSED', peerClosedHandler)
 
     return () => {
-      ServerPeer.removeSubscriber('PEER_CLOSED', reset)
+      ServerPeer.removeSubscriber('PEER_CLOSED', peerClosedHandler)
     }
-  }, [])
+  }, [stage])
 
   return (
     <div className="controlDevice">

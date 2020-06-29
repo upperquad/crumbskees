@@ -117,7 +117,9 @@ class PlayersManager extends Observable {
   startSetup = () => {
     if (this.players) {
       this.players.forEach((player, index) => {
-        this.players[index] = { token: getNewToken(index) }
+        if (!player.initialized) {
+          this.players[index] = { token: getNewToken(index) }
+        }
       })
     }
   }
