@@ -11,11 +11,13 @@ const App = () => {
 
   useEffect(() => {
     if (isDesktop) {
-      document.documentElement.classList.add('is-desktop')
+      document.documentElement.classList.add('is-display-device')
+      document.documentElement.classList.remove('is-control-device')
       // clear shared url
       window.history.replaceState({}, document.title, '/')
     } else {
-      document.documentElement.classList.remove('is-desktop')
+      document.documentElement.classList.remove('is-display-device')
+      document.documentElement.classList.add('is-control-device')
     }
   }, [isDesktop])
 

@@ -1,4 +1,6 @@
 import { Howl, Howler } from 'howler'
+import Observable from '~managers/abstracts/Observable'
+
 import musicLanding from '~assets/sounds/music-landing.mp3'
 import musicSetup from '~assets/sounds/music-setup.mp3'
 import musicPlay from '~assets/sounds/music-play.mp3'
@@ -13,8 +15,10 @@ import soundSnackGood from '~assets/sounds/snack-good.wav'
 
 Howler.autoSuspend = false
 
-class SoundManager {
+class SoundManager extends Observable {
   constructor() {
+    super()
+
     if (!SoundManager.instance) {
       SoundManager.instance = this
 
@@ -33,7 +37,7 @@ class SoundManager {
         snackBad: new Howl({ src: [soundSnackBad] }),
         snackGood: new Howl({ src: [soundSnackGood] }),
       }
-      this.mute = false
+      this.muted = false
       this.firstMusicPlayed = false
       this.currentMusic = null
     }
@@ -42,10 +46,11 @@ class SoundManager {
   }
 
   playSound = name => {
-    if (!this.mute) {
+    if (!this.muted) {
       if (!this.firstMusicPlayed) {
         this._sounds[name].on('play', () => {
           this.firstMusicPlayed = true
+          this._callObservers('UPDATED')
         })
       }
 
@@ -60,35 +65,56 @@ class SoundManager {
 
     const prevMusic = this.currentMusic
     this.currentMusic = name
-    if (prevMusic) {
+    if (prevMusic && !isUnmute) {
+      this._musics[prevMusic].off('fade')
+      this._musics[prevMusic].once('fade', () => {
+        this._musics[prevMusic].stop()
+      })
       this._musics[prevMusic].fade(1, 0, 1000)
     }
 
-    if (!this.mute) {
+    if (!this.muted || isUnmute) {
       if (!this.firstMusicPlayed) {
         this._musics[this.currentMusic].on('play', () => {
           this.firstMusicPlayed = true
+          this._callObservers('UPDATED')
         })
       }
 
+      this._musics[this.currentMusic].off('fade')
+      this._musics[this.currentMusic].volume(1)
       this._musics[this.currentMusic].play()
     }
   }
 
   mute = () => {
-    if (this.currentMusic && !this.mute) {
+    if (this.currentMusic && !this.muted) {
+      this._musics[this.currentMusic].off('fade')
+      this._musics[this.currentMusic].once('fade', () => {
+        this._musics[this.currentMusic].stop()
+      })
       this._musics[this.currentMusic].fade(1, 0, 1000)
     }
 
-    this.mute = true
+    Object.keys(this._sounds).forEach(key => this._sounds[key].stop())
+
+    this.muted = true
   }
 
   unmute = () => {
-    if (this.currentMusic && this.mute) {
+    if (this.currentMusic && this.muted) {
       this.playMusic(this.currentMusic, true)
     }
+    this.muted = false
+  }
 
-    this.mute = false
+  toggleMute = () => {
+    if (this.muted) {
+      this.unmute()
+    } else {
+      this.mute()
+    }
+    this._callObservers('UPDATED')
   }
 }
 

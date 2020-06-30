@@ -88,7 +88,7 @@ const ControlDevice = () => {
   }, [stage])
 
   return (
-    <div className="controlDevice">
+    <div>
       {stage === 'pre_connect' && (
         <PreConnectStage hasPlayed={hasPlayed} />
       )}

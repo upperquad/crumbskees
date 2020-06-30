@@ -21,7 +21,7 @@
     top: scaleVw(-4);
   }
 
-  @include respond-to(smartphone) {
+  :global(.is-control-device) & {
     border-width: 4px;
 
     &::before {
@@ -68,7 +68,7 @@
     width: scaleVw(12);
   }
 
-  @include respond-to(smartphone) {
+  :global(.is-control-device) & {
     &::before {
       height: 8px;
     }

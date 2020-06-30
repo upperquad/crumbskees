@@ -11,6 +11,7 @@ import PlayersManager from '~managers/PlayersManager'
 import SoundManager from '~managers/SoundManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Character from '~components/Character'
+import MuteButton from '~components/MuteButton'
 
 import backgroundVideo from '~assets/images/setup/background.mp4'
 import backgroundImage from '~assets/images/setup/background.jpg'
@@ -170,6 +171,7 @@ const SetupStage = props => {
           />
         </div>
       ))}
+      <MuteButton extraClassName={styles.muteButton} />
     </div>
   )
 }

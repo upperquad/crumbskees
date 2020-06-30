@@ -143,3 +143,9 @@
     background: $color-green;
   }
 }
+
+.muteButton {
+  position: absolute;
+  right: scaleVw(60);
+  top: scaleVw(54);
+}

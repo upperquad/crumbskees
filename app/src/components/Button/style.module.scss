@@ -21,14 +21,14 @@
 
 .button {
   cursor: pointer;
-  display: inline-block;
+  display: block;
   padding: 0 scaleVw(22) scaleVw(22) 0;
   position: relative;
   transition:
     padding .4s $easing-quad-out,
     transform .4s $easing-quad-out;
 
-  @include respond-to(above-smartphone) {
+  :global(.is-display-device) & {
     &:hover {
       animation: button-hover .3s 1 ease-in-out;
     }
@@ -69,7 +69,7 @@
       width: scaleVw(50);
     }
 
-    @include respond-to(smartphone) {
+    :global(.is-control-device) & {
       box-shadow: 22px 22px 0px $color-black;
 
       &::before {
@@ -93,21 +93,26 @@
     transition: background .2s ease;
     z-index: 1;
 
-    @include respond-to(smartphone) {
+    :global(.is-control-device) & {
       border-width: 4px;
       padding: 22px 20px;
+    }
 
-      &.isIcon {
-        padding: 0;
+    &.isIcon {
+      padding: 0;
 
-        .icon {
+      .icon {
+        display: block;
+        width: scaleVw(38);
+
+        :global(.is-control-device) & {
           width: 76px;
         }
       }
     }
   }
 
-  @include respond-to(smartphone) {
+  :global(.is-control-device) & {
     padding: 0 22px 22px 0;
 
     &:focus,
@@ -116,12 +121,21 @@
     }
   }
 
+  &.isMute {
+    padding: 0 scaleVw(8) scaleVw(8) 0;
+
+    &:focus,
+    &:active {
+      transform: translate(#{scaleVw(8)}, #{scaleVw(8)});
+    }
+  }
+
   &.isKeyPad {
     .buttonInner {
       @extend %t--number-pad;
     }
 
-    @include respond-to(smartphone) {
+    :global(.is-control-device) & {
       padding: 0 8px 8px 0;
 
       &:focus,

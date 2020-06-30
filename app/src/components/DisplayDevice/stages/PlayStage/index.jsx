@@ -7,6 +7,7 @@ import PlayersManager from '~managers/PlayersManager'
 import SoundManager from '~managers/SoundManager'
 
 import Round from './Round'
+import MuteButton from '~components/MuteButton'
 
 const PlayStage = props => {
   const { extraClassName, onFinish } = props
@@ -48,6 +49,7 @@ const PlayStage = props => {
           )}
         </Transition>
       </TransitionGroup>
+      <MuteButton extraClassName={styles.muteButton} />
     </section>
   )
 }

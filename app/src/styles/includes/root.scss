@@ -2,12 +2,12 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
 
-  &:global(.is-desktop) {
+  &:global(.is-display-device) {
     body {
     }
   }
 
-  &:not(:global(.is-desktop)) {
+  &:global(.is-control-device) {
     overscroll-behavior-x: none;
 
     body {

@@ -9,6 +9,7 @@ import Button from '~components/Button'
 import MarqueeText from '~components/MarqueeText'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Lottie from '~components/Lottie'
+import MuteButton from '~components/MuteButton'
 
 import p1WinBg from '~assets/images/result/p1-win.mp4'
 import p1WinBgImage from '~assets/images/result/p1-win.jpg'
@@ -104,6 +105,7 @@ const ResultStage = props => {
               clickHandler={onFinish}
             />
           </div>
+          <MuteButton extraClassName={styles.muteButton} />
         </React.Fragment>
       )}
     </div>

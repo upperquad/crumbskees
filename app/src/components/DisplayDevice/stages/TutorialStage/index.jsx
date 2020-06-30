@@ -7,6 +7,7 @@ import PlayersManager from '~managers/PlayersManager'
 import SoundManager from '~managers/SoundManager'
 
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
+import MuteButton from '~components/MuteButton'
 
 const TutorialStage = props => {
   const { bothConnected, extraClassName, onFinish, rollback } = props
@@ -53,6 +54,7 @@ const TutorialStage = props => {
           <GameZoneWrapper onFinish={onFinish} type="tutorial" />
         </div>
       </div>
+      <MuteButton extraClassName={styles.muteButton} />
     </div>
   )
 }

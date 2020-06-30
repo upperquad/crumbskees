@@ -5,6 +5,7 @@ import AutoplayVideo from '~components/AutoplayVideo'
 import Button from '~components/Button'
 import Lottie from '~components/Lottie'
 import MarqueeText from '~components/MarqueeText'
+import MuteButton from '~components/MuteButton'
 import SoundManager from '~managers/SoundManager'
 
 import backgroundVideo from '~assets/images/landing/background.mp4'
@@ -61,6 +62,7 @@ const LandingStage = props => {
           clickHandler={onFinish}
         />
       </div>
+      <MuteButton extraClassName={styles.muteButton} />
     </div>
   )
 }

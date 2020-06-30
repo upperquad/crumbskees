@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import { DEBUG } from '~constants'
 import AutoplayVideo from '~components/AutoplayVideo'
+import MuteButton from '~components/MuteButton'
 import SoundManager from '~managers/SoundManager'
 
 import backgroundVideo from '~assets/images/intro-illo/background.mp4'
@@ -26,6 +27,7 @@ const IntroIlloStage = props => {
         extraClassName={styles.video}
         poster={backgroundImage}
       />
+      <MuteButton extraClassName={styles.muteButton} />
     </div>
   )
 }
