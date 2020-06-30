@@ -1,5 +1,6 @@
 import PeerManager from '~managers/PeerManager'
 import TokenSocketManager from '~managers/TokenSocketManager'
+import SoundManager from '~managers/SoundManager'
 import { CHARACTERS } from '~constants'
 
 export default class Player {
@@ -82,6 +83,7 @@ export default class Player {
         TokenSocketManager.send('remove_token', { token: this.token })
         this.token = null
       }
+      SoundManager.playSound('playerJoin')
     })
 
     this.playerPeer.addSubscriber('MESSAGE', detail => {
@@ -91,6 +93,7 @@ export default class Player {
         case 'player_ready':
           this.setReady(true)
           this.updateParent('player_ready_change')
+          SoundManager.playSound('playerReady')
           break
         default:
           break
