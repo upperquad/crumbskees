@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import { GAME_ROUNDS } from '~constants'
 import PlayersManager from '~managers/PlayersManager'
+import SoundManager from '~managers/SoundManager'
 
 import Round from './Round'
 
@@ -18,6 +19,10 @@ const PlayStage = props => {
       setRoundIndex(roundIndex + 1)
     }
   }
+
+  useEffect(() => {
+    SoundManager.playMusic('play')
+  }, [])
 
   useEffect(() => {
     PlayersManager.startGame()

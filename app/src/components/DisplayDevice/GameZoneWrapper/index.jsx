@@ -4,7 +4,6 @@ import useForceUpdate from 'use-force-update'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import PlayersManager from '~managers/PlayersManager'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
-import SoundManager from '~managers/SoundManager'
 import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS, DEBUG } from '~constants'
 
 import styles from './style.module.scss'
@@ -66,7 +65,7 @@ const GameZoneWrapper = props => {
         const newTime = Math.max((TIME - deltaTime), 0)
 
         if (newTime <= 10 && !countDownStarted.current) {
-          SoundManager.countdown.play()
+          // TODO: play countdown
           countDownStarted.current = true
         }
 

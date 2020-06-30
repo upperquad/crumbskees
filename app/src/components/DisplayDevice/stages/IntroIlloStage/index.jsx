@@ -3,12 +3,17 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 import { DEBUG } from '~constants'
 import AutoplayVideo from '~components/AutoplayVideo'
+import SoundManager from '~managers/SoundManager'
 
 import backgroundVideo from '~assets/images/intro-illo/background.mp4'
 import backgroundImage from '~assets/images/intro-illo/background.jpg'
 
 const IntroIlloStage = props => {
   const { extraClassName, onFinish } = props
+
+  useEffect(() => {
+    SoundManager.playMusic('setup')
+  }, [])
 
   useEffect(() => {
     setTimeout(onFinish, DEBUG ? 1000 : 3500)

@@ -14,7 +14,6 @@ import ResultStage from './stages/ResultStage'
 import StageWrapper from './StageWrapper'
 
 import PlayersManager from '~managers/PlayersManager'
-import SoundManager from '~managers/SoundManager'
 
 const TRANSITION_TIMEOUTS = 1600
 
@@ -97,10 +96,7 @@ const DisplayDevice = () => {
             {status => (
               <StageWrapper status={status}>
                 <LandingStage
-                  onFinish={() => {
-                    SoundManager.background.play()
-                    setStage('intro-illo')
-                  }}
+                  onFinish={() => setStage('intro-illo')}
                 />
               </StageWrapper>
             )}

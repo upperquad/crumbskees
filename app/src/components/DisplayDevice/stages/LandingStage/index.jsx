@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Button from '~components/Button'
 import Lottie from '~components/Lottie'
 import MarqueeText from '~components/MarqueeText'
+import SoundManager from '~managers/SoundManager'
 
 import backgroundVideo from '~assets/images/landing/background.mp4'
 import backgroundImage from '~assets/images/landing/background.jpg'
@@ -12,6 +13,10 @@ import titleJson from '~assets/images/landing/title.json'
 
 const LandingStage = props => {
   const { extraClassName, onFinish } = props
+
+  useEffect(() => {
+    SoundManager.playMusic('landing')
+  }, [])
 
   return (
     <div className={classNames(styles.landing, extraClassName)}>

@@ -1,7 +1,14 @@
 import getNow from '~utils/time'
 
 class AnimationFrameManager {
-  _observers = []
+  constructor() {
+    if (!AnimationFrameManager.instance) {
+      AnimationFrameManager.instance = this
+      this._observers = []
+    }
+
+    return AnimationFrameManager.instance
+  }
 
   addSubscriber = observer => {
     if (this._observers.length === 0) {

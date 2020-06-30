@@ -4,6 +4,7 @@ import { useZoom } from '~utils/hooks'
 import styles from './style.module.scss'
 
 import PlayersManager from '~managers/PlayersManager'
+import SoundManager from '~managers/SoundManager'
 
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 
@@ -12,6 +13,10 @@ const TutorialStage = props => {
   const [zoom, setZoom] = useState(1)
 
   useZoom(0.553, setZoom)
+
+  useEffect(() => {
+    SoundManager.playMusic('setup')
+  }, [])
 
   useEffect(PlayersManager.startTutorial, [])
 

@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import styles from './style.module.scss'
 
 import PlayersManager from '~managers/PlayersManager'
+import SoundManager from '~managers/SoundManager'
 
 import Button from '~components/Button'
 import MarqueeText from '~components/MarqueeText'
@@ -22,6 +23,10 @@ const ResultStage = props => {
   const { extraClassName, onFinish } = props
   const [winnerSlug, setWinnerSlug] = useState(null)
   const [playersCache, setPlayersCache] = useState([])
+
+  useEffect(() => {
+    SoundManager.playMusic('result')
+  }, [])
 
   useEffect(() => {
     // special handling for the short amount of time after

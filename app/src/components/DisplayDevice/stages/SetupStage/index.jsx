@@ -8,6 +8,7 @@ import styles from './style.module.scss'
 
 import TokenSocketManager from '~managers/TokenSocketManager'
 import PlayersManager from '~managers/PlayersManager'
+import SoundManager from '~managers/SoundManager'
 import AutoplayVideo from '~components/AutoplayVideo'
 import Character from '~components/Character'
 
@@ -23,6 +24,10 @@ const SetupStage = props => {
   const [zoom, setZoom] = useState(1)
 
   useZoom(0.736, setZoom)
+
+  useEffect(() => {
+    SoundManager.playMusic('setup')
+  }, [])
 
   useEffect(() => {
     const connectHandler = () => {

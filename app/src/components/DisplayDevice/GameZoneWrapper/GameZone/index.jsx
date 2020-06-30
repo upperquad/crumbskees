@@ -84,7 +84,7 @@ const GameZone = props => {
       itemsCaught.forEach(item => {
         switch (item.type) {
           case 'grow':
-            SoundManager.grow.play()
+            SoundManager.playSound('powerGrow')
             setPowerArray(prevArray => {
               item.text = 'GROW'
               prevArray[playerIndex] = item
@@ -92,7 +92,7 @@ const GameZone = props => {
             })
             break
           case 'freeze':
-            SoundManager.freeze.play()
+            SoundManager.playSound('powerFreeze')
             setPowerArray(prevArray => {
               item.text = 'FREEZE'
               prevArray[1 - playerIndex] = item
@@ -100,7 +100,7 @@ const GameZone = props => {
             })
             break
           case 'time':
-            SoundManager.grow.play() // need a new sound here?
+            SoundManager.playSound('powerGrow')
             setPowerArray(prevArray => {
               item.text = 'ADD TIME'
               prevArray[playerIndex] = item
@@ -127,12 +127,18 @@ const GameZone = props => {
 
       if (badItemsCaught.length > 0) {
         removeScore(badItemsCaught, playerIndex)
-        SoundManager.score.play()
-      } else if (itemsCaught.length > 0) {
+      }
+
+      if (itemsCaught.length > 0) {
         removeItems(itemsCaught)
-        SoundManager.score.play() // TODO: need a different sound
+      }
+
+      if (badItemsCaught.length > 0) {
+        SoundManager.playSound('snackBad')
+      } else if (itemsCaught.length > 0) {
+        SoundManager.playSound('snackGood')
       } else {
-        SoundManager.score.play() // TODO: need a different sound
+        SoundManager.playSound('munch')
       }
 
       onUpdate()

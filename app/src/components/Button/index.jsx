@@ -2,6 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
+import SoundManager from '~managers/SoundManager'
+
 const Button = props => {
   const { clickHandler, extraClassName, icon, isFullWidth, isKeyPad, link, text } = props
 
@@ -17,8 +19,9 @@ const Button = props => {
     </div>
   )
 
-  const blurFocus = event => {
+  const buttonClick = event => {
     event.currentTarget.blur()
+    SoundManager.playSound('munch')
   }
 
   let buttonElem
@@ -29,7 +32,7 @@ const Button = props => {
         href={link}
         rel="noopener noreferrer"
         target="_blank"
-        onClick={blurFocus}
+        onClick={buttonClick}
       >
         {cardElem}
       </a>
@@ -44,7 +47,7 @@ const Button = props => {
         role="button"
         tabIndex="0"
         onClick={event => {
-          blurFocus(event)
+          buttonClick(event)
           clickHandler(event)
         }}
       >
