@@ -17,6 +17,8 @@ import p2WinBg from '~assets/images/result/p2-win.mp4'
 import p2WinBgImage from '~assets/images/result/p2-win.jpg'
 import tieBg from '~assets/images/result/tie.mp4'
 import tieBgImage from '~assets/images/result/tie.jpg'
+import singleBg from '~assets/images/result/single.mp4'
+import singleBgImage from '~assets/images/result/single.jpg'
 import titleJson from '~assets/images/landing/title.json'
 
 
@@ -38,12 +40,18 @@ const ResultStage = props => {
       }
       return null
     })
-    const newMaxScore = Math.max(...newPlayersCache.map(player => player.score))
-    if (typeof newMaxScore === 'number') {
-      const newWinners = newPlayersCache.filter(player => player.score === newMaxScore)
-      const newWinnerSlug = newWinners.length === 1 ? newWinners[0].slug : 'tie'
+
+    if (PlayersManager.mode === 'DUAL') {
+      const newMaxScore = Math.max(...newPlayersCache.map(player => player.score))
+      if (typeof newMaxScore === 'number') {
+        const newWinners = newPlayersCache.filter(player => player.score === newMaxScore)
+        const newWinnerSlug = newWinners.length === 1 ? newWinners[0].slug : 'tie'
+        setPlayersCache(newPlayersCache)
+        setWinnerSlug(newWinnerSlug)
+      }
+    } else if (PlayersManager.mode === 'SINGLE') {
       setPlayersCache(newPlayersCache)
-      setWinnerSlug(newWinnerSlug)
+      setWinnerSlug('single')
     }
   }, [])
 
@@ -61,6 +69,10 @@ const ResultStage = props => {
     case 'tie':
       bg = tieBg
       bgImage = tieBgImage
+      break
+    case 'single':
+      bg = singleBg
+      bgImage = singleBgImage
       break
     default:
       break

@@ -44,6 +44,7 @@ const GameZone = props => {
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
   const sceneInit = useRef(false)
+  const mouseHandler = useRef(null)
 
   // Players input
   useEffect(() => {
@@ -179,6 +180,8 @@ const GameZone = props => {
     if (PlayersManager.mode === 'DUAL') {
       PlayersManager.players[0].playerPeer.addSubscriber('MESSAGE', player1MessageHandler)
       PlayersManager.players[1].playerPeer.addSubscriber('MESSAGE', player2MessageHandler)
+    } else if (PlayersManager.mode === 'SINGLE') {
+      mouseHandler.current = player1MessageHandler
     }
 
     // check if no item left
@@ -198,8 +201,8 @@ const GameZone = props => {
       })
     }
 
-    return () => {
-      if (PlayersManager.mode === 'DUAL') {
+    if (PlayersManager.mode === 'DUAL') {
+      return () => {
         if (PlayersManager.players[0].playerPeer) {
           PlayersManager.players[0].playerPeer.removeSubscriber('MESSAGE', player1MessageHandler)
         }
@@ -210,6 +213,13 @@ const GameZone = props => {
       }
     }
 
+    if (PlayersManager.mode === 'SINGLE') {
+      return () => {
+        mouseHandler.current = null
+      }
+    }
+
+    return undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, items])
 
@@ -420,6 +430,7 @@ const GameZone = props => {
         type={type}
         videoBack={videoBack}
         videoFront={videoFront}
+        mouseHandler={mouseHandler.current}
       />
       {PlayersManager.players.map((player, index) => {
         if (player.initialized) {

@@ -147,25 +147,42 @@ const GameZoneWrapper = props => {
           </div>
           <div className={styles.readyIndicators}>
             <div className={styles.readyIndicatorsTitle} data-text="Ready?">Ready?</div>
-            {PlayersManager.players.map((player, index) => (
-              <div
-                key={playersCache[index].name}
-                className={classNames(
-                  styles.readyIndicator,
-                  styles[`readyIndicator--${index + 1}`],
-                  styles[`readyIndicator--${playersCache[index].secondaryColor}`],
-                  { [styles.isReady]: player.ready },
-                )}
-              >
-                <div className={styles.readyIndicatorInner}>
-                  <Character
-                    extraClassName={styles.readyIndicatorCharacter}
-                    character={playersCache[index]}
-                    mood={player.ready ? 'excited' : 'happy'}
-                  />
+            {PlayersManager.players.map((player, index) => {
+              const isClickable = PlayersManager.mode === 'SINGLE'
+              const clickHandler = isClickable ?
+                () => {
+                  PlayersManager.players[index].setReady(true)
+                } :
+                null
+              return (
+                <div
+                  key={playersCache[index].name}
+                  className={classNames(
+                    styles.readyIndicatorWrapper,
+                    styles[`readyIndicatorWrapper--${index + 1}`],
+                    { [styles.isClickable]: isClickable },
+                  )}
+                  role={isClickable ? 'button' : null}
+                  onClick={clickHandler}
+                >
+                  <div
+                    className={classNames(
+                      styles.readyIndicator,
+                      styles[`readyIndicator--${playersCache[index].secondaryColor}`],
+                      { [styles.isReady]: player.ready },
+                    )}
+                  >
+                    <div className={styles.readyIndicatorInner}>
+                      <Character
+                        extraClassName={styles.readyIndicatorCharacter}
+                        character={playersCache[index]}
+                        mood={player.ready ? 'excited' : 'happy'}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       )}

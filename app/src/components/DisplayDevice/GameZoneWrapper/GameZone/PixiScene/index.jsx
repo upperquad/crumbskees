@@ -5,7 +5,7 @@ import { useUpdateItems, useUpdatePowers, useRAF, useResizeScene, useSetScene, u
 import styles from './style.module.scss'
 
 const PixiScene = props => {
-  const { cancelPower, gameState, items, powers, setTime, targetPositions, type, videoBack, videoFront } = props
+  const { cancelPower, gameState, items, mouseHandler, powers, setTime, targetPositions, type, videoBack, videoFront } = props
   // re-used references through hooks
   const el = useRef(null)
   const app = useRef(null)
@@ -68,7 +68,27 @@ const PixiScene = props => {
   useRAF(allRefs, allProps)
   useUpdateGameState(allRefs, allProps)
 
-  return <div className={styles.pixiScene} ref={el} />
+  const clickHandler = mouseHandler ?
+    () => {
+      mouseHandler({ type: 'click' })
+    } :
+    null
+
+  const mouseMoveHandler = mouseHandler ?
+    event => {
+      console.log(event)
+      // mouseHandler({ type: 'cursor_move' })
+    } :
+    null
+
+  return (
+    <div
+      className={styles.pixiScene}
+      ref={el}
+      onClick={clickHandler}
+      onMouseMove={mouseMoveHandler}
+    />
+  )
 }
 
 export default PixiScene

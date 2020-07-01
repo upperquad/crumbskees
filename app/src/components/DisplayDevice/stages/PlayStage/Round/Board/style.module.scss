@@ -28,6 +28,12 @@
   position: relative;
 }
 
+.playerPlaceHolder {
+  background: $color-green;
+  border-left: scaleVw(4) solid $color-black;
+  flex: grid(13) 1 1;
+}
+
 .timer {
   background: $color-black;
   flex: grid(6) 0 0;

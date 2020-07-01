@@ -55,18 +55,22 @@
     order: 2;
   }
 
-  .readyIndicator {
-    @extend %shadow-box;
+  .readyIndicatorWrapper {
+    overflow: hidden;
+    padding: 0 scaleVw(16) scaleVw(16) 0;
 
-    height: scaleVw(173);
-    opacity: .7;
-    pointer-events: none;
-    position: relative;
-    transition: opacity .3s;
-    width: scaleVw(236);
+    &.isClickable {
+      &:hover {
+        .readyIndicator {
+          opacity: 1;
+        }
+      }
 
-    &.isReady {
-      opacity: 1;
+      &:active {
+        .readyIndicator {
+          transform: translate(#{scaleVw(16)}, #{scaleVw(16)});
+        }
+      }
     }
 
     &--1 {
@@ -87,6 +91,21 @@
         top: -34%;
         transform: rotate(-140deg);
       }
+    }
+  }
+
+  .readyIndicator {
+    @extend %shadow-box;
+
+    height: scaleVw(173);
+    opacity: .7;
+    pointer-events: none;
+    position: relative;
+    transition: opacity .3s, transform .15s ease-in-out;
+    width: scaleVw(236);
+
+    &.isReady {
+      opacity: 1;
     }
 
     &--red {

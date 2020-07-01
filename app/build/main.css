@@ -815,27 +815,34 @@ a {
   .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorsTitle--cHn_l {
     color: #fff;
     order: 2; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG {
+    overflow: hidden;
+    padding: 0 1.11111vw 1.11111vw 0; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG.GameZoneWrapper-isClickable--1X805:hover .GameZoneWrapper-readyIndicator--1vbfy {
+      opacity: 1; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG.GameZoneWrapper-isClickable--1X805:active .GameZoneWrapper-readyIndicator--1vbfy {
+      transform: translate(1.11111vw, 1.11111vw); }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--1--nX_jq {
+      order: 1; }
+      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--1--nX_jq .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+        left: -25%;
+        top: -20%;
+        transform: rotate(25deg); }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--2--2vlMn {
+      order: 3; }
+      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--2--2vlMn .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+        right: -28%;
+        top: -34%;
+        transform: rotate(-140deg); }
   .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy {
     height: 12.01389vw;
     opacity: .7;
     pointer-events: none;
     position: relative;
-    transition: opacity .3s;
+    transition: opacity .3s, transform .15s ease-in-out;
     width: 16.38889vw; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1vbfy.GameZoneWrapper-isReady--3CDNi {
       opacity: 1; }
-    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1--253OQ {
-      order: 1; }
-      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--1--253OQ .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
-        left: -25%;
-        top: -20%;
-        transform: rotate(25deg); }
-    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--2--3-IeY {
-      order: 3; }
-      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--2--3-IeY .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
-        right: -28%;
-        top: -34%;
-        transform: rotate(-140deg); }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--red--1UA4F {
       background: #ec504f; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicator--purple--1jvJ2 {
@@ -961,6 +968,7 @@ a {
 .PopupMessage-messageContainer---DqVT {
   height: 100%;
   left: 0;
+  pointer-events: none;
   position: absolute;
   top: 0;
   width: 100%;
@@ -1071,6 +1079,11 @@ a {
   flex: 28.125vw 1 1;
   justify-content: space-around;
   position: relative; }
+
+.Board-playerPlaceHolder--1TLgm {
+  background: #69e5ab;
+  border-left: 0.27778vw solid #000;
+  flex: 40.625vw 1 1; }
 
 .Board-timer--1FYhF {
   background: #000;
@@ -1612,41 +1625,41 @@ a {
     transform-origin: top left;
     width: 1.11111vw; }
 
-.ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh {
+.ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh {
   border: 0.27778vw solid #000;
   position: relative; }
-  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after {
+  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::after {
     background: #000;
     content: '';
     position: absolute; }
-  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before {
+  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::before {
     left: -0.27778vw;
     right: -0.27778vw;
     top: calc(100% + 0.27778vw);
     transform-origin: top left; }
-  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after {
+  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::after {
     bottom: calc(-0.27778vw - 1px);
     top: -0.27778vw; }
-  .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh {
+  .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p1--2sKrh {
     border-width: 4px; }
-    .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::before, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::before {
+    .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::before, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::before, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p1--2sKrh::before {
       left: -4px;
       right: -4px;
       top: calc(100% + 4px); }
-    .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::after, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::after {
+    .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::after, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::after, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p1--2sKrh::after {
       bottom: -4px;
       top: -4px; }
-  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before {
+  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::before {
     height: 0.83333vw;
     transform: skewX(45deg); }
-  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after {
+  .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::after {
     left: calc(100% + 0.27778vw);
     transform: skewY(45deg);
     transform-origin: top left;
     width: 0.83333vw; }
-  .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::before, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::before {
+  .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::before, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::before, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::before, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p1--2sKrh::before {
     height: 8px; }
-  .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::after, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::after {
+  .is-control-device .ResultStage-scores--p1--2rm_O .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p1--2rm_O .is-control-device .ResultStage-score--p2--3D6m0::after, .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p1--2sKrh::after, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh::after, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p1--2sKrh::after {
     left: calc(100% + 4px);
     width: 8px; }
 
@@ -1683,34 +1696,34 @@ a {
     transform-origin: top left;
     width: 1.875vw; }
 
-.ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0 {
+.ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0 {
   border: 0.27778vw solid #000;
   position: relative; }
-  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after {
+  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::after {
     background: #000;
     content: '';
     position: absolute; }
-  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before {
+  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::before {
     left: -0.27778vw;
     right: -0.27778vw;
     top: calc(100% + 0.27778vw);
     transform-origin: top left; }
-  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after {
+  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::after {
     bottom: calc(-0.27778vw - 1px);
     top: -0.27778vw; }
-  .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p2--3D6m0 {
+  .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p2--3D6m0, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p2--3D6m0 {
     border-width: 4px; }
-    .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p2--3D6m0::before {
+    .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p2--3D6m0::before, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p2--3D6m0::before {
       left: -4px;
       right: -4px;
       top: calc(100% + 4px); }
-    .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p2--3D6m0::after {
+    .is-control-device .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--p2--3P92l .is-control-device .ResultStage-score--p2--3D6m0::after, .is-control-device .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--single--G9856 .is-control-device .ResultStage-score--p2--3D6m0::after {
       bottom: -4px;
       top: -4px; }
-  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before {
+  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::before, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::before {
     height: 1.11111vw;
     transform: skewX(-45deg); }
-  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after {
+  .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0::after, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0::after {
     right: calc(100% + 0.27778vw);
     transform: skewY(-45deg);
     transform-origin: top right;
@@ -1770,15 +1783,15 @@ a {
       position: absolute;
       top: calc(100% - 0.27778vw);
       z-index: 1; }
-  .ResultStage-scores--p2--3P92l {
+  .ResultStage-scores--p2--3P92l, .ResultStage-scores--single--G9856 {
     left: 40%; }
-    .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh {
+    .ResultStage-scores--p2--3P92l .ResultStage-score--p1--2sKrh, .ResultStage-scores--single--G9856 .ResultStage-score--p1--2sKrh {
       font-size: 3.47222vw;
       position: absolute;
       right: calc(100% - 0.27778vw);
       top: calc(100% - 0.27778vw);
       z-index: 1; }
-    .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0 {
+    .ResultStage-scores--p2--3P92l .ResultStage-score--p2--3D6m0, .ResultStage-scores--single--G9856 .ResultStage-score--p2--3D6m0 {
       font-size: 9.02778vw; }
   .ResultStage-scores--tie--2G9ma .ResultStage-score--2trdh {
     font-size: 4.86111vw; }

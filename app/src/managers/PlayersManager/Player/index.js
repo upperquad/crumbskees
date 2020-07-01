@@ -9,7 +9,7 @@ export default class Player {
 
     switch (this.type) {
       case 'mouse':
-        this.playerIndex = 0
+        this.playerIndex = 1
         this.initialized = true
         break
       case 'remote':
@@ -17,7 +17,6 @@ export default class Player {
         this.id = id
         this.token = token
         this.lost = false
-        this.updateParent = updateParent
         this.playerPeer = new PeerManager()
         this.initialized = true
         this.connected = false
@@ -47,7 +46,7 @@ export default class Player {
     this.mouthSprite = mouthSprite
 
     this.ready = false // boolean to know if player is ready after trying the tutorial
-
+    this.updateParent = updateParent
     this.closeMouth = false
     this.mouthSequence = 0
     this._score = 0
@@ -73,6 +72,8 @@ export default class Player {
 
   setReady = ready => {
     this.ready = ready
+    this.updateParent('player_ready_change')
+    SoundManager.playSound('playerReady')
   }
 
   addScore = nbItemsCaught => {
@@ -110,8 +111,6 @@ export default class Player {
       switch (type) {
         case 'player_ready':
           this.setReady(true)
-          this.updateParent('player_ready_change')
-          SoundManager.playSound('playerReady')
           break
         default:
           break

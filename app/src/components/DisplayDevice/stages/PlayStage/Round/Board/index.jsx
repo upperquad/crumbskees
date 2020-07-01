@@ -93,8 +93,13 @@ const Board = props => {
   let player1Result = null
   let player2Result = null
   if (ended) {
-    player1Result = PlayersManager.players[0].score() < PlayersManager.players[1].score() ? 'lost' : 'won'
-    player2Result = PlayersManager.players[1].score() < PlayersManager.players[0].score() ? 'lost' : 'won'
+    if (PlayersManager.mode === 'DUAL') {
+      player1Result = PlayersManager.players[0].score() < PlayersManager.players[1].score() ? 'lost' : 'won'
+      player2Result = PlayersManager.players[1].score() < PlayersManager.players[0].score() ? 'lost' : 'won'
+    } else {
+      player1Result = 'won'
+      player2Result = 'won'
+    }
   }
 
   return (
@@ -124,6 +129,7 @@ const Board = props => {
           result={player2Result}
         />
       )}
+      {!PlayersManager.players[1] && <div className={styles.playerPlaceHolder} />}
     </div>
   )
 }

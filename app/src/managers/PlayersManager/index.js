@@ -138,6 +138,7 @@ class PlayersManager extends Observable {
           case 'SINGLE':
             this.players[index] = new Player({
               type: 'mouse',
+              updateParent: this.updatesFromPlayer,
             })
             break
           case 'DUAL':
