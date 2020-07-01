@@ -154,8 +154,13 @@ const GameZone = props => {
           setPositionArray(prevPositionArray => {
             const positionObj = prevPositionArray[playerIndex]
 
-            positionObj.x = clamp(positionObj.x + parseFloat(x, 10), -0.5, 0.5)
-            positionObj.y = clamp(positionObj.y + parseFloat(y, 10), -0.5, 0.5)
+            if (PlayersManager.mode === 'DUAL') {
+              positionObj.x = clamp(positionObj.x + parseFloat(x, 10), -0.5, 0.5)
+              positionObj.y = clamp(positionObj.y + parseFloat(y, 10), -0.5, 0.5)
+            } else if (PlayersManager.mode === 'SINGLE') {
+              positionObj.x = clamp(x, -0.5, 0.5)
+              positionObj.y = clamp(y, -0.5, 0.5)
+            }
 
             return prevPositionArray
           })

@@ -76,8 +76,14 @@ const PixiScene = props => {
 
   const mouseMoveHandler = mouseHandler ?
     event => {
-      console.log(event)
-      // mouseHandler({ type: 'cursor_move' })
+      if (el.current) {
+        const x = event.nativeEvent.offsetX / el.current.offsetWidth - 0.5
+        const y = event.nativeEvent.offsetY / el.current.offsetHeight - 0.5
+        mouseHandler({
+          type: 'cursor_move',
+          data: { x, y },
+        })
+      }
     } :
     null
 

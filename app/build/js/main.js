@@ -112548,7 +112548,17 @@ var PixiScene = function PixiScene(props) {
     });
   } : null;
   var mouseMoveHandler = mouseHandler ? function (event) {
-    console.log(event); // mouseHandler({ type: 'cursor_move' })
+    if (el.current) {
+      var x = event.nativeEvent.offsetX / el.current.offsetWidth - 0.5;
+      var y = event.nativeEvent.offsetY / el.current.offsetHeight - 0.5;
+      mouseHandler({
+        type: 'cursor_move',
+        data: {
+          x: x,
+          y: y
+        }
+      });
+    }
   } : null;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.pixiScene,
@@ -112991,8 +113001,15 @@ var GameZone = function GameZone(props) {
                 y = data.y;
             setPositionArray(function (prevPositionArray) {
               var positionObj = prevPositionArray[playerIndex];
-              positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["clamp"])(positionObj.x + parseFloat(x, 10), -0.5, 0.5);
-              positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["clamp"])(positionObj.y + parseFloat(y, 10), -0.5, 0.5);
+
+              if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].mode === 'DUAL') {
+                positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["clamp"])(positionObj.x + parseFloat(x, 10), -0.5, 0.5);
+                positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["clamp"])(positionObj.y + parseFloat(y, 10), -0.5, 0.5);
+              } else if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].mode === 'SINGLE') {
+                positionObj.x = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["clamp"])(x, -0.5, 0.5);
+                positionObj.y = Object(_utils_math__WEBPACK_IMPORTED_MODULE_6__["clamp"])(y, -0.5, 0.5);
+              }
+
               return prevPositionArray;
             });
             break;
