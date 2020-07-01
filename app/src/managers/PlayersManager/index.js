@@ -11,24 +11,39 @@ class PlayersManager extends Observable {
     if (!PlayersManager.instance) {
       PlayersManager.instance = this
 
-      this._players = [{}, {}]
-
-      this.players = new Proxy(this._players, {
-        get: (obj, prop) => obj[prop],
-        set: (obj, prop, value) => {
-          obj[prop] = value
-          this._callObservers('player_change')
-          return obj[prop]
-        },
-      })
-
-      TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
+      this._gameStarted = false
+      this.mode = null
     }
 
     return PlayersManager.instance
   }
 
-  _gameStarted = false
+  init = mode => {
+    this.mode = mode
+
+    switch (this.mode) {
+      case 'SINGLE':
+        this.players = [{}]
+        this.startSetup()
+        break
+      case 'DUAL':
+        this._players = [{}, {}]
+
+        this.players = new Proxy(this._players, {
+          get: (obj, prop) => obj[prop],
+          set: (obj, prop, value) => {
+            obj[prop] = value
+            this._callObservers('player_change')
+            return obj[prop]
+          },
+        })
+
+        TokenSocketManager.addSubscriber('MESSAGE', this._onMessage)
+        break
+      default:
+        break
+    }
+  }
 
   _onMessage = detail => {
     const { data, type } = detail
@@ -37,12 +52,13 @@ class PlayersManager extends Observable {
       case 'new_token_accepted': {
         const { id, token } = data
         const targetPlayerIndex = this.players.findIndex(player => player.token === token)
-        this.players[targetPlayerIndex] = new Player(
+        this.players[targetPlayerIndex] = new Player({
+          type: 'remote',
           id,
-          targetPlayerIndex,
+          playerIndex: targetPlayerIndex,
           token,
-          this.updatesFromPlayer,
-        )
+          updateParent: this.updatesFromPlayer,
+        })
         break
       }
       case 'token_exists': {
@@ -84,6 +100,7 @@ class PlayersManager extends Observable {
       })
       this._gameStarted = false
     }
+    this.mode = null
   }
 
   player = id => this.players.find(player => player.id === id)
@@ -115,25 +132,38 @@ class PlayersManager extends Observable {
   // }
 
   startSetup = () => {
-    if (this.players) {
-      this.players.forEach((player, index) => {
-        if (!player.initialized) {
-          this.players[index] = { token: getNewToken(index) }
+    this.players.forEach((player, index) => {
+      if (!player.initialized) {
+        switch (this.mode) {
+          case 'SINGLE':
+            this.players[index] = new Player({
+              type: 'mouse',
+            })
+            break
+          case 'DUAL':
+            this.players[index] = { token: getNewToken(index) }
+            break
+          default:
+            break
         }
+      }
+    })
+  }
+
+  startTutorial = () => {
+    if (PlayersManager.mode === 'DUAL') {
+      this.players.forEach(player => {
+        player.playerPeer.send('tutorial_start')
       })
     }
   }
 
-  startTutorial = () => {
-    this.players.forEach(player => {
-      player.playerPeer.send('tutorial_start')
-    })
-  }
-
   startGame = () => {
-    this.players.forEach(player => {
-      player.playerPeer.send('game_start')
-    })
+    if (PlayersManager.mode === 'DUAL') {
+      this.players.forEach(player => {
+        player.playerPeer.send('game_start')
+      })
+    }
     this._gameStarted = true
   }
 
@@ -152,9 +182,11 @@ class PlayersManager extends Observable {
   }
 
   endGame = () => {
-    this.players.forEach(player => {
-      player.playerPeer.send('result', { winner: this.getResult() })
-    })
+    if (PlayersManager.mode === 'DUAL') {
+      this.players.forEach(player => {
+        player.playerPeer.send('result', { winner: this.getResult() })
+      })
+    }
     this.reset()
   }
 
@@ -178,9 +210,9 @@ class PlayersManager extends Observable {
     }
   }
 
-  bothConnected = () => this.players.every(item => item.connected)
+  allConnected = () => this.players.every(item => item.connected)
 
-  bothReady = () => this.players.every(item => item.ready)
+  allReady = () => this.players.every(item => item.ready)
 
   addScore = (score, id) => {
     const player = this.player(id)

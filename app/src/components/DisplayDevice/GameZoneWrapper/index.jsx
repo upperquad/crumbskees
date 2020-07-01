@@ -106,21 +106,21 @@ const GameZoneWrapper = props => {
 
   useEffect(() => {
     if (type === 'tutorial') {
-      const handleBothReady = () => {
+      const handleAllReady = () => {
         forceUpdate()
 
-        if (PlayersManager.bothReady()) {
+        if (PlayersManager.allReady()) {
           setTimeout(() => {
             onFinish()
           }, 1000)
         }
       }
 
-      handleBothReady()
-      PlayersManager.addSubscriber('player_ready_change', handleBothReady)
+      handleAllReady()
+      PlayersManager.addSubscriber('player_ready_change', handleAllReady)
 
       return () => {
-        PlayersManager.removeSubscriber('player_ready_change', handleBothReady)
+        PlayersManager.removeSubscriber('player_ready_change', handleAllReady)
       }
     }
 

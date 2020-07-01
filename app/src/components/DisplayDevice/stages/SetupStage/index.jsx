@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 import classNames from 'classnames'
 import { TransitionGroup, Transition } from 'react-transition-group'
+import useForceUpdate from 'use-force-update'
 import { useZoom } from '~utils/hooks'
 import { CHARACTERS } from '~constants'
 import styles from './style.module.scss'
@@ -19,60 +20,76 @@ import backgroundImage from '~assets/images/setup/background.jpg'
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 const SetupStage = props => {
-  const { bothConnected, extraClassName, onFinish } = props
+  const { allConnected, extraClassName, onFinish } = props
   const [qrCode, setQrCode] = useState([null, null])
-  const [player1, player2] = PlayersManager.players
+  const [player1, player2] = PlayersManager.players || []
   const [zoom, setZoom] = useState(1)
+  const forceUpdate = useForceUpdate()
 
   useZoom(0.736, setZoom)
 
   useEffect(() => {
     SoundManager.playMusic('setup')
-  }, [])
+    PlayersManager.init('SINGLE')
+    forceUpdate()
+  }, [forceUpdate])
 
   useEffect(() => {
     const connectHandler = () => {
       PlayersManager.startSetup()
     }
 
-    TokenSocketManager.init('display')
-    TokenSocketManager.addSubscriber('CONNECTED', connectHandler)
-    TokenSocketManager.connect()
+    switch (PlayersManager.mode) {
+      case 'SINGLE':
+        PlayersManager.startSetup()
+        onFinish()
+        return undefined
+      case 'DUAL':
+        TokenSocketManager.init('display')
+        TokenSocketManager.addSubscriber('CONNECTED', connectHandler)
+        TokenSocketManager.connect()
 
-    return () => {
-      TokenSocketManager.removeSubscriber('CONNECTED', connectHandler)
-      TokenSocketManager.disconnect()
+        return () => {
+          TokenSocketManager.removeSubscriber('CONNECTED', connectHandler)
+          TokenSocketManager.disconnect()
+        }
+      default:
+        return undefined
     }
-  }, [])
+  }, [onFinish, PlayersManager.mode])
 
   useEffect(() => {
-    let didCancel = false
+    if (PlayersManager.mode === 'DUAL') {
+      let didCancel = false
 
-    Promise.all(PlayersManager.players.map(player => {
-      const { token } = player
-      if (token) {
-        const tokenUrl = `${BASE_URL}${token}`
-        return QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
-      }
-      return Promise.resolve('')
-    })).then(values => {
-      if (!didCancel) {
-        setQrCode(values)
-      }
-    })
+      Promise.all(PlayersManager.players.map(player => {
+        const { token } = player
+        if (token) {
+          const tokenUrl = `${BASE_URL}${token}`
+          return QRCode.toDataURL(tokenUrl, { margin: 2, scale: 10 })
+        }
+        return Promise.resolve('')
+      })).then(values => {
+        if (!didCancel) {
+          setQrCode(values)
+        }
+      })
 
-    return () => {
-      didCancel = true
+      return () => {
+        didCancel = true
+      }
     }
+
+    return undefined
   }, [player1, player2])
 
   useEffect(() => {
-    if (bothConnected) {
+    if (allConnected) {
       const nextStageTimeout = setTimeout(onFinish, 1000)
       return () => clearTimeout(nextStageTimeout)
     }
     return undefined
-  }, [bothConnected, onFinish])
+  }, [allConnected, onFinish])
 
   return (
     <div className={classNames(styles.setup, extraClassName)}>
@@ -88,7 +105,7 @@ const SetupStage = props => {
           You can scan the QR code with your camera app
         </p>
         <div className={styles.players}>
-          {PlayersManager.players.map((player, index) => {
+          {PlayersManager.players && PlayersManager.players.map((player, index) => {
             if (player.id || player.token) {
               return (
                 <div key={`${player.id}-${player.token}`} className={styles.player}>
@@ -156,7 +173,7 @@ const SetupStage = props => {
           })}
         </div>
       </div>
-      {PlayersManager.players.map((player, index) => (
+      {PlayersManager.players && PlayersManager.players.map((player, index) => (
         <div
           className={classNames(styles.cornerCharacter, styles[`cornerCharacter--${index + 1}`], {
             [styles.cornerCharacterOut]: player.connected,

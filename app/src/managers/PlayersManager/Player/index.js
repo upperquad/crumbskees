@@ -4,9 +4,29 @@ import SoundManager from '~managers/SoundManager'
 import { CHARACTERS } from '~constants'
 
 export default class Player {
-  _score = 0
+  constructor({ id, playerIndex, token, type, updateParent }) {
+    this.type = type
 
-  constructor(id, playerIndex, token, updateParent) {
+    switch (this.type) {
+      case 'mouse':
+        this.playerIndex = 0
+        this.initialized = true
+        break
+      case 'remote':
+        this.playerIndex = playerIndex
+        this.id = id
+        this.token = token
+        this.lost = false
+        this.updateParent = updateParent
+        this.playerPeer = new PeerManager()
+        this.initialized = true
+        this.connected = false
+        this._addPeerListeners()
+        break
+      default:
+        break
+    }
+
     const {
       color,
       finger,
@@ -15,16 +35,7 @@ export default class Player {
       name,
       secondaryColor,
       slug,
-    } = CHARACTERS[playerIndex]
-    this.playerIndex = playerIndex
-    this.id = id
-    this.token = token
-    this.lost = false
-    this.updateParent = updateParent
-    this.playerPeer = new PeerManager()
-    this.initialized = true
-
-    this.addPeerListeners()
+    } = CHARACTERS[this.playerIndex]
 
     // REVIEW: check if this is aligned with the control device
     this.color = color
@@ -35,18 +46,21 @@ export default class Player {
     this.slug = slug
     this.mouthSprite = mouthSprite
 
-    this.connected = false
-
     this.ready = false // boolean to know if player is ready after trying the tutorial
 
     this.closeMouth = false
     this.mouthSequence = 0
+    this._score = 0
 
-    this.playerPeer.connect(id)
+    if (this.type === 'remote') {
+      this.playerPeer.connect(id)
+    }
   }
 
   destroy = () => {
-    this.playerPeer.destroy()
+    if (this.playerPeer) {
+      this.playerPeer.destroy()
+    }
   }
 
   setConnected = connected => {
@@ -63,18 +77,22 @@ export default class Player {
 
   addScore = nbItemsCaught => {
     this._score += nbItemsCaught
-    this.playerPeer.send('score', { score: this._score })
+    if (this.type === 'remote') {
+      this.playerPeer.send('score', { score: this._score })
+    }
   }
 
   removeScore = nbItemsCaught => {
     this._score -= nbItemsCaught
     this._score = Math.max(this._score, 0)
-    this.playerPeer.send('score', { score: this._score })
+    if (this.type === 'remote') {
+      this.playerPeer.send('score', { score: this._score })
+    }
   }
 
   score = () => this._score
 
-  addPeerListeners = () => {
+  _addPeerListeners = () => {
     this.playerPeer.addSubscriber('CONNECTED', () => {
       this.setConnected(true)
       this.playerPeer.send('accepted', { playerIndex: this.playerIndex })

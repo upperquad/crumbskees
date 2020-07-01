@@ -10,7 +10,7 @@ import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 import MuteButton from '~components/MuteButton'
 
 const TutorialStage = props => {
-  const { bothConnected, extraClassName, onFinish, rollback } = props
+  const { allConnected, extraClassName, onFinish, rollback } = props
   const [zoom, setZoom] = useState(1)
 
   useZoom(0.553, setZoom)
@@ -22,10 +22,10 @@ const TutorialStage = props => {
   useEffect(PlayersManager.startTutorial, [])
 
   useEffect(() => {
-    if (!bothConnected) {
+    if (PlayersManager.mode === 'DUAL' && !allConnected) {
       rollback()
     }
-  }, [bothConnected, rollback])
+  }, [allConnected, rollback])
 
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>

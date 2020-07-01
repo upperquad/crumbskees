@@ -20,7 +20,7 @@ const TRANSITION_TIMEOUTS = 1600
 const DisplayDevice = () => {
   const [stage, setStage] = useState('landing')
   // const [errorReason, setErrorReason] = useState()
-  const [bothConnected, setBothConnected] = useState(false)
+  const [allConnected, setAllConnected] = useState(false)
   const forceUpdate = useForceUpdate()
 
   const resetGame = () => {
@@ -32,7 +32,7 @@ const DisplayDevice = () => {
   useEffect(() => {
     // This should trigger on all children components so don't have to do this anywhere else
     const onPlayerUpdate = () => {
-      setBothConnected(PlayersManager.bothConnected())
+      setAllConnected(PlayersManager.allConnected())
       forceUpdate()
     }
     PlayersManager.addSubscriber('player_change', onPlayerUpdate)
@@ -40,53 +40,7 @@ const DisplayDevice = () => {
     return () => {
       PlayersManager.removeSubscriber('player_change', onPlayerUpdate)
     }
-  }, [setBothConnected, forceUpdate])
-
-  //   TODO: listener for error states
-  //   useEffect(() => {
-  //     const errorListener = reason => {
-  //       setStage('error')
-  //       setErrorReason(reason)
-  //     }
-  //     PeerManager.addSubscriber('WS_CLOSE', errorListener)
-  //
-  //     return () => {
-  //       PeerManager.removeSubscriber('WS_CLOSE', errorListener)
-  //     }
-  //   }, [setStage])
-  //
-  //   useEffect(() => {
-  //     const messageHandler = detail => {
-  //       const { data, type } = detail
-  //
-  //       switch (type) {
-  //         case 'token_submit': {
-  //           const { id, token } = data
-  //           PlayersManager.newConnect(token, id)
-  //           setBothConnected(PlayersManager.bothConnected())
-  //           break
-  //         }
-  //         case 'reconnect_phone': {
-  //           const { id } = data
-  //           PlayersManager.newConnect(null, id)
-  //           break
-  //         }
-  //         case 'phone_left': {
-  //           const { id } = data
-  //           PlayersManager.closeConnection(id)
-  //           setBothConnected(PlayersManager.bothConnected())
-  //           break
-  //         }
-  //         default:
-  //           break
-  //       }
-  //     }
-  //     TokenSocketManager.addSubscriber('MESSAGE', messageHandler)
-  //
-  //     return () => {
-  //       TokenSocketManager.removeSubscriber('MESSAGE', messageHandler)
-  //     }
-  //   }, [])
+  }, [setAllConnected, forceUpdate])
 
   return (
     <div className={styles.displayDevice}>
@@ -124,7 +78,7 @@ const DisplayDevice = () => {
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
-                <SetupStage onFinish={() => setStage('tutorial')} bothConnected={bothConnected} />
+                <SetupStage onFinish={() => setStage('tutorial')} allConnected={allConnected} />
               </StageWrapper>
             )}
           </Transition>
@@ -134,7 +88,7 @@ const DisplayDevice = () => {
             {status => (
               <StageWrapper status={status}>
                 <TutorialStage
-                  bothConnected={bothConnected}
+                  allConnected={allConnected}
                   rollback={() => setStage('setup')}
                   onFinish={() => setStage('play')}
                 />

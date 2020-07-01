@@ -175,8 +175,11 @@ const GameZone = props => {
 
     const player1MessageHandler = detail => messageHandler(detail, 0)
     const player2MessageHandler = detail => messageHandler(detail, 1)
-    PlayersManager.players[0].playerPeer.addSubscriber('MESSAGE', player1MessageHandler)
-    PlayersManager.players[1].playerPeer.addSubscriber('MESSAGE', player2MessageHandler)
+
+    if (PlayersManager.mode === 'DUAL') {
+      PlayersManager.players[0].playerPeer.addSubscriber('MESSAGE', player1MessageHandler)
+      PlayersManager.players[1].playerPeer.addSubscriber('MESSAGE', player2MessageHandler)
+    }
 
     // check if no item left
     const targets = items.filter(item => item.type === 'target')
@@ -196,12 +199,14 @@ const GameZone = props => {
     }
 
     return () => {
-      if (PlayersManager.players[0].playerPeer) {
-        PlayersManager.players[0].playerPeer.removeSubscriber('MESSAGE', player1MessageHandler)
-      }
+      if (PlayersManager.mode === 'DUAL') {
+        if (PlayersManager.players[0].playerPeer) {
+          PlayersManager.players[0].playerPeer.removeSubscriber('MESSAGE', player1MessageHandler)
+        }
 
-      if (PlayersManager.players[1].playerPeer) {
-        PlayersManager.players[1].playerPeer.removeSubscriber('MESSAGE', player2MessageHandler)
+        if (PlayersManager.players[1].playerPeer) {
+          PlayersManager.players[1].playerPeer.removeSubscriber('MESSAGE', player2MessageHandler)
+        }
       }
     }
 
