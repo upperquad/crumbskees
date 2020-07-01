@@ -6,7 +6,19 @@ import { useUpdateItems, useUpdatePowers, useRAF, useResizeScene, useSetScene, u
 import styles from './style.module.scss'
 
 const PixiScene = props => {
-  const { addTime, cancelPower, gameState, items, mouseHandler, powers, targetPositions, type, videoBack, videoFront } = props
+  const {
+    addTime,
+    cancelPower,
+    gameState,
+    items,
+    mouseHandler,
+    powers,
+    targetPositions,
+    type,
+    videoBack,
+    videoFront,
+  } = props
+
   // re-used references through hooks
   const el = useRef(null)
   const app = useRef(null)

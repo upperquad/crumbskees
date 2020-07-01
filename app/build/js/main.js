@@ -115020,22 +115020,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! use-force-update */ "./node_modules/use-force-update/use-force-update.js");
-/* harmony import */ var use_force_update__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(use_force_update__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~utils/hooks */ "./src/utils/hooks.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/SetupStage/style.module.scss");
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
-/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
-/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
-/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
-/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
-/* harmony import */ var _components_MuteButton__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~components/MuteButton */ "./src/components/MuteButton/index.jsx");
-/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
-/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
-/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _utils_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~utils/hooks */ "./src/utils/hooks.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~constants */ "./src/constants.js");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.module.scss */ "./src/components/DisplayDevice/stages/SetupStage/style.module.scss");
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
+/* harmony import */ var _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~managers/PlayersManager */ "./src/managers/PlayersManager/index.js");
+/* harmony import */ var _managers_SoundManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~managers/SoundManager */ "./src/managers/SoundManager/index.js");
+/* harmony import */ var _components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ~components/AutoplayVideo */ "./src/components/AutoplayVideo/index.jsx");
+/* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
+/* harmony import */ var _components_MuteButton__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ~components/MuteButton */ "./src/components/MuteButton/index.jsx");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ~assets/images/setup/background.mp4 */ "./src/assets/images/setup/background.mp4");
+/* harmony import */ var _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ~assets/images/setup/background.jpg */ "./src/assets/images/setup/background.jpg");
+/* harmony import */ var _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_14__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -115045,7 +115043,6 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -115074,7 +115071,7 @@ var SetupStage = function SetupStage(props) {
       qrCode = _useState2[0],
       setQrCode = _useState2[1];
 
-  var _ref = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players || [],
+  var _ref = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players || [],
       _ref2 = _slicedToArray(_ref, 2),
       player1 = _ref2[0],
       player2 = _ref2[1];
@@ -115084,41 +115081,80 @@ var SetupStage = function SetupStage(props) {
       zoom = _useState4[0],
       setZoom = _useState4[1];
 
-  var forceUpdate = use_force_update__WEBPACK_IMPORTED_MODULE_4___default()();
-  Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_5__["useZoom"])(0.736, setZoom);
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      playersManagerInitiated = _useState6[0],
+      setPlayersManagerInitiated = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      tokenManagerConnected = _useState8[0],
+      setTokenManagerConnected = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      singlePlayerHovered = _useState10[0],
+      setSinglePlayerHovered = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState12 = _slicedToArray(_useState11, 2),
+      dualPlayerHovered = _useState12[0],
+      setDualPlayerHovered = _useState12[1];
+
+  Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_4__["useZoom"])(0.736, setZoom);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    _managers_SoundManager__WEBPACK_IMPORTED_MODULE_10__["default"].playMusic('setup');
-    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].init('SINGLE');
-    forceUpdate();
-  }, [forceUpdate]);
+    _managers_SoundManager__WEBPACK_IMPORTED_MODULE_9__["default"].playMusic('setup');
+  }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var connectHandler = function connectHandler() {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].startSetup();
+    var initiatedHandler = function initiatedHandler() {
+      setPlayersManagerInitiated(true);
     };
 
-    switch (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].mode) {
+    if (!_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode) {
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('INITIATED', initiatedHandler);
+      return function () {
+        return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('INITIATED', initiatedHandler);
+      };
+    }
+
+    initiatedHandler();
+    return undefined;
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (!playersManagerInitiated) {
+      return undefined;
+    }
+
+    var connectHandler = function connectHandler() {
+      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].startSetup();
+      setTokenManagerConnected(true);
+    };
+
+    switch (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode) {
       case 'SINGLE':
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].startSetup();
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].startSetup();
         onFinish();
         return undefined;
 
       case 'DUAL':
-        _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('display');
-        _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('CONNECTED', connectHandler);
-        _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].connect();
+        _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].addSubscriber('CONNECTED', connectHandler);
+        _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].init('display');
+        _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].connect();
         return function () {
-          _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('CONNECTED', connectHandler);
-          _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].disconnect();
+          _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].removeSubscriber('CONNECTED', connectHandler);
+          _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].disconnect();
+          setTokenManagerConnected(false);
         };
 
       default:
         return undefined;
-    }
-  }, [onFinish, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].mode]);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [playersManagerInitiated]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].mode === 'DUAL') {
+    if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode === 'DUAL') {
       var didCancel = false;
-      Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players.map(function (player) {
+      Promise.all(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player) {
         var token = player.token;
 
         if (token) {
@@ -115153,86 +115189,152 @@ var SetupStage = function SetupStage(props) {
     return undefined;
   }, [allConnected, onFinish]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.setup, extraClassName)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_11__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.video,
-    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_14___default.a,
-    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_15___default.a
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.setupInner,
-    style: {
-      transform: "scale(".concat(zoom, ")")
-    }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.title,
-    "data-text": "Grab a friend and your phones"
-  }, "Grab a friend and your phones"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.subtitle
-  }, "You can scan the QR code with your camera app"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.players
-  }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players && _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players.map(function (player, index) {
-    if (player.id || player.token) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        key: "".concat(player.id, "-").concat(player.token),
-        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.player
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.qrWrapper
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["TransitionGroup"], null, !player.connected && player.token && qrCode[index] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
-        key: player.token,
-        timeout: {
-          enter: 100,
-          exit: 300
-        }
-      }, function (status) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.qr, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.qrTransitioning, status === 'exiting' || status === 'exited' || status === 'entering'))
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.qrQr,
-          style: {
-            backgroundImage: "url(".concat(qrCode[index], ")")
-          }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.qrUrl
-        }, "Think QR codes are stupid?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Open ".concat(BASE_URL), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.qrUrlToken
-        }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players[index].token), ' on your phone'));
-      }), player.connected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
-        key: player.id,
-        timeout: {
-          enter: 100,
-          exit: 300
-        }
-      }, function (status) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.playerConnected, _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a["playerConnected--".concat(_constants__WEBPACK_IMPORTED_MODULE_6__["CHARACTERS"][index].color)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.playerConnectedTransitioning, status === 'exiting' || status === 'exited' || status === 'entering'))
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_12__["default"], {
-          extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.playerConnectedCharacter,
-          character: _constants__WEBPACK_IMPORTED_MODULE_6__["CHARACTERS"][index],
-          mood: "excited"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.playerConnectedText
-        }, "Connected!"));
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.playerName
-      }, _constants__WEBPACK_IMPORTED_MODULE_6__["CHARACTERS"][index].name));
-    }
-
-    return null;
-  }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players && _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_9__["default"].players.map(function (player, index) {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setup, extraClassName)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_AutoplayVideo__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.video,
+    src: _assets_images_setup_background_mp4__WEBPACK_IMPORTED_MODULE_13___default.a,
+    poster: _assets_images_setup_background_jpg__WEBPACK_IMPORTED_MODULE_14___default.a
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["TransitionGroup"], null, !_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
+    key: "mode-setup",
+    timeout: 300
+  }, function (wrapStatus) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.cornerCharacter, _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a["cornerCharacter--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.cornerCharacterOut, player.connected)),
-      key: _constants__WEBPACK_IMPORTED_MODULE_6__["CHARACTERS"][index].body
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.cornerCharacterBody,
-      src: _constants__WEBPACK_IMPORTED_MODULE_6__["CHARACTERS"][index].body,
-      alt: ""
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.cornerCharacterHead,
-      character: _constants__WEBPACK_IMPORTED_MODULE_6__["CHARACTERS"][index],
-      mood: "excited"
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modes, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setupInner, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.isTransitioning, wrapStatus === 'entering' || wrapStatus === 'exiting' || wrapStatus === 'exited')),
+      style: {
+        transform: "scale(".concat(zoom, ")")
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      onClick: function onClick() {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('SINGLE');
+      },
+      onMouseEnter: function onMouseEnter() {
+        setSinglePlayerHovered(true);
+      },
+      onMouseLeave: function onMouseLeave() {
+        setSinglePlayerHovered(false);
+      },
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.mode
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeTitle
+    }, "1 Player"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacters
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacterSingle,
+      character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][1],
+      mood: singlePlayerHovered ? 'excited' : 'happy'
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeSubtitle
+    }, "It\u2019s great! You\u2019ll always win"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeGo
+    }, "Go!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      onClick: function onClick() {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('DUAL');
+      },
+      onMouseEnter: function onMouseEnter() {
+        setDualPlayerHovered(true);
+      },
+      onMouseLeave: function onMouseLeave() {
+        setDualPlayerHovered(false);
+      },
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.mode
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeTitle
+    }, "2 Players"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacters
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacter1,
+      character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][0],
+      mood: dualPlayerHovered ? 'excited' : 'happy'
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacter2,
+      character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][1],
+      mood: dualPlayerHovered ? 'excited' : 'happy'
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeSubtitle
+    }, "Gotta friend nearby? Grab \u2018em"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeGo
+    }, "Go!")));
+  }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode === 'DUAL' && tokenManagerConnected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
+    key: "qr-setup",
+    timeout: 300
+  }, function (wrapStatus) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.setupInner, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.isTransitioning, wrapStatus === 'entering' || wrapStatus === 'exiting' || wrapStatus === 'exited'))
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        transform: "scale(".concat(zoom, ")")
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.title,
+      "data-text": "Grab a friend and your phones"
+    }, "Grab a friend and your phones"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.subtitle
+    }, "You can scan the QR code with your camera app"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.players
+    }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players && _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player, index) {
+      if (player.id || player.token) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: "".concat(player.id, "-").concat(player.token),
+          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.player
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrWrapper
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["TransitionGroup"], null, !player.connected && player.token && qrCode[index] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
+          key: player.token,
+          timeout: {
+            enter: 100,
+            exit: 300
+          }
+        }, function (status) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qr, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrTransitioning, status === 'exiting' || status === 'exited' || status === 'entering'))
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrQr,
+            style: {
+              backgroundImage: "url(".concat(qrCode[index], ")")
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrUrl
+          }, "Think QR codes are stupid?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Open ".concat(BASE_URL), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.qrUrlToken
+          }, _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players[index].token), ' on your phone'));
+        }), player.connected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
+          key: player.id,
+          timeout: {
+            enter: 100,
+            exit: 300
+          }
+        }, function (status) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnected, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a["playerConnected--".concat(_constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].color)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedTransitioning, status === 'exiting' || status === 'exited' || status === 'entering'))
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
+            extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedCharacter,
+            character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index],
+            mood: "excited"
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerConnectedText
+          }, "Connected!"));
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.playerName
+        }, _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].name));
+      }
+
+      return null;
+    }))), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players && _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].players.map(function (player, index) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacter, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a["cornerCharacter--".concat(index + 1)], _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterOut, player.connected)),
+        key: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].body
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterBody,
+        src: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index].body,
+        alt: ""
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.cornerCharacterHead,
+        character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][index],
+        mood: "excited"
+      }));
     }));
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MuteButton__WEBPACK_IMPORTED_MODULE_13__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.muteButton
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MuteButton__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.muteButton
   }));
 };
 
@@ -115248,7 +115350,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"SetupStage-title--5BCVB","playerName":"SetupStage-playerName--3DwHW","subtitle":"SetupStage-subtitle--1AeLK","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","setup":"SetupStage-setup--2ohF8","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","qrWrapper":"SetupStage-qrWrapper--3-nvG","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","muteButton":"SetupStage-muteButton--1GZEU"};
+module.exports = {"title":"SetupStage-title--5BCVB","modeTitle":"SetupStage-modeTitle--1KQCx","playerName":"SetupStage-playerName--3DwHW","modeGo":"SetupStage-modeGo--XaIwr","subtitle":"SetupStage-subtitle--1AeLK","modeSubtitle":"SetupStage-modeSubtitle--2M1Ch","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","mode":"SetupStage-mode--1NYa8","setup":"SetupStage-setup--2ohF8","setupInner":"SetupStage-setupInner--1bBeL","isTransitioning":"SetupStage-isTransitioning--2aCsP","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","modes":"SetupStage-modes--1MMlx","qrWrapper":"SetupStage-qrWrapper--3-nvG","modeCharacters":"SetupStage-modeCharacters--iimLw","modeCharacterSingle":"SetupStage-modeCharacterSingle--2nChw","modeCharacter2":"SetupStage-modeCharacter2--1BLln","modeCharacter1":"SetupStage-modeCharacter1--2TSC2","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","muteButton":"SetupStage-muteButton--1GZEU"};
 
 /***/ }),
 
@@ -115303,7 +115405,8 @@ var TutorialStage = function TutorialStage(props) {
   Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_2__["useZoom"])(0.553, setZoom);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     _managers_SoundManager__WEBPACK_IMPORTED_MODULE_5__["default"].playMusic('setup');
-  }, []);
+  }, []); // TODO: this should happen every 5 seconds or something just to be safe
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].startTutorial, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].mode === 'DUAL' && !allConnected) {
@@ -116593,9 +116696,7 @@ function (_Observable) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PlayersManager).call(this));
 
     _defineProperty(_assertThisInitialized(_this), "init", function (mode) {
-      _this.mode = mode;
-
-      switch (_this.mode) {
+      switch (mode) {
         case 'SINGLE':
           _this.players = [{}];
 
@@ -116623,6 +116724,10 @@ function (_Observable) {
         default:
           break;
       }
+
+      _this.mode = mode;
+
+      _this._callObservers('INITIATED');
     });
 
     _defineProperty(_assertThisInitialized(_this), "_onMessage", function (detail) {
@@ -116746,7 +116851,7 @@ function (_Observable) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "startTutorial", function () {
-      if (PlayersManager.mode === 'DUAL') {
+      if (_this.mode === 'DUAL') {
         _this.players.forEach(function (player) {
           player.playerPeer.send('tutorial_start');
         });
@@ -116754,7 +116859,7 @@ function (_Observable) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "startGame", function () {
-      if (PlayersManager.mode === 'DUAL') {
+      if (_this.mode === 'DUAL') {
         _this.players.forEach(function (player) {
           player.playerPeer.send('game_start');
         });
@@ -116778,7 +116883,7 @@ function (_Observable) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "endGame", function () {
-      if (PlayersManager.mode === 'DUAL') {
+      if (_this.mode === 'DUAL') {
         _this.players.forEach(function (player) {
           player.playerPeer.send('result', {
             winner: _this.getResult()

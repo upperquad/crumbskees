@@ -384,22 +384,24 @@ a {
     font-size: 100px;
     line-height: 120px; }
 
-.SetupStage-playerName--3DwHW {
+.SetupStage-modeTitle--1KQCx, .SetupStage-playerName--3DwHW,
+.SetupStage-modeGo--XaIwr {
   font-family: 'Ginto Nord', sans-serif;
   font-feature-settings: 'tnum' on, 'lnum' on;
   font-size: 3.75vw;
   font-weight: 900;
   line-height: 4.51389vw; }
-  .is-control-device .SetupStage-playerName--3DwHW {
+  .is-control-device .SetupStage-modeTitle--1KQCx, .is-control-device .SetupStage-playerName--3DwHW,
+  .is-control-device .SetupStage-modeGo--XaIwr {
     font-size: 54px;
     line-height: 65px; }
 
-.SetupStage-subtitle--1AeLK, .SetupStage-qrUrl--21ulS {
+.SetupStage-subtitle--1AeLK, .SetupStage-modeSubtitle--2M1Ch, .SetupStage-qrUrl--21ulS {
   font-family: 'Fakt', sans-serif;
   font-size: 1.38889vw;
   font-weight: 700;
   line-height: 1.66667vw; }
-  .is-control-device .SetupStage-subtitle--1AeLK, .is-control-device .SetupStage-qrUrl--21ulS {
+  .is-control-device .SetupStage-subtitle--1AeLK, .is-control-device .SetupStage-modeSubtitle--2M1Ch, .is-control-device .SetupStage-qrUrl--21ulS {
     font-size: 20px;
     line-height: 24px; }
 
@@ -423,34 +425,44 @@ a {
     text-shadow: 10px 10px 0 #000;
     -webkit-text-stroke: 8px #000; }
 
-.SetupStage-player--2JGID {
+.SetupStage-player--2JGID,
+.SetupStage-mode--1NYa8 {
   border: 0.27778vw solid #000;
   position: relative; }
-  .SetupStage-player--2JGID::before, .SetupStage-player--2JGID::after {
+  .SetupStage-player--2JGID::before,
+  .SetupStage-mode--1NYa8::before, .SetupStage-player--2JGID::after,
+  .SetupStage-mode--1NYa8::after {
     background: #000;
     content: '';
     position: absolute; }
-  .SetupStage-player--2JGID::before {
+  .SetupStage-player--2JGID::before,
+  .SetupStage-mode--1NYa8::before {
     left: -0.27778vw;
     right: -0.27778vw;
     top: calc(100% + 0.27778vw);
     transform-origin: top left; }
-  .SetupStage-player--2JGID::after {
+  .SetupStage-player--2JGID::after,
+  .SetupStage-mode--1NYa8::after {
     bottom: calc(-0.27778vw - 1px);
     top: -0.27778vw; }
-  .is-control-device .SetupStage-player--2JGID {
+  .is-control-device .SetupStage-player--2JGID,
+  .is-control-device .SetupStage-mode--1NYa8 {
     border-width: 4px; }
-    .is-control-device .SetupStage-player--2JGID::before {
+    .is-control-device .SetupStage-player--2JGID::before,
+    .is-control-device .SetupStage-mode--1NYa8::before {
       left: -4px;
       right: -4px;
       top: calc(100% + 4px); }
-    .is-control-device .SetupStage-player--2JGID::after {
+    .is-control-device .SetupStage-player--2JGID::after,
+    .is-control-device .SetupStage-mode--1NYa8::after {
       bottom: -4px;
       top: -4px; }
-  .SetupStage-player--2JGID::before {
+  .SetupStage-player--2JGID::before,
+  .SetupStage-mode--1NYa8::before {
     height: 1.11111vw;
     transform: skewX(45deg); }
-  .SetupStage-player--2JGID::after {
+  .SetupStage-player--2JGID::after,
+  .SetupStage-mode--1NYa8::after {
     left: calc(100% + 0.27778vw);
     transform: skewY(45deg);
     transform-origin: top left;
@@ -460,7 +472,13 @@ a {
   color: #000;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center; }
+  justify-content: center;
+  position: relative; }
+
+.SetupStage-setupInner--1bBeL {
+  transition: opacity .3s; }
+  .SetupStage-setupInner--1bBeL.SetupStage-isTransitioning--2aCsP {
+    opacity: 0; }
 
 .SetupStage-video--26_7G {
   height: 100%;
@@ -487,15 +505,59 @@ a {
   margin-bottom: 5.55556vw;
   position: relative; }
 
-.SetupStage-player--2JGID {
+.SetupStage-modes--1MMlx {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
+.SetupStage-player--2JGID,
+.SetupStage-mode--1NYa8 {
   background: #fff;
   margin: 0 4.16667vw;
   text-align: center;
   width: 31.94444vw; }
 
+.SetupStage-modeTitle--1KQCx {
+  margin-top: 1.73611vw; }
+
+.SetupStage-mode--1NYa8 {
+  cursor: pointer; }
+
 .SetupStage-qrWrapper--3-nvG {
   height: 24.30556vw;
   position: relative; }
+
+.SetupStage-modeCharacters--iimLw {
+  height: 17.36111vw;
+  position: relative; }
+  .SetupStage-modeCharacters--iimLw .SetupStage-modeCharacterSingle--2nChw,
+  .SetupStage-modeCharacters--iimLw .SetupStage-modeCharacter2--1BLln {
+    height: 18.75vw;
+    position: absolute;
+    width: 18.75vw; }
+  .SetupStage-modeCharacters--iimLw .SetupStage-modeCharacterSingle--2nChw {
+    left: 50%;
+    top: -0.69444vw;
+    transform: translateX(-50%) rotate(10deg); }
+  .SetupStage-modeCharacters--iimLw .SetupStage-modeCharacter1--2TSC2 {
+    height: 20.83333vw;
+    left: 35%;
+    position: absolute;
+    top: -3.47222vw;
+    transform: translateX(-50%) rotate(10deg);
+    width: 20.83333vw; }
+  .SetupStage-modeCharacters--iimLw .SetupStage-modeCharacter2--1BLln {
+    right: 35%;
+    top: -0.69444vw;
+    transform: translateX(50%) rotate(-13deg); }
+
+.SetupStage-modeSubtitle--2M1Ch {
+  margin-bottom: 1.45833vw; }
 
 .SetupStage-playerConnected--3s2oQ,
 .SetupStage-qr--14fFl {
@@ -540,7 +602,8 @@ a {
 .SetupStage-qrTransitioning--1eI0K {
   opacity: 0; }
 
-.SetupStage-playerName--3DwHW {
+.SetupStage-playerName--3DwHW,
+.SetupStage-modeGo--XaIwr {
   align-items: center;
   border-top: 0.27778vw solid #000;
   display: flex;

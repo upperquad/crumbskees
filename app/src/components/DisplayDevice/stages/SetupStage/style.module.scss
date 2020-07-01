@@ -5,9 +5,15 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  position: relative;
 }
 
 .setupInner {
+  transition: opacity .3s;
+
+  &.isTransitioning {
+    opacity: 0;
+  }
 }
 
 .video {
@@ -44,7 +50,19 @@
   position: relative;
 }
 
-.player {
+.modes {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.player,
+.mode {
   @extend %shadow-box;
 
   background: $color-white;
@@ -53,9 +71,58 @@
   width: scaleVw(460);
 }
 
+.modeTitle {
+  @extend %t--h2;
+
+  margin-top: scaleVw(25);
+}
+
+.mode {
+  cursor: pointer;
+}
+
 .qrWrapper {
   height: scaleVw(350);
   position: relative;
+}
+
+.modeCharacters {
+  height: scaleVw(250);
+  position: relative;
+
+  .modeCharacterSingle,
+  .modeCharacter2 {
+    height: scaleVw(270);
+    position: absolute;
+    width: scaleVw(270);
+  }
+
+  .modeCharacterSingle {
+    left: 50%;
+    top: scaleVw(-10);
+    transform: translateX(-50%) rotate(10deg);
+  }
+
+  .modeCharacter1 {
+    height: scaleVw(300);
+    left: 35%;
+    position: absolute;
+    top: scaleVw(-50);
+    transform: translateX(-50%) rotate(10deg);
+    width: scaleVw(300);
+  }
+
+  .modeCharacter2 {
+    right: 35%;
+    top: scaleVw(-10);
+    transform: translateX(50%) rotate(-13deg);
+  }
+}
+
+.modeSubtitle {
+  @extend %t--body;
+
+  margin-bottom: scaleVw(21);
 }
 
 .playerConnected,
@@ -114,7 +181,8 @@
   opacity: 0;
 }
 
-.playerName {
+.playerName,
+.modeGo {
   @extend %t--h2;
 
   align-items: center;

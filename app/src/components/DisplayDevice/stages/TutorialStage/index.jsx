@@ -19,6 +19,7 @@ const TutorialStage = props => {
     SoundManager.playMusic('setup')
   }, [])
 
+  // TODO: this should happen every 5 seconds or something just to be safe
   useEffect(PlayersManager.startTutorial, [])
 
   useEffect(() => {

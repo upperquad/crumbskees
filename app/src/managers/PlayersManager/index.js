@@ -19,9 +19,7 @@ class PlayersManager extends Observable {
   }
 
   init = mode => {
-    this.mode = mode
-
-    switch (this.mode) {
+    switch (mode) {
       case 'SINGLE':
         this.players = [{}]
         this.startSetup()
@@ -43,6 +41,8 @@ class PlayersManager extends Observable {
       default:
         break
     }
+    this.mode = mode
+    this._callObservers('INITIATED')
   }
 
   _onMessage = detail => {
@@ -152,7 +152,7 @@ class PlayersManager extends Observable {
   }
 
   startTutorial = () => {
-    if (PlayersManager.mode === 'DUAL') {
+    if (this.mode === 'DUAL') {
       this.players.forEach(player => {
         player.playerPeer.send('tutorial_start')
       })
@@ -160,7 +160,7 @@ class PlayersManager extends Observable {
   }
 
   startGame = () => {
-    if (PlayersManager.mode === 'DUAL') {
+    if (this.mode === 'DUAL') {
       this.players.forEach(player => {
         player.playerPeer.send('game_start')
       })
@@ -183,7 +183,7 @@ class PlayersManager extends Observable {
   }
 
   endGame = () => {
-    if (PlayersManager.mode === 'DUAL') {
+    if (this.mode === 'DUAL') {
       this.players.forEach(player => {
         player.playerPeer.send('result', { winner: this.getResult() })
       })
