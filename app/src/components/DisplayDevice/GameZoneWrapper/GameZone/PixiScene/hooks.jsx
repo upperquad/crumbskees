@@ -1,7 +1,7 @@
 // TODO: this file needs to be optimized
 import { useEffect } from 'react'
 import { AnimatedSprite, Application, Loader, Sprite, Container, Texture, Graphics } from 'pixi.js'
-import { GRID_UNIT, VB_WIDTH } from '~constants'
+import { DEBUG, GRID_UNIT, VB_WIDTH } from '~constants'
 import AnimationFrameManager from '~managers/AnimationFrameManager'
 import PlayersManager from '~managers/PlayersManager'
 import getNow from '~utils/time'
@@ -21,7 +21,6 @@ const MOUTH_SIZE = 3.1
 // powers
 const CANCEL_GROW_DURATION = 6000
 const CANCEL_FREEZE_DURATION = 4000
-const ADD_SECONDS = 20
 
 // transitions
 const TRANSITION_OUT_DURATION = 1000
@@ -260,19 +259,28 @@ export function useUpdatePowers(refs, props) {
       } else {
         if (props.powers[index].type === 'grow') {
           refs.playersTargetRadii.current[index] = CIRCLE_GROW_RATE
-        } else if (props.powers[index].type === 'freeze') {
-          // TODO: Do nothing? remove this then
-        } else if (props.powers[index].type === 'time' && typeof props.setTime === 'function') {
-          props.setTime(time => time + ADD_SECONDS)
-        }
-
-        if (props.powers[index].type) {
           const timeout = setTimeout(
             () => props.cancelPower(index),
-            props.powers[index].type === 'grow' ? CANCEL_GROW_DURATION : CANCEL_FREEZE_DURATION,
+            CANCEL_GROW_DURATION,
           )
 
           return () => clearTimeout(timeout)
+        }
+
+        if (props.powers[index].type === 'freeze') {
+          const timeout = setTimeout(
+            () => props.cancelPower(index),
+            CANCEL_FREEZE_DURATION,
+          )
+
+          return () => clearTimeout(timeout)
+        }
+
+        if (props.powers[index].type === 'time') {
+          if (typeof props.addTime === 'function') {
+            props.addTime()
+          }
+          props.cancelPower(index)
         }
       }
 
@@ -280,7 +288,7 @@ export function useUpdatePowers(refs, props) {
     })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.powers, props.setTime])
+  }, [props.powers, props.addTime])
 }
 
 
@@ -346,6 +354,11 @@ export function useRAF(refs, props) {
       // draw transition out rect
       if (refs.startTransitionOut.current > 0) {
         drawTransitionOut(now)
+      }
+
+      if (DEBUG) {
+        refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
+        refs.circlesMasked.current.drawRect(0, 0, refs.initWidth.current, refs.initHeight.current)
       }
     }
 

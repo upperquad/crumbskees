@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
+import classNames from 'classnames'
 
 import { useUpdateItems, useUpdatePowers, useRAF, useResizeScene, useSetScene, useUpdateGameState } from './hooks'
 
 import styles from './style.module.scss'
 
 const PixiScene = props => {
-  const { cancelPower, gameState, items, mouseHandler, powers, setTime, targetPositions, type, videoBack, videoFront } = props
+  const { addTime, cancelPower, gameState, items, mouseHandler, powers, targetPositions, type, videoBack, videoFront } = props
   // re-used references through hooks
   const el = useRef(null)
   const app = useRef(null)
@@ -54,7 +55,7 @@ const PixiScene = props => {
     gameState,
     items,
     powers,
-    setTime,
+    addTime,
     targetPositions,
     type,
     videoBack,
@@ -69,9 +70,7 @@ const PixiScene = props => {
   useUpdateGameState(allRefs, allProps)
 
   const clickHandler = mouseHandler ?
-    () => {
-      mouseHandler({ type: 'click' })
-    } :
+    () => mouseHandler({ type: 'click' }) :
     null
 
   const mouseMoveHandler = mouseHandler ?
@@ -89,7 +88,7 @@ const PixiScene = props => {
 
   return (
     <div
-      className={styles.pixiScene}
+      className={classNames(styles.pixiScene, { [styles.isWithMouse]: mouseHandler })}
       ref={el}
       onClick={clickHandler}
       onMouseMove={mouseMoveHandler}

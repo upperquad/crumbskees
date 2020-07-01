@@ -14,6 +14,20 @@
   }
 }
 
+@keyframes indicator-hover {
+  from {
+    transform: none;
+  }
+
+  50% {
+    transform: translate(#{scaleVw(4)}, #{scaleVw(4)});
+  }
+
+  to {
+    transform: none;
+  }
+}
+
 .gameContentTutorial {
   height: grid(8);
   position: relative;
@@ -55,14 +69,21 @@
     order: 2;
   }
 
+  .readyIndicatorPlaceHolder {
+    order: 1;
+    width: scaleVw(236);
+  }
+
   .readyIndicatorWrapper {
+    margin-right: scaleVw(-16);
     overflow: hidden;
     padding: 0 scaleVw(16) scaleVw(16) 0;
 
     &.isClickable {
       &:hover {
         .readyIndicator {
-          opacity: 1;
+          animation: indicator-hover .3s 1 ease-in-out;
+          opacity: .85;
         }
       }
 
@@ -73,7 +94,7 @@
       }
     }
 
-    &--1 {
+    &--p1 {
       order: 1;
 
       .readyIndicatorCharacter {
@@ -83,7 +104,7 @@
       }
     }
 
-    &--2 {
+    &--p2 {
       order: 3;
 
       .readyIndicatorCharacter {

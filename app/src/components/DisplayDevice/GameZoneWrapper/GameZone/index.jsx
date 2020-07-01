@@ -23,18 +23,19 @@ import PopupMessage from './PopupMessage'
 
 import growItem from '~assets/images/powers/grow.svg'
 import freezeItem from '~assets/images/powers/frozen.svg'
+import timeItem from '~assets/images/powers/time.svg'
 
 const GameZone = props => {
   const {
     addItemsLevel,
     addMessage,
+    addTime,
     gameState,
     message,
     onUpdate,
     round,
     setGameState,
     setParentPowerArray,
-    setTime,
     type,
   } = props
   const { videoBack, videoFront } = round
@@ -284,7 +285,7 @@ const GameZone = props => {
 
     const setupGrid = () => {
       // REVIEW: this is really inefficient
-      const { numBadItems, numBigItems, numRegularItems, powers } = round
+      const { numBadItems, numBigItems, numRegularItems, powers, powersSingleMode } = round
       for (let i = 0; i < GRID_COLS; i++) {
         for (let j = 0; j < GRID_LINES; j++) {
           const obj = { x: i, y: j }
@@ -294,10 +295,11 @@ const GameZone = props => {
 
       const newItems = []
 
-      // add powers
-      for (let i = 0; i < powers.length; i++) {
-        const power = { type: powers[i] }
-        switch (powers[i]) {
+      const powerItems = PlayersManager.mode === 'DUAL' ? powers : powersSingleMode
+
+      for (let i = 0; i < powerItems.length; i++) {
+        const power = { type: powerItems[i] }
+        switch (powerItems[i]) {
           default:
           case 'grow':
             power.image = growItem
@@ -306,16 +308,9 @@ const GameZone = props => {
           case 'freeze':
             power.image = freezeItem
             power.color = COLORS.blue
-
-            if (PlayersManager.mode === 'SINGLE_PLAYER') {
-              // replace freeze power with time power
-              // power.image = freezeItem // need a image for time power
-              power.color = COLORS.purple
-              power.type = 'time'
-            }
             break
           case 'time':
-            // power.image = freezeItem // need a image for time power
+            power.image = timeItem
             power.color = COLORS.purple
             break
         }
@@ -431,7 +426,7 @@ const GameZone = props => {
         items={items}
         targetPositions={positionArray}
         powers={powerArray}
-        setTime={setTime}
+        addTime={addTime}
         type={type}
         videoBack={videoBack}
         videoFront={videoFront}

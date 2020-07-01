@@ -784,6 +784,14 @@ a {
   100% {
     opacity: 0; } }
 
+@keyframes GameZoneWrapper-indicator-hover--1uPoe {
+  from {
+    transform: none; }
+  50% {
+    transform: translate(0.27778vw, 0.27778vw); }
+  to {
+    transform: none; } }
+
 .GameZoneWrapper-gameContentTutorial--1KOIM {
   height: 25vw;
   position: relative;
@@ -815,22 +823,27 @@ a {
   .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorsTitle--cHn_l {
     color: #fff;
     order: 2; }
+  .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorPlaceHolder--2Pp8z {
+    order: 1;
+    width: 16.38889vw; }
   .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG {
+    margin-right: -1.11111vw;
     overflow: hidden;
     padding: 0 1.11111vw 1.11111vw 0; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG.GameZoneWrapper-isClickable--1X805:hover .GameZoneWrapper-readyIndicator--1vbfy {
-      opacity: 1; }
+      animation: GameZoneWrapper-indicator-hover--1uPoe .3s 1 ease-in-out;
+      opacity: .85; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG.GameZoneWrapper-isClickable--1X805:active .GameZoneWrapper-readyIndicator--1vbfy {
       transform: translate(1.11111vw, 1.11111vw); }
-    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--1--nX_jq {
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--p1--2guV9 {
       order: 1; }
-      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--1--nX_jq .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--p1--2guV9 .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
         left: -25%;
         top: -20%;
         transform: rotate(25deg); }
-    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--2--2vlMn {
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--p2--3EZov {
       order: 3; }
-      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--2--2vlMn .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
+      .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--p2--3EZov .GameZoneWrapper-readyIndicatorCharacter--1LBFw {
         right: -28%;
         top: -34%;
         transform: rotate(-140deg); }
@@ -913,6 +926,8 @@ a {
   position: absolute;
   top: 0;
   width: 100%; }
+  .PixiScene-pixiScene--3xIt9.PixiScene-isWithMouse--29D_M {
+    cursor: none; }
 
 .PixiScene-canvas--3BFfV {
   height: 100%;
@@ -1202,7 +1217,7 @@ a {
 .Board-items--1l1Q1 {
   align-items: center;
   display: flex;
-  flex: 6.25vw 0 0;
+  flex: 9.375vw 0 0;
   flex-flow: row wrap;
   height: 9.02778vw;
   justify-content: space-between; }
@@ -1217,6 +1232,7 @@ a {
 
 .Board-item--2QmwZ {
   height: 1.59722vw;
+  margin: 0 0.13889vw;
   width: 1.59722vw; }
   .Board-item--2QmwZ.Board-itemSnack--3F-81 {
     animation: Board-item-appear--3d5br .15s 1 both;

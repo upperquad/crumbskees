@@ -13,6 +13,7 @@ import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 import Character from '~components/Character'
 
 const TIME = DEBUG ? 10 : 40
+const ADD_SECONDS = 5
 
 const GameZoneWrapper = props => {
   const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
@@ -24,16 +25,21 @@ const GameZoneWrapper = props => {
   const countDownStarted = useRef(false)
   const gameEnded = useRef(false)
   const startTime = useRef(null)
+  const timeAdded = useRef(0)
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [playersCache] = useState(() => (
     PlayersManager.players.map(player => (
       {
         lottie: player.lottie,
-        name: player.name,
+        slug: player.slug,
         secondaryColor: player.secondaryColor,
       }
     ))
   ))
+
+  const addTime = () => {
+    timeAdded.current = ADD_SECONDS
+  }
 
   const addMessage = messageObj => {
     setMessage(prevMessage => ({
@@ -62,7 +68,7 @@ const GameZoneWrapper = props => {
         }
 
         const deltaTime = (now - startTime.current) / 1000
-        const newTime = Math.max((TIME - deltaTime), 0)
+        const newTime = Math.max((timeAdded.current + TIME - deltaTime), 0)
 
         if (newTime <= 10 && !countDownStarted.current) {
           // TODO: play countdown
@@ -147,6 +153,7 @@ const GameZoneWrapper = props => {
           </div>
           <div className={styles.readyIndicators}>
             <div className={styles.readyIndicatorsTitle} data-text="Ready?">Ready?</div>
+            {PlayersManager.mode === 'SINGLE' && <div className={styles.readyIndicatorPlaceHolder} />}
             {PlayersManager.players.map((player, index) => {
               const isClickable = PlayersManager.mode === 'SINGLE'
               const clickHandler = isClickable ?
@@ -156,10 +163,10 @@ const GameZoneWrapper = props => {
                 null
               return (
                 <div
-                  key={playersCache[index].name}
+                  key={playersCache[index].slug}
                   className={classNames(
                     styles.readyIndicatorWrapper,
-                    styles[`readyIndicatorWrapper--${index + 1}`],
+                    styles[`readyIndicatorWrapper--${playersCache[index].slug}`],
                     { [styles.isClickable]: isClickable },
                   )}
                   role={isClickable ? 'button' : null}
@@ -203,7 +210,7 @@ const GameZoneWrapper = props => {
                     itemsLevel={itemsLevel}
                     setGameState={setGameState}
                     setParentPowerArray={setPowerArray}
-                    setTime={setTime}
+                    addTime={addTime}
                     type={type}
                   />
                 </div>
