@@ -9,6 +9,23 @@
   width: 100%;
 }
 
+.marqueeTop {
+  background: $color-purple;
+  left: 0;
+  padding: scaleVw(10) 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  .marqueeTopText {
+    @extend %t--body;
+
+    color: $color-red;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+}
+
 .marqueeLeft,
 .marqueeRight {
   background: $color-black;

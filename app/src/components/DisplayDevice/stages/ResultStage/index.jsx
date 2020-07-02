@@ -90,6 +90,18 @@ const ResultStage = props => {
               duration="12s"
             />
           </div>
+          <div className={styles.marqueeTop}>
+            <MarqueeText
+              extraClassName={styles.marqueeTopText}
+              text=" Made with <3 BY Upperquad
+              ~~~~(~@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•~)~~~~
+              Song by Solarbear • CC BY-NC-ND 3.0
+              ~~~~(~•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◊~)~~~~
+              Sounds by ####
+              ~~~~(~◊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@~)~~~~"
+              duration="36s"
+            />
+          </div>
           <div className={styles.marqueeRight}>
             <MarqueeText
               extraClassName={styles.marqueeSideText}
