@@ -28,6 +28,10 @@
     padding .4s $easing-quad-out,
     transform .4s $easing-quad-out;
 
+  &:focus {
+    outline: none;
+  }
+
   :global(.is-display-device) & {
     &:hover {
       animation: button-hover .3s 1 ease-in-out;

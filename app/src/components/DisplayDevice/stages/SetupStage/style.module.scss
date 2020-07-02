@@ -109,6 +109,10 @@
   cursor: pointer;
   transition: transform .15s ease-in-out;
 
+  &:focus {
+    outline: none;
+  }
+
   &:hover {
     animation: mode-hover .3s 1 ease-in-out;
   }

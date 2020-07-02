@@ -247,6 +247,8 @@ a {
   padding: 0 1.52778vw 1.52778vw 0;
   position: relative;
   transition: padding 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+  .Button-button--2dnz7:focus {
+    outline: none; }
   .is-display-device .Button-button--2dnz7:hover {
     animation: Button-button-hover--3woSL .3s 1 ease-in-out; }
   .is-display-device .Button-button--2dnz7:active {
@@ -547,6 +549,8 @@ a {
 .SetupStage-mode--1NYa8 {
   cursor: pointer;
   transition: transform .15s ease-in-out; }
+  .SetupStage-mode--1NYa8:focus {
+    outline: none; }
   .SetupStage-mode--1NYa8:hover {
     animation: SetupStage-mode-hover--192KR .3s 1 ease-in-out; }
   .SetupStage-mode--1NYa8:active {
@@ -917,6 +921,8 @@ a {
     margin-right: -1.11111vw;
     overflow: hidden;
     padding: 0 1.11111vw 1.11111vw 0; }
+    .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG.GameZoneWrapper-isClickable--1X805:focus {
+      outline: none; }
     .GameZoneWrapper-readyIndicators--1lgOI .GameZoneWrapper-readyIndicatorWrapper--6VzJG.GameZoneWrapper-isClickable--1X805:hover .GameZoneWrapper-readyIndicator--1vbfy {
       animation: GameZoneWrapper-indicator-hover--1uPoe .3s 1 ease-in-out;
       opacity: .85; }

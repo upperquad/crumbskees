@@ -17,7 +17,6 @@ const ADD_SECONDS = 5
 
 const GameZoneWrapper = props => {
   const { gameState, godMode, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
-  const { itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [message, setMessage] = useState({ messageCount: 0 })
   const [itemsLevel, setScoresLevel] = useState(() => PlayersManager.players.map(() => []))
@@ -224,7 +223,6 @@ const GameZoneWrapper = props => {
           <Board
             time={time}
             totalTime={TIME}
-            itemImage={itemImage}
             items={itemsLevel}
             transitionStatus={transitionStatus}
             roundName={GAME_ROUNDS[roundIndex].roundNameText}

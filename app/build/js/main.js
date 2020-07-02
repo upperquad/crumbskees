@@ -112886,19 +112886,23 @@ var GameZone = function GameZone(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState2 = _slicedToArray(_useState, 2),
       items = _useState2[0],
-      setItems = _useState2[1]; // TODO: power should be in player? Maybe not though
+      setItems = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      tutorialCount = _useState4[0],
+      setTutorialCount = _useState4[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return null;
     });
   }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      powerArray = _useState4[0],
-      setPowerArray = _useState4[1];
+      _useState6 = _slicedToArray(_useState5, 2),
+      powerArray = _useState6[0],
+      setPowerArray = _useState6[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return {
         x: 0,
@@ -112906,18 +112910,18 @@ var GameZone = function GameZone(props) {
       };
     });
   }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      positionArray = _useState6[0],
-      setPositionArray = _useState6[1];
+      _useState8 = _slicedToArray(_useState7, 2),
+      positionArray = _useState8[0],
+      setPositionArray = _useState8[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(function () {
     return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.map(function () {
       return false;
     });
   }),
-      _useState8 = _slicedToArray(_useState7, 2),
-      tapInstructionArray = _useState8[0],
-      setTapInstructionArray = _useState8[1];
+      _useState10 = _slicedToArray(_useState9, 2),
+      tapInstructionArray = _useState10[0],
+      setTapInstructionArray = _useState10[1];
 
   var sceneInit = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false);
   var mouseHandler = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // Players input
@@ -113046,9 +113050,7 @@ var GameZone = function GameZone(props) {
 
         case 'click':
           {
-            if (type === 'tutorial') {
-              handleClick(playerIndex);
-            } else if (type === 'game' && gameState !== 'after-game') {
+            if (type === 'tutorial' || type === 'game' && gameState !== 'after-game') {
               handleClick(playerIndex);
             }
 
@@ -113092,6 +113094,12 @@ var GameZone = function GameZone(props) {
           }
         }
       });
+
+      if (type === 'tutorial') {
+        setTutorialCount(function (prevCount) {
+          return prevCount + 1;
+        });
+      }
     }
 
     if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].mode === 'DUAL') {
@@ -113284,7 +113292,7 @@ var GameZone = function GameZone(props) {
     };
 
     setupGrid();
-  }, [round]); // tap instruction
+  }, [round, tutorialCount]); // tap instruction
 
   var zeroScorePlayers = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_2__["default"].players.filter(function (player) {
     return player.score && player.score() === 0;
@@ -113481,7 +113489,6 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
       setGameState = props.setGameState,
       transitionStatus = props.transitionStatus,
       type = props.type;
-  var itemImage = _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex].itemImage;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(TIME),
       _useState2 = _slicedToArray(_useState, 2),
@@ -113689,7 +113696,6 @@ var GameZoneWrapper = function GameZoneWrapper(props) {
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DisplayDevice_stages_PlayStage_Round_Board__WEBPACK_IMPORTED_MODULE_9__["default"], {
     time: time,
     totalTime: TIME,
-    itemImage: itemImage,
     items: itemsLevel,
     transitionStatus: transitionStatus,
     roundName: _constants__WEBPACK_IMPORTED_MODULE_6__["GAME_ROUNDS"][roundIndex].roundNameText,
@@ -115463,6 +115469,7 @@ var TutorialStage = function TutorialStage(props) {
       rollback();
     }
   }, [allConnected, rollback]);
+  var instructionText = _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_4__["default"].mode === 'DUAL' ? 'Use your phone screen to find food and tap the screen to eat it.' : 'Use your mouse to find food and click to eat it.';
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.tutorial, extraClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -115481,7 +115488,7 @@ var TutorialStage = function TutorialStage(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.heading
   }, "Find the snacks & munch \u2018em up."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.description
-  }, "Use your phone screen to find food and tap the screen to eat it. If you\u2019re on your computer, search and click with your mouse instead."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, instructionText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.heading
   }, "Go as fast as you can!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.description

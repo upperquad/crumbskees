@@ -41,7 +41,7 @@ const GameZone = props => {
   } = props
   const { videoBack, videoFront } = round
   const [items, setItems] = useState([])
-  // TODO: power should be in player? Maybe not though
+  const [tutorialCount, setTutorialCount] = useState(0)
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
@@ -169,9 +169,7 @@ const GameZone = props => {
           break
         }
         case 'click': {
-          if (type === 'tutorial') {
-            handleClick(playerIndex)
-          } else if (type === 'game' && gameState !== 'after-game') {
+          if (type === 'tutorial' || (type === 'game' && gameState !== 'after-game')) {
             handleClick(playerIndex)
           }
           break
@@ -206,6 +204,9 @@ const GameZone = props => {
           }
         },
       })
+      if (type === 'tutorial') {
+        setTutorialCount(prevCount => prevCount + 1)
+      }
     }
 
     if (PlayersManager.mode === 'DUAL') {
@@ -370,7 +371,7 @@ const GameZone = props => {
     }
 
     setupGrid()
-  }, [round])
+  }, [round, tutorialCount])
 
   // tap instruction
   const zeroScorePlayers = PlayersManager.players.filter(player => player.score && player.score() === 0)

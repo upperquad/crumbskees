@@ -28,6 +28,10 @@ const TutorialStage = props => {
     }
   }, [allConnected, rollback])
 
+  const instructionText = PlayersManager.mode === 'DUAL' ?
+    'Use your phone screen to find food and tap the screen to eat it.' :
+    'Use your mouse to find food and click to eat it.'
+
   return (
     <div className={classNames(styles.tutorial, extraClassName)}>
       <div
@@ -41,8 +45,7 @@ const TutorialStage = props => {
               Find the snacks & munch ‘em up.
             </div>
             <div className={styles.description}>
-              Use your phone screen to find food and tap the screen to eat it.
-              If you’re on your computer, search and click with your mouse instead.
+              {instructionText}
             </div>
             <div className={styles.heading}>
               Go as fast as you can!
