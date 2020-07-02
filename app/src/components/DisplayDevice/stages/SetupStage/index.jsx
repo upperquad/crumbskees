@@ -182,7 +182,7 @@ const SetupStage = props => {
                       mood={dualPlayerHovered ? 'excited' : 'happy'}
                     />
                   </div>
-                  <p className={styles.modeSubtitle}>Gotta friend nearby? Grab ‘em</p>
+                  <p className={styles.modeSubtitle}>Got a friend nearby? Grab ‘em</p>
                   <div className={styles.modeGo}>Go!</div>
                 </div>
               </div>
