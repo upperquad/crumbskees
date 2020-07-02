@@ -5,7 +5,6 @@ import styles from './style.module.scss'
 
 import LandingStage from './stages/LandingStage'
 import IntroIlloStage from './stages/IntroIlloStage'
-// import ModeStage from './stages/ModeStage'
 import SetupStage from './stages/SetupStage'
 import TutorialStage from './stages/TutorialStage'
 import PlayStage from './stages/PlayStage'
@@ -65,15 +64,6 @@ const DisplayDevice = () => {
             )}
           </Transition>
         )}
-        {/* stage === 'mode' && (
-          <Transition key="stage-mode" timeout={TRANSITION_TIMEOUTS}>
-            {status => (
-              <StageWrapper status={status}>
-                <ModeStage onFinish={() => setStage('setup')} />
-              </StageWrapper>
-            )}
-          </Transition>
-        ) */}
         {stage === 'setup' && (
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (
