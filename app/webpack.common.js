@@ -16,7 +16,7 @@ module.exports = {
         exclude: /node_modules/,
         use: 'babel-loader'
       }, {
-        test: /\.(png|svg|jpg|gif|mp4|mp3|wav)$/,
+        test: /\.(png|svg|jpg|gif|mp4|mp3|wav|webm)$/,
         use: 'file-loader'
       }, {
         test: /\.(woff|woff2|eot|ttf|otf)$/,

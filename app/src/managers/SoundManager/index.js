@@ -2,9 +2,13 @@ import { Howl, Howler } from 'howler'
 import Observable from '~managers/abstracts/Observable'
 
 import musicLanding from '~assets/sounds/music-landing.mp3'
+import musicLandingWebm from '~assets/sounds/music-landing.webm'
 import musicSetup from '~assets/sounds/music-setup.mp3'
+import musicSetupWebm from '~assets/sounds/music-setup.webm'
 import musicPlay from '~assets/sounds/music-play.mp3'
+import musicPlayWebm from '~assets/sounds/music-play.webm'
 import musicResult from '~assets/sounds/music-result.mp3'
+import musicResultWebm from '~assets/sounds/music-result.webm'
 import soundMunch from '~assets/sounds/munch.wav'
 import soundPlayerJoin from '~assets/sounds/player-join.wav'
 import soundPlayerReady from '~assets/sounds/player-ready.wav'
@@ -23,10 +27,10 @@ class SoundManager extends Observable {
       SoundManager.instance = this
 
       this._musics = {
-        landing: new Howl({ src: [musicLanding] }),
-        setup: new Howl({ src: [musicSetup] }),
-        play: new Howl({ src: [musicPlay] }),
-        result: new Howl({ src: [musicResult] }),
+        landing: new Howl({ src: [musicLandingWebm, musicLanding], loop: true }),
+        setup: new Howl({ src: [musicSetupWebm, musicSetup], loop: true }),
+        play: new Howl({ src: [musicPlayWebm, musicPlay], loop: true }),
+        result: new Howl({ src: [musicResultWebm, musicResult], loop: true }),
       }
       this._sounds = {
         munch: new Howl({ src: [soundMunch] }),
