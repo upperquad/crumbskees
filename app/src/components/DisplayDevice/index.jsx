@@ -15,7 +15,7 @@ import StageWrapper from './StageWrapper'
 
 import PlayersManager from '~managers/PlayersManager'
 
-const TRANSITION_TIMEOUTS = 1600
+const TRANSITION_TIMEOUTS = { enter: 1600, exit: 800 }
 
 const DisplayDevice = () => {
   const [stage, setStage] = useState('landing')
