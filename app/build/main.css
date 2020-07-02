@@ -2242,6 +2242,9 @@ a {
   @media only screen and (max-width: 374px) {
     .PreConnectStage-overlayCharacters--qxWn- {
       display: none; } }
+  @media only screen and (max-height: 660px) {
+    .PreConnectStage-overlayCharacters--qxWn- {
+      display: none; } }
 
 .PreConnectStage-character1--1Blcb {
   bottom: -35px;
@@ -2257,6 +2260,26 @@ a {
   position: absolute;
   right: -54px;
   width: 175px; }
+
+@media only screen and (max-width: 359px) {
+  .PreConnectStage-marquee--3ZMOV {
+    display: none; }
+  .PreConnectStage-overlaySubtitle--33MrA {
+    margin: 20px; }
+  .PreConnectStage-overlayButtonInner--htV9y {
+    font-size: 20px !important;
+    line-height: 28px !important; }
+  .is-control-device .PreConnectStage-overlayButtonCard--2Lbsq {
+    padding: 12px 18px !important; }
+  .is-control-device .PreConnectStage-tokenDisplay--1CluL .PreConnectStage-tokenDisplayInner--BfC1s {
+    font-size: 60px;
+    line-height: 72px; }
+  .is-control-device .PreConnectStage-tokenInputKeyCard--3axaa {
+    padding: 6px !important; } }
+
+@media only screen and (max-width: 359px) and (max-height: 550px) {
+  .PreConnectStage-instruction--R3YLX {
+    display: none; } }
 
 /* Colors */
 /* Breakpoints */

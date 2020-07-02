@@ -111141,7 +111141,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var Button = function Button(props) {
   var clickHandler = props.clickHandler,
+      extraCardClassName = props.extraCardClassName,
       extraClassName = props.extraClassName,
+      extraInnerClassName = props.extraInnerClassName,
       icon = props.icon,
       isFullWidth = props.isFullWidth,
       isKeyPad = props.isKeyPad,
@@ -111149,9 +111151,9 @@ var Button = function Button(props) {
       link = props.link,
       text = props.text;
   var cardElem = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonInner
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonInner, extraInnerClassName)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonCard, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isIcon, icon))
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.buttonCard, extraCardClassName, _defineProperty({}, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.isIcon, icon))
   }, icon ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: icon,
     alt: text,
@@ -111877,6 +111879,7 @@ var PreConnectStage = function PreConnectStage(props) {
   }, [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
       extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.tokenInputKey,
+      extraCardClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.tokenInputKeyCard,
       text: key,
       key: key,
       clickHandler: function clickHandler() {
@@ -111886,6 +111889,7 @@ var PreConnectStage = function PreConnectStage(props) {
     });
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.tokenInputKey,
+    extraCardClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.tokenInputKeyCard,
     text: "Clear",
     key: "clear",
     clickHandler: clearToken,
@@ -111918,7 +111922,8 @@ var PreConnectStage = function PreConnectStage(props) {
   }, "Visit crumbskees.com on your desktop or laptop and scan the QR with you phones to get started.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Already have a code?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.overlayButtonWrap
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.overlaybutton,
+    extraInnerClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.overlayButtonInner,
+    extraCardClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.overlayButtonCard,
     text: "I have a code",
     clickHandler: function clickHandler() {
       return setShowInstructionOverlay(false);
@@ -111948,7 +111953,7 @@ var PreConnectStage = function PreConnectStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","tokenDisplayInner":"PreConnectStage-tokenDisplayInner--BfC1s","overlayTitleInner":"PreConnectStage-overlayTitleInner--2qKoq","label":"PreConnectStage-label--1mMJf","instruction":"PreConnectStage-instruction--R3YLX","marquee":"PreConnectStage-marquee--3ZMOV","overlaySubtitle":"PreConnectStage-overlaySubtitle--33MrA","preConnect":"PreConnectStage-preConnect--1Inqw","tokenInput":"PreConnectStage-tokenInput--HjjO4","isConnecting":"PreConnectStage-isConnecting--QiRUG","tokenInputKey":"PreConnectStage-tokenInputKey--3if_1","placeholder1":"PreConnectStage-placeholder1--2D0S-","placeholder2":"PreConnectStage-placeholder2--3IyJD","placeholder3":"PreConnectStage-placeholder3--1VULV","instructionOverlay":"PreConnectStage-instructionOverlay--3c0-7","overlayContent":"PreConnectStage-overlayContent--1bD-P","overlayTitle":"PreConnectStage-overlayTitle--2ZeRY","overlayCharacters":"PreConnectStage-overlayCharacters--qxWn-","character1":"PreConnectStage-character1--1Blcb","character2":"PreConnectStage-character2--3hpz9"};
+module.exports = {"tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","tokenDisplayInner":"PreConnectStage-tokenDisplayInner--BfC1s","overlayTitleInner":"PreConnectStage-overlayTitleInner--2qKoq","label":"PreConnectStage-label--1mMJf","instruction":"PreConnectStage-instruction--R3YLX","marquee":"PreConnectStage-marquee--3ZMOV","overlaySubtitle":"PreConnectStage-overlaySubtitle--33MrA","preConnect":"PreConnectStage-preConnect--1Inqw","tokenInput":"PreConnectStage-tokenInput--HjjO4","isConnecting":"PreConnectStage-isConnecting--QiRUG","tokenInputKey":"PreConnectStage-tokenInputKey--3if_1","placeholder1":"PreConnectStage-placeholder1--2D0S-","placeholder2":"PreConnectStage-placeholder2--3IyJD","placeholder3":"PreConnectStage-placeholder3--1VULV","instructionOverlay":"PreConnectStage-instructionOverlay--3c0-7","overlayContent":"PreConnectStage-overlayContent--1bD-P","overlayTitle":"PreConnectStage-overlayTitle--2ZeRY","overlayCharacters":"PreConnectStage-overlayCharacters--qxWn-","character1":"PreConnectStage-character1--1Blcb","character2":"PreConnectStage-character2--3hpz9","overlayButtonInner":"PreConnectStage-overlayButtonInner--htV9y","overlayButtonCard":"PreConnectStage-overlayButtonCard--2Lbsq","tokenInputKeyCard":"PreConnectStage-tokenInputKeyCard--3axaa"};
 
 /***/ }),
 

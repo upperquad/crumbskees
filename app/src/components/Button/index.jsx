@@ -5,12 +5,23 @@ import styles from './style.module.scss'
 import SoundManager from '~managers/SoundManager'
 
 const Button = props => {
-  const { clickHandler, extraClassName, icon, isFullWidth, isKeyPad, isMute, link, text } = props
+  const {
+    clickHandler,
+    extraCardClassName,
+    extraClassName,
+    extraInnerClassName,
+    icon,
+    isFullWidth,
+    isKeyPad,
+    isMute,
+    link,
+    text,
+  } = props
 
   const cardElem = (
-    <div className={styles.buttonInner}>
+    <div className={classNames(styles.buttonInner, extraInnerClassName)}>
       <div
-        className={classNames(styles.buttonCard, {
+        className={classNames(styles.buttonCard, extraCardClassName, {
           [styles.isIcon]: icon,
         })}
       >
