@@ -111467,8 +111467,8 @@ var MeetCharacterStage = function MeetCharacterStage(props) {
     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.meetCharacter, _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a["meetCharacter--".concat(character.color)])
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.title,
-    "data-text": "UR IN!"
-  }, "UR IN!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    "data-text": "Let\u2019s go!"
+  }, "Let\u2019s go!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_3__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.character,
     character: character,
     mood: "happy"
