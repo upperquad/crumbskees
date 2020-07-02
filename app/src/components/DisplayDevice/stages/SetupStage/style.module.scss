@@ -61,14 +61,28 @@
   width: 100%;
 }
 
+.modeWrapper {
+  margin: 0 scaleVw(60);
+  overflow: hidden;
+  padding: 0 scaleVw(16) scaleVw(16) 0;
+}
+
+.modeWrapperBig {
+  margin: 0 scaleVw(80);
+  transform: scale(1.1);
+}
+
 .player,
 .mode {
   @extend %shadow-box;
 
   background: $color-white;
-  margin: 0 scaleVw(60);
   text-align: center;
   width: scaleVw(460);
+}
+
+.player {
+  margin: 0 scaleVw(60);
 }
 
 .modeTitle {
@@ -77,8 +91,31 @@
   margin-top: scaleVw(25);
 }
 
+@keyframes mode-hover {
+  from {
+    transform: none;
+  }
+
+  50% {
+    transform: translate(#{scaleVw(4)}, #{scaleVw(4)});
+  }
+
+  to {
+    transform: none;
+  }
+}
+
 .mode {
   cursor: pointer;
+  transition: transform .15s ease-in-out;
+
+  &:hover {
+    animation: mode-hover .3s 1 ease-in-out;
+  }
+
+  &:active {
+    transform: translate(#{scaleVw(16)}, #{scaleVw(16)});
+  }
 }
 
 .qrWrapper {

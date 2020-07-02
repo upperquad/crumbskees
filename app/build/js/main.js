@@ -115241,29 +115241,8 @@ var SetupStage = function SetupStage(props) {
         transform: "scale(".concat(zoom, ")")
       }
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      onClick: function onClick() {
-        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('SINGLE');
-      },
-      onMouseEnter: function onMouseEnter() {
-        setSinglePlayerHovered(true);
-      },
-      onMouseLeave: function onMouseLeave() {
-        setSinglePlayerHovered(false);
-      },
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.mode
+      className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeWrapper, _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeWrapperBig)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeTitle
-    }, "1 Player"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacters
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
-      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacterSingle,
-      character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][1],
-      mood: singlePlayerHovered ? 'excited' : 'happy'
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeSubtitle
-    }, "It\u2019s great! You\u2019ll always win"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeGo
-    }, "Go!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       onClick: function onClick() {
         _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('DUAL');
       },
@@ -115273,10 +115252,12 @@ var SetupStage = function SetupStage(props) {
       onMouseLeave: function onMouseLeave() {
         setDualPlayerHovered(false);
       },
-      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.mode
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.mode,
+      role: "button",
+      tabIndex: "0"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeTitle
-    }, "2 Players"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "2 Player"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacters
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
       extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacter1,
@@ -115288,9 +115269,36 @@ var SetupStage = function SetupStage(props) {
       mood: dualPlayerHovered ? 'excited' : 'happy'
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeSubtitle
-    }, "Got a friend nearby? Grab \u2018em"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "2 player is more fun!", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Got a friend nearby? Grab \u2018em"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeGo
-    }, "Go!")));
+    }, "Go!"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeWrapper
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      onClick: function onClick() {
+        _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('SINGLE');
+      },
+      onMouseEnter: function onMouseEnter() {
+        setSinglePlayerHovered(true);
+      },
+      onMouseLeave: function onMouseLeave() {
+        setSinglePlayerHovered(false);
+      },
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.mode,
+      role: "button",
+      tabIndex: "0"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeTitle
+    }, "1 Player"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacters
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Character__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeCharacterSingle,
+      character: _constants__WEBPACK_IMPORTED_MODULE_5__["CHARACTERS"][1],
+      mood: singlePlayerHovered ? 'excited' : 'happy'
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeSubtitle
+    }, "It\u2019s great too!", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "You\u2019ll always win"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: _style_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.modeGo
+    }, "Go!"))));
   }), _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode === 'DUAL' && tokenManagerConnected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_3__["Transition"], {
     key: "qr-setup",
     timeout: 300
@@ -115387,7 +115395,7 @@ var SetupStage = function SetupStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"SetupStage-title--5BCVB","modeTitle":"SetupStage-modeTitle--1KQCx","playerName":"SetupStage-playerName--3DwHW","modeGo":"SetupStage-modeGo--XaIwr","subtitle":"SetupStage-subtitle--1AeLK","modeSubtitle":"SetupStage-modeSubtitle--2M1Ch","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","mode":"SetupStage-mode--1NYa8","setup":"SetupStage-setup--2ohF8","setupInner":"SetupStage-setupInner--1bBeL","isTransitioning":"SetupStage-isTransitioning--2aCsP","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","modes":"SetupStage-modes--1MMlx","qrWrapper":"SetupStage-qrWrapper--3-nvG","modeCharacters":"SetupStage-modeCharacters--iimLw","modeCharacterSingle":"SetupStage-modeCharacterSingle--2nChw","modeCharacter2":"SetupStage-modeCharacter2--1BLln","modeCharacter1":"SetupStage-modeCharacter1--2TSC2","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","muteButton":"SetupStage-muteButton--1GZEU"};
+module.exports = {"title":"SetupStage-title--5BCVB","modeTitle":"SetupStage-modeTitle--1KQCx","playerName":"SetupStage-playerName--3DwHW","modeGo":"SetupStage-modeGo--XaIwr","subtitle":"SetupStage-subtitle--1AeLK","modeSubtitle":"SetupStage-modeSubtitle--2M1Ch","qrUrl":"SetupStage-qrUrl--21ulS","player":"SetupStage-player--2JGID","mode":"SetupStage-mode--1NYa8","setup":"SetupStage-setup--2ohF8","setupInner":"SetupStage-setupInner--1bBeL","isTransitioning":"SetupStage-isTransitioning--2aCsP","video":"SetupStage-video--26_7G","players":"SetupStage-players--1djmu","modes":"SetupStage-modes--1MMlx","modeWrapper":"SetupStage-modeWrapper--3YURc","modeWrapperBig":"SetupStage-modeWrapperBig--DaC-C","mode-hover":"SetupStage-mode-hover--192KR","modeHover":"SetupStage-mode-hover--192KR","qrWrapper":"SetupStage-qrWrapper--3-nvG","modeCharacters":"SetupStage-modeCharacters--iimLw","modeCharacterSingle":"SetupStage-modeCharacterSingle--2nChw","modeCharacter2":"SetupStage-modeCharacter2--1BLln","modeCharacter1":"SetupStage-modeCharacter1--2TSC2","playerConnected":"SetupStage-playerConnected--3s2oQ","qr":"SetupStage-qr--14fFl","playerConnectedCharacter":"SetupStage-playerConnectedCharacter--mHNTp","playerConnected--pink":"SetupStage-playerConnected--pink--3crM9","playerConnectedPink":"SetupStage-playerConnected--pink--3crM9","playerConnected--yellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedYellow":"SetupStage-playerConnected--yellow--1i33H","playerConnectedTransitioning":"SetupStage-playerConnectedTransitioning--aww32","qrTransitioning":"SetupStage-qrTransitioning--1eI0K","qrQr":"SetupStage-qrQr--3tWIR","qrUrlToken":"SetupStage-qrUrlToken--1Jgor","cornerCharacter":"SetupStage-cornerCharacter--2frHB","cornerCharacter--1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacter1":"SetupStage-cornerCharacter--1--1pqVe","cornerCharacterHead":"SetupStage-cornerCharacterHead--2RrB7","cornerCharacterOut":"SetupStage-cornerCharacterOut--2IZMS","cornerCharacter--2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacter2":"SetupStage-cornerCharacter--2--1Dhf_","cornerCharacterBody":"SetupStage-cornerCharacterBody--1pm_-","muteButton":"SetupStage-muteButton--1GZEU"};
 
 /***/ }),
 

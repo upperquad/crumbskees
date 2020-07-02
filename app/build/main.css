@@ -515,18 +515,42 @@ a {
   top: 0;
   width: 100%; }
 
+.SetupStage-modeWrapper--3YURc {
+  margin: 0 4.16667vw;
+  overflow: hidden;
+  padding: 0 1.11111vw 1.11111vw 0; }
+
+.SetupStage-modeWrapperBig--DaC-C {
+  margin: 0 5.55556vw;
+  transform: scale(1.1); }
+
 .SetupStage-player--2JGID,
 .SetupStage-mode--1NYa8 {
   background: #fff;
-  margin: 0 4.16667vw;
   text-align: center;
   width: 31.94444vw; }
+
+.SetupStage-player--2JGID {
+  margin: 0 4.16667vw; }
 
 .SetupStage-modeTitle--1KQCx {
   margin-top: 1.73611vw; }
 
+@keyframes SetupStage-mode-hover--192KR {
+  from {
+    transform: none; }
+  50% {
+    transform: translate(0.27778vw, 0.27778vw); }
+  to {
+    transform: none; } }
+
 .SetupStage-mode--1NYa8 {
-  cursor: pointer; }
+  cursor: pointer;
+  transition: transform .15s ease-in-out; }
+  .SetupStage-mode--1NYa8:hover {
+    animation: SetupStage-mode-hover--192KR .3s 1 ease-in-out; }
+  .SetupStage-mode--1NYa8:active {
+    transform: translate(1.11111vw, 1.11111vw); }
 
 .SetupStage-qrWrapper--3-nvG {
   height: 24.30556vw;
