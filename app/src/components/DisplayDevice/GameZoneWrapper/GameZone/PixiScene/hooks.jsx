@@ -27,17 +27,12 @@ const TRANSITION_OUT_DURATION = 1000
 
 const MOUTH_SEQUENCE = [
   { ratio: 500 / 597, frame: 0 },
-  { ratio: 458 / 597, frame: 1 },
-  { ratio: 403 / 597, frame: 2 },
-  { ratio: 347 / 597, frame: 3 },
-  { ratio: 306 / 597, frame: 4 },
-  { ratio: 236 / 597, frame: 5 },
-  { ratio: 236 / 597, frame: 5 },
-  { ratio: 236 / 597, frame: 5 },
-  { ratio: 306 / 597, frame: 4 },
-  { ratio: 347 / 597, frame: 3 },
-  { ratio: 403 / 597, frame: 2 },
-  { ratio: 458 / 597, frame: 1 },
+  { ratio: 403 / 597, frame: 1 },
+  { ratio: 306 / 597, frame: 2 },
+  { ratio: 236 / 597, frame: 3 },
+  { ratio: 236 / 597, frame: 3 },
+  { ratio: 306 / 597, frame: 2 },
+  { ratio: 403 / 597, frame: 1 },
   { ratio: 500 / 597, frame: 0 },
 ]
 

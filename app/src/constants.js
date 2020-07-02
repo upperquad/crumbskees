@@ -22,14 +22,10 @@ import characterMouth1Sequence1 from '~assets/images/characters/mouth-1/1.png'
 import characterMouth1Sequence2 from '~assets/images/characters/mouth-1/2.png'
 import characterMouth1Sequence3 from '~assets/images/characters/mouth-1/3.png'
 import characterMouth1Sequence4 from '~assets/images/characters/mouth-1/4.png'
-import characterMouth1Sequence5 from '~assets/images/characters/mouth-1/5.png'
-import characterMouth1Sequence6 from '~assets/images/characters/mouth-1/6.png'
 import characterMouth2Sequence1 from '~assets/images/characters/mouth-2/1.png'
 import characterMouth2Sequence2 from '~assets/images/characters/mouth-2/2.png'
 import characterMouth2Sequence3 from '~assets/images/characters/mouth-2/3.png'
 import characterMouth2Sequence4 from '~assets/images/characters/mouth-2/4.png'
-import characterMouth2Sequence5 from '~assets/images/characters/mouth-2/5.png'
-import characterMouth2Sequence6 from '~assets/images/characters/mouth-2/6.png'
 
 import goodSnack1 from '~assets/images/snacks/good/1.svg'
 import goodSnack2 from '~assets/images/snacks/good/2.svg'
@@ -104,8 +100,6 @@ export const CHARACTERS = [
       characterMouth1Sequence2,
       characterMouth1Sequence3,
       characterMouth1Sequence4,
-      characterMouth1Sequence5,
-      characterMouth1Sequence6,
     ],
   },
   {
@@ -131,8 +125,6 @@ export const CHARACTERS = [
       characterMouth2Sequence2,
       characterMouth2Sequence3,
       characterMouth2Sequence4,
-      characterMouth2Sequence5,
-      characterMouth2Sequence6,
     ],
   },
 ]

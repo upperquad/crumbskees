@@ -43,7 +43,7 @@ const ResultStage = props => {
     title = 'Winner!'
   } else {
     result = 'lost'
-    title = 'Looser!'
+    title = 'Loser!'
   }
 
   return (
