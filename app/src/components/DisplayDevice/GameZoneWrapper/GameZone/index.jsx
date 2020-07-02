@@ -470,7 +470,7 @@ function getItemsInCursor(items, position, isGrown) {
   return items.filter(item => {
     let itemX = item.x
     let itemY = item.y
-    let minDistanceSquare = isGrown ? 215 ** 2 : 95 ** 2
+    let minDistanceSquare = isGrown ? 165 ** 2 : 72 ** 2
 
     if (item.size === GRID_UNIT * 2) {
       // offset catch area for big item

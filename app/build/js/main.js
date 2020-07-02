@@ -113325,7 +113325,7 @@ function getItemsInCursor(items, position, isGrown) {
   return items.filter(function (item) {
     var itemX = item.x;
     var itemY = item.y;
-    var minDistanceSquare = isGrown ? Math.pow(215, 2) : Math.pow(95, 2);
+    var minDistanceSquare = isGrown ? Math.pow(165, 2) : Math.pow(72, 2);
 
     if (item.size === _constants__WEBPACK_IMPORTED_MODULE_5__["GRID_UNIT"] * 2) {
       // offset catch area for big item
@@ -116016,7 +116016,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var DEBUG = "boolean" !== 'undefined';
+var DEBUG = typeof DEBUG_VALUE !== 'undefined';
 var BREAKPOINT = 768;
 var VB_WIDTH = 1920;
 var VB_HEIGHT = 840;
