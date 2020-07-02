@@ -138,6 +138,7 @@ const SetupStage = props => {
                   <div
                     onClick={() => {
                       PlayersManager.init('DUAL')
+                      SoundManager.playSound('munch')
                     }}
                     onMouseEnter={() => {
                       setDualPlayerHovered(true)
@@ -174,6 +175,7 @@ const SetupStage = props => {
                   <div
                     onClick={() => {
                       PlayersManager.init('SINGLE')
+                      SoundManager.playSound('munch')
                     }}
                     onMouseEnter={() => {
                       setSinglePlayerHovered(true)
