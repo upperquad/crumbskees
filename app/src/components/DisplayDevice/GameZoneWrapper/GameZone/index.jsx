@@ -31,6 +31,7 @@ const GameZone = props => {
     addMessage,
     addTime,
     gameState,
+    godMode,
     message,
     onUpdate,
     round,
@@ -431,6 +432,7 @@ const GameZone = props => {
         videoBack={videoBack}
         videoFront={videoFront}
         mouseHandler={mouseHandler.current}
+        godMode={godMode}
       />
       {PlayersManager.players.map((player, index) => {
         if (player.initialized) {

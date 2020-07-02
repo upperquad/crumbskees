@@ -11,7 +11,7 @@ import AutoplayVideo from '~components/AutoplayVideo'
 import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 
 const Round = props => {
-  const { onRoundEnd, roundIndex, transitionStatus } = props
+  const { godMode, onRoundEnd, roundIndex, transitionStatus } = props
   const [gameState, setGameState] = useState('before-game')
   const [zoom, setZoom] = useState(1)
 
@@ -35,6 +35,7 @@ const Round = props => {
           setGameState={setGameState}
           transitionStatus={transitionStatus}
           type="game"
+          godMode={godMode}
         />
         <Intro
           roundIndex={roundIndex}

@@ -16,7 +16,7 @@ const TIME = DEBUG ? 10 : 40
 const ADD_SECONDS = 5
 
 const GameZoneWrapper = props => {
-  const { gameState, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
+  const { gameState, godMode, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
   const { itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [message, setMessage] = useState({ messageCount: 0 })
@@ -131,7 +131,9 @@ const GameZoneWrapper = props => {
     }
 
     return undefined
-  }, [forceUpdate, onFinish, type])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forceUpdate, type])
 
   return (
     <React.Fragment>
@@ -212,6 +214,7 @@ const GameZoneWrapper = props => {
                     setParentPowerArray={setPowerArray}
                     addTime={addTime}
                     type={type}
+                    godMode={godMode}
                   />
                 </div>
               </Transition>

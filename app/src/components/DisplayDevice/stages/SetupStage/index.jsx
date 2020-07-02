@@ -111,7 +111,9 @@ const SetupStage = props => {
       return () => clearTimeout(nextStageTimeout)
     }
     return undefined
-  }, [allConnected, onFinish])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allConnected])
 
   return (
     <div className={classNames(styles.setup, extraClassName)}>

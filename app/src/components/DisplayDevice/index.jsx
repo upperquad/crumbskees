@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { TransitionGroup, Transition } from 'react-transition-group'
 import useForceUpdate from 'use-force-update'
 import styles from './style.module.scss'
@@ -15,11 +15,18 @@ import StageWrapper from './StageWrapper'
 import PlayersManager from '~managers/PlayersManager'
 
 const TRANSITION_TIMEOUTS = { enter: 1600, exit: 800 }
+const CHEAT_CODE = [
+  'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+  'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA', 'Enter',
+]
+const CHEAT_CODE_LENGTH = CHEAT_CODE.length
 
 const DisplayDevice = () => {
   const [stage, setStage] = useState('landing')
   // const [errorReason, setErrorReason] = useState()
   const [allConnected, setAllConnected] = useState(false)
+  const keyBuffer = useRef([])
+  const [godMode, setGodMode] = useState(false)
   const forceUpdate = useForceUpdate()
 
   const resetGame = () => {
@@ -40,6 +47,27 @@ const DisplayDevice = () => {
       PlayersManager.removeSubscriber('player_change', onPlayerUpdate)
     }
   }, [setAllConnected, forceUpdate])
+
+  useEffect(() => {
+    const onKeyDown = event => {
+      keyBuffer.current.push(event.code)
+
+      if (keyBuffer.current.length > CHEAT_CODE_LENGTH) {
+        keyBuffer.current = keyBuffer.current.slice(keyBuffer.current.length - CHEAT_CODE_LENGTH)
+      }
+
+      if (keyBuffer.current.length === CHEAT_CODE_LENGTH &&
+        keyBuffer.current.every((key, index) => key === CHEAT_CODE[index])) {
+        setGodMode(true)
+        // TODO: need a sound for this
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.addEventListener('keydown', onKeyDown)
+    }
+  }, [])
 
   return (
     <div className={styles.displayDevice}>
@@ -80,7 +108,10 @@ const DisplayDevice = () => {
                 <TutorialStage
                   allConnected={allConnected}
                   rollback={() => setStage('setup')}
-                  onFinish={() => setStage('play')}
+                  onFinish={() => {
+                    setGodMode(false)
+                    setStage('play')
+                  }}
                 />
               </StageWrapper>
             )}
@@ -90,7 +121,10 @@ const DisplayDevice = () => {
           <Transition key="stage-play" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
-                <PlayStage onFinish={() => setStage('result')} />
+                <PlayStage
+                  godMode={godMode}
+                  onFinish={() => setStage('result')}
+                />
               </StageWrapper>
             )}
           </Transition>

@@ -10,6 +10,7 @@ const PixiScene = props => {
     addTime,
     cancelPower,
     gameState,
+    godMode,
     items,
     mouseHandler,
     powers,
@@ -42,8 +43,6 @@ const PixiScene = props => {
 
   const startTransitionOut = useRef(0)
 
-  const circleAlpha = type === 'tutorial' ? 0 : 1
-
   const allRefs = {
     el,
     app,
@@ -63,8 +62,8 @@ const PixiScene = props => {
 
   const allProps = {
     cancelPower,
-    circleAlpha,
     gameState,
+    godMode,
     items,
     powers,
     addTime,

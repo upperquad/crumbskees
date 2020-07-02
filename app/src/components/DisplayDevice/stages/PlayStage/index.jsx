@@ -10,7 +10,7 @@ import Round from './Round'
 import MuteButton from '~components/MuteButton'
 
 const PlayStage = props => {
-  const { extraClassName, onFinish } = props
+  const { extraClassName, godMode, onFinish } = props
   const [roundIndex, setRoundIndex] = useState(0)
 
   const onRoundEnd = () => {
@@ -45,6 +45,7 @@ const PlayStage = props => {
               transitionStatus={status}
               roundIndex={roundIndex}
               onRoundEnd={onRoundEnd}
+              godMode={godMode}
             />
           )}
         </Transition>

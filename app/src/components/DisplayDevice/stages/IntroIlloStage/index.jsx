@@ -18,7 +18,8 @@ const IntroIlloStage = props => {
 
   useEffect(() => {
     setTimeout(onFinish, DEBUG ? 1000 : 3500)
-  }, [onFinish])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className={classNames(styles.introIllo, extraClassName)}>

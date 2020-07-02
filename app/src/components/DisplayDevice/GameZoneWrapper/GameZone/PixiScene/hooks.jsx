@@ -98,11 +98,11 @@ export function useSetScene(refs, props) {
     }
 
     function setCircles() {
-      refs.circlesMasked.current = new Graphics()
-      // Circle
-      refs.containerFront.current.addChild(refs.circlesMasked.current)
-      // mask container into circle(s)
-      if (props.type === 'game') {
+      if (refs.containerFront.current) {
+        refs.circlesMasked.current = new Graphics()
+        // Circle
+        refs.containerFront.current.addChild(refs.circlesMasked.current)
+        // mask container into circle(s)
         refs.containerMasked.current.mask = refs.circlesMasked.current
       }
 
@@ -133,16 +133,13 @@ export function useSetScene(refs, props) {
     refs.el.current.appendChild(refs.app.current.view)
 
     // set layers
-    refs.containerFront.current = new Container()
     refs.containerMasked.current = new Container()
     refs.containerMouth.current = new Container()
     if (props.type === 'game') {
+      refs.containerFront.current = new Container()
       refs.app.current.stage.addChild(refs.containerFront.current)
     }
     refs.app.current.stage.addChild(refs.containerMasked.current)
-    if (props.type === 'tutorial') {
-      refs.app.current.stage.addChild(refs.containerFront.current)
-    }
     refs.app.current.stage.addChild(refs.containerMouth.current)
 
     let videoPixiBack
@@ -299,7 +296,9 @@ export function useRAF(refs, props) {
         return
       }
 
-      refs.circlesMasked.current.clear()
+      if (refs.circlesMasked.current) {
+        refs.circlesMasked.current.clear()
+      }
 
       PlayersManager.players.forEach((player, index) => {
         const currentPosition = refs.playersPositions.current[index]
@@ -332,14 +331,16 @@ export function useRAF(refs, props) {
         const mouthFrame = MOUTH_SEQUENCE[mouthSequenceIndex].frame
 
         // draw masked circle
-        refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
-        refs.circlesMasked.current.drawEllipse(
-          x,
-          y,
-          radius * refs.radiusBase.current,
-          radius * mouthHeightRatio * refs.radiusBase.current,
-        )
-        refs.circlesMasked.current.endFill()
+        if (refs.circlesMasked.current) {
+          refs.circlesMasked.current.beginFill(0xffffff)
+          refs.circlesMasked.current.drawEllipse(
+            x,
+            y,
+            radius * refs.radiusBase.current,
+            radius * mouthHeightRatio * refs.radiusBase.current,
+          )
+          refs.circlesMasked.current.endFill()
+        }
 
         // update mouth position
         const mouth = refs.playersMouths.current[index]
@@ -356,14 +357,18 @@ export function useRAF(refs, props) {
         drawTransitionOut(now)
       }
 
-      if (DEBUG) {
-        refs.circlesMasked.current.beginFill(0xffffff, props.circleAlpha)
+      if ((DEBUG || props.godMode) && refs.circlesMasked.current) {
+        refs.circlesMasked.current.beginFill(0xffffff)
         refs.circlesMasked.current.drawRect(0, 0, refs.initWidth.current, refs.initHeight.current)
       }
     }
 
     // draw transition out
     function drawTransitionOut(now) {
+      if (!refs.circlesMasked.current) {
+        return
+      }
+
       const percent = (now - refs.startTransitionOut.current) / TRANSITION_OUT_DURATION
       const positionX = refs.initWidth.current - refs.initWidth.current * inOutQuad(percent)
 
@@ -385,7 +390,7 @@ export function useRAF(refs, props) {
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.targetPositions, props.powers])
+  }, [props.targetPositions, props.powers, props.godMode])
 }
 
 export function useUpdateGameState(refs, props) {
