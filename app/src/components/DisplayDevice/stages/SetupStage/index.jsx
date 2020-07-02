@@ -295,7 +295,7 @@ const SetupStage = props => {
                     <Character
                       extraClassName={styles.cornerCharacterHead}
                       character={CHARACTERS[index]}
-                      mood="excited"
+                      mood="tutorial"
                     />
                   </div>
                 ))}
