@@ -114870,6 +114870,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_images_result_single_jpg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_assets_images_result_single_jpg__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _assets_images_landing_title_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ~assets/images/landing/title.json */ "./src/assets/images/landing/title.json");
 var _assets_images_landing_title_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! ~assets/images/landing/title.json */ "./src/assets/images/landing/title.json", 1);
+/* harmony import */ var _assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ~assets/images/icons/facebook.svg */ "./src/assets/images/icons/facebook.svg");
+/* harmony import */ var _assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ~assets/images/icons/twitter.svg */ "./src/assets/images/icons/twitter.svg");
+/* harmony import */ var _assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_20__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -114906,6 +114910,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 var ResultStage = function ResultStage(props) {
   var extraClassName = props.extraClassName,
       onFinish = props.onFinish;
@@ -114920,6 +114926,8 @@ var ResultStage = function ResultStage(props) {
       playersCache = _useState4[0],
       setPlayersCache = _useState4[1];
 
+  var hostURL = "".concat(window.location.protocol, "//").concat(window.location.hostname, "/");
+  var shareURL = encodeURIComponent(hostURL);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     _managers_SoundManager__WEBPACK_IMPORTED_MODULE_4__["default"].playMusic('result');
   }, []);
@@ -114990,17 +114998,17 @@ var ResultStage = function ResultStage(props) {
     src: bg,
     poster: bgImage
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeLeft
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeSideText,
-    text: "Winner winner chicken dinner! ",
-    duration: "12s"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeTop
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_6__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeTopText,
     text: " Made with <3 BY Upperquad ~~~~(~@\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\u2022~)~~~~ Song by Solarbear \u2022 CC BY-NC-ND 3.0 ~~~~(~\u2022\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0\u25CA~)~~~~ Sounds by #### ~~~~(~\u25CA\xA0\xA0\xA0\xA0\xA0\xA0\xA0\xA0@~)~~~~",
     duration: "36s"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeLeft
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeSideText,
+    text: "Winner winner chicken dinner! ",
+    duration: "12s"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marqueeRight
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -115020,7 +115028,17 @@ var ResultStage = function ResultStage(props) {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.titleMain,
     data: _assets_images_landing_title_json__WEBPACK_IMPORTED_MODULE_18__
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    text: "Play again",
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.shareTwitter,
+    link: "http://twitter.com/share?url=".concat(shareURL),
+    icon: _assets_images_icons_twitter_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
+    text: "Share on Twitter"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.shareFacebook,
+    link: "https://www.facebook.com/sharer/sharer.php?u=".concat(shareURL),
+    icon: _assets_images_icons_facebook_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
+    text: "Share on Facebook"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    text: "Again!",
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.button,
     clickHandler: onFinish
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MuteButton__WEBPACK_IMPORTED_MODULE_9__["default"], {
@@ -115048,7 +115066,7 @@ function zeroUnit(number) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"score":"ResultStage-score--2trdh","marqueeLeft":"ResultStage-marqueeLeft--d3eCo","marqueeSideText":"ResultStage-marqueeSideText--1PQgE","marqueeRight":"ResultStage-marqueeRight--_9P4J","marqueeTop":"ResultStage-marqueeTop--da7M8","marqueeTopText":"ResultStage-marqueeTopText--1tcdM","scores--tie":"ResultStage-scores--tie--2G9ma","scoresTie":"ResultStage-scores--tie--2G9ma","scores--p1":"ResultStage-scores--p1--2rm_O","scoresP1":"ResultStage-scores--p1--2rm_O","score--p2":"ResultStage-score--p2--3D6m0","scoreP2":"ResultStage-score--p2--3D6m0","scores--p2":"ResultStage-scores--p2--3P92l","scoresP2":"ResultStage-scores--p2--3P92l","score--p1":"ResultStage-score--p1--2sKrh","scoreP1":"ResultStage-score--p1--2sKrh","scores--single":"ResultStage-scores--single--G9856","scoresSingle":"ResultStage-scores--single--G9856","background":"ResultStage-background--10JOz","scores":"ResultStage-scores--22MpM","banner":"ResultStage-banner--13246","titleMain":"ResultStage-titleMain--1QqMq","button":"ResultStage-button--1TnLe","banner--p1":"ResultStage-banner--p1--30LXE","bannerP1":"ResultStage-banner--p1--30LXE","banner--p2":"ResultStage-banner--p2--OB-eg","bannerP2":"ResultStage-banner--p2--OB-eg","muteButton":"ResultStage-muteButton--27zR2"};
+module.exports = {"score":"ResultStage-score--2trdh","marqueeLeft":"ResultStage-marqueeLeft--d3eCo","marqueeSideText":"ResultStage-marqueeSideText--1PQgE","marqueeRight":"ResultStage-marqueeRight--_9P4J","marqueeTop":"ResultStage-marqueeTop--da7M8","marqueeTopText":"ResultStage-marqueeTopText--1tcdM","scores--tie":"ResultStage-scores--tie--2G9ma","scoresTie":"ResultStage-scores--tie--2G9ma","scores--p1":"ResultStage-scores--p1--2rm_O","scoresP1":"ResultStage-scores--p1--2rm_O","score--p2":"ResultStage-score--p2--3D6m0","scoreP2":"ResultStage-score--p2--3D6m0","scores--p2":"ResultStage-scores--p2--3P92l","scoresP2":"ResultStage-scores--p2--3P92l","score--p1":"ResultStage-score--p1--2sKrh","scoreP1":"ResultStage-score--p1--2sKrh","scores--single":"ResultStage-scores--single--G9856","scoresSingle":"ResultStage-scores--single--G9856","background":"ResultStage-background--10JOz","scores":"ResultStage-scores--22MpM","banner":"ResultStage-banner--13246","titleMain":"ResultStage-titleMain--1QqMq","banner--p1":"ResultStage-banner--p1--30LXE","bannerP1":"ResultStage-banner--p1--30LXE","banner--p2":"ResultStage-banner--p2--OB-eg","bannerP2":"ResultStage-banner--p2--OB-eg","muteButton":"ResultStage-muteButton--27zR2"};
 
 /***/ }),
 

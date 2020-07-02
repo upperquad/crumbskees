@@ -17,7 +17,7 @@
   }
 
   &::after {
-    bottom: calc(#{scaleVw(-4)} - 1px);
+    bottom: calc(#{scaleVw(-4)} - .5px);
     top: scaleVw(-4);
   }
 
@@ -50,6 +50,33 @@
     transform: skewY(45deg);
     transform-origin: top left;
     width: scaleVw(16);
+  }
+}
+
+%shadow-box-button {
+  @include shadow-box;
+
+  &::before {
+    height: scaleVw(22);
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    left: calc(100% + #{scaleVw(4)});
+    transform: skewY(45deg);
+    transform-origin: top left;
+    width: scaleVw(22);
+  }
+
+  :global(.is-control-device) & {
+    &::before {
+      height: 22px;
+    }
+
+    &::after {
+      left: calc(100% + 4px);
+      width: 22px;
+    }
   }
 }
 

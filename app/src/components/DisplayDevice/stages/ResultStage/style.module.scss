@@ -141,16 +141,13 @@
   height: scaleVw(140);
   justify-content: space-around;
   left: 0;
+  padding-right: scaleVw(10);
   position: absolute;
   right: 0;
 
   .titleMain {
     height: scaleVw(150 * .95);
     width: scaleVw(1024 * .95);
-  }
-
-  .button {
-    margin-left: scaleVw(30);
   }
 
   &--p1 {
