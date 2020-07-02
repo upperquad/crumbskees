@@ -111671,8 +111671,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Character__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ~components/Character */ "./src/components/Character/index.jsx");
 /* harmony import */ var _components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~components/MarqueeText */ "./src/components/MarqueeText/index.jsx");
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ~components/Button */ "./src/components/Button/index.jsx");
-/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
-/* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
+/* harmony import */ var _components_Lottie__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ~components/Lottie */ "./src/components/Lottie/index.jsx");
+/* harmony import */ var _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ~managers/TokenSocketManager */ "./src/managers/TokenSocketManager/index.js");
+/* harmony import */ var _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ~managers/PeerManager/ServerPeer */ "./src/managers/PeerManager/ServerPeer.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -111682,6 +111683,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -111723,7 +111725,7 @@ var PreConnectStage = function PreConnectStage(props) {
 
   var connect = function connect(connectToken) {
     setIsConnecting(true);
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].connect({
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].connect({
       token: connectToken
     });
   };
@@ -111758,9 +111760,9 @@ var PreConnectStage = function PreConnectStage(props) {
       }
     };
 
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].addSubscriber('WS_CLOSE', onWebSocketClose);
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('WS_CLOSE', onWebSocketClose);
     return function () {
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].removeSubscriber('WS_CLOSE', onWebSocketClose);
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('WS_CLOSE', onWebSocketClose);
     };
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -111772,7 +111774,7 @@ var PreConnectStage = function PreConnectStage(props) {
         case 'player_token_accepted':
           {
             var id = data.id;
-            _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_8__["default"].connect(id);
+            _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_9__["default"].connect(id);
             break;
           }
 
@@ -111781,9 +111783,9 @@ var PreConnectStage = function PreConnectStage(props) {
       }
     };
 
-    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].addSubscriber('MESSAGE', messageHandler);
+    _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('MESSAGE', messageHandler);
     return function () {
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].removeSubscriber('MESSAGE', messageHandler);
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('MESSAGE', messageHandler);
     };
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -111793,14 +111795,14 @@ var PreConnectStage = function PreConnectStage(props) {
       setToken('');
     };
 
-    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('CONNECTION_TIMEOUT', onPeerTimeout);
+    _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_9__["default"].addSubscriber('CONNECTION_TIMEOUT', onPeerTimeout);
     return function () {
-      _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout);
+      _managers_PeerManager_ServerPeer__WEBPACK_IMPORTED_MODULE_9__["default"].removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout);
     };
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (!hasPlayed) {
-      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_7__["default"].init('control');
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_8__["default"].init('control');
       var path = window.location.pathname;
 
       if (/^\/\d{4}$/.test(path)) {
@@ -111855,7 +111857,10 @@ var PreConnectStage = function PreConnectStage(props) {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.placeholder3
   })), isLoaded && showInstructionOverlay && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.instructionOverlay
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Lottie__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    path: "/static/mobile-background.json",
+    extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.instructionOverlayBg
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_MarqueeText__WEBPACK_IMPORTED_MODULE_5__["default"], {
     extraClassName: _style_module_scss__WEBPACK_IMPORTED_MODULE_2___default.a.marquee,
     text: "You\u2019ll need to open the game on a desktop browser to play!",
     duration: "10s"
@@ -111904,7 +111909,7 @@ var PreConnectStage = function PreConnectStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","tokenDisplayInner":"PreConnectStage-tokenDisplayInner--BfC1s","overlayTitleInner":"PreConnectStage-overlayTitleInner--2qKoq","label":"PreConnectStage-label--1mMJf","instruction":"PreConnectStage-instruction--R3YLX","marquee":"PreConnectStage-marquee--3ZMOV","overlaySubtitle":"PreConnectStage-overlaySubtitle--33MrA","preConnect":"PreConnectStage-preConnect--1Inqw","tokenInput":"PreConnectStage-tokenInput--HjjO4","isConnecting":"PreConnectStage-isConnecting--QiRUG","tokenInputKey":"PreConnectStage-tokenInputKey--3if_1","placeholder1":"PreConnectStage-placeholder1--2D0S-","placeholder2":"PreConnectStage-placeholder2--3IyJD","placeholder3":"PreConnectStage-placeholder3--1VULV","instructionOverlay":"PreConnectStage-instructionOverlay--3c0-7","overlayContent":"PreConnectStage-overlayContent--1bD-P","overlayTitle":"PreConnectStage-overlayTitle--2ZeRY","overlayCharacters":"PreConnectStage-overlayCharacters--qxWn-","character1":"PreConnectStage-character1--1Blcb","character2":"PreConnectStage-character2--3hpz9"};
+module.exports = {"tokenDisplay":"PreConnectStage-tokenDisplay--1CluL","tokenDisplayInner":"PreConnectStage-tokenDisplayInner--BfC1s","overlayTitleInner":"PreConnectStage-overlayTitleInner--2qKoq","label":"PreConnectStage-label--1mMJf","instruction":"PreConnectStage-instruction--R3YLX","marquee":"PreConnectStage-marquee--3ZMOV","overlaySubtitle":"PreConnectStage-overlaySubtitle--33MrA","preConnect":"PreConnectStage-preConnect--1Inqw","tokenInput":"PreConnectStage-tokenInput--HjjO4","isConnecting":"PreConnectStage-isConnecting--QiRUG","tokenInputKey":"PreConnectStage-tokenInputKey--3if_1","placeholder1":"PreConnectStage-placeholder1--2D0S-","placeholder2":"PreConnectStage-placeholder2--3IyJD","placeholder3":"PreConnectStage-placeholder3--1VULV","instructionOverlay":"PreConnectStage-instructionOverlay--3c0-7","instructionOverlayBg":"PreConnectStage-instructionOverlayBg--35UnD","overlayContent":"PreConnectStage-overlayContent--1bD-P","overlayTitle":"PreConnectStage-overlayTitle--2ZeRY","overlayCharacters":"PreConnectStage-overlayCharacters--qxWn-","character1":"PreConnectStage-character1--1Blcb","character2":"PreConnectStage-character2--3hpz9"};
 
 /***/ }),
 

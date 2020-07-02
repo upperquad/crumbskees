@@ -89,14 +89,22 @@
 }
 
 .instructionOverlay {
-  background: url('../../../../assets/images/mobile/landing-overlay.svg') center / cover no-repeat;
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
   left: 0;
+  overflow: hidden;
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.instructionOverlayBg {
+  height: 300vh;
+  left: calc(50% - 150vh);
+  position: absolute;
+  top: 0;
+  width: 300vh;
 }
 
 .marquee {
@@ -108,6 +116,7 @@
   flex-shrink: 0;
   letter-spacing: .1em;
   padding: 8px 0;
+  position: relative;
   text-transform: uppercase;
 }
 
@@ -119,6 +128,7 @@
   height: 440px;
   justify-content: center;
   padding: 20px 10px;
+  position: relative;
 }
 
 .overlayTitle {

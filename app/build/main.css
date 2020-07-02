@@ -2149,14 +2149,21 @@ a {
   height: 33px; }
 
 .PreConnectStage-instructionOverlay--3c0-7 {
-  background: url(/68e88b425d21a260c0a38cb18af3d1ae.svg) center/cover no-repeat;
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
   left: 0;
+  overflow: hidden;
   position: absolute;
   right: 0;
   top: 0; }
+
+.PreConnectStage-instructionOverlayBg--35UnD {
+  height: 300vh;
+  left: calc(50% - 150vh);
+  position: absolute;
+  top: 0;
+  width: 300vh; }
 
 .PreConnectStage-marquee--3ZMOV {
   background: #3f1bd0;
@@ -2165,6 +2172,7 @@ a {
   flex-shrink: 0;
   letter-spacing: .1em;
   padding: 8px 0;
+  position: relative;
   text-transform: uppercase; }
 
 .PreConnectStage-overlayContent--1bD-P {
@@ -2174,7 +2182,8 @@ a {
   flex-shrink: 0;
   height: 440px;
   justify-content: center;
-  padding: 20px 10px; }
+  padding: 20px 10px;
+  position: relative; }
 
 .PreConnectStage-overlayTitle--2ZeRY {
   margin: 0 auto;

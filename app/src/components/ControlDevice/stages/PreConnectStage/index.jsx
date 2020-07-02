@@ -8,6 +8,7 @@ import Character from '~components/Character'
 
 import MarqueeText from '~components/MarqueeText'
 import Button from '~components/Button'
+import Lottie from '~components/Lottie'
 
 import TokenSocketManager from '~managers/TokenSocketManager'
 import ServerPeer from '~managers/PeerManager/ServerPeer'
@@ -163,6 +164,10 @@ const PreConnectStage = props => {
 
       {isLoaded && showInstructionOverlay && (
         <div className={styles.instructionOverlay}>
+          <Lottie
+            path="/static/mobile-background.json"
+            extraClassName={styles.instructionOverlayBg}
+          />
           <MarqueeText
             extraClassName={styles.marquee}
             text="You’ll need to open the game on a desktop browser to play!"
