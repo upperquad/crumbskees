@@ -92,9 +92,9 @@ const ResultStage = props => {
               extraClassName={styles.marqueeTopText}
               text=" Made with <3 BY Upperquad
               ~~~~(~@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•~)~~~~
-              Song by Solarbear • CC BY-NC-ND 3.0
+              Songs: Jayster • Jaar • Tsuwami • Billsepher/Square Therapy (CC BY-NC-ND 3.0)
               ~~~~(~•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◊~)~~~~
-              Sounds by ####
+              Sounds: Juhani Junkala (CC0 1.0)
               ~~~~(~◊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@~)~~~~"
               duration="36s"
             />

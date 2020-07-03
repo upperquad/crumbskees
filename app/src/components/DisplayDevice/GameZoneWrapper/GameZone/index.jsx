@@ -30,6 +30,7 @@ const GameZone = props => {
     addItemsLevel,
     addMessage,
     addTime,
+    blockClick,
     gameState,
     godMode,
     message,
@@ -169,7 +170,7 @@ const GameZone = props => {
           break
         }
         case 'click': {
-          if (type === 'tutorial' || (type === 'game' && gameState !== 'after-game')) {
+          if (type === 'tutorial' || (type === 'game' && !blockClick)) {
             handleClick(playerIndex)
           }
           break
