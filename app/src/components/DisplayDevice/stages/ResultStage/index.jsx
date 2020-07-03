@@ -94,7 +94,7 @@ const ResultStage = props => {
               ~~~~(~@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•~)~~~~
               Songs: Jayster • Jaar • Tsuwami • Billsepher/Square Therapy (CC BY-NC-ND 3.0)
               ~~~~(~•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◊~)~~~~
-              Sounds: Juhani Junkala (CC0 1.0)
+              SFX: Juhani Junkala (CC0 1.0)
               ~~~~(~◊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@~)~~~~"
               duration="36s"
             />
