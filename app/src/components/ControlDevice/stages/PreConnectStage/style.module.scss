@@ -101,11 +101,12 @@
 
 .instructionOverlayBg {
   height: 100%;
-  left: 0;
+  left: 50%;
   min-height: 1920 / 1080 * 100vw;
   min-width: 1080 / 1920 * 100vh;
   position: absolute;
-  top: 0;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
   width: 100%;
 }
 
