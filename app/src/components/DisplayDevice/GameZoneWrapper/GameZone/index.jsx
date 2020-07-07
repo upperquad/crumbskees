@@ -30,6 +30,7 @@ const GameZone = props => {
     addItemsLevel,
     addMessage,
     addTime,
+    blockClick,
     gameState,
     godMode,
     message,
@@ -41,7 +42,7 @@ const GameZone = props => {
   } = props
   const { videoBack, videoFront } = round
   const [items, setItems] = useState([])
-  // TODO: power should be in player? Maybe not though
+  const [tutorialCount, setTutorialCount] = useState(0)
   const [powerArray, setPowerArray] = useState(() => PlayersManager.players.map(() => null))
   const [positionArray, setPositionArray] = useState(() => PlayersManager.players.map(() => ({ x: 0, y: 0 })))
   const [tapInstructionArray, setTapInstructionArray] = useState(() => PlayersManager.players.map(() => false))
@@ -169,9 +170,7 @@ const GameZone = props => {
           break
         }
         case 'click': {
-          if (type === 'tutorial') {
-            handleClick(playerIndex)
-          } else if (type === 'game' && gameState !== 'after-game') {
+          if (type === 'tutorial' || (type === 'game' && !blockClick)) {
             handleClick(playerIndex)
           }
           break
@@ -206,6 +205,9 @@ const GameZone = props => {
           }
         },
       })
+      if (type === 'tutorial') {
+        setTutorialCount(prevCount => prevCount + 1)
+      }
     }
 
     if (PlayersManager.mode === 'DUAL') {
@@ -370,7 +372,7 @@ const GameZone = props => {
     }
 
     setupGrid()
-  }, [round])
+  }, [round, tutorialCount])
 
   // tap instruction
   const zeroScorePlayers = PlayersManager.players.filter(player => player.score && player.score() === 0)
@@ -470,7 +472,7 @@ function getItemsInCursor(items, position, isGrown) {
   return items.filter(item => {
     let itemX = item.x
     let itemY = item.y
-    let minDistanceSquare = isGrown ? 215 ** 2 : 95 ** 2
+    let minDistanceSquare = isGrown ? 165 ** 2 : 72 ** 2
 
     if (item.size === GRID_UNIT * 2) {
       // offset catch area for big item

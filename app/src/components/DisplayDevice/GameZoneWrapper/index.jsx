@@ -17,12 +17,11 @@ const ADD_SECONDS = 5
 
 const GameZoneWrapper = props => {
   const { gameState, godMode, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
-  const { itemImage } = GAME_ROUNDS[roundIndex]
   const [time, setTime] = useState(TIME)
   const [message, setMessage] = useState({ messageCount: 0 })
   const [itemsLevel, setScoresLevel] = useState(() => PlayersManager.players.map(() => []))
   const forceUpdate = useForceUpdate()
-  const countDownStarted = useRef(false)
+  // const countDownStarted = useRef(false)
   const gameEnded = useRef(false)
   const startTime = useRef(null)
   const timeAdded = useRef(0)
@@ -70,10 +69,10 @@ const GameZoneWrapper = props => {
         const deltaTime = (now - startTime.current) / 1000
         const newTime = Math.max((timeAdded.current + TIME - deltaTime), 0)
 
-        if (newTime <= 10 && !countDownStarted.current) {
-          // TODO: play countdown
-          countDownStarted.current = true
-        }
+        // if (newTime <= 10 && !countDownStarted.current) {
+        //   // TODO: play countdown
+        //   countDownStarted.current = true
+        // }
 
         if (newTime <= 0) {
           if (!gameEnded.current) {
@@ -215,6 +214,7 @@ const GameZoneWrapper = props => {
                     addTime={addTime}
                     type={type}
                     godMode={godMode}
+                    blockClick={time <= 0}
                   />
                 </div>
               </Transition>
@@ -224,7 +224,6 @@ const GameZoneWrapper = props => {
           <Board
             time={time}
             totalTime={TIME}
-            itemImage={itemImage}
             items={itemsLevel}
             transitionStatus={transitionStatus}
             roundName={GAME_ROUNDS[roundIndex].roundNameText}

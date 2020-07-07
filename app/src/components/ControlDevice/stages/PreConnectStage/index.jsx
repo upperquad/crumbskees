@@ -139,6 +139,7 @@ const PreConnectStage = props => {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(key => (
               <Button
                 extraClassName={styles.tokenInputKey}
+                extraCardClassName={styles.tokenInputKeyCard}
                 text={key}
                 key={key}
                 clickHandler={() => updateToken(key)}
@@ -147,6 +148,7 @@ const PreConnectStage = props => {
             ))}
             <Button
               extraClassName={styles.tokenInputKey}
+              extraCardClassName={styles.tokenInputKeyCard}
               text="Clear"
               key="clear"
               clickHandler={clearToken}
@@ -197,7 +199,8 @@ const PreConnectStage = props => {
             </p>
             <div className={styles.overlayButtonWrap}>
               <Button
-                extraClassName={styles.overlaybutton}
+                extraInnerClassName={styles.overlayButtonInner}
+                extraCardClassName={styles.overlayButtonCard}
                 text="I have a code"
                 clickHandler={() => setShowInstructionOverlay(false)}
               />

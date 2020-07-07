@@ -163,6 +163,10 @@
   @media only screen and (max-width: 374px) {
     display: none;
   }
+
+  @media only screen and (max-height: 660px) {
+    display: none;
+  }
 }
 
 .character1 {
@@ -180,4 +184,38 @@
   position: absolute;
   right: -54px;
   width: 175px;
+}
+
+@media only screen and (max-width: 359px) {
+  .marquee {
+    display: none;
+  }
+
+  .overlaySubtitle {
+    margin: 20px;
+  }
+
+  .overlayButtonInner {
+    font-size: 20px !important;
+    line-height: 28px !important;
+  }
+
+  :global(.is-control-device) .overlayButtonCard {
+    padding: 12px 18px !important;
+  }
+
+  :global(.is-control-device) .tokenDisplay .tokenDisplayInner {
+    font-size: 60px;
+    line-height: 72px;
+  }
+
+  :global(.is-control-device) .tokenInputKeyCard {
+    padding: 6px !important;
+  }
+
+  @media only screen and (max-height: 550px) {
+    .instruction {
+      display: none;
+    }
+  }
 }

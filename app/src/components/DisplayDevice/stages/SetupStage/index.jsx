@@ -134,56 +134,74 @@ const SetupStage = props => {
                 })}
                 style={{ transform: `scale(${zoom})` }}
               >
-                <div
-                  onClick={() => {
-                    PlayersManager.init('SINGLE')
-                  }}
-                  onMouseEnter={() => {
-                    setSinglePlayerHovered(true)
-                  }}
-                  onMouseLeave={() => {
-                    setSinglePlayerHovered(false)
-                  }}
-                  className={styles.mode}
-                >
-                  <div className={styles.modeTitle}>1 Player</div>
-                  <div className={styles.modeCharacters}>
-                    <Character
-                      extraClassName={styles.modeCharacterSingle}
-                      character={CHARACTERS[1]}
-                      mood={singlePlayerHovered ? 'excited' : 'happy'}
-                    />
+                <div className={classNames(styles.modeWrapper, styles.modeWrapperBig)}>
+                  <div
+                    onClick={() => {
+                      PlayersManager.init('DUAL')
+                      SoundManager.playSound('munch')
+                    }}
+                    onMouseEnter={() => {
+                      setDualPlayerHovered(true)
+                    }}
+                    onMouseLeave={() => {
+                      setDualPlayerHovered(false)
+                    }}
+                    className={styles.mode}
+                    role="button"
+                    tabIndex="0"
+                  >
+                    <div className={styles.modeTitle}>2 Player</div>
+                    <div className={styles.modeCharacters}>
+                      <Character
+                        extraClassName={styles.modeCharacter1}
+                        character={CHARACTERS[0]}
+                        mood={dualPlayerHovered ? 'excited' : 'happy'}
+                      />
+                      <Character
+                        extraClassName={styles.modeCharacter2}
+                        character={CHARACTERS[1]}
+                        mood={dualPlayerHovered ? 'excited' : 'happy'}
+                      />
+                    </div>
+                    <p className={styles.modeSubtitle}>
+                      2 player is more fun!
+                      <br />
+                      Got a friend nearby? Grab ‘em
+                    </p>
+                    <div className={styles.modeGo}>Go!</div>
                   </div>
-                  <p className={styles.modeSubtitle}>It’s great! You’ll always win</p>
-                  <div className={styles.modeGo}>Go!</div>
                 </div>
-                <div
-                  onClick={() => {
-                    PlayersManager.init('DUAL')
-                  }}
-                  onMouseEnter={() => {
-                    setDualPlayerHovered(true)
-                  }}
-                  onMouseLeave={() => {
-                    setDualPlayerHovered(false)
-                  }}
-                  className={styles.mode}
-                >
-                  <div className={styles.modeTitle}>2 Players</div>
-                  <div className={styles.modeCharacters}>
-                    <Character
-                      extraClassName={styles.modeCharacter1}
-                      character={CHARACTERS[0]}
-                      mood={dualPlayerHovered ? 'excited' : 'happy'}
-                    />
-                    <Character
-                      extraClassName={styles.modeCharacter2}
-                      character={CHARACTERS[1]}
-                      mood={dualPlayerHovered ? 'excited' : 'happy'}
-                    />
+                <div className={styles.modeWrapper}>
+                  <div
+                    onClick={() => {
+                      PlayersManager.init('SINGLE')
+                      SoundManager.playSound('munch')
+                    }}
+                    onMouseEnter={() => {
+                      setSinglePlayerHovered(true)
+                    }}
+                    onMouseLeave={() => {
+                      setSinglePlayerHovered(false)
+                    }}
+                    className={styles.mode}
+                    role="button"
+                    tabIndex="0"
+                  >
+                    <div className={styles.modeTitle}>1 Player</div>
+                    <div className={styles.modeCharacters}>
+                      <Character
+                        extraClassName={styles.modeCharacterSingle}
+                        character={CHARACTERS[1]}
+                        mood={singlePlayerHovered ? 'excited' : 'happy'}
+                      />
+                    </div>
+                    <p className={styles.modeSubtitle}>
+                      It’s great too!
+                      <br />
+                      You’ll always win
+                    </p>
+                    <div className={styles.modeGo}>Go!</div>
                   </div>
-                  <p className={styles.modeSubtitle}>Gotta friend nearby? Grab ‘em</p>
-                  <div className={styles.modeGo}>Go!</div>
                 </div>
               </div>
             )}
@@ -295,7 +313,7 @@ const SetupStage = props => {
                     <Character
                       extraClassName={styles.cornerCharacterHead}
                       character={CHARACTERS[index]}
-                      mood="excited"
+                      mood="tutorial"
                     />
                   </div>
                 ))}

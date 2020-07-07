@@ -80,6 +80,10 @@
     padding: 0 scaleVw(16) scaleVw(16) 0;
 
     &.isClickable {
+      &:focus {
+        outline: none;
+      }
+
       &:hover {
         .readyIndicator {
           animation: indicator-hover .3s 1 ease-in-out;

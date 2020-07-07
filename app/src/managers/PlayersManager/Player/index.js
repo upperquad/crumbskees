@@ -103,6 +103,8 @@ export default class Player {
         this.token = null
       }
       SoundManager.playSound('playerJoin')
+      this.lost = false
+      this.updateParent('player_connection_change')
     })
 
     this.playerPeer.addSubscriber('MESSAGE', detail => {
@@ -115,6 +117,9 @@ export default class Player {
         default:
           break
       }
+
+      this.lost = false
+      this.updateParent('player_connection_change')
     })
 
     this.playerPeer.addSubscriber('PEER_CLOSED', () => {

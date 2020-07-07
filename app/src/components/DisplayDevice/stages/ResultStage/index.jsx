@@ -21,11 +21,15 @@ import singleBg from '~assets/images/result/single.mp4'
 import singleBgImage from '~assets/images/result/single.jpg'
 import titleJson from '~assets/images/landing/title.json'
 
+import facebook from '~assets/images/icons/facebook.svg'
+import twitter from '~assets/images/icons/twitter.svg'
 
 const ResultStage = props => {
   const { extraClassName, onFinish } = props
   const [winnerSlug, setWinnerSlug] = useState(null)
   const [playersCache, setPlayersCache] = useState([])
+  const hostURL = `${window.location.protocol}//${window.location.hostname}/`
+  const shareURL = encodeURIComponent(hostURL)
 
   useEffect(() => {
     SoundManager.playMusic('result')
@@ -83,6 +87,18 @@ const ResultStage = props => {
       {winnerSlug && (
         <React.Fragment>
           <AutoplayVideo extraClassName={styles.background} src={bg} poster={bgImage} />
+          <div className={styles.marqueeTop}>
+            <MarqueeText
+              extraClassName={styles.marqueeTopText}
+              text=" Made with <3 BY Upperquad
+              ~~~~(~@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•~)~~~~
+              Songs: Jayster • Jaar • Tsuwami • Billsepher/Square Therapy (CC BY-NC-ND 3.0)
+              ~~~~(~•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◊~)~~~~
+              SFX: Juhani Junkala (CC0 1.0)
+              ~~~~(~◊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@~)~~~~"
+              duration="36s"
+            />
+          </div>
           <div className={styles.marqueeLeft}>
             <MarqueeText
               extraClassName={styles.marqueeSideText}
@@ -112,7 +128,19 @@ const ResultStage = props => {
               <Lottie extraClassName={styles.titleMain} data={titleJson} />
             </h1>
             <Button
-              text="Play again"
+              extraClassName={styles.shareTwitter}
+              link={`http://twitter.com/share?url=${shareURL}`}
+              icon={twitter}
+              text="Share on Twitter"
+            />
+            <Button
+              extraClassName={styles.shareFacebook}
+              link={`https://www.facebook.com/sharer/sharer.php?u=${shareURL}`}
+              icon={facebook}
+              text="Share on Facebook"
+            />
+            <Button
+              text="Again!"
               extraClassName={styles.button}
               clickHandler={onFinish}
             />

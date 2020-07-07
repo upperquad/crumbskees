@@ -13,7 +13,7 @@ const MeetCharacterStage = props => {
         styles[`meetCharacter--${character.color}`],
       )}
     >
-      <h2 className={styles.title} data-text="UR IN!">UR IN!</h2>
+      <h2 className={styles.title} data-text="Let’s go!">Let’s go!</h2>
       <Character
         extraClassName={styles.character}
         character={character}

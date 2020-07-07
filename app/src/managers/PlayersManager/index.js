@@ -82,6 +82,9 @@ class PlayersManager extends Observable {
       case 'player_ready_change':
         this._callObservers('player_ready_change')
         break
+      case 'player_connection_change':
+        this._callObservers('player_connection_change')
+        break
       case 'player_peer_closed':
         this.closeConnection(id)
         break
@@ -106,30 +109,6 @@ class PlayersManager extends Observable {
   player = id => this.players.find(player => player.id === id)
 
   playerIndex = id => this.players.findIndex(player => player.id === id)
-
-  // newConnect = (submittedToken, userId) => {
-  //   if (submittedToken) {
-  //     const matchIndex = this.players.findIndex(playerObj => {
-  //       const { token } = playerObj
-  //       return token === submittedToken
-  //     })
-  //     if (matchIndex !== -1) {
-  //       this.players[matchIndex] = new Player({ id: userId, character: CHARACTERS[matchIndex] })
-  //       PeerManager.send('auth_result', { id: userId, result: 1, playerIndex: matchIndex })
-  //     } else {
-  //       PeerManager.send('auth_result', { id: userId, result: 0 })
-  //     }
-  //   } else if (userId) {
-  //     const player = this.players.find(ply => ply.id === userId)
-  //     if (player) {
-  //       PeerManager.send('reconnect_result', { id: userId, result: 1 })
-  //       player.setLostStatus(false)
-  //       this._callObservers('player_connection_change')
-  //     } else {
-  //       PeerManager.send('reconnect_result', { id: userId, result: 0 })
-  //     }
-  //   }
-  // }
 
   startSetup = () => {
     this.players.forEach((player, index) => {

@@ -28,6 +28,10 @@
     padding .4s $easing-quad-out,
     transform .4s $easing-quad-out;
 
+  &:focus {
+    outline: none;
+  }
+
   :global(.is-display-device) & {
     &:hover {
       animation: button-hover .3s 1 ease-in-out;
@@ -40,53 +44,14 @@
 
   .buttonInner {
     @extend %t--h3;
+    @extend %shadow-box-button;
 
-    box-shadow: scaleVw(22) scaleVw(22) 0px $color-black;
     position: relative;
     text-transform: uppercase;
-
-    &::before {
-      background: $color-black;
-      content: '';
-      height: scaleVw(50);
-      left: 0;
-      position: absolute;
-      top: 100%;
-      transform: rotate(-45deg);
-      transform-origin: top left;
-      width: scaleVw(50);
-    }
-
-    &::after {
-      background: $color-black;
-      content: '';
-      height: scaleVw(50);
-      left: 100%;
-      position: absolute;
-      top: 0;
-      transform: rotate(45deg);
-      transform-origin: top left;
-      width: scaleVw(50);
-    }
-
-    :global(.is-control-device) & {
-      box-shadow: 22px 22px 0px $color-black;
-
-      &::before {
-        height: 50px;
-        width: 50px;
-      }
-
-      &::after {
-        height: 50px;
-        width: 50px;
-      }
-    }
   }
 
   .buttonCard {
     background: $color-white;
-    border: scaleVw(4) solid $color-black;
     color: $color-black;
     padding: scaleVw(22) scaleVw(20);
     position: relative;
@@ -94,16 +59,19 @@
     z-index: 1;
 
     :global(.is-control-device) & {
-      border-width: 4px;
       padding: 22px 20px;
     }
 
     &.isIcon {
-      padding: 0;
+      padding: scaleVw(9);
+
+      :global(.is-control-device) & {
+        padding: 0;
+      }
 
       .icon {
         display: block;
-        width: scaleVw(38);
+        width: scaleVw(60);
 
         :global(.is-control-device) & {
           width: 76px;
@@ -128,6 +96,14 @@
     &:active {
       transform: translate(#{scaleVw(8)}, #{scaleVw(8)});
     }
+
+    .buttonCard {
+      padding: 0;
+
+      .icon {
+        width: scaleVw(38);
+      }
+    }
   }
 
   &.isKeyPad {
@@ -150,15 +126,15 @@
       .buttonCard {
         align-items: center;
         display: flex;
-        height: 72px;
+        height: 64px;
         justify-content: center;
         padding: 12px;
-        width: 72px;
+        width: 64px;
       }
 
       &.isFullWidth {
         .buttonCard {
-          width: 244px;
+          width: 236px;
         }
       }
     }
