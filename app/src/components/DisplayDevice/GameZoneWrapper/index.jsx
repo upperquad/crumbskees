@@ -184,7 +184,7 @@ const GameZoneWrapper = props => {
                       <Character
                         extraClassName={styles.readyIndicatorCharacter}
                         character={playersCache[index]}
-                        mood={player.ready ? 'excited' : 'happy'}
+                        mood={player.ready ? 'excitedSeamless' : 'happy'}
                       />
                     </div>
                   </div>

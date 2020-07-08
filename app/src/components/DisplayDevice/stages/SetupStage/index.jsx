@@ -155,12 +155,12 @@ const SetupStage = props => {
                       <Character
                         extraClassName={styles.modeCharacter1}
                         character={CHARACTERS[0]}
-                        mood={dualPlayerHovered ? 'excited' : 'happy'}
+                        mood={dualPlayerHovered ? 'excitedSeamless' : 'happy'}
                       />
                       <Character
                         extraClassName={styles.modeCharacter2}
                         character={CHARACTERS[1]}
-                        mood={dualPlayerHovered ? 'excited' : 'happy'}
+                        mood={dualPlayerHovered ? 'excitedSeamless' : 'happy'}
                       />
                     </div>
                     <p className={styles.modeSubtitle}>
@@ -192,7 +192,7 @@ const SetupStage = props => {
                       <Character
                         extraClassName={styles.modeCharacterSingle}
                         character={CHARACTERS[1]}
-                        mood={singlePlayerHovered ? 'excited' : 'happy'}
+                        mood={singlePlayerHovered ? 'excitedSeamless' : 'happy'}
                       />
                     </div>
                     <p className={styles.modeSubtitle}>
@@ -283,7 +283,7 @@ const SetupStage = props => {
                                         <Character
                                           extraClassName={styles.playerConnectedCharacter}
                                           character={CHARACTERS[index]}
-                                          mood="excited"
+                                          mood="excitedSeamless"
                                         />
                                         <span className={styles.playerConnectedText}>Connected!</span>
                                       </div>
@@ -313,7 +313,7 @@ const SetupStage = props => {
                     <Character
                       extraClassName={styles.cornerCharacterHead}
                       character={CHARACTERS[index]}
-                      mood="tutorial"
+                      mood="excitedSeamless"
                     />
                   </div>
                 ))}
