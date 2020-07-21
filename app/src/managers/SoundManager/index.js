@@ -87,6 +87,9 @@ class SoundManager extends Observable {
         this._musics[this.currentMusic].on('play', () => {
           this.firstMusicPlayed = true
           this._callObservers('UPDATED')
+          if (DEBUG) {
+            this.mute()
+          }
         })
       }
 

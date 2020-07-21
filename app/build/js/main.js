@@ -117213,6 +117213,10 @@ function (_Observable) {
             _this.firstMusicPlayed = true;
 
             _this._callObservers('UPDATED');
+
+            if (_constants__WEBPACK_IMPORTED_MODULE_1__["DEBUG"]) {
+              _this.mute();
+            }
           });
         }
 
