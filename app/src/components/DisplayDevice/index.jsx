@@ -96,7 +96,11 @@ const DisplayDevice = () => {
           <Transition key="stage-setup" timeout={TRANSITION_TIMEOUTS}>
             {status => (
               <StageWrapper status={status}>
-                <SetupStage onFinish={() => setStage('tutorial')} allConnected={allConnected} />
+                <SetupStage
+                  onCancel={resetGame}
+                  onFinish={() => setStage('tutorial')}
+                  allConnected={allConnected}
+                />
               </StageWrapper>
             )}
           </Transition>
@@ -108,6 +112,7 @@ const DisplayDevice = () => {
                 <TutorialStage
                   allConnected={allConnected}
                   rollback={() => setStage('setup')}
+                  onCancel={resetGame}
                   onFinish={() => {
                     setGodMode(false)
                     setStage('play')

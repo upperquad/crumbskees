@@ -1,4 +1,5 @@
 import { Howl, Howler } from 'howler'
+import { DEBUG } from '~constants'
 import Observable from '~managers/abstracts/Observable'
 
 import musicLanding from '~assets/sounds/music-landing.mp3'
@@ -16,6 +17,7 @@ import soundPowerFreeze from '~assets/sounds/power-freeze.mp3'
 import soundPowerGrow from '~assets/sounds/power-grow.mp3'
 import soundSnackBad from '~assets/sounds/snack-bad.mp3'
 import soundSnackGood from '~assets/sounds/snack-good.mp3'
+
 
 Howler.autoSuspend = false
 
@@ -55,6 +57,9 @@ class SoundManager extends Observable {
         this._sounds[name].on('play', () => {
           this.firstMusicPlayed = true
           this._callObservers('UPDATED')
+          if (DEBUG) {
+            this.mute()
+          }
         })
       }
 
@@ -103,6 +108,7 @@ class SoundManager extends Observable {
     Object.keys(this._sounds).forEach(key => this._sounds[key].stop())
 
     this.muted = true
+    this._callObservers('UPDATED')
   }
 
   unmute = () => {
@@ -110,6 +116,7 @@ class SoundManager extends Observable {
       this.playMusic(this.currentMusic, true)
     }
     this.muted = false
+    this._callObservers('UPDATED')
   }
 
   toggleMute = () => {
@@ -118,7 +125,6 @@ class SoundManager extends Observable {
     } else {
       this.mute()
     }
-    this._callObservers('UPDATED')
   }
 }
 

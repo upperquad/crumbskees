@@ -68,6 +68,14 @@
   font-weight: 900;
 }
 
+%t--back-button {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: scaleVw(20);
+  font-weight: 900;
+  line-height: scaleVw(25);
+}
+
 %t--number-pad {
   font-family: 'Fakt', sans-serif;
   font-size: 26px;

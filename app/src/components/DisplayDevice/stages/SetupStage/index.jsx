@@ -19,7 +19,7 @@ import backgroundImage from '~assets/images/setup/background.jpg'
 const BASE_URL = `${window.location.protocol}//${window.location.host}/`
 
 const SetupStage = props => {
-  const { allConnected, extraClassName, onFinish } = props
+  const { allConnected, extraClassName, onCancel, onFinish } = props
   const [qrCode, setQrCode] = useState([null, null])
   const [player1, player2] = PlayersManager.players || []
   const [zoom, setZoom] = useState(1)
@@ -317,6 +317,15 @@ const SetupStage = props => {
                     />
                   </div>
                 ))}
+                <div
+                  className={styles.backButton}
+                  onClick={onCancel}
+                >
+                  <svg viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 5.92126V10.0787H7.78533V16L0 7.979L7.78533 0V5.92126H15Z" fill="black" />
+                  </svg>
+                  Back
+                </div>
               </div>
             )}
           </Transition>
