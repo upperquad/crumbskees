@@ -115488,6 +115488,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var TutorialStage = function TutorialStage(props) {
   var allConnected = props.allConnected,
       extraClassName = props.extraClassName,
+      onCancel = props.onCancel,
       onFinish = props.onFinish,
       rollback = props.rollback;
 
@@ -115496,7 +115497,7 @@ var TutorialStage = function TutorialStage(props) {
       zoom = _useState2[0],
       setZoom = _useState2[1];
 
-  Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_2__["useZoom"])(0.553, setZoom);
+  Object(_utils_hooks__WEBPACK_IMPORTED_MODULE_2__["useZoom"])(0.575, setZoom);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     _managers_SoundManager__WEBPACK_IMPORTED_MODULE_5__["default"].playMusic('setup');
   }, []); // TODO: this should happen every 5 seconds or something just to be safe
@@ -115515,7 +115516,17 @@ var TutorialStage = function TutorialStage(props) {
     style: {
       transform: "scale(".concat(zoom, ")")
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.backButton,
+    onClick: onCancel
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    viewBox: "0 0 15 16",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    d: "M15 5.92126V10.0787H7.78533V16L0 7.979L7.78533 0V5.92126H15Z",
+    fill: "black"
+  })), "Back"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: _style_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.title,
     "data-text": "Here\u2019s the deal:"
   }, "Here\u2019s the deal:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -115550,7 +115561,7 @@ var TutorialStage = function TutorialStage(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"title":"TutorialStage-title--JVgZx","content":"TutorialStage-content--1pd2A","heading":"TutorialStage-heading--3Rx-V","description":"TutorialStage-description--2XJsx","tutorial":"TutorialStage-tutorial--3Ybyr","tutorialInner":"TutorialStage-tutorialInner--3rSm2","container":"TutorialStage-container--13i5g","muteButton":"TutorialStage-muteButton--7DufL"};
+module.exports = {"title":"TutorialStage-title--JVgZx","content":"TutorialStage-content--1pd2A","heading":"TutorialStage-heading--3Rx-V","description":"TutorialStage-description--2XJsx","backButton":"TutorialStage-backButton--38soY","tutorial":"TutorialStage-tutorial--3Ybyr","tutorialInner":"TutorialStage-tutorialInner--3rSm2","container":"TutorialStage-container--13i5g","muteButton":"TutorialStage-muteButton--7DufL"};
 
 /***/ }),
 

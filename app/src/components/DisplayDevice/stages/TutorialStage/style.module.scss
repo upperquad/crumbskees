@@ -42,6 +42,27 @@
   }
 }
 
+.backButton {
+  @extend %t--back-button;
+
+  cursor: pointer;
+  margin-left: scaleVw(-20);
+
+  svg {
+    display: inline-block;
+    margin-right: scaleVw(5);
+    transition: transform .3s $easing-circle-in-out;
+    vertical-align: baseline;
+    width: scaleVw(15);
+  }
+
+  &:hover {
+    svg {
+      transform: translateX(-30%);
+    }
+  }
+}
+
 .muteButton {
   position: absolute;
   right: scaleVw(16);

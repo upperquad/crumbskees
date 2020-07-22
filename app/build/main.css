@@ -718,7 +718,7 @@ a {
     display: inline-block;
     margin-right: 0.34722vw;
     transition: transform 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-    vertical-align: middle;
+    vertical-align: baseline;
     width: 1.04167vw; }
   .SetupStage-backButton--wEzPa:hover svg {
     transform: translateX(-30%); }
@@ -783,6 +783,13 @@ a {
     font-size: 20px;
     line-height: 24px; }
 
+.TutorialStage-backButton--38soY {
+  font-family: 'Ginto Nord', sans-serif;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 1.38889vw;
+  font-weight: 900;
+  line-height: 1.73611vw; }
+
 .TutorialStage-title--JVgZx {
   color: #fff;
   -moz-osx-font-smoothing: grayscale;
@@ -828,6 +835,18 @@ a {
   .TutorialStage-content--1pd2A .TutorialStage-description--2XJsx {
     margin-bottom: 3.61111vw;
     opacity: .5; }
+
+.TutorialStage-backButton--38soY {
+  cursor: pointer;
+  margin-left: -1.38889vw; }
+  .TutorialStage-backButton--38soY svg {
+    display: inline-block;
+    margin-right: 0.34722vw;
+    transition: transform 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    vertical-align: baseline;
+    width: 1.04167vw; }
+  .TutorialStage-backButton--38soY:hover svg {
+    transform: translateX(-30%); }
 
 .TutorialStage-muteButton--7DufL {
   position: absolute;

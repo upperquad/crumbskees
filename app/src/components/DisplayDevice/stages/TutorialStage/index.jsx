@@ -10,10 +10,10 @@ import GameZoneWrapper from '~components/DisplayDevice/GameZoneWrapper'
 import MuteButton from '~components/MuteButton'
 
 const TutorialStage = props => {
-  const { allConnected, extraClassName, onFinish, rollback } = props
+  const { allConnected, extraClassName, onCancel, onFinish, rollback } = props
   const [zoom, setZoom] = useState(1)
 
-  useZoom(0.553, setZoom)
+  useZoom(0.575, setZoom)
 
   useEffect(() => {
     SoundManager.playMusic('setup')
@@ -38,6 +38,15 @@ const TutorialStage = props => {
         className={styles.tutorialInner}
         style={{ transform: `scale(${zoom})` }}
       >
+        <div
+          className={styles.backButton}
+          onClick={onCancel}
+        >
+          <svg viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 5.92126V10.0787H7.78533V16L0 7.979L7.78533 0V5.92126H15Z" fill="black" />
+          </svg>
+          Back
+        </div>
         <h2 className={styles.title} data-text="Here’s the deal:">Here’s the deal:</h2>
         <div className={styles.container}>
           <div className={styles.content}>

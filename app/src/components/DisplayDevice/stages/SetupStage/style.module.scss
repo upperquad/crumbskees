@@ -320,7 +320,7 @@
     display: inline-block;
     margin-right: scaleVw(5);
     transition: transform .3s $easing-circle-in-out;
-    vertical-align: middle;
+    vertical-align: baseline;
     width: scaleVw(15);
   }
 
