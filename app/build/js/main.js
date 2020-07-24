@@ -116734,7 +116734,7 @@ var Player = function Player(_ref) {
   this._score = 0;
 
   if (this.type === 'remote') {
-    this.playerPeer.connect(id);
+    this.playerPeer.connect(this.id);
   }
 };
 
@@ -116899,16 +116899,9 @@ function (_Observable) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "reset", function () {
-      console.log('resetting');
-
       if (_this.players) {
-        console.log('has players');
-
         _this.players.forEach(function (player, index) {
-          console.log("player ".concat(index));
-
           if (typeof player.destroy === 'function') {
-            console.log('has destroy');
             player.destroy();
           }
 
@@ -116918,6 +116911,7 @@ function (_Observable) {
         _this._gameStarted = false;
       }
 
+      _managers_TokenSocketManager__WEBPACK_IMPORTED_MODULE_1__["default"].removeSubscriber('MESSAGE', _this._onMessage);
       _this.mode = null;
 
       _this._callObservers('MODE_UPDATED');

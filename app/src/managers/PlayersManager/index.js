@@ -103,6 +103,7 @@ class PlayersManager extends Observable {
       })
       this._gameStarted = false
     }
+    TokenSocketManager.removeSubscriber('MESSAGE', this._onMessage)
     this.mode = null
     this._callObservers('MODE_UPDATED')
   }

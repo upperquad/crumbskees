@@ -52,7 +52,7 @@ export default class Player {
     this._score = 0
 
     if (this.type === 'remote') {
-      this.playerPeer.connect(id)
+      this.playerPeer.connect(this.id)
     }
   }
 
