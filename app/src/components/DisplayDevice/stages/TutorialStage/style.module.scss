@@ -47,6 +47,8 @@
 
   cursor: pointer;
   margin-left: scaleVw(-20);
+  position: relative;
+  z-index: 1;
 
   svg {
     display: inline-block;
