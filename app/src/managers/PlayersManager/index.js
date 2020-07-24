@@ -104,6 +104,7 @@ class PlayersManager extends Observable {
       this._gameStarted = false
     }
     this.mode = null
+    this._callObservers('MODE_UPDATED')
   }
 
   player = id => this.players.find(player => player.id === id)
