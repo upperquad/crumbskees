@@ -42,7 +42,7 @@ class PlayersManager extends Observable {
         break
     }
     this.mode = mode
-    this._callObservers('INITIATED')
+    this._callObservers('MODE_UPDATED')
   }
 
   _onMessage = detail => {

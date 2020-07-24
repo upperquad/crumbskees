@@ -23,7 +23,7 @@ const SetupStage = props => {
   const [qrCode, setQrCode] = useState([null, null])
   const [player1, player2] = PlayersManager.players || []
   const [zoom, setZoom] = useState(1)
-  const [playersManagerInitiated, setPlayersManagerInitiated] = useState(false)
+  const [playersManagerModeCache, setPlayersManagerModeCache] = useState(false)
   const [tokenManagerConnected, setTokenManagerConnected] = useState(false)
   const [singlePlayerHovered, setSinglePlayerHovered] = useState(false)
   const [dualPlayerHovered, setDualPlayerHovered] = useState(false)
@@ -35,25 +35,18 @@ const SetupStage = props => {
   }, [])
 
   useEffect(() => {
-    const initiatedHandler = () => {
-      setPlayersManagerInitiated(true)
+    const modeUpdateHandler = () => {
+      setPlayersManagerModeCache(PlayersManager.mode)
     }
 
-    if (!PlayersManager.mode) {
-      PlayersManager.addSubscriber('INITIATED', initiatedHandler)
+    modeUpdateHandler()
 
-      return () => PlayersManager.removeSubscriber('INITIATED', initiatedHandler)
-    }
+    PlayersManager.addSubscriber('MODE_UPDATED', modeUpdateHandler)
 
-    initiatedHandler()
-    return undefined
+    return () => PlayersManager.removeSubscriber('MODE_UPDATED', modeUpdateHandler)
   }, [])
 
   useEffect(() => {
-    if (!playersManagerInitiated) {
-      return undefined
-    }
-
     const connectHandler = () => {
       PlayersManager.startSetup()
       setTokenManagerConnected(true)
@@ -78,7 +71,7 @@ const SetupStage = props => {
         return undefined
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playersManagerInitiated])
+  }, [playersManagerModeCache])
 
   useEffect(() => {
     if (PlayersManager.mode === 'DUAL') {

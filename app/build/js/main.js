@@ -115157,8 +115157,8 @@ var SetupStage = function SetupStage(props) {
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState6 = _slicedToArray(_useState5, 2),
-      playersManagerInitiated = _useState6[0],
-      setPlayersManagerInitiated = _useState6[1];
+      playersManagerModeCache = _useState6[0],
+      setPlayersManagerModeCache = _useState6[1];
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState8 = _slicedToArray(_useState7, 2),
@@ -115180,25 +115180,17 @@ var SetupStage = function SetupStage(props) {
     _managers_SoundManager__WEBPACK_IMPORTED_MODULE_9__["default"].playMusic('setup');
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var initiatedHandler = function initiatedHandler() {
-      setPlayersManagerInitiated(true);
+    var modeUpdateHandler = function modeUpdateHandler() {
+      setPlayersManagerModeCache(_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode);
     };
 
-    if (!_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode) {
-      _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('INITIATED', initiatedHandler);
-      return function () {
-        return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('INITIATED', initiatedHandler);
-      };
-    }
-
-    initiatedHandler();
-    return undefined;
+    modeUpdateHandler();
+    _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].addSubscriber('MODE_UPDATED', modeUpdateHandler);
+    return function () {
+      return _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].removeSubscriber('MODE_UPDATED', modeUpdateHandler);
+    };
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (!playersManagerInitiated) {
-      return undefined;
-    }
-
     var connectHandler = function connectHandler() {
       _managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].startSetup();
       setTokenManagerConnected(true);
@@ -115224,7 +115216,7 @@ var SetupStage = function SetupStage(props) {
         return undefined;
     } // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [playersManagerInitiated]);
+  }, [playersManagerModeCache]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (_managers_PlayersManager__WEBPACK_IMPORTED_MODULE_8__["default"].mode === 'DUAL') {
       var didCancel = false;
@@ -116830,7 +116822,7 @@ function (_Observable) {
 
       _this.mode = mode;
 
-      _this._callObservers('INITIATED');
+      _this._callObservers('MODE_UPDATED');
     });
 
     _defineProperty(_assertThisInitialized(_this), "_onMessage", function (detail) {
@@ -116907,9 +116899,16 @@ function (_Observable) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "reset", function () {
+      console.log('resetting');
+
       if (_this.players) {
+        console.log('has players');
+
         _this.players.forEach(function (player, index) {
+          console.log("player ".concat(index));
+
           if (typeof player.destroy === 'function') {
+            console.log('has destroy');
             player.destroy();
           }
 
@@ -116920,6 +116919,8 @@ function (_Observable) {
       }
 
       _this.mode = null;
+
+      _this._callObservers('MODE_UPDATED');
     });
 
     _defineProperty(_assertThisInitialized(_this), "player", function (id) {

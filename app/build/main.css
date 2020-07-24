@@ -838,7 +838,9 @@ a {
 
 .TutorialStage-backButton--38soY {
   cursor: pointer;
-  margin-left: -1.38889vw; }
+  margin-left: -1.38889vw;
+  position: relative;
+  z-index: 1; }
   .TutorialStage-backButton--38soY svg {
     display: inline-block;
     margin-right: 0.34722vw;
