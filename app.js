@@ -18,6 +18,13 @@ const page = path.join(__dirname, `${frontEndRoot}index.html`)
 const sixtyDaysInSeconds = 5184000
 
 const server = express()
+  .use((req, res, next) => {
+    if ((req.get('X-Forwarded-Proto') === 'http')) {
+      res.redirect('https://' + req.get('Host') + req.url)
+    } else {
+      next()
+    }
+  })
   .use(helmet.hsts({
     maxAge: sixtyDaysInSeconds
   }))
