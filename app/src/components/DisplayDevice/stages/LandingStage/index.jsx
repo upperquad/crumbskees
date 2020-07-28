@@ -26,13 +26,18 @@ const LandingStage = props => {
         extraClassName={styles.video}
         poster={backgroundImage}
       />
-      <div className={styles.marqueeTop}>
+      <a
+        className={styles.marqueeTop}
+        href="https://upperquad.com"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         <MarqueeText
           extraClassName={styles.marqueeTopText}
           text="Made with <3 by Upperquad ~~~~(~@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@~)~~~~"
           duration="12s"
         />
-      </div>
+      </a>
       <div className={styles.marqueeLeft}>
         <MarqueeText
           extraClassName={styles.marqueeSideText}
