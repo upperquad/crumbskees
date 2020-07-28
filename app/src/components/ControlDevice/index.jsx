@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { CHARACTERS } from '~constants'
 
 import PreConnectStage from './stages/PreConnectStage'
@@ -16,15 +16,18 @@ const ControlDevice = () => {
   const [winner, setWinner] = useState(null)
   const [serverPeer, setServerPeer] = useState(() => new PeerManager())
 
-  const reset = () => {
-    serverPeer.destroy()
-    setServerPeer(new PeerManager())
-    setScore(0)
-    setWinner(null)
-    setGameStarted(false)
-    setStage('pre_connect')
-    setCharacter(null)
-  }
+  const reset = useCallback(
+    () => {
+      serverPeer.destroy()
+      setServerPeer(new PeerManager())
+      setScore(0)
+      setWinner(null)
+      setGameStarted(false)
+      setStage('pre_connect')
+      setCharacter(null)
+    },
+    [serverPeer],
+  )
 
   useEffect(() => {
     const messageHandler = detail => {

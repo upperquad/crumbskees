@@ -80,7 +80,7 @@ const PreConnectStage = props => {
     return () => {
       TokenSocketManager.removeSubscriber('MESSAGE', messageHandler)
     }
-  }, [])
+  }, [serverPeer])
 
   useEffect(() => {
     const onPeerTimeout = () => {
@@ -94,7 +94,7 @@ const PreConnectStage = props => {
     return () => {
       serverPeer.removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
     }
-  }, [])
+  }, [serverPeer])
 
   useEffect(() => {
     if (!hasPlayed) {
