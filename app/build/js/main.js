@@ -117073,19 +117073,36 @@ function (_Observable) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "startRecurringMessage", function (messageType) {
+      _this.recurringMessageType = messageType;
+
+      _this.sendRecurringMessage();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "sendRecurringMessage", function () {
+      window.clearTimeout(_this.recurringMessageTimeout);
+
+      _this.players.forEach(function (player) {
+        player.playerPeer.send(_this.recurringMessageType);
+      });
+
+      _this.recurringMessageTimeout = window.setTimeout(_this.sendRecurringMessage, 5000);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "stopRecurringMessage", function () {
+      _this.recurringMessageType = null;
+      window.clearTimeout(_this.recurringMessageTimeout);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "startTutorial", function () {
       if (_this.mode === 'DUAL') {
-        _this.players.forEach(function (player) {
-          player.playerPeer.send('tutorial_start');
-        });
+        _this.startRecurringMessage('tutorial_start');
       }
     });
 
     _defineProperty(_assertThisInitialized(_this), "startGame", function () {
       if (_this.mode === 'DUAL') {
-        _this.players.forEach(function (player) {
-          player.playerPeer.send('game_start');
-        });
+        _this.startRecurringMessage('game_start');
       }
 
       _this._gameStarted = true;
@@ -117107,6 +117124,8 @@ function (_Observable) {
 
     _defineProperty(_assertThisInitialized(_this), "endGame", function () {
       if (_this.mode === 'DUAL') {
+        _this.stopRecurringMessage();
+
         _this.players.forEach(function (player) {
           player.playerPeer.send('result', {
             winner: _this.getResult()

@@ -132,19 +132,34 @@ class PlayersManager extends Observable {
     })
   }
 
+  startRecurringMessage = messageType => {
+    this.recurringMessageType = messageType
+    this.sendRecurringMessage()
+  }
+
+  sendRecurringMessage = () => {
+    window.clearTimeout(this.recurringMessageTimeout)
+    this.players.forEach(player => {
+      player.playerPeer.send(this.recurringMessageType)
+    })
+
+    this.recurringMessageTimeout = window.setTimeout(this.sendRecurringMessage, 5000)
+  }
+
+  stopRecurringMessage = () => {
+    this.recurringMessageType = null
+    window.clearTimeout(this.recurringMessageTimeout)
+  }
+
   startTutorial = () => {
     if (this.mode === 'DUAL') {
-      this.players.forEach(player => {
-        player.playerPeer.send('tutorial_start')
-      })
+      this.startRecurringMessage('tutorial_start')
     }
   }
 
   startGame = () => {
     if (this.mode === 'DUAL') {
-      this.players.forEach(player => {
-        player.playerPeer.send('game_start')
-      })
+      this.startRecurringMessage('game_start')
     }
     this._gameStarted = true
   }
@@ -165,6 +180,7 @@ class PlayersManager extends Observable {
 
   endGame = () => {
     if (this.mode === 'DUAL') {
+      this.stopRecurringMessage()
       this.players.forEach(player => {
         player.playerPeer.send('result', { winner: this.getResult() })
       })
