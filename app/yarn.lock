@@ -5758,6 +5758,11 @@ normalize-url@1.9.1:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
+nosleep.js@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/nosleep.js/-/nosleep.js-0.11.0.tgz#4e03af6751d7a969ceade0c45a1b481887b2b0c2"
+  integrity sha512-Ewb7YpPJ6t1IAiMoXM5vWBMomqVFD0wUXXzUfE+kGftXxXFXqLPV3Aq6Iggxxm568tMVptrlXLw5BPMzEgOK6A==
+
 npm-bundled@^1.0.1:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.6.tgz#e7ba9aadcef962bb61248f91721cd932b3fe6bdd"
