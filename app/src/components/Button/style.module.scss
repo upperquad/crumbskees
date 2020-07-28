@@ -32,6 +32,10 @@
     outline: none;
   }
 
+  &.isSmallShadow {
+    padding: 0 scaleVw(14) scaleVw(14) 0;
+  }
+
   :global(.is-display-device) & {
     &:hover {
       animation: button-hover .3s 1 ease-in-out;
@@ -39,6 +43,10 @@
 
     &:active {
       transform: translate(#{scaleVw(22)}, #{scaleVw(22)});
+    }
+
+    &.isSmallShadow:active {
+      transform: translate(#{scaleVw(14)}, #{scaleVw(14)});
     }
   }
 
@@ -86,6 +94,15 @@
     &:focus,
     &:active {
       transform: translate(22px, 22px);
+    }
+
+    &.isSmallShadow {
+      padding: 0 14px 14px 0;
+
+      &:focus,
+      &:active {
+        transform: translate(14px, 14px);
+      }
     }
   }
 

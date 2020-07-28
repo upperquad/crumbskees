@@ -14,6 +14,7 @@ const Button = props => {
     isFullWidth,
     isKeyPad,
     isMute,
+    isSmallShadow,
     link,
     text,
   } = props
@@ -55,6 +56,7 @@ const Button = props => {
           [styles.isKeyPad]: isKeyPad,
           [styles.isMute]: isMute,
           [styles.isFullWidth]: isFullWidth,
+          [styles.isSmallShadow]: isSmallShadow,
         })}
         role="button"
         tabIndex="0"

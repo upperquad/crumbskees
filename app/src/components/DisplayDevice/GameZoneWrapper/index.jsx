@@ -8,6 +8,7 @@ import { TUTORIAL_ROUND, GAME_ROUNDS, COLORS, DEBUG } from '~constants'
 
 import styles from './style.module.scss'
 
+import Button from '~components/Button'
 import GameZone from './GameZone'
 import Board from '~components/DisplayDevice/stages/PlayStage/Round/Board'
 import Character from '~components/Character'
@@ -19,6 +20,7 @@ const GameZoneWrapper = props => {
   const { gameState, godMode, onFinish, onRoundEnd, roundIndex = 0, setGameState, transitionStatus, type } = props
   const [time, setTime] = useState(TIME)
   const [message, setMessage] = useState({ messageCount: 0 })
+  const [modeCache] = useState(PlayersManager.mode)
   const [itemsLevel, setScoresLevel] = useState(() => PlayersManager.players.map(() => []))
   const forceUpdate = useForceUpdate()
   // const countDownStarted = useRef(false)
@@ -152,26 +154,30 @@ const GameZoneWrapper = props => {
               type={type}
             />
           </div>
-          <div className={styles.readyIndicators}>
-            <div className={styles.readyIndicatorsTitle} data-text="Ready?">Ready?</div>
-            {PlayersManager.mode === 'SINGLE' && <div className={styles.readyIndicatorPlaceHolder} />}
-            {PlayersManager.players.map((player, index) => {
-              const isClickable = PlayersManager.mode === 'SINGLE'
-              const clickHandler = isClickable ?
-                () => {
-                  PlayersManager.players[index].setReady(true)
-                } :
-                null
-              return (
+          {modeCache === 'SINGLE' && (
+            <div className={styles.readyCtaWrapper}>
+              {PlayersManager.players.map((player, index) => (
+                <Button
+                  text="Ready!"
+                  extraClassName={styles.readyCta}
+                  clickHandler={() => {
+                    PlayersManager.players[index].setReady(true)
+                  }}
+                  isSmallShadow
+                />
+              ))}
+            </div>
+          )}
+          {modeCache === 'DUAL' && (
+            <div className={styles.readyIndicators}>
+              <div className={styles.readyIndicatorsTitle} data-text="Ready?">Ready?</div>
+              {PlayersManager.players.map((player, index) => (
                 <div
                   key={playersCache[index].slug}
                   className={classNames(
                     styles.readyIndicatorWrapper,
                     styles[`readyIndicatorWrapper--${playersCache[index].slug}`],
-                    { [styles.isClickable]: isClickable },
                   )}
-                  role={isClickable ? 'button' : null}
-                  onClick={clickHandler}
                 >
                   <div
                     className={classNames(
@@ -189,9 +195,9 @@ const GameZoneWrapper = props => {
                     </div>
                   </div>
                 </div>
-              )
-            })}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
       {type === 'game' && (
