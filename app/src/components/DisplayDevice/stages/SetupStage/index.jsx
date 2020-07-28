@@ -164,7 +164,7 @@ const SetupStage = props => {
                     <div className={styles.modeGo}>Go!</div>
                   </div>
                 </div>
-                <div className={styles.modeWrapper}>
+                <div className={classNames(styles.modeWrapper, styles.modeWrapperSmall)}>
                   <div
                     onClick={() => {
                       PlayersManager.init('SINGLE')

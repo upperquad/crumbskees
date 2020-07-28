@@ -147,6 +147,7 @@ a {
 
 .LandingStage-marqueeTop--2c-M7 {
   background: #3f1bd0;
+  display: block;
   left: 0;
   padding: 0.69444vw 0;
   position: absolute;
@@ -538,13 +539,16 @@ a {
   width: 100%; }
 
 .SetupStage-modeWrapper--3YURc {
-  margin: 0 4.16667vw;
   overflow: hidden;
   padding: 0 1.11111vw 1.11111vw 0; }
 
 .SetupStage-modeWrapperBig--DaC-C {
-  margin: 0 5.55556vw;
-  transform: scale(1.1); }
+  margin: 0 6.94444vw;
+  transform: scale(1.2); }
+
+.SetupStage-modeWrapperSmall--1xRvz {
+  margin: 0 4.16667vw;
+  transform: scale(0.95); }
 
 .SetupStage-player--2JGID,
 .SetupStage-mode--1NYa8 {
@@ -840,6 +844,7 @@ a {
   cursor: pointer;
   margin-left: -1.38889vw;
   position: relative;
+  width: fit-content;
   z-index: 1; }
   .TutorialStage-backButton--38soY svg {
     display: inline-block;

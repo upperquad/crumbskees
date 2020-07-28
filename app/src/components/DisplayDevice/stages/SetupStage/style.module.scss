@@ -62,14 +62,18 @@
 }
 
 .modeWrapper {
-  margin: 0 scaleVw(60);
   overflow: hidden;
   padding: 0 scaleVw(16) scaleVw(16) 0;
 }
 
 .modeWrapperBig {
-  margin: 0 scaleVw(80);
-  transform: scale(1.1);
+  margin: 0 scaleVw(100);
+  transform: scale(1.2);
+}
+
+.modeWrapperSmall {
+  margin: 0 scaleVw(60);
+  transform: scale(.95);
 }
 
 .player,
