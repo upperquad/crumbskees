@@ -11,10 +11,9 @@ import Button from '~components/Button'
 import Lottie from '~components/Lottie'
 
 import TokenSocketManager from '~managers/TokenSocketManager'
-import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PreConnectStage = props => {
-  const { hasPlayed } = props
+  const { hasPlayed, serverPeer } = props
   const [token, setToken] = useState('')
   const [errorReason, setErrorReason] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
@@ -69,7 +68,7 @@ const PreConnectStage = props => {
       switch (type) {
         case 'player_token_accepted': {
           const { id } = data
-          ServerPeer.connect(id)
+          serverPeer.connect(id)
           break
         }
         default:
@@ -90,10 +89,10 @@ const PreConnectStage = props => {
       setToken('')
     }
 
-    ServerPeer.addSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
+    serverPeer.addSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
 
     return () => {
-      ServerPeer.removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
+      serverPeer.removeSubscriber('CONNECTION_TIMEOUT', onPeerTimeout)
     }
   }, [])
 
@@ -113,6 +112,8 @@ const PreConnectStage = props => {
       setShowInstructionOverlay(false)
       setIsLoaded(true)
     }
+
+    return () => TokenSocketManager.disconnect()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

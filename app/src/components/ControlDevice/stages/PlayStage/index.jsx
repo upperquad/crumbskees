@@ -7,10 +7,9 @@ import styles from './style.module.scss'
 import Button from '~components/Button'
 import Character from '~components/Character'
 import Lottie from '~components/Lottie'
-import ServerPeer from '~managers/PeerManager/ServerPeer'
 
 const PlayStage = props => {
-  const { character, gameStarted, score } = props
+  const { character, gameStarted, score, serverPeer } = props
   const [showInstruction, setShowInstruction] = useState(true)
   const [isTouching, setIsTouching] = useState(false)
   const [ready, setReady] = useState(false)
@@ -27,7 +26,7 @@ const PlayStage = props => {
   const updatePosition = (clientX, clientY) => {
     const x = (clientX - coordX.current) / window.innerWidth
     const y = (clientY - coordY.current) / window.innerHeight
-    ServerPeer.send('cursor_move', { x, y })
+    serverPeer.send('cursor_move', { x, y })
     coordX.current = clientX
     coordY.current = clientY
   }
@@ -54,7 +53,7 @@ const PlayStage = props => {
     setIsTouching(false)
 
     if (!isMovedSinceTouchStart.current) {
-      ServerPeer.send('click')
+      serverPeer.send('click')
       isClickSentSinceTouchStart.current = true
     }
   }
@@ -63,12 +62,12 @@ const PlayStage = props => {
     event.preventDefault()
 
     if (!isClickSentSinceTouchStart.current) {
-      ServerPeer.send('click')
+      serverPeer.send('click')
     }
   }
 
   const onReadyTouch = () => {
-    ServerPeer.send('player_ready')
+    serverPeer.send('player_ready')
     setReady(true)
   }
 

@@ -5,7 +5,7 @@ import PreConnectStage from './stages/PreConnectStage'
 import MeetCharacterStage from './stages/MeetCharacterStage'
 import PlayStage from './stages/PlayStage'
 import ResultStage from './stages/ResultStage'
-import ServerPeer from '~managers/PeerManager/ServerPeer'
+import PeerManager from '~managers/PeerManager'
 
 const ControlDevice = () => {
   const [hasPlayed, setHasPlayed] = useState(false)
@@ -14,9 +14,11 @@ const ControlDevice = () => {
   const [character, setCharacter] = useState(null)
   const [score, setScore] = useState(0)
   const [winner, setWinner] = useState(null)
-  // const [mode, setMode] = useState(null)
+  const [serverPeer, setServerPeer] = useState(() => new PeerManager())
 
   const reset = () => {
+    serverPeer.destroy()
+    setServerPeer(new PeerManager())
     setScore(0)
     setWinner(null)
     setGameStarted(false)
@@ -30,8 +32,6 @@ const ControlDevice = () => {
 
       switch (type) {
         case 'accepted': {
-          // const { mode: activatedMode, playerIndex } = data
-          // setMode(activatedMode)
           const { playerIndex } = data
           if (CHARACTERS[playerIndex]) {
             setCharacter(CHARACTERS[playerIndex])
@@ -60,19 +60,19 @@ const ControlDevice = () => {
         case 'result': {
           setWinner(data.winner)
           setStage('result')
-          ServerPeer.destroy()
+          serverPeer.destroy()
           break
         }
         default:
           break
       }
     }
-    ServerPeer.addSubscriber('MESSAGE', messageHandler)
+    serverPeer.addSubscriber('MESSAGE', messageHandler)
 
     return () => {
-      ServerPeer.removeSubscriber('MESSAGE', messageHandler)
+      serverPeer.removeSubscriber('MESSAGE', messageHandler)
     }
-  }, [])
+  }, [serverPeer])
 
   useEffect(() => {
     const peerClosedHandler = () => {
@@ -80,17 +80,17 @@ const ControlDevice = () => {
         reset()
       }
     }
-    ServerPeer.addSubscriber('PEER_CLOSED', peerClosedHandler)
+    serverPeer.addSubscriber('PEER_CLOSED', peerClosedHandler)
 
     return () => {
-      ServerPeer.removeSubscriber('PEER_CLOSED', peerClosedHandler)
+      serverPeer.removeSubscriber('PEER_CLOSED', peerClosedHandler)
     }
-  }, [stage])
+  }, [reset, serverPeer, stage])
 
   return (
     <div>
       {stage === 'pre_connect' && (
-        <PreConnectStage hasPlayed={hasPlayed} />
+        <PreConnectStage hasPlayed={hasPlayed} serverPeer={serverPeer} />
       )}
       {stage === 'meet_character' && (
         <MeetCharacterStage
@@ -102,6 +102,7 @@ const ControlDevice = () => {
           gameStarted={gameStarted}
           character={character}
           score={score}
+          serverPeer={serverPeer}
         />
       )}
       {stage === 'result' && (
