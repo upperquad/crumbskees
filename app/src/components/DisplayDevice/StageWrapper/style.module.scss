@@ -14,12 +14,6 @@
   }
 }
 
-@keyframes stripe-swipe {
-  to {
-    transform: translate3d(620vw, 0, 0);
-  }
-}
-
 .stageWrapper {
   bottom: 0;
   left: 0;
@@ -35,43 +29,6 @@
   .stage {
     animation: stage-appear .75s 1 both linear;
   }
-
-  .stripe {
-    animation: stripe-swipe 1.5s 1 both cubic-bezier(.28, 0, .68, .99);
-    visibility: visible;
-
-    &--2 {
-      animation-delay: 10ms;
-    }
-
-    &--3 {
-      animation-delay: 30ms;
-    }
-
-    &--4 {
-      animation-delay: 60ms;
-    }
-
-    &--5 {
-      animation-delay: 100ms;
-    }
-
-    &--6 {
-      animation-delay: 150ms;
-    }
-
-    &--7 {
-      animation-delay: 210ms;
-    }
-
-    &--8 {
-      animation-delay: 280ms;
-    }
-
-    &--9 {
-      animation-delay: 360ms;
-    }
-  }
 }
 
 .stageWrapperExiting {
@@ -84,68 +41,4 @@
   position: absolute;
   top: 0;
   width: 100%;
-}
-
-@function stripe-height($power: 1) {
-  @return calc(#{8 * scaleVw(4) * $power / 9} + #{100vh * $power / 9});
-}
-
-@function stripe-offset($index: 0) {
-  @return calc(#{8 * scaleVw(4) * $index / 9} + #{100vh * $index / 9} - #{scaleVw(4) * $index});
-}
-
-.stripe {
-  border: scaleVw(4) solid $color-black;
-  border-radius: stripe-height(.5);
-  height: stripe-height();
-  position: absolute;
-  right: 110vw;
-  visibility: hidden;
-  width: 500vw;
-  z-index: 1000;
-
-  &--1 {
-    background: $color-purple;
-    top: 0;
-  }
-
-  &--2 {
-    background: $color-red;
-    top: stripe-offset(1);
-  }
-
-  &--3 {
-    background: $color-orange;
-    top: stripe-offset(2);
-  }
-
-  &--4 {
-    background: $color-yellow;
-    top: stripe-offset(3);
-  }
-
-  &--5 {
-    background: $color-pink;
-    top: stripe-offset(4);
-  }
-
-  &--6 {
-    background: $color-purple;
-    top: stripe-offset(5);
-  }
-
-  &--7 {
-    background: $color-red;
-    top: stripe-offset(6);
-  }
-
-  &--8 {
-    background: $color-orange;
-    top: stripe-offset(7);
-  }
-
-  &--9 {
-    background: $color-yellow;
-    top: stripe-offset(8);
-  }
 }
