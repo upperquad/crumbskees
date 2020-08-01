@@ -21,7 +21,7 @@ const Stripes = () => {
 
     // total animation time is 1.6 second, 96 (60 * 1.6) frames
     // stroke : stripe = 1 : 28
-    const stripeWidth = 3 * baseWidth
+    const stripeWidth = 5 * baseWidth
     const stripeGap = 0.2 * baseWidth
     const stripeHeight = (28 / (28 * 9 + 10 * 1)) * baseHeight
     const stripeStroke = (1 / (28 * 9 + 10 * 1)) * baseHeight
@@ -43,34 +43,33 @@ const Stripes = () => {
 
     app.stage.addChild(graphics)
 
+    stripes.forEach((stripe, index) => {
+      const stripeX = -stripeWidth - index * stripeGap
+      const stripeY = stripeStroke + index * (stripeStroke + stripeHeight)
+      graphics.beginFill(0x0)
+      graphics.drawRoundedRect(
+        stripeX - stripeStroke,
+        stripeY - stripeStroke,
+        stripeWidth + stripeStroke * 2,
+        stripeHeight + stripeStroke * 2,
+        stripeRadius,
+      )
+      graphics.endFill()
+      graphics.beginFill(stripe)
+      graphics.drawRoundedRect(
+        stripeX,
+        stripeY,
+        stripeWidth,
+        stripeHeight,
+        stripeRadius,
+      )
+      graphics.endFill()
+    })
+
     let currentFrame = 0
 
     app.ticker.add(deltaFrames => {
-      graphics.clear()
-
-      stripes.forEach((stripe, index) => {
-        const stripeX = -stripeWidth - index * stripeGap + movementPerFrame * currentFrame
-        const stripeY = stripeStroke + index * (stripeStroke + stripeHeight)
-        graphics.beginFill(0x0)
-        graphics.drawRoundedRect(
-          stripeX - stripeStroke,
-          stripeY - stripeStroke,
-          stripeWidth + stripeStroke * 2,
-          stripeHeight + stripeStroke * 2,
-          stripeRadius,
-        )
-        graphics.endFill()
-        graphics.beginFill(stripe)
-        graphics.drawRoundedRect(
-          stripeX,
-          stripeY,
-          stripeWidth,
-          stripeHeight,
-          stripeRadius,
-        )
-        graphics.endFill()
-      })
-
+      graphics.setTransform(movementPerFrame * currentFrame)
       currentFrame += deltaFrames
     })
 
