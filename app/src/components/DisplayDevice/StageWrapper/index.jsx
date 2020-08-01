@@ -2,6 +2,8 @@ import React, { Children, cloneElement } from 'react'
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
+import Stripes from './Stripes'
+
 const StageWrapper = props => {
   const { children, status } = props
 
@@ -19,6 +21,7 @@ const StageWrapper = props => {
       })}
     >
       {childrenWithClasses}
+      {status === 'entering' && <Stripes />}
     </div>
   )
 }

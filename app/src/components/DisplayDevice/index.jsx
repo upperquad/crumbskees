@@ -14,7 +14,7 @@ import StageWrapper from './StageWrapper'
 
 import PlayersManager from '~managers/PlayersManager'
 
-const TRANSITION_TIMEOUTS = { enter: 1600, exit: 800 }
+const TRANSITION_TIMEOUTS = { enter: 3000, exit: 800 }
 const CHEAT_CODE = [
   'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
   'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA', 'Enter',
