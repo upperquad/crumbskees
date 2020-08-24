@@ -192,7 +192,7 @@ const PreConnectStage = props => {
               </span>
             </h1>
             <p className={styles.overlaySubtitle}>
-              Visit crumbskees.com on your desktop or laptop and scan the QR with you phones to get started.
+              Visit crumbskees.com on your desktop or laptop and scan the QR with your phones to get started.
               <br />
               &nbsp;
               <br />
