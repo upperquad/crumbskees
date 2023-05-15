@@ -8,10 +8,12 @@ html {
   }
 
   &:global(.is-control-device) {
-    overscroll-behavior-x: none;
+    overscroll-behavior: none;
+    touch-action: none;
 
     body {
-      overscroll-behavior-x: none;
+      overscroll-behavior: none;
+      touch-action: none;
     }
   }
 }
