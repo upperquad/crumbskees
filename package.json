@@ -13,7 +13,7 @@
   "keywords": [],
   "author": "",
   "dependencies": {
-    "express": "4.13.4",
+    "express": "4.17.3",
     "helmet": "^3.23.2",
     "socketpeer": "link:vendor/socketpeer",
     "throttle-debounce": "^2.1.0",
